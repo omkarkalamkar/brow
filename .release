@@ -13,7 +13,7 @@ release_notes=
 **Charts:**
 **1. ska-tmc-low-integration 0.20.1-rc.3 - 0.20.1-rc.4**
 
- **1.1 ska-tmc-low - 0.20.1-rc.4 - 0.20.1-rc.4:
+ **1.1 ska-tmc-low - 0.20.1-rc.3 - 0.20.1-rc.4:
        a. Fix bug SKB-618
        b. Update the image of Sdpleafnodes to 0.17.3
        
