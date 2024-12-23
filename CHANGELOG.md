@@ -7,6 +7,11 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 Added
 -----
+
+[0.20.1-rc.5]
+* Update CSPleafnodes chart to update ska-telmodel
+
+
 [0.20.1-rc.4]
 * Fix bug SKB-618
 * Update the image of Sdpleafnodes to 0.17.3
