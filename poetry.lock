@@ -1688,7 +1688,7 @@ reference = "PyPI-public"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "fbe51fd136efb48a3867429dd1e152e09501fff0f880a2625f5d5ab5a34e0649"
+content-hash = "c8deeea4784f93a85327c2f653abf19bddb9aa892907228158888c82180b3ebf"
 
 [metadata.files]
 alabaster = [
