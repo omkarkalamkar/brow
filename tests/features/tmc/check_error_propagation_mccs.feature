@@ -1,4 +1,4 @@
-@XTP-39454 @tmc @Team_himalaya
+@XTP-39454 @XTP-73592 @tmc @Team_himalaya
 Scenario: Error Propagation Reported by TMC Low Configure Command for Defective MCCS Subarray
 
 Given the telescope is is ON state

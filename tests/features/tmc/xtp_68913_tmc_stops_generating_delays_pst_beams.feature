@@ -1,4 +1,4 @@
-@XTP-68913
+@XTP-68913 @XTP-73579 @XTP-73581
 Scenario: TMC stops generating delay values for PST Beams
     Given the telescope is in ON state
     And subarray is configured and generating delay values for PST Beams

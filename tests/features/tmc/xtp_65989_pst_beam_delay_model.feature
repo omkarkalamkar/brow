@@ -1,4 +1,4 @@
-@XTP-65989
+@XTP-65989 @XTP-73579 @XTP-73581
 Scenario: TMC generates delay values for PST Beams
     Given the telescope is in ON state
     And subarray is in obsState IDLE

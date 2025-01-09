@@ -1,4 +1,4 @@
-@XTP-32140
+@XTP-32140 @XTP-73579 @XTP-73581
 Scenario: TMC generates delay values
     Given the telescope is in ON state
     And subarray is in obsState IDLE
