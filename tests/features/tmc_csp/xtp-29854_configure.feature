@@ -1,4 +1,4 @@
-@XTP-29855 @XTP-29682 @tmc_csp
+@XTP-29855 @XTP-29682 @XTP-73798 @tmc_csp
 Scenario: Configure CSP subarray using TMC
     Given the Telescope is in ON state
     And the subarray <subarray_id> obsState is IDLE
