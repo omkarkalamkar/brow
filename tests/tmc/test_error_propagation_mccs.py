@@ -172,7 +172,7 @@ def configure_command_reports_error_propagate(
     exception_message = (
         "Exception occurred on the following devices:"
         + f" {mccs_subarray_leaf_node}:"
-        + "Exception occurred, command failed."
+        + " Exception occurred, command failed."
     )
 
     assert_that(event_tracer).described_as(
