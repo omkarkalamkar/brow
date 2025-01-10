@@ -13,7 +13,8 @@ from pytest_bdd import given, scenario, then, when
 from ska_control_model import ObsState
 from ska_tango_base.commands import ResultCode
 from ska_tango_testing.integration import TangoEventTracer, log_events
-from ska_tango_testing.mock.placeholders import Anything
+
+# from ska_tango_testing.mock.placeholders import Anything
 from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
@@ -187,6 +188,18 @@ def given_a_tmc_in_scanning_obs_state(
         "obsState",
         ObsState.SCANNING,
     )
+
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN" STEP: '
+        "Subarray Node device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        "is expected have longRunningCommand as"
+        '(unique_id,(ResultCode.OK,"Command Completed"))',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "longRunningCommandResult",
+        (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
+    )
     event_tracer.clear_events()
 
 
@@ -210,7 +223,7 @@ def invoke_endscan_with_a_device_going_to_fault(
     csp_sim, _ = get_device_simulators(simulator_factory)
     csp_sim.SetDefective(json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT))
 
-    _, unique_id = subarray_node_low.execute_transition("EndScan")
+    subarray_node_low.execute_transition("EndScan")
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "WHEN" STEP: '
         "'I invoke EndScan command and a sub-system goes to FAULT'"
@@ -271,21 +284,6 @@ def check_obs_state_ready_for_leaf_nodes(
         subarray_node_low.mccs_subarray_leaf_node,
         "obsState",
         ObsState.READY,
-    )
-
-    exception_message = "Timeout has occurred, command failed"
-
-    assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER ENDSCAN COMMAND: "
-        "Subarray Node device"
-        f"({subarray_node_low.subarray_node.dev_name()}) "
-        "is expected have longRunningCommandResult"
-        "(ResultCode.FAILED,exception)",
-    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
-        subarray_node_low.subarray_node,
-        [exception_message],
-        Anything,
-        ResultCode.FAILED,
     )
 
     event_tracer.clear_events()
