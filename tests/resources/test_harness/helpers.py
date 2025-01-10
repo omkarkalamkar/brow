@@ -949,9 +949,14 @@ def wait_for_partial_or_complete_abort(timeout: int = 110) -> None:
             assert event_recorder.has_change_event_occurred_for_given_values(
                 dev_proxy,
                 attribute_name,
-                [ObsState.FAULT, ObsState.ABORTED],
+                [ObsState.FAULT, ObsState.ABORTED, ObsState.ABORTING],
             )
+
         else:
+
+            LOGGER.info(
+                "Checking for events from subsystems",
+            )
             assert event_recorder.has_change_event_occurred_for_given_values(
                 dev_proxy,
                 attribute_name,
