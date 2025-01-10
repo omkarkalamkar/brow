@@ -33,7 +33,6 @@ from tests.resources.test_support.constant_low import (
 )
 
 
-@pytest.mark.skip(reason="will be done in 1647")
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/SKB_512.feature",
@@ -210,7 +209,7 @@ def invoke_endscan_with_a_device_going_to_fault(
     csp_sim, _ = get_device_simulators(simulator_factory)
     csp_sim.SetDefective(json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT))
 
-    subarray_node_low.execute_transition("EndScan")
+    _, unique_id = subarray_node_low.execute_transition("EndScan")
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "WHEN" STEP: '
         "'I invoke EndScan command and a sub-system goes to FAULT'"
@@ -221,6 +220,21 @@ def invoke_endscan_with_a_device_going_to_fault(
         subarray_node_low.csp_subarray_leaf_node,
         "cspSubarrayObsState",
         ObsState.FAULT,
+    )
+
+    exception_message = "Timeout has occurred, command failed"
+
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER CONFIGURE COMMAND: "
+        "Subarray Node device"
+        f"({subarray_node_low.subarray_node.dev_name()}) "
+        "is expected have longRunningCommandResult"
+        "(ResultCode.FAILED,exception)",
+    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+        subarray_node_low.subarray_node,
+        [exception_message],
+        unique_id[0],
+        ResultCode.FAILED,
     )
 
     # Resetting defect for teardown.
@@ -272,4 +286,5 @@ def check_obs_state_ready_for_leaf_nodes(
         "obsState",
         ObsState.READY,
     )
+
     event_tracer.clear_events()
