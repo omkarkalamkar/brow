@@ -14,15 +14,19 @@ from tango import DevState
 
 from tests.conftest import LOGGER
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
-from tests.resources.test_harness.constant import TIMEOUT
-
-# from tests.resources.test_harness.simulator_factory import SimulatorFactory
+from tests.resources.test_harness.constant import (
+    ERROR_PROPAGATION_DEFECT,
+    TIMEOUT,
+    low_csp_subarray_leaf_node,
+    low_sdp_subarray_leaf_node,
+    mccs_subarray_leaf_node,
+)
+from tests.resources.test_harness.simulator_factory import SimulatorFactory
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
 from tests.resources.test_harness.utils.common_utils import JsonFactory
-
-# from tests.resources.test_harness.utils.enums import SimulatorDeviceType
+from tests.resources.test_harness.utils.enums import SimulatorDeviceType
 from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
     prepare_json_args_for_commands,
@@ -101,10 +105,57 @@ def perform_idle_transition(
         "is expected have longRunningCommand as"
         '(unique_id,(ResultCode.OK,"Command Completed"))',
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
+        central_node_low.central_node,
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
+    event_tracer.clear_events()
+
+
+def perform_ready_transition_with_end(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    defective_device,
+):
+    """
+    Execute End and verify error propogation
+    """
+
+    _, unique_id = subarray_node_low.end_observation()
+
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "WHEN" STEP: '
+        '"I end the observation"'
+        "Subarray Node device"
+        f"({subarray_node_low.subarray_node.dev_name()}) "
+        "is expected to be in IDLE obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.subarray_node,
+        "obsState",
+        ObsState.CONFIGURING,
+    )
+
+    exception_message = (
+        "Exception occurred on the following devices:"
+        + f" {defective_device}:"
+        + " Exception occurred, command failed."
+    )
+
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        '"the command failure is reported by subarray with appropriate"'
+        '"error message"'
+        "Subarray Node device"
+        f"({subarray_node_low.subarray_node.dev_name()}) "
+        "is expected have longRunningCommandResult"
+        "(ResultCode.FAILED,exception)",
+    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+        subarray_node_low.subarray_node,
+        [exception_message],
+        unique_id[0],
+        ResultCode.FAILED,
+    )
+
     event_tracer.clear_events()
 
 
@@ -267,10 +318,9 @@ def move_tmc_to_intial_state(
 
 @when(parsers.parse("{command} is invoked on a {defectiveSubsystem} Subarray"))
 def execute_command_on_tmc_with_defectivesetup(
-    # central_node_low: CentralNodeWrapperLow,
-    # subarray_node_low: SubarrayNodeWrapperLow,
-    # event_tracer: TangoEventTracer,
-    # command_input_factory: JsonFactory,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    simulator_factory: SimulatorFactory,
     command,
     defectiveSubsystem,
 ):
@@ -279,6 +329,45 @@ def execute_command_on_tmc_with_defectivesetup(
     """
 
     LOGGER.info("Inside %s  is invoked for %s", command, defectiveSubsystem)
+
+    defective_subarray = None
+    match defectiveSubsystem:
+        case "CSP":
+            defective_subarray = (
+                simulator_factory.get_or_create_simulator_device(
+                    SimulatorDeviceType.LOW_CSP_DEVICE
+                )
+            )
+            defective_device = low_csp_subarray_leaf_node
+        case "SDP":
+            defective_subarray = (
+                simulator_factory.get_or_create_simulator_device(
+                    SimulatorDeviceType.LOW_SDP_DEVICE
+                )
+            )
+            defective_device = low_sdp_subarray_leaf_node
+
+        case "MCCS":
+            defective_subarray = (
+                simulator_factory.get_or_create_simulator_device(
+                    SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
+                )
+            )
+
+            defective_device = mccs_subarray_leaf_node
+
+        # Inducing Fault
+    #
+    defective_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
+
+    match command:
+        case "END":
+            LOGGER.info("Working on Ready State")
+            perform_ready_transition_with_end(
+                subarray_node_low,
+                event_tracer,
+                defective_device,
+            )
 
 
 @then(
