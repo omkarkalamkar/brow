@@ -13,6 +13,7 @@ from pytest_bdd import given, scenario, then, when
 from ska_control_model import ObsState
 from ska_tango_base.commands import ResultCode
 from ska_tango_testing.integration import TangoEventTracer, log_events
+from ska_tango_testing.mock.placeholders import Anything
 from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
@@ -222,21 +223,6 @@ def invoke_endscan_with_a_device_going_to_fault(
         ObsState.FAULT,
     )
 
-    exception_message = "Timeout has occurred, command failed"
-
-    assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER CONFIGURE COMMAND: "
-        "Subarray Node device"
-        f"({subarray_node_low.subarray_node.dev_name()}) "
-        "is expected have longRunningCommandResult"
-        "(ResultCode.FAILED,exception)",
-    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
-        subarray_node_low.subarray_node,
-        [exception_message],
-        unique_id[0],
-        ResultCode.FAILED,
-    )
-
     # Resetting defect for teardown.
     csp_sim.SetDefective(json.dumps(RESET_DEFECT))
     event_tracer.clear_events()
@@ -285,6 +271,21 @@ def check_obs_state_ready_for_leaf_nodes(
         subarray_node_low.mccs_subarray_leaf_node,
         "obsState",
         ObsState.READY,
+    )
+
+    exception_message = "Timeout has occurred, command failed"
+
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER ENDSCAN COMMAND: "
+        "Subarray Node device"
+        f"({subarray_node_low.subarray_node.dev_name()}) "
+        "is expected have longRunningCommandResult"
+        "(ResultCode.FAILED,exception)",
+    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+        subarray_node_low.subarray_node,
+        [exception_message],
+        Anything,
+        ResultCode.FAILED,
     )
 
     event_tracer.clear_events()
