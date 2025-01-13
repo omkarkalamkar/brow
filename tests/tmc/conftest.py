@@ -586,4 +586,7 @@ def validate_subarry_obsState(
         "obsState"
     ).value
     assert attribute_value == 4
-    assert attribute_value == ObsState.READY
+    if Intermediate == "READY":
+        assert attribute_value == ObsState.READY
+    elif Intermediate == "SCANNING":
+        assert attribute_value == ObsState.SCANNING

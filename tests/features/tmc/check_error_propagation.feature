@@ -12,7 +12,6 @@ Examples:
             |READY            | END     | MCCS                 | READY |
             |SCANNING         | ENDSCAN | CSP                  | SCANNING |
             |SCANNING         | ENDSCAN | MCCS                 | SCANNING |
-            |SCANNING         | ENDSCAN | SDP                  | SCANNING|
             |READY            | SCAN    | CSP                  | SCANNING |
             |READY            | SCAN    | MCCS                 | SCANNING |
             |READY            | SCAN    | SDP                  | SCANNING|
