@@ -5,6 +5,8 @@ Common modules for reuse
 
 import json
 
+import pytest
+
 # import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, then, when
@@ -126,49 +128,47 @@ def perform_idle_transition(
 
 def verify_scanning_transition_with_endscan(
     subarray_node_low: SubarrayNodeWrapperLow,
-    event_tracer: TangoEventTracer,
-    defective_device,
+    # event_tracer: TangoEventTracer,
 ):
     """
     Execute EndScan and verify error propogation
     """
 
-    _, unique_id = subarray_node_low.execute_transition("EndScan")
-    exception_message = (
-        "Exception occurred on the following devices:"
-        + f" {defective_device}:"
-        + " Exception occurred, command failed."
-    )
-
-    assert_that(event_tracer).described_as(
-        'FAILED ASSUMPTION IN "THEN" STEP: '
-        '"the command failure is reported by subarray with appropriate"'
-        '"error message"'
-        "Subarray Node device"
-        f"({subarray_node_low.subarray_node.dev_name()}) "
-        "is expected have longRunningCommandResult"
-        "(ResultCode.FAILED,exception)",
-    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
-        subarray_node_low.subarray_node,
-        [exception_message],
-        unique_id[0],
-        ResultCode.FAILED,
-    )
-
-    defective_device.SetDefective(json.dumps({"enabled": False}))
+    _, pytest.unique_id = subarray_node_low.execute_transition("EndScan")
+    # exception_message = (
+    #     "Exception occurred on the following devices:"
+    #     + f" {defective_device}:"
+    #     + " Exception occurred, command failed."
+    # )
+    #
+    # assert_that(event_tracer).described_as(
+    #     'FAILED ASSUMPTION IN "THEN" STEP: '
+    #     '"the command failure is reported by subarray with appropriate"'
+    #     '"error message"'
+    #     "Subarray Node device"
+    #     f"({subarray_node_low.subarray_node.dev_name()}) "
+    #     "is expected have longRunningCommandResult"
+    #     "(ResultCode.FAILED,exception)",
+    # ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+    #     subarray_node_low.subarray_node,
+    #     [exception_message],
+    #     unique_id[0],
+    #     ResultCode.FAILED,
+    # )
+    #
+    # defective_device.SetDefective(json.dumps({"enabled": False}))
 
 
 def perform_ready_transition_with_end(
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
-    defective_device,
 ):
     """
     Execute End and verify error propogation
     """
 
     # _, unique_id = subarray_node_low.end_observation()
-    _, unique_id = subarray_node_low.subarray_node.End()
+    _, pytest.unique_id = subarray_node_low.subarray_node.End()
 
     LOGGER.info("Checking for error message")
 
@@ -184,30 +184,30 @@ def perform_ready_transition_with_end(
         ObsState.CONFIGURING,
     )
 
-    exception_message = (
-        "Exception occurred on the following devices:"
-        + f" {defective_device}:"
-        + " Exception occurred, command failed."
-    )
-
-    assert_that(event_tracer).described_as(
-        'FAILED ASSUMPTION IN "THEN" STEP: '
-        '"the command failure is reported by subarray with appropriate"'
-        '"error message"'
-        "Subarray Node device"
-        f"({subarray_node_low.subarray_node.dev_name()}) "
-        "is expected have longRunningCommandResult"
-        "(ResultCode.FAILED,exception)",
-    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
-        subarray_node_low.subarray_node,
-        [exception_message],
-        unique_id[0],
-        ResultCode.FAILED,
-    )
-
-    defective_device.SetDefective(json.dumps({"enabled": False}))
-
-    event_tracer.clear_events()
+    # exception_message = (
+    #     "Exception occurred on the following devices:"
+    #     + f" {defective_device}:"
+    #     + " Exception occurred, command failed."
+    # )
+    #
+    # assert_that(event_tracer).described_as(
+    #     'FAILED ASSUMPTION IN "THEN" STEP: '
+    #     '"the command failure is reported by subarray with appropriate"'
+    #     '"error message"'
+    #     "Subarray Node device"
+    #     f"({subarray_node_low.subarray_node.dev_name()}) "
+    #     "is expected have longRunningCommandResult"
+    #     "(ResultCode.FAILED,exception)",
+    # ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+    #     subarray_node_low.subarray_node,
+    #     [exception_message],
+    #     pytest.unique_id[0],
+    #     ResultCode.FAILED,
+    # )
+    #
+    # defective_device.SetDefective(json.dumps({"enabled": False}))
+    #
+    # event_tracer.clear_events()
 
 
 def perform_scanning_transition(
@@ -462,35 +462,35 @@ def execute_command_on_tmc_with_defectivesetup(
 
     LOGGER.info("Inside %s  is invoked for %s", command, defectiveSubsystem)
 
-    defective_subarray = None
+    pytest.defective_subarray = None
     match defectiveSubsystem:
         case "CSP":
-            defective_subarray = (
+            pytest.defective_subarray = (
                 simulator_factory.get_or_create_simulator_device(
                     SimulatorDeviceType.LOW_CSP_DEVICE
                 )
             )
-            defective_device = low_csp_subarray_leaf_node
+            pytest.defective_device = low_csp_subarray_leaf_node
         case "SDP":
-            defective_subarray = (
+            pytest.defective_subarray = (
                 simulator_factory.get_or_create_simulator_device(
                     SimulatorDeviceType.LOW_SDP_DEVICE
                 )
             )
-            defective_device = low_sdp_subarray_leaf_node
+            pytest.defective_device = low_sdp_subarray_leaf_node
 
         case "MCCS":
-            defective_subarray = (
+            pytest.defective_subarray = (
                 simulator_factory.get_or_create_simulator_device(
                     SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
                 )
             )
 
-            defective_device = mccs_subarray_leaf_node
+            pytest.defective_device = mccs_subarray_leaf_node
 
         # Inducing Fault
     #
-    defective_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
+    pytest.defective_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
 
     match command:
         case "END":
@@ -498,15 +498,13 @@ def execute_command_on_tmc_with_defectivesetup(
             perform_ready_transition_with_end(
                 subarray_node_low,
                 event_tracer,
-                defective_subarray,
             )
 
         case "ENDSCAN":
             LOGGER.info("Working on Ready State")
             verify_scanning_transition_with_endscan(
                 subarray_node_low,
-                event_tracer,
-                defective_device,
+                # event_tracer,
             )
 
 
@@ -518,8 +516,8 @@ def execute_command_on_tmc_with_defectivesetup(
 )
 def validate_error_message_reporting(
     # central_node_low: CentralNodeWrapperLow,
-    # subarray_node_low: SubarrayNodeWrapperLow,
-    # event_tracer: TangoEventTracer,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
     # command_input_factory: JsonFactory,
 ):
     """
@@ -527,6 +525,31 @@ def validate_error_message_reporting(
     """
 
     LOGGER.info("validate_error_message_reporting")
+
+    exception_message = (
+        "Exception occurred on the following devices:"
+        + f" {pytest.defective_device}:"
+        + " Exception occurred, command failed."
+    )
+
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        '"the command failure is reported by subarray with appropriate"'
+        '"error message"'
+        "Subarray Node device"
+        f"({subarray_node_low.subarray_node.dev_name()}) "
+        "is expected have longRunningCommandResult"
+        "(ResultCode.FAILED,exception)",
+    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+        subarray_node_low.subarray_node,
+        [exception_message],
+        pytest.unique_id[0],
+        ResultCode.FAILED,
+    )
+
+    pytest.defective_subarray.SetDefective(json.dumps({"enabled": False}))
+
+    event_tracer.clear_events()
 
 
 @then(parsers.parse("the TMC SubarrayNode remains in {Intermediate} obsState"))
