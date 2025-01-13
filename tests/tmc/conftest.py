@@ -498,7 +498,7 @@ def execute_command_on_tmc_with_defectivesetup(
             perform_ready_transition_with_end(
                 subarray_node_low,
                 event_tracer,
-                defective_device,
+                defective_subarray,
             )
 
         case "ENDSCAN":
