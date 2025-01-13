@@ -11,32 +11,7 @@ is identified as defective,
 
 
 import pytest
-
-# from assertpy import assert_that
-# from pytest_bdd import given, scenario, then, when
 from pytest_bdd import scenario
-
-# from ska_control_model import ObsState, ResultCode
-# from ska_tango_testing.integration import TangoEventTracer, log_events
-# from tango import DevState
-#
-# from tests.resources.test_harness.central_node_low
-# import CentralNodeWrapperLow
-# from tests.resources.test_harness.constant import (
-#     ERROR_PROPAGATION_DEFECT,
-#     TIMEOUT,
-#     mccs_subarray_leaf_node,
-# )
-# from tests.resources.test_harness.simulator_factory import SimulatorFactory
-# from tests.resources.test_harness.subarray_node_low import (
-#     SubarrayNodeWrapperLow,
-# )
-# from tests.resources.test_harness.utils.common_utils import JsonFactory
-# from tests.resources.test_harness.utils.enums import SimulatorDeviceType
-# from tests.resources.test_support.common_utils.tmc_helpers import (
-#     prepare_json_args_for_centralnode_commands,
-#     prepare_json_args_for_commands,
-# )
 
 
 @pytest.mark.SKA_low12

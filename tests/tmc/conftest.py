@@ -6,8 +6,6 @@ Common modules for reuse
 import json
 
 import pytest
-
-# import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, then, when
 from ska_control_model import ObsState, ResultCode
@@ -23,10 +21,6 @@ from tests.resources.test_harness.constant import (
     low_sdp_subarray_leaf_node,
     mccs_subarray_leaf_node,
 )
-
-# from tests.resources.test_harness.helpers import (
-#     wait_and_validate_device_attribute_value,
-# )
 from tests.resources.test_harness.simulator_factory import SimulatorFactory
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
@@ -132,35 +126,12 @@ def perform_idle_transition(
 
 def verify_scanning_transition_with_endscan(
     subarray_node_low: SubarrayNodeWrapperLow,
-    # event_tracer: TangoEventTracer,
 ):
     """
     Execute EndScan and verify error propogation
     """
 
     _, pytest.unique_id = subarray_node_low.execute_transition("EndScan")
-    # exception_message = (
-    #     "Exception occurred on the following devices:"
-    #     + f" {defective_device}:"
-    #     + " Exception occurred, command failed."
-    # )
-    #
-    # assert_that(event_tracer).described_as(
-    #     'FAILED ASSUMPTION IN "THEN" STEP: '
-    #     '"the command failure is reported by subarray with appropriate"'
-    #     '"error message"'
-    #     "Subarray Node device"
-    #     f"({subarray_node_low.subarray_node.dev_name()}) "
-    #     "is expected have longRunningCommandResult"
-    #     "(ResultCode.FAILED,exception)",
-    # ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
-    #     subarray_node_low.subarray_node,
-    #     [exception_message],
-    #     unique_id[0],
-    #     ResultCode.FAILED,
-    # )
-    #
-    # defective_device.SetDefective(json.dumps({"enabled": False}))
 
 
 def perform_ready_transition_with_end(
@@ -171,7 +142,6 @@ def perform_ready_transition_with_end(
     Execute End and verify error propogation
     """
 
-    # _, unique_id = subarray_node_low.end_observation()
     _, pytest.unique_id = subarray_node_low.subarray_node.End()
 
     LOGGER.info("Checking for error message")
@@ -187,31 +157,6 @@ def perform_ready_transition_with_end(
         "obsState",
         ObsState.CONFIGURING,
     )
-
-    # exception_message = (
-    #     "Exception occurred on the following devices:"
-    #     + f" {defective_device}:"
-    #     + " Exception occurred, command failed."
-    # )
-    #
-    # assert_that(event_tracer).described_as(
-    #     'FAILED ASSUMPTION IN "THEN" STEP: '
-    #     '"the command failure is reported by subarray with appropriate"'
-    #     '"error message"'
-    #     "Subarray Node device"
-    #     f"({subarray_node_low.subarray_node.dev_name()}) "
-    #     "is expected have longRunningCommandResult"
-    #     "(ResultCode.FAILED,exception)",
-    # ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
-    #     subarray_node_low.subarray_node,
-    #     [exception_message],
-    #     pytest.unique_id[0],
-    #     ResultCode.FAILED,
-    # )
-    #
-    # defective_device.SetDefective(json.dumps({"enabled": False}))
-    #
-    # event_tracer.clear_events()
 
 
 def perform_scan(
@@ -232,7 +177,6 @@ def perform_scan(
 
 
 def perform_scanning_transition(
-    # central_node_low: CentralNodeWrapperLow,
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
     command_input_factory: JsonFactory,
@@ -250,7 +194,6 @@ def perform_scanning_transition(
         "Scan", scan_input_json
     )
 
-    # """Verify that the subarray is in the SCANNING obsState."""
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         "'the subarray must be in the SCANNING obsState until finished'"
@@ -262,17 +205,6 @@ def perform_scanning_transition(
         "obsState",
         ObsState.SCANNING,
     )
-    # assert_that(event_tracer).described_as(
-    #     'FAILED ASSUMPTION IN "THEN" STEP: '
-    #     "'the subarray must be in the SCANNING obsState until finished'"
-    #     "Subarray Node device"
-    #     f"({subarray_node_low.subarray_node.dev_name()}) "
-    #     "is expected to be in READY obstate",
-    # ).within_timeout(TIMEOUT).has_change_event_occurred(
-    #     subarray_node_low.subarray_node,
-    #     "obsState",
-    #     ObsState.READY,
-    # )
 
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
@@ -461,13 +393,6 @@ def move_tmc_to_intial_state(
                 command_input_factory,
             )
 
-    # case
-    # 2:
-    # return "Two"
-    # case
-    # _:
-    # return "Other"
-
 
 @when(parsers.parse("{command} is invoked on a {defectiveSubsystem} Subarray"))
 def execute_command_on_tmc_with_defectivesetup(
@@ -510,8 +435,6 @@ def execute_command_on_tmc_with_defectivesetup(
 
             pytest.defective_device = mccs_subarray_leaf_node
 
-        # Inducing Fault
-    #
     pytest.defective_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
 
     match command:
@@ -544,10 +467,8 @@ def execute_command_on_tmc_with_defectivesetup(
     )
 )
 def validate_error_message_reporting(
-    # central_node_low: CentralNodeWrapperLow,
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
-    # command_input_factory: JsonFactory,
 ):
     """
     Send next command on TMC
@@ -595,22 +516,10 @@ def validate_subarry_obsState(
 
     LOGGER.info("validate_error_message_reporting for %s ", Intermediate)
 
-    # assert_that(event_tracer).described_as(
-    #     'FAILED ASSUMPTION IN "THEN" STEP: '
-    #     "'the subarray must be in the stuck obsState'"
-    #     "Subarray Node device"
-    #     f"({subarray_node_low.subarray_node.dev_name()}) "
-    #     "is expected to be in READY obstate",
-    # ).within_timeout(TIMEOUT).has_change_event_occurred(
-    #     subarray_node_low.subarray_node,
-    #     "obsState",
-    #     ObsState.READY,
-    # )
-
     attribute_value = subarray_node_low.subarray_node.read_attribute(
         "obsState"
     ).value
-    # assert attribute_value == 4
+
     if Intermediate == "READY":
         assert attribute_value == ObsState.READY
     elif Intermediate == "SCANNING":
