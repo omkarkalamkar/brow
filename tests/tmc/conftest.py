@@ -214,6 +214,23 @@ def perform_ready_transition_with_end(
     # event_tracer.clear_events()
 
 
+def perform_scan(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    # event_tracer: TangoEventTracer,
+    command_input_factory: JsonFactory,
+):
+
+    """
+    Perform Scan
+    """
+    scan_input_json = prepare_json_args_for_commands(
+        "scan_low", command_input_factory
+    )
+    _, pytest.unique_id = subarray_node_low.execute_transition(
+        "Scan", scan_input_json
+    )
+
+
 def perform_scanning_transition(
     # central_node_low: CentralNodeWrapperLow,
     subarray_node_low: SubarrayNodeWrapperLow,
@@ -457,6 +474,7 @@ def execute_command_on_tmc_with_defectivesetup(
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
     simulator_factory: SimulatorFactory,
+    command_input_factory: JsonFactory,
     command,
     defectiveSubsystem,
 ):
@@ -505,10 +523,17 @@ def execute_command_on_tmc_with_defectivesetup(
             )
 
         case "ENDSCAN":
-            LOGGER.info("Working on Ready State")
+            LOGGER.info("Working on End Scan")
             verify_scanning_transition_with_endscan(
                 subarray_node_low,
                 # event_tracer,
+            )
+        case "SCAN":
+            LOGGER.info("Workng on Scan")
+            perform_scan(
+                subarray_node_low,
+                # event_tracer,
+                command_input_factory,
             )
 
 
@@ -585,7 +610,7 @@ def validate_subarry_obsState(
     attribute_value = subarray_node_low.subarray_node.read_attribute(
         "obsState"
     ).value
-    assert attribute_value == 4
+    # assert attribute_value == 4
     if Intermediate == "READY":
         assert attribute_value == ObsState.READY
     elif Intermediate == "SCANNING":
