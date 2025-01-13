@@ -10,7 +10,6 @@ Examples:
             |initialObsState  | command | defectiveSubsystem  |Intermediate|
             |READY            | END     | CSP                  | READY |
             |READY            | END     | MCCS                 | READY |
-            |READY            | END     | SDP                  | READY|
             |SCANNING         | ENDSCAN | CSP                  | SCANNING |
             |SCANNING         | ENDSCAN | MCCS                 | SCANNING |
             |SCANNING         | ENDSCAN | SDP                  | SCANNING|
