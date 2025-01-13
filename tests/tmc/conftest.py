@@ -82,6 +82,18 @@ def perform_idle_transition(
     """
 
     event_tracer.subscribe_event(subarray_node_low.subarray_node, "obsState")
+    event_tracer.subscribe_event(
+        central_node_low.central_node, "longRunningCommandResult"
+    )
+
+    log_events(
+        {
+            central_node_low.central_node: [
+                "longRunningCommandResult",
+            ]
+        }
+    )
+
     assign_input_str = prepare_json_args_for_centralnode_commands(
         "assign_resources_low", command_input_factory
     )
@@ -100,7 +112,7 @@ def perform_idle_transition(
 
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
-        "Subarray Node device"
+        "Central Node device"
         f"({central_node_low.central_node.dev_name()}) "
         "is expected have longRunningCommand as"
         '(unique_id,(ResultCode.OK,"Command Completed"))',
@@ -156,7 +168,49 @@ def perform_ready_transition_with_end(
         ResultCode.FAILED,
     )
 
+    defective_device.SetDefective(json.dumps({"enabled": False}))
+
     event_tracer.clear_events()
+
+
+def perform_scanning_transition(
+    # central_node_low: CentralNodeWrapperLow,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    command_input_factory: JsonFactory,
+):
+    """
+    Execute Scan and verify
+    """
+
+    scan_input_json = prepare_json_args_for_commands(
+        "scan_low", command_input_factory
+    )
+    subarray_node_low.execute_transition("Scan", scan_input_json)
+
+    # """Verify that the subarray is in the SCANNING obsState."""
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the subarray must be in the SCANNING obsState until finished'"
+        "Subarray Node device"
+        f"({subarray_node_low.subarray_node.dev_name()}) "
+        "is expected to be in SCANNING obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.subarray_node,
+        "obsState",
+        ObsState.SCANNING,
+    )
+    # assert_that(event_tracer).described_as(
+    #     'FAILED ASSUMPTION IN "THEN" STEP: '
+    #     "'the subarray must be in the SCANNING obsState until finished'"
+    #     "Subarray Node device"
+    #     f"({subarray_node_low.subarray_node.dev_name()}) "
+    #     "is expected to be in READY obstate",
+    # ).within_timeout(TIMEOUT).has_change_event_occurred(
+    #     subarray_node_low.subarray_node,
+    #     "obsState",
+    #     ObsState.READY,
+    # )
 
 
 def perform_ready_transition(
@@ -301,8 +355,32 @@ def move_tmc_to_intial_state(
                 command_input_factory,
             )
 
+            LOGGER.info("Sending End Command")
             perform_ready_transition(
                 central_node_low,
+                subarray_node_low,
+                event_tracer,
+                command_input_factory,
+            )
+        case "SCANNING":
+            LOGGER.info("Working on SCANNING")
+            LOGGER.info("Working on Ready State")
+            perform_idle_transition(
+                central_node_low,
+                subarray_node_low,
+                event_tracer,
+                command_input_factory,
+            )
+
+            perform_ready_transition(
+                central_node_low,
+                subarray_node_low,
+                event_tracer,
+                command_input_factory,
+            )
+
+            perform_scanning_transition(
+                # central_node_low,
                 subarray_node_low,
                 event_tracer,
                 command_input_factory,
