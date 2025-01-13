@@ -23,6 +23,9 @@ from tests.resources.test_harness.constant import (
     low_sdp_subarray_leaf_node,
     mccs_subarray_leaf_node,
 )
+from tests.resources.test_harness.helpers import (
+    wait_and_validate_device_attribute_value,
+)
 from tests.resources.test_harness.simulator_factory import SimulatorFactory
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
@@ -556,7 +559,7 @@ def validate_error_message_reporting(
 def validate_subarry_obsState(
     # central_node_low: CentralNodeWrapperLow,
     subarray_node_low: SubarrayNodeWrapperLow,
-    event_tracer: TangoEventTracer,
+    # event_tracer: TangoEventTracer,
     # command_input_factory: JsonFactory,
     Intermediate,
 ):
@@ -566,14 +569,21 @@ def validate_subarry_obsState(
 
     LOGGER.info("validate_error_message_reporting for %s ", Intermediate)
 
-    assert_that(event_tracer).described_as(
-        'FAILED ASSUMPTION IN "THEN" STEP: '
-        "'the subarray must be in the stuck obsState'"
-        "Subarray Node device"
-        f"({subarray_node_low.subarray_node.dev_name()}) "
-        "is expected to be in READY obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
+    # assert_that(event_tracer).described_as(
+    #     'FAILED ASSUMPTION IN "THEN" STEP: '
+    #     "'the subarray must be in the stuck obsState'"
+    #     "Subarray Node device"
+    #     f"({subarray_node_low.subarray_node.dev_name()}) "
+    #     "is expected to be in READY obstate",
+    # ).within_timeout(TIMEOUT).has_change_event_occurred(
+    #     subarray_node_low.subarray_node,
+    #     "obsState",
+    #     ObsState.READY,
+    # )
+
+    assert wait_and_validate_device_attribute_value(
         subarray_node_low.subarray_node,
         "obsState",
-        ObsState.READY,
+        "4",
+        is_json=False,
     )
