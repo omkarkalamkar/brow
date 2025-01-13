@@ -31,7 +31,6 @@ from tests.resources.test_harness.subarray_node_low import (
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 
 
-@pytest.mark.test1
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/xtp_65989_pst_beam_delay_model.feature",
