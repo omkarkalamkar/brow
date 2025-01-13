@@ -23,9 +23,10 @@ from tests.resources.test_harness.constant import (
     low_sdp_subarray_leaf_node,
     mccs_subarray_leaf_node,
 )
-from tests.resources.test_harness.helpers import (
-    wait_and_validate_device_attribute_value,
-)
+
+# from tests.resources.test_harness.helpers import (
+#     wait_and_validate_device_attribute_value,
+# )
 from tests.resources.test_harness.simulator_factory import SimulatorFactory
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
@@ -581,9 +582,8 @@ def validate_subarry_obsState(
     #     ObsState.READY,
     # )
 
-    assert wait_and_validate_device_attribute_value(
-        subarray_node_low.subarray_node,
-        "obsState",
-        "4",
-        is_json=False,
-    )
+    attribute_value = subarray_node_low.subarray_node.read_attribute(
+        "obsState"
+    ).value
+    assert attribute_value == 4
+    assert attribute_value == ObsState.READY
