@@ -555,8 +555,8 @@ def validate_error_message_reporting(
 @then(parsers.parse("the TMC SubarrayNode remains in {Intermediate} obsState"))
 def validate_subarry_obsState(
     # central_node_low: CentralNodeWrapperLow,
-    # subarray_node_low: SubarrayNodeWrapperLow,
-    # event_tracer: TangoEventTracer,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
     # command_input_factory: JsonFactory,
     Intermediate,
 ):
@@ -565,3 +565,15 @@ def validate_subarry_obsState(
     """
 
     LOGGER.info("validate_error_message_reporting for %s ", Intermediate)
+
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the subarray must be in the stuck obsState'"
+        "Subarray Node device"
+        f"({subarray_node_low.subarray_node.dev_name()}) "
+        "is expected to be in READY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.subarray_node,
+        "obsState",
+        ObsState.READY,
+    )
