@@ -19,6 +19,7 @@ from ska_tango_testing.integration import TangoEventTracer
 from tests.conftest import LOGGER
 from tests.resources.test_harness.constant import (
     INTERMEDIATE_CONFIGURING_STATE_DEFECT,
+    INTERMEDIATE_SCANNING_STATE_DEFECT,
     TIMEOUT,
     low_csp_subarray_leaf_node,
     low_sdp_subarray_leaf_node,
@@ -102,12 +103,11 @@ def execute_command_on_tmc_with_defectivesetup(
 
             pytest.defective_device = mccs_subarray_leaf_node
 
-    pytest.defective_subarray.SetDefective(
-        INTERMEDIATE_CONFIGURING_STATE_DEFECT
-    )
-
     match command:
         case "END":
+            pytest.defective_subarray.SetDefective(
+                INTERMEDIATE_CONFIGURING_STATE_DEFECT
+            )
             LOGGER.info("Working on Ready State")
             perform_ready_transition_with_end(
                 subarray_node_low,
@@ -115,12 +115,20 @@ def execute_command_on_tmc_with_defectivesetup(
             )
 
         case "ENDSCAN":
+
+            pytest.defective_subarray.SetDefective(
+                INTERMEDIATE_SCANNING_STATE_DEFECT
+            )
             LOGGER.info("Working on End Scan")
             verify_scanning_transition_with_endscan(
                 subarray_node_low,
                 # event_tracer,
             )
         case "SCAN":
+
+            pytest.defective_subarray.SetDefective(
+                INTERMEDIATE_SCANNING_STATE_DEFECT
+            )
             LOGGER.info("Workng on Scan")
             perform_scan(
                 subarray_node_low,
