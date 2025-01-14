@@ -75,6 +75,9 @@ Added
 
 Fixed
 -----
+[0.20.1-rc.6]
+* Fixed bug SKB-599 with latest sdp leaf node image v0.19.3
+
 [0.18.1]
 ********
 * Updated Subarray Node v0.23.3 to fix SKB-512
