@@ -8,12 +8,9 @@ Then the command failure is reported by subarray with appropriate error message
 Then the TMC SubarrayNode remains in <Intermediate> obsState
 Examples:
             |initialObsState  | command | defectiveSubsystem  |Intermediate|
-            |READY            | END     | CSP                  | READY |
-            |READY            | END     | MCCS                 | READY |
-            |SCANNING         | ENDSCAN | CSP                  | SCANNING |
-            |SCANNING         | ENDSCAN | MCCS                 | SCANNING |
-            |READY            | SCAN    | CSP                  | SCANNING |
-            |READY            | SCAN    | MCCS                 | SCANNING |
+            |READY            | END     | SDP                  | READY|
+            |SCANNING         | ENDSCAN | SDP                  | SCANNING|
+            |READY            | SCAN    | SDP                  | SCANNING|
 
 
 Scenario: TimeOut Reported by TMC Low End/EndScan/Scan Commands for Defective Subarray

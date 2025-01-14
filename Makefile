@@ -17,7 +17,7 @@ PYTHON_LINT_TARGET ?= tests/
 
 DEPLOYMENT_TYPE = $(shell echo $(TELESCOPE) | cut -d '-' -f2)
 #MARK ?= $(shell echo $(TELESCOPE) | sed "s/-/_/g") ## What -m opt to pass to pytest
-MARK= SKA_low13
+MARK= SKA_low12
 # run one test with FILE=acceptance/test_subarray_node.py::test_check_internal_model_according_to_the_tango_ecosystem_deployed
 FILE ?= tests## A specific test file to pass to pytest
 ADD_ARGS ?= ## Additional args to pass to pytest
@@ -78,7 +78,7 @@ CI_ENVIRONMENT_SLUG ?= ska-tmc-low-integration
 ifeq ($(MAKECMDGOALS),k8s-test)
 ADD_ARGS +=  --true-context
 #MARK ?= $(shell echo $(TELESCOPE) | sed "s/-/_/g")
-MARK = SKA_low13
+MARK = SKA_low12
 endif
 
 PYTHON_VARS_AFTER_PYTEST ?= -m '$(MARK)' $(ADD_ARGS) $(FILE) -x --count=$(COUNT)
