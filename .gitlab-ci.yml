@@ -96,7 +96,7 @@ k8s-test:
   variables:
     KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA'
     SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA"
-    MARK: 'SKA_low'
+    MARK: 'test1'
   before_script:
     - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
     - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
@@ -150,14 +150,14 @@ k8s-test-tmc-with-sdp:
     - make k8s-install-chart SDP_PROCCONTROL_REPLICAS=0
     - make k8s-wait 
     - make k8s-wait KUBE_APP="ska-sdp"
-    - make k8s-test MARK='tmc_sdp_unhappy_path'
+    - make k8s-test MARK='test1'
     - make k8s-uninstall-chart
     - kubectl -n $KUBE_NAMESPACE delete pods,svc,daemonsets,deployments,replicasets,statefulsets,cronjobs,jobs,ingresses,configmaps --all
     - make k8s-delete-namespace
     - make k8s-install-chart SDP_PROCCONTROL_REPLICAS=1
     - make k8s-wait
     - make k8s-wait KUBE_APP="ska-sdp"
-    - make k8s-test MARK='tmc_sdp'
+    - make k8s-test MARK='test1'
   after_script:
     - pip3 install -q -U ska-ser-xray
     - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
@@ -179,7 +179,7 @@ k8s-test-tmc-with-mccs:
   variables:
     KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-mccs-low'
     SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-mccs-low"
-    MARK: 'tmc_mccs'
+    MARK: 'test1'
     MCCS_SIMULATION_ENABLED: 'false'
   before_script:
     - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
