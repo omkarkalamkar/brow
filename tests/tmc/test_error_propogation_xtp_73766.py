@@ -79,7 +79,6 @@ def execute_command(
                     INTERMEDIATE_CONFIGURING_STATE_DEFECT
                 )
 
-                pytest.defective_subarray.SetDelayInfo(35)
                 LOGGER.info("Working on Ready State")
                 perform_ready_transition_with_end(
                     subarray_node_low,
