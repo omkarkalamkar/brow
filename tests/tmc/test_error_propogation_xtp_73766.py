@@ -113,7 +113,7 @@ def execute_command(
                 #     COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE
                 # )
 
-                pytest.defective_subarray.SetDelayInfo(json.dumps({"End": 35}))
+                pytest.defective_subarray.SetDelayInfo(json.dumps({"End": 55}))
                 LOGGER.info("Working on Ready State")
                 perform_ready_transition_with_end(
                     subarray_node_low,
@@ -126,7 +126,7 @@ def execute_command(
                 #     COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE
                 # )
                 pytest.defective_subarray.SetDelayInfo(
-                    json.dumps({"EndScan": 35})
+                    json.dumps({"EndScan": 55})
                 )
                 LOGGER.info("Working on End Scan")
                 verify_scanning_transition_with_endscan(
@@ -139,7 +139,7 @@ def execute_command(
                 #     COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE
                 # )
                 pytest.defective_subarray.SetDelayInfo(
-                    json.dumps({"Scan": 35})
+                    json.dumps({"Scan": 55})
                 )
                 LOGGER.info("Workng on Scan")
                 perform_scan(
