@@ -19,6 +19,7 @@ configure_logging(logging.DEBUG)
 LOGGER = logging.getLogger(__name__)
 
 
+@pytest.mark.test1
 @pytest.mark.tmc_csp
 @scenario(
     "../features/tmc_csp/xtp-29854_configure.feature",
