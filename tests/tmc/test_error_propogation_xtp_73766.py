@@ -18,7 +18,6 @@ from ska_tango_testing.integration import TangoEventTracer
 
 from tests.conftest import LOGGER
 from tests.resources.test_harness.constant import (
-    COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE,
     INTERMEDIATE_CONFIGURING_STATE_DEFECT,
     TIMEOUT,
     low_csp_subarray_leaf_node,
@@ -110,9 +109,9 @@ def execute_command(
 
         match command:
             case "END":
-                pytest.defective_subarray.SetDefective(
-                    COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE
-                )
+                # pytest.defective_subarray.SetDefective(
+                #     COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE
+                # )
 
                 pytest.defective_subarray.SetDelayInfo(35)
                 LOGGER.info("Working on Ready State")
@@ -123,9 +122,9 @@ def execute_command(
 
             case "ENDSCAN":
 
-                pytest.defective_subarray.SetDefective(
-                    COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE
-                )
+                # pytest.defective_subarray.SetDefective(
+                #     COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE
+                # )
                 pytest.defective_subarray.SetDelayInfo(35)
                 LOGGER.info("Working on End Scan")
                 verify_scanning_transition_with_endscan(
@@ -134,9 +133,9 @@ def execute_command(
                 )
             case "SCAN":
 
-                pytest.defective_subarray.SetDefective(
-                    COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE
-                )
+                # pytest.defective_subarray.SetDefective(
+                #     COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE
+                # )
                 pytest.defective_subarray.SetDelayInfo(35)
                 LOGGER.info("Workng on Scan")
                 perform_scan(
