@@ -157,7 +157,7 @@ k8s-test-tmc-with-sdp:
     - make k8s-install-chart SDP_PROCCONTROL_REPLICAS=1
     - make k8s-wait
     - make k8s-wait KUBE_APP="ska-sdp"
-    - make k8s-test MARK='tmc_sdp'
+    - make k8s-test MARK='test1'
   after_script:
     - pip3 install -q -U ska-ser-xray
     - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
