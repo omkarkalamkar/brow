@@ -1,5 +1,6 @@
+
 Feature: TMC performs Configuration on MCCS subsystem
-@XTP-31009 @XTP-30488 @73777 @Team_HIMALAYA @tmc_mccs
+@XTP-31009 @XTP-30488 @Team_HIMALAYA @tmc_mccs
 Scenario: Configure a MCCS subarray for a scan
     Given the Telescope is in the ON state
     And obsState of subarray <subarray_id> is IDLE
