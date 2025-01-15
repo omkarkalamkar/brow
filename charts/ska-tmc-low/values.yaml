@@ -108,9 +108,9 @@ mccsmasterleafnode:
 
 mccssubarrayleafnode:
   image:
-    registry: artefact.skao.int
+    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
     image: ska-tmc-mccsleafnodes
-    tag: 0.5.2
+    tag: 0.5.3-dev.cb4c7b9ca
     pullPolicy: IfNotPresent
 
 resources:

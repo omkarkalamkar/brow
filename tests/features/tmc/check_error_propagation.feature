@@ -14,7 +14,7 @@ Examples:
             |SCANNING         | ENDSCAN | MCCS                 | SCANNING |
             |READY            | SCAN    | CSP                  | SCANNING |
             |READY            | SCAN    | MCCS                 | SCANNING |
-         
+
 
 
 Scenario: TimeOut Reported by TMC Low End/EndScan/Scan Commands for Defective Subarray
