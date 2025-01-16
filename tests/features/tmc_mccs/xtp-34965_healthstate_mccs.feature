@@ -1,4 +1,4 @@
-	@XTP-34965 @XTP-73574 @XTP-28348 @XTP-34276
+	@XTP-34965 @XTP-73574 @XTP-28348 @XTP-34276 @XTP-73574
 	Scenario Outline: Verify CentralNode TelescopeHealthState
 		Given a Telescope consisting of TMC, MCCS, emulated SDP and emulated CSP 
 		And the Telescope is in ON state
