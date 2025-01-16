@@ -8,7 +8,3 @@ Then the command failure is reported by subarray with appropriate error message
 
 
 
-
-
-
-

@@ -436,11 +436,7 @@ class SubarrayNodeWrapperLow:
             # Invoke Release
             LOGGER.info("Invoking Release Resources on Subarray")
             self.release_resources(self.release_input)
-        # elif self.subarray_node.obsState == ObsState.READY:
-        #     # Invoke End
-        #     LOGGER.info("Invoking End command on Subarray")
-        #     self.end_observation()
-        #     self.release_resources(self.release_input)
+
         else:
             self.force_change_of_obs_state("EMPTY")
         if SIMULATED_DEVICES_DICT["sdp_and_mccs"]:
