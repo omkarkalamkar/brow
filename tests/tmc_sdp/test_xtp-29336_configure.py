@@ -13,7 +13,6 @@ from tests.resources.test_harness.helpers import (
 )
 
 
-@pytest.mark.test1
 @pytest.mark.tmc_sdp
 @scenario(
     "../features/tmc_sdp/xtp-29336_configure.feature",
