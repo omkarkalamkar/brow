@@ -179,7 +179,7 @@ k8s-test-tmc-with-mccs:
   variables:
     KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-mccs-low'
     SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-mccs-low"
-    MARK: 'tmc_mccs'
+    MARK: 'test1'
     MCCS_SIMULATION_ENABLED: 'false'
   before_script:
     - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
