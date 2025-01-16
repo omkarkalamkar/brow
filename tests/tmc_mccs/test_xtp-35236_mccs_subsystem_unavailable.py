@@ -21,7 +21,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
     wait_for_attribute_update,
 )
 
-
+@pytest.mark.test1
 @pytest.mark.tmc_mccs
 @scenario(
     "../features/tmc_mccs/xtp-35236_mccs_subsystem_unavailable.feature",
