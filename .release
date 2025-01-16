@@ -1,16 +1,16 @@
-release=0.20.1-rc.6
-tag=0.20.1-rc.6
+release=0.20.2-rc.1
+tag=0.20.2-rc.1
 tag_description=
 **Charts:**
-**1. ska-tmc-low-integration 0.20.1-rc.5 - 0.20.1-rc.6**
+**1. ska-tmc-low-integration 0.20.1-rc.5 - 0.20.2-rc.1**
 
-    **1.1 ska-tmc-low - 0.20.1-rc.5 - 0.20.1-rc.6:
+    **1.1 ska-tmc-low - 0.20.1-rc.5 - 0.20.2-rc.1:
        a. Fixed bug SKB-599 with latest sdp leaf node image v0.19.3
        
 
 release_notes=
 **Charts:**
-**1. ska-tmc-low-integration 0.20.1-rc.5 - 0.20.1-rc.6**
+**1. ska-tmc-low-integration 0.20.1-rc.5 - 0.20.2-rc.1**
 
- **1.1 ska-tmc-low - 0.20.1-rc.5 - 0.20.1-rc.6:
+ **1.1 ska-tmc-low - 0.20.1-rc.5 - 0.20.2-rc.1:
        a. Fixed bug SKB-599 with latest sdp leaf node image v0.19.3

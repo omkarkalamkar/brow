@@ -75,7 +75,7 @@ Added
 
 Fixed
 -----
-[0.20.1-rc.6]
+[0.20.2-rc.1]
 * Fixed bug SKB-599 with latest sdp leaf node image v0.19.3
 
 [0.18.1]
