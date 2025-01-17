@@ -113,7 +113,7 @@ k8s-test-tmc-with-csp:
   variables:
     KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-csp-low'
     SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-csp-low"
-    MARK: 'tmc_csp'
+    MARK: 'test2'
     COUNT: 1
     CSP_SIMULATION_ENABLED: 'false'
   environment:
