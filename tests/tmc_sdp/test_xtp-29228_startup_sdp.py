@@ -7,6 +7,7 @@ from tango import DevState
 from tests.resources.test_harness.helpers import get_master_device_simulators
 
 
+@pytest.mark.test2
 @pytest.mark.tmc_sdp
 @scenario(
     "../features/tmc_sdp/xtp-29228_start_up_tmc_sdp.feature",
