@@ -22,7 +22,6 @@ from tests.resources.test_harness.subarray_node_low import (
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 
 
-@pytest.mark.skip
 @pytest.mark.tmc_sdp
 @scenario(
     "../features/tmc_sdp/xtp_39894_tmc_sdp_long_sequence.feature",

@@ -4,7 +4,6 @@ import pytest
 from pytest_bdd import scenario
 
 
-@pytest.mark.skip
 @pytest.mark.tmc_sdp
 @scenario(
     "../features/tmc_sdp/xtp_39894_tmc_sdp_long_sequence.feature",
