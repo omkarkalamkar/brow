@@ -7,30 +7,13 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 Added
 -----
-
-[0.20.1-rc.5]
-* Update CSPleafnodes chart to update ska-telmodel
-
-
-[0.20.1-rc.4]
-* Fix bug SKB-618
-* Update the image of Sdpleafnodes to 0.17.3
-
-[0.20.1-rc.3]
-* Fix bug SKB-634, SKB-641
-* Update the image of SubarrayNode to 0.26.4
-
-[0.20.1-rc.2]
+[0.20.1]
 * Fixed SKB-648
 * Updated ska-tmc-mccsleafnodes v0.5.1 to fix SKB-627
-
-[0.20.1-rc.1]
 * Resolved SKB-329
 * The updated versions are as follows - 
 * CSPLeafNodes - 0.21.3
 * Updated Subarray Node v0.26.1 to fix SKB-643 and SKB-618
-
-[0.20.1-rc]
 * Harmonization of JSON Usage Across TMC LOW Integration Repository:
 * Single Source of JSON Files: Replaced all instances of JSON files in the repository with a single source from the TelModel repository, ensuring consistency and    easier maintenance.
 * Removal of Redundant JSON Files: Deleted duplicate JSON files from the Integration and TMC Integration repositories to reduce redundancy and improve clarity.
@@ -75,6 +58,14 @@ Added
 
 Fixed
 -----
+[0.20.2-rc.1]
+* Fixed bug SKB-599 with latest sdp leaf node image v0.19.3
+* Update CSPleafnodes chart to update ska-telmodel
+* Fixe bug SKB-618
+* Updated the image of Sdpleafnodes to 0.17.3
+* Fixed bug SKB-634, SKB-641
+* Updated the image of SubarrayNode to 0.26.4
+
 [0.18.1]
 ********
 * Updated Subarray Node v0.23.3 to fix SKB-512
