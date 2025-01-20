@@ -1,4 +1,3 @@
-Feature: MCCS Controller report the error when one of the subarray beam is unavailable
 @XTP-35236 @XTP-28348 @XTP-73592 @XTP-34276 @Team_HIMALAYA
 Scenario Outline: MCCS Controller report the error when one of the subarray beam is unavailable
     Given a Telescope consisting of TMC,MCCS,emulated SDP and emulated CSP
