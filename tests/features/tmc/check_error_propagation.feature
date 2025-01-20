@@ -5,9 +5,9 @@ Given the telescope is is ON state
 And the TMC subarray is in the <initialObsState> observation state
 When <command> is invoked on a <defectiveSubsystem> Subarray
 Then the command failure is reported by subarray with appropriate error message
-Then the TMC SubarrayNode remains in <Intermediate> obsState
+Then the TMC SubarrayNode remains in <stuck> obsState
 Examples:
-            |initialObsState  | command | defectiveSubsystem  |Intermediate|
+            |initialObsState  | command | defectiveSubsystem  |stuck|
             |READY            | END     | CSP                  | READY |
             |READY            | END     | MCCS                 | READY |
             |SCANNING         | ENDSCAN | CSP                  | SCANNING |
@@ -26,9 +26,9 @@ Given the telescope is is ON state
 And the TMC subarray is in the <initialObsState> observation state
 When <command> is invoked on a <defectiveSubsystem> Subarray
 Then the command failure is reported by subarray with appropriate error message
-Then the TMC SubarrayNode remains in <Intermediate> obsState
+Then the TMC SubarrayNode remains in <stuck> obsState
 Examples:
-            |initialObsState  | command | defectiveSubsystem  |Intermediate|
+            |initialObsState  | command | defectiveSubsystem  |stuck|
             |READY            | END     | CSP                  | READY |
             |READY            | END     | MCCS                 | READY |
             |SCANNING         | ENDSCAN | CSP                  | SCANNING |

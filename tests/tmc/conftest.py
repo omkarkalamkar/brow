@@ -12,7 +12,6 @@ from ska_control_model import ObsState, ResultCode
 from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DevState
 
-from tests.conftest import LOGGER
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.constant import (
     ERROR_PROPAGATION_DEFECT,
@@ -129,7 +128,7 @@ def verify_scanning_transition_with_endscan(
     subarray_node_low: SubarrayNodeWrapperLow,
 ):
     """
-    Execute EndScan and verify error propogation
+    Execute EndScan
     """
 
     _, pytest.unique_id = subarray_node_low.execute_transition("EndScan")
@@ -140,12 +139,10 @@ def perform_ready_transition_with_end(
     event_tracer: TangoEventTracer,
 ):
     """
-    Execute End and verify error propogation
+    Execute End and verify error propagation
     """
 
     _, pytest.unique_id = subarray_node_low.subarray_node.End()
-
-    LOGGER.info("Checking for error message")
 
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "WHEN" STEP: '
@@ -162,7 +159,6 @@ def perform_ready_transition_with_end(
 
 def perform_scan(
     subarray_node_low: SubarrayNodeWrapperLow,
-    # event_tracer: TangoEventTracer,
     command_input_factory: JsonFactory,
 ):
 
@@ -183,7 +179,7 @@ def perform_scanning_transition(
     command_input_factory: JsonFactory,
 ):
     """
-    Execute Scan and verify
+    Send a Scan command to the subarray.
     """
     event_tracer.subscribe_event(
         subarray_node_low.subarray_node, "longRunningCommandResult"
@@ -228,10 +224,9 @@ def perform_ready_transition(
     command_input_factory: JsonFactory,
 ):
     """
-    Execute Configure and verify
+    Send a Configure command to the subarray.
     """
 
-    # """Send a Configure command to the subarray."""
     configure_input_json = prepare_json_args_for_commands(
         "configure_low", command_input_factory
     )
@@ -239,7 +234,6 @@ def perform_ready_transition(
         configure_input_json
     )
 
-    # """Verify that the subarray is in the READY obsState."""
     event_tracer.subscribe_event(
         subarray_node_low.subarray_devices.get("sdp_subarray"), "obsState"
     )
@@ -355,7 +349,7 @@ def move_tmc_to_intial_state(
 
     match initialObsState:
         case "READY":
-            LOGGER.info("Sending Assign Command")
+
             perform_idle_transition(
                 central_node_low,
                 subarray_node_low,
@@ -363,7 +357,6 @@ def move_tmc_to_intial_state(
                 command_input_factory,
             )
 
-            LOGGER.info("Sending Configure Command")
             perform_ready_transition(
                 central_node_low,
                 subarray_node_low,
@@ -371,8 +364,7 @@ def move_tmc_to_intial_state(
                 command_input_factory,
             )
         case "SCANNING":
-            LOGGER.info("Working on SCANNING")
-            LOGGER.info("Working on Ready State")
+
             perform_idle_transition(
                 central_node_low,
                 subarray_node_low,
@@ -388,7 +380,6 @@ def move_tmc_to_intial_state(
             )
 
             perform_scanning_transition(
-                # central_node_low,
                 subarray_node_low,
                 event_tracer,
                 command_input_factory,
@@ -405,10 +396,8 @@ def execute_command_on_tmc_with_defectivesetup(
     defectiveSubsystem,
 ):
     """
-    Send next command on TMC
+    Execute command on TMC subarray node with defective subsystem.
     """
-
-    LOGGER.info("Inside %s  is invoked for %s", command, defectiveSubsystem)
 
     pytest.defective_subarray = None
     match defectiveSubsystem:
@@ -442,23 +431,21 @@ def execute_command_on_tmc_with_defectivesetup(
 
     match command:
         case "END":
-            LOGGER.info("Working on Ready State")
+
             perform_ready_transition_with_end(
                 subarray_node_low,
                 event_tracer,
             )
 
         case "ENDSCAN":
-            LOGGER.info("Working on End Scan")
+
             verify_scanning_transition_with_endscan(
                 subarray_node_low,
-                # event_tracer,
             )
         case "SCAN":
-            LOGGER.info("Workng on Scan")
+
             perform_scan(
                 subarray_node_low,
-                # event_tracer,
                 command_input_factory,
             )
 
@@ -474,10 +461,8 @@ def validate_error_message_reporting(
     event_tracer: TangoEventTracer,
 ):
     """
-    Send next command on TMC
+    Check if subarray node populates error message correctly.
     """
-
-    LOGGER.info("validate_error_message_reporting")
 
     exception_message = (
         "Exception occurred on the following devices:"
@@ -505,25 +490,20 @@ def validate_error_message_reporting(
     event_tracer.clear_events()
 
 
-@then(parsers.parse("the TMC SubarrayNode remains in {Intermediate} obsState"))
+@then(parsers.parse("the TMC SubarrayNode remains in {stuck} obsState"))
 def validate_subarry_obsState(
-    # central_node_low: CentralNodeWrapperLow,
     subarray_node_low: SubarrayNodeWrapperLow,
-    # event_tracer: TangoEventTracer,
-    # command_input_factory: JsonFactory,
-    Intermediate,
+    stuck,
 ):
     """
-    Send next command on TMC
+    Check if TMC subarray remains in stuck Obs-State.
     """
-
-    LOGGER.info("validate_error_message_reporting for %s ", Intermediate)
 
     attribute_value = subarray_node_low.subarray_node.read_attribute(
         "obsState"
     ).value
 
-    if Intermediate == "READY":
+    if stuck == "READY":
         assert attribute_value == ObsState.READY
-    elif Intermediate == "SCANNING":
+    elif stuck == "SCANNING":
         assert attribute_value == ObsState.SCANNING
