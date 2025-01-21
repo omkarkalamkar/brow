@@ -8,7 +8,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 Added
 -----
 
-[0.20.1-rc.6]
+[0.20.3-rc.1]
 * Update Error Propogation for End/EndScan/Scan command
 
 [0.20.1-rc.5]

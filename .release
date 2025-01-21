@@ -1,18 +1,18 @@
-release=0.20.1-rc.5
-tag=0.20.1-rc.5
+release=0.20.3-rc.1
+tag=0.20.3-rc.1
 tag_description=
 **Charts:**
-**1. ska-tmc-low-integration 0.20.1-rc.3 - 0.20.1-rc.5**
+**1. ska-tmc-low-integration 0.20.1-rc.3 - 0.20.3-rc.1**
 
-    **1.1 ska-tmc-low - 0.20.1-rc.3 - 0.20.1-rc.5:
+    **1.1 ska-tmc-low - 0.20.1-rc.3 - 0.20.3-rc.1:
        a. Fix bug SKB-618
        b. Update the image of Sdpleafnodes to 0.17.3
        
 
 release_notes=
 **Charts:**
-**1. ska-tmc-low-integration 0.20.1-rc.3 - 0.20.1-rc.5**
+**1. ska-tmc-low-integration 0.20.1-rc.3 - 0.20.3-rc.1**
 
- **1.1 ska-tmc-low - 0.20.1-rc.3 - 0.20.1-rc.5:
+ **1.1 ska-tmc-low - 0.20.1-rc.3 - 0.20.3-rc.1:
        a. Fix bug SKB-618
        b. Update the image of Sdpleafnodes to 0.17.3
