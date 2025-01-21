@@ -65,6 +65,16 @@ def given_a_tmc(
     event_tracer.subscribe_event(subarray_node_low.mccs_subarray1, "obsState")
     event_tracer.subscribe_event(subarray_node_low.csp_subarray1, "obsState")
     event_tracer.subscribe_event(subarray_node_low.sdp_subarray1, "obsState")
+
+    event_tracer.subscribe_event(
+        subarray_node_low.mccs_subarray_leaf_node, "obsState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.csp_subarray_leaf_node, "cspSubarrayobsState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.sdp_subarray_leaf_node, "sdpSubarrayobsState"
+    )
     log_events(
         {
             central_node_low.central_node: [
@@ -78,6 +88,9 @@ def given_a_tmc(
             subarray_node_low.mccs_subarray1: ["obsState"],
             subarray_node_low.csp_subarray1: ["obsState"],
             subarray_node_low.sdp_subarray1: ["obsState"],
+            subarray_node_low.mccs_subarray_leaf_node: ["obsState"],
+            subarray_node_low.csp_subarray_leaf_node: ["cspSubarrayobsState"],
+            subarray_node_low.sdp_subarray_leaf_node: ["sdpSubarrayobsState"],
         }
     )
     central_node_low.move_to_on()
@@ -171,6 +184,40 @@ def given_a_tmc(
         ObsState.EMPTY,
     )
 
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN" STEP: '
+        "'a mccs subarray leaf node in IDLE obsState'"
+        "mccs subarray device"
+        f"({subarray_node_low.mccs_subarray_leaf_node.dev_name()}) "
+        "is expected to be in EMPTY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.mccs_subarray_leaf_node,
+        "obsState",
+        ObsState.EMPTY,
+    )
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN" STEP: '
+        "'a csp subarray leaf node in IDLE obsState'"
+        "CSP Subarray device"
+        f"({subarray_node_low.csp_subarray_leaf_node.dev_name()}) "
+        "is expected to be in EMPTY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.csp_subarray_leaf_node,
+        "cspSubarrayobsState",
+        ObsState.EMPTY,
+    )
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN" STEP: '
+        "'a sdp subarray leaf in IDLE obsState'"
+        "SDP Subarray device"
+        f"({subarray_node_low.sdp_subarray_leaf_node.dev_name()}) "
+        "is expected to be in EMPTY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.sdp_subarray_leaf_node,
+        "sdpSubarrayobsState",
+        ObsState.EMPTY,
+    )
+
 
 @given("TMC Subarray is in RESOURCING Observation State")
 def tmc_subarray_is_in_resourcing(
@@ -179,7 +226,9 @@ def tmc_subarray_is_in_resourcing(
     """
     Invoke Release All resource and check tmc subarray is in resourcing state
     """
-    result, _ = subarray_node_low.release_resources_subarray()
+    result, unique_id = subarray_node_low.execute_transition(
+        "ReleaseAllResources"
+    )
     assert result[0] == ResultCode.QUEUED
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
@@ -191,6 +240,23 @@ def tmc_subarray_is_in_resourcing(
         subarray_node_low.subarray_node,
         "obsState",
         ObsState.RESOURCING,
+    )
+    exception_message = [
+        "Exception occurred on the following devices:",
+        "ska_low/tm_leaf_node/csp_subarray01:",
+        "Command is not allowed",
+    ]
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION ATER ASSIGN RESOURCES: "
+        "Central Node device"
+        f"({subarray_node_low.subarray_node.dev_name()}) "
+        "is expected have longRunningCommandResult"
+        "(ResultCode.FAILED,exception)",
+    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+        subarray_node_low.subarray_node,
+        exception_message,
+        unique_id[0],
+        ResultCode.FAILED,
     )
 
 
@@ -217,6 +283,7 @@ def subarray_is_empty(subarray_node_low: SubarrayNodeWrapperLow, event_tracer):
         "obsState",
         ObsState.EMPTY,
     )
+    event_tracer.clear_events()
 
 
 @when("Assign Resources to TMC Subarray")
@@ -230,7 +297,9 @@ def assign_resources_to_subarray(
     assign_input_json = prepare_json_args_for_centralnode_commands(
         "assign_resources_low", command_input_factory
     )
-    _, unique_id = central_node_low.store_resources(assign_input_json)
+    _, unique_id = central_node_low.perform_action(
+        "AssignResources", assign_input_json
+    )
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
         "'the subarray is in IDLE obsState'"
@@ -250,6 +319,40 @@ def tmc_subarray_is_in_idle(
     subarray_node_low: SubarrayNodeWrapperLow, event_tracer: TangoEventTracer
 ):
     """Check Subarray is in IDLE obs state"""
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN" STEP: '
+        "'a mccs subarray leaf node in EMPTY obsState'"
+        "mccs subarray device"
+        f"({subarray_node_low.mccs_subarray_leaf_node.dev_name()}) "
+        "is expected to be in IDLE obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.mccs_subarray_leaf_node,
+        "obsState",
+        ObsState.IDLE,
+    )
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN" STEP: '
+        "'a csp subarray leaf node in EMPTY obsState'"
+        "CSP Subarray device"
+        f"({subarray_node_low.csp_subarray_leaf_node.dev_name()}) "
+        "is expected to be in IDLE obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.csp_subarray_leaf_node,
+        "cspSubarrayobsState",
+        ObsState.IDLE,
+    )
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN" STEP: '
+        "'a sdp subarray leaf in EMPTY obsState'"
+        "SDP Subarray device"
+        f"({subarray_node_low.sdp_subarray_leaf_node.dev_name()}) "
+        "is expected to be in IDLE obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.sdp_subarray_leaf_node,
+        "sdpSubarrayobsState",
+        ObsState.IDLE,
+    )
+
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
         "'the subarray is in IDLE obsState'"
