@@ -27,7 +27,6 @@ from tests.resources.test_harness.subarray_node_low import (
 from tests.resources.test_support.constant_low import TIMEOUT
 
 
-@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/SKB_646.feature",
@@ -144,6 +143,7 @@ def given_a_tmc(
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
+    event_tracer.clear_events()
 
     # Invoke release all  resource on csp, sdp, mccs
     subarray_node_low.mccs_subarray1.ReleaseAllResources()
