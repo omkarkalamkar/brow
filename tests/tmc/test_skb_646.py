@@ -355,7 +355,7 @@ def tmc_subarray_is_in_idle(
 
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
-        "'the subarray is in IDLE obsState'"
+        "'the subarray is in EMPTY obsState'"
         "Subarray Node device"
         f"({subarray_node_low.subarray_node.dev_name()}) "
         "is expected to be in IDLE obstate",
