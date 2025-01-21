@@ -6,6 +6,7 @@ Control (TMC) system to verify the SKB-646.
 
 
 import json
+import time
 
 import pytest
 from assertpy import assert_that
@@ -217,6 +218,9 @@ def given_a_tmc(
         "sdpSubarrayobsState",
         ObsState.EMPTY,
     )
+    # This sleep is required because after empty event
+    # received in subarray it take some time to process
+    time.sleep(0.3)
 
 
 @given("TMC Subarray is in RESOURCING Observation State")
