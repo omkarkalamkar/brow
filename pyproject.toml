@@ -1,10 +1,11 @@
 [tool.poetry]
 name = "ska-tmc-low-integration"
-version = "0.20.1-rc.5"
+version = "0.20.2-rc.1"
 description = "Repository for integration of TMC Low components"
 authors = ["Team Himalaya", "Team Sahyadri"]
 license = "BSD-3-Clause"
 package-mode = false
+
 include = [
     { path = 'tests'}
 ]

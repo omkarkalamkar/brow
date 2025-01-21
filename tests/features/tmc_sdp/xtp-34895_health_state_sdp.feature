@@ -1,4 +1,4 @@
-@XTP-34895 @XTP-29227 @tmc_sdp_unhappy_path @Team_himalaya
+@XTP-34895 @XTP-73574 @XTP-28348 @XTP-29227 @Team_HIMALAYA
 Scenario Outline: Verify TMC TelescopeHealthState transition based on SDP Controller HealthState
     Given a Telescope consisting of TMC, SDP, simulated CSP and simulated MCCS 
     When The <devices> health state changes to <health_state> 

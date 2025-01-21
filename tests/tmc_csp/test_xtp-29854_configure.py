@@ -22,7 +22,7 @@ LOGGER = logging.getLogger(__name__)
 @pytest.mark.tmc_csp
 @scenario(
     "../features/tmc_csp/xtp-29854_configure.feature",
-    "Configure CSP subarray using TMC",
+    "Configure a CSP subarray for a scan using TMC",
 )
 def test_tmc_csp_configure_functionality(central_node_low) -> None:
     """
