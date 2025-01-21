@@ -212,41 +212,6 @@ def execute_command_on_tmc_with_defectivesetup(
                 command_input_factory,
             )
 
-    # match command:
-    #     case "END":
-    #         pytest.defective_subarray.SetDefective(
-    #             INTERMEDIATE_CONFIGURING_STATE_DEFECT
-    #         )
-    #
-    #         pytest.defective_subarray.SetDelayInfo(35)
-    #         LOGGER.info("Working on Ready State")
-    #         perform_ready_transition_with_end(
-    #             subarray_node_low,
-    #             event_tracer,
-    #         )
-    #
-    #     case "ENDSCAN":
-    #
-    #         pytest.defective_subarray.SetDefective(
-    #             INTERMEDIATE_CONFIGURING_STATE_DEFECT
-    #         )
-    #         LOGGER.info("Working on End Scan")
-    #         verify_scanning_transition_with_endscan(
-    #             subarray_node_low,
-    #             # event_tracer,
-    #         )
-    #     case "SCAN":
-    #
-    #         pytest.defective_subarray.SetDefective(
-    #             INTERMEDIATE_CONFIGURING_STATE_DEFECT
-    #         )
-    #         LOGGER.info("Workng on Scan")
-    #         perform_scan(
-    #             subarray_node_low,
-    #             # event_tracer,
-    #             command_input_factory,
-    #         )
-
 
 @then(
     parsers.parse(
