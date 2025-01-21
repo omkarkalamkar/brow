@@ -1,4 +1,4 @@
-@XTP-34890 @XTP-34276 @tmc_sdp_unhappy_path
+@XTP-34890 @XTP-73592 @XTP-34276 @XTP-28348 @XTP-29227
 Scenario: SDP Subarray report the error when one of the SDP's component is unavailable
     Given a Telescope consisting of TMC,SDP,simulated CSP and simulated MCCS 
     And the telescope is in ON state

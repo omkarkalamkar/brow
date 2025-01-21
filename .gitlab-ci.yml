@@ -120,6 +120,9 @@ k8s-test-tmc-with-csp:
     name: test/$CI_COMMIT_REF_SLUG
     on_stop: stop-k8s-test-tmc-with-csp
   when: manual
+  after_script:
+    - pip3 install -q -U ska-ser-xray
+    - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
 
 stop-k8s-test-tmc-with-csp:
   extends:
@@ -188,6 +191,9 @@ k8s-test-tmc-with-mccs:
     name: test/$CI_COMMIT_REF_SLUG
     on_stop: stop-k8s-test-tmc-with-mccs
   when: manual
+  after_script:
+    - pip3 install -q -U ska-ser-xray
+    - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
 
 stop-k8s-test-tmc-with-mccs:
   extends:

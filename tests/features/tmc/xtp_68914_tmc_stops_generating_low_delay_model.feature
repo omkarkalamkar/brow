@@ -1,4 +1,5 @@
-@XTP-68914
+#Test case to verify TMC generates delay values
+@XTP-68914 @XTP-73581 @XTP-73579 
 Scenario: TMC generates delay values
     Given the telescope is in ON state
     And subarray is configured and starts generating delay values
