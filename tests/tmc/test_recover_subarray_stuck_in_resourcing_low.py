@@ -22,6 +22,7 @@ from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_harness.utils.enums import SimulatorDeviceType
 from tests.resources.test_support.constant_low import (
     FAILED_RESULT_DEFECT,
+    SDP_BACK_TO_INITIAL_STATE,
     TIMEOUT,
 )
 
@@ -260,9 +261,20 @@ def test_abort_with_sdp_csp_in_empty(
             is_json=True,
         )
     else:
-        assign = json.loads(assign_input_json)
-        assign["sdp"]["execution_block"]["eb_id"] = "eb-test-0005"
-        assign_input_json = json.dumps(assign)
+        failed_result_defect = SDP_BACK_TO_INITIAL_STATE
+        failed_result_defect["target_obsstates"] = [
+            ObsState.RESOURCING,
+            ObsState.EMPTY,
+        ]
+
+        defective_device_proxy.SetDefective(json.dumps(failed_result_defect))
+
+        assert wait_and_validate_device_attribute_value(
+            defective_device_proxy,
+            "defective",
+            json.dumps(failed_result_defect),
+            is_json=True,
+        )
 
     _, unique_id = central_node_low.perform_action(
         "AssignResources", assign_input_json
