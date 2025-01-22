@@ -185,7 +185,7 @@ def test_recover_subarray_stuck_in_resourcing_low(
     )
 
 
-@pytest.mark.SKA_low
+@pytest.mark.SKA_low25
 @pytest.mark.parametrize("defective_device", ["csp_subarray", "sdp_subarray"])
 def test_abort_with_sdp_csp_in_empty(
     central_node_low: CentralNodeWrapperLow,
@@ -261,7 +261,7 @@ def test_abort_with_sdp_csp_in_empty(
         )
     else:
         assign = json.loads(assign_input_json)
-        assign["sdp"]["resources"]["receive_nodes"] = 0
+        assign["sdp"]["execution_block"]["eb_id"] = "eb-test-0005"
         assign_input_json = json.dumps(assign)
 
     _, unique_id = central_node_low.perform_action(
