@@ -10,6 +10,7 @@ from ska_tango_base.control_model import HealthState
 from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DeviceProxy, DevState
 
+from tests.conftest import set_low_devices_admin_mode
 from tests.resources.test_harness.constant import (
     RESET_DEFECT,
     device_dict_low,
@@ -420,6 +421,7 @@ class CentralNodeWrapperLow(object):
         )
         LOGGER.info(f"Received simulated devices: {SIMULATED_DEVICES_DICT}")
         if SIMULATED_DEVICES_DICT["all_mocks"]:
+            set_low_devices_admin_mode()
             LOGGER.info("Invoking TelescopeOn command with all Mocks")
             _, unique_id = self.central_node.TelescopeOn()
             self.set_values_with_all_mocks(DevState.ON)

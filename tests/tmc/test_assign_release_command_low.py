@@ -8,7 +8,6 @@ from ska_control_model import ObsState, ResultCode
 from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DevState
 
-from tests.conftest import set_low_devices_admin_mode
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.constant import (
     COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_EMPTY,
@@ -54,7 +53,6 @@ def test_assign_release_defective_csp(
         }
     )
 
-    set_low_devices_admin_mode()
     central_node_low.move_to_on()
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ON COMMAND: "
