@@ -21,12 +21,6 @@ from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.central_node_with_csp_low import (
     CentralNodeCspWrapperLow,
 )
-from tests.resources.test_harness.constant import (
-    low_csp_master,
-    low_csp_subarray1,
-    mccs_controller,
-    mccs_subarray1,
-)
 from tests.resources.test_harness.event_recorder import EventRecorder
 from tests.resources.test_harness.helpers import set_admin_mode_values_mccs
 from tests.resources.test_harness.simulator_factory import SimulatorFactory
@@ -319,20 +313,3 @@ def adjust_controller_to_degraded_state(controller):
     """
     health_params = {"stations_degraded_threshold": 0}
     controller.healthModelParams = json.dumps(health_params)
-
-
-def set_low_devices_admin_mode():
-    """Set the admin mode of low  devices"""
-    csp_master_device = tango.DeviceProxy(low_csp_master)
-    csp_subarray_device = tango.DeviceProxy(low_csp_subarray1)
-    if csp_master_device.adminMode != 0:
-        csp_master_device.adminMode = 0
-    if csp_subarray_device.adminMode != 0:
-        csp_subarray_device.adminMode = 0
-
-    mccs_master_device = tango.DeviceProxy(mccs_controller)
-    mccs_subarray_device = tango.DeviceProxy(mccs_subarray1)
-    if mccs_master_device.adminMode != 0:
-        mccs_master_device.adminMode = 0
-    if mccs_subarray_device.adminMode != 0:
-        mccs_subarray_device.adminMode = 0
