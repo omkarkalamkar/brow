@@ -816,7 +816,7 @@ class CentralNodeWrapperLow(object):
             elapsed_time = time.time() - start_time
         return True
 
-    def set_low_devices_admin_mode():
+    def set_low_devices_admin_mode(self):
         """Set the admin mode of low  devices"""
         csp_master_device = tango.DeviceProxy(low_csp_master)
         csp_subarray_device = tango.DeviceProxy(low_csp_subarray1)
