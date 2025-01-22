@@ -33,6 +33,7 @@ def test_assign_release_defective_csp(
     event_tracer: TangoEventTracer,
     simulator_factory: SimulatorFactory,
     command_input_factory: JsonFactory,
+    set_low_devices_admin_mode,
 ):
     """Verify defective exception raised when csp set to defective."""
     event_tracer.subscribe_event(
@@ -52,6 +53,8 @@ def test_assign_release_defective_csp(
             central_node_low.subarray_node: ["obsState"],
         }
     )
+
+    set_low_devices_admin_mode()
     central_node_low.move_to_on()
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ON COMMAND: "
