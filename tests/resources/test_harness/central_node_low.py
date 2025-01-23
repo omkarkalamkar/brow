@@ -3,6 +3,7 @@ import logging
 import time
 from time import sleep
 
+import tango
 from assertpy import assert_that
 from ska_control_model import AdminMode, ObsState, ResultCode
 from ska_ser_logging import configure_logging
@@ -420,6 +421,7 @@ class CentralNodeWrapperLow(object):
         )
         LOGGER.info(f"Received simulated devices: {SIMULATED_DEVICES_DICT}")
         if SIMULATED_DEVICES_DICT["all_mocks"]:
+            self.set_low_devices_admin_mode()
             LOGGER.info("Invoking TelescopeOn command with all Mocks")
             _, unique_id = self.central_node.TelescopeOn()
             self.set_values_with_all_mocks(DevState.ON)
@@ -813,3 +815,19 @@ class CentralNodeWrapperLow(object):
             time.sleep(1)
             elapsed_time = time.time() - start_time
         return True
+
+    def set_low_devices_admin_mode(self):
+        """Set the admin mode of low  devices"""
+        csp_master_device = tango.DeviceProxy(low_csp_master)
+        csp_subarray_device = tango.DeviceProxy(low_csp_subarray1)
+        if csp_master_device.adminMode != 0:
+            csp_master_device.adminMode = 0
+        if csp_subarray_device.adminMode != 0:
+            csp_subarray_device.adminMode = 0
+
+        mccs_master_device = tango.DeviceProxy(mccs_controller)
+        mccs_subarray_device = tango.DeviceProxy(mccs_subarray1)
+        if mccs_master_device.adminMode != 0:
+            mccs_master_device.adminMode = 0
+        if mccs_subarray_device.adminMode != 0:
+            mccs_subarray_device.adminMode = 0
