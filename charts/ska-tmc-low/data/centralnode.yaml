@@ -36,13 +36,13 @@ server:
             - "{{.Values.global.mccs_master}}"
         - name: "SkuidService"
           values:
-          - "{{.Values.deviceServers.centralnode.SkuidService}}"
+            - "{{.Values.deviceServers.centralnode.SkuidService}}"
         - name: "AssignResourcesInterface"
           values:
-          - "{{.Values.deviceServers.centralnode.AssignResourcesInterface}}"
+            - "{{.Values.deviceServers.centralnode.AssignResourcesInterface}}"
         - name: "ReleaseResourcesInterface"
           values:
-          - "{{.Values.deviceServers.centralnode.ReleaseResourcesInterface}}"
+            - "{{.Values.deviceServers.centralnode.ReleaseResourcesInterface}}"
         - name: "TMCSubarrayNodes"
           values:
           {{- range  ( regexSplit " " ((.Values.subarray_count | int) | seq ) -1 )  }}
