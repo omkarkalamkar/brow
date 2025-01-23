@@ -67,14 +67,14 @@ centralnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-centralnode
-    tag: 0.17.0
+    tag: 0.17.3
     pullPolicy: IfNotPresent
 
 subarraynode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-subarraynode
-    tag: 0.26.4
+    tag: 0.27.5
     pullPolicy: IfNotPresent
 
 sdpleafnodes:
@@ -88,14 +88,14 @@ cspmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.21.5
+    tag: 0.23.1
     pullPolicy: IfNotPresent
 
 cspsubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.21.5
+    tag: 0.23.1
     pullPolicy: IfNotPresent
 
 
@@ -103,7 +103,7 @@ mccsmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.5.1
+    tag: 0.5.3
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
@@ -126,8 +126,12 @@ deviceServers:
     enabled: true
     instances: ["01"]
     file: "data/centralnode.yaml"
-    SleepTime: 0.5
-    CommandTimeout: 80
+    SkuidService: "ska-ser-skuid-test-svc.ska-tmc-centralnode.svc.techops.internal.skao.int:9870"
+    LivelinessCheckPeriod: 0.5
+    EventSubscriptionCheckPeriod: 0.5
+    CommandTimeOut: 80
+    AssignResourcesInterface: "https://schema.skao.int/ska-low-tmc-assignresources/4.0"
+    ReleaseResourcesInterface: "https://schema.skao.int/ska-low-tmc-releaseresources/3.0"
 
   subarraynode:
     enabled: true
@@ -138,26 +142,34 @@ deviceServers:
     MccsConfigureInterfaceURL: "https://schema.skao.int/ska-low-mccs-configure/1.0"
     MccsScanInterfaceURL: "https://schema.skao.int/ska-low-mccs-scan/3.0"
     JonesURI: "tango://jones.skao.int/low/stn-beam/1"
-    SleepTime: 0.5
-    CommandTimeout: 70
+    LivelinessCheckPeriod: 0.5
+    EventSubscriptionCheckPeriod: 0.5
+    CommandTimeOut: 70
+    AbortCommandTimeOut: 40
 
   sdpsubarrayleafnode:
     enabled: true
     file: "data/sdpsubarrayleafnode.yaml"
-    SleepTime: 0.5
-    CommandTimeout: 50
+    CommandTimeOut: 50
+    AdapterTimeOut: 2
+    LivelinessCheckPeriod: 0.5
+    EventSubscriptionCheckPeriod: 0.5
 
   sdpmasterleafnode:
     enabled: true
     instances: ["01"]
     file: "data/sdpmasterleafnode.yaml"
-    SleepTime: 0.5
+    AdapterTimeOut: 2
+    LivelinessCheckPeriod: 0.5
+    EventSubscriptionCheckPeriod: 0.5
 
   cspmasterleafnode:
     enabled: true
     instances: ["01"]
     file: "data/cspmasterleafnode.yaml"
-    SleepTime: 0.5
+    AdapterTimeOut: 2.0
+    LivelinessCheckPeriod: 0.5
+    EventSubscriptionCheckPeriod: 0.5
 
   cspsubarrayleafnode:
     enabled: true
@@ -170,21 +182,27 @@ deviceServers:
     PSTDelayCadence: 300.0
     PSTDelayValidityPeriod: 600.0
     PSTDelayModelTimeInAdvance: 600
-    SleepTime: 0.5
-    CommandTimeout: 50
+    CommandTimeOut: 50
+    AdapterTimeOut: 2.0
+    LivelinessCheckPeriod: 0.5
+    EventSubscriptionCheckPeriod: 0.5
 
   mccsmasterleafnode:
     enabled: true
     instances: ["01"]
     file: "data/mccsmasterleafnode.yaml"
-    SleepTime: 0.5
-    CommandTimeout: 50
+    CommandTimeOut: 50
+    LivelinessCheckPeriod: 0.5
+    EventSubscriptionCheckPeriod: 0.5
+    AdapterTimeOut: 2.0
 
   mccssubarrayleafnode:
     enabled: true
     file: "data/mccssubarrayleafnode.yaml"
-    SleepTime: 0.5
-    CommandTimeout: 50
+    LivelinessCheckPeriod: 0.5
+    EventSubscriptionCheckPeriod: 0.5
+    CommandTimeOut: 50
+    AdapterTimeOut: 2.0
 
   mocks:
     enabled: false

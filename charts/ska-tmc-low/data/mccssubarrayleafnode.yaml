@@ -9,8 +9,10 @@ server:
   instances:
   {{ $mccs_sa_fqdn_prefix:= .Values.global.mccs_subarray_prefix}} 
   {{ $mccs_master_fqdn := .Values.global.mccs_master }}
-  {{ $CommandTimeout := .Values.deviceServers.mccssubarrayleafnode.CommandTimeout }}
-  {{ $SleepTime := .Values.deviceServers.mccssubarrayleafnode.SleepTime}}
+  {{ $CommandTimeOut := .Values.deviceServers.mccssubarrayleafnode.CommandTimeOut }}
+  {{ $LivelinessCheckPeriod := .Values.deviceServers.mccssubarrayleafnode.LivelinessCheckPeriod }}
+  {{ $EventSubscriptionCheckPeriod := .Values.deviceServers.mccssubarrayleafnode.EventSubscriptionCheckPeriod }}
+  {{ $AdapterTimeOut := .Values.deviceServers.mccssubarrayleafnode.AdapterTimeOut}}
   {{- range  ( regexSplit " " ((.Values.subarray_count | int) | seq ) -1 ) }}
     - name: "{{ printf "%02s" . }}"
       classes:
@@ -35,10 +37,16 @@ server:
                 - "5"
               - name: "CommandTimeOut"
                 values:
-                - "{{ $CommandTimeout }}"
-              - name: "SleepTime"
+                - "{{ $CommandTimeOut }}"
+              - name: "LivelinessCheckPeriod"
                 values:
-                - "{{ $SleepTime }}"
+                - "{{ $LivelinessCheckPeriod }}"
+              - name: "EventSubscriptionCheckPeriod"
+                values:
+                - "{{ $EventSubscriptionCheckPeriod }}"
+              - name: "AdapterTimeOut"
+                values:
+                - "{{ $AdapterTimeOut }}"
   {{- end}}
 depends_on:
   - device: sys/database/2

@@ -12,8 +12,10 @@ entrypoints:
 {{- $PSTDelayModelTimeInAdvance := .Values.deviceServers.cspsubarrayleafnode.PSTDelayModelTimeInAdvance }}
 {{- $PSTDelayCadence := .Values.deviceServers.cspsubarrayleafnode.PSTDelayCadence }}
 {{- $PSTDelayValidityPeriod := .Values.deviceServers.cspsubarrayleafnode.PSTDelayValidityPeriod }}
-{{- $CommandTimeout := .Values.deviceServers.cspsubarrayleafnode.CommandTimeout }}
-{{- $SleepTime := .Values.deviceServers.cspsubarrayleafnode.SleepTime }}
+{{- $CommandTimeOut := .Values.deviceServers.cspsubarrayleafnode.CommandTimeOut }}
+{{- $AdapterTimeOut := .Values.deviceServers.cspsubarrayleafnode.AdapterTimeOut }}
+{{- $LivelinessCheckPeriod := .Values.deviceServers.cspsubarrayleafnode.LivelinessCheckPeriod }}
+{{- $EventSubscriptionCheckPeriod := .Values.deviceServers.cspsubarrayleafnode.EventSubscriptionCheckPeriod }}
 server:
   name: "csp_subarray_leaf_node_low"
   instances:
@@ -61,12 +63,18 @@ server:
               - name: "PSTDelayValidityPeriod"
                 values:
                 - "{{ $PSTDelayValidityPeriod }}"
-              - name: "CommandTimeout"
+              - name: "CommandTimeOut"
                 values:
-                - "{{ $CommandTimeout }}"
-              - name: "SleepTime"
+                - "{{ $CommandTimeOut }}"
+              - name: "LivelinessCheckPeriod"
                 values:
-                - "{{ $SleepTime }}"
+                - "{{ $LivelinessCheckPeriod }}"
+              - name: "EventSubscriptionCheckPeriod"
+                values:
+                - "{{ $EventSubscriptionCheckPeriod }}"
+              - name: "AdapterTimeOut"
+                values:
+                - "{{ $AdapterTimeOut }}"
   {{- end}}
 depends_on:
   - device: sys/database/2

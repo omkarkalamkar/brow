@@ -25,9 +25,15 @@ server:
         - name: "LoggingLevelDefault"
           values:
             - "5"
-        - name: "SleepTime"
+        - name: "AdapterTimeOut"
           values:
-            - "{{.Values.deviceServers.cspmasterleafnode.SleepTime}}"
+          - "{{.Values.deviceServers.cspmln.AdapterTimeOut}}"
+        - name: "LivelinessCheckPeriod"
+          values:
+          - "{{.Values.deviceServers.cspmln.LivelinessCheckPeriod}}"
+        - name: "EventSubscriptionCheckPeriod"
+          values:
+          - "{{.Values.deviceServers.cspmln.EventSubscriptionCheckPeriod}}"
 depends_on:
   - device: sys/database/2
 image:
