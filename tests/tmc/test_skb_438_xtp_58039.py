@@ -137,12 +137,16 @@ def subarray_node_obs_state_resourcing(
     event_tracer.subscribe_event(
         central_node_low.csp_subarray_leaf_node, "cspSubarrayObsState"
     )
+    event_tracer.subscribe_event(
+        central_node_low.sdp_subarray_leaf_node, "sdpSubarrayObsState"
+    )
     csp_sim.setDelayInfo(json.dumps({"AssignResources": 50}))
     log_events(
         {
             csp_sim: ["obsState"],
             sdp_sim: ["obsState"],
             central_node_low.csp_subarray_leaf_node: ["cspSubarrayObsState"],
+            central_node_low.sdp_subarray_leaf_node: ["sdpSubarrayObsState"],
         }
     )
     assert_that(event_tracer).described_as(
@@ -163,6 +167,16 @@ def subarray_node_obs_state_resourcing(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         sdp_sim,
         "obsState",
+        ObsState.RESOURCING,
+    )
+    assert_that(event_tracer).described_as(
+        "FAILED UNEXPECTED OBSSTATE: "
+        "SDP subarray leaf device"
+        f"({central_node_low.sdp_subarray_leaf_node.dev_name()}) "
+        "is expected to be in RESOURCING obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.sdp_subarray_leaf_node,
+        "sdpSubarrayObsState",
         ObsState.RESOURCING,
     )
     assert_that(event_tracer).described_as(
