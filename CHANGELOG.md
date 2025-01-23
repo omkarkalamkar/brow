@@ -58,6 +58,9 @@ Added
 
 Fixed
 -----
+[0.20.2-rc.2]
+* Fixed bug SKB-646 with latest subarray node image v0.27.6
+
 [0.20.2-rc.1]
 * Fixed bug SKB-599 with latest sdp leaf node image v0.19.3
 * Update CSPleafnodes chart to update ska-telmodel
