@@ -27,13 +27,13 @@ server:
             - "5"
         - name: "AdapterTimeOut"
           values:
-          - "{{.Values.deviceServers.cspmln.AdapterTimeOut}}"
+            - "{{.Values.deviceServers.cspmln.AdapterTimeOut}}"
         - name: "LivelinessCheckPeriod"
           values:
-          - "{{.Values.deviceServers.cspmln.LivelinessCheckPeriod}}"
+            - "{{.Values.deviceServers.cspmln.LivelinessCheckPeriod}}"
         - name: "EventSubscriptionCheckPeriod"
           values:
-          - "{{.Values.deviceServers.cspmln.EventSubscriptionCheckPeriod}}"
+            - "{{.Values.deviceServers.cspmln.EventSubscriptionCheckPeriod}}"
 depends_on:
   - device: sys/database/2
 image:
