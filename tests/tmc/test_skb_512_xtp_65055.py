@@ -193,7 +193,7 @@ def given_a_tmc_in_scanning_obs_state(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
         "Subarray Node device"
         f"({central_node_low.subarray_node.dev_name()}) "
-        "is expected have longRunningCommand as"
+        "is expected to have longRunningCommand as"
         '(unique_id,(ResultCode.OK,"Command Completed"))',
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
