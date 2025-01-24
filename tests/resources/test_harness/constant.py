@@ -52,6 +52,16 @@ INTERMEDIATE_CONFIGURING_STATE_DEFECT = json.dumps(
     }
 )
 
+INTERMEDIATE_SCANNING_STATE_DEFECT = json.dumps(
+    {
+        "enabled": True,
+        "fault_type": FaultType.COMMAND_NOT_ALLOWED_AFTER_QUEUING,
+        "error_message": "Device stuck in intermediate state",
+        "result": ResultCode.FAILED,
+        "intermediate_state": ObsState.SCANNING,
+    }
+)
+
 OBS_STATE_RESOURCING_STUCK_DEFECT = {
     "enabled": True,
     "fault_type": FaultType.STUCK_IN_OBSTATE,
@@ -93,6 +103,16 @@ RESET_DEFECT = json.dumps(
     }
 )
 
+
+FAILED_DEFECT = json.dumps(
+    {
+        "enabled": True,
+        "fault_type": FaultType.FAILED_RESULT,
+        "error_message": "Default exception.",
+        "result": ResultCode.FAILED,
+    }
+)
+
 COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE = {
     "enabled": True,
     "fault_type": FaultType.FAILED_RESULT,
@@ -107,6 +127,16 @@ COMMAND_NOT_ALLOWED_DEFECT = json.dumps(
         "fault_type": FaultType.COMMAND_NOT_ALLOWED,
         "error_message": "Command is not allowed",
         "result": ResultCode.FAILED,
+    }
+)
+
+TIMEOUT_DEFECT = json.dumps(
+    {
+        "enabled": True,
+        "fault_type": FaultType.STUCK_IN_INTERMEDIATE_STATE,
+        "error_message": "Device stuck in intermediate state",
+        "result": ResultCode.FAILED,
+        "intermediate_state": ObsState.RESOURCING,
     }
 )
 

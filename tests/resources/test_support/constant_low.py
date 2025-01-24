@@ -119,6 +119,14 @@ FAILED_RESULT_DEFECT = {
     "target_obsstates": [ObsState.IDLE],
 }
 
+SDP_BACK_TO_INITIAL_STATE = {
+    "enabled": True,
+    "fault_type": FaultType.SDP_BACK_TO_INITIAL_STATE,
+    "error_message": "Device defective.",
+    "result": ResultCode.FAILED,
+    "target_obsstates": [ObsState.EMPTY],
+}
+
 RESET_DEFECT = {"enabled": False}
 
 COMMAND_NOT_ALLOWED_DEFECT = {
