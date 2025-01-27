@@ -3,15 +3,15 @@ tag=0.20.3-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 0.20.2-rc.1 - 0.20.3-rc.1**
+**1. ska-tmc-low-integration 0.20.2-rc.2 - 0.20.3-rc.1**
 
-    **1.1 ska-tmc-low - 0.20.2-rc.1- 0.20.3-rc.1:
+    **1.1 ska-tmc-low - 0.20.2-rc.2- 0.20.3-rc.1:
            * Updated the image of SubarrayNode to 0.27.6
            * Updated the image of central node to 0.17.2
            * Updated the image of Sdpleafnodes to 0.19.3
            * Updated the image of CSPleafnodes to 0.23.2
            * Updated the image of MCCSleafnode to 0.5.4
-           * Fixed bug skb-525 ,SKB-646
+           * Fixed bug skb-525
            * Introduced error propagation and timeout for Scan /EndScan /End Commands
 
        
@@ -19,14 +19,14 @@ tag_description=
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 0.20.2-rc.1 - 0.20.3-rc.1
+**1. ska-tmc-low-integration 0.20.2-rc.2 - 0.20.3-rc.1
 
- **1.1 ska-tmc-low - 0.20.2-rc.1- 0.20.3-rc.1:
+ **1.1 ska-tmc-low - 0.20.2-rc.2- 0.20.3-rc.1:
            * Updated the image of SubarrayNode to 0.27.6
            * Updated the image of central node to 0.17.2
            * Updated the image of Sdpleafnodes to 0.19.3
            * Updated the image of CSPleafnodes to 0.23.2
            * Updated the image of MCCSleafnode to 0.5.4
-           * Fixed bug skb-525 , SKB-646
+           * Fixed bug skb-525
            * Introduced error propagation and timeout for Scan /EndScan /End Commands
 

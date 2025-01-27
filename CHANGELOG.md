@@ -65,9 +65,11 @@ Fixed
  * Updated the image of Sdpleafnodes to 0.19.3
  * Updated the image of CSPleafnodes to 0.23.2
  * Updated the image of MCCSleafnode to 0.5.4
- * Fixed bug skb-525 ,SKB-646
+ * Fixed bug skb-525 
  * Introduced error propagation and timeout for Scan /EndScan /End Commands]
 
+[0.20.2-rc.2]
+* Fixed bug SKB-646 with latest subarray node image v0.27.6
 
 [0.20.2-rc.1]
 * Fixed bug SKB-599 with latest sdp leaf node image v0.19.3
