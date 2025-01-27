@@ -13,6 +13,8 @@ from pytest_bdd import given, scenario, then, when
 from ska_control_model import ObsState
 from ska_tango_base.commands import ResultCode
 from ska_tango_testing.integration import TangoEventTracer, log_events
+
+# from ska_tango_testing.mock.placeholders import Anything
 from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
@@ -186,6 +188,7 @@ def given_a_tmc_in_scanning_obs_state(
         "obsState",
         ObsState.SCANNING,
     )
+
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
         "Subarray Node device"
@@ -282,4 +285,5 @@ def check_obs_state_ready_for_leaf_nodes(
         "obsState",
         ObsState.READY,
     )
+
     event_tracer.clear_events()

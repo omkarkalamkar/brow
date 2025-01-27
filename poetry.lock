@@ -1468,12 +1468,13 @@ reference = "PyPI-public"
 
 [[package]]
 name = "pylint-junit"
-version = "0.3.4"
+version = "0.3.5"
 description = "pylint reporter for junit format."
 optional = false
 python-versions = "*"
 files = [
-    {file = "pylint_junit-0.3.4-py2.py3-none-any.whl", hash = "sha256:006f8e793a1b64f1e0c8a29c6ee531b8af971deddafbc605c3076270f36c88f0"},
+    {file = "pylint_junit-0.3.5-py2.py3-none-any.whl", hash = "sha256:6f6554a357ba7b6c3329c3f350150585bd9031374eb78bcb7c407ce32399e036"},
+    {file = "pylint_junit-0.3.5.tar.gz", hash = "sha256:a7cbeebfaf392e79cbecc76b244589ffb81771bfeb15df5596fbe25700a96b5e"},
 ]
 
 [package.dependencies]
@@ -2789,4 +2790,4 @@ reference = "PyPI-public"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "5fc5dd2875fc34994c9136401626744debca34ecd1c20ce31cc77f77a57c8dcc"
+content-hash = "79b41d9eb08298188f5e6981da06b8691ab1ff8f4d69936e20fe96af47d8838b"

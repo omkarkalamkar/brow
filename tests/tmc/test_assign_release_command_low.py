@@ -52,6 +52,7 @@ def test_assign_release_defective_csp(
             central_node_low.subarray_node: ["obsState"],
         }
     )
+
     central_node_low.move_to_on()
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ON COMMAND: "

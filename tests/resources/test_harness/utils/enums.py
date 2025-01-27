@@ -36,6 +36,7 @@ class SimulatorDeviceType(IntEnum):
 class FaultType(enum.IntEnum):
     """Enum class for raising various exceptions from helper devices."""
 
+    COMMAND_NOT_ALLOWED_AFTER_QUEUING = 6
     NONE = 0
     COMMAND_NOT_ALLOWED = 1
     FAILED_RESULT = 2
