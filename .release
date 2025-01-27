@@ -1,26 +1,16 @@
-release=0.20.2-rc.1
-tag=0.20.2-rc.1
+release=0.20.2-rc.2
+tag=0.20.2-rc.2
 tag_description=
 **Charts:**
-**1. ska-tmc-low-integration 0.20.1 - 0.20.2-rc.1**
+**1. ska-tmc-low-integration 0.20.2-rc.1 - 0.20.2-rc.2**
 
-    **1.1 ska-tmc-low - 0.20.1- 0.20.2-rc.1:
-        * Fixed bug SKB-699 with latest sdp leaf node image v0.19.3
-        * Update CSPleafnodes image to update ska-telmodel
-        * Fixed bug SKB-618
-        * Updated the image of Sdpleafnodes to 0.17.3
-        * Fixed bug SKB-634, SKB-641
-        * Updated the image of SubarrayNode to 0.26.4
+    **1.1 ska-tmc-low - 0.20.2-rc.1 - 0.20.2-rc.2:
+        * Fixed bug SKB-646 with latest subarray node image v0.27.6
        
 
 release_notes=
 **Charts:**
-**1. ska-tmc-low-integration 0.20.1 - 0.20.2-rc.1**
+**1. ska-tmc-low-integration 0.20.2-rc.1 - 0.20.2-rc.2**
 
- **1.1 ska-tmc-low - 0.20.1 - 0.20.2-rc.1:
-        * Fixed bug SKB-699 with latest sdp leaf node image v0.19.3
-        * Update CSPleafnodes image to update ska-telmodel
-        * Fixed bug SKB-618
-        * Updated the image of Sdpleafnodes to 0.17.3
-        * Fixed bug SKB-634, SKB-641
-        * Updated the image of SubarrayNode to 0.26.4
+ **1.1 ska-tmc-low - 0.20.2-rc.1 - 0.20.2-rc.2:
+        * Fixed bug SKB-646 with latest subarray node image v0.27.6
