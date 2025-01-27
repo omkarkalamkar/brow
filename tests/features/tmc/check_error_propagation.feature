@@ -20,6 +20,7 @@ Examples:
 
 
 
+@XTP-73592 @XTP-74764  @tmc @Team_Sahydri
 Scenario: TimeOut Reported by TMC Low End/EndScan/Scan Commands for Defective Subarray
 
 Given the telescope is is ON state
