@@ -25,12 +25,18 @@ server:
         - name: "LoggingLevelDefault"
           values:
           - "5"
-        - name: "SleepTime"
+        - name: "LivelinessCheckPeriod"
           values:
-          - "{{.Values.deviceServers.mccsmasterleafnode.SleepTime}}"
-        - name: "CommandTimeout"
+          - "{{.Values.deviceServers.mccsmasterleafnode.LivelinessCheckPeriod}}"
+        - name: "EventSubscriptionCheckPeriod"
           values:
-          - "{{.Values.deviceServers.mccsmasterleafnode.CommandTimeout}}"
+          - "{{.Values.deviceServers.mccsmasterleafnode.EventSubscriptionCheckPeriod}}"
+        - name: "AdapterTimeOut"
+          values:
+          - "{{.Values.deviceServers.mccsmasterleafnode.AdapterTimeOut}}"
+        - name: "CommandTimeOut"
+          values:
+          - "{{.Values.deviceServers.mccsmasterleafnode.CommandTimeOut}}"
 depends_on:
   - device: sys/database/2
 image:

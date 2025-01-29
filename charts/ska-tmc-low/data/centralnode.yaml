@@ -34,6 +34,15 @@ server:
         - name: "MccsMasterFQDN"
           values:
             - "{{.Values.global.mccs_master}}"
+        - name: "SkuidService"
+          values:
+            - "{{.Values.deviceServers.centralnode.SkuidService}}"
+        - name: "AssignResourcesInterface"
+          values:
+            - "{{.Values.deviceServers.centralnode.AssignResourcesInterface}}"
+        - name: "ReleaseResourcesInterface"
+          values:
+            - "{{.Values.deviceServers.centralnode.ReleaseResourcesInterface}}"
         - name: "TMCSubarrayNodes"
           values:
           {{- range  ( regexSplit " " ((.Values.subarray_count | int) | seq ) -1 )  }}
@@ -58,12 +67,15 @@ server:
         - name: "LoggingLevelDefault"
           values:
             - "5"
-        - name: "CommandTimeout"
+        - name: "CommandTimeOut"
           values:
-            - "{{.Values.deviceServers.centralnode.CommandTimeout}}"
-        - name: "SleepTime"
+            - "{{.Values.deviceServers.centralnode.CommandTimeOut}}"
+        - name: "LivelinessCheckPeriod"
           values:
-            - "{{.Values.deviceServers.centralnode.SleepTime}}"
+            - "{{.Values.deviceServers.centralnode.LivelinessCheckPeriod}}"
+        - name: "EventSubscriptionCheckPeriod"
+          values:
+            - "{{.Values.deviceServers.centralnode.EventSubscriptionCheckPeriod}}"
 
 depends_on:
   - device: sys/database/2

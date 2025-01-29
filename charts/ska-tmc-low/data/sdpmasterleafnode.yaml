@@ -25,9 +25,18 @@ server:
         - name: "LoggingLevelDefault"
           values:
             - "5"
-        - name: "SleepTime"
+        - name: "AdapterTimeOut"
           values:
-            - "{{.Values.deviceServers.sdpmasterleafnode.SleepTime}}"
+            - "{{.Values.deviceServers.sdpmasterleafnode.AdapterTimeOut}}"
+        - name: "LivelinessCheckPeriod"
+          values:
+            - "{{.Values.deviceServers.sdpmasterleafnode.LivelinessCheckPeriod}}"
+        - name: "EventSubscriptionCheckPeriod"
+          values:
+            - "{{.Values.deviceServers.sdpmasterleafnode.EventSubscriptionCheckPeriod}}"
+        - name: "SDPMasterAdminModeEnabled"
+          values:
+            - "{{.Values.deviceServers.sdpmasterleafnode.SDPMasterAdminModeEnabled}}"
 depends_on:
   - device: sys/database/2
 image:
