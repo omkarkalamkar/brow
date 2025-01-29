@@ -21,7 +21,7 @@ TMC Low deployment comes with following components:
 
 
 Configurable options
----------------------
+====================
 
 * a. **instances** : User can provide the array of device server deployment instances required for node.
 
@@ -51,47 +51,135 @@ Configurable options
 
 * d. **enabled** : User can opt to disable any node by setting this value to False.Default is True for all nodes.
 
-* e. **tmc_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of SubarrayNode.
+* e. Variables under global section
+-----------------------------------
 
-* f. **csp_subarray_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of CspSubarrayLeafNode.
+    #. **tmc_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of SubarrayNode.
 
-* g. **sdp_subarray_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of SdpSubarrayLeafNode.
+    #. **csp_subarray_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of CspSubarrayLeafNode.
 
-* h. **csp_master_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of CspMasterLeafNode.
+    #. **sdp_subarray_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of SdpSubarrayLeafNode.
 
-* i. **sdp_master_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of SdpMasterLeafNode.
+    #. **csp_master_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of CspMasterLeafNode.
 
-* j. **csp_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of CSP Subarray.
+    #. **sdp_master_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of SdpMasterLeafNode.
 
-* k. **sdp_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of SDP Subarray.
+    #. **csp_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of CSP Subarray.
 
-* l. **csp_master** : This value is present under global, User can use this to change the FQDN of CSP Master.
+    #. **sdp_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of SDP Subarray.
 
-* m. **sdp_master** : This value is present under global, User can use this to change the FQDN of SDP Master.
+    #. **csp_master** : This value is present under global, User can use this to change the FQDN of CSP Master.
 
-* n. **mccs_master** : This value is present under global, User can use this to change the FQDN of MCCS Master.
+    #. **sdp_master** : This value is present under global, User can use this to change the FQDN of SDP Master.
 
-* o. **mccs_master_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Master Leaf Node.
+    #. **mccs_master** : This value is present under global, User can use this to change the FQDN of MCCS Master.
 
-* p. **mccs_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Subarray.
+    #. **mccs_master_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Master Leaf Node.
 
-* q. **mccs_subarray_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Subarray Leaf Node.
+    #. **mccs_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Subarray.
 
-* r. **DelayCadence** :  This refers to the time difference (in seconds) between each publication of delay values to the `delayModel` attribute on the `CspSubarrayLeafNode`.
+    #. **mccs_subarray_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Subarray Leaf Node.
 
-* s. **DelayValidityPeriod** : This represents the duration (in seconds) for which delay values remain valid after being published.
+* f. Variables under deviceServers.centralnode section
+------------------------------------------------------
+    #. **SkuidService** :  This refers to the value for SKUID service. Currently defaults to "ska-ser-skuid-test-svc.ska-tmc-centralnode.svc.techops.internal.skao.int:9870".
 
-* t. **DelayModelTimeInAdvance** : This indicates the time in seconds by which delay values need to be available in advance.
-* u. **CspAssignResourcesInterfaceURL** : Interface version for CSP assign resources command. 
+    #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
+
+    #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
+    
+    #. **CommandTimeOut** :  This refers to the Timeout (in seconds) for the command execution. Currently defaults to 80 seconds.
+
+    #. **AssignResourcesInterface** :  This refers to the interface value of AsignResources schema. Currently defaults to "https://schema.skao.int/ska-low-tmc-assignresources/4.0".
+
+    #. **ReleaseResourcesInterface** :  This refers to the interface value of ReleaseResources schema. Currently defaults to "https://schema.skao.int/ska-low-tmc-releaseresources/3.0".
+
+* g. Variables under deviceServers.subarraynode section
+-------------------------------------------------------
+
+    #. **CspAssignResourcesInterfaceURL** : Interface version for CSP assign resources command. 
                                     This value is present under Subarray Node.Currently defaults to "https://schema.skao.int/ska-low-csp-assignresources/3.0"
-* v. **CspScanInterfaceURL** :Interface version for CSP scan command. 
+    #. **CspScanInterfaceURL** : Interface version for CSP scan command. 
                                     This value is present under Subarray Node.Currently defaults to "https://schema.skao.int/ska-low-csp-scan/2.0"
-* w **SdpScanInterfaceURL**:Interface version for SDP scan command. 
+    #. **SdpScanInterfaceURL** : Interface version for SDP scan command. 
                                     This value is present under Subarray Node.Currently defaults to "https://schema.skao.int/ska-sdp-scan/0.4"
-* x **MccsConfigureInterfaceURL**:Interface version for MCCS configure command. 
+    #. **MccsConfigureInterfaceURL** : Interface version for MCCS configure command. 
                                     This value is present under Subarray Node.Currently defaults to "https://schema.skao.int/ska-low-mccs-configure/1.0"
-* y **MccsScanInterfaceURL**:Interface version for MCCS scan command. 
+    #. **MccsScanInterfaceURL** : Interface version for MCCS scan command. 
                                     This value is present under Subarray Node.Currently defaults to "https://schema.skao.int/ska-low-mccs-scan/3.0"
+    #. **JonesURI** : IURI for Jones Matrix. Currently defaults to "tango://jones.skao.int/low/stn-beam/1".
+    #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
+
+    #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
+    
+    #. **CommandTimeOut** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 70 seconds.
+    #. **AbortCommandTimeOut** :  This refers to the timeout for the Subarray ABORTED obsState transition. Once the AbortCommandTimeOut exceeds, SubarrayNode transitions to obsState FAULT. Currently defaults to 40 seconds.
+
+* h. Variables under deviceServers.sdpsubarrayleafnode section
+--------------------------------------------------------------
+    #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
+
+    #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
+    
+    #. **CommandTimeOut** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.
+
+    #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
+
+* i. Variables under deviceServers.sdpmasterleafnode section
+------------------------------------------------------------
+    #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
+
+    #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
+
+    #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
+
+* j. Variables under deviceServers.cspmasterleafnode section
+------------------------------------------------------------
+    #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
+
+    #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
+
+    #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
+
+* k. Variables under deviceServers.cspsubarrayleafnode section
+--------------------------------------------------------------
+    #. **DelayCadence** :  This refers to the time difference (in seconds) between each publication of delay values to the `delayModel` attribute on the `CspSubarrayLeafNode`. Currently defaults to 300 seconds.
+
+    #. **DelayValidityPeriod** : This represents the duration (in seconds) for which delay values remain valid after being published. Currently defaults to 600 seconds.
+
+    #. **DelayModelTimeInAdvance** : This indicates the time in seconds by which delay values need to be available in advance. Currently defaults to 600 seconds.
+    #. **PSTDelayCadence** :  This refers to the time difference (in seconds) between each publication of delay values for the PST beam. Currently defaults to 300 seconds.
+
+    #. **PSTDelayValidityPeriod** : This represents the duration (in seconds) for which delay values remain valid after being published. Currently defaults to 600 seconds.
+
+    #. **PSTDelayModelTimeInAdvance** : This indicates the time in seconds by which delay values need to be available in advance. Currently defaults to 600 seconds.
+    #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
+
+    #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
+    
+    #. **CommandTimeOut** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.
+
+    #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
+
+* l. Variables under deviceServers.mccsmasterleafnode section
+-------------------------------------------------------------
+    #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
+
+    #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
+    
+    #. **CommandTimeOut** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.
+
+    #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
+
+* h. Variables under deviceServers.mccssubarrayleafnode section
+---------------------------------------------------------------
+    #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
+
+    #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
+    
+    #. **CommandTimeOut** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.
+
+    #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
 
 
 TMC Low Sub-system FQDN's:
