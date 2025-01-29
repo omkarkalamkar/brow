@@ -1,5 +1,5 @@
 TMC Low Deployment
-=======================
+==================
 
 TMC Low deployment comes with following components:
 
@@ -21,7 +21,7 @@ TMC Low deployment comes with following components:
 
 
 Configurable options
-====================
+--------------------
 
 * a. **instances** : User can provide the array of device server deployment instances required for node.
 
@@ -184,8 +184,8 @@ Configurable options
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
 
 
-TMC Low Sub-system FQDN's:
----------------------------
+TMC Low Sub-system FQDN's
+-------------------------
 Below are the FQDN's of the TMC Low components. For updated FQDN's kindly refer values.yaml in the TMC Low charts.
 
 +------------------------------------------+------------------------------------------------------------------------+ 
