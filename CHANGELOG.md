@@ -58,6 +58,13 @@ Added
 
 Fixed
 -----
+[0.20.3-rc.2]
+ * Fixed bug skb-658
+ * Removed SleepTime property and utilised properties livelinessCheckPeriod and eventSubscriptionCheck
+ * Renamed the properties as required
+ * Fixed the RTD documentation and added documentation for all the properties of all the TMC nodes
+ * Made all the properties configurable
+ * Corrected data types of the properties wherever required
 
 [0.20.3-rc.1]
  * Updated the image of SubarrayNode to 0.27.6
@@ -69,15 +76,15 @@ Fixed
  * Introduced error propagation and timeout for Scan /EndScan /End Commands]
 
 [0.20.2-rc.2]
-* Fixed bug SKB-646 with latest subarray node image v0.27.6
+ * Fixed bug SKB-646 with latest subarray node image v0.27.6
 
 [0.20.2-rc.1]
-* Fixed bug SKB-599 with latest sdp leaf node image v0.19.3
-* Update CSPleafnodes chart to update ska-telmodel
-* Fixe bug SKB-618
-* Updated the image of Sdpleafnodes to 0.17.3
-* Fixed bug SKB-634, SKB-641
-* Updated the image of SubarrayNode to 0.26.4
+ * Fixed bug SKB-599 with latest sdp leaf node image v0.19.3
+ * Update CSPleafnodes chart to update ska-telmodel
+ * Fixe bug SKB-618
+ * Updated the image of Sdpleafnodes to 0.17.3
+ * Fixed bug SKB-634, SKB-641
+ * Updated the image of SubarrayNode to 0.26.4
 
 [0.18.1]
 ********
