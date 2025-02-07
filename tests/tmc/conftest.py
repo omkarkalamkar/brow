@@ -470,7 +470,6 @@ def validate_error_message_reporting(
     exception_message = (
         "Exception occurred on the following devices:"
         + f" {pytest.defective_device}:"
-        + " Exception occurred, command failed."
     )
 
     assert_that(event_tracer).described_as(
