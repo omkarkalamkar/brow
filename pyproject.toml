@@ -25,12 +25,13 @@ ska-control-model="1.0.0"
 ska-tango-base="1.0.0"
 pytango = "9.5.0"
 numpy = "^1.23.0"
-ska-tango-testing = "0.7.1"
+ska-tango-testing = "0.7.2"
 ska-ser-logging = "^0.4.3"
 httpx = "^0.19.0"
 msgpack = "1.0.7"
 msgpack_numpy = "0.4.8"
 ska-telmodel = "^1.17.0"
+ska-integration-test-harness= {git = "https://gitlab.com/ska-telescope/ska-integration-test-harness.git", branch = "sst-1012-make-ith-support-low" }
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.8.0"
