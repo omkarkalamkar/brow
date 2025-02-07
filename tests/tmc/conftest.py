@@ -15,6 +15,7 @@ from tango import DevState
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.constant import (
     ERROR_PROPAGATION_DEFECT,
+    FAILED_DEFECT,
     TIMEOUT,
     low_csp_subarray_leaf_node,
     low_sdp_subarray_leaf_node,
@@ -419,7 +420,7 @@ def execute_command_on_tmc_with_defectivesetup(
                 )
             )
             pytest.defective_device = low_sdp_subarray_leaf_node
-            pytest.defective_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
+            pytest.defective_subarray.SetDefective(FAILED_DEFECT)
 
         case "MCCS":
             pytest.defective_subarray = (
