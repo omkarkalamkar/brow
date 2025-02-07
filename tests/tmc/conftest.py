@@ -386,7 +386,11 @@ def move_tmc_to_intial_state(
             )
 
 
-@when(parsers.parse("{command} is invoked on a {defectiveSubsystem} Subarray"))
+@when(
+    parsers.parse(
+        "{command} is invoked on a defectiveSubsystem {defectiveSubsystem}"
+    )
+)
 def execute_command_on_tmc_with_defectivesetup(
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
@@ -452,8 +456,7 @@ def execute_command_on_tmc_with_defectivesetup(
 
 @then(
     parsers.parse(
-        "the command failure is reported by subarray with appropriate"
-        " error message"
+        "the command failure is reported by subarray with error message"
     )
 )
 def validate_error_message_reporting(
