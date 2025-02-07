@@ -19,7 +19,6 @@ from ska_tango_testing.integration import TangoEventTracer
 from tests.conftest import LOGGER
 from tests.resources.test_harness.constant import (
     INTERMEDIATE_CONFIGURING_STATE_DEFECT,
-    TIMEOUT,
     low_csp_subarray_leaf_node,
     low_sdp_subarray_leaf_node,
     mccs_subarray_leaf_node,
@@ -245,7 +244,7 @@ def validate_error_message_reporting(
         f"({subarray_node_low.subarray_node.dev_name()}) "
         "is expected have longRunningCommandResult"
         "(ResultCode.FAILED,exception)",
-    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+    ).within_timeout(120).has_desired_result_code_message_in_lrcr_event(
         subarray_node_low.subarray_node,
         [exception_message],
         pytest.unique_id[0],

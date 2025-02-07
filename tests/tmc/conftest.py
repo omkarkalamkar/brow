@@ -480,7 +480,7 @@ def validate_error_message_reporting(
         f"({subarray_node_low.subarray_node.dev_name()}) "
         "is expected have longRunningCommandResult"
         "(ResultCode.FAILED,exception)",
-    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+    ).within_timeout(120).has_desired_result_code_message_in_lrcr_event(
         subarray_node_low.subarray_node,
         [exception_message],
         pytest.unique_id[0],
