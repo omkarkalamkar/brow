@@ -59,6 +59,12 @@ This project is integration of the TMC components for the `Square Kilometre Arra
 
    CHANGELOG.rst
    
+.. toctree::
+   :maxdepth: 1
+   :caption: Admin HealthState:
+
+   healthstate/healthstate_adminmode_aggregation
+   
 Indices and tables
 ------------------
 * :ref:`genindex`
