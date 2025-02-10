@@ -6,7 +6,7 @@ from typing import Any
 
 import pytest
 from assertpy import assert_that
-from pytest_bdd import given, parsers, then
+from pytest_bdd import parsers, then
 from ska_control_model import ObsState, ResultCode
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
 from ska_integration_test_harness.facades.sdp_facade import SDPFacade
@@ -36,10 +36,10 @@ ASSERTIONS_TIMEOUT = 60
 def default_commands_inputs() -> TestHarnessInputs:
     """Default JSON inputs for TMC commands."""
     return TestHarnessInputs(
-        assign_input=MyFileJSONInput("centralnode", "assign_resources_mid"),
-        configure_input=MyFileJSONInput("subarray", "configure_mid"),
-        scan_input=MyFileJSONInput("subarray", "scan_mid"),
-        release_input=MyFileJSONInput("centralnode", "release_resources_mid"),
+        assign_input=MyFileJSONInput("centralnode", "assign_resources_low"),
+        configure_input=MyFileJSONInput("subarray", "configure_low"),
+        scan_input=MyFileJSONInput("subarray", "scan_low"),
+        release_input=MyFileJSONInput("centralnode", "release_resources_low"),
     )
 
 
@@ -181,121 +181,6 @@ def _setup_event_subscriptions(
             tmc.central_node: ["longRunningCommandResult"],
         },
         event_enum_mapping={"obsState": ObsState},
-    )
-
-
-@given("the telescope is in ON state")
-def given_the_telescope_is_in_on_state(
-    tmc: TMCFacade,
-):
-    """Ensure the telescope is in ON state."""
-    # TODO: move to on should verify LRC completion,
-    # but now it fails (at least when called here)
-    tmc.move_to_on(wait_termination=True, is_long_running_command=False)
-
-
-@given(parsers.parse("the subarray {subarray_id} can be used"))
-def subarray_can_be_used(
-    subarray_id: str,
-    tmc: TMCFacade,
-    csp: CSPFacade,
-    sdp: SDPFacade,
-    event_tracer: TangoEventTracer,
-):
-    """Set up the subarray (and the subscriptions) to be used in the test."""
-    tmc.set_subarray_id(int(subarray_id))
-    _setup_event_subscriptions(tmc, csp, sdp, event_tracer)
-
-
-@given(parsers.parse("the subarray {subarray} is in the RESOURCING state"))
-def subarray_in_resourcing_state(
-    context_fixt: SubarrayTestContextData,
-    tmc: TMCFacade,
-    default_commands_inputs: TestHarnessInputs,
-):
-    """Ensure the subarray is in the RESOURCING state."""
-    context_fixt.starting_state = ObsState.RESOURCING
-    context_fixt.expected_next_state = ObsState.IDLE
-
-    tmc.force_change_of_obs_state(
-        ObsState.RESOURCING,
-        default_commands_inputs,
-        wait_termination=True,
-    )
-
-
-@given(parsers.parse("the subarray {subarray} is in the IDLE state"))
-def subarray_in_idle_state(
-    context_fixt: SubarrayTestContextData,
-    tmc: TMCFacade,
-    default_commands_inputs: TestHarnessInputs,
-):
-    """Ensure the subarray is in the IDLE state."""
-    context_fixt.starting_state = ObsState.IDLE
-
-    tmc.force_change_of_obs_state(
-        ObsState.EMPTY,
-        default_commands_inputs,
-        wait_termination=True,
-    )
-
-    json_input = MyFileJSONInput(
-        "centralnode", "assign_resources_mid"
-    ).with_attribute("subarray_id", 1)
-
-    context_fixt.when_action_result = tmc.assign_resources(
-        json_input,
-        wait_termination=True,
-    )
-
-
-@given(parsers.parse("the subarray {subarray} is in the CONFIGURING state"))
-def subarray_in_configuring_state(
-    context_fixt: SubarrayTestContextData,
-    tmc: TMCFacade,
-    default_commands_inputs: TestHarnessInputs,
-):
-    """Ensure the subarray is in the CONFIGURING state."""
-    context_fixt.starting_state = ObsState.CONFIGURING
-    context_fixt.expected_next_state = ObsState.READY
-
-    tmc.force_change_of_obs_state(
-        ObsState.CONFIGURING,
-        default_commands_inputs,
-        wait_termination=True,
-    )
-
-
-@given(parsers.parse("the subarray {subarray} is in the READY state"))
-def subarray_in_ready_state(
-    context_fixt: SubarrayTestContextData,
-    tmc: TMCFacade,
-    default_commands_inputs: TestHarnessInputs,
-):
-    """Ensure the subarray is in the READY state."""
-    context_fixt.starting_state = ObsState.READY
-
-    tmc.force_change_of_obs_state(
-        ObsState.READY,
-        default_commands_inputs,
-        wait_termination=True,
-    )
-
-
-@given(parsers.parse("the subarray {subarray} is in the SCANNING state"))
-def subarray_in_scanning_state(
-    context_fixt: SubarrayTestContextData,
-    tmc: TMCFacade,
-    default_commands_inputs: TestHarnessInputs,
-):
-    """Ensure the subarray is in the SCANNING state."""
-    context_fixt.starting_state = ObsState.SCANNING
-    context_fixt.expected_next_state = ObsState.READY
-
-    tmc.force_change_of_obs_state(
-        ObsState.SCANNING,
-        default_commands_inputs,
-        wait_termination=True,
     )
 
 
