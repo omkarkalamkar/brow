@@ -6,6 +6,7 @@ tag_description=
 **1. ska-tmc-low-integration 0.20.3-rc.2 - 0.20.3-rc.3**
 
     **1.1 ska-tmc-low - 0.20.3-rc.2 - 0.20.3-rc.3:**
+           * Updated ska-tmc-subarraynode v0.29.0
            * Implemented HealthState aggregation logic with AdminMode consideration (SP-4908)
            * Added documentation updates for HealthState aggregation
            * Included warning on `SetAdminMode` command usage
@@ -16,6 +17,7 @@ release_notes=
 **1. ska-tmc-low-integration 0.20.3-rc.2 - 0.20.3-rc.3**
 
     **1.1 ska-tmc-low - 0.20.3-rc.2 - 0.20.3-rc.3:**
+           * Updated ska-tmc-subarraynode v0.29.0
            * Implemented HealthState aggregation logic with AdminMode consideration (SP-4908)
            * Added documentation updates for HealthState aggregation
            * Included warning on `SetAdminMode` command usage

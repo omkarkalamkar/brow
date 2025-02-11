@@ -8,6 +8,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 Added
 -----
 [0.20.3-rc.3]
+* Updated ska-tmc-subarraynode v0.29.0
 * Implemented HealthState aggregation logic with AdminMode consideration (SP-4908)
 * Added documentation updates for HealthState aggregation
 * Included warning on `SetAdminMode` command usage
