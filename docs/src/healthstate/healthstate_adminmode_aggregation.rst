@@ -67,8 +67,8 @@ Although **AdminMode** is not aggregated separately, it influences HealthState a
 
 🔹 **Note:** Since **MCCS Subarray is OFFLINE**, its **FAILED** state is ignored. The system health is **DEGRADED** instead of **FAILED**.
 
-.. warning::
-   Do not use the `SetAdminMode` command directly, as AdminMode is managed internally by the system.
+.. warning::  
+   Although TMC devices provide the `SetAdminMode` command to set the `AdminMode` of lower-level devices and subsystems, its usage is discouraged. The functionality is not consistently implemented across all subsystems, and using this command may lead to system inconsistencies. Full implementation of `AdminMode` is expected by the end of PI 27.  
 
 Usage in TMC LOW
 -----------------------

@@ -45,7 +45,7 @@ This project is integration of the TMC components for the `Square Kilometre Arra
    :maxdepth: 1
    :caption: TMC Low Recovery
 
-   reovering_tmc/recovery
+   recovering_tmc/recovery
 
 .. toctree::
    :maxdepth: 1
