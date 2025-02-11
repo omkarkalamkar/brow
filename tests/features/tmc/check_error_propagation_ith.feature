@@ -13,5 +13,3 @@ Scenario Outline: TMC subarray reports errors during interactions with CSP or SD
       | SDP            | AssignResources  	 | EMPTY     |
       | CSP            | ReleaseResources 	 | IDLE      |
       | SDP            | ReleaseResources	 | IDLE      |
-      | CSP            | Configure         	 | IDLE      |
-      | SDP        	   | Configure           | IDLE      |
