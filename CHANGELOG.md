@@ -7,6 +7,11 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 Added
 -----
+[0.20.3-rc.3]
+* Implemented HealthState aggregation logic with AdminMode consideration (SP-4908)
+* Added documentation updates for HealthState aggregation
+* Included warning on `SetAdminMode` command usage
+
 [0.20.1]
 * Fixed SKB-648
 * Updated ska-tmc-mccsleafnodes v0.5.1 to fix SKB-627

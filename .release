@@ -1,19 +1,21 @@
-release=0.20.3-rc.2
-tag=0.20.3-rc.2
+release=0.20.3-rc.3
+tag=0.20.3-rc.3
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 0.20.3-rc.1 - 0.20.3-rc.2**
+**1. ska-tmc-low-integration 0.20.3-rc.2 - 0.20.3-rc.3**
 
-    **1.1 ska-tmc-low - 0.20.3-rc.1- 0.20.3-rc.2:
-           * Fixed bug skb-658
-
+    **1.1 ska-tmc-low - 0.20.3-rc.2 - 0.20.3-rc.3:**
+           * Implemented HealthState aggregation logic with AdminMode consideration (SP-4908)
+           * Added documentation updates for HealthState aggregation
+           * Included warning on `SetAdminMode` command usage
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 0.20.3-rc.1 - 0.20.3-rc.2
+**1. ska-tmc-low-integration 0.20.3-rc.2 - 0.20.3-rc.3**
 
- **1.1 ska-tmc-low - 0.20.3-rc.1- 0.20.3-rc.2:
-           * Fixed bug skb-658
-
+    **1.1 ska-tmc-low - 0.20.3-rc.2 - 0.20.3-rc.3:**
+           * Implemented HealthState aggregation logic with AdminMode consideration (SP-4908)
+           * Added documentation updates for HealthState aggregation
+           * Included warning on `SetAdminMode` command usage
