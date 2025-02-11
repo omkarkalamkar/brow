@@ -11,7 +11,7 @@ from ska_control_model import ObsState, ResultCode
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
 from ska_integration_test_harness.facades.sdp_facade import SDPFacade
 from ska_integration_test_harness.facades.tmc_facade import TMCFacade
-from ska_tango_testing.integration import log_events
+from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DevState
 
 from tests.resources.test_harness.constant import INTERMEDIATE_STATE_DEFECT
@@ -22,6 +22,7 @@ from tests.resources.test_harness.utils.my_file_json_input import (
 TIMEOUT = 100
 
 
+@pytest.mark.test1
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation_ith.feature",
@@ -36,7 +37,7 @@ def test_tmc_command_error_propagation():
 @given("the telescope is in ON state")
 def given_the_telescope_is_in_on_state(
     tmc: TMCFacade,
-    event_tracer,
+    event_tracer: TangoEventTracer,
 ):
     """Ensure the telescope is in ON state."""
     tmc.move_to_on(wait_termination=True)
