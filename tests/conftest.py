@@ -153,6 +153,7 @@ def change_event_callbacks() -> MockTangoEventCallbackGroup:
     )
 
 
+# pylint: disable=redefined-outer-name
 @pytest.fixture()
 def tmc_low() -> Generator[TMCLow, None, None]:
     """Return TMC Low object"""
@@ -381,11 +382,12 @@ def telescope_wrapper(
 
 
 @pytest.fixture
-def event_tracer() -> TangoEventTracer:
+def event_tracers() -> TangoEventTracer:
     """Create an event tracer."""
     return TangoEventTracer(
         event_enum_mapping={"obsState": ObsState},
     )
+
 
 @pytest.fixture
 def default_commands_inputs() -> TestHarnessInputs:
