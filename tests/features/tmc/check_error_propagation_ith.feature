@@ -10,6 +10,6 @@ Scenario Outline: TMC subarray reports errors during interactions with CSP or SD
     Examples:
       | subarray       | command         	 | obs_state |
       | CSP            | AssignResources 	 | EMPTY     |
-      | SDP            | AssignResources   | EMPTY     |
-      | CSP            | ReleaseResources  | IDLE      |
+      | SDP            | AssignResources     | EMPTY     |
+      | CSP            | ReleaseResources    | IDLE      |
       | SDP            | ReleaseResources	 | IDLE      |

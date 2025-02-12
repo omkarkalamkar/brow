@@ -66,7 +66,9 @@ def given_the_telescope_is_in_on_state(
 
     # Assertions
     event_tracer.clear_events()
-
+@given("TMC subarray is in ObsState EMPTY")
+def subarray_in_empty_obsstate():
+    "TMC subarray is in ObsState EMPTY"
 
 @when("the SDP subarray is in an abnormal state")
 def execute_command_on_abnormal_sdp_subarray(
