@@ -12,7 +12,7 @@ class MyFileJSONInput(FileJSONInput):
         os.path.dirname(__file__),
         "..",
         "..",
-        # "..",
+        "..",
         "data",
     )
     FILE_SUFFIX = ".json"

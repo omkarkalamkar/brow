@@ -9,7 +9,19 @@ from typing import Generator
 import pytest
 import tango
 from pytest_bdd import given, parsers, then, when
-from ska_control_model import HealthState
+from ska_control_model import HealthState, ObsState
+from ska_integration_test_harness.facades.csp_facade import CSPFacade
+from ska_integration_test_harness.facades.sdp_facade import SDPFacade
+from ska_integration_test_harness.facades.tmc_facade import TMCFacade
+from ska_integration_test_harness.init.test_harness_builder import (
+    TestHarnessBuilder,
+)
+from ska_integration_test_harness.inputs.test_harness_inputs import (
+    TestHarnessInputs,
+)
+from ska_integration_test_harness.structure.telescope_wrapper import (
+    TelescopeWrapper,
+)
 from ska_ser_logging import configure_logging
 from ska_tango_testing.integration import TangoEventTracer
 from ska_tango_testing.mock.tango.event_callback import (
@@ -32,6 +44,9 @@ from tests.resources.test_harness.subarray_node_with_csp_low import (
 )
 from tests.resources.test_harness.tmc_low import TMCLow
 from tests.resources.test_harness.utils.common_utils import JsonFactory
+from tests.resources.test_harness.utils.my_file_json_input import (
+    MyFileJSONInput,
+)
 
 configure_logging(logging.DEBUG)
 LOGGER = logging.getLogger(__name__)
@@ -313,3 +328,72 @@ def adjust_controller_to_degraded_state(controller):
     """
     health_params = {"stations_degraded_threshold": 0}
     controller.healthModelParams = json.dumps(health_params)
+
+
+@pytest.fixture
+def tmc(telescope_wrapper: TelescopeWrapper) -> TMCFacade:
+    """Create a facade to TMC devices."""
+    return TMCFacade(telescope_wrapper)
+
+
+@pytest.fixture
+def csp(telescope_wrapper: TelescopeWrapper):
+    """Create a facade to CSP devices."""
+    return CSPFacade(telescope_wrapper)
+
+
+@pytest.fixture
+def sdp(telescope_wrapper: TelescopeWrapper):
+    """Create a facade to SDP devices."""
+    return SDPFacade(telescope_wrapper)
+
+
+# ----------------------------------------------------------
+# Tango event tracer
+@pytest.fixture
+def telescope_wrapper(
+    default_commands_inputs: TestHarnessInputs,
+) -> TelescopeWrapper:
+    """Create an unique test harness with proxies to all devices."""
+    test_harness_builder = TestHarnessBuilder()
+
+    # import from a configuration file device names and emulation directives
+    # for TMC, CSP, SDP and MCCS
+    test_harness_builder.read_config_file(
+        "../../../../app/tests/resources/test_harness/test_harness_config.yaml"
+    )
+    test_harness_builder.validate_configurations()
+
+    # set the default inputs for the TMC commands,
+    # which will be used for teardown procedures
+    test_harness_builder.set_default_inputs(default_commands_inputs)
+    test_harness_builder.validate_default_inputs()
+    test_harness_builder.set_kubernetes_namespace(os.getenv("KUBE_NAMESPACE"))
+
+    # build the wrapper of the telescope and it's sub-systems
+    telescope = test_harness_builder.build()
+    telescope.actions_default_timeout = 120
+    yield telescope
+
+    # after a test is completed, reset the telescope to its initial state
+    # (obsState=READY, telescopeState=OFF, no resources assigned)
+    telescope.tear_down()
+
+
+@pytest.fixture
+def event_tracer() -> TangoEventTracer:
+    """Create an event tracer."""
+    return TangoEventTracer(
+        event_enum_mapping={"obsState": ObsState},
+    )
+
+
+@pytest.fixture
+def default_commands_inputs() -> TestHarnessInputs:
+    """Default JSON inputs for TMC commands."""
+    return TestHarnessInputs(
+        assign_input=MyFileJSONInput("centralnode", "assign_resources_low"),
+        configure_input=MyFileJSONInput("subarray", "configure_low"),
+        scan_input=MyFileJSONInput("subarray", "scan_low"),
+        release_input=MyFileJSONInput("centralnode", "release_resources_low"),
+    )

@@ -12,6 +12,8 @@ tmc:
   tmc_csp_subarray_leaf_node_name: "ska_low/tm_leaf_node/csp_subarray01"
   tmc_sdp_master_leaf_node_name: "ska_low/tm_leaf_node/sdp_master"
   tmc_sdp_subarray_leaf_node_name: "ska_low/tm_leaf_node/sdp_subarray01"
+  tmc_mccs_subarray_leaf_node_name: "ska_low/tm_leaf_node/mccs_master"
+  tmc_mccs_master_leaf_node_name: "low-mccs/subarray/01"
 
 csp:
   is_emulated: true # Supported false too, default is true
@@ -33,3 +35,4 @@ mccs:
   # Expected device names (Required)
   mccs_controller_name: "low-mccs/control/control"
   mccs_subarray1_name: "low-mccs/subarray/01"
+  
