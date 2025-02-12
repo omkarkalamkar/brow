@@ -16,7 +16,6 @@ from pytest_bdd import parsers, scenario, then, when
 from ska_control_model import ResultCode
 from ska_tango_testing.integration import TangoEventTracer
 
-from tests.conftest import LOGGER
 from tests.resources.test_harness.constant import (
     INTERMEDIATE_CONFIGURING_STATE_DEFECT,
     low_csp_subarray_leaf_node,
@@ -77,7 +76,6 @@ def execute_command(
                     INTERMEDIATE_CONFIGURING_STATE_DEFECT
                 )
 
-                LOGGER.info("Working on Ready State")
                 perform_ready_transition_with_end(
                     subarray_node_low,
                     event_tracer,
@@ -88,20 +86,18 @@ def execute_command(
                 pytest.defective_subarray.SetDefective(
                     INTERMEDIATE_CONFIGURING_STATE_DEFECT
                 )
-                LOGGER.info("Working on End Scan")
+
                 verify_scanning_transition_with_endscan(
                     subarray_node_low,
-                    # event_tracer,
                 )
             case "SCAN":
 
                 pytest.defective_subarray.SetDefective(
                     INTERMEDIATE_CONFIGURING_STATE_DEFECT
                 )
-                LOGGER.info("Workng on Scan")
+
                 perform_scan(
                     subarray_node_low,
-                    # event_tracer,
                     command_input_factory,
                 )
     elif device == "SDP":
