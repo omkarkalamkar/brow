@@ -350,7 +350,6 @@ def sdp(telescope_wrapper: TelescopeWrapper):
 
 
 # ----------------------------------------------------------
-# Tango event tracer
 @pytest.fixture
 def telescope_wrapper(
     default_commands_inputs: TestHarnessInputs,
