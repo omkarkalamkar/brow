@@ -1,4 +1,7 @@
+"""Test case to verify error propagation functionality for
+the AssignResourcs/ReleaseResources command"""
 # import time
+import json
 
 import pytest
 from assertpy import assert_that
@@ -66,27 +69,31 @@ def given_the_telescope_is_in_on_state(
 
     # Assertions
     event_tracer.clear_events()
+
+
 @given("TMC subarray is in ObsState EMPTY")
 def subarray_in_empty_obsstate():
     "TMC subarray is in ObsState EMPTY"
+
 
 @when("the SDP subarray is in an abnormal state")
 def execute_command_on_abnormal_sdp_subarray(
     sdp: SDPFacade,
 ):
-    sdp.sdp_subarray.SetDefective(INTERMEDIATE_STATE_DEFECT)
+    """executes commands"""
+    sdp.sdp_subarray.SetDefective(json.dumps(INTERMEDIATE_STATE_DEFECT))
 
 
 @when("the CSP subarray is in an abnormal state")
 def execute_command_on_abnormal_csp_subarray(
     csp: CSPFacade,
 ):
-    csp.csp_subarray.SetDefective(INTERMEDIATE_STATE_DEFECT)
+    """executes commands"""
+    csp.csp_subarray.SetDefective(json.dumps(INTERMEDIATE_STATE_DEFECT))
 
 
 @when(parsers.parse("I issue the AssignResources command to the TMC"))
 def execute_command_assign_resources(
-    command: str,
     tmc,
     event_tracer,
 ):
@@ -108,7 +115,6 @@ def execute_command_assign_resources(
 
 @when("I issue the ReleaseResources command to the TMC")
 def execute_commands_release_resources(
-    command: str,
     tmc,
     event_tracer,
 ):
@@ -130,7 +136,6 @@ def execute_commands_release_resources(
 
 @then("the Error is reported by the TMC")
 def error_reporting(
-    command,
     tmc,
     event_tracer,
 ):

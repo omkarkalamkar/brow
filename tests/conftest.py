@@ -387,7 +387,6 @@ def event_tracer() -> TangoEventTracer:
         event_enum_mapping={"obsState": ObsState},
     )
 
-
 @pytest.fixture
 def default_commands_inputs() -> TestHarnessInputs:
     """Default JSON inputs for TMC commands."""
