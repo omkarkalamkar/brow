@@ -1,3 +1,5 @@
+"""Test case to verify error propagation functionality for
+the AssignResourcs/ReleaseResources command"""
 # import time
 
 import json
@@ -78,6 +80,7 @@ def subarray_in_empty_obsstate():
 def execute_command_on_abnormal_sdp_subarray(
     sdp: SDPFacade,
 ):
+    "the SDP subarray is in an abnormal state"
     sdp.sdp_subarray.SetDefective(json.dumps(INTERMEDIATE_STATE_DEFECT))
 
 
