@@ -3,7 +3,7 @@ the AssignResourcs/ReleaseResources command"""
 # import time
 
 import json
-
+import time
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
@@ -90,8 +90,7 @@ def execute_command_assign_resources(
 ):
     """executes commands"""
     assign_input = MyFileJSONInput("centralnode", "assign_resources_low")
-    pytest.unique_id = tmc.central_node.AssignResources(assign_input)
-
+    pytest.unique_id = tmc.central_node.AssignResources(assign_input.as_str())
 
 @then("the Error is reported by the TMC")
 def error_reporting(
@@ -100,7 +99,7 @@ def error_reporting(
 ):
     """executes commands"""
     exception_message = "Exception occurred on the following devices"
-
+    time.sleep(5)
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         '"the command failure is reported by subarray with appropriate"'
