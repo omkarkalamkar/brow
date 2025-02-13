@@ -4,6 +4,7 @@ the AssignResourcs/ReleaseResources command"""
 
 import json
 import time
+
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
@@ -91,6 +92,7 @@ def execute_command_assign_resources(
     """executes commands"""
     assign_input = MyFileJSONInput("centralnode", "assign_resources_low")
     pytest.unique_id = tmc.central_node.AssignResources(assign_input.as_str())
+
 
 @then("the Error is reported by the TMC")
 def error_reporting(
