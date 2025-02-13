@@ -14,7 +14,7 @@ server:
     classes:
     - name: "CentralNodeLow"
       devices:
-      - name: "ska_low/tm_central/central_node"
+      - name: "low-tmc/central-node/0"
         properties:
         - name: "CspMasterLeafNodeFQDN"
           values:

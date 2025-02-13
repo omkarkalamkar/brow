@@ -11,7 +11,7 @@ server:
     classes:
     - name: "SdpMasterLeafNode"
       devices:
-      - name: "ska_low/tm_leaf_node/sdp_master"
+      - name: "low-tmc/leaf-node-sdp/0"
         properties:
         - name: "SdpMasterFQDN"
           values:

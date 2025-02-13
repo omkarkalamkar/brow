@@ -25,7 +25,7 @@ server:
       classes:
       - name: "CspSubarrayLeafNodeLow"
         devices:
-          - name: "ska_low/tm_leaf_node/csp_subarray{{ printf "%02s" . }}"
+          - name: "low-tmc/subarray-leaf-node-csp/{{ printf "%02s" . }}"
             properties:
               - name: "TelmodelSource"
                 values:

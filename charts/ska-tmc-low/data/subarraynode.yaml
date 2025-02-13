@@ -30,7 +30,7 @@ server:
       classes:
       - name: "SubarrayNodeLow"
         devices:
-        - name: "ska_low/tm_subarray_node/{{ . }}"
+        - name: "low-tmc/subarray/{{ printf "%02s" . }}"
           properties:
           - name: "CspSubarrayLNFQDN"
             values:

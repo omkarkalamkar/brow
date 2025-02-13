@@ -11,7 +11,7 @@ server:
     classes:
     - name: "MccsMasterLeafNode"
       devices:
-      - name: "ska_low/tm_leaf_node/mccs_master"
+      - name: "mid-low/leaf-node-mccs/0"
         properties:
         - name: "MccsMasterFQDN"
           values:

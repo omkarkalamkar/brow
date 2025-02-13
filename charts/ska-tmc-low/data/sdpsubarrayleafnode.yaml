@@ -18,7 +18,7 @@ server:
       classes:
       - name: "SdpSubarrayLeafNode"
         devices:
-          - name: "ska_low/tm_leaf_node/sdp_subarray{{ printf "%02s" . }}"
+          - name: "low-tmc/subarray-leaf-node-sdp/{{ printf "%02s" . }}"
             properties:
               - name: "SdpSubarrayFQDN"
                 values:
