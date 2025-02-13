@@ -448,8 +448,7 @@ def test_abort_with_mccs_in_empty(
     )
 
     exception_message = (
-        " low-tmc/subarray/01: "
-        + "Timeout has occurred, command failed"
+        " low-tmc/subarray/01: " + "Timeout has occurred, command failed"
     )
 
     assert_that(event_tracer).described_as(
