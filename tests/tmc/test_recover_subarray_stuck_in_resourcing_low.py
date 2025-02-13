@@ -282,7 +282,7 @@ def test_abort_with_sdp_csp_in_empty(
 
     exception_message = (
         "Exception occurred on the following devices: "
-        f"low-tmc/subarray-leaf-node-{defective_device}/01: "
+        f"low-tmc/subarray-leaf-node-{defective_device[:3]}/01: "
     )
 
     assert_that(event_tracer).described_as(
@@ -448,7 +448,8 @@ def test_abort_with_mccs_in_empty(
     )
 
     exception_message = (
-        " low-tmc/subarray/01: " + "Timeout has occurred, command failed"
+        " low-tmc/subarray/01: "
+        + "Timeout has occurred, command failed"
     )
 
     assert_that(event_tracer).described_as(
