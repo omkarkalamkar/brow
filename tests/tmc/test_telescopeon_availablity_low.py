@@ -28,9 +28,7 @@ def test_assign(json_factory):
     assign_json = json_factory("assign_resource_low")
     central_node = DeviceProxy(centralnode)
     _, message = central_node.AssignResources(assign_json)
-    assert "Subarray ska_low/tm_subarray_node/1 is not available" in str(
-        message
-    )
+    assert "Subarray low-tmc/subarray/01 is not available" in str(message)
 
 
 @pytest.mark.skip(reason="This test case needs pods deletion")
@@ -42,9 +40,7 @@ def test_release(json_factory):
     central_node = DeviceProxy(centralnode)
     _, message = central_node.ReleaseResources(release_json)
 
-    assert "Subarray ska_low/tm_subarray_node/1 is not available" in str(
-        message
-    )
+    assert "Subarray low-tmc/subarray/01 is not available" in str(message)
 
 
 @pytest.mark.skip(reason="This test case needs pods deletion")

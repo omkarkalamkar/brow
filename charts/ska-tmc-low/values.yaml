@@ -34,7 +34,7 @@ global:
     - "mccssubarrayleafnode"
 
   # fqdn for low devices
-  tmc_subarray_prefix: "ska_low/tm_subarray_node"
+  tmc_subarray_prefix: "low-tmc/subarray"
   csp_subarray_ln_prefix: "low-tmc/subarray-leaf-node-csp/"
   sdp_subarray_ln_prefix: "low-tmc/subarray-leaf-node-sdp/"
   csp_master_ln_prefix: "low-tmc/leaf-node-csp/0"
@@ -103,14 +103,14 @@ mccsmasterleafnode:
   image:
     registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
     image: ska-tmc-mccsleafnodes
-    tag: 0.6.2-dev.c7e064a67
+    tag: 0.6.2-dev.c1b47827b
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
     registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
     image: ska-tmc-mccsleafnodes
-    tag: 0.6.2-dev.c7e064a67
+    tag: 0.6.2-dev.c1b47827b
     pullPolicy: IfNotPresent
 
 resources:

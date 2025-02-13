@@ -3,7 +3,7 @@ function: telescope-monitoring
 domain: general-monitoring
 instances: ["01"]
 entrypoints:
-  - name: "ska_tmc_cspsubarrayleafnode.csp_subarray_leaf_node_low.CspSubarrayLeafNodeLow"
+  - name: "ska_tmc_cspsubarrayleafnode.csp_subarray_leaf_node_low.LowTmcLeafNodeCspSubarray"
 {{- $TelmodelSource := .Values.deviceServers.cspsubarrayleafnode.TelmodelSource }}
 {{- $TelmodelPath := .Values.deviceServers.cspsubarrayleafnode.TelmodelPath }}
 {{- $DelayModelTimeInAdvance := .Values.deviceServers.cspsubarrayleafnode.DelayModelTimeInAdvance }}
@@ -23,7 +23,7 @@ server:
   {{- range  ( regexSplit " " ((.Values.subarray_count | int) | seq ) -1 ) }}
     - name: "{{ printf "%02s" . }}"
       classes:
-      - name: "CspSubarrayLeafNodeLow"
+      - name: "LowTmcLeafNodeCspSubarray"
         devices:
           - name: "low-tmc/subarray-leaf-node-csp/{{ printf "%02s" . }}"
             properties:

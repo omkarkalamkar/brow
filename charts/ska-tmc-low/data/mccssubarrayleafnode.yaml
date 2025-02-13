@@ -3,7 +3,7 @@ function: telescope-monitoring
 domain: general-monitoring
 instances: ["01"]
 entrypoints:
-  - name: "ska_tmc_mccssubarrayleafnode.mccs_subarray_leaf_node.MccsSubarrayLeafNode"
+  - name: "ska_tmc_mccssubarrayleafnode.mccs_subarray_leaf_node.LowTmcLeafNodeMccsSubarray"
 server:
   name: "mccs_subarray_leaf_node"
   instances:
@@ -16,7 +16,7 @@ server:
   {{- range  ( regexSplit " " ((.Values.subarray_count | int) | seq ) -1 ) }}
     - name: "{{ printf "%02s" . }}"
       classes:
-      - name: "MccsSubarrayLeafNode"
+      - name: "LowTmcLeafNodeMccsSubarray"
         devices:
           - name: "low-tmc/subarray-leaf-node-mccs/{{ printf "%02s" . }}"
             properties:

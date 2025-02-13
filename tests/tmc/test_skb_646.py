@@ -247,7 +247,7 @@ def tmc_subarray_is_in_resourcing(
     )
     exception_message = [
         "Exception occurred on the following devices:",
-        "ska_low/tm_leaf_node/csp_subarray01:",
+        "low-tmc/subarray-leaf-node-csp/01:",
         "Command is not allowed",
     ]
     assert_that(event_tracer).described_as(

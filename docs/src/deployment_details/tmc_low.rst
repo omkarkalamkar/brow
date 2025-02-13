@@ -191,21 +191,21 @@ Below are the FQDN's of the TMC Low components. For updated FQDN's kindly refer 
 +------------------------------------------+------------------------------------------------------------------------+ 
 | TMC Low component                        |            FQDN                                                        | 
 +==========================================+========================================================================+ 
-| Central Node                             |  ska_low/tm_central/central_node                                       |
+| Central Node                             |  low-tmc/central-node/0                                       |
 +------------------------------------------+------------------------------------------------------------------------+
-| Subarray Node                            |  ska_low/tm_subarray_node/{id}                                         |
+| Subarray Node                            |  low-tmc/subarray/{id}                                         |
 +------------------------------------------+------------------------------------------------------------------------+
-| CSP Subarray Leaf Node                   |  ska_low/tm_leaf_node/csp_subarray{id}                                 |
+| CSP Subarray Leaf Node                   |  low-tmc/subarray-leaf-node-csp/{id}                                 |
 +------------------------------------------+------------------------------------------------------------------------+
-| SDP Subarray Leaf Node                   |  ska_low/tm_leaf_node/sdp_subarray{id}                                 |
+| SDP Subarray Leaf Node                   |  low-tmc/subarray-leaf-node-sdp/{id}                                 |
 +------------------------------------------+------------------------------------------------------------------------+
-| MCCS Subarray Leaf Node                  +  ska_low/tm_leaf_node/mccs_subarray{id}                                |    
+| MCCS Subarray Leaf Node                  +  low-tmc/subarray-leaf-node-mccs/{id}                                |    
 +------------------------------------------+------------------------------------------------------------------------+
-| MCCS Master Leaf Node                    +  ska_low/tm_leaf_node/mccs_master                                      |
+| MCCS Master Leaf Node                    +  low-tmc/leaf-node-mccs/0                                      |
 +------------------------------------------+------------------------------------------------------------------------+
-| SDP Master Leaf Node                     +  ska_low/tm_leaf_node/sdp_master                                       |
+| SDP Master Leaf Node                     +  low-tmc/leaf-node-sdp/0                                       |
 +------------------------------------------+------------------------------------------------------------------------+
-| CSP Master Leaf Node                     +  ska_low/tm_leaf_node/csp_master                                       |
+| CSP Master Leaf Node                     +  low-tmc/leaf-node-csp/0                                       |
 +------------------------------------------+------------------------------------------------------------------------+
 
 
@@ -214,23 +214,23 @@ Below are the FQDN's of the TMC Low components. For updated FQDN's kindly refer 
 
             Subarray 1 will be:
            
-                Subarray Node : ska_low/tm_subarray_node/01
+                Subarray Node : low-tmc/subarray/01
            
-                CSP Subarray Leaf Node: ska_low/tm_leaf_node/csp_subarray01 
+                CSP Subarray Leaf Node: low-tmc/subarray-leaf-node-csp/01 
            
-                SDP Subarray Leaf Node: ska_low/tm_leaf_node/sdp_subarray01
-           
-                MCCS Subarray Leaf Node: ska_low/tm_leaf_node/mccs_subarray01
+                SDP Subarray Leaf Node: low-tmc/subarray-leaf-node-sdp/01
+
+                MCCS Subarray Leaf Node: low-tmc/subarray-leaf-node-mccs/01
          
             For Subarray 2:
 
-                Subarray Node : ska_low/tm_subarray_node/02
+                Subarray Node : low-tmc/subarray/02
          
-                CSP Subarray Leaf Node: ska_low/tm_leaf_node/csp_subarray02
+                CSP Subarray Leaf Node: low-tmc/subarray-leaf-node-csp/02
          
-                SDP Subarray Leaf Node: ska_low/tm_leaf_node/sdp_subarray02
+                SDP Subarray Leaf Node: low-tmc/subarray-leaf-node-sdp/02
          
-                MCCS Subarray Leaf Node: ska_low/tm_leaf_node/mccs_subarray02
+                MCCS Subarray Leaf Node: low-tmc/subarray-leaf-node-mccs/02
 
 
 

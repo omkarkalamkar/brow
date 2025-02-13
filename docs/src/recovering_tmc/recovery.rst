@@ -20,7 +20,7 @@ Using Abort() & Restart() Command
 |                                   |    - To recover TMC Low stuck in RESOURCING from Subarray node execute:|
 |                                   |      Abort() command followed by Restart() command.                    |
 |                                   |                                                                        |
-|                                   |      - subarray_node = tango.DeviceProxy("ska_low/tm_subarray_node/01")|
+|                                   |      - subarray_node = tango.DeviceProxy("low-tmc/subarray/01")|
 | + RESOURCING                      |      - subarray_node.Abort()                                           |
 |                                   |      - subarray_node.Restart()                                         |
 | + CONFIGURING                     |                                                                        |
@@ -44,7 +44,7 @@ and on the device where the obsState is RESOURCING invoke Abort() command follow
 |                                   | - If the ObsState of the device is IDLE, invoke ReleaseAllResources()  |
 |                                   |   command on that device. For Ex.                                      |
 |                                   | -  cspleafnode_proxy =                                                 |
-|                                   |    tango.DeviceProxy("ska_low/tm_leaf_node/csp_subarray01")            |
+|                                   |    tango.DeviceProxy("low-tmc/subarray-leaf-node-csp/01")            |
 |                                   | - To check ObsState of cspleafnode, execute                            |
 |                                   |   `cspleafnode_proxy.obsState`                                         |
 |                                   | - To release resources of the device, execute                          |
@@ -64,6 +64,6 @@ TMC Low in FAULT ObsState
 | ObsState                          |    - Create device proxy of subarray node                              |
 |                                   |    - To recover TMC Low stuck in FAULT from Subarray node execute:     |
 |                                   |      RESTART command.                                                  |
-|                                   |    - subarray_node = tango.DeviceProxy("ska_low/tm_subarray_node/01")  |
+|                                   |    - subarray_node = tango.DeviceProxy("low-tmc/subarray/01")  |
 |                                   |    - subarray_node.Restart()                                           |
 +-----------------------------------+------------------------------------------------------------------------+

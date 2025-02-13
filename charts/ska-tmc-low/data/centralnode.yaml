@@ -3,7 +3,7 @@ function: telescope-monitoring
 domain: general-monitoring
 instances: ["01"]
 entrypoints:
-  - name: "ska_tmc_centralnode.central_node_low.CentralNodeLow"
+  - name: "ska_tmc_centralnode.central_node_low.LowTmcCentralNode"
 server:
   name: "central_node_low"
   instances:
@@ -12,7 +12,7 @@ server:
   {{ $sdp_sa_ln_fqdn_prefix:= .Values.global.sdp_subarray_ln_prefix}}
   - name: "01"
     classes:
-    - name: "CentralNodeLow"
+    - name: "LowTmcCentralNode"
       devices:
       - name: "low-tmc/central-node/0"
         properties:
@@ -46,7 +46,7 @@ server:
         - name: "TMCSubarrayNodes"
           values:
           {{- range  ( regexSplit " " ((.Values.subarray_count | int) | seq ) -1 )  }}
-          - "{{ $tmc_sa_fqdn_prefix }}/{{ . }}"
+          - "{{ $tmc_sa_fqdn_prefix }}/{{ printf "%02s" . }}"
           {{- end }}
         - name: "CspSubarrayLeafNodes"
           values:

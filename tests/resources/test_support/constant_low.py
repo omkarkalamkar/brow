@@ -3,14 +3,14 @@ from ska_control_model import ObsState, ResultCode
 
 from tests.resources.test_support.common_utils.result_code import FaultType
 
-centralnode = "ska_low/tm_central/central_node"
-tmc_subarraynode1 = "ska_low/tm_subarray_node/1"
-tmc_subarraynode2 = "ska_low/tm_subarray_node/2"
-tmc_subarraynode3 = "ska_low/tm_subarray_node/3"
-tmc_csp_master_leaf_node = "ska_low/tm_leaf_node/csp_master"
-tmc_sdp_master_leaf_node = "ska_low/tm_leaf_node/sdp_master"
-tmc_csp_subarray_leaf_node = "ska_low/tm_leaf_node/csp_subarray01"
-tmc_sdp_subarray_leaf_node = "ska_low/tm_leaf_node/sdp_subarray01"
+centralnode = "low-tmc/central-node/0"
+tmc_subarraynode1 = "low-tmc/subarray/01"
+tmc_subarraynode2 = "low-tmc/subarray/02"
+tmc_subarraynode3 = "low-tmc/subarray/03"
+tmc_csp_master_leaf_node = "low-tmc/leaf-node-csp/0"
+tmc_sdp_master_leaf_node = "low-tmc/leaf-node-sdp/0"
+tmc_csp_subarray_leaf_node = "low-tmc/subarray-leaf-node-csp/01"
+tmc_sdp_subarray_leaf_node = "low-tmc/subarray-leaf-node-sdp/01"
 sdp_subarray1 = "low-sdp/subarray/01"
 sdp_subarray2 = "low-sdp/subarray/02"
 sdp_subarray3 = "low-sdp/subarray/03"

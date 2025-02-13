@@ -3,15 +3,15 @@ function: telescope-monitoring
 domain: general-monitoring
 instances: ["01"]
 entrypoints:
-  - name: "ska_tmc_mccsmasterleafnode.mccs_master_leaf_node.MccsMasterLeafNode"
+  - name: "ska_tmc_mccsmasterleafnode.mccs_master_leaf_node.LowTmcLeafNodeMccs"
 server:
   name: "mccs_master_leaf_node"
   instances:
   - name: "01"
     classes:
-    - name: "MccsMasterLeafNode"
+    - name: "LowTmcLeafNodeMccs"
       devices:
-      - name: "mid-low/leaf-node-mccs/0"
+      - name: "low-tmc/leaf-node-mccs/0"
         properties:
         - name: "MccsMasterFQDN"
           values:
