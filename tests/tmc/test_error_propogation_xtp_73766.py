@@ -16,10 +16,8 @@ from pytest_bdd import parsers, scenario, then, when
 from ska_control_model import ResultCode
 from ska_tango_testing.integration import TangoEventTracer
 
-from tests.conftest import LOGGER
 from tests.resources.test_harness.constant import (
     INTERMEDIATE_CONFIGURING_STATE_DEFECT,
-    TIMEOUT,
     low_csp_subarray_leaf_node,
     low_sdp_subarray_leaf_node,
     mccs_subarray_leaf_node,
@@ -78,7 +76,6 @@ def execute_command(
                     INTERMEDIATE_CONFIGURING_STATE_DEFECT
                 )
 
-                LOGGER.info("Working on Ready State")
                 perform_ready_transition_with_end(
                     subarray_node_low,
                     event_tracer,
@@ -89,32 +86,27 @@ def execute_command(
                 pytest.defective_subarray.SetDefective(
                     INTERMEDIATE_CONFIGURING_STATE_DEFECT
                 )
-                LOGGER.info("Working on End Scan")
+
                 verify_scanning_transition_with_endscan(
                     subarray_node_low,
-                    # event_tracer,
                 )
             case "SCAN":
 
                 pytest.defective_subarray.SetDefective(
                     INTERMEDIATE_CONFIGURING_STATE_DEFECT
                 )
-                LOGGER.info("Workng on Scan")
+
                 perform_scan(
                     subarray_node_low,
-                    # event_tracer,
                     command_input_factory,
                 )
     elif device == "SDP":
 
         match command:
             case "END":
-                # pytest.defective_subarray.SetDefective(
-                #     COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE
-                # )
 
                 pytest.defective_subarray.SetDelayInfo(json.dumps({"End": 55}))
-                LOGGER.info("Working on Ready State")
+
                 perform_ready_transition_with_end(
                     subarray_node_low,
                     event_tracer,
@@ -122,29 +114,22 @@ def execute_command(
 
             case "ENDSCAN":
 
-                # pytest.defective_subarray.SetDefective(
-                #     COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE
-                # )
                 pytest.defective_subarray.SetDelayInfo(
                     json.dumps({"EndScan": 55})
                 )
-                LOGGER.info("Working on End Scan")
+
                 verify_scanning_transition_with_endscan(
                     subarray_node_low,
                     # event_tracer,
                 )
             case "SCAN":
 
-                # pytest.defective_subarray.SetDefective(
-                #     COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE
-                # )
                 pytest.defective_subarray.SetDelayInfo(
                     json.dumps({"Scan": 55})
                 )
-                LOGGER.info("Workng on Scan")
+
                 perform_scan(
                     subarray_node_low,
-                    # event_tracer,
                     command_input_factory,
                 )
 
@@ -161,8 +146,6 @@ def execute_command_on_tmc_with_defectivesetup(
     """
     Send next command on TMC
     """
-
-    LOGGER.info("Inside %s  is invoked for %s", command, defectiveSubsystem)
 
     pytest.defective_subarray = None
     match defectiveSubsystem:
@@ -227,14 +210,6 @@ def validate_error_message_reporting(
     Send next command on TMC
     """
 
-    LOGGER.info("validate_error_message_reporting")
-
-    # exception_message = (
-    #     "Exception occurred on the following devices:"
-    #     + f" {pytest.defective_device}:"
-    #     + " Exception occurred, command failed."
-    # )
-
     exception_message = "Timeout has occurred, command failed"
 
     assert_that(event_tracer).described_as(
@@ -245,7 +220,7 @@ def validate_error_message_reporting(
         f"({subarray_node_low.subarray_node.dev_name()}) "
         "is expected have longRunningCommandResult"
         "(ResultCode.FAILED,exception)",
-    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+    ).within_timeout(120).has_desired_result_code_message_in_lrcr_event(
         subarray_node_low.subarray_node,
         [exception_message],
         pytest.unique_id[0],
