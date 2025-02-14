@@ -32,6 +32,8 @@ This project is integration of the TMC components for the `Square Kilometre Arra
    :caption: Developer guide
 
    developer_guide/code_quality
+   developer_guide/fqdns
+
    
 
 .. toctree::

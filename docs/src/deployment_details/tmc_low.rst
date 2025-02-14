@@ -184,30 +184,6 @@ Configurable options
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
 
 
-TMC Low Sub-system FQDN's
--------------------------
-Below are the FQDN's of the TMC Low components. For updated FQDN's kindly refer values.yaml in the TMC Low charts.
-
-+------------------------------------------+------------------------------------------------------------------------+ 
-| TMC Low component                        |            FQDN                                                        | 
-+==========================================+========================================================================+ 
-| Central Node                             |  low-tmc/central-node/0                                       |
-+------------------------------------------+------------------------------------------------------------------------+
-| Subarray Node                            |  low-tmc/subarray/{id}                                         |
-+------------------------------------------+------------------------------------------------------------------------+
-| CSP Subarray Leaf Node                   |  low-tmc/subarray-leaf-node-csp/{id}                                 |
-+------------------------------------------+------------------------------------------------------------------------+
-| SDP Subarray Leaf Node                   |  low-tmc/subarray-leaf-node-sdp/{id}                                 |
-+------------------------------------------+------------------------------------------------------------------------+
-| MCCS Subarray Leaf Node                  +  low-tmc/subarray-leaf-node-mccs/{id}                                |    
-+------------------------------------------+------------------------------------------------------------------------+
-| MCCS Master Leaf Node                    +  low-tmc/leaf-node-mccs/0                                      |
-+------------------------------------------+------------------------------------------------------------------------+
-| SDP Master Leaf Node                     +  low-tmc/leaf-node-sdp/0                                       |
-+------------------------------------------+------------------------------------------------------------------------+
-| CSP Master Leaf Node                     +  low-tmc/leaf-node-csp/0                                       |
-+------------------------------------------+------------------------------------------------------------------------+
-
 
 **NOTE** : {id} is the identifier for the deployed subarray.
            For instance, if two subarrays are deployed
