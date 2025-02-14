@@ -1,31 +1,32 @@
 """Test case to verify error propagation functionality for
-the AssignResourcs/ReleaseResources command"""
-# import time
+the AssignResourcs command"""
 
 import json
-import time
 
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
 from ska_control_model import ResultCode
-from ska_integration_test_harness.facades.sdp_facade import SDPFacade
+from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
 from ska_integration_test_harness.facades.tmc_facade import TMCFacade
-
-# )
 from ska_tango_testing.integration import log_events
 
-from tests.resources.test_harness.constant import INTERMEDIATE_STATE_DEFECT
+from tests.resources.test_harness.constant import (  # mccs_master_leaf_node,
+    ERROR_PROPAGATION_DEFECT,
+)
 from tests.resources.test_harness.utils.my_file_json_input import (
     MyFileJSONInput,
 )
+
+# import time
+
 
 # from ska_integration_test_harness.inputs.test_harness_inputs import (
 # TestHarnessInputs,
 # from tango import DevState
 
 
-TIMEOUT = 100
+TIMEOUT = 80
 
 
 @pytest.mark.test
@@ -77,12 +78,12 @@ def subarray_in_empty_obsstate():
     "TMC subarray is in ObsState EMPTY"
 
 
-@when("the SDP subarray is in an abnormal state")
-def execute_command_on_abnormal_sdp_subarray(
-    sdp: SDPFacade,
+@when("the MCCS controller is in an abnormal state")
+def execute_command_on_abnormal_mccs_subarray(
+    mccs: MCCSFacade,
 ):
-    "the SDP subarray is in an abnormal state"
-    sdp.sdp_subarray.SetDefective(json.dumps(INTERMEDIATE_STATE_DEFECT))
+    "the mccs subarray is in an abnormal state"
+    mccs.mccs_controller.SetDefective(json.dumps(ERROR_PROPAGATION_DEFECT))
 
 
 @when(parsers.parse("I issue the AssignResources command to the TMC"))
@@ -97,21 +98,26 @@ def execute_command_assign_resources(
 @then("the Error is reported by the TMC")
 def error_reporting(
     tmc,
-    event_tracer,
+    event_tracers,
 ):
     """executes commands"""
-    exception_message = "Exception occurred on the following devices"
-    time.sleep(5)
-    assert_that(event_tracer).described_as(
+    # exception_message = (
+    #     "Exception occurred on the following devices:"
+    #     + "ska_low/tm_leaf_node/mccs_master:"
+    #     + "Exception occurred, command failed."
+    # )
+    exception_message = "command failed"
+    log_events({tmc.central_node: ["longRunningCommandResult"]})
+    assert_that(event_tracers).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
-        '"the command failure is reported by subarray with appropriate"'
+        '"the command failure is reported by central_node with appropriate"'
         '"error message"'
-        "Subarray Node device"
-        f"({tmc.subarray_node.dev_name()}) "
+        "CentralNode device"
+        f"({tmc.central_node.dev_name()}) "
         "is expected have longRunningCommandResult"
         "(ResultCode.FAILED,exception)",
     ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
-        tmc.subarray_node,
+        tmc.central_node,
         [exception_message],
         pytest.unique_id[0],
         ResultCode.FAILED,

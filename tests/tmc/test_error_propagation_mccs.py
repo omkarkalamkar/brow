@@ -32,6 +32,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 
 
+@pytest.mark.test1
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation_mccs.feature",
