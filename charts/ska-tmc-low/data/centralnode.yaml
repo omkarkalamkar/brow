@@ -18,19 +18,19 @@ server:
         properties:
         - name: "CspMasterLeafNodeFQDN"
           values:
-          - "{{.Values.global.csp_master_ln_prefix}}"
+          - "{{.Values.global.csp_master_ln}}"
         - name: "CspMasterFQDN"
           values:
           - "{{.Values.global.csp_master}}"
         - name: "SdpMasterLeafNodeFQDN"
           values:
-          - "{{.Values.global.sdp_master_ln_prefix}}"
+          - "{{.Values.global.sdp_master_ln}}"
         - name: "SdpMasterFQDN"
           values:
           - "{{.Values.global.sdp_master}}"
         - name: "MccsMasterLeafNodeFQDN"
           values:
-            - "{{.Values.global.mccs_master_ln_prefix}}"
+            - "{{.Values.global.mccs_master_ln}}"
         - name: "MccsMasterFQDN"
           values:
             - "{{.Values.global.mccs_master}}"
