@@ -7,6 +7,12 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 Added
 -----
+[0.20.3-rc.3]
+* Updated ska-tmc-subarraynode v0.29.0
+* Implemented HealthState aggregation logic with AdminMode consideration (SP-4908)
+* Added documentation updates for HealthState aggregation
+* Included warning on `SetAdminMode` command usage
+
 [0.20.1]
 * Fixed SKB-648
 * Updated ska-tmc-mccsleafnodes v0.5.1 to fix SKB-627
@@ -73,7 +79,7 @@ Fixed
  * Updated the image of CSPleafnodes to 0.23.2
  * Updated the image of MCCSleafnode to 0.5.4
  * Fixed bug skb-525 
- * Introduced error propagation and timeout for Scan /EndScan /End Commands]
+ * Introduced error propagation and timeout for Scan /EndScan /End Commands
 
 [0.20.2-rc.2]
  * Fixed bug SKB-646 with latest subarray node image v0.27.6

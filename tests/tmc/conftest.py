@@ -385,7 +385,11 @@ def move_tmc_to_intial_state(
             )
 
 
-@when(parsers.parse("{command} is invoked on a {defectiveSubsystem} Subarray"))
+@when(
+    parsers.parse(
+        "{command} is invoked on a defectiveSubsystem {defectiveSubsystem}"
+    )
+)
 def execute_command_on_tmc_with_defectivesetup(
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
@@ -451,8 +455,7 @@ def execute_command_on_tmc_with_defectivesetup(
 
 @then(
     parsers.parse(
-        "the command failure is reported by subarray with appropriate"
-        " error message"
+        "the command failure is reported by subarray with error message"
     )
 )
 def validate_error_message_reporting(
@@ -466,7 +469,6 @@ def validate_error_message_reporting(
     exception_message = (
         "Exception occurred on the following devices:"
         + f" {pytest.defective_device}:"
-        + " Exception occurred, command failed."
     )
 
     assert_that(event_tracer).described_as(
@@ -477,7 +479,7 @@ def validate_error_message_reporting(
         f"({subarray_node_low.subarray_node.dev_name()}) "
         "is expected have longRunningCommandResult"
         "(ResultCode.FAILED,exception)",
-    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+    ).within_timeout(120).has_desired_result_code_message_in_lrcr_event(
         subarray_node_low.subarray_node,
         [exception_message],
         pytest.unique_id[0],

@@ -45,7 +45,7 @@ This project is integration of the TMC components for the `Square Kilometre Arra
    :maxdepth: 1
    :caption: TMC Low Recovery
 
-   reovering_tmc/recovery
+   recovering_tmc/recovery
 
 .. toctree::
    :maxdepth: 1
@@ -58,6 +58,12 @@ This project is integration of the TMC components for the `Square Kilometre Arra
    :caption: Releases
 
    CHANGELOG.rst
+   
+.. toctree::
+   :maxdepth: 1
+   :caption: Admin HealthState:
+
+   healthstate/healthstate_adminmode_aggregation
    
 Indices and tables
 ------------------
