@@ -3,9 +3,9 @@ function: telescope-monitoring
 domain: general-monitoring
 instances: ["01"]
 entrypoints:
-  - name: "ska_tmc_sdpmasterleafnode.sdp_master_leaf_node.LowTmcLeafNodeSdp"
+  - name: "ska_tmc_sdpmasterleafnode.sdp_master_leaf_node_low.LowTmcLeafNodeSdp"
 server:
-  name: "sdp_master_leaf_node"
+  name: "sdp_master_leaf_node_low"
   instances:
   - name: "01"
     classes:
