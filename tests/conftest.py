@@ -10,7 +10,7 @@ from typing import Any, Generator
 import pytest
 import tango
 from pytest_bdd import given, parsers, then, when
-from ska_control_model import HealthState, ObsState
+from ska_control_model import HealthState, ObsState, ResultCode
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
 from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
 from ska_integration_test_harness.facades.sdp_facade import SDPFacade
@@ -25,7 +25,7 @@ from ska_integration_test_harness.structure.telescope_wrapper import (
     TelescopeWrapper,
 )
 from ska_ser_logging import configure_logging
-from ska_tango_testing.integration import TangoEventTracer
+from ska_tango_testing.integration import TangoEventTracer, log_events
 from ska_tango_testing.mock.tango.event_callback import (
     MockTangoEventCallbackGroup,
 )
@@ -495,6 +495,7 @@ def _get_long_run_command_id(context_fixt: SubarrayTestContextData) -> str:
 
 
 def get_expected_long_run_command_result(context_fixt) -> tuple[str, str]:
+    "Returns the expected long-running command result."
     return (
         _get_long_run_command_id(context_fixt),
         f'[{ResultCode.OK.value}, "Command Completed"]',

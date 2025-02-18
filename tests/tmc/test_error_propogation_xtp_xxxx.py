@@ -17,11 +17,6 @@ from tests.resources.test_harness.utils.my_file_json_input import (
     MyFileJSONInput,
 )
 
-# from ska_integration_test_harness.inputs.test_harness_inputs import (
-# TestHarnessInputs,
-# from tango import DevState
-
-
 TIMEOUT = 120
 
 
