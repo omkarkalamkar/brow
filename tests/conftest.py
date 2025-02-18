@@ -3,8 +3,9 @@ import json
 import logging
 import os
 import time
+from dataclasses import dataclass
 from os.path import dirname, join
-from typing import Generator
+from typing import Any, Generator
 
 import pytest
 import tango
@@ -410,45 +411,91 @@ def default_commands_inputs() -> TestHarnessInputs:
     )
 
 
-# @dataclass
-# class SubarrayTestContextData:
-#     """A class to store shared variables between steps."""
+@dataclass
+class SubarrayTestContextData:
+    """A class to store shared variables between steps."""
 
-#     starting_state: ObsState | None = None
-#     """The state of the system before the WHEN step."""
+    starting_state: ObsState | None = None
+    """The state of the system before the WHEN step."""
 
-#     expected_next_state: ObsState | None = None
-#     """The expected state to be reached if no WHEN step is executed.
+    expected_next_state: ObsState | None = None
+    """The expected state to be reached if no WHEN step is executed.
 
-#     It is meaningful when the starting state is transient and so it will
-#     automatically change to another state (different both from the starting
-#     state and the expected next state).
+    It is meaningful when the starting state is transient and so it will
+    automatically change to another state (different both from the starting
+    state and the expected next state).
 
-#     Leave empty if the starting state is not transient.
-#     """
+    Leave empty if the starting state is not transient.
+    """
 
-#     when_action_result: Any | None = None
-#     """The result of the WHEN step command."""
+    when_action_result: Any | None = None
+    """The result of the WHEN step command."""
 
-#     when_action_name: str | None = None
-#     """The name of the Tango command executed in the WHEN step."""
+    when_action_name: str | None = None
+    """The name of the Tango command executed in the WHEN step."""
 
-#     def is_starting_state_transient(self) -> bool:
-#         """Check if the starting state is transient."""
-#         return self.expected_next_state is not None
+    def is_starting_state_transient(self) -> bool:
+        """Check if the starting state is transient."""
+        return self.expected_next_state is not None
 
 
-# @pytest.fixture
-# def context_fixt() -> SubarrayTestContextData:
-#     """A collection of variables shared between steps.
+@pytest.fixture
+def context_fixt() -> SubarrayTestContextData:
+    """A collection of variables shared between steps.
 
-#     The shared variables are the following:
+    The shared variables are the following:
 
-#     - previous_state: the previous state of the subarray.
-#     - expected_next_state: the expected next state of the subarray (specified
-#         only if the previous st
-#     - trigger: the trigger that caused the state change.
+    - previous_state: the previous state of the subarray.
+    - expected_next_state: the expected next state of the subarray (specified
+        only if the previous st
+    - trigger: the trigger that caused the state change.
 
-#     :return: the shared variables.
-#     """
-#     return SubarrayTestContextData()
+    :return: the shared variables.
+    """
+    return SubarrayTestContextData()
+
+
+def _setup_event_subscriptions(
+    tmc: TMCFacade,
+    csp: CSPFacade,
+    sdp: SDPFacade,
+    event_tracer: TangoEventTracer,
+):
+    """Set up event subscriptions for the test.
+
+    Args:
+        subarray_node_facade: Facade for the TMC subarray node.
+        csp: Facade for the CSP.
+        event_tracer: Event tracer for capturing events.
+    """
+    event_tracer.subscribe_event(tmc.subarray_node, "obsState")
+    event_tracer.subscribe_event(csp.csp_subarray, "obsState")
+    event_tracer.subscribe_event(sdp.sdp_subarray, "obsState")
+    event_tracer.subscribe_event(tmc.subarray_node, "assignedResources")
+    event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
+    event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
+
+    log_events(
+        {
+            tmc.subarray_node: [
+                "obsState",
+                "longRunningCommandResult",
+                "assignedResources",
+            ],
+            csp.csp_subarray: ["obsState"],
+            sdp.sdp_subarray: ["obsState"],
+            tmc.central_node: ["longRunningCommandResult"],
+        },
+        event_enum_mapping={"obsState": ObsState},
+    )
+
+
+def _get_long_run_command_id(context_fixt: SubarrayTestContextData) -> str:
+    return context_fixt.when_action_result[1][0]
+
+
+def get_expected_long_run_command_result(context_fixt) -> tuple[str, str]:
+    return (
+        _get_long_run_command_id(context_fixt),
+        f'[{ResultCode.OK.value}, "Command Completed"]',
+    )
