@@ -24,13 +24,14 @@ server:
   {{ $mccs_sa_ln_fqdn_prefix:= .Values.global.mccs_subarray_ln_prefix}}
   {{ $mccs_sa_fqdn_prefix:= .Values.global.mccs_subarray_prefix}}
   {{ $CommandTimeOut := .Values.deviceServers.subarraynode.CommandTimeOut }}
-
+  {{ $domain := .Values.global.domain}}
+  {{ $family := .Values.deviceServers.subarraynode.family }}
   {{- range  ( regexSplit " " ((.Values.subarray_count | int) | seq ) -1 ) }}
     - name: "{{ printf "%02s" . }}"
       classes:
       - name: "SubarrayNodeLow"
         devices:
-        - name: "low-tmc/subarray/{{ printf "%02s" . }}"
+        - name: "{{ $domain }}/{{ $family }}/{{ printf "%02s" . }}"
           properties:
           - name: "CspSubarrayLNFQDN"
             values:

@@ -33,6 +33,8 @@ global:
     - "subarraynode"
     - "mccssubarrayleafnode"
 
+  domain: "low-tmc"
+
   # fqdn for low devices
   tmc_subarray_prefix: "low-tmc/subarray"
   csp_subarray_ln_prefix: "low-tmc/subarray-leaf-node-csp/"
@@ -132,6 +134,8 @@ deviceServers:
     CommandTimeOut: 80
     AssignResourcesInterface: "https://schema.skao.int/ska-low-tmc-assignresources/4.0"
     ReleaseResourcesInterface: "https://schema.skao.int/ska-low-tmc-releaseresources/3.0"
+    family: "central-node"
+    member : "0"
 
   subarraynode:
     enabled: true
@@ -146,6 +150,7 @@ deviceServers:
     EventSubscriptionCheckPeriod: 0.5
     CommandTimeOut: 70
     AbortCommandTimeOut: 40
+    family: "subarray"
 
   sdpsubarrayleafnode:
     enabled: true
@@ -155,6 +160,8 @@ deviceServers:
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     SDPSubarrayAdminModeEnabled: true
+    family: "subarray-leaf-node-sdp"
+    
 
   sdpmasterleafnode:
     enabled: true
@@ -164,7 +171,9 @@ deviceServers:
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     SDPMasterAdminModeEnabled: true
-
+    family: "leaf-node-sdp"
+    member: "0"
+    
   cspmasterleafnode:
     enabled: true
     instances: ["01"]
@@ -172,6 +181,19 @@ deviceServers:
     AdapterTimeOut: 2.0
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
+    family: "leaf-node-csp"
+    member: "0"
+  
+  mccsmasterleafnode:
+    enabled: true
+    instances: ["01"]
+    file: "data/mccsmasterleafnode.yaml"
+    CommandTimeOut: 50
+    LivelinessCheckPeriod: 0.5
+    EventSubscriptionCheckPeriod: 0.5
+    AdapterTimeOut: 2.0
+    family: "leaf-node-mccs"
+    member: "0"
 
   cspsubarrayleafnode:
     enabled: true
@@ -188,15 +210,7 @@ deviceServers:
     AdapterTimeOut: 2.0
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
-
-  mccsmasterleafnode:
-    enabled: true
-    instances: ["01"]
-    file: "data/mccsmasterleafnode.yaml"
-    CommandTimeOut: 50
-    LivelinessCheckPeriod: 0.5
-    EventSubscriptionCheckPeriod: 0.5
-    AdapterTimeOut: 2.0
+    family: "subarray-leaf-node-csp"
 
   mccssubarrayleafnode:
     enabled: true
@@ -205,6 +219,7 @@ deviceServers:
     EventSubscriptionCheckPeriod: 0.5
     CommandTimeOut: 50
     AdapterTimeOut: 2.0
+    family: "subarray-leaf-node-mccs"
 
   mocks:
     enabled: false

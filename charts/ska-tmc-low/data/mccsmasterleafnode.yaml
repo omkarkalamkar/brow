@@ -7,11 +7,14 @@ entrypoints:
 server:
   name: "mccs_master_leaf_node"
   instances:
+  {{ $domain := .Values.global.domain}}
+  {{ $family := .Values.deviceServers.mccsmasterleafnode.family }}
+  {{ $member := .Values.deviceServers.mccsmasterleafnode.member }}
   - name: "01"
     classes:
     - name: "LowTmcLeafNodeMccs"
       devices:
-      - name: "low-tmc/leaf-node-mccs/0"
+      - name: "{{ $domain }}/{{ $family }}/{{ $member }}"
         properties:
         - name: "MccsMasterFQDN"
           values:

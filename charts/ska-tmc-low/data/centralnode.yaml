@@ -10,11 +10,14 @@ server:
   {{ $tmc_sa_fqdn_prefix:= .Values.global.tmc_subarray_prefix}}
   {{ $csp_sa_ln_fqdn_prefix:= .Values.global.csp_subarray_ln_prefix}}
   {{ $sdp_sa_ln_fqdn_prefix:= .Values.global.sdp_subarray_ln_prefix}}
+  {{ $domain := .Values.global.domain}}
+  {{ $family := .Values.deviceServers.centralnode.family }}
+  {{ $member := .Values.deviceServers.centralnode.member }}
   - name: "01"
     classes:
     - name: "LowTmcCentralNode"
       devices:
-      - name: "low-tmc/central-node/0"
+      - name: "{{ $domain }}/{{ $family }}/{{ $member }}"
         properties:
         - name: "CspMasterLeafNodeFQDN"
           values:

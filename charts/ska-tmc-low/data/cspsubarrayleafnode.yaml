@@ -16,6 +16,8 @@ entrypoints:
 {{- $AdapterTimeOut := .Values.deviceServers.cspsubarrayleafnode.AdapterTimeOut }}
 {{- $LivelinessCheckPeriod := .Values.deviceServers.cspsubarrayleafnode.LivelinessCheckPeriod }}
 {{- $EventSubscriptionCheckPeriod := .Values.deviceServers.cspsubarrayleafnode.EventSubscriptionCheckPeriod }}
+{{ $domain := .Values.global.domain}}
+{{ $family := .Values.deviceServers.cspsubarrayleafnode.family }}
 server:
   name: "csp_subarray_leaf_node_low"
   instances:
@@ -25,7 +27,7 @@ server:
       classes:
       - name: "LowTmcLeafNodeCspSubarray"
         devices:
-          - name: "low-tmc/subarray-leaf-node-csp/{{ printf "%02s" . }}"
+          - name: "{{ $domain }}/{{ $family }}/{{ printf "%02s" . }}"
             properties:
               - name: "TelmodelSource"
                 values:
