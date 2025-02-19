@@ -10,7 +10,7 @@ from typing import Any, Generator
 import pytest
 import tango
 from pytest_bdd import given, parsers, then, when
-from ska_control_model import HealthState, ObsState, ResultCode
+from ska_control_model import HealthState, ObsState
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
 from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
 from ska_integration_test_harness.facades.sdp_facade import SDPFacade
@@ -384,7 +384,7 @@ def telescope_wrapper(
 
     # build the wrapper of the telescope and it's sub-systems
     telescope = test_harness_builder.build()
-    telescope.actions_default_timeout = 200
+    telescope.actions_default_timeout = 120
     yield telescope
 
     # after a test is completed, reset the telescope to its initial state
@@ -487,16 +487,4 @@ def _setup_event_subscriptions(
             tmc.central_node: ["longRunningCommandResult"],
         },
         event_enum_mapping={"obsState": ObsState},
-    )
-
-
-def _get_long_run_command_id(context_fixt: SubarrayTestContextData) -> str:
-    return context_fixt.when_action_result[1][0]
-
-
-def get_expected_long_run_command_result(context_fixt) -> tuple[str, str]:
-    "Returns the expected long-running command result."
-    return (
-        _get_long_run_command_id(context_fixt),
-        f'[{ResultCode.OK.value}, "Command Completed"]',
     )
