@@ -8,7 +8,7 @@ TRL for TMC low devices
 The TRLs of all the TMC low devices are updated to comply with ADR-9
 
 +-----------------------------------------+---------------------------------------+
-| Previous TRL                            | Updated TRL                          |
+| Previous TRL                            | Updated TRL                           |
 +-----------------------------------------+---------------------------------------+
 | `ska_low/tm_central/central_node`       | `low-tmc/central-node/0`              |
 +-----------------------------------------+---------------------------------------+
