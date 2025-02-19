@@ -25,7 +25,7 @@ from ska_integration_test_harness.structure.telescope_wrapper import (
     TelescopeWrapper,
 )
 from ska_ser_logging import configure_logging
-from ska_tango_testing.integration import TangoEventTracer, log_events
+from ska_tango_testing.integration import TangoEventTracer
 from ska_tango_testing.mock.tango.event_callback import (
     MockTangoEventCallbackGroup,
 )
@@ -453,38 +453,3 @@ def context_fixt() -> SubarrayTestContextData:
     :return: the shared variables.
     """
     return SubarrayTestContextData()
-
-
-def _setup_event_subscriptions(
-    tmc: TMCFacade,
-    csp: CSPFacade,
-    sdp: SDPFacade,
-    event_tracer: TangoEventTracer,
-):
-    """Set up event subscriptions for the test.
-
-    Args:
-        subarray_node_facade: Facade for the TMC subarray node.
-        csp: Facade for the CSP.
-        event_tracer: Event tracer for capturing events.
-    """
-    event_tracer.subscribe_event(tmc.subarray_node, "obsState")
-    event_tracer.subscribe_event(csp.csp_subarray, "obsState")
-    event_tracer.subscribe_event(sdp.sdp_subarray, "obsState")
-    event_tracer.subscribe_event(tmc.subarray_node, "assignedResources")
-    event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
-    event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
-
-    log_events(
-        {
-            tmc.subarray_node: [
-                "obsState",
-                "longRunningCommandResult",
-                "assignedResources",
-            ],
-            csp.csp_subarray: ["obsState"],
-            sdp.sdp_subarray: ["obsState"],
-            tmc.central_node: ["longRunningCommandResult"],
-        },
-        event_enum_mapping={"obsState": ObsState},
-    )

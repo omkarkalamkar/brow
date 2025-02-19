@@ -27,7 +27,8 @@ TIMEOUT = 80
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation_ith.feature",
-    "TMC subarray reports errors during interactions with MCCS subarray",
+    "Error Propagation Reported by TMC Low AssignResources Command for "
+    "Defective MCCS Controller",
 )
 def test_tmc_command_error_propagation():
     """

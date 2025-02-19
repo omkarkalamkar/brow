@@ -1,5 +1,5 @@
 @SKA_low @XTP-73592 @XTP-28348
-Scenario Outline: TMC subarray reports errors during interactions with MCCS subarray
+Scenario Outline: Error Propagation Reported by TMC Low AssignResources Command for Defective MCCS Controller
     Given the telescope is in ON state
     And TMC subarray is in ObsState EMPTY
     When the MCCS controller is in an abnormal state    
