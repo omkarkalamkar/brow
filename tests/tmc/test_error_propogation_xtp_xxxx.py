@@ -1,9 +1,6 @@
 """Test case to verify error propagation functionality for
 the AssignResourcs command"""
 
-import json
-import time
-
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
@@ -17,7 +14,7 @@ from tests.resources.test_harness.utils.my_file_json_input import (
     MyFileJSONInput,
 )
 
-TIMEOUT = 120
+TIMEOUT = 80
 
 
 @pytest.mark.test
@@ -93,7 +90,6 @@ def execute_command_assign_resources(
 @then("the Error is reported by the TMC")
 def error_reporting(
     tmc,
-    mccs,
     event_tracers,
 ):
     """executes commands"""
@@ -103,7 +99,6 @@ def error_reporting(
     ]
 
     log_events({tmc.central_node: ["longRunningCommandResult"]})
-    time.sleep(10)
     assert_that(event_tracers).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         '"the command failure is reported by central_node with appropriate"'
@@ -118,4 +113,3 @@ def error_reporting(
         pytest.unique_id[0],
         ResultCode.FAILED,
     )
-    mccs.mccs_controller.SetDefective(json.dumps({"enabled": False}))
