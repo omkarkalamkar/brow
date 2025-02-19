@@ -3,9 +3,9 @@ tag=0.20.3
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 0.20.3-rc.3 - 0.20.3**
+**1. ska-tmc-low-integration 0.20.3**
 
-    **1.1 ska-tmc-low - 0.20.3-rc.3 - 0.20.3:**
+    **1.1 ska-tmc-low - 0.20.3:**
             * Updated the image of SubarrayNode to 0.27.6
             * Updated the image of central node to 0.17.2
             * Updated the image of Sdpleafnodes to 0.19.3
@@ -28,9 +28,9 @@ tag_description=
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 0.20.3-rc.3 - 0.20.3**
+**1. ska-tmc-low-integration 0.20.3**
 
-    **1.1 ska-tmc-low - 0.20.3-rc.3 - 0.20.3:**
+    **1.1 ska-tmc-low - 0.20.3:**
             * Updated the image of SubarrayNode to 0.27.6
             * Updated the image of central node to 0.17.2
             * Updated the image of Sdpleafnodes to 0.19.3
