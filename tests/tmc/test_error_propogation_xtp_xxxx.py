@@ -23,7 +23,6 @@ from tests.resources.test_harness.utils.my_file_json_input import (
 TIMEOUT = 80
 
 
-@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation_ith.feature",

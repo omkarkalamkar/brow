@@ -107,7 +107,6 @@ def test_assign_release_defective_csp(
     csp_sim.SetDefective(json.dumps({"enabled": False}))
 
 
-@pytest.mark.test1
 @pytest.mark.SKA_low
 def test_assign_release_timeout_sdp(
     central_node_low: CentralNodeWrapperLow,
