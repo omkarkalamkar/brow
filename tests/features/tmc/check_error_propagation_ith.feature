@@ -1,4 +1,4 @@
-Scenario Outline: TMC subarray reports errors during interactions with CSP or SDP subarray
+Scenario Outline: TMC subarray reports errors during interactions with MCCS subarray
     Given the telescope is in ON state
     And TMC subarray is in ObsState EMPTY
     When the MCCS controller is in an abnormal state    
