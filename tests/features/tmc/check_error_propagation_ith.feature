@@ -1,4 +1,4 @@
-@SKA_low @XTP-73592 @XTP-28348
+@SKA_low @XTP-76912 @XTP-73592 @XTP-28348
 Scenario Outline: Error Propagation Reported by TMC Low AssignResources Command for Defective MCCS Controller
     Given the telescope is in ON state
     And TMC subarray is in ObsState EMPTY
