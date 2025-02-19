@@ -1,14 +1,14 @@
 ######################################################
-Fully qualified domain names(FQDN) for TMC Low devices
+TRLfor TMC Low devices
 ######################################################
 
 
-FQDN for TMC low devices
+TRL for TMC low devices
 ===========================
-The FQDNs of all the TMC low devices are updated to comply with ADR-9
+The TRLs of all the TMC low devices are updated to comply with ADR-9
 
 +-----------------------------------------+---------------------------------------+
-| Previous FQDN                           | Updated FQDN                          |
+| Previous TRL                            | Updated TRL                          |
 +-----------------------------------------+---------------------------------------+
 | `ska_low/tm_central/central_node`       | `low-tmc/central-node/0`              |
 +-----------------------------------------+---------------------------------------+
