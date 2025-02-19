@@ -7,11 +7,25 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 Added
 -----
-[0.20.3-rc.3]
+[0.20.3]
+* Updated the image of SubarrayNode to 0.27.6
+* Updated the image of central node to 0.17.2
+* Updated the image of Sdpleafnodes to 0.19.3
+* Updated the image of CSPleafnodes to 0.23.2
+* Updated the image of MCCSleafnode to 0.5.4
+* Fixed bug skb-525 
+* Introduced error propagation and timeout for Scan /EndScan /End Commands
+* Fixed bug skb-658
+* Removed SleepTime property and utilised properties livelinessCheckPeriod and eventSubscriptionCheck
+* Renamed the properties as required
+* Fixed the RTD documentation and added documentation for all the properties of all the TMC nodes
+* Made all the properties configurable
+* Corrected data types of the properties wherever required
 * Updated ska-tmc-subarraynode v0.29.0
 * Implemented HealthState aggregation logic with AdminMode consideration (SP-4908)
 * Added documentation updates for HealthState aggregation
 * Included warning on `SetAdminMode` command usage
+
 
 [0.20.1]
 * Fixed SKB-648
@@ -21,7 +35,7 @@ Added
 * CSPLeafNodes - 0.21.3
 * Updated Subarray Node v0.26.1 to fix SKB-643 and SKB-618
 * Harmonization of JSON Usage Across TMC LOW Integration Repository:
-* Single Source of JSON Files: Replaced all instances of JSON files in the repository with a single source from the TelModel repository, ensuring consistency and    easier maintenance.
+* Single Source of JSON Files: Replaced all instances of JSON files in the repository with a single source    from the TelModel repository, ensuring consistency and    easier maintenance.
 * Removal of Redundant JSON Files: Deleted duplicate JSON files from the Integration and TMC Integration repositories to reduce redundancy and improve clarity.
 * Test Case Updates: Modified test cases to reference JSON files from the TelModel repository, aligning all tests with the updated, harmonized JSON structure.
 * Includes improved liveliness probe functionality
@@ -64,6 +78,12 @@ Added
 
 Fixed
 -----
+[0.20.3-rc.3]
+* Updated ska-tmc-subarraynode v0.29.0
+* Implemented HealthState aggregation logic with AdminMode consideration (SP-4908)
+* Added documentation updates for HealthState aggregation
+* Included warning on `SetAdminMode` command usage
+
 [0.20.3-rc.2]
  * Fixed bug skb-658
  * Removed SleepTime property and utilised properties livelinessCheckPeriod and eventSubscriptionCheck

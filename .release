@@ -1,23 +1,50 @@
-release=0.20.3-rc.3
-tag=0.20.3-rc.3
+release=0.20.3
+tag=0.20.3
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 0.20.3-rc.2 - 0.20.3-rc.3**
+**1. ska-tmc-low-integration 0.20.3-rc.3 - 0.20.3**
 
-    **1.1 ska-tmc-low - 0.20.3-rc.2 - 0.20.3-rc.3:**
-           * Updated ska-tmc-subarraynode v0.29.0
-           * Implemented HealthState aggregation logic with AdminMode consideration (SP-4908)
-           * Added documentation updates for HealthState aggregation
-           * Included warning on `SetAdminMode` command usage
+    **1.1 ska-tmc-low - 0.20.3-rc.3 - 0.20.3:**
+            * Updated the image of SubarrayNode to 0.27.6
+            * Updated the image of central node to 0.17.2
+            * Updated the image of Sdpleafnodes to 0.19.3
+            * Updated the image of CSPleafnodes to 0.23.2
+            * Updated the image of MCCSleafnode to 0.5.4
+            * Fixed bug skb-525 
+            * Introduced error propagation and timeout for Scan /EndScan /End Commands
+            * Fixed bug skb-658
+            * Removed SleepTime property and utilised properties livelinessCheckPeriod and eventSubscriptionCheck
+            * Renamed the properties as required
+            * Fixed the RTD documentation and added documentation for all the properties of all the TMC nodes
+            * Made all the properties configurable
+            * Corrected data types of the properties wherever required
+            * Updated ska-tmc-subarraynode v0.29.0
+            * Implemented HealthState aggregation logic with AdminMode consideration (SP-4908)
+            * Added documentation updates for HealthState aggregation
+            * Included warning on `SetAdminMode` command usage
+
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 0.20.3-rc.2 - 0.20.3-rc.3**
+**1. ska-tmc-low-integration 0.20.3-rc.3 - 0.20.3**
 
-    **1.1 ska-tmc-low - 0.20.3-rc.2 - 0.20.3-rc.3:**
-           * Updated ska-tmc-subarraynode v0.29.0
-           * Implemented HealthState aggregation logic with AdminMode consideration (SP-4908)
-           * Added documentation updates for HealthState aggregation
-           * Included warning on `SetAdminMode` command usage
+    **1.1 ska-tmc-low - 0.20.3-rc.3 - 0.20.3:**
+            * Updated the image of SubarrayNode to 0.27.6
+            * Updated the image of central node to 0.17.2
+            * Updated the image of Sdpleafnodes to 0.19.3
+            * Updated the image of CSPleafnodes to 0.23.2
+            * Updated the image of MCCSleafnode to 0.5.4
+            * Fixed bug skb-525 
+            * Introduced error propagation and timeout for Scan /EndScan /End Commands
+            * Fixed bug skb-658
+            * Removed SleepTime property and utilised properties livelinessCheckPeriod and eventSubscriptionCheck
+            * Renamed the properties as required
+            * Fixed the RTD documentation and added documentation for all the properties of all the TMC nodes
+            * Made all the properties configurable
+            * Corrected data types of the properties wherever required
+            * Updated ska-tmc-subarraynode v0.29.0
+            * Implemented HealthState aggregation logic with AdminMode consideration (SP-4908)
+            * Added documentation updates for HealthState aggregation
+            * Included warning on `SetAdminMode` command usage
