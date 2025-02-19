@@ -1,6 +1,6 @@
-##########################
-FQDN for TMC Low devices
-##########################
+######################################################
+Fully qualified domain names(FQDN) for TMC Low devices
+######################################################
 
 
 FQDN for TMC low devices
