@@ -1,5 +1,5 @@
 """Test case to verify error propagation functionality for
-the AssignResourcs command"""
+the AssignResources command"""
 import json
 
 import pytest
