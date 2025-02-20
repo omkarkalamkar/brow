@@ -100,7 +100,7 @@ def execute_command_assign_resources(
     )
 
 
-@then("the command failure is reported by  TMC CentralNode with error message")
+@then("the command failure is reported by TMC CentralNode with error message")
 def error_reporting(
     tmc: TMCFacade,
     mccs: MCCSFacade,
