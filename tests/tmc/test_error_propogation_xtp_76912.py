@@ -1,7 +1,6 @@
 """Test case to verify error propagation functionality for
 the AssignResourcs command"""
 import json
-import time
 
 import pytest
 from assertpy import assert_that
@@ -134,5 +133,11 @@ def error_reporting(
     )
     mccs.mccs_controller.SetDefective(json.dumps({"enabled": False}))
     tmc.subarray_node.Abort()
-    time.sleep(5)
+    assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
+        tmc.subarray_node, "obsState", ObsState.ABORTED
+    )
+
     tmc.subarray_node.Restart()
+    assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
+        tmc.subarray_node, "obsState", ObsState.EMPTY
+    )
