@@ -361,7 +361,6 @@ def mccs(telescope_wrapper: TelescopeWrapper):
     return MCCSFacade(telescope_wrapper)
 
 
-# ----------------------------------------------------------
 @pytest.fixture
 def telescope_wrapper(
     default_commands_inputs: TestHarnessInputs,
