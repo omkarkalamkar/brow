@@ -118,7 +118,6 @@ def error_reporting(
         "Exception occurred on device:",
     ]
 
-    log_events({tmc.central_node: ["longRunningCommandResult"]})
     assert_that(event_tracers).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         '"the command failure is reported by central_node with appropriate"'
