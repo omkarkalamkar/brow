@@ -83,7 +83,7 @@ def subarray_in_empty_obsstate(
 def execute_command_on_abnormal_mccs_subarray(
     mccs: MCCSFacade,
 ):
-    "the mccs subarray is in an abnormal state"
+    "the mccs controller is in an abnormal state"
     mccs.mccs_controller.SetDefective(ERROR_PROPAGATION_DEFECT)
 
 
@@ -91,7 +91,9 @@ def execute_command_on_abnormal_mccs_subarray(
 def execute_command_assign_resources(
     tmc: TMCFacade,
 ):
-    """executes commands"""
+    """
+    Executes the AssignResources command on the TMC Central Node.
+    """
     assign_input = MyFileJSONInput("centralnode", "assign_resources_low")
     _, pytest.unique_id = tmc.central_node.AssignResources(
         assign_input.as_str()
@@ -104,7 +106,13 @@ def error_reporting(
     mccs: MCCSFacade,
     event_tracers: TangoEventTracer,
 ):
-    """executes commands"""
+    """Validates that an error is correctly reported by the TMC.
+
+    This function checks if an error message is generated and logged
+    by the TMC when the AssignResources command fails due to a defective
+    MCCS Controller.
+    It verifies the error reporting mechanism by asserting the expected
+    failure message in the longRunningCommandResult event."""
     exception_message = [
         "ska_low/tm_leaf_node/mccs_master: ",
         "Exception occurred on device:",
