@@ -14,7 +14,10 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
 from ska_tango_testing.integration import TangoEventTracer, log_events
 
 from tests.conftest import SubarrayTestContextData
-from tests.resources.test_harness.constant import ERROR_PROPAGATION_DEFECT
+from tests.resources.test_harness.constant import (
+    ERROR_PROPAGATION_DEFECT,
+    mccs_master_leaf_node,
+)
 from tests.resources.test_harness.utils.my_file_json_input import (
     MyFileJSONInput,
 )
@@ -22,6 +25,7 @@ from tests.resources.test_harness.utils.my_file_json_input import (
 TIMEOUT = 80
 
 
+@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation_ith.feature",
@@ -113,7 +117,7 @@ def error_reporting(
     It verifies the error reporting mechanism by asserting the expected
     failure message in the longRunningCommandResult event."""
     exception_message = [
-        "ska_low/tm_leaf_node/mccs_master: ",
+        f" {mccs_master_leaf_node}: ",
         "Exception occurred on device:",
     ]
 

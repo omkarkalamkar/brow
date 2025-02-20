@@ -2105,26 +2105,27 @@ reference = "ska-nexus"
 
 [[package]]
 name = "ska-integration-test-harness"
-version = "0.2.4"
+version = "0.3.0"
 description = "Currently, a test harness for TMC-CSP integration tests. In future, a generic test harness integration testing an arbitrary combination of production or emulated SKA subsystems."
 optional = false
-python-versions = "^3.10"
-files = []
-develop = false
+python-versions = ">=3.10,<4.0"
+files = [
+    {file = "ska_integration_test_harness-0.3.0-py3-none-any.whl", hash = "sha256:b5a5a9a9e1e7978c6ae6af92b029471004835fc5bafbefc6dfa72903a8c68740"},
+    {file = "ska_integration_test_harness-0.3.0.tar.gz", hash = "sha256:666b774a25c2c42b24ec3566eb1c586a8cfc487f28939f65da80b5cdb708adb5"},
+]
 
 [package.dependencies]
-assertpy = "^1.1"
-msgpack-numpy = "^0.4.8"
-pytango = "^9.4.2"
+assertpy = ">=1.1,<2.0"
+msgpack-numpy = ">=0.4.8,<0.5.0"
+pytango = ">=9.4.2,<10.0.0"
 ska-control-model = ">=1.0.0,<2.0.0"
-ska-ser-logging = "^0.4.1"
-ska-tango-testing = "^0.7.2"
+ska-ser-logging = ">=0.4.1,<0.5.0"
+ska-tango-testing = ">=0.7.2,<0.8.0"
 
 [package.source]
-type = "git"
-url = "https://gitlab.com/ska-telescope/ska-integration-test-harness.git"
-reference = "sst-1012-make-ith-support-low"
-resolved_reference = "01bc4abcaba87204ac2237bea2890c3e7e89f662"
+type = "legacy"
+url = "https://artefact.skao.int/repository/pypi-internal/simple"
+reference = "ska-nexus"
 
 [[package]]
 name = "ska-ser-logging"
@@ -2806,4 +2807,4 @@ reference = "PyPI-public"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "d3e27e866acaf0700d8ecdfdf9a8d673d26c8d066d164e49eee16afbf7302265"
+content-hash = "2b3abe6511ac08acc9aaeb4944ce3195383e109098927c819dc4af83e64a3301"

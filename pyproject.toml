@@ -31,8 +31,7 @@ httpx = "^0.19.0"
 msgpack = "1.0.7"
 msgpack_numpy = "0.4.8"
 ska-telmodel = "^1.17.0"
-ska-integration-test-harness= {git = "https://gitlab.com/ska-telescope/ska-integration-test-harness.git", branch = "sst-1012-make-ith-support-low" }
-
+ska-integration-test-harness= "0.3.0"
 [tool.poetry.group.dev.dependencies]
 black = "^22.8.0"
 isort = "^5.10.1"
