@@ -2,7 +2,6 @@
 Common modules for reuse
 """
 
-
 import json
 
 import pytest
