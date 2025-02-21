@@ -3,15 +3,18 @@ function: telescope-monitoring
 domain: general-monitoring
 instances: ["01"]
 entrypoints:
-  - name: "ska_tmc_cspmasterleafnode.csp_master_leaf_node.CspMasterLeafNode"
+  - name: "ska_tmc_cspmasterleafnode.csp_master_leaf_node.TmcLeafNodeCspControl"
 server:
   name: "csp_master_leaf_node"
   instances:
+  {{ $domain := .Values.global.domain}}
+  {{ $family := .Values.deviceServers.cspmasterleafnode.family }}
+  {{ $member := .Values.deviceServers.cspmasterleafnode.member }}
   - name: "01"
     classes:
-    - name: "CspMasterLeafNode"
+    - name: "TmcLeafNodeCspControl"
       devices:
-      - name: "ska_low/tm_leaf_node/csp_master"
+      - name: "{{ $domain }}/{{ $family }}/{{ $member }}"
         properties:
         - name: "CspMasterFQDN"
           values:

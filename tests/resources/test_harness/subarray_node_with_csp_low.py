@@ -20,9 +20,7 @@ class SubarrayNodeCspWrapperLow(SubarrayNodeWrapperLow):
     """
 
     def set_subarray_id(self, subarray_id):
-        self.subarray_node = DeviceProxy(
-            f"ska_low/tm_subarray_node/{subarray_id}"
-        )
+        self.subarray_node = DeviceProxy(f"low-tmc/subarray/{subarray_id}")
         subarray_id = "{:02d}".format(int(subarray_id))
         self.subarray_devices = {
             "csp_subarray": DeviceProxy(f"low-csp/subarray/{subarray_id}"),
@@ -30,13 +28,13 @@ class SubarrayNodeCspWrapperLow(SubarrayNodeWrapperLow):
             "mccs_subarray": DeviceProxy(f"low-mccs/subarray/{subarray_id}"),
         }
         self.csp_subarray_leaf_node = DeviceProxy(
-            f"ska_low/tm_leaf_node/csp_subarray{subarray_id}"
+            f"low-tmc/subarray-leaf-node-csp/{subarray_id}"
         )
         self.sdp_subarray_leaf_node = DeviceProxy(
-            f"ska_low/tm_leaf_node/sdp_subarray{subarray_id}"
+            f"low-tmc/subarray-leaf-node-sdp/{subarray_id}"
         )
         self.mccs_subarray_leaf_node = DeviceProxy(
-            f"ska_low/tm_leaf_node/mccs_subarray{subarray_id}"
+            f"low-tmc/subarray-leaf-node-mccs/{subarray_id}"
         )
 
     def _reset_simulator_devices(self):

@@ -3,7 +3,7 @@ function: telescope-monitoring
 domain: general-monitoring
 instances: ["01"]
 entrypoints:
-  - name: "ska_tmc_cspsubarrayleafnode.csp_subarray_leaf_node_low.CspSubarrayLeafNodeLow"
+  - name: "ska_tmc_cspsubarrayleafnode.csp_subarray_leaf_node_low.LowTmcLeafNodeCspSubarray"
 {{- $TelmodelSource := .Values.deviceServers.cspsubarrayleafnode.TelmodelSource }}
 {{- $TelmodelPath := .Values.deviceServers.cspsubarrayleafnode.TelmodelPath }}
 {{- $DelayModelTimeInAdvance := .Values.deviceServers.cspsubarrayleafnode.DelayModelTimeInAdvance }}
@@ -16,6 +16,8 @@ entrypoints:
 {{- $AdapterTimeOut := .Values.deviceServers.cspsubarrayleafnode.AdapterTimeOut }}
 {{- $LivelinessCheckPeriod := .Values.deviceServers.cspsubarrayleafnode.LivelinessCheckPeriod }}
 {{- $EventSubscriptionCheckPeriod := .Values.deviceServers.cspsubarrayleafnode.EventSubscriptionCheckPeriod }}
+{{ $domain := .Values.global.domain}}
+{{ $family := .Values.deviceServers.cspsubarrayleafnode.family }}
 server:
   name: "csp_subarray_leaf_node_low"
   instances:
@@ -23,9 +25,9 @@ server:
   {{- range  ( regexSplit " " ((.Values.subarray_count | int) | seq ) -1 ) }}
     - name: "{{ printf "%02s" . }}"
       classes:
-      - name: "CspSubarrayLeafNodeLow"
+      - name: "LowTmcLeafNodeCspSubarray"
         devices:
-          - name: "ska_low/tm_leaf_node/csp_subarray{{ printf "%02s" . }}"
+          - name: "{{ $domain }}/{{ $family }}/{{ printf "%02s" . }}"
             properties:
               - name: "TelmodelSource"
                 values:

@@ -59,9 +59,9 @@ Configurable options
 
     #. **sdp_subarray_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of SdpSubarrayLeafNode.
 
-    #. **csp_master_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of CspMasterLeafNode.
+    #. **csp_master_ln** : This value is present under global, User can use this to change the FQDN of CspMasterLeafNode.
 
-    #. **sdp_master_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of SdpMasterLeafNode.
+    #. **sdp_master_ln** : This value is present under global, User can use this to change the FQDN of SdpMasterLeafNode.
 
     #. **csp_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of CSP Subarray.
 
@@ -73,7 +73,7 @@ Configurable options
 
     #. **mccs_master** : This value is present under global, User can use this to change the FQDN of MCCS Master.
 
-    #. **mccs_master_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Master Leaf Node.
+    #. **mccs_master_ln** : This value is present under global, User can use this to change the FQDN of MCCS Master Leaf Node.
 
     #. **mccs_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Subarray.
 
@@ -184,53 +184,29 @@ Configurable options
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
 
 
-TMC Low Sub-system FQDN's
--------------------------
-Below are the FQDN's of the TMC Low components. For updated FQDN's kindly refer values.yaml in the TMC Low charts.
-
-+------------------------------------------+------------------------------------------------------------------------+ 
-| TMC Low component                        |            FQDN                                                        | 
-+==========================================+========================================================================+ 
-| Central Node                             |  ska_low/tm_central/central_node                                       |
-+------------------------------------------+------------------------------------------------------------------------+
-| Subarray Node                            |  ska_low/tm_subarray_node/{id}                                         |
-+------------------------------------------+------------------------------------------------------------------------+
-| CSP Subarray Leaf Node                   |  ska_low/tm_leaf_node/csp_subarray{id}                                 |
-+------------------------------------------+------------------------------------------------------------------------+
-| SDP Subarray Leaf Node                   |  ska_low/tm_leaf_node/sdp_subarray{id}                                 |
-+------------------------------------------+------------------------------------------------------------------------+
-| MCCS Subarray Leaf Node                  +  ska_low/tm_leaf_node/mccs_subarray{id}                                |    
-+------------------------------------------+------------------------------------------------------------------------+
-| MCCS Master Leaf Node                    +  ska_low/tm_leaf_node/mccs_master                                      |
-+------------------------------------------+------------------------------------------------------------------------+
-| SDP Master Leaf Node                     +  ska_low/tm_leaf_node/sdp_master                                       |
-+------------------------------------------+------------------------------------------------------------------------+
-| CSP Master Leaf Node                     +  ska_low/tm_leaf_node/csp_master                                       |
-+------------------------------------------+------------------------------------------------------------------------+
-
 
 **NOTE** : {id} is the identifier for the deployed subarray.
            For instance, if two subarrays are deployed
 
             Subarray 1 will be:
            
-                Subarray Node : ska_low/tm_subarray_node/01
+                Subarray Node : low-tmc/subarray/01
            
-                CSP Subarray Leaf Node: ska_low/tm_leaf_node/csp_subarray01 
+                CSP Subarray Leaf Node: low-tmc/subarray-leaf-node-csp/01 
            
-                SDP Subarray Leaf Node: ska_low/tm_leaf_node/sdp_subarray01
-           
-                MCCS Subarray Leaf Node: ska_low/tm_leaf_node/mccs_subarray01
+                SDP Subarray Leaf Node: low-tmc/subarray-leaf-node-sdp/01
+
+                MCCS Subarray Leaf Node: low-tmc/subarray-leaf-node-mccs/01
          
             For Subarray 2:
 
-                Subarray Node : ska_low/tm_subarray_node/02
+                Subarray Node : low-tmc/subarray/02
          
-                CSP Subarray Leaf Node: ska_low/tm_leaf_node/csp_subarray02
+                CSP Subarray Leaf Node: low-tmc/subarray-leaf-node-csp/02
          
-                SDP Subarray Leaf Node: ska_low/tm_leaf_node/sdp_subarray02
+                SDP Subarray Leaf Node: low-tmc/subarray-leaf-node-sdp/02
          
-                MCCS Subarray Leaf Node: ska_low/tm_leaf_node/mccs_subarray02
+                MCCS Subarray Leaf Node: low-tmc/subarray-leaf-node-mccs/02
 
 
 

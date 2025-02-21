@@ -3,7 +3,7 @@ function: telescope-monitoring
 domain: general-monitoring
 instances: ["01"]
 entrypoints:
-  - name: "ska_tmc_mccssubarrayleafnode.mccs_subarray_leaf_node.MccsSubarrayLeafNode"
+  - name: "ska_tmc_mccssubarrayleafnode.mccs_subarray_leaf_node.LowTmcLeafNodeMccsSubarray"
 server:
   name: "mccs_subarray_leaf_node"
   instances:
@@ -13,12 +13,14 @@ server:
   {{ $LivelinessCheckPeriod := .Values.deviceServers.mccssubarrayleafnode.LivelinessCheckPeriod }}
   {{ $EventSubscriptionCheckPeriod := .Values.deviceServers.mccssubarrayleafnode.EventSubscriptionCheckPeriod }}
   {{ $AdapterTimeOut := .Values.deviceServers.mccssubarrayleafnode.AdapterTimeOut}}
+  {{ $domain := .Values.global.domain}}
+  {{ $family := .Values.deviceServers.mccssubarrayleafnode.family }}
   {{- range  ( regexSplit " " ((.Values.subarray_count | int) | seq ) -1 ) }}
     - name: "{{ printf "%02s" . }}"
       classes:
-      - name: "MccsSubarrayLeafNode"
+      - name: "LowTmcLeafNodeMccsSubarray"
         devices:
-          - name: "ska_low/tm_leaf_node/mccs_subarray{{ printf "%02s" . }}"
+          - name: "{{ $domain }}/{{ $family }}/{{ printf "%02s" . }}"
             properties:
               - name: "MccsSubarrayFQDN"
                 values:

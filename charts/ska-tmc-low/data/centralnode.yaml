@@ -3,34 +3,37 @@ function: telescope-monitoring
 domain: general-monitoring
 instances: ["01"]
 entrypoints:
-  - name: "ska_tmc_centralnode.central_node_low.CentralNodeLow"
+  - name: "ska_tmc_centralnode.central_node_low.LowTmcCentralNode"
 server:
   name: "central_node_low"
   instances:
   {{ $tmc_sa_fqdn_prefix:= .Values.global.tmc_subarray_prefix}}
   {{ $csp_sa_ln_fqdn_prefix:= .Values.global.csp_subarray_ln_prefix}}
   {{ $sdp_sa_ln_fqdn_prefix:= .Values.global.sdp_subarray_ln_prefix}}
+  {{ $domain := .Values.global.domain}}
+  {{ $family := .Values.deviceServers.centralnode.family }}
+  {{ $member := .Values.deviceServers.centralnode.member }}
   - name: "01"
     classes:
-    - name: "CentralNodeLow"
+    - name: "LowTmcCentralNode"
       devices:
-      - name: "ska_low/tm_central/central_node"
+      - name: "{{ $domain }}/{{ $family }}/{{ $member }}"
         properties:
         - name: "CspMasterLeafNodeFQDN"
           values:
-          - "{{.Values.global.csp_master_ln_prefix}}"
+          - "{{.Values.global.csp_master_ln}}"
         - name: "CspMasterFQDN"
           values:
           - "{{.Values.global.csp_master}}"
         - name: "SdpMasterLeafNodeFQDN"
           values:
-          - "{{.Values.global.sdp_master_ln_prefix}}"
+          - "{{.Values.global.sdp_master_ln}}"
         - name: "SdpMasterFQDN"
           values:
           - "{{.Values.global.sdp_master}}"
         - name: "MccsMasterLeafNodeFQDN"
           values:
-            - "{{.Values.global.mccs_master_ln_prefix}}"
+            - "{{.Values.global.mccs_master_ln}}"
         - name: "MccsMasterFQDN"
           values:
             - "{{.Values.global.mccs_master}}"
@@ -46,7 +49,7 @@ server:
         - name: "TMCSubarrayNodes"
           values:
           {{- range  ( regexSplit " " ((.Values.subarray_count | int) | seq ) -1 )  }}
-          - "{{ $tmc_sa_fqdn_prefix }}/{{ . }}"
+          - "{{ $tmc_sa_fqdn_prefix }}/{{ printf "%02s" . }}"
           {{- end }}
         - name: "CspSubarrayLeafNodes"
           values:

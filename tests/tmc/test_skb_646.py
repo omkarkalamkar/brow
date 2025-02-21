@@ -25,7 +25,10 @@ from tests.resources.test_harness.helpers import (
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
-from tests.resources.test_support.constant_low import TIMEOUT
+from tests.resources.test_support.constant_low import (
+    TIMEOUT,
+    tmc_csp_subarray_leaf_node,
+)
 
 
 @pytest.mark.SKA_low
@@ -247,7 +250,7 @@ def tmc_subarray_is_in_resourcing(
     )
     exception_message = [
         "Exception occurred on the following devices:",
-        "ska_low/tm_leaf_node/csp_subarray01:",
+        f"{tmc_csp_subarray_leaf_node}:",
         "Command is not allowed",
     ]
     assert_that(event_tracer).described_as(

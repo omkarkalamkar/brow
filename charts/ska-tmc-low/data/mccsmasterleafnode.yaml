@@ -3,15 +3,18 @@ function: telescope-monitoring
 domain: general-monitoring
 instances: ["01"]
 entrypoints:
-  - name: "ska_tmc_mccsmasterleafnode.mccs_master_leaf_node.MccsMasterLeafNode"
+  - name: "ska_tmc_mccsmasterleafnode.mccs_master_leaf_node.LowTmcLeafNodeMccs"
 server:
   name: "mccs_master_leaf_node"
   instances:
+  {{ $domain := .Values.global.domain}}
+  {{ $family := .Values.deviceServers.mccsmasterleafnode.family }}
+  {{ $member := .Values.deviceServers.mccsmasterleafnode.member }}
   - name: "01"
     classes:
-    - name: "MccsMasterLeafNode"
+    - name: "LowTmcLeafNodeMccs"
       devices:
-      - name: "ska_low/tm_leaf_node/mccs_master"
+      - name: "{{ $domain }}/{{ $family }}/{{ $member }}"
         properties:
         - name: "MccsMasterFQDN"
           values:

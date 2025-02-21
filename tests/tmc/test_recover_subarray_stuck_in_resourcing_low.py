@@ -24,6 +24,7 @@ from tests.resources.test_support.constant_low import (
     FAILED_RESULT_DEFECT,
     SDP_BACK_TO_INITIAL_STATE,
     TIMEOUT,
+    tmc_subarraynode1,
 )
 
 
@@ -282,7 +283,7 @@ def test_abort_with_sdp_csp_in_empty(
 
     exception_message = (
         "Exception occurred on the following devices: "
-        f"ska_low/tm_leaf_node/{defective_device}01: "
+        f"low-tmc/subarray-leaf-node-{defective_device[:3]}/01: "
     )
 
     assert_that(event_tracer).described_as(
@@ -448,8 +449,7 @@ def test_abort_with_mccs_in_empty(
     )
 
     exception_message = (
-        " ska_low/tm_subarray_node/1: "
-        + "Timeout has occurred, command failed"
+        f" {tmc_subarraynode1}: " + "Timeout has occurred, command failed"
     )
 
     assert_that(event_tracer).described_as(

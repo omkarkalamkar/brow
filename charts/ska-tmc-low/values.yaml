@@ -33,19 +33,21 @@ global:
     - "subarraynode"
     - "mccssubarrayleafnode"
 
+  domain: "low-tmc"
+
   # fqdn for low devices
-  tmc_subarray_prefix: "ska_low/tm_subarray_node"
-  csp_subarray_ln_prefix: "ska_low/tm_leaf_node/csp_subarray"
-  sdp_subarray_ln_prefix: "ska_low/tm_leaf_node/sdp_subarray"
-  csp_master_ln_prefix: "ska_low/tm_leaf_node/csp_master"
-  sdp_master_ln_prefix: "ska_low/tm_leaf_node/sdp_master"
-  mccs_master_ln_prefix: "ska_low/tm_leaf_node/mccs_master"
+  tmc_subarray_prefix: "low-tmc/subarray"
+  csp_subarray_ln_prefix: "low-tmc/subarray-leaf-node-csp/"
+  sdp_subarray_ln_prefix: "low-tmc/subarray-leaf-node-sdp/"
+  csp_master_ln: "low-tmc/leaf-node-csp/0"
+  sdp_master_ln: "low-tmc/leaf-node-sdp/0"
+  mccs_master_ln: "low-tmc/leaf-node-mccs/0"
   csp_subarray_prefix: "low-csp/subarray"
   sdp_subarray_prefix: "low-sdp/subarray"
   csp_master: "low-csp/control/0"
   sdp_master: "low-sdp/control/0"
   mccs_master: "low-mccs/control/control"
-  mccs_subarray_ln_prefix: "ska_low/tm_leaf_node/mccs_subarray"
+  mccs_subarray_ln_prefix: "low-tmc/subarray-leaf-node-mccs/"
   mccs_subarray_prefix: "low-mccs/subarray"
 
 dsconfig:
@@ -67,35 +69,35 @@ centralnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-centralnode
-    tag: 0.17.3
+    tag: 0.18.0
     pullPolicy: IfNotPresent
 
 subarraynode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-subarraynode
-    tag: 0.29.0
+    tag: 0.30.0
     pullPolicy: IfNotPresent
 
 sdpleafnodes:
   image:
     registry: artefact.skao.int
     image: ska-tmc-sdpleafnodes
-    tag: 0.20.2
+    tag: 0.21.0
     pullPolicy: IfNotPresent
 
 cspmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.23.4
+    tag: 0.24.0
     pullPolicy: IfNotPresent
 
 cspsubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.23.4
+    tag: 0.24.0
     pullPolicy: IfNotPresent
 
 
@@ -103,14 +105,14 @@ mccsmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.6.1
+    tag: 0.6.2
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.6.1
+    tag: 0.6.2
     pullPolicy: IfNotPresent
 
 resources:
@@ -132,6 +134,8 @@ deviceServers:
     CommandTimeOut: 80
     AssignResourcesInterface: "https://schema.skao.int/ska-low-tmc-assignresources/4.0"
     ReleaseResourcesInterface: "https://schema.skao.int/ska-low-tmc-releaseresources/3.0"
+    family: "central-node"
+    member : "0"
 
   subarraynode:
     enabled: true
@@ -146,6 +150,7 @@ deviceServers:
     EventSubscriptionCheckPeriod: 0.5
     CommandTimeOut: 70
     AbortCommandTimeOut: 40
+    family: "subarray"
 
   sdpsubarrayleafnode:
     enabled: true
@@ -155,6 +160,8 @@ deviceServers:
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     SDPSubarrayAdminModeEnabled: true
+    family: "subarray-leaf-node-sdp"
+    
 
   sdpmasterleafnode:
     enabled: true
@@ -164,7 +171,9 @@ deviceServers:
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     SDPMasterAdminModeEnabled: true
-
+    family: "leaf-node-sdp"
+    member: "0"
+    
   cspmasterleafnode:
     enabled: true
     instances: ["01"]
@@ -172,6 +181,19 @@ deviceServers:
     AdapterTimeOut: 2.0
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
+    family: "leaf-node-csp"
+    member: "0"
+  
+  mccsmasterleafnode:
+    enabled: true
+    instances: ["01"]
+    file: "data/mccsmasterleafnode.yaml"
+    CommandTimeOut: 50
+    LivelinessCheckPeriod: 0.5
+    EventSubscriptionCheckPeriod: 0.5
+    AdapterTimeOut: 2.0
+    family: "leaf-node-mccs"
+    member: "0"
 
   cspsubarrayleafnode:
     enabled: true
@@ -188,15 +210,7 @@ deviceServers:
     AdapterTimeOut: 2.0
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
-
-  mccsmasterleafnode:
-    enabled: true
-    instances: ["01"]
-    file: "data/mccsmasterleafnode.yaml"
-    CommandTimeOut: 50
-    LivelinessCheckPeriod: 0.5
-    EventSubscriptionCheckPeriod: 0.5
-    AdapterTimeOut: 2.0
+    family: "subarray-leaf-node-csp"
 
   mccssubarrayleafnode:
     enabled: true
@@ -205,6 +219,7 @@ deviceServers:
     EventSubscriptionCheckPeriod: 0.5
     CommandTimeOut: 50
     AdapterTimeOut: 2.0
+    family: "subarray-leaf-node-mccs"
 
   mocks:
     enabled: false
