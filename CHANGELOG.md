@@ -108,10 +108,10 @@ Added
 [0.20.3-rc.2]
 Added
 -----
- * Removed SleepTime property and utilised properties livelinessCheckPeriod and eventSubscriptionCheck
- * Renamed the properties as required
- * Made all the properties configurable
- * Corrected data types of the properties wherever required
+* Removed SleepTime property and utilised properties livelinessCheckPeriod and eventSubscriptionCheck
+* Renamed the properties as required
+* Made all the properties configurable
+* Corrected data types of the properties wherever required
 
 Fixed
 -----
@@ -121,28 +121,28 @@ Fixed
 [0.20.3-rc.1]
 Added
 -----
- * Updated the image of SubarrayNode to 0.27.6
- * Updated the image of central node to 0.17.2
- * Updated the image of Sdpleafnodes to 0.19.3
- * Updated the image of CSPleafnodes to 0.23.2
- * Updated the image of MCCSleafnode to 0.5.4
- * Introduced error propagation and timeout for Scan /EndScan /End Commands
+* Updated the image of SubarrayNode to 0.27.6
+* Updated the image of central node to 0.17.2
+* Updated the image of Sdpleafnodes to 0.19.3
+* Updated the image of CSPleafnodes to 0.23.2
+* Updated the image of MCCSleafnode to 0.5.4
+* Introduced error propagation and timeout for Scan /EndScan /End Commands
 
 Fixed
 -----
- * Fixed bug skb-525 
+* Fixed bug skb-525 
 
 [0.20.2-rc.2]
 Fixed
 -----
- * Fixed bug SKB-646 with latest subarray node image v0.27.6
+* Fixed bug SKB-646 with latest subarray node image v0.27.6
 
 [0.20.2-rc.1]
 Added
 -----
- * Update CSPleafnodes chart to update ska-telmodel
- * Updated the image of Sdpleafnodes to 0.17.3
- * Updated the image of SubarrayNode to 0.26.4
+* Update CSPleafnodes chart to update ska-telmodel
+* Updated the image of Sdpleafnodes to 0.17.3
+* Updated the image of SubarrayNode to 0.26.4
 
 Fixed
 -----
