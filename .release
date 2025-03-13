@@ -1,35 +1,17 @@
-release=1.0.0-rc.1
-tag=1.0.0-rc.1
+release=1.0.0-rc.2
+tag=1.0.0-rc.2
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 1.0.0-rc.1**
+**1. ska-tmc-low-integration 1.0.0-rc.2**
 
-    **1.1 ska-tmc-low  0.20.3 - 1.0.0-rc.1 :**
-            * Updated the TRL's of TMC low devices
-            * ska_low/tm_central/central_node - low-tmc/central-node/0              
-            * ska_low/tm_subarray_node/1 - low-tmc/subarray/01            
-            * ska_low/tm_leaf_node/csp_master - low-tmc/leaf-node-csp/0
-            * ska_low/tm_leaf_node/sdp_master - low-tmc/leaf-node-sdp/0
-            * ska_low/tm_leaf_node/mccs_master - low-tmc/leaf-node-mccs/0
-            * ska_low/tm_leaf_node/csp_subarray01 - low-tmc/subarray-leaf-node-csp/01
-            * ska_low/tm_leaf_node/sdp_subarray01 - low-tmc/subarray-leaf-node-sdp/01
-            * ska_low/tm_leaf_node/mccs_subarray01 - low-tmc/subarray-leaf-node-mccs/01
-            * Updated event receiver in centralNode to include state and healthState subscription instead of using from common tp fix device not defined in DB issue          
+    **1.1 ska-tmc-low  1.0.0-rc.1 - 1.0.0-rc.2 :**
+            * Resolve SKB-672              
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 1.0.0-rc.1**
+**1. ska-tmc-low-integration 1.0.0-rc.2**
 
-    **1.1 ska-tmc-low  0.20.3 - 1.0.0-rc.1 :**
-            * Updated the TRL's of TMC low devices
-            * ska_low/tm_central/central_node - low-tmc/central-node/0              
-            * ska_low/tm_subarray_node/1 - low-tmc/subarray/01            
-            * ska_low/tm_leaf_node/csp_master - low-tmc/leaf-node-csp/0
-            * ska_low/tm_leaf_node/sdp_master - low-tmc/leaf-node-sdp/0
-            * ska_low/tm_leaf_node/mccs_master - low-tmc/leaf-node-mccs/0
-            * ska_low/tm_leaf_node/csp_subarray01 - low-tmc/subarray-leaf-node-csp/01
-            * ska_low/tm_leaf_node/sdp_subarray01 - low-tmc/subarray-leaf-node-sdp/01
-            * ska_low/tm_leaf_node/mccs_subarray01 - low-tmc/subarray-leaf-node-mccs/01
-            * Updated event receiver in centralNode to include state and healthState subscription instead of using from common tp fix device not defined in DB issue          
+    **1.1 ska-tmc-low  1.0.0-rc.1 - 1.0.0-rc.2 :**
+            * Resolve SKB-672 
