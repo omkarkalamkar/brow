@@ -5,6 +5,11 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[Unreleased]
+Fixed
+-----
+* Resolved SKB-732.
+
 [1.0.0-rc.2]
 Added
 -----
