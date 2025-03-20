@@ -9,6 +9,8 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 Fixed
 -----
 * Resolved SKB-732.
+* Removed configure json interface(0.3) hardcoding in TMC SDP Subarray Leaf Node.
+
 
 [1.0.0-rc.2]
 Added
