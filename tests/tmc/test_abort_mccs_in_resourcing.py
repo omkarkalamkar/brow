@@ -30,7 +30,7 @@ from tests.resources.test_support.constant_low import TIMEOUT
 
 @pytest.mark.SKA_low
 @scenario(
-    "../features/tmc/mccs_abort.feature",
+    "../features/tmc/check_mccs_abort.feature",
     "Verify Abort in Resourcing",
 )
 def test_verify_abort_mccs():
