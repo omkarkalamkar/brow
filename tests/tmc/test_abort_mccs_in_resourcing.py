@@ -15,7 +15,8 @@
 # from ska_tango_testing.integration import TangoEventTracer, log_events
 # from tango import DevState
 
-# from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
+# from tests.resources.test_harness.central_node_low import (
+#     CentralNodeWrapperLow)
 # from tests.resources.test_harness.simulator_factory import SimulatorFactory
 # from tests.resources.test_harness.subarray_node_low import (
 #     SubarrayNodeWrapperLow,
@@ -91,7 +92,7 @@
 
 # @given("central node is busy assigning resources")
 # def central_node_assign_resources(
-#     central_node_low: CentralNodeWrapperLow, command_input_factory: JsonFactory
+#  central_node_low: CentralNodeWrapperLow, command_input_factory: JsonFactory
 # ):
 #     """
 #     This method invokes AssignResources command on central node.
