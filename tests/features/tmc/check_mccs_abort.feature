@@ -3,4 +3,4 @@ Scenario: Verify Abort in Resourcing
     And central node is busy assigning resources
     And mccsleafnode node is in observation state ObsState.RESOURCING
     When I invoke abort on subarray node
-    When MCCS subarray transitions to Obsstate EMPTY
+    Then MCCS subarray transitions to observation state ObsState.EMPTY

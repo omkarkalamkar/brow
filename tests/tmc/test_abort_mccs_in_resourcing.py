@@ -27,7 +27,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 from tests.resources.test_support.constant_low import TIMEOUT
 
-
+@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_mccs_abort.feature",
@@ -110,7 +110,7 @@ def central_node_assign_resources(
     assert result[0] == ResultCode.QUEUED
 
 
-@given("mccsleafnode node is in observation state RESOURCING")
+@given("mccsleafnode node is in observation state ObsState.RESOURCING")
 def subarray_node_obs_state_resourcing(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
@@ -158,7 +158,7 @@ def subarray_node_obs_state_resourcing(
 
 
 @when("I invoke abort on subarray node")
-def subarray_node_invoke_abort(subarray_node_low: SubarrayNodeWrapperLow):
+def mccs_subarray_node_invoke_abort(subarray_node_low: SubarrayNodeWrapperLow):
     """This method invokes abort on subarray node
 
     Args:
@@ -167,7 +167,7 @@ def subarray_node_invoke_abort(subarray_node_low: SubarrayNodeWrapperLow):
     subarray_node_low.abort_subarray()
 
 
-@then("MCCS subarray transitions to Obsstate EMPTY")
+@then("MCCS subarray transitions to observation state ObsState.EMPTY")
 def check_central_node_lrcr(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
