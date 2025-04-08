@@ -147,7 +147,7 @@ def subarray_node_obs_state_resourcing(
     assert_that(event_tracer).described_as(
         "FAILED UNEXPECTED OBSSTATE: "
         "mccs subarray device"
-        f"({central_node_low.subarray_node.dev_name()}) "
+        f"({central_node_low.mccs_subarray1.dev_name()}) "
         "is expected to be in RESOURCING obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         mccs_sim,
