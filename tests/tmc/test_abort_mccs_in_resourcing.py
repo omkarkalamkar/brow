@@ -13,6 +13,7 @@ from pytest_bdd import given, scenario, then, when
 from ska_control_model import ObsState
 from ska_tango_base.commands import ResultCode
 from ska_tango_testing.integration import TangoEventTracer, log_events
+from ska_tango_testing.mock.placeholders import Anything
 from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
@@ -55,7 +56,11 @@ def given_a_tmc(
     event_tracer.subscribe_event(
         central_node_low.central_node, "longRunningCommandResult"
     )
+    event_tracer.subscribe_event(
+        central_node_low.mccs_master_leaf_node, "longRunningCommandResult"
+    )
     event_tracer.subscribe_event(central_node_low.subarray_node, "obsState")
+
     log_events(
         {
             central_node_low.central_node: [
@@ -110,7 +115,9 @@ def central_node_assign_resources(
     assert result[0] == ResultCode.QUEUED
 
 
-@given("mccsleafnode node is in observation state ObsState.RESOURCING")
+@given(
+    "mccs subarray leafnode node is in observation state ObsState.RESOURCING"
+)
 def subarray_node_obs_state_resourcing(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
@@ -167,14 +174,13 @@ def mccs_subarray_node_invoke_abort(subarray_node_low: SubarrayNodeWrapperLow):
     subarray_node_low.abort_subarray()
 
 
-@then("MCCS subarray transitions to observation state ObsState.EMPTY")
+@then("mccs master leafnode result to aborted")
 def check_central_node_lrcr(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
-    simulator_factory,
 ):
     """
-    This method checks for central node long running command result
+    This method checks for mccs master leafnode command result
     attribute's desired event.
 
     Args:
@@ -182,16 +188,32 @@ def check_central_node_lrcr(
         event_tracer(TangoEventTracer): Object of TangoEventTracer used for
         managing the device events
     """
-    mccs_sim = simulator_factory.get_or_create_simulator_device(
-        SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
+
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION ATER ASSIGN RESOURCES: "
+        "Central Node device"
+        f"({central_node_low.central_node.dev_name()}) "
+        "is expected have longRunningCommandResult"
+        "(ResultCode.ABORTED, command is aborted)",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.mccs_master_leaf_node,
+        attribute_name="longRunningCommandResult",
+        attribute_value=(
+            Anything,
+            json.dumps([ResultCode.ABORTED, "Command has been aborted"]),
+        ),
     )
     assert_that(event_tracer).described_as(
-        "FAILED UNEXPECTED OBSSTATE: "
-        "mccs subarray device"
-        f"({central_node_low.subarray_node.dev_name()}) "
-        "is expected to be in EMPTY obstate",
+        "FAILED ASSUMPTION ATER ASSIGN RESOURCES: "
+        "Central Node device"
+        f"({central_node_low.central_node.dev_name()}) "
+        "is expected have longRunningCommandResult"
+        "(ResultCode.ABORTED, command is aborted)",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        mccs_sim,
-        "obsState",
-        ObsState.EMPTY,
+        central_node_low.central_node,
+        attribute_name="longRunningCommandResult",
+        attribute_value=(
+            pytest.unique_id[0],
+            Anything,
+        ),
     )
