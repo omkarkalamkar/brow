@@ -8,7 +8,8 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 [1.0.0-rc.4]
 Fixed
 -----
-* Resolved the issues observed while performing 2 Subarray testing.
+* Updated MCCS master Leaf Node ReleaseResources command to instruct MCCS Controller to release the resources from specific subarray
+* Removed the transitional obsState RESOURCING check from SDP Subarray Leaf Node AssignResources command tracker
 
 [1.0.0-rc.3]
 Fixed
