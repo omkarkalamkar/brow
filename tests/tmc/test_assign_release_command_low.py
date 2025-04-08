@@ -24,7 +24,7 @@ from tests.resources.test_harness.utils.enums import SimulatorDeviceType
 from tests.resources.test_support.constant_low import (
     INTERMEDIATE_STATE_DEFECT,
     RESET_DEFECT,
-    tmc_subarraynode1,
+    tmc_csp_subarray_leaf_node,
 )
 
 
@@ -86,10 +86,12 @@ def test_assign_release_defective_csp(
     )
     assert unique_id[0].endswith("AssignResources")
     assert result[0] == ResultCode.QUEUED
+
     exception_message = (
-        f" {tmc_subarraynode1}:"
-        + " Exception occurred on the following devices:"
+        "Exception occurred on the following"
+        + f" devices: {tmc_csp_subarray_leaf_node}"
     )
+
     log_events({central_node_low.central_node: ["longRunningCommandResult"]})
 
     assert_that(event_tracer).described_as(
