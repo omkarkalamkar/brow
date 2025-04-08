@@ -28,7 +28,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 from tests.resources.test_support.constant_low import TIMEOUT
 
-
+@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_mccs_abort.feature",
@@ -216,4 +216,22 @@ def check_central_node_lrcr(
             pytest.unique_id[0],
             Anything,
         ),
+    )
+
+@then("the Subarray node transitions to observation state ObsState.ABORTED")
+def tmc_status(
+    subarray_node_low: SubarrayNodeWrapperLow, event_tracer: TangoEventTracer
+):
+    """
+    Verifies that the Subarray transition to ObsState.ABORTED.
+    """
+    assert_that(event_tracer).described_as(
+        '"the Subarray transitions to ABORTED"'
+        "Subarray Node device"
+        f"({subarray_node_low.subarray_node.dev_name()}) "
+        "is expected to be in EMPTY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.subarray_node,
+        "obsState",
+        ObsState.ABORTED,
     )

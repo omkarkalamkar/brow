@@ -5,6 +5,18 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[1.0.0-rc.3]
+Fixed
+-----
+* Resolved SKB-732.
+* Removed configure json interface(0.3) hardcoding in TMC SDP Subarray Leaf Node.
+
+
+[1.0.0-rc.2]
+Added
+-----
+* Resolve SKB-672
+
 [1.0.0-rc.1]
 Added
 -----
