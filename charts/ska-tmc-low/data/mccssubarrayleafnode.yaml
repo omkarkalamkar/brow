@@ -31,6 +31,9 @@ server:
               - name: "SkaLevel"
                 values:
                 - "3"
+              - name: "MccsMasterLeafNodeFQDN"
+                values:
+                - "low-tmc/leaf-node-mccs/0"
               - name: "LoggingTargetsDefault"
                 values:
                 - "tango::logger"
