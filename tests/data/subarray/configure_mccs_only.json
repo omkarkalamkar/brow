@@ -1,0 +1,48 @@
+{
+    "interface": "https://schema.skao.int/ska-low-tmc-configure/4.2",
+    "transaction_id": "txn-....-00001",
+    "mccs": {
+        "subarray_beams": [
+            {
+                "subarray_beam_id": 1,
+                "update_rate": 0.0,
+                "logical_bands": [
+                    {
+                        "start_channel": 80,
+                        "number_of_channels": 16
+                    },
+                    {
+                        "start_channel": 384,
+                        "number_of_channels": 16
+                    }
+                ],
+                "apertures": [
+                    {
+                        "aperture_id": "AP001.01",
+                        "weighting_key_ref": "aperture2"
+                    },
+                    {
+                        "aperture_id": "AP001.02",
+                        "weighting_key_ref": "aperture3"
+                    },
+                    {
+                        "aperture_id": "AP002.01",
+                        "weighting_key_ref": "aperture2"
+                    },
+                    {
+                        "aperture_id": "AP002.02",
+                        "weighting_key_ref": "aperture3"
+                    }
+                ],
+                "sky_coordinates": {
+                    "reference_frame": "ICRS",
+                    "c1": 180.0,
+                    "c2": 45.0
+                }
+            }
+        ]
+    },
+    "tmc": {
+        "scan_duration": 10.0
+    }
+}
