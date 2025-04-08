@@ -83,7 +83,7 @@ sdpleafnodes:
   image:
     registry: artefact.skao.int
     image: ska-tmc-sdpleafnodes
-    tag: 0.21.1
+    tag: 0.21.3
     pullPolicy: IfNotPresent
 
 cspmasterleafnode:
@@ -105,14 +105,14 @@ mccsmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.6.2
+    tag: 0.7.1
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.6.2
+    tag: 0.7.1
     pullPolicy: IfNotPresent
 
 resources:
