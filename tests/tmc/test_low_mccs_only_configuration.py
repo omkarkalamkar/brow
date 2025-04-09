@@ -147,7 +147,7 @@ def check_mccs_obs_state(
         subarray_node_low.subarray_devices.get("mccs_subarray"), "obsState"
     )
     event_tracer.subscribe_event(
-        subarray_node_low.mccs_subarray_leaf_node, "mccsSubarrayObsState"
+        subarray_node_low.mccs_subarray_leaf_node, "obsState"
     )
     log_events(
         {
@@ -167,7 +167,7 @@ def check_mccs_obs_state(
         "is expected to be in READY obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         subarray_node_low.mccs_subarray_leaf_node,
-        "mccsSubarrayObsState",
+        "obsState",
         ObsState.READY,
     )
 
