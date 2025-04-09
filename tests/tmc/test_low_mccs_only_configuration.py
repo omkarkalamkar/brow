@@ -134,7 +134,7 @@ def send_configure(
     configure_input_json = prepare_json_args_for_commands(
         "configure_mccs_only", command_input_factory
     )
-    subarray_node_low.store_configuration_data(configure_input_json)
+    subarray_node_low.subarray_node.Configure(configure_input_json)
 
 
 @then("the MCCS is in the READY obsState")
