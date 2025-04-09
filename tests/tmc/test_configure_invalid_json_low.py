@@ -207,9 +207,10 @@ def invalid_command_rejection(invalid_json):
         # TODO: Enable this once CDM available with latest telmodel
         # assert "Invalid 'interface' value: None"
         # in pytest.command_result[1][0]
+
         assert (
-            "Low TMC configure 4.1' Missing keys: 'csp', 'interface', "
-            "'mccs', 'sdp" in pytest.command_result[1][0]
+            "JSON Error: Missing 'interface'"
+            "key in the Configure json" in pytest.command_result[1][0]
         )
 
 
