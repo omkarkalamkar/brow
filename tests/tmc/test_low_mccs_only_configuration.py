@@ -132,7 +132,7 @@ def send_configure(
 ):
     """Send a Configure command to the subarray with only mccs key."""
     configure_input_json = prepare_json_args_for_commands(
-        "configure_station_only", command_input_factory
+        "configure_mccs_only", command_input_factory
     )
     subarray_node_low.store_configuration_data(configure_input_json)
 
