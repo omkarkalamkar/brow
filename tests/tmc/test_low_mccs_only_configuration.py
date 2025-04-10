@@ -154,7 +154,7 @@ def check_mccs_obs_state(
             subarray_node_low.subarray_devices.get("mccs_subarray"): [
                 "obsState"
             ],
-            subarray_node_low.sdp_subarray_leaf_node: ["mccsSubarrayObsState"],
+            subarray_node_low.mccs_subarray_leaf_node: ["obsState"],
         }
     )
     mccs = subarray_node_low.subarray_devices.get("mccs_subarray")
