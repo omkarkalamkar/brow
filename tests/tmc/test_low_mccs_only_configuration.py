@@ -39,7 +39,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 def test_tmc_configure_command():
     """BDD test scenario for verifying successful execution of
-    the Low Configure command in a TMC."""
+    the Low Configure command in a TMC with mccs only configuration."""
 
 
 @given("a TMC")
