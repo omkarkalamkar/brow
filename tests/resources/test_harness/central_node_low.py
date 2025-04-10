@@ -319,7 +319,7 @@ class CentralNodeWrapperLow(object):
             _, unique_id = self.subarray_abort()
             assert_that(self.event_tracer).described_as(
                 "FAILED ASSUMPTION AFTER ABORT COMMAND: "
-                "Central Node device"
+                "SubarrayNode device"
                 f"({self.subarray_node.dev_name()}) "
                 "is expected have longRunningCommand as"
                 '(unique_id,(ResultCode.STARTED,"Command Started"))',

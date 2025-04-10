@@ -20,7 +20,6 @@ from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.constant import TIMEOUT
-from tests.resources.test_harness.helpers import set_receive_address
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
@@ -39,34 +38,37 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 def test_tmc_configure_command():
     """BDD test scenario for verifying successful execution of
-    the Low Configure command in a TMC."""
+    the Low Configure command in a TMC with MCCS only configuration."""
 
 
-@given("a TMC")
-def given_tmc(
-    central_node_low: CentralNodeWrapperLow, event_tracer: TangoEventTracer
-):
-    """Set up a TMC and ensure it is in the ON state."""
+@given("the telescope is in ON state")
+def check_telescope_is_in_on_state(
+    central_node_low: CentralNodeWrapperLow,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+) -> None:
+    """
+    Ensure telescope is in ON state.
+    """
+    # Event Subscriptions
     event_tracer.subscribe_event(
         central_node_low.central_node, "telescopeState"
     )
     event_tracer.subscribe_event(
-        central_node_low.central_node, "longRunningCommandResult"
+        subarray_node_low.subarray_node, "longRunningCommandResult"
     )
-    event_tracer.subscribe_event(central_node_low.subarray_node, "obsState")
     log_events(
         {
-            central_node_low.central_node: [
-                "telescopeState",
+            central_node_low.central_node: ["telescopeState"],
+            subarray_node_low.subarray_node: [
+                "obsState",
                 "longRunningCommandResult",
             ],
-            central_node_low.subarray_node: ["obsState"],
         }
     )
     central_node_low.move_to_on()
     assert_that(event_tracer).described_as(
-        'FAILED ASSUMPTION IN "GIVEN STEP: '
-        '"a TMC'
+        "FAILED ASSUMPTION AFTER ON COMMAND: "
         "Central Node device"
         f"({central_node_low.central_node.dev_name()}) "
         "is expected to be in TelescopeState ON",
@@ -75,46 +77,51 @@ def given_tmc(
         "telescopeState",
         DevState.ON,
     )
-    assert_that(event_tracer).described_as(
-        'FAILED ASSUMPTION IN "GIVEN STEP: '
-        '"a TMC'
-        "Subarray Node device"
-        f"({central_node_low.subarray_node.dev_name()}) "
-        f"is expected to be in EMPTY obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
-        "obsState",
-        ObsState.EMPTY,
+
+
+@given("subarray in the IDLE obsState")
+def perform_idle_transition(
+    central_node_low: CentralNodeWrapperLow,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    command_input_factory: JsonFactory,
+):
+    """
+    Execute Assign and verify
+    """
+
+    event_tracer.subscribe_event(subarray_node_low.subarray_node, "obsState")
+    event_tracer.subscribe_event(
+        central_node_low.central_node, "longRunningCommandResult"
     )
 
+    log_events(
+        {
+            central_node_low.central_node: [
+                "longRunningCommandResult",
+            ]
+        }
+    )
 
-@given("a subarray in the IDLE obsState")
-def given_subarray_in_idle(
-    command_input_factory: JsonFactory,
-    central_node_low: CentralNodeWrapperLow,
-    event_tracer: TangoEventTracer,
-):
-    """Set up a subarray in the IDLE obsState."""
-    set_receive_address(central_node_low)
-    assign_input_json = prepare_json_args_for_centralnode_commands(
+    assign_input_str = prepare_json_args_for_centralnode_commands(
         "assign_resources_low", command_input_factory
     )
-    _, unique_id = central_node_low.store_resources(assign_input_json)
+    _, unique_id = central_node_low.store_resources(assign_input_str)
+
     assert_that(event_tracer).described_as(
-        'FAILED ASSUMPTION IN "GIVEN" STEP: '
-        "'the subarray is in IDLE obsState'"
+        "FAILED ASSUMPTION AFTER ASSIGNRESOURCES COMMAND: "
         "Subarray Node device"
-        f"({central_node_low.subarray_node.dev_name()}) "
+        f"({subarray_node_low.subarray_node.dev_name()}) "
         "is expected to be in IDLE obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
+        subarray_node_low.subarray_node,
         "obsState",
         ObsState.IDLE,
     )
+
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
-        "'the subarray is in IDLE obsState'"
-        "Subarray Node device"
+        "Central Node device"
         f"({central_node_low.central_node.dev_name()}) "
         "is expected have longRunningCommand as"
         '(unique_id,(ResultCode.OK,"Command Completed"))',
@@ -123,6 +130,7 @@ def given_subarray_in_idle(
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
+    event_tracer.clear_events()
 
 
 @when("I configure subarray with only MCCS")
@@ -132,9 +140,22 @@ def send_configure(
 ):
     """Send a Configure command to the subarray with only mccs key."""
     configure_input_json = prepare_json_args_for_commands(
-        "configure_mccs_only", command_input_factory
+        "configure_low", command_input_factory
     )
+    configure_input_json = json.loads(configure_input_json)
+
+    for subsystem in ["sdp", "csp"]:
+        del configure_input_json[subsystem]
+
+    configure_input_json[
+        "interface"
+    ] = "https://schema.skao.int/ska-low-tmc-configure/4.2"
+
+    configure_input_json = json.dumps(configure_input_json)
+
     subarray_node_low.subarray_node.Configure(configure_input_json)
+    # In an effort to reduce number of data files we are modifying the
+    # existing configure_low.
 
 
 @then("the MCCS is in the READY obsState")
