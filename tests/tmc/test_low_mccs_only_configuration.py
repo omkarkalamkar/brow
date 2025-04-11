@@ -280,3 +280,15 @@ def check_subarray_obs_state(
         "obsState",
         ObsState.READY,
     )
+
+    tmc.abort()
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        tmc.subarray_node, "obsState", ObsState.ABORTED
+    )
+
+    tmc.restart()
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(tmc.subarray_node, "obsState", ObsState.EMPTY)
