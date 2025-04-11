@@ -32,7 +32,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 
 
-@given("the telescope is in ON state")
+@given("the telescope is is ON state")
 def check_telescope_is_in_on_state(
     central_node_low: CentralNodeWrapperLow,
     subarray_node_low: SubarrayNodeWrapperLow,
@@ -160,7 +160,6 @@ def perform_scan(
     subarray_node_low: SubarrayNodeWrapperLow,
     command_input_factory: JsonFactory,
 ):
-
     """
     Perform Scan
     """
@@ -340,7 +339,6 @@ def move_tmc_to_intial_state(
     command_input_factory: JsonFactory,
     initialObsState,
 ):
-
     """
     Method to move and verify tmc  subarray  in required initial
     observation state.
