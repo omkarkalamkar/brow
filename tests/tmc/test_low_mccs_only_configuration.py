@@ -126,7 +126,7 @@ def perform_idle_transition(
 @when("I configure TMC subarray with MCCS only configuration")
 def send_configure(tmc: TMCFacade):
     """Send a Configure command to the subarray with only mccs key."""
-    configure_input = MyFileJSONInput("centralnode", "assign_resources_low")
+    configure_input = MyFileJSONInput("subarray", "configure_low")
 
     configure_input_json = json.loads(configure_input.as_str())
 
