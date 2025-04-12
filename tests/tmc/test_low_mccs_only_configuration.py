@@ -196,13 +196,13 @@ def check_csp_sdp_obs_state(
     event_tracer: TangoEventTracer,
 ):
     """Verify that the CSP and SDP remains in the IDLE obsState."""
-    csp_subrray = csp.csp_subarray
+    csp_subarray = csp.csp_subarray
     csp_sln = tmc.csp_subarray_leaf_node
     sdp_subarray = sdp.sdp_subarray
     sdp_sln = tmc.sdp_subarray_leaf_node
 
     event_tracer.subscribe_event(sdp_subarray, "obsState")
-    event_tracer.subscribe_event(csp_subrray, "obsState")
+    event_tracer.subscribe_event(csp_subarray, "obsState")
 
     event_tracer.subscribe_event(csp_sln, "cspSubarrayObsState")
     event_tracer.subscribe_event(sdp_sln, "sdpSubarrayObsState")
@@ -210,7 +210,7 @@ def check_csp_sdp_obs_state(
     log_events(
         {
             sdp_subarray: ["obsState"],
-            csp_subrray: ["obsState"],
+            csp_subarray: ["obsState"],
             csp_sln: ["cspSubarrayObsState"],
             sdp_sln: ["sdpSubarrayObsState"],
         }
@@ -242,10 +242,10 @@ def check_csp_sdp_obs_state(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         "'the subarray must be in the IDLE obsState'"
         "CSP Subarray device"
-        f"({csp_subrray.dev_name()}) "
+        f"({csp_subarray.dev_name()}) "
         "is expected to be in IDLE obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        csp,
+        csp_subarray,
         "obsState",
         ObsState.IDLE,
     )
@@ -256,7 +256,7 @@ def check_csp_sdp_obs_state(
         f"({sdp_subarray.dev_name()}) "
         "is expected to be in IDLE obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        sdp,
+        sdp_subarray,
         "obsState",
         ObsState.IDLE,
     )
