@@ -189,8 +189,7 @@ def check_mccs_obs_state(
 
 
 @then(
-    """the SDP and CSP subarray and subarray leafnodes
-      remains in the IDLE obsState"""
+    "the SDP, CSP subarray and subarray leafnodes remain in the IDLE obsState"
 )
 def check_csp_sdp_obs_state(
     tmc: TMCFacade,
