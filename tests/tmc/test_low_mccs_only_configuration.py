@@ -144,7 +144,7 @@ def send_configure(tmc: TMCFacade):
     # existing configure_low.
 
 
-@then("the MCCS subarray and MCCS subarray leafnode is in the READY obsState")
+@then("the MCCS subarray and MCCS subarray leafnode are in the READY obsState")
 def check_mccs_obs_state(
     tmc: TMCFacade,
     mccs: MCCSFacade,
