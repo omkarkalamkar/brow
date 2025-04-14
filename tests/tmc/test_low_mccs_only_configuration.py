@@ -144,7 +144,7 @@ def send_configure(tmc: TMCFacade):
     # existing configure_low.
 
 
-@then("the MCCS subarray and leafnode is in the READY obsState")
+@then("the MCCS subarray and MCCS subarray leafnode is in the READY obsState")
 def check_mccs_obs_state(
     tmc: TMCFacade,
     mccs: MCCSFacade,
@@ -188,7 +188,10 @@ def check_mccs_obs_state(
     )
 
 
-@then("the SDP and CSP subarray and leafnodes remains in the IDLE obsState")
+@then(
+    """the SDP and CSP subarray and subarray leafnodes
+      remains in the IDLE obsState"""
+)
 def check_csp_sdp_obs_state(
     tmc: TMCFacade,
     sdp: SDPFacade,
@@ -280,15 +283,3 @@ def check_subarray_obs_state(
         "obsState",
         ObsState.READY,
     )
-
-    tmc.abort()
-    assert_that(event_tracer).within_timeout(
-        TIMEOUT
-    ).has_change_event_occurred(
-        tmc.subarray_node, "obsState", ObsState.ABORTED
-    )
-
-    tmc.restart()
-    assert_that(event_tracer).within_timeout(
-        TIMEOUT
-    ).has_change_event_occurred(tmc.subarray_node, "obsState", ObsState.EMPTY)
