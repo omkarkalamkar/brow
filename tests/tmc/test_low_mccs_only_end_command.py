@@ -67,7 +67,7 @@ def given_the_telescope_is_in_on_state(
     event_tracers.clear_events()
 
 
-@given("TMC subarray in the IDLE obsState")
+@given("the TMC subarray in the IDLE obsState")
 def perform_idle_transition(
     tmc: TMCFacade,
     event_tracer: TangoEventTracer,
