@@ -1,13 +1,14 @@
 """
-Module: test_low_mccs_only_end_command
+Module: test_low_mccs_only_endscan_command
 
-This module defines a Pytest BDD test scenario for the successful configuration
-of a Low Telescope Subarray in the Telescope Monitoring and Control (TMC)
-system with MCCS only configuration and execution of End Command.
+This module defines a Pytest BDD test scenario for the successful execution
+of the EndScan Command on a Low Telescope Subarray in the Telescope Monitoring
+and Control (TMC) system with an MCCS-only subsystem.
 The scenario includes steps to set up the TMC, prepare a subarray in the IDLE
-observation state, and configure only MCCS subsystem and invoking the End
-command.The completion of the configuration is verified by checking that
-the subarray transitions to the IDLE observation state.
+observation state, configure only the MCCS subsystem, invoke the Scan command
+to transition to SCANNING, and then invoke the EndScan command. The successful
+execution is verified by checking that the subarray transitions to the READY
+observation state after the EndScan command.
 """
 import json
 
@@ -27,11 +28,11 @@ from tests.resources.test_support.common_utils.result_code import ResultCode
 
 @pytest.mark.SKA_low
 @scenario(
-    "../features/tmc/check_mccs_only_end.feature",
-    "Successful Execution of the End Command on a Low"
+    "../features/tmc/check_mccs_only_endscan.feature",
+    "Successful Execution of the EndScan Command on a Low"
     + " Telescope Subarray with an MCCS-Only subsystem",
 )
-def test_tmc_mccs_only_end_command():
+def test_tmc_mccs_only_endscan_command():
     """BDD test scenario for verifying successful execution of
     the Low End command in a TMC with MCCS only subsystem."""
 
@@ -162,41 +163,60 @@ def check_subarray_obs_state_ready(
     )
 
 
-@when("I invoke the End command on the TMC subarray")
-def mccs_only_end_command(
+@given("I invoke the Scan command on the TMC subarray")
+def mccs_only_scan(
+    tmc: TMCFacade,
+):
+    """Inovke Scan command"""
+
+    scan_input = MyFileJSONInput("subarray", "scan_low")
+
+    _, pytest.unique_id = tmc.subarray_node.Scan(scan_input)
+
+
+@given("the TMC subarray is in the SCANNING obsState")
+def check_subarray_obs_state_idle_scanning(
     tmc: TMCFacade,
     event_tracer: TangoEventTracer,
 ):
-    """Inovke End command"""
-    event_tracer.subscribe_event(tmc.subarray_node, "obsState")
-    event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
-
-    log_events(
-        {
-            tmc.central_node: [
-                "longRunningCommandResult",
-            ]
-        }
-    )
-
-    _, pytest.unique_id = tmc.end_observation()
-
-
-@then("the TMC subarray is in the IDLE obsState")
-def check_subarray_obs_state_idle(
-    tmc: TMCFacade,
-    event_tracer: TangoEventTracer,
-):
-    """Verify that the subarray is in the IDLE obsState."""
-
+    """Verify that the subarray is in the SCANNING obsState."""
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
-        "'And the subarray is in the IDLE obsState'"
+        "'the subarray must be in the SCANNING obsState until finished'"
         "Subarray Node device"
         f"({tmc.subarray_node.dev_name()}) "
-        "is expected to be in IDLE obstate",
+        "is expected to be in SCANNING obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node,
         "obsState",
-        ObsState.IDLE,
+        ObsState.SCANNING,
+    )
+
+
+@when("I invoke the EndScan command on the TMC subarray")
+def mccs_only_end(
+    tmc: TMCFacade,
+):
+    """Inovke EndScan command"""
+
+    _, pytest.unique_id = tmc.subarray_node.EndScan()
+
+
+@then("the TMC subarray transitions to the READY obsState")
+def check_subarray_obs_state_is_ready(
+    tmc: TMCFacade,
+    event_tracer: TangoEventTracer,
+):
+    """Verify that the subarray is in the READY obsState."""
+
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'And the subarray is in the READY obsState'"
+        "Subarray Node device"
+        f"({tmc.subarray_node.dev_name()}) "
+        "is expected to be in READY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.READY,
     )

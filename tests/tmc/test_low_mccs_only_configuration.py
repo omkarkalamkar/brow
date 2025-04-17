@@ -1,5 +1,5 @@
 """
-Module: test_tmc_configure_command with MCCS only configuration
+Module: test_low_mccs_only_configuration
 
 This module defines a Pytest BDD test scenario for the successful configuration
 of a Low Telescope Subarray in the Telescope Monitoring and Control (TMC)
@@ -38,7 +38,7 @@ def test_tmc_configure_command():
     the Low Configure command in a TMC with MCCS only configuration."""
 
 
-@given("the telescope is in ON state")
+@given("the telescope is in the ON state")
 def given_the_telescope_is_in_on_state(
     tmc: TMCFacade,
     event_tracers: TangoEventTracer,
