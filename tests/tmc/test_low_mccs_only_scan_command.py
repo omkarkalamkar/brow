@@ -170,7 +170,7 @@ def mccs_only_scan(
 
     scan_input = MyFileJSONInput("subarray", "scan_low")
 
-    _, pytest.unique_id = tmc.subarray_node.Scan(scan_input)
+    _, pytest.unique_id = tmc.subarray_node.Scan(scan_input.as_str())
 
 
 @then("the TMC subarray is in the SCANNING obsState")
