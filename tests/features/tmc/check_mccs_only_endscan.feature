@@ -5,5 +5,5 @@ Scenario: Successful Execution of the EndScan Command on a Low Telescope Subarra
 	And the TMC subarray is in the READY obsState
 	And I invoke the Scan command on the TMC subarray
 	And the TMC subarray is in the SCANNING obsState
-	I invoke the EndScan command on the TMC subarray
+	When I invoke the EndScan command on the TMC subarray
 	Then the TMC subarray transitions to the READY obsState
