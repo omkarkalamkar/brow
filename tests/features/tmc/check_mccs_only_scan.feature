@@ -1,3 +1,4 @@
+@XTP-79503
 Scenario: Successful Execution of the Scan Command on a Low Telescope Subarray with an MCCS-Only subsystem
 	Given the telescope is in the ON state
 	And the TMC subarray is in the IDLE obsState
