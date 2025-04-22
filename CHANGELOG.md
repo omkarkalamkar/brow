@@ -5,6 +5,12 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[1.0.0-rc.4]
+Fixed
+-----
+* Updated MCCS master Leaf Node ReleaseResources command to instruct MCCS Controller to release the resources from specific subarray
+* Removed the transitional obsState RESOURCING check from SDP Subarray Leaf Node AssignResources command tracker
+
 [1.0.0-rc.3]
 Fixed
 -----
