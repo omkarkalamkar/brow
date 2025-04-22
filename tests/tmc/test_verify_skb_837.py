@@ -46,6 +46,7 @@ def subarray_obsstate_in_idle(
     central_node_low: CentralNodeWrapperLow,
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
+    subarray_node_low: SubarrayNodeWrapperLow,
 ):
     """
     This method invokes AssignResources command on central node.
@@ -100,6 +101,12 @@ def subarray_obsstate_in_idle(
         "obsState",
         ObsState.IDLE,
     )
+    subarray_node_low.sdp_subarray1.SetDirectreceiveAddresses("{}")
+    subarray_node_low.sdp_subarray1.SetDefective(EVENT_DEFECT)
+    subarray_node_low.sdp_subarray1.SetDirectreceiveAddresses(
+        RECEIVE_ADDRESSES
+    )
+    subarray_node_low.sdp_subarray1.SetDefective(json.dumps(RESET_DEFECT))
 
 
 @given("change event data is EMPTY for attribute receiveAddresses")
@@ -116,12 +123,6 @@ def central_node_assign_resources(
         event_tracer(TangoEventTracer): object of TangoEventTracer used for
         managing the device events
     """
-    subarray_node_low.sdp_subarray1.SetDirectreceiveAddresses("{}")
-    subarray_node_low.sdp_subarray1.SetDefective(EVENT_DEFECT)
-    subarray_node_low.sdp_subarray1.SetDirectreceiveAddresses(
-        RECEIVE_ADDRESSES
-    )
-    subarray_node_low.sdp_subarray1.SetDefective(json.dumps(RESET_DEFECT))
     assert_that(event_tracer).described_as(
         "SDP subarry "
         f"({subarray_node_low.sdp_subarray1.dev_name}) "
