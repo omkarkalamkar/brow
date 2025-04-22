@@ -322,7 +322,7 @@ class CentralNodeWrapperLow(object):
                 "Subarray device :"
                 f"({self.subarray_node.dev_name()}) "
                 "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.STARTED,"Command Started"))',
+                '(unique_id,(ResultCode.OK,"Command Started"))',
             ).within_timeout(TIMEOUT).has_change_event_occurred(
                 self.subarray_node,
                 "longRunningCommandResult",
