@@ -141,7 +141,7 @@ def test_recover_subarray_stuck_in_resourcing_low(
     )
 
     sdp_sim.SetDefective(json.dumps({"enabled": False}))
-    sdp_sim.SetDirectObsState(ObsState.EMPTY)
+    sdp_sim.ReleaseAllResources()
     csp_sim.ReleaseAllResources()
     mccs_sim.ReleaseAllResources()
 
