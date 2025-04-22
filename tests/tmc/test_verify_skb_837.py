@@ -31,7 +31,6 @@ from tests.resources.test_support.constant_low import (
 )
 
 
-@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_configure_command_missing_event.feature",
