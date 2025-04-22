@@ -5,6 +5,7 @@ Control (TMC) system resolution of SKB-476.
 """
 
 import json
+
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, scenario, then, when
@@ -63,10 +64,10 @@ def subarray_obsstate_in_idle(
         central_node_low.central_node, "longRunningCommandResult"
     )
     event_tracer.subscribe_event(
-       central_node_low.subarray_node, "longRunningCommandResult"
+        central_node_low.subarray_node, "longRunningCommandResult"
     )
     event_tracer.subscribe_event(
-       central_node_low.sdp_subarray1, "receiveAddresses"
+        central_node_low.sdp_subarray1, "receiveAddresses"
     )
     event_tracer.subscribe_event(central_node_low.subarray_node, "obsState")
     central_node_low.move_to_on()
@@ -107,7 +108,7 @@ def central_node_assign_resources(
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
-    
+
     """
     This method invokes simulates empty event in sdpsubarray device
 
@@ -138,7 +139,7 @@ def central_node_assign_resources(
 def invoke_configure_command(
     command_input_factory: JsonFactory,
     subarray_node_low: SubarrayNodeWrapperLow,
-     event_tracer: TangoEventTracer,
+    event_tracer: TangoEventTracer,
 ):
     """
     Method to verify the input json and invocation of configure command
