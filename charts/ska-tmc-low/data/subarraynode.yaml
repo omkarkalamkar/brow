@@ -3,7 +3,7 @@ function: telescope-monitoring
 domain: subarray
 instances: ["01"]
 entrypoints:
-  - name: "ska_tmc_subarraynode.subarray_node_low.SubarrayNodeLow"
+  - name: "ska_tmc_subarraynode.subarray_node_low.LowTmcSubarray"
 {{- $csp_assign_interface := .Values.deviceServers.subarraynode.CspAssignResourcesInterfaceURL }}
 {{- $csp_scan_interface := .Values.deviceServers.subarraynode.CspScanInterfaceURL }}
 {{- $sdp_scan_interface := .Values.deviceServers.subarraynode.SdpScanInterfaceURL }}
@@ -29,7 +29,7 @@ server:
   {{- range  ( regexSplit " " ((.Values.subarray_count | int) | seq ) -1 ) }}
     - name: "{{ printf "%02s" . }}"
       classes:
-      - name: "SubarrayNodeLow"
+      - name: "LowTmcSubarray"
         devices:
         - name: "{{ $domain }}/{{ $family }}/{{ printf "%02s" . }}"
           properties:
@@ -98,4 +98,3 @@ image:
   image: "{{.Values.subarraynode.image.image}}"
   tag: "{{.Values.subarraynode.image.tag}}"
   pullPolicy: "{{.Values.subarraynode.image.pullPolicy}}"
-
