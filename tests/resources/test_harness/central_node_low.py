@@ -319,7 +319,7 @@ class CentralNodeWrapperLow(object):
             _, unique_id = self.subarray_abort()
             assert_that(self.event_tracer).described_as(
                 "FAILED ASSUMPTION AFTER ABORT COMMAND: "
-                "Central Node device"
+                "Subarray device :"
                 f"({self.subarray_node.dev_name()}) "
                 "is expected have longRunningCommand as"
                 '(unique_id,(ResultCode.OK,"Abort command completed"))',
@@ -337,7 +337,7 @@ class CentralNodeWrapperLow(object):
             _, unique_id = self.subarray_restart()
             assert_that(self.event_tracer).described_as(
                 "FAILED ASSUMPTION AFTER RESTART COMMAND: "
-                "Central Node device"
+                "Subarraynode device :"
                 f"({self.subarray_node.dev_name()}) "
                 "is expected have longRunningCommand as"
                 '(unique_id,(ResultCode.OK,"Command Completed"))',
@@ -354,7 +354,7 @@ class CentralNodeWrapperLow(object):
             _, unique_id = self.subarray_restart()
             assert_that(self.event_tracer).described_as(
                 "FAILED ASSUMPTION AFTER RESTART COMMAND: "
-                "Central Node device"
+                "Subarraynode device :"
                 f"({self.subarray_node.dev_name()}) "
                 "is expected have longRunningCommand as"
                 '(unique_id,(ResultCode.OK,"Command Completed"))',
