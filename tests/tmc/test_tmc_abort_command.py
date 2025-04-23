@@ -199,7 +199,7 @@ def invoke_abort_command(
         "longRunningCommandResult",
         (
             unique_id[0],
-            json.dumps((int(ResultCode.STARTED), "Command Started")),
+            json.dumps((int(ResultCode.OK), "Abort command completed")),
         ),
     )
 
