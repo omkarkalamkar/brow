@@ -5,6 +5,12 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[1.0.0-rc.6]
+Fixed
+-----
+
+* Updated tags to use processing functionality in call back function in MCCS,SDP & CSP instead of Tango event handler.
+
 [1.0.0-rc.5]
 Fixed
 -----
