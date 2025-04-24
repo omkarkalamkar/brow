@@ -9,6 +9,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 Fixed
 -----
 * Updated Subarraynode to Resolve SKB-837 : missing event of receive_address from sdp subarray
+* Server Name of subarraynode device got changed from `SubarrayNodeLow` to `LowTmcSubarray`
 
 [1.0.0-rc.4]
 Fixed
