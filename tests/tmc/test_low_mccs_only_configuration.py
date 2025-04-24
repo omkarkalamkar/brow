@@ -1,0 +1,284 @@
+"""
+Module: test_low_mccs_only_configuration
+
+This module defines a Pytest BDD test scenario for the successful configuration
+of a Low Telescope Subarray in the Telescope Monitoring and Control (TMC)
+system with MCCS only configuration.
+The scenario includes steps to set up the TMC, prepare a subarray in the IDLE
+observation state, and configure only MCCS subsystem. The completion of the
+configuration is verified by checking that the subarray transitions to
+the READY observation state.
+"""
+import json
+
+import pytest
+from assertpy import assert_that
+from pytest_bdd import given, scenario, then, when
+from ska_control_model import ObsState
+from ska_integration_test_harness.facades.csp_facade import CSPFacade
+from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
+from ska_integration_test_harness.facades.sdp_facade import SDPFacade
+from ska_integration_test_harness.facades.tmc_facade import TMCFacade
+from ska_tango_testing.integration import TangoEventTracer, log_events
+
+from tests.resources.test_harness.constant import TIMEOUT
+from tests.resources.test_harness.utils.my_file_json_input import (
+    MyFileJSONInput,
+)
+from tests.resources.test_support.common_utils.result_code import ResultCode
+
+
+@pytest.mark.SKA_low
+@scenario(
+    "../features/tmc/check_mccs_only_configuration.feature",
+    "Successful Configuration of Low Telescope Subarray with Only MCCS in TMC",
+)
+def test_tmc_configure_command():
+    """BDD test scenario for verifying successful execution of
+    the Low Configure command in a TMC with MCCS only configuration."""
+
+
+@given("the telescope is in the ON state")
+def given_the_telescope_is_in_on_state(
+    tmc: TMCFacade,
+    event_tracers: TangoEventTracer,
+):
+    """Ensure the telescope is in ON state."""
+    tmc.move_to_on(wait_termination=True)
+    event_tracers.subscribe_event(tmc.central_node, "telescopeState")
+    event_tracers.subscribe_event(tmc.central_node, "longRunningCommandResult")
+    event_tracers.subscribe_event(tmc.subarray_node, "obsState")
+    event_tracers.subscribe_event(
+        tmc.subarray_node, "longRunningCommandResult"
+    )
+
+    # Logging setup
+    log_events(
+        {
+            tmc.central_node: [
+                "telescopeState",
+                "longRunningCommandResult",
+            ],
+            tmc.subarray_node: [
+                "obsState",
+                "longRunningCommandResult",
+            ],
+        }
+    )
+    # Assertions
+    event_tracers.clear_events()
+
+
+@given("TMC subarray in the IDLE obsState")
+def perform_idle_transition(
+    tmc: TMCFacade,
+    event_tracer: TangoEventTracer,
+):
+    """
+    Execute Assign and verify
+    """
+
+    event_tracer.subscribe_event(tmc.subarray_node, "obsState")
+    event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
+
+    log_events(
+        {
+            tmc.central_node: [
+                "longRunningCommandResult",
+            ]
+        }
+    )
+
+    assign_input = MyFileJSONInput("centralnode", "assign_resources_low")
+
+    _, pytest.unique_id = tmc.central_node.AssignResources(
+        assign_input.as_str()
+    )
+
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER ASSIGNRESOURCES COMMAND: "
+        "Subarray Node device"
+        f"({tmc.subarray_node.dev_name()}) "
+        "is expected to be in IDLE obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.IDLE,
+    )
+
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN" STEP: '
+        "Central Node device"
+        f"({tmc.central_node.dev_name()}) "
+        "is expected have longRunningCommand as"
+        '(unique_id,(ResultCode.OK,"Command Completed"))',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.central_node,
+        "longRunningCommandResult",
+        (
+            pytest.unique_id[0],
+            json.dumps((int(ResultCode.OK), "Command Completed")),
+        ),
+    )
+    event_tracer.clear_events()
+
+
+@when("I configure TMC subarray with MCCS only configuration")
+def send_configure(tmc: TMCFacade):
+    """Send a Configure command to the subarray with only mccs key."""
+    configure_input = MyFileJSONInput("subarray", "configure_low")
+
+    configure_input_json = json.loads(configure_input.as_str())
+
+    for subsystem in ["sdp", "csp"]:
+        del configure_input_json[subsystem]
+
+    configure_input_json[
+        "interface"
+    ] = "https://schema.skao.int/ska-low-tmc-configure/4.2"
+
+    configure_input_json = json.dumps(configure_input_json)
+
+    tmc.subarray_node.Configure(configure_input_json)
+    # In an effort to reduce number of data files we are modifying the
+    # existing configure_low.
+
+
+@then("the MCCS subarray and MCCS subarray leafnode are in the READY obsState")
+def check_mccs_obs_state(
+    tmc: TMCFacade,
+    mccs: MCCSFacade,
+    event_tracer: TangoEventTracer,
+):
+    """Verify that the MCCS is in the READY obsState."""
+    mccs_subarray = mccs.mccs_subarray
+    mccs_sln = tmc.mccs_subarray_leaf_node
+
+    event_tracer.subscribe_event(mccs_subarray, "obsState")
+    event_tracer.subscribe_event(mccs_sln, "obsState")
+    log_events(
+        {
+            mccs_subarray: ["obsState"],
+            mccs_sln: ["obsState"],
+        }
+    )
+
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the MCCS must be in the READY obsState'"
+        "MCCS Subarray Leaf Node device"
+        f"({mccs_sln.dev_name()}) "
+        "is expected to be in READY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        mccs_sln,
+        "obsState",
+        ObsState.READY,
+    )
+
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the MCCS is in the READY obsState'"
+        "MCCS Subarray device"
+        f"({mccs_subarray.dev_name()}) "
+        "is expected to be in READY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        mccs_subarray,
+        "obsState",
+        ObsState.READY,
+    )
+
+
+@then(
+    "the SDP, CSP subarray and subarray leafnodes remain in the IDLE obsState"
+)
+def check_csp_sdp_obs_state(
+    tmc: TMCFacade,
+    sdp: SDPFacade,
+    csp: CSPFacade,
+    event_tracer: TangoEventTracer,
+):
+    """Verify that the CSP and SDP remains in the IDLE obsState."""
+    csp_subarray = csp.csp_subarray
+    csp_sln = tmc.csp_subarray_leaf_node
+    sdp_subarray = sdp.sdp_subarray
+    sdp_sln = tmc.sdp_subarray_leaf_node
+
+    event_tracer.subscribe_event(sdp_subarray, "obsState")
+    event_tracer.subscribe_event(csp_subarray, "obsState")
+
+    event_tracer.subscribe_event(csp_sln, "cspSubarrayObsState")
+    event_tracer.subscribe_event(sdp_sln, "sdpSubarrayObsState")
+
+    log_events(
+        {
+            sdp_subarray: ["obsState"],
+            csp_subarray: ["obsState"],
+            csp_sln: ["cspSubarrayObsState"],
+            sdp_sln: ["sdpSubarrayObsState"],
+        }
+    )
+
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the subarray must be in the IDLE obsState'"
+        "CSP Subarray Leaf Node device"
+        f"({csp_sln.dev_name()}) "
+        "is expected to be in IDLE obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        csp_sln,
+        "cspSubarrayObsState",
+        ObsState.IDLE,
+    )
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the subarray must be in the IDLE obsState'"
+        "SDP Subarray Leaf Node device"
+        f"({sdp_sln.dev_name()}) "
+        "is expected to be in IDLE obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        sdp_sln,
+        "sdpSubarrayObsState",
+        ObsState.IDLE,
+    )
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the subarray must be in the IDLE obsState'"
+        "CSP Subarray device"
+        f"({csp_subarray.dev_name()}) "
+        "is expected to be in IDLE obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        csp_subarray,
+        "obsState",
+        ObsState.IDLE,
+    )
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the subarray must be in the IDLE obsState'"
+        "SDP Subarray device"
+        f"({sdp_subarray.dev_name()}) "
+        "is expected to be in IDLE obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        sdp_subarray,
+        "obsState",
+        ObsState.IDLE,
+    )
+
+
+@then("the TMC subarray is in the READY obsState")
+def check_subarray_obs_state(
+    tmc: TMCFacade,
+    event_tracer: TangoEventTracer,
+):
+    """Verify that the subarray is in the READY obsState."""
+
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'And the subarray is in the READY obsState'"
+        "Subarray Node device"
+        f"({tmc.subarray_node.dev_name()}) "
+        "is expected to be in READY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.READY,
+    )

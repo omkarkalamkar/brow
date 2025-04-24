@@ -160,7 +160,6 @@ def perform_scan(
     subarray_node_low: SubarrayNodeWrapperLow,
     command_input_factory: JsonFactory,
 ):
-
     """
     Perform Scan
     """
@@ -340,7 +339,6 @@ def move_tmc_to_intial_state(
     command_input_factory: JsonFactory,
     initialObsState,
 ):
-
     """
     Method to move and verify tmc  subarray  in required initial
     observation state.
