@@ -139,7 +139,6 @@ def test_recover_subarray_stuck_in_resourcing_low(
         "obsState",
         ObsState.IDLE,
     )
-
     event_tracer.clear_events()
     sdp_sim.SetDirectObsState(ObsState.EMPTY)
     csp_sim.ReleaseAllResources()
