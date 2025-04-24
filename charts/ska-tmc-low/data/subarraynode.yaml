@@ -80,7 +80,7 @@ server:
               - "{{ $mccs_scan_interface }}"
           - name: "JonesURI"
             values:
-              - "{{ $jones_uri }}"   
+              - "{{ $jones_uri }}"
           - name: "LivelinessCheckPeriod"
             values:
               - "{{ $LivelinessCheckPeriod }}"
@@ -89,7 +89,7 @@ server:
               - "{{ $EventSubscriptionCheckPeriod }}"
           - name: "AbortCommandTimeOut"
             values:
-              - "{{ $AbortCommandTimeOut }}"       
+              - "{{ $AbortCommandTimeOut }}"
 {{- end}}
 depends_on:
   - device: sys/database/2

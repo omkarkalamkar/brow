@@ -76,7 +76,7 @@ subarraynode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-subarraynode
-    tag: 0.32.2
+    tag: 0.33.0
     pullPolicy: IfNotPresent
 
 sdpleafnodes:
@@ -100,7 +100,6 @@ cspsubarrayleafnode:
     tag: 0.24.0
     pullPolicy: IfNotPresent
 
-
 mccsmasterleafnode:
   image:
     registry: artefact.skao.int
@@ -122,7 +121,6 @@ resources:
     cpu: 200m
     memory: 200Mi
 
-
 deviceServers:
   centralnode:
     enabled: true
@@ -135,7 +133,7 @@ deviceServers:
     AssignResourcesInterface: "https://schema.skao.int/ska-low-tmc-assignresources/4.0"
     ReleaseResourcesInterface: "https://schema.skao.int/ska-low-tmc-releaseresources/3.0"
     family: "central-node"
-    member : "0"
+    member: "0"
 
   subarraynode:
     enabled: true
@@ -161,7 +159,6 @@ deviceServers:
     EventSubscriptionCheckPeriod: 0.5
     SDPSubarrayAdminModeEnabled: true
     family: "subarray-leaf-node-sdp"
-    
 
   sdpmasterleafnode:
     enabled: true
@@ -173,7 +170,7 @@ deviceServers:
     SDPMasterAdminModeEnabled: true
     family: "leaf-node-sdp"
     member: "0"
-    
+
   cspmasterleafnode:
     enabled: true
     instances: ["01"]
@@ -183,7 +180,7 @@ deviceServers:
     EventSubscriptionCheckPeriod: 0.5
     family: "leaf-node-csp"
     member: "0"
-  
+
   mccsmasterleafnode:
     enabled: true
     instances: ["01"]
@@ -228,8 +225,6 @@ deviceServers:
       sdp: false
       csp: false
       mccs: false
-
-
 
 nodeSelector: {}
 
