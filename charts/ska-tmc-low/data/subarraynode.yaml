@@ -98,4 +98,3 @@ image:
   image: "{{.Values.subarraynode.image.image}}"
   tag: "{{.Values.subarraynode.image.tag}}"
   pullPolicy: "{{.Values.subarraynode.image.pullPolicy}}"
-
