@@ -5,6 +5,12 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[1.0.0-rc.7]
+Fixed
+-----
+* Fixed SKB-881 and SKB-798
+* Fixed an issue in the case of Abort in obsState RESOURCING
+
 [1.0.0-rc.6]
 Added
 -----
