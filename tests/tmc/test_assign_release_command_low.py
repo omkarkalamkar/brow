@@ -86,10 +86,12 @@ def test_assign_release_defective_csp(
     )
     assert unique_id[0].endswith("AssignResources")
     assert result[0] == ResultCode.QUEUED
+
     exception_message = (
         f" {tmc_subarraynode1}:"
         + " Exception occurred on the following devices:"
     )
+
     log_events({central_node_low.central_node: ["longRunningCommandResult"]})
 
     assert_that(event_tracer).described_as(

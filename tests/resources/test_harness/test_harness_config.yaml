@@ -35,4 +35,3 @@ mccs:
   # Expected device names (Required)
   mccs_controller_name: "low-mccs/control/control"
   mccs_subarray1_name: "low-mccs/subarray/01"
-  

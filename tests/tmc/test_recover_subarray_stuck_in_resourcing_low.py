@@ -36,6 +36,8 @@ def test_recover_subarray_stuck_in_resourcing_low(
     command_input_factory: JsonFactory,
 ):
     """AssignResources and ReleaseResources is executed."""
+    event_tracer.clear_events()
+
     event_tracer.subscribe_event(
         central_node_low.central_node, "telescopeState"
     )

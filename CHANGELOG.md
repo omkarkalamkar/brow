@@ -8,8 +8,13 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 [1.0.0-rc.7]
 Fixed
 -----
+* Fixed SKB-881 and SKB-798
+* Fixed an issue in the case of Abort in obsState RESOURCING
 
-* Updated tags to use processing functionality in call back function in MCCS,SDP & CSP instead of Tango event handler.
+[1.0.0-rc.6]
+Added
+-----
+* Updated subarraynode to support MCCS-only End, Scan, EndScan commands.
 
 [1.0.0-rc.5]
 Fixed
@@ -45,8 +50,8 @@ Added
 Updated
 -------
 * Updated the TRLs of TMC low devices as per ADR-9
-* ska_low/tm_central/central_node - low-tmc/central-node/0              
-* ska_low/tm_subarray_node/1 - low-tmc/subarray/01            
+* ska_low/tm_central/central_node - low-tmc/central-node/0
+* ska_low/tm_subarray_node/1 - low-tmc/subarray/01
 * ska_low/tm_leaf_node/csp_master - low-tmc/leaf-node-csp/0
 * ska_low/tm_leaf_node/sdp_master - low-tmc/leaf-node-sdp/0
 * ska_low/tm_leaf_node/mccs_master - low-tmc/leaf-node-mccs/0
@@ -61,7 +66,7 @@ Updated
 
 Fixed
 -----
-* Fixed event receiver in centralNode to include state and healthState subscription instead of using from common tp fix device not defined issue.  
+* Fixed event receiver in centralNode to include state and healthState subscription instead of using from common tp fix device not defined issue.
 
 
 [0.20.3]
@@ -71,7 +76,7 @@ Added
 * Updated the image of central node to 0.17.2
 * Updated the image of Sdpleafnodes to 0.19.3
 * Updated the image of CSPleafnodes to 0.23.2
-* Updated the image of MCCSleafnode to 0.5.4 
+* Updated the image of MCCSleafnode to 0.5.4
 * Introduced error propagation and timeout for Scan /EndScan /End Commands
 * Renamed the properties as required
 * Made all the properties configurable
@@ -96,17 +101,17 @@ Added
 -----
 * Updated ska-tmc-mccsleafnodes v0.5.1 to fix SKB-627
 * Resolved SKB-329
-* The updated versions are as follows - 
+* The updated versions are as follows -
 * CSPLeafNodes - 0.21.3
 * Updated Subarray Node v0.26.1 to fix SKB-643 and SKB-618
 * Harmonization of JSON Usage Across TMC LOW Integration Repository:
 * Single Source of JSON Files: Replaced all instances of JSON files in the repository with a single source    from the TelModel repository, ensuring consistency and    easier maintenance.
 * Test Case Updates: Modified test cases to reference JSON files from the TelModel repository, aligning all tests with the updated, harmonized JSON structure.
 * Includes improved liveliness probe functionality
-* The updated versions are as follows - 
+* The updated versions are as follows -
 * Centralnode - 0.16.7
-* SubarrayNode - 0.24.0 
-* Sdpleafnode - 0.17.1 
+* SubarrayNode - 0.24.0
+* Sdpleafnode - 0.17.1
 * Cspleafnode - 0.5.0
 * Mccsleafnode - 0.5.0
 
@@ -152,7 +157,7 @@ Added
 * To mitigate the dependency for PST observation to be based on having `pst` and `pss` keys (mandatory) under the TMC-CSP schema.
 * As per the SKA Tel model, PSS and PST keys are not mandatory fields, considering every observation would not be around PST. The way TMC was supporting the PST observation considered these keys mandatory.
 * This caused issues when the observation is not for PST.
-* Changes in TMC SubarrayNode v0.23.1 handle this condition, considering PST and PSS as optional. 
+* Changes in TMC SubarrayNode v0.23.1 handle this condition, considering PST and PSS as optional.
 * Checks are added on TMC SubarrayNode to confirm the type of observation first and then send command input to CSP accordingly.
 
 
@@ -189,7 +194,7 @@ Added
 
 Fixed
 -----
-* Fixed bug skb-525 
+* Fixed bug skb-525
 
 [0.20.2-rc.2]
 Fixed
@@ -281,4 +286,4 @@ Fixed
 * Fixed SKB-300.
 
 [Unreleased]
-* Refactored delay model testcases to remove multiple when then statements. 
+* Refactored delay model testcases to remove multiple when then statements.
