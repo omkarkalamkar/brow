@@ -6,7 +6,29 @@ All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 [1.0.0]
-* tmc-low full release 1.0.0
+Added
+-----
+* Added `domain` field in values.yaml. The domain is `low-tmc`
+* Added `family` and `member` field in deviceServers of each controller leafnode device in values.yaml
+* Added `family` field in deviceServers of each subarray leafnode devices in value.yaml
+
+Updated
+-------
+* Updated the TRLs of TMC low devices as per ADR-9
+* Updated subarraynode to support MCCS-only End, Scan, EndScan commands.
+
+Fixed
+-----
+* Fixed event receiver in centralNode to include state and healthState subscription instead of using from common tp fix device not defined issue.
+* Resolved SKB-672
+* Resolved SKB-732.
+* Removed configure json interface(0.3) hardcoding in TMC SDP Subarray Leaf Node.
+* Updated MCCS master Leaf Node ReleaseResources command to instruct MCCS Controller to release the resources from specific subarray
+* Removed the transitional obsState RESOURCING check from SDP Subarray Leaf Node AssignResources command tracker
+* Updated Subarraynode to Resolve SKB-837 : missing event of receive_address from sdp subarray
+* Server Name of subarraynode device got changed from `SubarrayNodeLow` to `LowTmcSubarray`
+* Fixed SKB-881 and SKB-798
+* Fixed an issue in the case of Abort in obsState RESOURCING
 
 [1.0.0-rc.7]
 Fixed
