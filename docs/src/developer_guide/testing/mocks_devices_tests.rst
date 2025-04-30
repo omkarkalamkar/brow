@@ -13,8 +13,8 @@ Commands Implemented
 
 To execute the tests, run the command `make k8s-test MARK=SKA_low`.
 
-* ``ON`` - Test the On command on TMC with multiple subsystems.
-* ``Off`` - Test the Off command on TMC with multiple subsystems.
+* ``TelescopeOn`` - Test the On command on TMC with multiple subsystems.
+* ``TelescopeOff`` - Test the Off command on TMC with multiple subsystems.
 * ``AssignResources`` - Test the AssignResources command on TMC with multiple subsystems.
 * ``ReleaseResources`` - Test the ReleaseResources command on TMC with multiple subsystems.
 * ``Standby`` - Test the Standby command on TMC with multiple subsystems.
