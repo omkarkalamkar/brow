@@ -53,6 +53,8 @@ Configurable options
 
 * e. Variables under **global** section
 
+    #. **domain** : This value is present under global. It is the domain name of TMC TANGO device. The value is set to "low-tmc".
+
     #. **tmc_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of SubarrayNode.
 
     #. **csp_subarray_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of CspSubarrayLeafNode.
@@ -93,6 +95,10 @@ Configurable options
 
     #. **ReleaseResourcesInterface** :  This refers to the interface value of ReleaseResources schema. Currently defaults to "https://schema.skao.int/ska-low-tmc-releaseresources/3.0".
 
+    #. **family** :  This refers to the family name of CentralNode TANGO device. Currently defaults to "central-node".
+
+    #. **member** :  This refers to the member of CentralNode TANGO device. Currently defaults to "0".
+
 * g. Variables under **deviceServers.subarraynode** section
 
     #. **CspAssignResourcesInterfaceURL** : Interface version for CSP assign resources command. Currently defaults to "https://schema.skao.int/ska-low-csp-assignresources/3.0"
@@ -115,6 +121,8 @@ Configurable options
     
     #. **AbortCommandTimeOut** :  This refers to the timeout for the Subarray ABORTED obsState transition. Once the AbortCommandTimeOut exceeds, SubarrayNode transitions to obsState FAULT. Currently defaults to 40 seconds.
 
+    #. **family** :  This refers to the family name of SubarrayNode TANGO device. Currently defaults to "subarray".
+
 * h. Variables under **deviceServers.sdpsubarrayleafnode** section
 
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
@@ -125,6 +133,8 @@ Configurable options
 
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
 
+    #. **family** :  This refers to the family name of SDP Subarray Leaf Node TANGO device. Currently defaults to "subarray-leaf-node-sdp".
+
 * i. Variables under  **deviceServers.sdpmasterleafnode** section
 
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
@@ -133,6 +143,10 @@ Configurable options
 
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
 
+    #. **family** :  This refers to the family name of SDP Master Leaf Node TANGO device. Currently defaults to "leaf-node-sdp".
+
+    #. **member** :  This refers to the member of SDP Master Leaf Node TANGO device. Currently defaults to "0".
+
 * j. Variables under **deviceServers.cspmasterleafnode** section
 
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
@@ -140,6 +154,10 @@ Configurable options
     #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
 
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
+
+    #. **family** :  This refers to the family name of CSP Master Leaf Node TANGO device. Currently defaults to "leaf-node-csp".
+
+    #. **member** :  This refers to the member of CSP Master Leaf Node TANGO device. Currently defaults to "0".
 
 * k. Variables under **deviceServers.cspsubarrayleafnode** section
 
@@ -163,6 +181,8 @@ Configurable options
 
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
 
+    #. **family** :  This refers to the family name of CSP Subarray Leaf Node TANGO device. Currently defaults to "subarray-leaf-node-csp".
+
 * l. Variables under **deviceServers.mccsmasterleafnode** section
 
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
@@ -172,6 +192,10 @@ Configurable options
     #. **CommandTimeOut** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.
 
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
+
+    #. **family** :  This refers to the family name of MCCS Master Leaf Node TANGO device. Currently defaults to "leaf-node-mccs".
+
+    #. **member** :  This refers to the member of MCCS Master Leaf Node TANGO device. Currently defaults to "0".
 
 * h. Variables under **deviceServers.mccssubarrayleafnode** section
 
@@ -183,6 +207,7 @@ Configurable options
 
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
 
+    #. **family** :  This refers to the family name of MCCS Subarray Leaf Node TANGO device. Currently defaults to "subarray-leaf-node-mccs".
 
 
 **NOTE** : {id} is the identifier for the deployed subarray.
