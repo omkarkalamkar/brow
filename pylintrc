@@ -64,7 +64,8 @@ disable=invalid-name,
         unrecognized-option,
         too-many-instance-attributes,
         too-many-arguments,
-        too-many-statements
+        too-many-statements,
+        unbalanced-tuple-unpacking
 
 
         
