@@ -151,7 +151,10 @@ def get_device_simulators(simulator_factory):
     csp_sim = simulator_factory.get_or_create_simulator_device(
         SimulatorDeviceType.LOW_CSP_DEVICE
     )
-    return csp_sim, sdp_sim
+    mccs_sim = simulator_factory.get_or_create_simulator_device(
+        SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
+    )
+    return csp_sim, sdp_sim, mccs_sim
 
 
 def get_master_device_simulators(simulator_factory):
