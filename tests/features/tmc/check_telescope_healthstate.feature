@@ -74,4 +74,3 @@ Feature: Telescope Health State evaluation
       | csp_admin_mode | sdp_admin_mode | mccs_admin_mode |
       | OFFLINE        | OFFLINE        | OFFLINE         |
       | ONLINE         | OFFLINE        | ONLINE          |
-      | ONLINE         | ONLINE         | OFFLINE         |

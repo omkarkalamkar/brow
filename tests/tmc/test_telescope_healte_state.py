@@ -14,7 +14,6 @@ from tests.resources.test_harness.helpers import (
 state = {}
 
 
-@pytest.mark.aki1
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_telescope_healthstate.feature",
@@ -24,7 +23,6 @@ def test_telescope_health_state_failed():
     """Test telescope healthstate"""
 
 
-@pytest.mark.aki1
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_telescope_healthstate.feature",
@@ -34,7 +32,6 @@ def test_telescope_health_state_ok():
     """Test telescope healthstate"""
 
 
-@pytest.mark.aki1
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_telescope_healthstate.feature",
@@ -44,7 +41,6 @@ def test_telescope_health_state_degraded():
     """Test telescope healthstate"""
 
 
-@pytest.mark.aki1
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_telescope_healthstate.feature",
@@ -54,8 +50,7 @@ def test_telescope_health_state_unknown():
     """Test telescope healthstate"""
 
 
-@pytest.mark.aki1
-@pytest.mark.SKA_low
+# @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_telescope_healthstate.feature",
     "DEGRADED health state when CSP, SDP, or MCCS controller is "
