@@ -76,7 +76,7 @@ def test_assign_release_defective_csp(
         ObsState.EMPTY,
     )
 
-    csp_sim, _ = get_device_simulators(simulator_factory)
+    csp_sim, _, _ = get_device_simulators(simulator_factory)
     event_tracer.subscribe_event(csp_sim, "obsState")
     csp_sim.SetDefective(
         json.dumps(COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_EMPTY)
@@ -124,7 +124,7 @@ def test_assign_release_timeout_sdp(
     assign_input_json = prepare_json_args_for_centralnode_commands(
         "assign_resources_low", command_input_factory
     )
-    _, sdp_sim = get_device_simulators(simulator_factory)
+    _, sdp_sim, _ = get_device_simulators(simulator_factory)
     sdp_sim.SetDelayInfo(json.dumps({"AssignResources": 52}))
     event_tracer.subscribe_event(
         central_node_low.central_node, "longRunningCommandResult"
@@ -231,7 +231,7 @@ def test_release_exception_propagation(
         "obsState",
         ObsState.EMPTY,
     )
-    csp_sim, _ = get_device_simulators(simulator_factory)
+    csp_sim, _, _ = get_device_simulators(simulator_factory)
     event_tracer.subscribe_event(csp_sim, "obsState")
 
     _, assign_unique_id = central_node_low.perform_action(
