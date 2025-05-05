@@ -1,4 +1,6 @@
 """Test Telescope Health State"""
+import time
+
 import pytest
 from pytest_bdd import given, parsers, scenario, then, when
 from ska_tango_base.control_model import AdminMode, HealthState
@@ -156,6 +158,7 @@ def apply_all_states():
         admin_mode = state.get(f"{name}_admin_mode", None)
         if admin_mode is not None:
             device.adminMode = admin_mode
+            time.sleep(0.3)
 
 
 @when("health states are applied")
