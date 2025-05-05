@@ -1,9 +1,7 @@
 """Test Telescope Health State"""
-import time
-
 import pytest
 from pytest_bdd import given, parsers, scenario, then, when
-from ska_tango_base.control_model import AdminMode, HealthState
+from ska_tango_base.control_model import HealthState
 from tango import DevState
 
 from tests.resources.test_harness.helpers import (
