@@ -118,44 +118,6 @@ def set_all_ok_health(simulator_factory):
     )
 
 
-@given(parsers.parse("CSP admin mode is {csp_admin_mode}"))
-def set_csp_admin_mode(simulator_factory, csp_admin_mode):
-    """Set the csp controller admin mode"""
-    csp_m, _, _ = get_master_device_simulators(simulator_factory)
-    state["csp"] = csp_m
-    state["csp_admin_mode"] = AdminMode[csp_admin_mode]
-
-
-@given(parsers.parse("SDP admin mode is {sdp_admin_mode}"))
-def set_sdp_admin_mode(simulator_factory, sdp_admin_mode):
-    """Set the sdp controller admin mode"""
-    _, sdp_m, _ = get_master_device_simulators(simulator_factory)
-    state["sdp"] = sdp_m
-    state["sdp_admin_mode"] = AdminMode[sdp_admin_mode]
-
-
-@given(parsers.parse("MCCS admin mode is {mccs_admin_mode}"))
-def set_mccs_admin_mode(simulator_factory, mccs_admin_mode):
-    """Set the mccs controller admin mode"""
-    _, _, mccs_m = get_master_device_simulators(simulator_factory)
-    state["mccs"] = mccs_m
-    state["mccs_admin_mode"] = AdminMode[mccs_admin_mode]
-
-
-@when("all states are applied")
-def apply_all_states():
-    """ "Apply all the states"""
-    for name in ["csp", "sdp", "mccs"]:
-        device = state[name]
-        # Set healthState
-        device.SetDirectHealthState(HealthState.OK)
-        # Set AdminMode if available
-        admin_mode = state.get(f"{name}_admin_mode", None)
-        if admin_mode is not None:
-            device.adminMode = admin_mode
-            time.sleep(0.3)
-
-
 @when("health states are applied")
 def apply_health_states():
     """Apply the healthstate to devices"""

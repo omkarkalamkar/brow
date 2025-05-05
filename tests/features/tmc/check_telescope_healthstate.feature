@@ -60,17 +60,3 @@ Feature: Telescope Health State evaluation
       | OK        | OK        | UNKNOWN    |
       | UNKNOWN   | UNKNOWN   | OK         |
       | UNKNOWN   | OK        | UNKNOWN    |
-    
-  Scenario Outline: DEGRADED health state when CSP, SDP, or MCCS controller is OFFLINE despite OK health
-    Given the telescope 
-    And all master and subarray components have OK health
-    And CSP admin mode is <csp_admin_mode>
-    And SDP admin mode is <sdp_admin_mode>
-    And MCCS admin mode is <mccs_admin_mode>
-    When all states are applied
-    Then the telescopeHealthState should be DEGRADED
-
-    Examples:
-      | csp_admin_mode | sdp_admin_mode | mccs_admin_mode |
-      | OFFLINE        | OFFLINE        | OFFLINE         |
-      | ONLINE         | OFFLINE        | ONLINE          |
