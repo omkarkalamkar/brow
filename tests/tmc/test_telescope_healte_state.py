@@ -3,7 +3,10 @@ import pytest
 from ska_tango_base.control_model import HealthState
 from tango import DevState
 
-from tests.resources.test_harness.helpers import get_master_device_simulators
+from tests.resources.test_harness.helpers import (
+    get_device_simulators,
+    get_master_device_simulators,
+)
 
 
 class TestTelescopeHealthState:
@@ -68,6 +71,7 @@ class TestTelescopeHealthState:
     def test_telescope_health_state_ok(
         self,
         central_node_low,
+        subarray_node_low,
         simulator_factory,
         event_recorder,
     ):
@@ -77,7 +81,11 @@ class TestTelescopeHealthState:
             sdp_master_sim,
             mccs_master_sim,
         ) = get_master_device_simulators(simulator_factory)
-
+        (
+            csp_subarray_sim,
+            sdp_subarray_sim,
+            mccs_subarray_sim,
+        ) = get_device_simulators(simulator_factory)
         central_node_low.move_to_on()
         event_recorder.subscribe_event(
             central_node_low.central_node, "telescopeState"
@@ -91,10 +99,22 @@ class TestTelescopeHealthState:
         sdp_master_sim.SetDirectHealthState(HealthState.OK)
         mccs_master_sim.SetDirectHealthState(HealthState.OK)
 
+        # Subarray healthstate should be OK
+        csp_subarray_sim.SetDirectHealthState(HealthState.OK)
+        sdp_subarray_sim.SetDirectHealthState(HealthState.OK)
+        mccs_subarray_sim.SetDirectHealthState(HealthState.OK)
         event_recorder.subscribe_event(
             central_node_low.central_node, "telescopeHealthState"
         )
+        event_recorder.subscribe_event(
+            subarray_node_low.subarray_node, "healthState"
+        )
 
+        assert event_recorder.has_change_event_occurred(
+            subarray_node_low.subarray_node,
+            "healthState",
+            HealthState.OK,
+        )
         assert event_recorder.has_change_event_occurred(
             central_node_low.central_node,
             "telescopeHealthState",
