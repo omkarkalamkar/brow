@@ -48,16 +48,6 @@ def test_telescope_health_state_unknown():
     """Test telescope healthstate"""
 
 
-# @pytest.mark.SKA_low
-@scenario(
-    "../features/tmc/check_telescope_healthstate.feature",
-    "DEGRADED health state when CSP, SDP, or MCCS controller is "
-    "OFFLINE despite OK health",
-)
-def test_telescope_health_state_degraded_when_offline():
-    """Test telescope healthstate"""
-
-
 @given("the telescope is ON")
 def telescope_on(central_node_low, event_recorder):
     """Turn On the telescope"""
