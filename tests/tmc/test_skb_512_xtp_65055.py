@@ -219,7 +219,7 @@ def invoke_endscan_with_a_device_going_to_fault(
         subarray_node_low.csp_subarray_leaf_node, "cspSubarrayObsState"
     )
 
-    csp_sim, _ = get_device_simulators(simulator_factory)
+    csp_sim, _, _ = get_device_simulators(simulator_factory)
     csp_sim.SetDefective(json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT))
 
     subarray_node_low.execute_transition("EndScan")
