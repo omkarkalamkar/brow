@@ -27,6 +27,8 @@ server:
           devices:
           - name: "low-csp/subarray/01"
           - name: "low-csp/subarray/02"
+          - name: "low-csp/subarray/03"
+          - name: "low-csp/subarray/04"
     {{- end }}
     {{- if eq $isSimulatedSdp true }}
     - name: "03"
@@ -40,6 +42,8 @@ server:
           devices:
           - name: "low-sdp/subarray/01"
           - name: "low-sdp/subarray/02"
+          - name: "low-sdp/subarray/03"
+          - name: "low-sdp/subarray/04"
     {{- end }}
     {{- if eq $isSimulatedMccs true }}
     - name: "05"
@@ -53,6 +57,8 @@ server:
           devices:
           - name: "low-mccs/subarray/01"
           - name: "low-mccs/subarray/02"
+          - name: "low-mccs/subarray/03"
+          - name: "low-mccs/subarray/04"
     {{- end }}
 
 depends_on:
