@@ -38,7 +38,7 @@ TIMEOUT = 80
 
 @pytest.mark.SKA_low
 @scenario(
-    "../features/tmc/xtp_xxxxx_error_propagation_timeout_abort.feature",
+    "../features/tmc/error_propagation_timeout_abort.feature",
     "Error Propagation Reported by TMC Low Abort Commands for Defective "
     "Subarray",
 )
