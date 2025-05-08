@@ -1,17 +1,19 @@
-release=1.1.0-rc.1
-tag=1.1.0-rc.1
+release=1.1.0-rc.2
+tag=1.1.0-rc.2
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 1.1.0-rc.1**
+**1. ska-tmc-low-integration 1.1.0-rc.2**
 
-    **1.1 ska-tmc-low  1.0.0 - 1.1.0-rc.1 :**
-            * Health State aggregation using rule engine
+    **1.1 ska-tmc-low  1.1.0-rc.1 - 1.1.0-rc.2 :**
+            * Deployed 4 mock Subarrays instances of CSP, SDP and MCCS
+            * Moved the processing from Tango event handler to call back functions 
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 1.1.0**
+**1. ska-tmc-low-integration 1.1.0-rc.2**
 
-    **1.1 ska-tmc-low  1.0.0 - 1.1.0-rc.1 :**
-            * Health State aggregation using rule engine
+    **1.1 ska-tmc-low  1.1.0-rc.1 - 1.1.0-rc.2 :**
+            * Deploy 4 mock Subarrays instances of CSP, SDP and MCCS
+            * Moved the processing from Tango event handler to call back functions
