@@ -8,7 +8,8 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 [1.1.0-rc.2]
 Updated
 -------
-* Deploy 4 mock Subarrays instances of CSP, SDP and MCCS
+* Deployed 4 mock Subarrays instances of CSP, SDP and MCCS
+* Moved the processing from Tango event handler to call back functions
 
 [1.1.0-rc.1]
 Updated
