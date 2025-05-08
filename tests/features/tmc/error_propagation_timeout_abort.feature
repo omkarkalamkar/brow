@@ -7,12 +7,12 @@ Scenario Outline: Error Propagation Reported by TMC Low Abort Command for Defect
 
 
 Examples:
-        |initialObsState  | command | defectiveSubsystem  
-        |IDLE             | ABORT   | CSP                 
-        |IDLE             | ABORT   | SDP               
-        |READY            | ABORT   | MCCS                
-        |ABORTED          | RESTART | CSP                
-        |ABORTED          | RESTART | RESTART                  
+        |initialObsState  | command | defectiveSubsystem | 
+        |IDLE             | ABORT   | CSP                |
+        |IDLE             | ABORT   | SDP                |
+        |READY            | ABORT   | MCCS               | 
+        |ABORTED          | RESTART | CSP                |
+        |ABORTED          | RESTART | RESTART            |     
 
 @XTP-28348
 Scenario Outline: TimeOut Reported by TMC Low Abort Command for Defective Subarray
