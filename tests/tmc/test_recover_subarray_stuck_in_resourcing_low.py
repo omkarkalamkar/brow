@@ -78,7 +78,7 @@ def test_recover_subarray_stuck_in_resourcing_low(
         DevState.ON,
     )
 
-    csp_sim, sdp_sim = get_device_simulators(simulator_factory)
+    csp_sim, sdp_sim, _ = get_device_simulators(simulator_factory)
     mccs_sim = simulator_factory.get_or_create_simulator_device(
         SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
     )
@@ -239,7 +239,7 @@ def test_abort_with_sdp_csp_in_empty(
         "telescopeState",
         DevState.ON,
     )
-    csp_sim, sdp_sim = get_device_simulators(simulator_factory)
+    csp_sim, sdp_sim, _ = get_device_simulators(simulator_factory)
     mccs_sim = simulator_factory.get_or_create_simulator_device(
         SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
     )
@@ -388,7 +388,7 @@ def test_abort_with_mccs_in_empty(
     command_input_factory: JsonFactory,
 ):
     """recover subarray when MCCS is in empty with abort."""
-    csp_sim, sdp_sim = get_device_simulators(simulator_factory)
+    csp_sim, sdp_sim, _ = get_device_simulators(simulator_factory)
     mccs_sim = simulator_factory.get_or_create_simulator_device(
         SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
     )

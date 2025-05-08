@@ -52,7 +52,7 @@ def telescope_is_in_resourcing_obsstate(
     mccs_subarray_sim = simulator_factory.get_or_create_simulator_device(
         SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
     )
-    csp_sim, _ = get_device_simulators(simulator_factory)
+    csp_sim, _, _ = get_device_simulators(simulator_factory)
     csp_sim.SetDelayInfo(delay_command_params_str)
     mccs_subarray_sim.SetDelayInfo(delay_command_params_str)
 

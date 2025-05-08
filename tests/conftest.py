@@ -36,7 +36,10 @@ from tests.resources.test_harness.central_node_with_csp_low import (
     CentralNodeCspWrapperLow,
 )
 from tests.resources.test_harness.event_recorder import EventRecorder
-from tests.resources.test_harness.helpers import set_admin_mode_values_mccs
+from tests.resources.test_harness.helpers import (
+    get_device_simulators,
+    set_admin_mode_values_mccs,
+)
 from tests.resources.test_harness.simulator_factory import SimulatorFactory
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
@@ -208,6 +211,12 @@ def central_node_real_csp_low() -> Generator[
 def command_input_factory() -> JsonFactory:
     """Return Json Factory"""
     return JsonFactory()
+
+
+@pytest.fixture
+def simulators(simulator_factory):
+    """Return the subarray simulators"""
+    return get_device_simulators(simulator_factory)
 
 
 @pytest.fixture()
