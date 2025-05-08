@@ -5,6 +5,11 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[1.1.0-rc.2]
+Updated
+-------
+* Deploy 4 mock Subarrays instances of CSP, SDP and MCCS
+
 [1.1.0-rc.1]
 Updated
 -------
