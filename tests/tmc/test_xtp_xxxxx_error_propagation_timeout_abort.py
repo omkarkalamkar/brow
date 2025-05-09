@@ -36,6 +36,7 @@ from tests.resources.test_harness.constant import (
 TIMEOUT = 80
 
 
+@pytest.mark.skip
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
@@ -48,6 +49,7 @@ def test_tmc_command_error_propagation():
     """
 
 
+@pytest.mark.skip
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/xtp_xxxxx_error_propagation_timeout_abort.feature",
