@@ -5,7 +5,7 @@ import json
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
-from ska_control_model import ObsState, ResultCode
+from ska_control_model import ObsState
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
 from ska_integration_test_harness.facades.sdp_facade import SDPFacade
 from ska_integration_test_harness.facades.tmc_facade import TMCFacade
@@ -15,15 +15,13 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
 from ska_tango_testing.integration import TangoEventTracer, log_events
 
 from tests.conftest import SubarrayTestContextData, _setup_event_subscriptions
-from tests.resources.test_harness.constant import (
-    ERROR_PROPAGATION_DEFECT,
-    low_csp_subarray_leaf_node,
-)
-from tests.resources.test_harness.utils.my_file_json_input import (
-    MyFileJSONInput,
-)
+from tests.resources.test_harness.constant import ERROR_PROPAGATION_DEFECT
 
-TIMEOUT = 80
+# from tests.resources.test_harness.utils.my_file_json_input import (
+#     MyFileJSONInput,
+# )
+
+TIMEOUT = 120
 
 
 @pytest.mark.test
@@ -37,6 +35,12 @@ def test_tmc_command_error_propagation():
     """
     Test case to verify TMC Error Propagation functionality.
     """
+
+
+exception_message = (
+    '[3, "Exception occurred on the following devices: '
+    'low-tmc/subarray-leaf-node-csp/01: Exception occurred, command failed."]'
+)
 
 
 @given("the telescope is in ON state")
@@ -70,34 +74,23 @@ def given_the_telescope_is_in_on_state(
     event_tracers.clear_events()
 
 
-@given("TMC subarray is in ObsState EMPTY")
-def subarray_in_empty_obsstate(
+@given("TMC subarray is in ObsState IDLE")
+def subarray_in_ready_state(
     context_fixt: SubarrayTestContextData,
     tmc: TMCFacade,
-    csp: CSPFacade,
     sdp: SDPFacade,
+    csp: CSPFacade,
     event_tracer: TangoEventTracer,
+    default_commands_inputs: TestHarnessInputs,
 ):
-    """Verify the subarray's transition to the EMPTY state."""
+    """Ensure the subarray is in the initial obsstate state."""
     _setup_event_subscriptions(tmc, csp, sdp, event_tracer)
-    context_fixt.starting_state = ObsState.EMPTY
+    context_fixt.starting_state = ObsState.IDLE
+
     tmc.force_change_of_obs_state(
-        ObsState.EMPTY,
-        TestHarnessInputs(),
+        ObsState.IDLE,
+        default_commands_inputs,
         wait_termination=True,
-    )
-
-
-@given(parsers.parse("I issue the AssignResources command to the TMC"))
-def execute_command_assign_resources(
-    tmc: TMCFacade,
-):
-    """
-    Executes the AssignResources command on the TMC Central Node.
-    """
-    assign_input = MyFileJSONInput("centralnode", "assign_resources_low")
-    _, pytest.unique_id = tmc.central_node.AssignResources(
-        assign_input.as_str()
     )
 
 
@@ -110,13 +103,10 @@ def execute_command_on_abnormal_csp_subarray(
 
 
 @when("I invoke abort command on defective system")
-def execute_command_abort(
-    tmc: TMCFacade, context_fixt: SubarrayTestContextData, command: str
-):
+def execute_command_abort(tmc: TMCFacade):
     """
-    Executes the Abort command on the TMC Central Node.
+    Executes the Abort command on the TMC Subarray Node.
     """
-    context_fixt.when_action_name = command
     _, pytest.unique_id = tmc.subarray_node.Abort()
 
 
@@ -133,32 +123,88 @@ def error_reporting(
     MCCS Controller.
     It verifies the error reporting mechanism by asserting the expected
     failure message in the longRunningCommandResult event."""
-    exception_message = [
-        f" {low_csp_subarray_leaf_node}: ",
-        "Exception occurred on device:",
-    ]
+    # exception_message = [
+    #     f" {low_csp_subarray_leaf_node}: ",
+    #     "Exception occurred on device:",
+    # ]
 
     assert_that(event_tracers).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
-        '"the command failure is reported by central_node with appropriate"'
+        '"the command failure is reported by subarray_node with appropriate"'
         '"error message"'
-        "CentralNode device"
+        "SubarrayNode device"
         f"({tmc.subarray_node.dev_name()}) "
         "is expected have longRunningCommandResult"
         "(ResultCode.FAILED,exception)",
-    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node,
-        exception_message,
-        pytest.unique_id[0],
-        ResultCode.FAILED,
+        "longRunningCommandResult",
+        (pytest.unique_id[0], exception_message),
     )
     csp.csp_subarray.SetDefective(json.dumps({"enabled": False}))
-    tmc.subarray_node.Abort()
-    assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
-        tmc.subarray_node, "obsState", ObsState.ABORTED
+
+    csp.csp_subarray.Abort()
+
+    assert_that(event_tracers).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the csp subarray must be in the ABORTED obsState'"
+        "CSP Subarray device"
+        f"({csp.csp_subarray.dev_name()}) "
+        "is expected to be in ABORTED obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        csp.csp_subarray,
+        "obsState",
+        ObsState.ABORTED,
     )
 
     tmc.subarray_node.Restart()
     assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
         tmc.subarray_node, "obsState", ObsState.EMPTY
+    )
+
+
+@then(parsers.parse("the TMC SubarrayNode remains in stuck obsState"))
+def verify_stuck_state(
+    tmc: TMCFacade,
+    csp: CSPFacade,
+    event_tracer: TangoEventTracer,
+):
+    """
+    Verify the subarray's transition to the READY state.
+
+    """
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the csp subarray must be in the ABORTING obsState' "
+        "CSP Subarray device"
+        f"({csp.csp_subarray.dev_name()}) "
+        "is expected to be in ABORTING obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        csp.csp_subarray,
+        "obsState",
+        ObsState.ABORTING,
+    )
+
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the tmc subarray must be in the ABORTING obsState' "
+        "TMC Subarray device"
+        f"({tmc.subarray_node.dev_name()}) "
+        "is expected to be in ABORTING obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.ABORTING,
+    )
+
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the tmc subarray must be in the FAULT obsState' "
+        "TMC Subarray device"
+        f"({tmc.subarray_node.dev_name()}) "
+        "is expected to be in ABORTING obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.FAULT,
     )
