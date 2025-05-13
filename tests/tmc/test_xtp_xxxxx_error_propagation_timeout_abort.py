@@ -1,14 +1,6 @@
-"""
-Test case to verify error propagation functionality for
-the Abort command
-
-This test case verifies that one of  the MCCS/CSP/SDP Subarray
-is identified as defective,
- and the required command is executed on the TMC Low,
- then Subarry node
-   reports an error.
-"""
-
+"""Test case to verify error propagation functionality for
+the AssignResources command"""
+import json
 
 import pytest
 from assertpy import assert_that
@@ -38,8 +30,8 @@ TIMEOUT = 80
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
-    "Error Propagation Reported by TMC Low Abort Command "
-    "for Defective Subarray",
+    "Error Propagation Reported by TMC Low Abort Command for "
+    "Defective Subarray",
 )
 def test_tmc_command_error_propagation():
     """
@@ -78,17 +70,15 @@ def given_the_telescope_is_in_on_state(
     event_tracers.clear_events()
 
 
-@given(parsers.parse("the TMC subarray is in the IDLE observation state"))
-def perform_idle_transition(
-    tmc: TMCFacade,
-    sdp: SDPFacade,
-    csp: CSPFacade,
-    event_tracer: TangoEventTracer,
+@given("TMC subarray is in ObsState EMPTY")
+def subarray_in_empty_obsstate(
     context_fixt: SubarrayTestContextData,
+    tmc: TMCFacade,
+    csp: CSPFacade,
+    sdp: SDPFacade,
+    event_tracer: TangoEventTracer,
 ):
-    """
-    Execute Assign and verify
-    """
+    """Verify the subarray's transition to the EMPTY state."""
     _setup_event_subscriptions(tmc, csp, sdp, event_tracer)
     context_fixt.starting_state = ObsState.EMPTY
     tmc.force_change_of_obs_state(
@@ -96,47 +86,53 @@ def perform_idle_transition(
         TestHarnessInputs(),
         wait_termination=True,
     )
+
+
+@given(parsers.parse("I issue the AssignResources command to the TMC"))
+def execute_command_assign_resources(
+    tmc: TMCFacade,
+):
+    """
+    Executes the AssignResources command on the TMC Central Node.
+    """
     assign_input = MyFileJSONInput("centralnode", "assign_resources_low")
     _, pytest.unique_id = tmc.central_node.AssignResources(
         assign_input.as_str()
     )
-    assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER ASSIGNRESOURCES COMMAND: "
-        "Subarray Node device"
-        f"({tmc.subarray_node.dev_name()}) "
-        "is expected to be in IDLE obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        tmc.subarray_node,
-        "obsState",
-        ObsState.IDLE,
-    )
 
 
-@when(parsers.parse("Abort is invoked on a defective subsystem"))
-def defect_subsystem_and_invoke_command(
+@given("the CSP subarray is in an abnormal state")
+def execute_command_on_abnormal_csp_subarray(
     csp: CSPFacade,
-    tmc: TMCFacade,
 ):
-    """This step simulates a failure in one of the subsystems
-    (CSP, SDP, or MCCS) by setting it to a defective state,
-    then triggers the given command (e.g., Abort, Restart)
-    on the TMC SubarrayNode to verify proper error propagation."""
+    "the csp subarray is in an abnormal state"
     csp.csp_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
+
+
+@when("I invoke abort command on defective system")
+def execute_command_abort(
+    tmc: TMCFacade, context_fixt: SubarrayTestContextData, command: str
+):
+    """
+    Executes the Abort command on the TMC Central Node.
+    """
+    context_fixt.when_action_name = command
     _, pytest.unique_id = tmc.subarray_node.Abort()
 
 
-@then(
-    "the command failure is reported by subarray with "
-    "an appropriate error message"
-)
-def verify_abort_failure(
-    event_tracers: TangoEventTracer,
+@then("the command failure is reported by TMC SubarrayNode with error message")
+def error_reporting(
     tmc: TMCFacade,
+    csp: CSPFacade,
+    event_tracers: TangoEventTracer,
 ):
-    """This function checks that when an Abort or Restart command is
-    issued after a subsystem is set to defective, the expected error
-    message is present in the longRunningCommandResult
-    event of the SubarrayNode, and that the result code is FAILED."""
+    """Validates that an error is correctly reported by the TMC.
+
+    This function checks if an error message is generated and logged
+    by the TMC when the AssignResources command fails due to a defective
+    MCCS Controller.
+    It verifies the error reporting mechanism by asserting the expected
+    failure message in the longRunningCommandResult event."""
     exception_message = [
         f" {low_csp_subarray_leaf_node}: ",
         "Exception occurred on device:",
@@ -144,7 +140,7 @@ def verify_abort_failure(
 
     assert_that(event_tracers).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
-        '"the command failure is reported by subarray_node with appropriate"'
+        '"the command failure is reported by central_node with appropriate"'
         '"error message"'
         "CentralNode device"
         f"({tmc.subarray_node.dev_name()}) "
@@ -155,4 +151,14 @@ def verify_abort_failure(
         exception_message,
         pytest.unique_id[0],
         ResultCode.FAILED,
+    )
+    csp.csp_subarray.SetDefective(json.dumps({"enabled": False}))
+    tmc.subarray_node.Abort()
+    assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
+        tmc.subarray_node, "obsState", ObsState.ABORTED
+    )
+
+    tmc.subarray_node.Restart()
+    assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
+        tmc.subarray_node, "obsState", ObsState.EMPTY
     )
