@@ -15,9 +15,12 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
 from ska_tango_testing.integration import TangoEventTracer
 
 from tests.conftest import SubarrayTestContextData, _setup_event_subscriptions
-from tests.resources.test_harness.constant import ERROR_PROPAGATION_DEFECT
+from tests.resources.test_harness.constant import (
+    ERROR_PROPAGATION_DEFECT,
+    FAILED_RESULT_DEFECT,
+)
 
-TIMEOUT = 60
+TIMEOUT = 120
 
 
 @pytest.mark.test
@@ -33,9 +36,13 @@ def test_tmc_command_error_propagation():
     """
 
 
-exception_message = (
+exception_message_csp = (
     '[3, "Exception occurred on the following devices: '
     'low-tmc/subarray-leaf-node-csp/01: Exception occurred, command failed."]'
+)
+exception_message_sdp = (
+    '[3, "Exception occurred on the following devices: '
+    'low-tmc/subarray-leaf-node-sdp/01: Exception occurred, command failed"]'
 )
 
 
@@ -68,12 +75,19 @@ def subarray_in_ready_state(
     )
 )
 def execute_command_abort(
-    tmc: TMCFacade, context_fixt: SubarrayTestContextData, csp: CSPFacade
+    tmc: TMCFacade,
+    context_fixt: SubarrayTestContextData,
+    csp: CSPFacade,
+    sdp: SDPFacade,
+    defectiveSubsystem: str,
 ):
     """
     Executes the Abort command on the TMC Subarray Node.
     """
-    csp.csp_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
+    if defectiveSubsystem == "CSP":
+        csp.csp_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
+    if defectiveSubsystem == "SDP":
+        sdp.sdp_subarray.SetDefective(FAILED_RESULT_DEFECT)
     context_fixt.when_action_name = "Abort"
     _, pytest.unique_id = tmc.subarray_node.Abort()
 
@@ -111,11 +125,18 @@ def verify_fault_obsstate(
     )
 
 
-@then("the command failure is reported by TMC SubarrayNode with error message")
+@then(
+    parsers.parse(
+        "the command failure is reported by subarray with error message "
+        "with {defectiveSubsystem}"
+    )
+)
 def error_reporting(
     tmc: TMCFacade,
     csp: CSPFacade,
+    sdp: SDPFacade,
     event_tracers: TangoEventTracer,
+    defectiveSubsystem: str,
 ):
     """Validates that an error is correctly reported by the TMC.
 
@@ -124,29 +145,51 @@ def error_reporting(
     MCCS Controller.
     It verifies the error reporting mechanism by asserting the expected
     failure message in the longRunningCommandResult event."""
-
-    assert_that(event_tracers).described_as(
-        'FAILED ASSUMPTION IN "THEN" STEP: '
-        '"the command failure is reported by subarray_node with appropriate"'
-        '"error message"'
-        "SubarrayNode device"
-        f"({tmc.subarray_node.dev_name()}) "
-        "is expected have longRunningCommandResult"
-        "(ResultCode.FAILED,exception)",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        tmc.subarray_node,
-        "longRunningCommandResult",
-        (pytest.unique_id[0], exception_message),
-    )
-    csp.csp_subarray.SetDefective(json.dumps({"enabled": False}))
-
-    csp.csp_subarray.Abort()
-
-    assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
-        csp.csp_subarray,
-        "obsState",
-        ObsState.ABORTED,
-    )
+    if defectiveSubsystem == "CSP":
+        assert_that(event_tracers).described_as(
+            'FAILED ASSUMPTION IN "THEN" STEP: '
+            '"the command failure is reported by subarray_node with "'
+            '"appropriate error message"'
+            "SubarrayNode device"
+            f"({tmc.subarray_node.dev_name()}) "
+            "is expected have longRunningCommandResult"
+            "(ResultCode.FAILED,exception)",
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            tmc.subarray_node,
+            "longRunningCommandResult",
+            (pytest.unique_id[0], exception_message_csp),
+        )
+        csp.csp_subarray.SetDefective(json.dumps({"enabled": False}))
+        # tear_down as TMC is inconsistent state. Also
+        # FAULT obsState is not considered in tear_down
+        csp.csp_subarray.Abort()
+        assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
+            csp.csp_subarray,
+            "obsState",
+            ObsState.ABORTED,
+        )
+    if defectiveSubsystem == "SDP":
+        assert_that(event_tracers).described_as(
+            'FAILED ASSUMPTION IN "THEN" STEP: '
+            "'the subarray is in FAULT obsState' "
+            "TMC Subarray Node device "
+            f"({tmc.subarray_node.dev_name()}) "
+            "is expected have longRunningCommandResult as "
+            "(unique_id, COMMAND_RESULT)",
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            tmc.subarray_node,
+            "longRunningCommandResult",
+            (pytest.unique_id[0], exception_message_sdp),
+        )
+        # tear_down as TMC is inconsistent state. Also
+        # FAULT obsState is not considered in tear_down
+        sdp.sdp_subarray.SetDefective(json.dumps({"enabled": False}))
+        sdp.sdp_subarray.Abort()
+        assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
+            sdp.sdp_subarray,
+            "obsState",
+            ObsState.ABORTED,
+        )
 
     tmc.subarray_node.Restart()
     assert_that(event_tracers).within_timeout(5).has_change_event_occurred(

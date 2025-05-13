@@ -4,7 +4,7 @@ Scenario Outline: Error Propagation Reported by TMC Low Abort Command for Defect
     And TMC subarray is in ObsState IDLE
     When Abort is invoked on a defective subsystem <defectiveSubsystem>
     Then TMC SubarrayNode obsstate changes to FAULT obsState
-    Then the command failure is reported by TMC SubarrayNode with error message
+    Then the command failure is reported by subarray with error message with <defectiveSubsystem>
 
     Examples:
             | defectiveSubsystem   |
