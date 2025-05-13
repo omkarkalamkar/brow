@@ -37,18 +37,23 @@ def test_tmc_command_error_propagation():
     """
 
 
-exception_message_csp = (
-    '[3, "Exception occurred on the following devices: '
-    'low-tmc/subarray-leaf-node-csp/01: Exception occurred, command failed."]'
-)
-exception_message_sdp = (
-    '[3, "Exception occurred on the following devices: '
-    'low-tmc/subarray-leaf-node-sdp/01: Exception occurred, command failed"]'
-)
-exception_message_mccs = (
-    '[3, "Exception occurred on the following devices: '
-    'low-tmc/subarray-leaf-node-mccs/01: Exception occurred, command failed."]'
-)
+exception_messages = {
+    "CSP": (
+        '[3, "Exception occurred on the following devices: '
+        "low-tmc/subarray-leaf-node-csp/01: Exception occurred, "
+        'command failed."]'
+    ),
+    "SDP": (
+        '[3, "Exception occurred on the following devices: '
+        "low-tmc/subarray-leaf-node-sdp/01: Exception occurred, "
+        'command failed"]'
+    ),
+    "MCCS": (
+        '[3, "Exception occurred on the following devices: '
+        "low-tmc/subarray-leaf-node-mccs/01: Exception occurred, "
+        'command failed."]'
+    ),
+}
 
 
 # @given ---> conftest
@@ -163,72 +168,34 @@ def error_reporting(
     MCCS Controller.
     It verifies the error reporting mechanism by asserting the expected
     failure message in the longRunningCommandResult event."""
+    expected_msg = exception_messages[defectiveSubsystem]
+
+    assert_that(event_tracers).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        tmc.subarray_node,
+        "longRunningCommandResult",
+        (pytest.unique_id[0], expected_msg),
+    )
+
+    # Reset subsystem and bring it to ABORTED so TMC can be restarted
     if defectiveSubsystem == "CSP":
-        assert_that(event_tracers).described_as(
-            'FAILED ASSUMPTION IN "THEN" STEP: '
-            '"the command failure is reported by subarray_node with "'
-            '"appropriate error message"'
-            "SubarrayNode device"
-            f"({tmc.subarray_node.dev_name()}) "
-            "is expected have longRunningCommandResult"
-            "(ResultCode.FAILED,exception)",
-        ).within_timeout(TIMEOUT).has_change_event_occurred(
-            tmc.subarray_node,
-            "longRunningCommandResult",
-            (pytest.unique_id[0], exception_message_csp),
-        )
         csp.csp_subarray.SetDefective(json.dumps({"enabled": False}))
-        # tear_down as TMC is inconsistent state. Also
-        # FAULT obsState is not considered in tear_down
         csp.csp_subarray.Abort()
         assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
-            csp.csp_subarray,
-            "obsState",
-            ObsState.ABORTED,
+            csp.csp_subarray, "obsState", ObsState.ABORTED
         )
     elif defectiveSubsystem == "SDP":
-        assert_that(event_tracers).described_as(
-            'FAILED ASSUMPTION IN "THEN" STEP: '
-            "'the subarray is in FAULT obsState' "
-            "TMC Subarray Node device "
-            f"({tmc.subarray_node.dev_name()}) "
-            "is expected have longRunningCommandResult as "
-            "(unique_id, COMMAND_RESULT)",
-        ).within_timeout(TIMEOUT).has_change_event_occurred(
-            tmc.subarray_node,
-            "longRunningCommandResult",
-            (pytest.unique_id[0], exception_message_sdp),
-        )
-        # tear_down as TMC is inconsistent state. Also
-        # FAULT obsState is not considered in tear_down
         sdp.sdp_subarray.SetDefective(json.dumps({"enabled": False}))
         sdp.sdp_subarray.Abort()
         assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
-            sdp.sdp_subarray,
-            "obsState",
-            ObsState.ABORTED,
+            sdp.sdp_subarray, "obsState", ObsState.ABORTED
         )
     elif defectiveSubsystem == "MCCS":
-        assert_that(event_tracers).described_as(
-            'FAILED ASSUMPTION IN "THEN" STEP: '
-            "'the subarray is in FAULT obsState' "
-            "TMC Subarray Node device "
-            f"({tmc.subarray_node.dev_name()}) "
-            "is expected have longRunningCommandResult as "
-            "(unique_id, COMMAND_RESULT)",
-        ).within_timeout(TIMEOUT).has_change_event_occurred(
-            tmc.subarray_node,
-            "longRunningCommandResult",
-            (pytest.unique_id[0], exception_message_mccs),
-        )
-        # tear_down as TMC is inconsistent state. Also
-        # FAULT obsState is not considered in tear_down
         mccs.mccs_subarray.SetDefective(json.dumps({"enabled": False}))
         mccs.mccs_subarray.Abort()
         assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
-            mccs.mccs_subarray,
-            "obsState",
-            ObsState.ABORTED,
+            mccs.mccs_subarray, "obsState", ObsState.ABORTED
         )
 
     tmc.subarray_node.Restart()
