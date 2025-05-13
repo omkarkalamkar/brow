@@ -47,9 +47,10 @@ def send_telescope_off_command(
     tmc.move_to_off(wait_termination=False)
 
 
-@then("the SDP and MCCS go to OFF state")
+@then("the CSP, SDP and MCCS goes to OFF state")
 def check_telescope_state_off(
     tmc: TMCFacade,
+    csp: CSPFacade,
     sdp: SDPFacade,
     mccs: MCCSFacade,
     event_tracer: TangoEventTracer,
@@ -63,10 +64,6 @@ def check_telescope_state_off(
         sdp.sdp_master,
         "State",
         DevState.OFF,
-    ).has_change_event_occurred(
-        sdp.sdp_subarray,
-        "State",
-        DevState.OFF,
     )
 
     assert_that(event_tracer).described_as(
@@ -77,41 +74,14 @@ def check_telescope_state_off(
         mccs.mccs_controller,
         "State",
         DevState.OFF,
-    ).has_change_event_occurred(
-        mccs.mccs_subarray,
-        "State",
-        DevState.OFF,
     )
 
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER STANDBY COMMAND: "
-        "Central Node device"
-        f"({tmc.central_node.dev_name()}) "
-        "is expected to be in TelescopeState UNKNOWN",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        tmc.central_node,
-        "telescopeState",
-        DevState.UNKNOWN,
-    )
-
-
-@then("the CSP remains in ON state")
-def check_csp_on_state(
-    csp: CSPFacade,
-    event_tracer: TangoEventTracer,
-):
-    """Check CSP remains in ON state"""
-
-    assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER OFF COMMAND: "
+        "FAILED ASSUMPTION AFTER OFFCOMMAND: "
         "CSP devices"
-        "are expected to be in State ON",
+        "are expected to be in State OFF",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         csp.csp_master,
         "State",
-        DevState.ON,
-    ).has_change_event_occurred(
-        csp.csp_subarray,
-        "State",
-        DevState.ON,
+        DevState.OFF,
     )

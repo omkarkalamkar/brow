@@ -47,7 +47,7 @@ def given_the_telescope_is_in_on_state(
     """Set up event subscriptions for the test.
     and Ensure the telescope is in ON state
     """
-    tmc.move_to_on(wait_termination=False)
+    tmc.move_to_on(wait_termination=True)
     event_tracer.subscribe_event(tmc.subarray_node, "obsState")
     event_tracer.subscribe_event(csp.csp_subarray, "obsState")
     event_tracer.subscribe_event(sdp.sdp_subarray, "obsState")
@@ -88,6 +88,8 @@ def given_the_sut(
     event_tracer.subscribe_event(csp.csp_subarray, "State")
     event_tracer.subscribe_event(sdp.sdp_master, "State")
     event_tracer.subscribe_event(sdp.sdp_subarray, "State")
+    event_tracer.subscribe_event(mccs.mccs_controller, "State")
+    event_tracer.subscribe_event(mccs.mccs_subarray, "State")
 
     log_events(
         {
