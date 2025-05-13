@@ -1,0 +1,110 @@
+"""
+Module: test_low_on
+
+This module defines a Pytest test class to verify the behavior of the
+On command on a Telescope Monitoring and Control (TMC) CentralNode Low.
+The test includes checking the transitions triggered by the On command and
+validating the completion transitions assuming that external subsystems work
+fine.
+"""
+
+import pytest
+from assertpy import assert_that
+from pytest_bdd import scenario, then, when
+from ska_integration_test_harness.facades.csp_facade import CSPFacade
+from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
+from ska_integration_test_harness.facades.sdp_facade import SDPFacade
+from ska_integration_test_harness.facades.tmc_facade import TMCFacade
+from ska_tango_testing.integration import TangoEventTracer
+from tango import DevState
+
+# Constants
+TIMEOUT = 60
+
+
+@pytest.mark.SKA_low
+@scenario(
+    "../features/tmc/check_on_command.feature",
+    "Starting up low telescope",
+)
+def test_telescope_on_command_flow():
+    """
+    Test case to verify ON command on low telescope
+    """
+
+
+@when("I invoke the ON command on the telescope")
+def send_telescope_on_command(
+    event_tracer: TangoEventTracer,
+    tmc: TMCFacade,
+):
+    """Send the ON command to the telescope."""
+    event_tracer.clear_events()
+    tmc.move_to_on(wait_termination=False)
+
+
+@then("the SDP, CSP and MCCS go to ON state")
+def verify_on_state(
+    event_tracer: TangoEventTracer,
+    csp: CSPFacade,
+    sdp: SDPFacade,
+    mccs: MCCSFacade,
+):
+    """A method to check Subsystem State"""
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER ON COMMAND: "
+        "CSP devices"
+        "are expected to be in State ON",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        csp.csp_master,
+        "State",
+        DevState.ON,
+    ).has_change_event_occurred(
+        csp.csp_subarray,
+        "State",
+        DevState.ON,
+    )
+
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER ON COMMAND: "
+        "SDP devices"
+        "are expected to be in State ON",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        sdp.sdp_master,
+        "State",
+        DevState.ON,
+    ).has_change_event_occurred(
+        sdp.sdp_subarray,
+        "State",
+        DevState.ON,
+    )
+
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER ON COMMAND: "
+        "MCCS devices"
+        "are expected to be in State ON",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        mccs.mccs_controller,
+        "State",
+        DevState.ON,
+    ).has_change_event_occurred(
+        mccs.mccs_subarray,
+        "State",
+        DevState.ON,
+    )
+
+
+@then("the telescope goes to ON state")
+def check_telescope_state(tmc: TMCFacade, event_tracer: TangoEventTracer):
+    """A method to check CentralNode.telescopeState"""
+
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER ON COMMAND: "
+        "Central Node device"
+        f"({tmc.central_node.dev_name()}) "
+        "is expected to be in TelescopeState ON",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.central_node,
+        "telescopeState",
+        DevState.ON,
+    )
