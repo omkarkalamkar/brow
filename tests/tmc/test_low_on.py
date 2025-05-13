@@ -43,7 +43,7 @@ def send_telescope_on_command(
 ):
     """Send the ON command to the telescope."""
     event_tracer.clear_events()
-    tmc.move_to_on(wait_termination=False)
+    tmc.move_to_on(wait_termination=True)
 
 
 @then("the SDP, CSP and MCCS go to ON state")
