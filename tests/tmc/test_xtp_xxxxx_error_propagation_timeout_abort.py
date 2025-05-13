@@ -4,7 +4,7 @@ import json
 
 import pytest
 from assertpy import assert_that
-from pytest_bdd import given, scenario, then, when
+from pytest_bdd import given, parsers, scenario, then, when
 from ska_control_model import ObsState
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
 from ska_integration_test_harness.facades.sdp_facade import SDPFacade
@@ -62,21 +62,18 @@ def subarray_in_ready_state(
     )
 
 
-@given("the CSP subarray is in an abnormal state")
-def execute_command_on_abnormal_csp_subarray(
-    csp: CSPFacade,
-):
-    "the csp subarray is in an abnormal state"
-    csp.csp_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
-
-
-@when("I invoke abort command on defective system")
+@when(
+    parsers.parse(
+        "Abort is invoked on a defective subsystem {defectiveSubsystem}"
+    )
+)
 def execute_command_abort(
-    tmc: TMCFacade, context_fixt: SubarrayTestContextData
+    tmc: TMCFacade, context_fixt: SubarrayTestContextData, csp: CSPFacade
 ):
     """
     Executes the Abort command on the TMC Subarray Node.
     """
+    csp.csp_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
     context_fixt.when_action_name = "Abort"
     _, pytest.unique_id = tmc.subarray_node.Abort()
 
