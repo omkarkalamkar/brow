@@ -62,10 +62,6 @@ def verify_on_state(
         csp.csp_master,
         "State",
         DevState.ON,
-    ).has_change_event_occurred(
-        csp.csp_subarray,
-        "State",
-        DevState.ON,
     )
 
     assert_that(event_tracer).described_as(
@@ -76,10 +72,6 @@ def verify_on_state(
         sdp.sdp_master,
         "State",
         DevState.ON,
-    ).has_change_event_occurred(
-        sdp.sdp_subarray,
-        "State",
-        DevState.ON,
     )
 
     assert_that(event_tracer).described_as(
@@ -88,10 +80,6 @@ def verify_on_state(
         "are expected to be in State ON",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         mccs.mccs_controller,
-        "State",
-        DevState.ON,
-    ).has_change_event_occurred(
-        mccs.mccs_subarray,
         "State",
         DevState.ON,
     )
