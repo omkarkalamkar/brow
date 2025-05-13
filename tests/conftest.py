@@ -467,6 +467,7 @@ def _setup_event_subscriptions(
     tmc: TMCFacade,
     csp: CSPFacade,
     sdp: SDPFacade,
+    mccs: MCCSFacade,
     event_tracer: TangoEventTracer,
 ):
     """Subscribe TMC, CSP and SDP devices to track and log obsState events.
@@ -479,6 +480,7 @@ def _setup_event_subscriptions(
     event_tracer.subscribe_event(tmc.subarray_node, "obsState")
     event_tracer.subscribe_event(csp.csp_subarray, "obsState")
     event_tracer.subscribe_event(sdp.sdp_subarray, "obsState")
+    event_tracer.subscribe_event(mccs.mccs_subarray, "obsState")
     event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
     event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
 
@@ -489,6 +491,7 @@ def _setup_event_subscriptions(
                 "longRunningCommandResult",
             ],
             csp.csp_subarray: ["obsState"],
+            mccs.mccs_subarray: ["obsState"],
             sdp.sdp_subarray: ["obsState", "commandCallInfo"],
             tmc.central_node: ["longRunningCommandResult"],
         },
@@ -500,10 +503,11 @@ def subarray_can_be_used(
     tmc: TMCFacade,
     csp: CSPFacade,
     sdp: SDPFacade,
+    mccs: MCCSFacade,
     event_tracer: TangoEventTracer,
 ):
     """Set up the subarray to be used in the test."""
-    _setup_event_subscriptions(tmc, csp, sdp, event_tracer)
+    _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
 
 
 @given("the telescope is in ON state")

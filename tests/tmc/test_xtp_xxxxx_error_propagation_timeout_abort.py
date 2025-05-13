@@ -7,6 +7,7 @@ from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
 from ska_control_model import ObsState
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
+from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
 from ska_integration_test_harness.facades.sdp_facade import SDPFacade
 from ska_integration_test_harness.facades.tmc_facade import TMCFacade
 from ska_integration_test_harness.inputs.test_harness_inputs import (
@@ -20,10 +21,9 @@ from tests.resources.test_harness.constant import (
     FAILED_RESULT_DEFECT,
 )
 
-TIMEOUT = 120
+TIMEOUT = 60
 
 
-@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
@@ -55,11 +55,12 @@ def subarray_in_ready_state(
     tmc: TMCFacade,
     sdp: SDPFacade,
     csp: CSPFacade,
+    mccs: MCCSFacade,
     event_tracers: TangoEventTracer,
     default_commands_inputs: TestHarnessInputs,
 ):
     """Ensure the subarray is in the initial obsstate state."""
-    _setup_event_subscriptions(tmc, csp, sdp, event_tracers)
+    _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracers)
     context_fixt.starting_state = ObsState.IDLE
 
     tmc.force_change_of_obs_state(
