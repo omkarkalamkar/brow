@@ -9,7 +9,7 @@ from ska_integration_test_harness.facades.csp_facade import CSPFacade
 from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
 from ska_integration_test_harness.facades.sdp_facade import SDPFacade
 from ska_integration_test_harness.facades.tmc_facade import TMCFacade
-from ska_tango_testing.integration import TangoEventTracer, log_events
+from ska_tango_testing.integration import TangoEventTracer
 
 from tests.resources.test_harness.constant import COMMAND_COMPLETED
 from tests.resources.test_harness.helpers import check_subarray_obsstate
@@ -31,35 +31,7 @@ def test_telescope_assign_resources():
     """
 
 
-@given("the telescope is in the ON state")
-def given_the_telescope_is_in_on_state(
-    tmc: TMCFacade,
-    event_tracers: TangoEventTracer,
-):
-    """Ensure the telescope is in ON state."""
-    tmc.move_to_on(wait_termination=True)
-    event_tracers.subscribe_event(tmc.central_node, "telescopeState")
-    event_tracers.subscribe_event(tmc.central_node, "longRunningCommandResult")
-    event_tracers.subscribe_event(tmc.subarray_node, "obsState")
-    event_tracers.subscribe_event(
-        tmc.subarray_node, "longRunningCommandResult"
-    )
-
-    # Logging setup
-    log_events(
-        {
-            tmc.central_node: [
-                "telescopeState",
-                "longRunningCommandResult",
-            ],
-            tmc.subarray_node: [
-                "obsState",
-                "longRunningCommandResult",
-            ],
-        }
-    )
-    # Assertions
-    event_tracers.clear_events()
+# @given("the telescope is in the ON state") -> conftest
 
 
 @given("subarray is in EMPTY ObsState")

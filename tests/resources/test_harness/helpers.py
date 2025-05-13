@@ -104,6 +104,7 @@ def check_subarray_obsstate(
     event_tracer: TangoEventTracer,
     obs_state: ObsState,
 ):
+    TIMEOUT = 100
     subarray_devices = {
         "SDP": sdp.sdp_subarray,
         "CSP": csp.csp_subarray,

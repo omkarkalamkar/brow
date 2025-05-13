@@ -33,6 +33,9 @@ def test_telescope_on_command_flow():
     """
 
 
+# @Given("a Low telescope") -> conftest
+
+
 @when("I invoke the ON command on the telescope")
 def send_telescope_on_command(
     event_tracer: TangoEventTracer,
