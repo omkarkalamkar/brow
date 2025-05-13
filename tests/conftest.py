@@ -504,3 +504,34 @@ def subarray_can_be_used(
 ):
     """Set up the subarray to be used in the test."""
     _setup_event_subscriptions(tmc, csp, sdp, event_tracer)
+
+
+@given("the telescope is in ON state")
+def given_the_telescope_is_in_on_state(
+    tmc: TMCFacade,
+    event_tracers: TangoEventTracer,
+):
+    """Ensure the telescope is in ON state."""
+    tmc.move_to_on(wait_termination=True)
+    event_tracers.subscribe_event(tmc.central_node, "telescopeState")
+    event_tracers.subscribe_event(tmc.central_node, "longRunningCommandResult")
+    event_tracers.subscribe_event(tmc.subarray_node, "obsState")
+    event_tracers.subscribe_event(
+        tmc.subarray_node, "longRunningCommandResult"
+    )
+
+    # Logging setup
+    log_events(
+        {
+            tmc.central_node: [
+                "telescopeState",
+                "longRunningCommandResult",
+            ],
+            tmc.subarray_node: [
+                "obsState",
+                "longRunningCommandResult",
+            ],
+        }
+    )
+    # Assertions
+    event_tracers.clear_events()

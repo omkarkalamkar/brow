@@ -1,7 +1,6 @@
 """Test case to verify error propagation functionality for
-the AssignResources command"""
+the Abort command"""
 import json
-import logging
 
 import pytest
 from assertpy import assert_that
@@ -13,20 +12,12 @@ from ska_integration_test_harness.facades.tmc_facade import TMCFacade
 from ska_integration_test_harness.inputs.test_harness_inputs import (
     TestHarnessInputs,
 )
-from ska_ser_logging import configure_logging
-from ska_tango_testing.integration import TangoEventTracer, log_events
+from ska_tango_testing.integration import TangoEventTracer
 
 from tests.conftest import SubarrayTestContextData, _setup_event_subscriptions
 from tests.resources.test_harness.constant import ERROR_PROPAGATION_DEFECT
 
-# from tests.resources.test_harness.utils.my_file_json_input import (
-#     MyFileJSONInput,
-# )
-
-configure_logging(logging.DEBUG)
-LOGGER = logging.getLogger(__name__)
-
-TIMEOUT = 120
+TIMEOUT = 60
 
 
 @pytest.mark.test
@@ -48,35 +39,7 @@ exception_message = (
 )
 
 
-@given("the telescope is in ON state")
-def given_the_telescope_is_in_on_state(
-    tmc: TMCFacade,
-    event_tracers: TangoEventTracer,
-):
-    """Ensure the telescope is in ON state."""
-    tmc.move_to_on(wait_termination=True)
-    event_tracers.subscribe_event(tmc.central_node, "telescopeState")
-    event_tracers.subscribe_event(tmc.central_node, "longRunningCommandResult")
-    event_tracers.subscribe_event(tmc.subarray_node, "obsState")
-    event_tracers.subscribe_event(
-        tmc.subarray_node, "longRunningCommandResult"
-    )
-
-    # Logging setup
-    log_events(
-        {
-            tmc.central_node: [
-                "telescopeState",
-                "longRunningCommandResult",
-            ],
-            tmc.subarray_node: [
-                "obsState",
-                "longRunningCommandResult",
-            ],
-        }
-    )
-    # Assertions
-    event_tracers.clear_events()
+# @given ---> conftest
 
 
 @given("TMC subarray is in ObsState IDLE")
@@ -165,9 +128,6 @@ def error_reporting(
     It verifies the error reporting mechanism by asserting the expected
     failure message in the longRunningCommandResult event."""
 
-    LOGGER.info("ID: %s", pytest.unique_id[0])
-    LOGGER.info("exception_message:::::: %s", exception_message)
-
     assert_that(event_tracers).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         '"the command failure is reported by subarray_node with appropriate"'
@@ -185,13 +145,7 @@ def error_reporting(
 
     csp.csp_subarray.Abort()
 
-    assert_that(event_tracers).described_as(
-        'FAILED ASSUMPTION IN "THEN" STEP: '
-        "'the csp subarray must be in the ABORTED obsState'"
-        "CSP Subarray device"
-        f"({csp.csp_subarray.dev_name()}) "
-        "is expected to be in ABORTED obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
+    assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
         csp.csp_subarray,
         "obsState",
         ObsState.ABORTED,
