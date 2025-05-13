@@ -49,7 +49,6 @@ def send_telescope_off_command(
 
 @then("the CSP, SDP and MCCS goes to OFF state")
 def check_telescope_state_off(
-    tmc: TMCFacade,
     csp: CSPFacade,
     sdp: SDPFacade,
     mccs: MCCSFacade,
