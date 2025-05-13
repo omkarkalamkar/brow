@@ -24,6 +24,7 @@ from tests.resources.test_harness.constant import (
 TIMEOUT = 60
 
 
+@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
@@ -44,12 +45,20 @@ exception_message_sdp = (
     '[3, "Exception occurred on the following devices: '
     'low-tmc/subarray-leaf-node-sdp/01: Exception occurred, command failed"]'
 )
+exception_message_mccs = (
+    '[3, "Exception occurred on the following devices: '
+    'low-tmc/subarray-leaf-node-mccs/01: Exception occurred, command failed"]'
+)
 
 
 # @given ---> conftest
 
 
-@given("TMC subarray is in ObsState IDLE")
+@given(
+    parsers.parse(
+        "TMC subarray is in initial ObsState for {defectiveSubsystem}"
+    )
+)
 def subarray_in_ready_state(
     context_fixt: SubarrayTestContextData,
     tmc: TMCFacade,
@@ -58,13 +67,17 @@ def subarray_in_ready_state(
     mccs: MCCSFacade,
     event_tracers: TangoEventTracer,
     default_commands_inputs: TestHarnessInputs,
+    defectiveSubsystem: str,
 ):
     """Ensure the subarray is in the initial obsstate state."""
     _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracers)
-    context_fixt.starting_state = ObsState.IDLE
+    target_state = (
+        ObsState.READY if defectiveSubsystem == "MCCS" else ObsState.IDLE
+    )
+    context_fixt.starting_state = target_state
 
     tmc.force_change_of_obs_state(
-        ObsState.IDLE,
+        target_state,
         default_commands_inputs,
         wait_termination=True,
     )
@@ -80,6 +93,7 @@ def execute_command_abort(
     context_fixt: SubarrayTestContextData,
     csp: CSPFacade,
     sdp: SDPFacade,
+    mccs: MCCSFacade,
     defectiveSubsystem: str,
 ):
     """
@@ -87,8 +101,10 @@ def execute_command_abort(
     """
     if defectiveSubsystem == "CSP":
         csp.csp_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
-    if defectiveSubsystem == "SDP":
+    elif defectiveSubsystem == "SDP":
         sdp.sdp_subarray.SetDefective(FAILED_RESULT_DEFECT)
+    elif defectiveSubsystem == "MCCS":
+        mccs.mccs_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
     context_fixt.when_action_name = "Abort"
     _, pytest.unique_id = tmc.subarray_node.Abort()
 
@@ -136,6 +152,7 @@ def error_reporting(
     tmc: TMCFacade,
     csp: CSPFacade,
     sdp: SDPFacade,
+    mccs: MCCSFacade,
     event_tracers: TangoEventTracer,
     defectiveSubsystem: str,
 ):
@@ -169,7 +186,7 @@ def error_reporting(
             "obsState",
             ObsState.ABORTED,
         )
-    if defectiveSubsystem == "SDP":
+    elif defectiveSubsystem == "SDP":
         assert_that(event_tracers).described_as(
             'FAILED ASSUMPTION IN "THEN" STEP: '
             "'the subarray is in FAULT obsState' "
@@ -188,6 +205,28 @@ def error_reporting(
         sdp.sdp_subarray.Abort()
         assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
             sdp.sdp_subarray,
+            "obsState",
+            ObsState.ABORTED,
+        )
+    elif defectiveSubsystem == "MCCS":
+        assert_that(event_tracers).described_as(
+            'FAILED ASSUMPTION IN "THEN" STEP: '
+            "'the subarray is in FAULT obsState' "
+            "TMC Subarray Node device "
+            f"({tmc.subarray_node.dev_name()}) "
+            "is expected have longRunningCommandResult as "
+            "(unique_id, COMMAND_RESULT)",
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            tmc.subarray_node,
+            "longRunningCommandResult",
+            (pytest.unique_id[0], exception_message_mccs),
+        )
+        # tear_down as TMC is inconsistent state. Also
+        # FAULT obsState is not considered in tear_down
+        mccs.mccs_subarray.SetDefective(json.dumps({"enabled": False}))
+        mccs.mccs_subarray.Abort()
+        assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
+            mccs.mccs_subarray,
             "obsState",
             ObsState.ABORTED,
         )
