@@ -44,7 +44,7 @@ def send_telescope_off_command(
 ):
     """Send the OFF command to the telescope."""
     event_tracer.clear_events()
-    tmc.move_to_off(wait_termination=False)
+    tmc.move_to_off(wait_termination=True)
 
 
 @then("the CSP, SDP and MCCS goes to OFF state")
