@@ -25,7 +25,7 @@ TIMEOUT = 100
     "../features/tmc/check_releaseresource.feature",
     "Release resources from Low subarray",
 )
-def test_telescope_assign_resources():
+def test_telescope_releaseresources():
     """
     Test case to verify releaseResources functionality
     """
