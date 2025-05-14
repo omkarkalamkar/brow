@@ -24,7 +24,7 @@ from tests.resources.test_harness.constant import (
 TIMEOUT = 60
 
 
-@pytest.mark.skip
+@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
@@ -93,7 +93,7 @@ def execute_command_abort(
     defectiveSubsystem: str,
 ):
     """
-    Executes the Abort command on the TMC Subarray Node.
+    Executes the Restart command on the TMC Subarray Node.
     """
     if defectiveSubsystem == "CSP":
         csp.csp_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
@@ -122,7 +122,7 @@ def verify_fault_obsstate(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node,
         "obsState",
-        ObsState.ABORTING,
+        ObsState.RESTARTING,
     )
 
     assert_that(event_tracers).described_as(
