@@ -20,7 +20,7 @@ from tests.resources.test_harness.utils.my_file_json_input import (
 TIMEOUT = 100
 
 
-@pytest.mark.system_level_tests
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_assignresources_command.feature",
     "Assign resources to Low subarray",
