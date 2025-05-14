@@ -23,6 +23,7 @@ from tests.resources.test_harness.constant import (
 
 TIMEOUT = 60
 
+
 @pytest.mark.skip
 @pytest.mark.SKA_low
 @scenario(

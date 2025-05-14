@@ -39,5 +39,5 @@ Scenario Outline: Timeout Reported by TMC Low Abort Command for Defective Subarr
     Examples:
             | defectiveSubsystem   |
             #| CSP                  |
-            | SDP                  |
-            #| MCCS                 |
+            #| SDP                  |
+            | MCCS                 |
