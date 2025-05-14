@@ -95,15 +95,15 @@ def given_the_sut(
         {
             tmc.central_node: ["telescopeState"],
             csp.csp_master: ["State"],
-            csp.csp_subarray: ["State"],
-            mccs.mccs_subarray: ["State"],
+            sdp.sdp_master: ["State"],
+            mccs.mccs_controller: ["State"],
         }
     )
     log_events(
         {
-            mccs.mccs_controller: ["State"],
-            sdp.sdp_master: ["State"],
+            mccs.mccs_subarray: ["State"],
             sdp.sdp_subarray: ["State"],
+            csp.csp_subarray: ["State"],
         }
     )
 

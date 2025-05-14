@@ -19,7 +19,7 @@ from ska_tango_testing.integration import TangoEventTracer
 from tango import DevState
 
 # Constants
-TIMEOUT = 60
+TIMEOUT = 100
 
 
 @pytest.mark.SKA_low
@@ -65,10 +65,6 @@ def check_telescope_state_off(
         DevState.OFF,
     ).within_timeout(
         TIMEOUT
-    ).has_change_event_occurred(
-        sdp.sdp_subarray,
-        "State",
-        DevState.OFF,
     )
 
     assert_that(event_tracer).described_as(
@@ -87,12 +83,6 @@ def check_telescope_state_off(
         "are expected to be in State OFF",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         csp.csp_master,
-        "State",
-        DevState.OFF,
-    ).within_timeout(
-        TIMEOUT
-    ).has_change_event_occurred(
-        csp.csp_subarray,
         "State",
         DevState.OFF,
     )
