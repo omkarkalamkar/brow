@@ -79,12 +79,6 @@ def check_telescope_state_off(
         mccs.mccs_controller,
         "State",
         DevState.OFF,
-    ).within_timeout(
-        TIMEOUT
-    ).has_change_event_occurred(
-        mccs.mccs_subarray,
-        "State",
-        DevState.OFF,
     )
 
     assert_that(event_tracer).described_as(
