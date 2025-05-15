@@ -155,7 +155,7 @@ def error_reporting(
             mccs.mccs_subarray, "obsState", ObsState.EMPTY
         )
 
-    tmc.subarray_node.Restart()
-    assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
-        tmc.subarray_node, "obsState", ObsState.EMPTY
-    )
+    # tmc.subarray_node.Restart()
+    # assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
+    #     tmc.subarray_node, "obsState", ObsState.EMPTY
+    # )

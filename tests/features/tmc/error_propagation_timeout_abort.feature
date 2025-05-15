@@ -40,7 +40,7 @@ Scenario Outline: Error Propagation Reported by TMC Low Restart Command for Defe
         #| MCCS                 |
 
 
-@XTP-28348
+@XTP-81466 @XTP-28348
 Scenario Outline: Timeout Reported by TMC Low Reset Command for Defective Subarray
     Given the telescope is in ON state
     And TMC subarray is in ABORTED ObsState
