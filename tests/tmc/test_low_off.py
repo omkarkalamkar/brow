@@ -68,7 +68,7 @@ def check_telescope_state_off(
     )
 
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER OFFCOMMAND: "
+        "FAILED ASSUMPTION AFTER OFF COMMAND: "
         "MCCS devices"
         "are expected to be in State OFF",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
@@ -78,11 +78,27 @@ def check_telescope_state_off(
     )
 
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER OFFCOMMAND: "
+        "FAILED ASSUMPTION AFTER OFF COMMAND: "
         "CSP devices"
         "are expected to be in State OFF",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         csp.csp_master,
         "State",
+        DevState.OFF,
+    )
+
+
+@then("the telescope goes to ON state")
+def check_telescope_state(tmc: TMCFacade, event_tracer: TangoEventTracer):
+    """A method to check CentralNode.telescopeState"""
+
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER OFF COMMAND: "
+        "Central Node device"
+        f"({tmc.central_node.dev_name()}) "
+        "is expected to be in TelescopeState OFF",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.central_node,
+        "telescopeState",
         DevState.OFF,
     )

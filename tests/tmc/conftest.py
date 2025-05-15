@@ -81,7 +81,8 @@ def given_the_sut(
     mccs: MCCSFacade,
 ):
     """
-    Telescope consisting of csp , sdp and dish devices
+    Set up event subscriptions for the test for a Low Telescope consisting of
+    csp , sdp and mccs devices
     """
     event_tracer.subscribe_event(tmc.central_node, "telescopeState")
     event_tracer.subscribe_event(csp.csp_master, "State")
