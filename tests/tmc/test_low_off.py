@@ -88,7 +88,7 @@ def check_telescope_state_off(
     )
 
 
-@then("the telescope goes to ON state")
+@then("the telescope goes to OFF state")
 def check_telescope_state(tmc: TMCFacade, event_tracer: TangoEventTracer):
     """A method to check CentralNode.telescopeState"""
 
