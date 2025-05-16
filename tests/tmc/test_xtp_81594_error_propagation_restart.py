@@ -24,6 +24,7 @@ from tests.resources.test_harness.constant import (
 TIMEOUT = 60
 
 
+@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
@@ -99,7 +100,7 @@ def execute_command_restart(
     elif defectiveSubsystem == "SDP":
         sdp.sdp_subarray.SetDefective(FAILED_RESULT_DEFECT)
     elif defectiveSubsystem == "MCCS":
-        mccs.mccs_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
+        mccs.mccs_controller.SetDefective(ERROR_PROPAGATION_DEFECT)
     context_fixt.when_action_name = "Restart"
     _, pytest.unique_id = tmc.subarray_node.Restart()
 
