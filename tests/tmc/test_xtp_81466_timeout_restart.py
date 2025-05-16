@@ -23,6 +23,7 @@ TIMEOUT = 60
 
 
 @pytest.mark.test
+@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
@@ -165,3 +166,4 @@ def error_reporting(
         assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
             mccs.mccs_subarray, "obsState", ObsState.EMPTY
         )
+    event_tracers.clear_events()

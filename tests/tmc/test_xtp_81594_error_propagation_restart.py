@@ -155,3 +155,5 @@ def error_reporting(
         assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
             mccs.mccs_subarray, "obsState", ObsState.EMPTY
         )
+
+    event_tracers.clear_events()

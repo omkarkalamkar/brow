@@ -1,5 +1,9 @@
-"""Test module to validate timeout behavior in the Abort command
-when a defective subsystem (CSP, SDP, or MCCS) causes the command to fail.
+"""Test case to verify error propagation functionality for the Abort command
+
+This test module checks if the TMC SubarrayNode correctly propagates errors
+when the `Abort` command is invoked on a defective subsystem
+(CSP, SDP, or MCCS).It ensures that the TMC transitions to the FAULT
+state and logs the expected error message.
 """
 import json
 
@@ -17,26 +21,44 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
 from ska_tango_testing.integration import TangoEventTracer
 
 from tests.conftest import SubarrayTestContextData, _setup_event_subscriptions
-from tests.resources.test_harness.constant import TIMEOUT_DEFECT
+from tests.resources.test_harness.constant import (
+    ERROR_PROPAGATION_DEFECT,
+    FAILED_RESULT_DEFECT,
+)
 
 TIMEOUT = 60
 
 
+@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
-    "Timeout Reported by TMC Low Abort Command for Defective Subarray",
+    "Error Propagation Reported by TMC Low Abort Command for "
+    "Defective Subarray",
 )
-def test_tmc_command_timeout():
+def test_tmc_command_error_propagation():
     """
-    Test case to verify TMC Timeout functionality.
+    Verifies TMC error propagation on Abort command
+    for defective subsystems (CSP, SDP, MCCS).
     """
 
 
 exception_messages = {
-    "CSP": ('[3, "Timeout has occurred, command failed"]'),
-    "SDP": ('[3, "Timeout has occurred, command failed"]'),
-    "MCCS": ('[3, "Timeout has occurred, command failed"]'),
+    "CSP": (
+        '[3, "Exception occurred on the following devices: '
+        "low-tmc/subarray-leaf-node-csp/01: Exception occurred, "
+        'command failed."]'
+    ),
+    "SDP": (
+        '[3, "Exception occurred on the following devices: '
+        "low-tmc/subarray-leaf-node-sdp/01: Exception occurred, "
+        'command failed"]'
+    ),
+    "MCCS": (
+        '[3, "Exception occurred on the following devices: '
+        "low-tmc/subarray-leaf-node-mccs/01: Exception occurred, "
+        'command failed."]'
+    ),
 }
 
 
@@ -61,14 +83,13 @@ def subarray_in_initial_state(
     """Ensure the subarray is in the initial obsstate state.
     Args:
         context_fixt: Subarray test context for maintaining state.
-        tmc: TMCFacade instance for controlling the TMC Subarray.
-        sdp: SDPFacade instance for controlling the SDP Subarray.
-        csp: CSPFacade instance for controlling the CSP Subarray.
-        mccs: MCCSFacade instance for controlling the MCCS Subarray.
-        event_tracers: For monitoring Tango events.
+        tmc: TMC facade for controlling the SubarrayNode.
+        sdp: SDP facade.
+        csp: CSP facade.
+        mccs: MCCS facade.
+        event_tracers: Tango event subscription handlers.
         default_commands_inputs: Default command input data.
-        defectiveSubsystem: The subsystem name expected to simulate a timeout
-    """
+        defectiveSubsystem: Name of the subsystem marked as defective."""
     _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracers)
     target_state = (
         ObsState.READY if defectiveSubsystem == "MCCS" else ObsState.IDLE
@@ -96,22 +117,21 @@ def execute_command_abort(
     defectiveSubsystem: str,
 ):
     """
-    Simulates a timeout by setting the specified subsystem as defective
-    or delayed, then triggers Abort.
-    Args:
-        tmc: TMCFacade instance to execute the Abort command.
-        context_fixt: Context object to record action being tested.
-        csp: CSPFacade instance.
-        sdp: SDPFacade instance.
-        mccs: MCCSFacade instance.
-        defectiveSubsystem: The name of the defective subsystem.
+    Invoke the Abort command on the TMC SubarrayNode with a faulty subsystem.
+        Args:
+        tmc: TMC SubarrayNode facade.
+        context_fixt: Subarray test context object.
+        csp: CSP facade.
+        sdp: SDP facade.
+        mccs: MCCS facade.
+        defectiveSubsystem: Subsystem that will simulate a failure.
     """
     if defectiveSubsystem == "CSP":
-        csp.csp_subarray.SetDefective(TIMEOUT_DEFECT)
+        csp.csp_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
     elif defectiveSubsystem == "SDP":
-        sdp.sdp_subarray.SetDelayInfo(json.dumps({"Abort": 135}))
+        sdp.sdp_subarray.SetDefective(FAILED_RESULT_DEFECT)
     elif defectiveSubsystem == "MCCS":
-        mccs.mccs_subarray.SetDefective(TIMEOUT_DEFECT)
+        mccs.mccs_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
     context_fixt.when_action_name = "Abort"
     _, pytest.unique_id = tmc.subarray_node.Abort()
 
@@ -154,7 +174,7 @@ def verify_fault_obsstate(
 
 @then(
     parsers.parse(
-        "the Timeout is reported by subarray with error message "
+        "the command failure is reported by subarray with error message "
         "with {defectiveSubsystem}"
     )
 )
@@ -166,16 +186,15 @@ def error_reporting(
     event_tracers: TangoEventTracer,
     defectiveSubsystem: str,
 ):
-    """Validates that TMC's SubarrayNode correctly reports the timeout via
-    longRunningCommandResult.
-        Args:
-        tmc: TMCFacade instance.
-        csp: CSPFacade instance.
-        sdp: SDPFacade instance.
-        mccs: MCCSFacade instance.
-        event_tracers: Used to monitor Tango events for error reporting.
-        defectiveSubsystem: The subsystem name that triggered the timeout.
-    """
+    """Check that the error is reported in the longRunningCommandResult of
+    TMC due to subsystem failure.
+    Args:
+        tmc: TMC facade.
+        csp: CSP facade.
+        sdp: SDP facade.
+        mccs: MCCS facade.
+        event_tracers: Event tracer for state and result validation.
+        defectiveSubsystem: Name of the defective subsystem being tested."""
     expected_msg = exception_messages[defectiveSubsystem]
 
     assert_that(event_tracers).within_timeout(
@@ -194,11 +213,9 @@ def error_reporting(
             csp.csp_subarray, "obsState", ObsState.ABORTED
         )
     elif defectiveSubsystem == "SDP":
-        sdp.sdp_subarray.ResetDelayInfo()
+        sdp.sdp_subarray.SetDefective(json.dumps({"enabled": False}))
         sdp.sdp_subarray.Abort()
-        assert_that(event_tracers).within_timeout(
-            135
-        ).has_change_event_occurred(
+        assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
             sdp.sdp_subarray, "obsState", ObsState.ABORTED
         )
     elif defectiveSubsystem == "MCCS":
@@ -209,4 +226,6 @@ def error_reporting(
         )
 
     tmc.restart()
-    event_tracers.clear_events()
+    assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
+        tmc.subarray_node, "obsState", ObsState.EMPTY
+    )
