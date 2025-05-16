@@ -1,7 +1,7 @@
 """
 Module: test_low_on
 
-This module defines a Pytest test class to verify the behavior of the
+This module defines a Pytest test  to verify the behavior of the
 On command on a Telescope Monitoring and Control (TMC) CentralNode Low.
 The test includes checking the transitions triggered by the On command and
 validating the completion transitions assuming that external subsystems work
@@ -31,9 +31,6 @@ def test_telescope_on_command_flow():
     """
     Test case to verify ON command on low telescope
     """
-
-
-# @Given("a Low telescope") -> conftest
 
 
 @when("I invoke the ON command on the telescope")

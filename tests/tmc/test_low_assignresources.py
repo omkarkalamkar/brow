@@ -31,9 +31,6 @@ def test_telescope_assign_resources():
     """
 
 
-# @given("the telescope is in the ON state") -> conftest
-
-
 @given("subarray is in the EMPTY ObsState")
 def subarray_in_empty_obsstate(
     tmc: TMCFacade,

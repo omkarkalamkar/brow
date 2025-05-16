@@ -98,10 +98,6 @@ def given_the_sut(
             csp.csp_master: ["State"],
             sdp.sdp_master: ["State"],
             mccs.mccs_controller: ["State"],
-        }
-    )
-    log_events(
-        {
             mccs.mccs_subarray: ["State"],
             sdp.sdp_subarray: ["State"],
             csp.csp_subarray: ["State"],

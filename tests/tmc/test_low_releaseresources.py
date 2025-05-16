@@ -31,9 +31,6 @@ def test_telescope_releaseresources():
     """
 
 
-# @given("the telescope is in the ON state") -> conftest
-
-
 @given("subarray is in the IDLE obsState")
 def invoke_assignresources(
     tmc: TMCFacade,
