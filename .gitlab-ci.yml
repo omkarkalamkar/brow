@@ -96,7 +96,7 @@ k8s-test:
   variables:
     KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA'
     SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA"
-    MARK: 'SKA_low'
+    MARK: 'testing'
   before_script:
     - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
     - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
@@ -148,7 +148,7 @@ k8s-test-tmc-with-sdp:
     - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
     - 'make help | grep k8s-test'
     - make k8s-install-chart SDP_PROCCONTROL_REPLICAS=0
-    - make k8s-wait 
+    - make k8s-wait
     - make k8s-wait KUBE_APP="ska-sdp"
     - make k8s-test MARK='tmc_sdp_unhappy_path'
     - make k8s-uninstall-chart
@@ -165,14 +165,14 @@ k8s-test-tmc-with-sdp:
     name: test/$CI_COMMIT_REF_SLUG
     on_stop: stop-k8s-test-tmc-with-sdp
   when: manual
-    
+
 stop-k8s-test-tmc-with-sdp:
   extends:
     - stop-k8s-test
   variables:
     KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-sdp'
     SDP_SIMULATION_ENABLED: 'false'
-    
+
 k8s-test-tmc-with-mccs:
   extends:
     - k8s-test
