@@ -47,7 +47,7 @@ def send_telescope_off_command(
     tmc.move_to_off(wait_termination=True)
 
 
-@then("the CSP, SDP and MCCS goes to the OFF state")
+@then("the CSP, SDP and MCCS go to the OFF state")
 def check_telescope_state_off(
     csp: CSPFacade,
     sdp: SDPFacade,
@@ -88,7 +88,7 @@ def check_telescope_state_off(
     )
 
 
-@then("the telescope goes to the OFF state")
+@then("the telescope go to the OFF state")
 def check_telescope_state(tmc: TMCFacade, event_tracer: TangoEventTracer):
     """A method to check CentralNode.telescopeState"""
 

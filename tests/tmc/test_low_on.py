@@ -46,7 +46,7 @@ def send_telescope_on_command(
     tmc.move_to_on(wait_termination=True)
 
 
-@then("the SDP, CSP and MCCS goes to the ON state")
+@then("the SDP, CSP and MCCS go to the ON state")
 def verify_on_state(
     event_tracer: TangoEventTracer,
     csp: CSPFacade,
@@ -85,7 +85,7 @@ def verify_on_state(
     )
 
 
-@then("the telescope goes to the ON state")
+@then("the telescope go to the ON state")
 def check_telescope_state(tmc: TMCFacade, event_tracer: TangoEventTracer):
     """A method to check CentralNode.telescopeState"""
 
