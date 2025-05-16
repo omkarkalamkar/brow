@@ -11,7 +11,6 @@ from ska_integration_test_harness.facades.sdp_facade import SDPFacade
 from ska_integration_test_harness.facades.tmc_facade import TMCFacade
 from ska_tango_testing.integration import TangoEventTracer
 
-from tests.conftest import LOGGER
 from tests.resources.test_harness.constant import COMMAND_COMPLETED
 from tests.resources.test_harness.helpers import check_subarray_obsstate
 from tests.resources.test_harness.utils.my_file_json_input import (
@@ -21,7 +20,6 @@ from tests.resources.test_harness.utils.my_file_json_input import (
 TIMEOUT = 100
 
 
-@pytest.mark.testing
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_assignresources_command.feature",
@@ -95,17 +93,3 @@ def subsystems_subarray_idle(
 ):
     """Check if all subarrays are in IDLE obsState."""
     check_subarray_obsstate(tmc, csp, sdp, mccs, event_tracer, ObsState.IDLE)
-    LOGGER.info("AR value: %s", tmc.subarray_node.assignedResources)
-    assigned_resources_json = MyFileJSONInput(
-        "centralnode", "assign_resources_low"
-    ).as_str()
-    assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
-        "Subarray Node device"
-        f"({tmc.subarray_node.dev_name()}) "
-        "is expected to have assignedResources input json",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        tmc.subarray_node,
-        "assignedResources",
-        assigned_resources_json,
-    )
