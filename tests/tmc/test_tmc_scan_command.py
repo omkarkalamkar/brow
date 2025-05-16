@@ -12,6 +12,7 @@ from ska_control_model import ObsState
 from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DevState
 
+from tests.conftest import LOGGER
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.constant import TIMEOUT
 from tests.resources.test_harness.subarray_node_low import (
@@ -25,6 +26,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 
 
+@pytest.mark.testing
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_scan_command.feature",
@@ -121,6 +123,12 @@ def given_subarray_in_ready(
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
+
+    LOGGER.info(
+        "SubarrayNode assignedResources after reaching IDLE state: %s",
+        central_node_low.subarray_node.assignedResources,
+    )
+
     configure_input_json = prepare_json_args_for_commands(
         "configure_low", command_input_factory
     )
@@ -149,6 +157,10 @@ def given_subarray_in_ready(
         central_node_low.subarray_node,
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
+    )
+    LOGGER.info(
+        "SubarrayNode assignedResources after reaching IDLE state: %s",
+        central_node_low.subarray_node.assignedResources,
     )
 
 
