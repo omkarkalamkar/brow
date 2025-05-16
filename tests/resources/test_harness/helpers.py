@@ -104,6 +104,21 @@ def check_subarray_obsstate(
     event_tracer: TangoEventTracer,
     obs_state: ObsState,
 ):
+    """Check if subarray devices are in the expected observation state.
+
+    Args:
+        tmc: TMCFacade
+        csp: CSPFacade
+        sdp: SDPFacade
+        mccs: MCCSFacade
+        event_tracer: TangoEventTracer for monitoring device state changes.
+        obs_state: Expected ObsState for subarray devices.
+
+    Raises:
+        AssertionError: If any device fails to reach
+        the expected state within 100 seconds.
+    """
+
     TIMEOUT = 100
     subarray_devices = {
         "SDP": sdp.sdp_subarray,
