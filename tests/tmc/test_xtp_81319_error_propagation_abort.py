@@ -232,6 +232,6 @@ def error_reporting(
         )
 
     tmc.restart()
-    assert_that(event_tracers).within_timeout(TIMEOUT).has_change_event_occurred(
-        tmc.subarray_node, "obsState", ObsState.EMPTY
-    )
+    assert_that(event_tracers).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(tmc.subarray_node, "obsState", ObsState.EMPTY)
