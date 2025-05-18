@@ -35,8 +35,8 @@ Scenario Outline: Error Propagation Reported by TMC Low Restart Command for Defe
 
     Examples:
         | defectiveSubsystem   |
-        | CSP                  |
         | SDP                  |
+        | CSP                  |
         | MCCS                 |
 
 
@@ -49,6 +49,6 @@ Scenario Outline: Timeout Reported by TMC Low Reset Command for Defective Subarr
 
     Examples:
             | defectiveSubsystem   |
-            | CSP                  |
             | SDP                  |
+            | CSP                  |
             | MCCS                 |

@@ -136,7 +136,6 @@ def error_reporting(
         (pytest.unique_id[0], expected_msg),
     )
 
-    # Reset subsystem and bring it to ABORTED so TMC can be restarted
     if defectiveSubsystem == "CSP":
         csp.csp_subarray.SetDefective(json.dumps({"enabled": False}))
         csp.csp_subarray.Restart()
