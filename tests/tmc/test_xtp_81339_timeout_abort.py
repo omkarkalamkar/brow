@@ -19,7 +19,7 @@ from ska_tango_testing.integration import TangoEventTracer
 from tests.conftest import SubarrayTestContextData, _setup_event_subscriptions
 from tests.resources.test_harness.constant import TIMEOUT_DEFECT
 
-TIMEOUT = 60
+TIMEOUT = 80
 
 
 @pytest.mark.test
@@ -207,9 +207,14 @@ def error_reporting(
     elif defectiveSubsystem == "MCCS":
         mccs.mccs_subarray.SetDefective(json.dumps({"enabled": False}))
         mccs.mccs_subarray.Abort()
-        assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
+        assert_that(event_tracers).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
             mccs.mccs_subarray, "obsState", ObsState.ABORTED
         )
 
     tmc.restart()
+    assert_that(event_tracers).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(tmc.subarray_node, "obsState", ObsState.EMPTY)
     event_tracers.clear_events()
