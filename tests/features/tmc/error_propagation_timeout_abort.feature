@@ -35,8 +35,8 @@ Scenario Outline: Error Propagation Reported by TMC Low Restart Command for Defe
 
     Examples:
         | defectiveSubsystem   |
-        | CSP                  |
         | SDP                  |
+        | CSP                  |
         | MCCS                 |
 
 
