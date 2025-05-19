@@ -152,7 +152,7 @@ def error_reporting(
             sdp.sdp_subarray, "obsState", ObsState.EMPTY
         )
     elif defectiveSubsystem == "MCCS":
-        mccs.mccs_subarray.SetDefective(json.dumps({"enabled": False}))
+        mccs.mccs_controller.SetDefective(json.dumps({"enabled": False}))
         mccs.mccs_subarray.Restart()
         assert_that(event_tracers).within_timeout(
             TIMEOUT
