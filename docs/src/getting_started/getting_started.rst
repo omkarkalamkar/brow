@@ -139,14 +139,10 @@ Install the umbrella chart::
 Test the deployment with (the result of the tests are stored into the folder ``charts/build``)::
 
     make k8s-wait && make k8s-test
-    k8s-test: start test runner: test-runner-test -n ska-tmc-low-intergration
-    ...
-    ..
 
 To watch the pods, services status::
 
     make k8s-watch
-
 
 Uninstall the chart::
 
