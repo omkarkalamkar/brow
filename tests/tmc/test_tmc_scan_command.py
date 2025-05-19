@@ -121,6 +121,7 @@ def given_subarray_in_ready(
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
+
     configure_input_json = prepare_json_args_for_commands(
         "configure_low", command_input_factory
     )

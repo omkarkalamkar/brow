@@ -5,6 +5,12 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[1.1.0-rc.3]
+Updated
+-------
+* Utilized refactored event manager in ska-tmc-centralnode version 0.19.5
+* ska-tmc-common version 0.27.5 is utilized for the same
+
 [1.1.0-rc.2]
 Updated
 -------

@@ -1,19 +1,19 @@
-release=1.1.0-rc.2
-tag=1.1.0-rc.2
+release=1.1.0-rc.3
+tag=1.1.0-rc.3
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 1.1.0-rc.2**
+**1. ska-tmc-low-integration 1.1.0-rc.3**
 
-    **1.1 ska-tmc-low  1.1.0-rc.1 - 1.1.0-rc.2 :**
-            * Deployed 4 mock Subarrays instances of CSP, SDP and MCCS
-            * Moved the processing from Tango event handler to call back functions 
+    **1.1 ska-tmc-low  1.1.0-rc.2 - 1.1.0-rc.3 :**
+            * Utilized refactored event manager in ska-tmc-centralnode
+            * ska-tmc-common version 0.27.5 is utilized for the same
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 1.1.0-rc.2**
+**1. ska-tmc-low-integration 1.1.0-rc.3**
 
-    **1.1 ska-tmc-low  1.1.0-rc.1 - 1.1.0-rc.2 :**
-            * Deploy 4 mock Subarrays instances of CSP, SDP and MCCS
-            * Moved the processing from Tango event handler to call back functions
+    **1.1 ska-tmc-low  1.1.0-rc.2 - 1.1.0-rc.3 :**
+            * Utilized refactored event manager in ska-tmc-centralnode
+            * ska-tmc-common version 0.27.5 is utilized for the same

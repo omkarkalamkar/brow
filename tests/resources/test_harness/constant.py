@@ -9,6 +9,8 @@ from tests.resources.test_harness.utils.enums import (
     SimulatorDeviceType,
 )
 
+COMMAND_COMPLETED = json.dumps([ResultCode.OK, "Command Completed"])
+
 TIMEOUT = 80
 COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE = {
     "enabled": True,
