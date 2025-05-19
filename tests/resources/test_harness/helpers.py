@@ -8,10 +8,16 @@ from typing import Any
 
 import pytest
 import tango
+from assertpy import assert_that
 from ska_control_model import AdminMode, ObsState
+from ska_integration_test_harness.facades.csp_facade import CSPFacade
+from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
+from ska_integration_test_harness.facades.sdp_facade import SDPFacade
+from ska_integration_test_harness.facades.tmc_facade import TMCFacade
 from ska_ser_logging import configure_logging
 from ska_tango_base.commands import ResultCode
 from ska_tango_base.control_model import HealthState
+from ska_tango_testing.integration import TangoEventTracer
 from ska_tango_testing.mock.placeholders import Anything
 from tango import DeviceProxy
 
@@ -88,6 +94,45 @@ def update_scan_id(input_json: str, scan_id: int) -> str:
     input_json["scan_id"] = int(scan_id)
     updated_json = json.dumps(input_json)
     return updated_json
+
+
+def check_subarray_obsstate(
+    tmc: TMCFacade,
+    csp: CSPFacade,
+    sdp: SDPFacade,
+    mccs: MCCSFacade,
+    event_tracer: TangoEventTracer,
+    obs_state: ObsState,
+):
+    """Check if subarray devices are in the expected observation state.
+
+    Args:
+        tmc: TMCFacade
+        csp: CSPFacade
+        sdp: SDPFacade
+        mccs: MCCSFacade
+        event_tracer: TangoEventTracer for monitoring device state changes.
+        obs_state: Expected ObsState for subarray devices.
+
+    Raises:
+        AssertionError: If any device fails to reach
+        the expected state within 100 seconds.
+    """
+
+    TIMEOUT = 100
+    subarray_devices = {
+        "SDP": sdp.sdp_subarray,
+        "CSP": csp.csp_subarray,
+        "TMC": tmc.subarray_node,
+        "MCCS": mccs.mccs_subarray,
+    }
+    for name, device in subarray_devices.items():
+        assert_that(event_tracer).described_as(
+            f"{name} Subarray device ({device.dev_name()}) "
+            f"should be in {obs_state.name} obsState."
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            device, "obsState", obs_state
+        )
 
 
 def check_subarray_obs_state(obs_state: str = None, timeout: int = 50) -> bool:
