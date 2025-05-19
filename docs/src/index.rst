@@ -12,7 +12,7 @@ This project is integration of the TMC components for the `Square Kilometre Arra
    :maxdepth: 2
    :caption: TMC Deployment
 
-   deployment_details/index
+   deployment_details/tmc_low
 
 .. toctree::
    :maxdepth: 1
