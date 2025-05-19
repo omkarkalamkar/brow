@@ -22,7 +22,6 @@ from tests.resources.test_harness.constant import TIMEOUT_DEFECT
 TIMEOUT = 60
 
 
-@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
