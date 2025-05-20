@@ -106,7 +106,7 @@ def execute_command_abort(
     if defective_subsystem == "CSP":
         csp.csp_subarray.SetDefective(TIMEOUT_DEFECT)
     elif defective_subsystem == "SDP":
-        sdp.sdp_subarray.SetDelayInfo(json.dumps({"Abort": 60}))
+        sdp.sdp_subarray.SetDelayInfo(json.dumps({"Abort": 50}))
     elif defective_subsystem == "MCCS":
         mccs.mccs_subarray.SetDefective(TIMEOUT_DEFECT)
     context_data.when_action_name = "Abort"
@@ -195,7 +195,7 @@ def error_reporting(
     elif defective_subsystem == "SDP":
         sdp.sdp_subarray.ResetDelayInfo()
         sdp.sdp_subarray.Abort()
-        assert_that(event_tracer).within_timeout(60).has_change_event_occurred(
+        assert_that(event_tracer).within_timeout(50).has_change_event_occurred(
             sdp.sdp_subarray, "obsState", ObsState.ABORTED
         )
     elif defective_subsystem == "MCCS":
