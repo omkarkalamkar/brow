@@ -61,9 +61,6 @@ exception_messages = {
 }
 
 
-# @given ---> conftest
-
-
 @given(
     parsers.parse(
         "TMC subarray is in initial ObsState for {defectiveSubsystem}"

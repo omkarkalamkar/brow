@@ -55,9 +55,6 @@ exception_messages = {
 }
 
 
-# @given ---> conftest
-
-
 @given(parsers.parse("TMC subarray is in ABORTED ObsState"))
 def subarray_in_aborted_state(
     context_fixt: SubarrayTestContextData,
