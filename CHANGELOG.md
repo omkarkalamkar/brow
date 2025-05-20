@@ -5,6 +5,11 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[1.1.0-dev.1]
+Updated
+-------
+* Utilized refactored component manager in ska-tmc-centralnode version 0.19.5-dev.c9e79a7d6
+
 [1.1.0-rc.3]
 Updated
 -------
