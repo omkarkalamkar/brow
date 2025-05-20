@@ -1,13 +1,13 @@
 @XTP-81319 @XTP-28348
 Scenario Outline: Error Propagation Reported by TMC Low Abort Command for Defective Subarray
     Given the telescope is in ON state
-    And TMC subarray is in initial ObsState for <defectiveSubsystem>
-    When Abort is invoked on a defective subsystem <defectiveSubsystem>
+    And TMC subarray is in initial ObsState for <defective_subsystem>
+    When Abort is invoked on a defective subsystem <defective_subsystem>
     Then TMC SubarrayNode obsstate changes to FAULT obsState
-    Then the command failure is reported by subarray with error message with <defectiveSubsystem>
+    Then the command failure is reported by subarray with error message with <defective_subsystem>
 
     Examples:
-            | defectiveSubsystem   |
+            | defective_subsystem  |
             | CSP                  |
             | SDP                  |
             | MCCS                 |
@@ -15,13 +15,13 @@ Scenario Outline: Error Propagation Reported by TMC Low Abort Command for Defect
 @XTP-81339 @XTP-28348
 Scenario Outline: Timeout Reported by TMC Low Abort Command for Defective Subarray
     Given the telescope is in ON state
-    And TMC subarray is in initial ObsState for <defectiveSubsystem>
-    When Abort is invoked on a defective subsystem <defectiveSubsystem>
+    And TMC subarray is in initial ObsState for <defective_subsystem>
+    When Abort is invoked on a defective subsystem <defective_subsystem>
     Then TMC SubarrayNode obsstate changes to FAULT obsState
-    Then the Timeout is reported by subarray with error message with <defectiveSubsystem>
+    Then the Timeout is reported by subarray with error message with <defective_subsystem>
 
     Examples:
-            | defectiveSubsystem   |
+            | defective_subsystem  |
             | CSP                  |
             | SDP                  |
             | MCCS                 |
@@ -30,11 +30,11 @@ Scenario Outline: Timeout Reported by TMC Low Abort Command for Defective Subarr
 Scenario Outline: Error Propagation Reported by TMC Low Restart Command for Defective Subarray
     Given the telescope is in ON state
     And TMC subarray is in ABORTED ObsState
-    When Restart is invoked on a defective subsystem <defectiveSubsystem>
-    Then the command failure is reported by subarray with error message with <defectiveSubsystem>
+    When Restart is invoked on a defective subsystem <defective_subsystem>
+    Then the command failure is reported by subarray with error message with <defective_subsystem>
 
     Examples:
-        | defectiveSubsystem   |
+        | defective_subsystem  |
         | SDP                  |
         | CSP                  |
         | MCCS                 |
@@ -44,11 +44,11 @@ Scenario Outline: Error Propagation Reported by TMC Low Restart Command for Defe
 Scenario Outline: Timeout Reported by TMC Low Reset Command for Defective Subarray
     Given the telescope is in ON state
     And TMC subarray is in ABORTED ObsState
-    When Restart is invoked on a defective subsystem <defectiveSubsystem>
-    Then the Timeout is reported by subarray with error message with <defectiveSubsystem>
+    When Restart is invoked on a defective subsystem <defective_subsystem>
+    Then the Timeout is reported by subarray with error message with <defective_subsystem>
 
     Examples:
-            | defectiveSubsystem   |
+            | defective_subsystem  |
             | SDP                  |
             | CSP                  |
             | MCCS                 |

@@ -77,7 +77,7 @@ def subarray_in_aborted_state(
 
 @when(
     parsers.parse(
-        "Restart is invoked on a defective subsystem {defectiveSubsystem}"
+        "Restart is invoked on a defective subsystem {defective_subsystem}"
     )
 )
 def execute_command_restart(
@@ -86,16 +86,16 @@ def execute_command_restart(
     csp: CSPFacade,
     sdp: SDPFacade,
     mccs: MCCSFacade,
-    defectiveSubsystem: str,
+    defective_subsystem: str,
 ):
     """
     Executes the Restart command on the TMC Subarray Node.
     """
-    if defectiveSubsystem == "CSP":
+    if defective_subsystem == "CSP":
         csp.csp_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
-    elif defectiveSubsystem == "SDP":
+    elif defective_subsystem == "SDP":
         sdp.sdp_subarray.SetDefective(FAILED_RESULT_DEFECT)
-    elif defectiveSubsystem == "MCCS":
+    elif defective_subsystem == "MCCS":
         mccs.mccs_controller.SetDefective(ERROR_PROPAGATION_DEFECT)
     context_data.when_action_name = "Restart"
     _, pytest.unique_id = tmc.subarray_node.Restart()
@@ -104,7 +104,7 @@ def execute_command_restart(
 @then(
     parsers.parse(
         "the command failure is reported by subarray with error message "
-        "with {defectiveSubsystem}"
+        "with {defective_subsystem}"
     )
 )
 def error_reporting(
@@ -113,7 +113,7 @@ def error_reporting(
     sdp: SDPFacade,
     mccs: MCCSFacade,
     event_tracers: TangoEventTracer,
-    defectiveSubsystem: str,
+    defective_subsystem: str,
 ):
     """Validates that an error is correctly reported by the TMC.
 
@@ -122,7 +122,7 @@ def error_reporting(
     MCCS Controller.
     It verifies the error reporting mechanism by asserting the expected
     failure message in the longRunningCommandResult event."""
-    expected_msg = exception_messages[defectiveSubsystem]
+    expected_msg = exception_messages[defective_subsystem]
 
     assert_that(event_tracers).within_timeout(
         TIMEOUT
@@ -132,7 +132,7 @@ def error_reporting(
         (pytest.unique_id[0], expected_msg),
     )
 
-    if defectiveSubsystem == "CSP":
+    if defective_subsystem == "CSP":
         csp.csp_subarray.SetDefective(json.dumps({"enabled": False}))
         csp.csp_subarray.Restart()
         assert_that(event_tracers).within_timeout(
@@ -140,7 +140,7 @@ def error_reporting(
         ).has_change_event_occurred(
             csp.csp_subarray, "obsState", ObsState.EMPTY
         )
-    elif defectiveSubsystem == "SDP":
+    elif defective_subsystem == "SDP":
         sdp.sdp_subarray.SetDefective(json.dumps({"enabled": False}))
         sdp.sdp_subarray.Restart()
         assert_that(event_tracers).within_timeout(
@@ -148,7 +148,7 @@ def error_reporting(
         ).has_change_event_occurred(
             sdp.sdp_subarray, "obsState", ObsState.EMPTY
         )
-    elif defectiveSubsystem == "MCCS":
+    elif defective_subsystem == "MCCS":
         mccs.mccs_controller.SetDefective(json.dumps({"enabled": False}))
         mccs.mccs_subarray.Restart()
         assert_that(event_tracers).within_timeout(

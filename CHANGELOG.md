@@ -5,6 +5,10 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+Unreleased
+***************
+* Refactored delay model testcases to remove multiple when then statements.
+
 1.1.0-rc.3
 ***************
 Updated
@@ -358,6 +362,3 @@ Fixed
 -----------
 * Fixed SKB-300.
 
-Unreleased
-***************
-* Refactored delay model testcases to remove multiple when then statements.
