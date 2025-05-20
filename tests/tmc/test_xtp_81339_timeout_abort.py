@@ -46,7 +46,7 @@ exception_messages = {
     )
 )
 def subarray_in_initial_state(
-    context_fixt: SubarrayTestContextData,
+    context_data: SubarrayTestContextData,
     tmc: TMCFacade,
     sdp: SDPFacade,
     csp: CSPFacade,
@@ -57,7 +57,7 @@ def subarray_in_initial_state(
 ):
     """Ensure the subarray is in the initial obsstate state.
     Args:
-        context_fixt: Subarray test context for maintaining state.
+        context_data: Subarray test context for maintaining state.
         tmc: TMCFacade instance for controlling the TMC Subarray.
         sdp: SDPFacade instance for controlling the SDP Subarray.
         csp: CSPFacade instance for controlling the CSP Subarray.
@@ -70,7 +70,7 @@ def subarray_in_initial_state(
     target_state = (
         ObsState.READY if defectiveSubsystem == "MCCS" else ObsState.IDLE
     )
-    context_fixt.starting_state = target_state
+    context_data.starting_state = target_state
 
     tmc.force_change_of_obs_state(
         target_state,
@@ -86,7 +86,7 @@ def subarray_in_initial_state(
 )
 def execute_command_abort(
     tmc: TMCFacade,
-    context_fixt: SubarrayTestContextData,
+    context_data: SubarrayTestContextData,
     csp: CSPFacade,
     sdp: SDPFacade,
     mccs: MCCSFacade,
@@ -97,7 +97,7 @@ def execute_command_abort(
     or delayed, then triggers Abort.
     Args:
         tmc: TMCFacade instance to execute the Abort command.
-        context_fixt: Context object to record action being tested.
+        context_data: Context object to record action being tested.
         csp: CSPFacade instance.
         sdp: SDPFacade instance.
         mccs: MCCSFacade instance.
@@ -109,7 +109,7 @@ def execute_command_abort(
         sdp.sdp_subarray.SetDelayInfo(json.dumps({"Abort": 135}))
     elif defectiveSubsystem == "MCCS":
         mccs.mccs_subarray.SetDefective(TIMEOUT_DEFECT)
-    context_fixt.when_action_name = "Abort"
+    context_data.when_action_name = "Abort"
     _, pytest.unique_id = tmc.subarray_node.Abort()
 
 

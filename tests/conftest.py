@@ -448,7 +448,7 @@ class SubarrayTestContextData:
 
 
 @pytest.fixture
-def context_fixt() -> SubarrayTestContextData:
+def context_data() -> SubarrayTestContextData:
     """A collection of variables shared between steps.
 
     The shared variables are the following:

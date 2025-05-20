@@ -70,10 +70,10 @@ def given_the_telescope_is_in_on_state(
 
 @given("TMC subarray is in ObsState EMPTY")
 def subarray_in_empty_obsstate(
-    tmc: TMCFacade, context_fixt: SubarrayTestContextData
+    tmc: TMCFacade, context_data: SubarrayTestContextData
 ):
     """Verify the subarray's transition to the EMPTY state."""
-    context_fixt.starting_state = ObsState.EMPTY
+    context_data.starting_state = ObsState.EMPTY
     tmc.force_change_of_obs_state(
         ObsState.EMPTY,
         TestHarnessInputs(),

@@ -54,7 +54,7 @@ exception_messages = {
 
 @given("TMC subarray is in ABORTED ObsState")
 def subarray_in_aborted_state(
-    context_fixt: SubarrayTestContextData,
+    context_data: SubarrayTestContextData,
     tmc: TMCFacade,
     sdp: SDPFacade,
     csp: CSPFacade,
@@ -64,7 +64,7 @@ def subarray_in_aborted_state(
 ):
     """Ensure the subarray is in the initial obsstate state."""
     _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracers)
-    context_fixt.starting_state = ObsState.ABORTED
+    context_data.starting_state = ObsState.ABORTED
     tmc.force_change_of_obs_state(
         ObsState.ABORTED,
         default_commands_inputs,
@@ -79,7 +79,7 @@ def subarray_in_aborted_state(
 )
 def execute_command_restart(
     tmc: TMCFacade,
-    context_fixt: SubarrayTestContextData,
+    context_data: SubarrayTestContextData,
     csp: CSPFacade,
     sdp: SDPFacade,
     mccs: MCCSFacade,
@@ -90,7 +90,7 @@ def execute_command_restart(
     or delayed, then triggers Restart.
     Args:
         tmc: TMCFacade instance to execute the Restart command.
-        context_fixt: Context object to record action being tested.
+        context_data: Context object to record action being tested.
         csp: CSPFacade instance.
         sdp: SDPFacade instance.
         mccs: MCCSFacade instance.
@@ -102,7 +102,7 @@ def execute_command_restart(
         sdp.sdp_subarray.SetDelayInfo(json.dumps({"Restart": 135}))
     elif defectiveSubsystem == "MCCS":
         mccs.mccs_controller.SetDefective(TIMEOUT_DEFECT)
-    context_fixt.when_action_name = "Restart"
+    context_data.when_action_name = "Restart"
     _, pytest.unique_id = tmc.subarray_node.Restart()
 
 
