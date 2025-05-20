@@ -1,4 +1,4 @@
-@XTP-81319 @XTP-28348
+@XTP-81319 @XTP-28348 @XTP-73592
 Scenario Outline: Error Propagation Reported by TMC Low Abort Command for Defective Subarray
     Given the telescope is in ON state
     And TMC subarray is in initial ObsState for <defective_subsystem>
@@ -26,7 +26,7 @@ Scenario Outline: Timeout Reported by TMC Low Abort Command for Defective Subarr
             | SDP                  |
             | MCCS                 |
 
-@XTP-81594 @XTP-28348
+@XTP-81594 @XTP-28348 @XTP-73592
 Scenario Outline: Error Propagation Reported by TMC Low Restart Command for Defective Subarray
     Given the telescope is in ON state
     And TMC subarray is in ABORTED ObsState
@@ -40,7 +40,7 @@ Scenario Outline: Error Propagation Reported by TMC Low Restart Command for Defe
         | MCCS                 |
 
 
-@XTP-81466 @XTP-28348
+@XTP-81466 @XTP-28348 @XTP-73592
 Scenario Outline: Timeout Reported by TMC Low Reset Command for Defective Subarray
     Given the telescope is in ON state
     And TMC subarray is in ABORTED ObsState
