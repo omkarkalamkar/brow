@@ -62,11 +62,11 @@ def subarray_in_aborted_state(
     sdp: SDPFacade,
     csp: CSPFacade,
     mccs: MCCSFacade,
-    event_tracers: TangoEventTracer,
+    event_tracer: TangoEventTracer,
     default_commands_inputs: TestHarnessInputs,
 ):
     """Ensure the subarray is in the initial obsstate state."""
-    _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracers)
+    _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
     context_data.starting_state = ObsState.ABORTED
     tmc.force_change_of_obs_state(
         ObsState.ABORTED,
@@ -112,7 +112,7 @@ def error_reporting(
     csp: CSPFacade,
     sdp: SDPFacade,
     mccs: MCCSFacade,
-    event_tracers: TangoEventTracer,
+    event_tracer: TangoEventTracer,
     defective_subsystem: str,
 ):
     """Validates that an error is correctly reported by the TMC.
@@ -124,7 +124,7 @@ def error_reporting(
     failure message in the longRunningCommandResult event."""
     expected_msg = exception_messages[defective_subsystem]
 
-    assert_that(event_tracers).within_timeout(
+    assert_that(event_tracer).within_timeout(
         TIMEOUT
     ).has_change_event_occurred(
         tmc.subarray_node,
@@ -135,7 +135,7 @@ def error_reporting(
     if defective_subsystem == "CSP":
         csp.csp_subarray.SetDefective(json.dumps({"enabled": False}))
         csp.csp_subarray.Restart()
-        assert_that(event_tracers).within_timeout(
+        assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
             csp.csp_subarray, "obsState", ObsState.EMPTY
@@ -143,7 +143,7 @@ def error_reporting(
     elif defective_subsystem == "SDP":
         sdp.sdp_subarray.SetDefective(json.dumps({"enabled": False}))
         sdp.sdp_subarray.Restart()
-        assert_that(event_tracers).within_timeout(
+        assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
             sdp.sdp_subarray, "obsState", ObsState.EMPTY
@@ -151,10 +151,10 @@ def error_reporting(
     elif defective_subsystem == "MCCS":
         mccs.mccs_controller.SetDefective(json.dumps({"enabled": False}))
         mccs.mccs_subarray.Restart()
-        assert_that(event_tracers).within_timeout(
+        assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
             mccs.mccs_subarray, "obsState", ObsState.EMPTY
         )
 
-    event_tracers.clear_events()
+    event_tracer.clear_events()
