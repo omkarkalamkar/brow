@@ -1,5 +1,5 @@
 =======================================
-TMC Low Integration Testing Guidelines
+TMC LOW Integration Testing Guidelines
 =======================================
 
 **********************
@@ -11,7 +11,10 @@ Pairwise testing is a way of testing the TMC code with mocked subsystems in plac
 Commands Implemented
 ^^^^^^^^^^^^^^^^^^^^
 
-To execute the tests, run the command `make k8s-test MARK=SKA_low`.
+To execute the tests, run the command::
+
+    make k8s-test MARK=SKA_low
+
 
 * ``TelescopeOn`` - Test the On command on TMC with multiple subsystems.
 * ``TelescopeOff`` - Test the Off command on TMC with multiple subsystems.

@@ -1,11 +1,11 @@
 #######################
-TRL for TMC Low devices
+TRL for TMC LOW devices
 #######################
 
 
-TRL for TMC low devices
+TRL for TMC LOW devices
 =======================
-The TRLs of all the TMC low devices are updated to comply with ADR-9
+The TRLs of all the TMC LOW devices are updated to comply with ADR-9
 
 +-----------------------------------------+---------------------------------------+
 | Previous TRL                            | Updated TRL                           |
