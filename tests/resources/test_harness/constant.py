@@ -88,6 +88,16 @@ COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_EMPTY = {
     "target_obsstates": [ObsState.RESOURCING, ObsState.EMPTY],
 }
 
+
+FAILED_RESULT_DEFECT = json.dumps(
+    {
+        "enabled": True,
+        "fault_type": FaultType.FAILED_RESULT,
+        "error_message": "Device is defective, cannot process command",
+        "result": ResultCode.FAILED,
+    }
+)
+
 ERROR_PROPAGATION_DEFECT = json.dumps(
     {
         "enabled": True,
