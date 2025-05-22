@@ -1,19 +1,17 @@
-release=1.1.0-rc.3
-tag=1.1.0-rc.3
+release=1.2.0-rc.1
+tag=1.2.0-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 1.1.0-rc.3**
+**1. ska-tmc-low-integration 1.2.0-rc.1**
 
-    **1.1 ska-tmc-low  1.1.0-rc.2 - 1.1.0-rc.3 :**
-            * Utilized refactored event manager in ska-tmc-centralnode
-            * ska-tmc-common version 0.27.5 is utilized for the same
+    **1.1 ska-tmc-low  1.1.0-rc.3 - 1.2.0-rc.1 :**
+            * Implemented error propagation and timeout functionality for the Abort and Restart commands.
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 1.1.0-rc.3**
+**1. ska-tmc-low-integration 1.2.0-rc.1**
 
-    **1.1 ska-tmc-low  1.1.0-rc.2 - 1.1.0-rc.3 :**
-            * Utilized refactored event manager in ska-tmc-centralnode
-            * ska-tmc-common version 0.27.5 is utilized for the same
+    **1.1 ska-tmc-low  1.1.0-rc.3 - 1.2.0-rc.1 :**
+            * Implemented error propagation and timeout functionality for the Abort and Restart commands.
