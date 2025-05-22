@@ -13,7 +13,7 @@ Unreleased
 ***************
 Updated
 -----------
-* Implement error propagation and timeout functionality for the Abort and Restart commands.
+* Implemented error propagation and timeout functionality for the Abort and Restart commands.
 
 1.1.0-rc.3
 ***************
