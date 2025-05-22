@@ -9,6 +9,12 @@ Unreleased
 ***************
 * Refactored delay model testcases to remove multiple when then statements.
 
+1.2.0-rc.1
+***************
+Updated
+-----------
+* Implement error propagation and timeout functionality for the Abort and Restart commands.
+
 1.1.0-rc.3
 ***************
 Updated
