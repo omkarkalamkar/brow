@@ -8,6 +8,10 @@ import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, then, when
 from ska_control_model import ObsState, ResultCode
+from ska_integration_test_harness.facades.csp_facade import CSPFacade
+from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
+from ska_integration_test_harness.facades.sdp_facade import SDPFacade
+from ska_integration_test_harness.facades.tmc_facade import TMCFacade
 from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DevState
 
@@ -30,6 +34,75 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
     prepare_json_args_for_commands,
 )
+
+
+@given("the telescope is in the ON state")
+def given_the_telescope_is_in_on_state(
+    tmc: TMCFacade,
+    csp: CSPFacade,
+    sdp: SDPFacade,
+    mccs: MCCSFacade,
+    event_tracer: TangoEventTracer,
+):
+    """Set up event subscriptions for the test.
+    and Ensure the telescope is in ON state
+    """
+    tmc.move_to_on(wait_termination=True)
+    event_tracer.subscribe_event(tmc.subarray_node, "obsState")
+    event_tracer.subscribe_event(csp.csp_subarray, "obsState")
+    event_tracer.subscribe_event(sdp.sdp_subarray, "obsState")
+    event_tracer.subscribe_event(mccs.mccs_subarray, "obsState")
+    event_tracer.subscribe_event(tmc.subarray_node, "assignedResources")
+    event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
+    event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
+
+    log_events(
+        {
+            tmc.subarray_node: [
+                "obsState",
+                "longRunningCommandResult",
+                "assignedResources",
+            ],
+            csp.csp_subarray: ["obsState"],
+            sdp.sdp_subarray: ["obsState"],
+            mccs.mccs_subarray: ["obsState"],
+            tmc.central_node: ["longRunningCommandResult"],
+        },
+        event_enum_mapping={"obsState": ObsState},
+    )
+
+
+@given("a Low telescope")
+def given_the_sut(
+    event_tracer: TangoEventTracer,
+    tmc: TMCFacade,
+    csp: CSPFacade,
+    sdp: SDPFacade,
+    mccs: MCCSFacade,
+):
+    """
+    Set up event subscriptions for the test for a Low Telescope consisting of
+    csp , sdp and mccs devices
+    """
+    event_tracer.subscribe_event(tmc.central_node, "telescopeState")
+    event_tracer.subscribe_event(csp.csp_master, "State")
+    event_tracer.subscribe_event(csp.csp_subarray, "State")
+    event_tracer.subscribe_event(sdp.sdp_master, "State")
+    event_tracer.subscribe_event(sdp.sdp_subarray, "State")
+    event_tracer.subscribe_event(mccs.mccs_controller, "State")
+    event_tracer.subscribe_event(mccs.mccs_subarray, "State")
+
+    log_events(
+        {
+            tmc.central_node: ["telescopeState"],
+            csp.csp_master: ["State"],
+            sdp.sdp_master: ["State"],
+            mccs.mccs_controller: ["State"],
+            mccs.mccs_subarray: ["State"],
+            sdp.sdp_subarray: ["State"],
+            csp.csp_subarray: ["State"],
+        }
+    )
 
 
 @given("the telescope is is ON state")

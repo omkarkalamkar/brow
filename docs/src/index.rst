@@ -12,7 +12,7 @@ This project is integration of the TMC components for the `Square Kilometre Arra
    :maxdepth: 2
    :caption: TMC Deployment
 
-   deployment_details/index
+   deployment_details/tmc_low
 
 .. toctree::
    :maxdepth: 1
@@ -55,22 +55,21 @@ This project is integration of the TMC components for the `Square Kilometre Arra
 
    developer_guide/testing//mocks_devices_tests
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Releases
-
-   CHANGELOG.rst
    
 .. toctree::
    :maxdepth: 1
    :caption: Admin HealthState:
 
    healthstate/healthstate_adminmode_aggregation
-   
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Releases
+
+   CHANGELOG.rst
+
 Indices and tables
 ------------------
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`
-
 * :ref:`search`

@@ -9,6 +9,8 @@ from tests.resources.test_harness.utils.enums import (
     SimulatorDeviceType,
 )
 
+COMMAND_COMPLETED = json.dumps([ResultCode.OK, "Command Completed"])
+
 TIMEOUT = 80
 COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE = {
     "enabled": True,
@@ -85,6 +87,16 @@ COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_EMPTY = {
     "result": ResultCode.FAILED,
     "target_obsstates": [ObsState.RESOURCING, ObsState.EMPTY],
 }
+
+
+FAILED_RESULT_DEFECT = json.dumps(
+    {
+        "enabled": True,
+        "fault_type": FaultType.FAILED_RESULT,
+        "error_message": "Device is defective, cannot process command",
+        "result": ResultCode.FAILED,
+    }
+)
 
 ERROR_PROPAGATION_DEFECT = json.dumps(
     {
