@@ -5,6 +5,16 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[1.1.0]
+Updated
+-------
+* Utilized refactored event manager in ska-tmc-centralnode version 0.19.5
+* ska-tmc-common version 0.27.5 is utilized for the same
+* Deployed 4 mock Subarrays instances of CSP, SDP and MCCS
+* Moved the processing from Tango event handler to call back functions
+* Improved health state aggregation 
+* Used rule engine for aggregation process
+
 [1.1.0-rc.3]
 Updated
 -------
