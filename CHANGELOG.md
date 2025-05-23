@@ -5,39 +5,53 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
-Unreleased
-***************
-* Refactored delay model testcases to remove multiple when then statements.
-
-1.2.0-rc.1
-***************
+[1.2.0-rc.1]
+************
 Updated
------------
+-------
 * Implemented error propagation and timeout functionality for the Abort and Restart commands.
 
-1.1.0-rc.3
-***************
+[1.1.0]
+*******
+
+Updated
+-------
+* Utilized refactored event manager in ska-tmc-centralnode version 0.19.5
+* ska-tmc-common version 0.27.5 is utilized for the same
+* Deployed 4 mock Subarrays instances of CSP, SDP and MCCS
+* Moved the processing from Tango event handler to call back functions
+* Improved health state aggregation 
+* Used rule engine for aggregation process
+
+[1.1.0-rc.3]
+************
+Unreleased
+**********
+* Refactored delay model testcases to remove multiple when then statements.
+
+[1.1.0-rc.3]
+************
 Updated
 -----------
 * Utilized refactored event manager in ska-tmc-centralnode version 0.19.5
 * ska-tmc-common version 0.27.5 is utilized for the same
 
-1.1.0-rc.2
-***************
+[1.1.0-rc.2]
+************
 Updated
 -----------
 * Deployed 4 mock Subarrays instances of CSP, SDP and MCCS
 * Moved the processing from Tango event handler to call back functions
 
-1.1.0-rc.1
-***************
+[1.1.0-rc.1]
+************
 Updated
 -----------
 * Improved health state aggregation 
 * Used rule engine for aggregation process
 
-1.0.0
-**********
+[1.0.0]
+*******
 Added
 ---------
 * Added `domain` field in values.yaml. The domain is `low-tmc`
@@ -62,49 +76,49 @@ Fixed
 * Fixed SKB-881 and SKB-798
 * Fixed an issue in the case of Abort in obsState RESOURCING
 
-1.0.0-rc.7
-***************
+[1.0.0-rc.7]
+************
 Fixed
 ---------
 * Fixed SKB-881 and SKB-798
 * Fixed an issue in the case of Abort in obsState RESOURCING
 
-1.0.0-rc.6
-***************
+[1.0.0-rc.6]
+************
 Added
 ---------
 * Updated subarraynode to support MCCS-only End, Scan, EndScan commands.
 
-1.0.0-rc.5
-***************
+[1.0.0-rc.5]
+************
 Fixed
 ---------
 * Updated Subarraynode to Resolve SKB-837 : missing event of receive_address from sdp subarray
 * Server Name of subarraynode device got changed from `SubarrayNodeLow` to `LowTmcSubarray`
 
-1.0.0-rc.4
-***************
+[1.0.0-rc.4]
+************
 Fixed
 -----------
 * Updated MCCS master Leaf Node ReleaseResources command to instruct MCCS Controller to release the resources from specific subarray
 * Removed the transitional obsState RESOURCING check from SDP Subarray Leaf Node AssignResources command tracker
 
-1.0.0-rc.3
-***************
+[1.0.0-rc.3]
+************
 Fixed
 -----------
 * Resolved SKB-732.
 * Removed configure json interface(0.3) hardcoding in TMC SDP Subarray Leaf Node.
 
 
-1.0.0-rc.2
-***************
+[1.0.0-rc.2]
+************
 Added
 -----------
 * Resolve SKB-672
 
-1.0.0-rc.1
-***************
+[1.0.0-rc.1]
+************
 Added
 -----------
 * Added `domain` field in values.yaml. The domain is `low-tmc`
@@ -133,8 +147,8 @@ Fixed
 * Fixed event receiver in centralNode to include state and healthState subscription instead of using from common tp fix device not defined issue.
 
 
-0.20.3
-***************
+[0.20.3]
+********
 Added
 -----------
 * Updated the image of SubarrayNode to 0.27.6
@@ -161,8 +175,8 @@ Removed
 -----------
 * Removed SleepTime property and utilised properties livelinessCheckPeriod and eventSubscriptionCheck
 
-0.20.1
-***************
+[0.20.1]
+********
 Added
 -----------
 * Updated ska-tmc-mccsleafnodes v0.5.1 to fix SKB-627
@@ -189,8 +203,8 @@ Removed
 -----------
 * Removal of Redundant JSON Files: Deleted duplicate JSON files from the Integration and TMC Integration repositories to reduce redundancy and improve clarity.
 
-0.20.0
-***********
+[0.20.0]
+********
 Added
 -----------
 * Integrate TMC CSPLeafNodes version 0.21.1 to support PST Beam Delay Calculation
@@ -198,8 +212,8 @@ Added
 * Dependency Update:
 * CSPLN: v0.21.1
 
-0.19.0
-***********
+[0.19.0]
+********
 Added
 -----------
 * MCCS Chart Update: Utilized the latest MCCS chart v0.16.2 for enhanced functionality and stability.
@@ -214,8 +228,8 @@ Added
 * SKB-319
 * SKB-375
 
-0.18.0
-***********
+[0.18.0]
+********
 Added
 -----------
 * Integrate TMC SubarrayNode v0.23.1
@@ -229,8 +243,8 @@ Added
 * Checks are added on TMC SubarrayNode to confirm the type of observation first and then send command input to CSP accordingly.
 
 
-0.20.3-rc.3
-****************
+[0.20.3-rc.3]
+*************
 Added
 -----------
 * Updated ska-tmc-subarraynode v0.29.0
@@ -238,8 +252,9 @@ Added
 * Added documentation updates for HealthState aggregation
 * Included warning on `SetAdminMode` command usage
 
-0.20.3-rc.2
-****************
+[0.20.3-rc.2]
+*************
+
 Added
 -----------
 * Removed SleepTime property and utilised properties livelinessCheckPeriod and eventSubscriptionCheck
@@ -252,8 +267,9 @@ Fixed
 * Fixed bug skb-658
 * Fixed the RTD documentation and added documentation for all the properties of all the TMC nodes
 
-0.20.3-rc.1
-****************
+[0.20.3-rc.1]
+*************
+
 Added
 -----------
 * Updated the image of SubarrayNode to 0.27.6
@@ -267,14 +283,14 @@ Fixed
 -----------
 * Fixed bug skb-525
 
-0.20.2-rc.2
-****************
+[0.20.2-rc.2]
+*************
 Fixed
 -----------
 * Fixed bug SKB-646 with latest subarray node image v0.27.6
 
-0.20.2-rc.1
-****************
+[0.20.2-rc.1]
+*************
 Added
 -----------
 * Update CSPleafnodes chart to update ska-telmodel
@@ -287,32 +303,32 @@ Fixed
  * Fixed bug SKB-634, SKB-641
  * Fixed bug SKB-618
 
-0.18.1
-***********
+[0.18.1]
+********
 Added
 -----------
 * Updated Subarray Node v0.23.3 to fix SKB-512
 
-0.17.3
-***********
+[0.17.3]
+********
 Added
 -----------
 * Updated Subarray Node v0.22.3 to resolve SKB-477.
 
-0.17.2
-***********
+[0.17.2]
+********
 Added
 -----------
 * Updated Subarray Node v0.22.2 to resolve SKB-476.
 
-0.17.1
-***********
+[0.17.1]
+********
 Added
 -----------
 * Updated Central Node v0.16.3 and Subarray Node v0.21.4 related to SKB-438.
 
-0.17.0
-***********
+[0.17.0]
+********
 Added
 -----------
 * TMC Low release with base class version 1.0.0.
@@ -327,8 +343,8 @@ Fixed
 -----------
 * Fixed bug SKB-355.
 
-0.16.0
-***********
+[0.16.0]
+********
 Added
 -----------
 * REL-1557: Updated AssignResources and Configure schemas for verification as per SKA Tel Model v > 1.17.0.
@@ -344,16 +360,16 @@ Fixed
 * Bug SKB-296 is fixed.
 * Bug SKB-187 is fixed.
 
-0.15.1
-***********
+[0.15.1]
+********
 Added
 -----------
 * Updated CentralNode version to 0.15.0.
 * Updated SubarrayNode version to 0.18.1 with MCCS scan command issue to fix SKB-395.
 * Added "MccsScanInterfaceURL" property that can be configured during deployment to set MCCS Scan interface URL.
 
-0.15.0
-***********
+[0.15.0]
+********
 Added
 -----------
 * Integrated TMC SubarrayNode latest image with SKB-355 and bug fix for interface URL for CSP, SDP, and MCCS Scan and Configure commands.
@@ -362,8 +378,8 @@ Added
 * Affected BDD test case - XTP-32140.
 * Updated randomly failing test cases - TMC configure with mocks, TMC-SDP Abort in Configuring, TMC-CSP Abort in Resourcing.
 
-0.14.1
-***********
+[0.14.1]
+********
 Fixed
 -----------
 * Fixed SKB-300.

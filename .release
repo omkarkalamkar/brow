@@ -5,7 +5,7 @@ tag_description=
 
 **1. ska-tmc-low-integration 1.2.0-rc.1**
 
-    **1.1 ska-tmc-low  1.1.0-rc.3 - 1.2.0-rc.1 :**
+    **1.1 ska-tmc-low  1.1.0 - 1.2.0-rc.1 :**
             * Implemented error propagation and timeout functionality for the Abort and Restart commands.
 
 release_notes=
@@ -13,5 +13,5 @@ release_notes=
 
 **1. ska-tmc-low-integration 1.2.0-rc.1**
 
-    **1.1 ska-tmc-low  1.1.0-rc.3 - 1.2.0-rc.1 :**
+    **1.1 ska-tmc-low  1.1.0 - 1.2.0-rc.1 :**
             * Implemented error propagation and timeout functionality for the Abort and Restart commands.
