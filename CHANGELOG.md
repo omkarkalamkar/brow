@@ -9,7 +9,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 ************
 Updated
 -------
-Updated latest version of ska-tmc-sdpleafnodes and ska-tmc-cspleafnodes
+Utilised latest version of ska-tmc-sdpleafnodes and ska-tmc-cspleafnodes
 
 [1.2.0-rc.2]
 ************
