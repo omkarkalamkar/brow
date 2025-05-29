@@ -5,6 +5,13 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[1.2.0]
+************
+Updated
+-------
+* Implemented error propagation and timeout functionality for the Abort and Restart commands.
+* Utilised latest version of ska-tmc-sdpleafnodes and ska-tmc-cspleafnodes
+
 [1.2.0-rc.3]
 ************
 Updated
