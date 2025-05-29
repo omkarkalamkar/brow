@@ -10,7 +10,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 Updated
 -------
 * Implemented error propagation and timeout functionality for the Abort and Restart commands.
-* Utilised latest version of ska-tmc-sdpleafnodes and ska-tmc-cspleafnodes
+* Logs were refactored to resolve SKB-794 by updating the ska-tmc-sdpleafnodes and ska-tmc-cspleafnodes repositories and utilizing their latest versions: ska-tmc-sdpleafnodes v0.22.3 and ska-tmc-cspleafnodes v0.25.2.
 
 [1.2.0-rc.3]
 ************
