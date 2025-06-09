@@ -1,18 +1,18 @@
-release=1.2.0
-tag=1.2.0
+release=1.2.1-rc.1
+tag=1.2.1-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 1.2.0**
+**1. ska-tmc-low-integration 1.2.1-rc.1**
 
-    **1.1 ska-tmc-low  1.2.0-rc.3 - 1.2.0 :**
+    **1.1 ska-tmc-low  1.2.0 - 1.2.1-rc.1 :**
             * Implemented error propagation and timeout functionality for the Abort and Restart commands.
             * Logs were refactored to resolve SKB-794 by updating the ska-tmc-sdpleafnodes and ska-tmc-cspleafnodes repositories and utilizing their latest versions: ska-tmc-sdpleafnodes v0.22.3 and ska-tmc-cspleafnodes v0.25.2.
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 1.2.0**
+**1. ska-tmc-low-integration 1.2.1-rc.1**
 
-    **1.1 ska-tmc-low  1.2.0-rc.3 - 1.2.0 :**
+    **1.1 ska-tmc-low  1.2.0 - 1.2.1-rc.1 :**
             * Implemented error propagation and timeout functionality for the Abort and Restart commands.
             * Logs were refactored to resolve SKB-794 by updating the ska-tmc-sdpleafnodes and ska-tmc-cspleafnodes repositories and utilizing their latest versions: ska-tmc-sdpleafnodes v0.22.3 and ska-tmc-cspleafnodes v0.25.2. 
