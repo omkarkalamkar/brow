@@ -33,7 +33,7 @@ server:
                 - "3"
               - name: "MccsMasterLeafNodeFQDN"
                 values:
-                - "low-tmc/leaf-node-mccs/0"
+                - "{{.Values.global.mccs_master_ln}}"
               - name: "LoggingTargetsDefault"
                 values:
                 - "tango::logger"
