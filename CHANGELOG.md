@@ -9,7 +9,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 ************
 Updated
 -------
-Utilised latest version of ska-tmc-mccsleafnodes to resolve SKB-939
+Utilised latest version of ska-tmc-mccsleafnodes v0.8.1 to resolve SKB-939
 
 [1.2.0]
 ************
