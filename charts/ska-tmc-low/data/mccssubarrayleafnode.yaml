@@ -9,6 +9,7 @@ server:
   instances:
   {{ $mccs_sa_fqdn_prefix:= .Values.global.mccs_subarray_prefix}} 
   {{ $mccs_master_fqdn := .Values.global.mccs_master }}
+  {{ $mccs_master_ln_fqdn := .Values.global.mccs_master_ln}}
   {{ $CommandTimeOut := .Values.deviceServers.mccssubarrayleafnode.CommandTimeOut }}
   {{ $LivelinessCheckPeriod := .Values.deviceServers.mccssubarrayleafnode.LivelinessCheckPeriod }}
   {{ $EventSubscriptionCheckPeriod := .Values.deviceServers.mccssubarrayleafnode.EventSubscriptionCheckPeriod }}
@@ -33,7 +34,7 @@ server:
                 - "3"
               - name: "MccsMasterLeafNodeFQDN"
                 values:
-                - "low-tmc/leaf-node-mccs/0"
+                - "{{$mccs_master_ln_fqdn}}"
               - name: "LoggingTargetsDefault"
                 values:
                 - "tango::logger"
