@@ -21,9 +21,3 @@ Testing TMC Low
     :caption: Pairwise Testing
 
     pair_wise_test
-
-Indices and tables
-------------------
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
