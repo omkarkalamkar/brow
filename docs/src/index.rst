@@ -7,34 +7,33 @@ This project is integration of the TMC components for the `Square Kilometre Arra
    :caption: Getting started
 
    getting_started/getting_started
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Introduction of TMC (Telescope Monitoring and Control)
+
+   tmc_intro.rst
    
 .. toctree::
-   :maxdepth: 2
-   :caption: TMC Deployment
+   :maxdepth: 1
+   :caption: Deployment
 
    deployment_details/tmc_low
 
 .. toctree::
    :maxdepth: 1
-   :caption: TMC (Telescope Monitoring and Control)
+   :caption: Operations Guide
 
-.. include:: tmc_api.rst
-
-.. toctree::
-   :maxdepth: 1
-   :caption: TMC APIs
-
-   apis/obs_mandc
-   apis/operational_mandc
+   operations_guide/operations_guide
 
 .. toctree::
    :maxdepth: 1
    :caption: Developer guide
 
+   developer_guide/developer_guide
+
    developer_guide/code_quality
    developer_guide/fqdns
-
-   
 
 .. toctree::
    :maxdepth: 1
@@ -42,23 +41,11 @@ This project is integration of the TMC components for the `Square Kilometre Arra
 
    developer_guide/testing/pair_wise_test
    developer_guide/testing/test_harness
-
-.. toctree::
-   :maxdepth: 1
-   :caption: TMC Low Recovery
-
-   recovering_tmc/recovery
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Mocked Device Testing:
-
    developer_guide/testing//mocks_devices_tests
 
-   
 .. toctree::
    :maxdepth: 1
-   :caption: Admin HealthState:
+   :caption: Admin HealthState
 
    healthstate/healthstate_adminmode_aggregation
 

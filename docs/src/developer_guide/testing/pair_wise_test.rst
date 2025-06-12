@@ -1,9 +1,9 @@
 ######################################
-TMC LOW integration Testing guidelines
+TMC LOW pair wise Testing guidelines
 ######################################
 
 ****************************
-Pair wise testing / Real-SDP
+TMC - SDP Pair
 ****************************
 
 Pair wise testing is way of testing the TMC code with real SDP subsystem in place. 
@@ -45,7 +45,7 @@ Long command sequence implementation
 * ``TMC Low executes multiple scans with different resources and configurations``-  Testing TMC-SDP long sequence for multiple scan functionality by parameterizing new scan_type and new scan_ids
 
 ****************************
-Pair wise testing / Real-CSP
+TMC - CSP Pair
 ****************************
 
 Pair wise testing is way of testing the TMC code with real CSP subsystem in place. 
@@ -70,7 +70,7 @@ To test with tmc_csp execute the command::
 
 
 *****************************
-Pair wise testing / Real-MCCS
+TMC - MCCS Pair
 *****************************
 
 Pair wise testing is way of testing the TMC code with real MCCS subsystem in place using latest `test harness` implemented.
