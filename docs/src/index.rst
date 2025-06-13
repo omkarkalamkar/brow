@@ -3,28 +3,16 @@ This project is integration of the TMC components for the `Square Kilometre Arra
 .. _Square Kilometre Array: https://skatelescope.org/
 
 .. toctree::
-   :maxdepth: 1
-   :caption: Getting started
+   :maxdepth: 2
+   :caption: TMC Low Documentation
 
    getting_started/getting_started
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Introduction of TMC (Telescope Monitoring and Control)
-
    tmc_intro.rst
-   
-.. toctree::
-   :maxdepth: 1
-   :caption: Deployment
-
    deployment_details/tmc_low
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Operations Guide
-
    operations_guide/operations_guide
+   developer_guide/developer_guide
+
+This is delimiter text
 
 .. toctree::
    :maxdepth: 1
