@@ -49,7 +49,8 @@ extensions = [
     "sphinx.ext.doctest",
     "sphinx.ext.githubpages",
     "sphinx.ext.napoleon",
-    "recommonmark"
+    "myst_parser"
+    # "recommonmark"
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -78,6 +79,8 @@ exclude_patterns = []
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
 
+# Suppress warning of specific types
+suppress_warnings = ['autosectionlabel.*']
 
 # -- Options for HTML output -------------------------------------------------
 
