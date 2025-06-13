@@ -1,7 +1,7 @@
-.. _developer_guide:
+.. _code_quality:
 
 ================================
-TMC LOW code quality guidelines
+Code Quality Guidelines
 ================================
 
 Code formatting / style

@@ -1,4 +1,4 @@
-.. _developer_guide:
+.. _testing:
 
 ========================
 Testing TMC Low
@@ -9,6 +9,8 @@ Testing TMC Low
    :caption: TMC Test harness
 
    test_harness
+   mocks_devices_tests
+   pair_wise_test
 
 .. toctree::
    :maxdepth: 1

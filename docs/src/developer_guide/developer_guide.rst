@@ -22,9 +22,3 @@ TMC Low Developer Guide
     :caption: Testing
 
     testing/testing
-
-Indices and tables
-------------------
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
