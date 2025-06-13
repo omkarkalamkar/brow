@@ -1,4 +1,4 @@
-.. _components:
+.. _components_cn:
 
 ==============
 Central Node
