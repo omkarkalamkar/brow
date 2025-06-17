@@ -11,7 +11,11 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
 )
 from ska_tango_testing.integration import TangoEventTracer, log_events
 
-from tests.tmc.tmc_new_iTH.utils import reset_defects, set_subsystem_defects
+from tests.tmc.tmc_new_iTH.utils import (
+    MCCS_RELEASE_INPUT,
+    reset_defects,
+    set_subsystem_defects,
+)
 
 
 def _setup_event_subscriptions(
@@ -74,7 +78,7 @@ def subarray_tmc_subarray_resourcing_fault(
 ):
     _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
     set_subsystem_defects(
-        csp, sdp, mccs, "EMPTY", "EMPTY", "EMPTY", "AssignResources"
+        csp, sdp, mccs, "EMPTY", "EMPTY", "IDLE", "AssignResources"
     )
     tmc.assign_resources(
         default_commands_inputs.assign_input, wait_termination=False
@@ -85,6 +89,14 @@ def subarray_tmc_subarray_resourcing_fault(
         f"from {ObsState.FAULT}."
     ).within_timeout(100).has_change_event_occurred(
         tmc.subarray_node, "obsState", ObsState.FAULT
+    )
+    mccs.mccs_controller.Release(MCCS_RELEASE_INPUT)
+    assert_that(event_tracer).described_as(
+        f"MCCS Subarray device ({mccs.mccs_subarray})"
+        "ObsState attribute value should move "
+        f"from {ObsState.EMPTY}."
+    ).within_timeout(100).has_change_event_occurred(
+        mccs.mccs_subarray, "obsState", ObsState.EMPTY
     )
 
 

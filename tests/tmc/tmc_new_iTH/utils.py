@@ -21,6 +21,16 @@ from tests.resources.test_support.constant_low import (
     SDP_BACK_TO_INITIAL_STATE,
 )
 
+INTERFACE = (
+    "https://schema.skatelescope.org/ska-low-mccs-controller-release/2.0"
+)
+MCCS_RELEASE_INPUT = json.dumps(
+    {
+        "interface": INTERFACE,
+        "subarray_id": 1,
+        "release_all": "true",
+    }
+)
 command_defect_mapping = {
     "AssignResources": {
         "RESOURCING": json.dumps(INTERMEDIATE_STATE_DEFECT),
