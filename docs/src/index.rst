@@ -4,44 +4,20 @@ This project is integration of the TMC components for the `Square Kilometre Arra
 
 .. toctree::
    :maxdepth: 2
-   :caption: TMC Low Documentation
+   :caption: Table of Contents
 
    getting_started/getting_started
-   tmc_intro.rst
-   deployment_details/tmc_low
-   operations_guide/operations_guide
+   getting_started/tmc_intro.rst
+   knowledge_base/knowledge_base
    developer_guide/developer_guide
-
-This is delimiter text
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Developer guide
-
-   developer_guide/developer_guide
-
-   developer_guide/code_quality
-   developer_guide/fqdns
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Testing
-
-   developer_guide/testing/pair_wise_test
-   developer_guide/testing/test_harness
-   developer_guide/testing//mocks_devices_tests
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Admin HealthState
-
-   healthstate/healthstate_adminmode_aggregation
 
 .. toctree::
    :maxdepth: 1
    :caption: Releases
 
    CHANGELOG.rst
+
+This is delimiter text. The contents below will be modified as part of documentation reorganisation.
 
 Indices and tables
 ------------------

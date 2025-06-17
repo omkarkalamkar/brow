@@ -6,19 +6,11 @@ TMC Low Developer Guide
 
 .. toctree::
    :maxdepth: 1
-   :caption: Code Quality guidelines
 
    code_quality
+   apis/operational_mandc
+   apis/obs_mandc
+   testing/testing
 
-.. toctree::
-    :maxdepth: 1
-    :caption: External APIs
-
-    apis/operational_mandc
-    apis/obs_mandc
-
-.. toctree::
-    :maxdepth: 1
-    :caption: Testing
-
-    testing/testing
+TMC development follows logging guidelines in addition to SKA logging guidelines. These TMC specific 
+guidelines are documented at: `[Confluence] TMC Logging guidelines <https://confluence.skatelescope.org/x/ax0AEw>`_

@@ -1,41 +1,45 @@
-HealthState Aggregation in Telescope Low
-=========================================
+===========================================
+Subarray healthState Aggregation in TMC Low
+===========================================
 
 Overview
---------
+========
 
-This document explains how **HealthState** aggregation works in the Telescope Low system.  
-The overall system state is determined by aggregating the health states of multiple subsystems,  
-with **AdminMode** as an input factor.
+This document explains how TMC performs Subarray healthState aggregation. 
+The subarray healthState is determined by aggregating the health states of 
+multiple subsystem subarray devices. The **AdminMode** reported by the 
+subsystem subarray devices as also a contributing factor.
 
 HealthState Aggregation
 -----------------------
 
-Each subsystem reports a **HealthState**, which can be one of:
+Each subsystem subarray device reports an attribute named **healthState**. The 
+value can be:
 
 - **OK** – Fully functional.
 - **DEGRADED** – Partially functional with issues.
 - **FAILED** – Non-functional.
 - **UNKNOWN** – Health state is unavailable.
 
-### Aggregation Rules:
+Only a single value can be reported at a time.
+
+Aggregation Rules
+------------------
 
 1. If **any subsystem** is in **FAILED**, the system health is **FAILED**.
 2. If no subsystems are **FAILED**, but **any subsystem** is **DEGRADED**, the system health is **DEGRADED**.
 3. If **all subsystems** are **OK**, the system health is **OK**.
 4. If **all subsystems are UNKNOWN**, the system health is **UNKNOWN**.
 
-#### Example:
+.. csv-table::  Example
+   :file: healthstate_aggregation.csv
+   :header-rows: 1
 
-+---------------+-------------+---------------+
-| Subsystem     | HealthState | System Health |
-+---------------+-------------+---------------+
-| CSP Subarray  | OK          | OK            |
-| SDP Subarray  | DEGRADED    | DEGRADED      |
-| MCCS Subarray | OK          | DEGRADED      |
-+---------------+-------------+---------------+
+.. note::
+   The adminMode is defined in more details in the SKA Control System Guidelines. 
+   Please refer the document for additional understanding.
 
-Effect of AdminMode on HealthState
+Impact of AdminMode on HealthState
 ----------------------------------
 
 Although **AdminMode** is not aggregated separately, it influences HealthState aggregation.

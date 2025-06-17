@@ -1,4 +1,6 @@
-TMC Low Deployment
+.. _deployment:
+
+Deployment
 ==================
 
 TMC Low deployment comes with following components:

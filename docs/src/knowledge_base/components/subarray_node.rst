@@ -9,8 +9,8 @@ TRL
 ==============
 `low-tmc/subarray-node/1`
 
-.. note:: In the full scale deployment, there will be 16 instances of Subarray Node.
-   In such case, only the last part of the TRL will be different indicating the id of the subarray. 
+.. note:: In the full scale deployment, there are 16 instances of Subarray Node.
+   In such case, only the last part of the TRL indicates the id of the subarray.
    E.g. `low-tmc/subarray-node/2`, `low-tmc/subarray-node/3` and so on.
 
 Attributes

@@ -17,10 +17,9 @@ autodoc_mock_imports = []
 
 import os
 import sys
+import yaml
 
 sys.path.insert(0, os.path.abspath("../../src"))
-
-
 
 
 # -- Project information -----------------------------------------------------
@@ -29,10 +28,21 @@ project = "TMC-LOW Documentation"
 copyright = "2022, NCRA India"
 author = "Team-Himalaya, Team-Sahyadri"
 
+def get_version():
+    """Reads and returns the version from tmc low chart to display in 
+    the documentation"""
+    tmc_version = "0.0"
+    with open("../../charts/ska-tmc-low/Chart.yaml", "r") as chart_yaml:
+        yaml_data = yaml.safe_load(chart_yaml)
+        tmc_version = yaml_data["version"]
+    return tmc_version
+tmc_version = get_version()
+
 # The short X.Y version
-version = "1.0"
+version = tmc_version
+
 # The full version, including alpha/beta/rc tags
-release = "1.0"
+release = tmc_version
 
 
 # -- General configuration ---------------------------------------------------
@@ -50,7 +60,6 @@ extensions = [
     "sphinx.ext.githubpages",
     "sphinx.ext.napoleon",
     "myst_parser"
-    # "recommonmark"
 ]
 
 # Add any paths that contain templates here, relative to this directory.
