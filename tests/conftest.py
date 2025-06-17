@@ -25,7 +25,7 @@ from ska_integration_test_harness.structure.telescope_wrapper import (
     TelescopeWrapper,
 )
 from ska_ser_logging import configure_logging
-from ska_tango_testing.integration import TangoEventTracer
+from ska_tango_testing.integration import TangoEventTracer, log_events
 from ska_tango_testing.mock.tango.event_callback import (
     MockTangoEventCallbackGroup,
 )
@@ -448,7 +448,7 @@ class SubarrayTestContextData:
 
 
 @pytest.fixture
-def context_fixt() -> SubarrayTestContextData:
+def context_data() -> SubarrayTestContextData:
     """A collection of variables shared between steps.
 
     The shared variables are the following:
@@ -461,3 +461,79 @@ def context_fixt() -> SubarrayTestContextData:
     :return: the shared variables.
     """
     return SubarrayTestContextData()
+
+
+def _setup_event_subscriptions(
+    tmc: TMCFacade,
+    csp: CSPFacade,
+    sdp: SDPFacade,
+    mccs: MCCSFacade,
+    event_tracer: TangoEventTracer,
+):
+    """Subscribe TMC, CSP and SDP devices to track and log obsState events.
+
+    :param tmc: the TMC facade.
+    :param csp: the CSP facade.
+    :param sdp: the SDP facade.
+    :param event_tracer: the event tracer.
+    """
+    event_tracer.subscribe_event(tmc.subarray_node, "obsState")
+    event_tracer.subscribe_event(csp.csp_subarray, "obsState")
+    event_tracer.subscribe_event(sdp.sdp_subarray, "obsState")
+    event_tracer.subscribe_event(mccs.mccs_subarray, "obsState")
+    event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
+    event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
+
+    log_events(
+        {
+            tmc.subarray_node: [
+                "obsState",
+                "longRunningCommandResult",
+            ],
+            csp.csp_subarray: ["obsState"],
+            mccs.mccs_subarray: ["obsState"],
+            sdp.sdp_subarray: ["obsState", "commandCallInfo"],
+            tmc.central_node: ["longRunningCommandResult"],
+        },
+        event_enum_mapping={"obsState": ObsState},
+    )
+
+
+def subarray_can_be_used(
+    tmc: TMCFacade,
+    csp: CSPFacade,
+    sdp: SDPFacade,
+    mccs: MCCSFacade,
+    event_tracer: TangoEventTracer,
+):
+    """Set up the subarray to be used in the test."""
+    _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
+
+
+@given("the telescope is in ON state")
+def given_the_telescope_is_in_on_state(
+    tmc: TMCFacade,
+    event_tracer: TangoEventTracer,
+):
+    """Ensure the telescope is in ON state."""
+    tmc.move_to_on(wait_termination=True)
+    event_tracer.subscribe_event(tmc.central_node, "telescopeState")
+    event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
+    event_tracer.subscribe_event(tmc.subarray_node, "obsState")
+    event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
+
+    # Logging setup
+    log_events(
+        {
+            tmc.central_node: [
+                "telescopeState",
+                "longRunningCommandResult",
+            ],
+            tmc.subarray_node: [
+                "obsState",
+                "longRunningCommandResult",
+            ],
+        }
+    )
+    # Assertions
+    event_tracer.clear_events()
