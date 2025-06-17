@@ -65,4 +65,27 @@ Feature: SP-5340
 		   | Scan            | SCANNING     | SCANNING         | READY         |
 		   | Scan            | SCANNING     | SCANNING         | SCANNING      |
 		   | Scan            | SCANNING     | SCANNING         | FAULT         |
-
+		   | ReleaseResources| FAULT        | IDLE             | IDLE          |
+		   | ReleaseResources| IDLE         | FAULT            | IDLE          |
+		   | ReleaseResources| IDLE         | IDLE             | FAULT         |
+		   | ReleaseResources| IDLE         | FAULT            | FAULT         |
+		   | ReleaseResources| FAULT        | FAULT            | IDLE          |
+		   | ReleaseResources| FAULT        | IDLE             | FAULT         |
+		   | ReleaseResources| FAULT        | IDLE             | RESOURCING    |
+		   | ReleaseResources| RESOURCING   | FAULT            | IDLE          |
+		   | ReleaseResources| RESOURCING   | RESOURCING       | FAULT         |
+		   | ReleaseResources| RESOURCING   | FAULT            | FAULT         |
+		   | ReleaseResources| FAULT        | FAULT            | RESOURCING    |
+		   | ReleaseResources| FAULT        | RESOURCING       | FAULT         |
+		   | EndScan         | FAULT        | READY            | READY         |
+		   | EndScan         | READY        | FAULT            | READY         |
+		   | EndScan         | READY        | READY            | FAULT         |
+		   | EndScan         | READY        | FAULT            | FAULT         |   
+		   | EndScan         | FAULT        | FAULT            | READY         |   
+		   | EndScan         | FAULT        | READY            | FAULT         |
+		   | End             | FAULT        | IDLE             | IDLE          |
+		   | End             | IDLE         | FAULT            | IDLE          |
+		   | End             | IDLE         | IDLE             | FAULT         |
+		   | End             | IDLE         | FAULT            | FAULT         |   
+		   | End             | FAULT        | FAULT            | IDLE          |   
+		   | End             | FAULT        | IDLE             | FAULT         |

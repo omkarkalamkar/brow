@@ -25,16 +25,22 @@ command_defect_mapping = {
     "AssignResources": {
         "RESOURCING": json.dumps(INTERMEDIATE_STATE_DEFECT),
         "FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT),
-        "EMPTY": COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_EMPTY,
+        "EMPTY": json.dumps(COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_EMPTY),
     },
     "Configure": {
         "CONFIGURING": json.dumps(INTERMEDIATE_CONFIGURING_OBS_STATE_DEFECT),
-        "FAULT": INTERMEDIATE_FAULT_OBS_STATE_DEFECT,
+        "FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT),
     },
     "Scan": {
         "SCANNING": INTERMEDIATE_SCANNING_STATE_DEFECT,
-        "FAULT": INTERMEDIATE_FAULT_OBS_STATE_DEFECT,
+        "FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT),
     },
+    "ReleaseResources": {
+        "RESOURCING": json.dumps(INTERMEDIATE_STATE_DEFECT),
+        "FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT),
+    },
+    "ENDSCAN": {"FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT)},
+    "END": {"FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT)},
 }
 
 
@@ -54,7 +60,7 @@ def set_subsystem_defects(
         command_defect_mapping.get(command).get(mccs_obsstate, RESET_DEFECT)
     )
     if sdp_obsstate == "EMPTY" and command == "AssignResources":
-        sdp.sdp_subarray.SetDefective(SDP_BACK_TO_INITIAL_STATE)
+        sdp.sdp_subarray.SetDefective(json.dumps(SDP_BACK_TO_INITIAL_STATE))
     else:
         sdp.sdp_subarray.SetDefective(
             command_defect_mapping.get(command).get(sdp_obsstate, RESET_DEFECT)
@@ -118,6 +124,52 @@ def invoke_command_with_defect(
             tmc.scan(
                 default_commands_inputs.scan_input, wait_termination=False
             )
+        case "ReleaseResources":
+            tmc.force_change_of_obs_state(
+                ObsState.IDLE, default_commands_inputs, wait_termination=True
+            )
+            set_subsystem_defects(
+                csp,
+                sdp,
+                mccs,
+                csp_obsstate,
+                sdp_obsstate,
+                mccs_obsstate,
+                command,
+            )
+            tmc.release_resources(
+                default_commands_inputs.release_input, wait_termination=False
+            )
+        case "End":
+            tmc.force_change_of_obs_state(
+                ObsState.READY, default_commands_inputs, wait_termination=True
+            )
+            set_subsystem_defects(
+                csp,
+                sdp,
+                mccs,
+                csp_obsstate,
+                sdp_obsstate,
+                mccs_obsstate,
+                command,
+            )
+            tmc.end_observation(wait_termination=False)
+        case "EndScan":
+            tmc.force_change_of_obs_state(
+                ObsState.SCANNING,
+                default_commands_inputs,
+                wait_termination=True,
+            )
+            set_subsystem_defects(
+                csp,
+                sdp,
+                mccs,
+                csp_obsstate,
+                sdp_obsstate,
+                mccs_obsstate,
+                command,
+            )
+            tmc.end_scan(wait_termination=False)
 
 
 def reset_defects(csp: CSPFacade, sdp: SDPFacade, mccs: MCCSFacade):
