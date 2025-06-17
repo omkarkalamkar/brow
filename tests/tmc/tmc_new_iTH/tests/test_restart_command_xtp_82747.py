@@ -88,7 +88,7 @@ def subarray_tmc_subarray_resourcing_fault(
     )
 
 
-@given("CSP,MCCS and SDP in observation state EMPTY")
+@given("CSP,SDP and MCCS in observation state EMPTY")
 def verify_csp_mccs_sdp_obs_state_empty(
     csp: CSPFacade, sdp: SDPFacade, mccs: MCCSFacade
 ):
