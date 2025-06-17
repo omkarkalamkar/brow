@@ -3,13 +3,13 @@ Feature: SP-5340
 	#This test covers scenarios where user invokes Restart command as TMC Subarray Node is in FAULT observation state to recover system.
 	@XTP-82856 @XTP-82736
 	Scenario Outline: Test Restart Command when TMC subarray transitions to FAULT observation state
-	Given CSP,SDP and MCCS in observation states <CSP_obsState>,<SDP_obsState> and <MCCS_obsState> after <command>
+	Given CSP,SDP and MCCS in observation states <csp_obsstate>,<sdp_obsstate> and <mccs_obsstate> after <command>
 	And TMC Subarray in observation state FAULT
 	When I invoke restart command on the TMC Subarray
 	Then SDP,CSP and MCCS transitions to observation state EMPTY
 	And TMC subarray transitions to observation state EMPTY
 		Examples:
-		   | Command         | CSP obsState | SDP obsState     | MCCS obsState |
+		   | command         | csp_obsstate | sdp_obsstate     | mccs_obsstate |
 		   | AssignResources | FAULT        | IDLE             | IDLE          |
 		   | AssignResources | FAULT        | IDLE             | RESOURCING    |
 		   | AssignResources | FAULT        | IDLE             | FAULT         |

@@ -72,7 +72,7 @@ def subarray_tmc_subarray_resourcing_fault(
     default_commands_inputs: TestHarnessInputs,
     event_tracer: TangoEventTracer,
 ):
-    _setup_event_subscriptions()
+    _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
     set_subsystem_defects(
         csp, sdp, mccs, "EMPTY", "EMPTY", "EMPTY", "AssignResources"
     )

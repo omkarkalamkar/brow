@@ -18,6 +18,7 @@ from tests.resources.test_support.constant_low import (
     INTERMEDIATE_CONFIGURING_OBS_STATE_DEFECT,
     INTERMEDIATE_FAULT_OBS_STATE_DEFECT,
     INTERMEDIATE_STATE_DEFECT,
+    SDP_BACK_TO_INITIAL_STATE,
 )
 
 command_defect_mapping = {
@@ -41,20 +42,23 @@ def set_subsystem_defects(
     csp: CSPFacade,
     sdp: SDPFacade,
     mccs: MCCSFacade,
-    CSP_obsState: str,
-    SDP_obsState: str,
-    MCCS_obsState: str,
+    csp_obsstate: str,
+    sdp_obsstate: str,
+    mccs_obsstate: str,
     command: str,
 ):
     csp.csp_subarray.SetDefective(
-        command_defect_mapping.get(command).get(CSP_obsState, RESET_DEFECT)
-    )
-    sdp.sdp_subarray.SetDefective(
-        command_defect_mapping.get(command).get(SDP_obsState, RESET_DEFECT)
+        command_defect_mapping.get(command).get(csp_obsstate, RESET_DEFECT)
     )
     mccs.mccs_subarray.SetDefective(
-        command_defect_mapping.get(command).get(MCCS_obsState, RESET_DEFECT)
+        command_defect_mapping.get(command).get(mccs_obsstate, RESET_DEFECT)
     )
+    if sdp_obsstate == "EMPTY" and command == "AssignResources":
+        sdp.sdp_subarray.SetDefective(SDP_BACK_TO_INITIAL_STATE)
+    else:
+        sdp.sdp_subarray.SetDefective(
+            command_defect_mapping.get(command).get(sdp_obsstate, RESET_DEFECT)
+        )
 
 
 def invoke_command_with_defect(
@@ -63,9 +67,9 @@ def invoke_command_with_defect(
     csp: CSPFacade,
     sdp: SDPFacade,
     mccs: MCCSFacade,
-    CSP_obsState: str,
-    SDP_obsState: str,
-    MCCS_obsState: str,
+    csp_obsstate: str,
+    sdp_obsstate: str,
+    mccs_obsstate: str,
     command: str,
 ):
     match command:
@@ -74,9 +78,9 @@ def invoke_command_with_defect(
                 csp,
                 sdp,
                 mccs,
-                CSP_obsState,
-                SDP_obsState,
-                MCCS_obsState,
+                csp_obsstate,
+                sdp_obsstate,
+                mccs_obsstate,
                 command,
             )
             tmc.assign_resources(
@@ -90,9 +94,9 @@ def invoke_command_with_defect(
                 csp,
                 sdp,
                 mccs,
-                CSP_obsState,
-                SDP_obsState,
-                MCCS_obsState,
+                csp_obsstate,
+                sdp_obsstate,
+                mccs_obsstate,
                 command,
             )
             tmc.configure(
@@ -106,9 +110,9 @@ def invoke_command_with_defect(
                 csp,
                 sdp,
                 mccs,
-                CSP_obsState,
-                SDP_obsState,
-                MCCS_obsState,
+                csp_obsstate,
+                sdp_obsstate,
+                mccs_obsstate,
                 command,
             )
             tmc.scan(

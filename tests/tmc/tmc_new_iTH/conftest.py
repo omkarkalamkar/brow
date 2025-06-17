@@ -88,6 +88,10 @@ class TestContextData:
         """Check if the starting state is transient."""
         return self.expected_next_state is not None
 
+    csp_obsstate: ObsState | None = None
+    sdp_obsstate: ObsState | None = None
+    mccs_obsstate: ObsState | None = None
+
 
 @pytest.fixture
 def context_data() -> TestContextData:

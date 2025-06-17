@@ -11,6 +11,7 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
 )
 from ska_tango_testing.integration import TangoEventTracer, log_events
 
+from tests.tmc.tmc_new_iTH.conftest import TestContextData
 from tests.tmc.tmc_new_iTH.utils import (
     invoke_command_with_defect,
     reset_defects,
@@ -53,6 +54,54 @@ def _setup_event_subscriptions(
     )
 
 
+def _check_abort_flow(
+    csp: CSPFacade,
+    sdp: SDPFacade,
+    mccs: MCCSFacade,
+    context_fixt: TestContextData,
+    event_tracer: TangoEventTracer,
+):
+    abort_not_allowed_obs_states = [
+        ObsState.ABORTED,
+        ObsState.FAULT,
+        ObsState.EMPTY,
+    ]
+    if context_fixt.csp_obsstate not in abort_not_allowed_obs_states:
+        assert_that(event_tracer).described_as(
+            f"CSP Subarray device ({csp.csp_subarray}) "
+            "ObsState attribute values should move "
+            f"to ABORTED."
+        ).within_timeout(100).has_change_event_occurred(
+            csp.csp_subarray,
+            "obsState",
+            ObsState.ABORTED,
+            previous_value=ObsState.ABORTING,
+        )
+
+    if context_fixt.sdp_obsstate not in abort_not_allowed_obs_states:
+        assert_that(event_tracer).described_as(
+            f"SDP Subarray device ({sdp.sdp_subarray}) "
+            "ObsState attribute values should move "
+            f"to ABORTED."
+        ).within_timeout(100).has_change_event_occurred(
+            sdp.sdp_subarray,
+            "obsState",
+            ObsState.ABORTED,
+            previous_value=ObsState.ABORTING,
+        )
+    if context_fixt.mccs_obsstate not in abort_not_allowed_obs_states:
+        assert_that(event_tracer).described_as(
+            f"MCCS Subarray device ({mccs.mccs_subarray}) "
+            "ObsState attribute values should move "
+            f"to ABORTED."
+        ).within_timeout(100).has_change_event_occurred(
+            mccs.mccs_subarray,
+            "obsState",
+            ObsState.ABORTED,
+            previous_value=ObsState.ABORTING,
+        )
+
+
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/xtp_82856.feature",
@@ -66,14 +115,14 @@ def test_restart_command_in_observation_state_fault():
 
 @given(
     parsers.parse(
-        "CSP,SDP and MCCS in observation states {CSP_obsState},{SDP_obsState} "
-        "and {MCCS_obsState} after {command}"
+        "CSP,SDP and MCCS in observation states {csp_obsstate},{sdp_obsstate} "
+        "and {mccs_obsstate} after {command}"
     )
 )
 def verify_subsystem_after_command(
-    CSP_obsState: str,
-    SDP_obsState: str,
-    MCCS_obsState: str,
+    csp_obsstate: str,
+    sdp_obsstate: str,
+    mccs_obsstate: str,
     command: str,
     tmc: TMCFacade,
     csp: CSPFacade,
@@ -81,43 +130,47 @@ def verify_subsystem_after_command(
     mccs: MCCSFacade,
     default_commands_inputs: TestHarnessInputs,
     event_tracer: TangoEventTracer,
+    context_fixt: TestContextData,
 ):
-    _setup_event_subscriptions()
+    _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
     invoke_command_with_defect(
         tmc,
         default_commands_inputs,
         csp,
         sdp,
         mccs,
-        CSP_obsState,
-        SDP_obsState,
-        MCCS_obsState,
+        csp_obsstate,
+        sdp_obsstate,
+        mccs_obsstate,
         command,
     )
     assert_that(event_tracer).described_as(
         f"CSP Subarray device ({csp.csp_subarray})"
         "ObsState attribute value should move "
-        f"to {CSP_obsState}."
+        f"to {csp_obsstate}."
     ).within_timeout(100).has_change_event_occurred(
-        csp.csp_subarray, "obsState", ObsState[CSP_obsState]
+        csp.csp_subarray, "obsState", ObsState[csp_obsstate]
     )
 
     assert_that(event_tracer).described_as(
         f"SDP Subarray device ({sdp.sdp_subarray})"
         "ObsState attribute value should move "
-        f" to {SDP_obsState}."
+        f" to {sdp_obsstate}."
     ).within_timeout(100).has_change_event_occurred(
-        sdp.sdp_subarray, "obsState", ObsState[SDP_obsState]
+        sdp.sdp_subarray, "obsState", ObsState[sdp_obsstate]
     )
     assert_that(event_tracer).described_as(
         f"MCCS Subarray device ({mccs.mccs_subarray})"
         "ObsState attribute value should move "
-        f" to {MCCS_obsState}."
+        f" to {mccs_obsstate}."
     ).within_timeout(100).has_change_event_occurred(
         mccs.mccs_subarray,
         "obsState",
-        ObsState[MCCS_obsState],
+        ObsState[mccs_obsstate],
     )
+    context_fixt.csp_obsstate = ObsState[csp_obsstate]
+    context_fixt.sdp_obsstate = ObsState[sdp_obsstate]
+    context_fixt.mccs_obsstate = ObsState[mccs_obsstate]
 
 
 @given("TMC subarray in observation state FAULT")
@@ -151,7 +204,23 @@ def verify_sdp_csp_mccs_in_empty_observation_state(
     csp: CSPFacade,
     sdp: SDPFacade,
     mccs: MCCSFacade,
+    context_fixt: TestContextData,
 ):
+    _check_abort_flow(csp, sdp, mccs)
+    assert_that(event_tracer).described_as(
+        f"MCCS Subarray device ({mccs.mccs_subarray})"
+        f", CSP Subarray device ({csp.csp_subarray}) "
+        f"and SDP Subarray device ({sdp.sdp_subarray}) "
+        "ObsState attribute values should move "
+        f"to RESTARTING."
+    ).within_timeout(100).has_change_event_occurred(
+        mccs.mccs_subarray, "obsState", ObsState.RESTARTING
+    ).has_change_event_occurred(
+        csp.csp_subarray, "obsState", ObsState.RESTARTING
+    ).has_change_event_occurred(
+        sdp.sdp_subarray, "obsState", ObsState.RESTARTING
+    )
+
     assert_that(event_tracer).described_as(
         f"MCCS Subarray device ({mccs.mccs_subarray})"
         f", CSP Subarray device ({csp.csp_subarray}) "
