@@ -109,8 +109,8 @@ def context_data() -> TestContextData:
     return TestContextData()
 
 
-def get_long_run_command_id(context_fixt: TestContextData) -> str:
-    return context_fixt.when_action_result[1][0]
+def get_long_run_command_id(context_data: TestContextData) -> str:
+    return context_data.when_action_result[1][0]
 
 
 @pytest.fixture

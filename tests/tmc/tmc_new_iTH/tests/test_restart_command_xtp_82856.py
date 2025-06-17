@@ -58,7 +58,7 @@ def _check_abort_flow(
     csp: CSPFacade,
     sdp: SDPFacade,
     mccs: MCCSFacade,
-    context_fixt: TestContextData,
+    context_data: TestContextData,
     event_tracer: TangoEventTracer,
 ):
     abort_not_allowed_obs_states = [
@@ -66,7 +66,7 @@ def _check_abort_flow(
         ObsState.FAULT,
         ObsState.EMPTY,
     ]
-    if context_fixt.csp_obsstate not in abort_not_allowed_obs_states:
+    if context_data.csp_obsstate not in abort_not_allowed_obs_states:
         assert_that(event_tracer).described_as(
             f"CSP Subarray device ({csp.csp_subarray}) "
             "ObsState attribute values should move "
@@ -78,7 +78,7 @@ def _check_abort_flow(
             previous_value=ObsState.ABORTING,
         )
 
-    if context_fixt.sdp_obsstate not in abort_not_allowed_obs_states:
+    if context_data.sdp_obsstate not in abort_not_allowed_obs_states:
         assert_that(event_tracer).described_as(
             f"SDP Subarray device ({sdp.sdp_subarray}) "
             "ObsState attribute values should move "
@@ -89,7 +89,7 @@ def _check_abort_flow(
             ObsState.ABORTED,
             previous_value=ObsState.ABORTING,
         )
-    if context_fixt.mccs_obsstate not in abort_not_allowed_obs_states:
+    if context_data.mccs_obsstate not in abort_not_allowed_obs_states:
         assert_that(event_tracer).described_as(
             f"MCCS Subarray device ({mccs.mccs_subarray}) "
             "ObsState attribute values should move "
@@ -130,7 +130,7 @@ def verify_subsystem_after_command(
     mccs: MCCSFacade,
     default_commands_inputs: TestHarnessInputs,
     event_tracer: TangoEventTracer,
-    context_fixt: TestContextData,
+    context_data: TestContextData,
 ):
     _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
     invoke_command_with_defect(
@@ -168,9 +168,9 @@ def verify_subsystem_after_command(
         "obsState",
         ObsState[mccs_obsstate],
     )
-    context_fixt.csp_obsstate = ObsState[csp_obsstate]
-    context_fixt.sdp_obsstate = ObsState[sdp_obsstate]
-    context_fixt.mccs_obsstate = ObsState[mccs_obsstate]
+    context_data.csp_obsstate = ObsState[csp_obsstate]
+    context_data.sdp_obsstate = ObsState[sdp_obsstate]
+    context_data.mccs_obsstate = ObsState[mccs_obsstate]
 
 
 @given("TMC subarray in observation state FAULT")
@@ -204,7 +204,7 @@ def verify_sdp_csp_mccs_in_empty_observation_state(
     csp: CSPFacade,
     sdp: SDPFacade,
     mccs: MCCSFacade,
-    context_fixt: TestContextData,
+    context_data: TestContextData,
 ):
     _check_abort_flow(csp, sdp, mccs)
     assert_that(event_tracer).described_as(
