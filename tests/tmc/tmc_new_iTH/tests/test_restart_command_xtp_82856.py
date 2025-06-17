@@ -55,7 +55,7 @@ def _setup_event_subscriptions(
 
 @pytest.mark.SKA_low
 @scenario(
-    "../features/xtp_82856.feature",
+    "../tmc/tmc_new_iTH/features/xtp_82856.feature",
     "Test Restart Command when TMC subarray transitions to "
     "FAULT observation state",
 )
