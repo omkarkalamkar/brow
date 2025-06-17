@@ -1,16 +1,16 @@
-release=1.2.1-rc.1
-tag=1.2.1-rc.1
+release=1.2.1-rc.2
+tag=1.2.1-rc.2
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 1.2.1-rc.1**
+**1. ska-tmc-low-integration 1.2.1-rc.2**
 
-    **1.1 ska-tmc-low  1.2.0 - 1.2.1-rc.1 :**
-            * Utilised latest version of ska-tmc-mccsleafnodes v0.8.1 to resolve SKB-939
+    **1.1 ska-tmc-low  1.2.1-rc.1 - 1.2.1-rc.2 :**
+            * Utilised latest version of centralnode v0.19.7 to resolve SKB-860
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 1.2.1-rc.1**
+**1. ska-tmc-low-integration 1.2.1-rc.2**
 
-    **1.1 ska-tmc-low  1.2.0 - 1.2.1-rc.1 :**
-            * Utilised latest version of ska-tmc-mccsleafnodes v0.8.1 to resolve SKB-939
+    **1.1 ska-tmc-low  1.2.1-rc.1 - 1.2.1-rc.2 :**
+            * Utilised latest version of centralnode v0.19.7 to resolve SKB-860

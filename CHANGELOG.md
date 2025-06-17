@@ -5,6 +5,12 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[1.2.1-rc.2]
+************
+Updated
+-------
+* Utilised latest version of centralnode v0.19.7 to resolve SKB-860
+
 [1.2.1-rc.1]
 ************
 Updated
