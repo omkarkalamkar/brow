@@ -21,6 +21,7 @@ from tests.resources.test_support.constant_low import (
     SDP_BACK_TO_INITIAL_STATE,
 )
 
+TIMEOUT = 10
 INTERFACE = (
     "https://schema.skatelescope.org/ska-low-mccs-controller-release/2.0"
 )

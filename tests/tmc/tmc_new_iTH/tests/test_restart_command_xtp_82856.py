@@ -13,6 +13,7 @@ from ska_tango_testing.integration import TangoEventTracer, log_events
 
 from tests.tmc.tmc_new_iTH.conftest import TestContextData
 from tests.tmc.tmc_new_iTH.utils import (
+    TIMEOUT,
     invoke_command_with_defect,
     reset_defects,
 )
@@ -71,7 +72,7 @@ def _check_abort_flow(
             f"CSP Subarray device ({csp.csp_subarray}) "
             "ObsState attribute values should move "
             f"to ABORTED."
-        ).within_timeout(100).has_change_event_occurred(
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
             csp.csp_subarray,
             "obsState",
             ObsState.ABORTED,
@@ -83,7 +84,7 @@ def _check_abort_flow(
             f"SDP Subarray device ({sdp.sdp_subarray}) "
             "ObsState attribute values should move "
             f"to ABORTED."
-        ).within_timeout(100).has_change_event_occurred(
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
             sdp.sdp_subarray,
             "obsState",
             ObsState.ABORTED,
@@ -94,7 +95,7 @@ def _check_abort_flow(
             f"MCCS Subarray device ({mccs.mccs_subarray}) "
             "ObsState attribute values should move "
             f"to ABORTED."
-        ).within_timeout(100).has_change_event_occurred(
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
             mccs.mccs_subarray,
             "obsState",
             ObsState.ABORTED,
@@ -148,7 +149,7 @@ def verify_subsystem_after_command(
         f"CSP Subarray device ({csp.csp_subarray})"
         "ObsState attribute value should move "
         f"to {csp_obsstate}."
-    ).within_timeout(100).has_change_event_occurred(
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
         csp.csp_subarray, "obsState", ObsState[csp_obsstate]
     )
 
@@ -156,14 +157,14 @@ def verify_subsystem_after_command(
         f"SDP Subarray device ({sdp.sdp_subarray})"
         "ObsState attribute value should move "
         f" to {sdp_obsstate}."
-    ).within_timeout(100).has_change_event_occurred(
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
         sdp.sdp_subarray, "obsState", ObsState[sdp_obsstate]
     )
     assert_that(event_tracer).described_as(
         f"MCCS Subarray device ({mccs.mccs_subarray})"
         "ObsState attribute value should move "
         f" to {mccs_obsstate}."
-    ).within_timeout(100).has_change_event_occurred(
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
         mccs.mccs_subarray,
         "obsState",
         ObsState[mccs_obsstate],
@@ -185,7 +186,7 @@ def verify_tmc_subarray_observation_state_fault(
         f"TMC Subarray Node device ({tmc.subarray_node})"
         "ObsState attribute value should move "
         f" to EMPTY."
-    ).within_timeout(100).has_change_event_occurred(
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node,
         "obsState",
         ObsState.FAULT,
@@ -213,7 +214,7 @@ def verify_sdp_csp_mccs_in_empty_observation_state(
         f"and SDP Subarray device ({sdp.sdp_subarray}) "
         "ObsState attribute values should move "
         f"to RESTARTING."
-    ).within_timeout(100).has_change_event_occurred(
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
         mccs.mccs_subarray, "obsState", ObsState.RESTARTING
     ).has_change_event_occurred(
         csp.csp_subarray, "obsState", ObsState.RESTARTING
@@ -227,7 +228,7 @@ def verify_sdp_csp_mccs_in_empty_observation_state(
         f"and SDP Subarray device ({sdp.sdp_subarray}) "
         "ObsState attribute values should move "
         f"to EMPTY."
-    ).within_timeout(100).has_change_event_occurred(
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
         mccs.mccs_subarray, "obsState", ObsState.EMPTY
     ).has_change_event_occurred(
         csp.csp_subarray, "obsState", ObsState.EMPTY
@@ -244,6 +245,6 @@ def verify_tmc_subarray_in_empty_observation_state(
         f"TMC Subarray Node device ({tmc.subarray_node})"
         "ObsState attribute value should move "
         f"from {ObsState.FAULT} to EMPTY."
-    ).within_timeout(100).has_change_event_occurred(
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node, "obsState", ObsState.EMPTY
     )

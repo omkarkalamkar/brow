@@ -13,6 +13,7 @@ from ska_tango_testing.integration import TangoEventTracer, log_events
 
 from tests.tmc.tmc_new_iTH.utils import (
     MCCS_RELEASE_INPUT,
+    TIMEOUT,
     reset_defects,
     set_subsystem_defects,
 )
@@ -87,7 +88,7 @@ def subarray_tmc_subarray_resourcing_fault(
         f"TMC Subarray Node device ({tmc.subarray_node})"
         "ObsState attribute value should move "
         f"from {ObsState.FAULT}."
-    ).within_timeout(100).has_change_event_occurred(
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node, "obsState", ObsState.FAULT
     )
     mccs.mccs_controller.Release(MCCS_RELEASE_INPUT)
@@ -95,7 +96,7 @@ def subarray_tmc_subarray_resourcing_fault(
         f"MCCS Subarray device ({mccs.mccs_subarray})"
         "ObsState attribute value should move "
         f"from {ObsState.EMPTY}."
-    ).within_timeout(100).has_change_event_occurred(
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
         mccs.mccs_subarray, "obsState", ObsState.EMPTY
     )
 
@@ -123,6 +124,6 @@ def verify_tmc_subarray_transitions_to_obs_state_empty(
         f"TMC Subarray Node device ({tmc.subarray_node})"
         "ObsState attribute value should move "
         f"from {ObsState.FAULT} to EMPTY."
-    ).within_timeout(100).has_change_event_occurred(
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node, "obsState", ObsState.EMPTY
     )
