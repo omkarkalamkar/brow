@@ -103,6 +103,7 @@ def _check_abort_flow(
         )
 
 
+@pytest.mark.test  # temp
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/xtp_82856.feature",
