@@ -1,4 +1,4 @@
-.. _code_quality:
+.. _code_quality_guidelines:
 
 ================================
 Code Quality Guidelines

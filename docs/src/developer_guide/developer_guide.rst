@@ -1,13 +1,14 @@
-.. _Square Kilometre Array: https://skatelescope.org/
+.. _developer_guide:
 
 ========================
-TMC Low Developer Guide
+Developer Guide
 ========================
 
 .. toctree::
    :maxdepth: 1
 
-   code_quality
+   code_quality_guidelines
+   architecture
    apis/operational_mandc
    apis/obs_mandc
    testing/testing

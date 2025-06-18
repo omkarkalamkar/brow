@@ -1,7 +1,7 @@
 .. _knowledge_base:
 
 ========================
-TMC Low Knowledge Base
+Knowledge Base
 ========================
 
 .. toctree::
