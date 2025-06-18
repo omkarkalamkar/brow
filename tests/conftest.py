@@ -402,7 +402,6 @@ def _tear_down(tmc: TMCFacade, event_tracers: TangoEventTracer):
 @pytest.fixture
 def telescope_wrapper(
     default_commands_inputs: TestHarnessInputs,
-    tmc: TMCFacade,
     event_tracers: TangoEventTracer,
 ) -> TelescopeWrapper:
     """Create an unique test harness with proxies to all devices."""
@@ -428,7 +427,7 @@ def telescope_wrapper(
 
     # after a test is completed, reset the telescope to its initial state
     # (obsState=READY, telescopeState=OFF, no resources assigned)
-    _tear_down(tmc, event_tracers)
+    _tear_down(telescope.tmc, event_tracers)
     telescope.tear_down()
 
 
