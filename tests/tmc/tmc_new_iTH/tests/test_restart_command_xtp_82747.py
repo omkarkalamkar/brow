@@ -55,7 +55,9 @@ def _setup_event_subscriptions(
     )
 
 
-@pytest.mark.test  # temp
+@pytest.mark.skip(
+    reason="Will be enabled after completion of SP-5340 implementation"
+)
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/xtp_82747.feature",

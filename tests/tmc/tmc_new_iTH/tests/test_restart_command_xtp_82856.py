@@ -103,7 +103,9 @@ def _check_abort_flow(
         )
 
 
-@pytest.mark.test  # temp
+@pytest.mark.skip(
+    reason="Will be enabled after completion of SP-5340 implementation"
+)
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/xtp_82856.feature",
