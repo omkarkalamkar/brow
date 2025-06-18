@@ -62,6 +62,9 @@ def _check_abort_flow(
     context_data: TestContextData,
     event_tracer: TangoEventTracer,
 ):
+    """This function checks obstates for abort and
+    tracks abort flow if it will be aborted.
+    """
     abort_not_allowed_obs_states = [
         ObsState.ABORTED,
         ObsState.FAULT,
@@ -136,6 +139,7 @@ def verify_subsystem_after_command(
     event_tracer: TangoEventTracer,
     context_data: TestContextData,
 ):
+    """Verifies the the subsystem obsStates after command is invoked"""
     _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
     invoke_command_with_defect(
         tmc,
@@ -185,6 +189,7 @@ def verify_tmc_subarray_observation_state_fault(
     sdp: SDPFacade,
     mccs: MCCSFacade,
 ):
+    """Verifies the TMC subarray observation state FAULT"""
     assert_that(event_tracer).described_as(
         f"TMC Subarray Node device ({tmc.subarray_node})"
         "ObsState attribute value should move "
@@ -199,6 +204,7 @@ def verify_tmc_subarray_observation_state_fault(
 
 @when("I invoke Restart Command on the TMC Subarray")
 def invoke_restart_command(tmc: TMCFacade):
+    """Invokes restart command on the TMC Subarray."""
     tmc.restart()
 
 
@@ -210,7 +216,10 @@ def verify_sdp_csp_mccs_in_empty_observation_state(
     mccs: MCCSFacade,
     context_data: TestContextData,
 ):
-    _check_abort_flow(csp, sdp, mccs)
+    """Verifies the observation states of SDP,CSP and MCCS
+    after command Restart.
+    """
+    _check_abort_flow(csp, sdp, mccs, context_data, event_tracer)
     assert_that(event_tracer).described_as(
         f"MCCS Subarray device ({mccs.mccs_subarray})"
         f", CSP Subarray device ({csp.csp_subarray}) "
@@ -244,6 +253,7 @@ def verify_sdp_csp_mccs_in_empty_observation_state(
 def verify_tmc_subarray_in_empty_observation_state(
     event_tracer: TangoEventTracer, tmc: TMCFacade
 ):
+    """Verifies the observation state of TMC Subarray."""
     assert_that(event_tracer).described_as(
         f"TMC Subarray Node device ({tmc.subarray_node})"
         "ObsState attribute value should move "

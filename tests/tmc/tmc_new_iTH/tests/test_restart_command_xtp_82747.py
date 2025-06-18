@@ -72,7 +72,7 @@ def test_restart_command_from_observation_state_resourcing_fault():
 @given(
     "a TMC Subarray transitioned from RESOURCING to FAULT observation state"
 )
-def subarray_tmc_subarray_resourcing_fault(
+def verify_tmc_subarray_resourcing_fault(
     tmc: TMCFacade,
     csp: CSPFacade,
     sdp: SDPFacade,
@@ -80,6 +80,9 @@ def subarray_tmc_subarray_resourcing_fault(
     default_commands_inputs: TestHarnessInputs,
     event_tracer: TangoEventTracer,
 ):
+    """Verifies TMC Subarray Observation state into FAULT after
+    AssignResources failure.
+    """
     _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
     set_subsystem_defects(
         csp, sdp, mccs, "EMPTY", "EMPTY", "IDLE", "AssignResources"
@@ -108,6 +111,7 @@ def subarray_tmc_subarray_resourcing_fault(
 def verify_csp_mccs_sdp_obs_state_empty(
     csp: CSPFacade, sdp: SDPFacade, mccs: MCCSFacade
 ):
+    """Verifies observation states of the subsystems."""
     assert csp.csp_subarray.obsState == ObsState.EMPTY
     assert sdp.sdp_subarray.obsState == ObsState.EMPTY
     assert mccs.mccs_subarray.obsState == ObsState.EMPTY
@@ -116,6 +120,7 @@ def verify_csp_mccs_sdp_obs_state_empty(
 
 @when("I invoke Restart Command on the TMC Subarray")
 def invoke_restart_command(tmc: TMCFacade):
+    """Invokes restart command on TMC Subarray."""
     tmc.restart()
 
 
@@ -123,6 +128,8 @@ def invoke_restart_command(tmc: TMCFacade):
 def verify_tmc_subarray_transitions_to_obs_state_empty(
     event_tracer: TangoEventTracer, tmc: TMCFacade
 ):
+    """Verifies TMC subarray observation state EMPTY after restart
+    command."""
     assert_that(event_tracer).described_as(
         f"TMC Subarray Node device ({tmc.subarray_node})"
         "ObsState attribute value should move "
