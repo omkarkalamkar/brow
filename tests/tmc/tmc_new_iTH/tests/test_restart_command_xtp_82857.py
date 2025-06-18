@@ -60,7 +60,7 @@ def _setup_event_subscriptions(
 )
 @pytest.mark.SKA_low
 @scenario(
-    "../tmc/tmc_new_iTH/features/xtp_82747.feature",
+    "../tmc/tmc_new_iTH/features/xtp_82857.feature",
     "Test Restart Command when TMC subarray transitions to "
     "FAULT observation state",
 )
@@ -71,6 +71,7 @@ def test_restart_command_from_observation_state_resourcing_fault():
 
 @given(
     "a TMC Subarray transitioned from RESOURCING to FAULT observation state"
+    " after command failure"
 )
 def verify_tmc_subarray_resourcing_fault(
     tmc: TMCFacade,
@@ -97,6 +98,24 @@ def verify_tmc_subarray_resourcing_fault(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node, "obsState", ObsState.FAULT
     )
+
+
+@given("CSP,SDP and MCCS in observation state EMPTY,EMPTY and IDLE")
+def verify_csp_mccs_sdp_obs_state_empty(
+    csp: CSPFacade, sdp: SDPFacade, mccs: MCCSFacade
+):
+    """Verifies observation states of the subsystems."""
+    assert csp.csp_subarray.obsState == ObsState.IDLE
+    assert sdp.sdp_subarray.obsState == ObsState.EMPTY
+    assert mccs.mccs_subarray.obsState == ObsState.EMPTY
+    reset_defects(csp, sdp, mccs)
+
+
+@given("MCCS resources are released directly using MCCS Controller")
+def invoke_release_on_mccs_controller(
+    mccs: MCCSFacade, event_tracer: TangoEventTracer
+):
+    """Invokes release command on mccs controller"""
     mccs.mccs_controller.Release(MCCS_RELEASE_INPUT)
     assert_that(event_tracer).described_as(
         f"MCCS Subarray device ({mccs.mccs_subarray})"
@@ -105,17 +124,6 @@ def verify_tmc_subarray_resourcing_fault(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         mccs.mccs_subarray, "obsState", ObsState.EMPTY
     )
-
-
-@given("CSP,SDP and MCCS in observation state EMPTY")
-def verify_csp_mccs_sdp_obs_state_empty(
-    csp: CSPFacade, sdp: SDPFacade, mccs: MCCSFacade
-):
-    """Verifies observation states of the subsystems."""
-    assert csp.csp_subarray.obsState == ObsState.EMPTY
-    assert sdp.sdp_subarray.obsState == ObsState.EMPTY
-    assert mccs.mccs_subarray.obsState == ObsState.EMPTY
-    reset_defects(csp, sdp, mccs)
 
 
 @when("I invoke Restart Command on the TMC Subarray")
