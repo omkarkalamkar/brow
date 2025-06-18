@@ -61,8 +61,8 @@ def _setup_event_subscriptions(
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/xtp_82857.feature",
-    "Test Restart Command when TMC subarray transitions to "
-    "FAULT observation state",
+    "Test Restart Command flow when TMC Subarray observation state is FAULT"
+    " and subsystems are EMPTY",
 )
 def test_restart_command_from_observation_state_resourcing_fault():
     """BDD test scenario for verifying execution of the Restart
