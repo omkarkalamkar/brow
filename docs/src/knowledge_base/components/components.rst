@@ -1,10 +1,10 @@
 .. _components:
 
-========================
-TMC Low Components
-========================
+================================
+TMC Low Attribute Specification
+================================
 
-This section contains some of the default deployment configurations of the TMC components.
+This section specifies the attributes exposed by TMC Low components.
 
 .. toctree::
    :maxdepth: 1
