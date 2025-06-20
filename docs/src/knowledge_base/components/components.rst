@@ -4,7 +4,7 @@
 TMC Low Attribute Specification
 ================================
 
-This section specifies the attributes exposed by TMC Low components.
+This section specifies the attributes exposed by each of the TMC Low component.
 
 .. toctree::
    :maxdepth: 1
