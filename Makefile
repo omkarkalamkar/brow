@@ -8,8 +8,12 @@ TANGO_HOST_NAME ?= tango-databaseds
 TELESCOPE ?= SKA-low
 KUBE_NAMESPACE ?= ska-tmc-low-integration
 KUBE_NAMESPACE_SDP ?= ska-tmc-integration-sdp
+CSP_SIMULATION_ENABLED ?= true
+SDP_SIMULATION_ENABLED ?= true
+MCCS_SIMULATION_ENABLED ?= true
 K8S_TIMEOUT ?= 600s
 PYTHON_LINT_TARGET ?= tests/
+
 
 DEPLOYMENT_TYPE = $(shell echo $(TELESCOPE) | cut -d '-' -f2)
 MARK ?= $(shell echo $(TELESCOPE) | sed "s/-/_/g") ## What -m opt to pass to pytest
