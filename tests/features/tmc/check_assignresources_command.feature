@@ -1,3 +1,4 @@
+@XTP-65635
 Scenario: Assign resources to Low subarray
     Given the telescope is in the ON state
     And subarray is in the EMPTY ObsState
