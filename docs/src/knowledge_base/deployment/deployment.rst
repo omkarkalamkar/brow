@@ -1,43 +1,95 @@
-TMC Low Deployment
+.. _deployment:
+
+==================
+Deployment
 ==================
 
-TMC Low deployment comes with following components:
+Standard deployment
+====================
 
-1. Central Node
-2. Subarray Node
-3. Csp Master Leaf Node
-4. Csp Subarray Leaf Node
-5. Sdp Master Leaf Node
-6. Sdp Subarray Leaf Node
-7. MCCS Master Leaf Node
-8. MCCS Subarray Leaf Node
+The TMC Low is packaged as a `helm chart <https://helm.sh/>`_ and can be 
+deployed uing helm commands. The default deployment configuration is 
+assumed to be the SKA production environment. In the current version,
+TMC supports `one` subarray operation. Following list shows default number 
+of instances deployed for each of the TMC component.
 
+#. Central Node - 1
+#. Subarray Node - 1
+#. CSP Master Leaf Node - 1
+#. CSP Subarray Leaf Node - 1
+#. SDP Master Leaf Node - 1
+#. SDP Subarray Leaf Node - 1
+#. MCCS Master Leaf Node - 1
+#. MCCS Subarray Leaf Node - 1
 
-Configurable options
+.. warning:: The number of instances of Central Node, MCCS Master Leaf Node, 
+    SDP Master, Leaf Node and CSP Master Leaf Node should always be one even 
+    though it is technically possible to deploy multiple instances.
+
+To deploy the TMC use following command on the terminal:
+
+.. code-block:: python
+
+    helm install my-tmc-release https://artefact.skao.int/repository/helm-internal/ska-tmc-low --namespace ska-tmc-low
+
+It is possible to customize the deployment as per need. To do so, the 
+`values.yaml` file in TMC chart needs to be modified. The same can be done by 
+using `--set` option in the command line while using the `helm install` 
+command.
+
+Basic Customization options
+===========================
+
+Number of subarrays 
 --------------------
 
-#. **instances** : User can provide the array of device server deployment instances required for node.
+The number of subarrays can be deployed according to the need. A variable 
+named **subarray_count** need to be set to the desired value. This option 
+affects the number of instances of following components.
 
-    Default for nodes are:
+#. Subarray Node
+#. CSP Subarray Leaf Node
+#. SDP Subarray Leaf Node 
+#. MCCS Subarray Leaf Node 
 
-    #. **Central Node** : ["01"]
-    #. **Csp Master Leaf Node** : ["01"]
-    #. **Sdp Master Leaf Node** : ["01"]
-    #. **MCCS Master Leaf Node** : ["01"]
+Tango host
+----------
+
+This option allows to specify the desired Tango facility. The variable 
+**tango_host** is used to specify the tango facility. By default, the value 
+of this variable is set to `databaseds-tango-base-test:10000`.
+
+Command timeout
+---------------
+
+This option sets the timeout value till which the TMC components wait for
+completion of commands invoked on lower level Tango devices. This timeout 
+should be set for each TMC component. To set the desired timeout value, 
+navigate to **deviceServers -> <component name>** in `values.yaml` file. 
+Locate **CommandTimeOut** variable and set an integer value equivalant in 
+seconds.
 
 .. warning::
-   Although, it is technically possible to provide multiple instances, it is not recommended to do is.
+    When setting the command timeout values, it is essential to set bigger
+    timeout values Central Node and Subarray Node than any Leaf Node. This is 
+    because the as per TMC architecture, Central Node and Subarray Node are
+    higher level in the hierarchy and Leaf Nodes are at lower level. The 
+    commands flow from Central Node, Subarray Node, to Leaf Nodes and then to the 
+    subsystems. The higher level nodes need to factor in the command timeout 
+    set on lower level components.  
 
-#. **subarray_count** : User can set this subarray count according to number device server deployment instances required for node..
 
-    Default Value is 2.
-    
-    #. **Subarray Node**
-    #. **Csp Subarray Leaf Node**
-    #. **Sdp Subarray Leaf Node** 
-    #. **MCCS Subarray Leaf Node** 
+Advanced Customization options
+===============================
 
-#. **file** : User can provide custom device server configuration file to  nodes.Default is  `configuration files <https://gitlab.com/ska-telescope/ska-tmc/ska-tmc-low-integration/-/blob/main/charts/ska-tmc-low/data/>`_
+Following are the advance options. These options are mainly useful for developers 
+and AIV engineers for testing purpose. Customizing these parameters should be 
+done carefully.
+
+
+#. **file** : User can provide custom device server configuration file to 
+nodes. Defaults are: 
+`configuration files <https://gitlab.com/ska-telescope/ska-tmc/ska-tmc-low-integration/-/blob/main/charts/ska-tmc-low/data/>`_.
 
 #. **enabled** : User can opt to disable any node by setting this value to False.Default is True for all nodes.
 
@@ -58,7 +110,14 @@ Configurable options
     #. **mccs_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Subarray.
     #. **mccs_subarray_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Subarray Leaf Node.
 
-#. Variables under **deviceServers.centralnode** section
+Component specific configuration
+---------------------------------
+
+This section specifies the configuration options for individual TMC component. 
+Navigate to **deviceServers.<component>** section in values.yaml file. 
+
+Central Node
+^^^^^^^^^^^^^
 
     #. **SkuidService** :  This refers to the value for SKUID service. Currently defaults to "ska-ser-skuid-test-svc.ska-tmc-centralnode.svc.techops.internal.skao.int:9870".
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
@@ -69,10 +128,10 @@ Configurable options
     #. **family** :  This refers to the family name of CentralNode TANGO device. Currently defaults to "central-node".
     #. **member** :  This refers to the member of CentralNode TANGO device. Currently defaults to "0".
 
-#. Variables under **deviceServers.subarraynode** section
+Subarray Node
+^^^^^^^^^^^^^^
 
     #. **CspAssignResourcesInterfaceURL** : Interface version for CSP assign resources command. Currently defaults to "https://schema.skao.int/ska-low-csp-assignresources/3.0"
-
     #. **CspScanInterfaceURL** : Interface version for CSP scan command. Currently defaults to "https://schema.skao.int/ska-low-csp-scan/2.0"
     #. **SdpScanInterfaceURL** : Interface version for SDP scan command. Currently defaults to "https://schema.skao.int/ska-sdp-scan/0.4"
     #. **MccsConfigureInterfaceURL** : Interface version for MCCS configure command. Currently defaults to "https://schema.skao.int/ska-low-mccs-configure/1.0"
@@ -84,16 +143,17 @@ Configurable options
     #. **AbortCommandTimeOut** :  This refers to the timeout for the Subarray ABORTED obsState transition. Once the AbortCommandTimeOut exceeds, SubarrayNode transitions to obsState FAULT. Currently defaults to 40 seconds.
     #. **family** :  This refers to the family name of SubarrayNode TANGO device. Currently defaults to "subarray".
 
-#. Variables under **deviceServers.sdpsubarrayleafnode** section
+SDP Subarray Leaf Node
+^^^^^^^^^^^^^^^^^^^^^^^^
 
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
     #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
     #. **CommandTimeOut** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
-
     #. **family** :  This refers to the family name of SDP Subarray Leaf Node TANGO device. Currently defaults to "subarray-leaf-node-sdp".
 
-#. Variables under  **deviceServers.sdpmasterleafnode** section
+SDP Master Leaf Node
+^^^^^^^^^^^^^^^^^^^^^^^^
 
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
     #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
@@ -101,7 +161,8 @@ Configurable options
     #. **family** :  This refers to the family name of SDP Master Leaf Node TANGO device. Currently defaults to "leaf-node-sdp".
     #. **member** :  This refers to the member of SDP Master Leaf Node TANGO device. Currently defaults to "0".
 
-#. Variables under **deviceServers.cspmasterleafnode** section
+CSP Master Leaf Node
+^^^^^^^^^^^^^^^^^^^^^^^^
 
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
     #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
@@ -109,7 +170,8 @@ Configurable options
     #. **family** :  This refers to the family name of CSP Master Leaf Node TANGO device. Currently defaults to "leaf-node-csp".
     #. **member** :  This refers to the member of CSP Master Leaf Node TANGO device. Currently defaults to "0".
 
-#. Variables under **deviceServers.cspsubarrayleafnode** section
+CSP Subarray Leaf Node
+^^^^^^^^^^^^^^^^^^^^^^^^
 
     #. **DelayCadence** :  This refers to the time difference (in seconds) between each publication of delay values to the `delayModel` attribute on the `CspSubarrayLeafNode`. Currently defaults to 300 seconds.
     #. **DelayValidityPeriod** : This represents the duration (in seconds) for which delay values remain valid after being published. Currently defaults to 600 seconds.
@@ -123,7 +185,8 @@ Configurable options
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
     #. **family** :  This refers to the family name of CSP Subarray Leaf Node TANGO device. Currently defaults to "subarray-leaf-node-csp".
 
-#. Variables under **deviceServers.mccsmasterleafnode** section
+MCCS Master Leaf Node
+^^^^^^^^^^^^^^^^^^^^^^^^
 
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
     #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
@@ -132,30 +195,11 @@ Configurable options
     #. **family** :  This refers to the family name of MCCS Master Leaf Node TANGO device. Currently defaults to "leaf-node-mccs".
     #. **member** :  This refers to the member of MCCS Master Leaf Node TANGO device. Currently defaults to "0".
 
-#. Variables under **deviceServers.mccssubarrayleafnode** section
+MCCS Master Leaf Node
+^^^^^^^^^^^^^^^^^^^^^^^^
 
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
     #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
     #. **CommandTimeOut** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
     #. **family** :  This refers to the family name of MCCS Subarray Leaf Node TANGO device. Currently defaults to "subarray-leaf-node-mccs".
-
-
-**NOTE** : {id} is the identifier for the deployed subarray. For instance, if two subarrays are deployed
-
-        Subarray 1 refers to:
-            | Subarray Node : low-tmc/subarray/01
-            | CSP Subarray Leaf Node: low-tmc/subarray-leaf-node-csp/01
-            | SDP Subarray Leaf Node: low-tmc/subarray-leaf-node-sdp/01
-            | MCCS Subarray Leaf Node: low-tmc/subarray-leaf-node-mccs/01
-
-        Subarray 2 refers to:
-            | Subarray Node : low-tmc/subarray/02
-            | CSP Subarray Leaf Node: low-tmc/subarray-leaf-node-csp/02
-            | SDP Subarray Leaf Node: low-tmc/subarray-leaf-node-sdp/02
-            | MCCS Subarray Leaf Node: low-tmc/subarray-leaf-node-mccs/02
-
-
-
-
-

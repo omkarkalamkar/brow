@@ -1,8 +1,8 @@
 
 .. _`Recovering TMC Low`:
 
-How to recover TMC Low when it remains in given ObsState for long time
-=======================================================================
+Recovering when system stucks in an ObsState for long time
+==========================================================
 The following table list down the steps to recover TMC Low when it is stuck in one 
 of the intermediate ObsState (Example: RESOURCING, CONFIGURING).
 

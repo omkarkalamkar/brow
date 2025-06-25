@@ -1,0 +1,34 @@
+Attribute Name,Data Type,Is archived?,Archiver config
+State,DevState (Enum),Yes,Change Event
+Status,DevString,No,
+adminMode,AdminMode (DevEnum),No,
+buildState,DevString,No,
+commandedState,commandedState,No,
+controlMode,ControlMode,No,
+desiredTelescopeState,DevState,Yes,Change Event
+healthState,HealthState (DevEnum),Yes,Change Event
+internalModel,DevString,No,
+lastDeviceInfoChanged,DevString,No,
+loggingLevel,LoggingLevel (Enum),No,
+simulationMode,SimulationMode (DevEnum),No,
+telescopeAvailability,DevString,Yes,Change Event
+telescopeHealthState,HealthState (Enum),Yes,Change Event
+telescopeState,DevState,No,
+testMode,TestMode (DevEnum),No,
+tmOpState,DevState,No,
+transformedInternalModel,DevString,No,
+cspMasterDevName,DevString,No,
+CspMasterLeafNodeDevName,DevString,No,
+sdpMasterDevName,DevString,No,
+SdpMasterLeafNodeDevName,DevString,No,
+mccsMasterName,DevString,No,
+mccsMasterLeafNodeName,DevString,No,
+subarrayDevNames,DevVarStringArray,No,
+versionId,DevString,No,
+loggingTargets,DevVarStringArray,No,
+longRunningCommandIDsInQueue,DevVarStringArray,No,
+longRunningCommandInProgress,DevVarStringArray,No,
+longRunningCommandProgress,DevVarStringArray,No,
+longRunningCommandResult,DevVarStringArray,No,
+longRunningCommandStatus,DevVarStringArray,No,
+longRunningCommandsInQueue,DevVarStringArray,No,

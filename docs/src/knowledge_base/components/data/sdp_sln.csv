@@ -1,0 +1,30 @@
+Attribute Name,Data Type,Is archived?,Archiver config
+State,DevState (Enum),Yes,Change Event
+Status,DevString,No,
+adminMode,AdminMode (DevEnum),No,
+buildState,DevString,No,
+commandedState,commandedState,No,
+controlMode,ControlMode,No,
+healthState,HealthState (DevEnum),Yes,Change Event
+isAdminModeEnabled,DevBoolean,No,
+isSubsystemAvailable,DevBoolean,Yes,Change Event
+lastDeviceInfoChanged,DevString,No,
+loggingLevel,LoggingLevel (Enum),No,
+sdpSubarrayAdminMode,AdminMode (DevEnum),No,
+sdpSubarrayDevName,DevString,No,
+sdpSubarrayObsState,ObsState (DevEnum),Yes,Change Event
+simulationMode,SimulationMode (DevEnum),No,
+testMode,TestMode (DevEnum),No,
+versionId,DevString,No,
+_lrcEvent,DevVarStringArray,No,
+loggingTargets,DevVarStringArray,No,
+longRunningCommandIDsInQueue,DevVarStringArray,No,
+longRunningCommandInProgress,DevVarStringArray,No,
+longRunningCommandProgress,DevVarStringArray,No,
+longRunningCommandResult,DevVarStringArray,No,
+longRunningCommandStatus,DevVarStringArray,No,
+longRunningCommandsInQueue,DevVarStringArray,No,
+lrcExecuting,DevVarStringArray,No,
+lrcFinished,DevVarStringArray,No,
+lrcProtocolVersions,LrcMixedIn,No,
+lrcQueue,DevVarStringArray,No,
