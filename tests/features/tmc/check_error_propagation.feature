@@ -10,6 +10,10 @@
 		            |READY            | END     | CSP                  | FAULT |
 		            |READY            | END     | MCCS                 | FAULT |
 		            |READY            | END     | SDP                  | FAULT|
+		            |IDLE             | CONFIGURE | CSP                | FAULT |
+                    |IDLE             | CONFIGURE | MCCS               | FAULT |
+                    |IDLE             | CONFIGURE | CSP                | FAULT |
+
 
 
 
