@@ -297,7 +297,7 @@ class CentralNodeWrapperLow(object):
                     json.dumps((int(ResultCode.OK), "Command Completed")),
                 ),
             )
-            self.move_to_off()
+        self.move_to_off()
         self._clear_command_call_and_transition_data(clear_transition=True)
         self.event_recorder.clear_events()
         self.event_tracer.clear_events()
