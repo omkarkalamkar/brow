@@ -349,6 +349,7 @@ def test_assign_release_timeout_csp(
     event_tracer.subscribe_event(
         central_node_low.central_node, "longRunningCommandResult"
     )
+    event_tracer.subscribe_event(central_node_low.subarray_node, "obsState")
 
     assign_input_json = prepare_json_args_for_centralnode_commands(
         "assign_resources_low", command_input_factory
