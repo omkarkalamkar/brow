@@ -25,7 +25,8 @@ SUBSYSTEM_DEVICES = {
 @pytest.mark.aki
 @scenario(
     "../features/tmc/check_cmd_not_allowed_adminmode.feature",
-    "Command not allowed from CentralNode when subsystem adminmode is OFFLINE/NOT_FITTED",
+    "Command not allowed from CentralNode when subsystem adminmode "
+    "is OFFLINE/NOT_FITTED",
 )
 def test_command_not_allowed():
     """
