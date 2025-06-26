@@ -280,5 +280,5 @@ class TestAssignCommandNotAllowedPropagation:
         assert wait_and_validate_device_attribute_value(
             central_node_low.subarray_node,
             "obsState",
-            ObsState.EMPTY,
+            ObsState.FAULT,
         )
