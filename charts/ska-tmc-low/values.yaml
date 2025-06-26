@@ -157,7 +157,7 @@ deviceServers:
     AdapterTimeOut: 2
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
-    SDPSubarrayAdminModeEnabled: true
+    SDPSubarrayAdminModeEnabled: false
     family: "subarray-leaf-node-sdp"
 
   sdpmasterleafnode:
@@ -167,7 +167,7 @@ deviceServers:
     AdapterTimeOut: 2
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
-    SDPMasterAdminModeEnabled: true
+    SDPMasterAdminModeEnabled: false
     family: "leaf-node-sdp"
     member: "0"
 
