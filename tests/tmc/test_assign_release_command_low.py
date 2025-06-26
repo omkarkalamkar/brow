@@ -95,6 +95,17 @@ def test_assign_release_defective_csp(
     log_events({central_node_low.central_node: ["longRunningCommandResult"]})
 
     assert_that(event_tracer).described_as(
+        "FAILED UNEXPECTED INITIAL OBSSTATE: "
+        "Subarray Node device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        "is expected to be in FAULT obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "obsState",
+        ObsState.FAULT,
+    )
+
+    assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION ATER ASSIGN RESOURCES: "
         "Central Node device"
         f"({central_node_low.central_node.dev_name()}) "
@@ -168,6 +179,17 @@ def test_assign_release_timeout_sdp(
     exception_message = (
         f"{central_node_low.sdp_subarray_leaf_node.dev_name()}:"
         " Timeout has occurred, command failed"
+    )
+
+    assert_that(event_tracer).described_as(
+        "FAILED UNEXPECTED INITIAL OBSSTATE: "
+        "Subarray Node device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        "is expected to be in FAULT obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "obsState",
+        ObsState.FAULT,
     )
 
     assert_that(event_tracer).described_as(
@@ -250,16 +272,6 @@ def test_release_exception_propagation(
 
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
-        "Subarray Node device"
-        f"({central_node_low.subarray_node.dev_name()}) "
-        "is expected to be in RESOURCING obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
-        "obsState",
-        ObsState.RESOURCING,
-    )
-    assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
         "Csp Subarray device"
         f"({central_node_low.subarray_node.dev_name()}) "
         "is expected to be in RESOURCING obstate",
@@ -268,12 +280,22 @@ def test_release_exception_propagation(
         "obsState",
         ObsState.RESOURCING,
     )
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
+        "Subarray Node device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        "is expected to be in RESOURCING obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "obsState",
+        ObsState.FAULT,
+    )
     _, unique_id = central_node_low.perform_action(
         "ReleaseResources", release_input_json
     )
 
     exception_message = (
-        "ReleaseResources command not permitted in observation state 1"
+        "ReleaseResources command not permitted in observation state 9"
     )
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
@@ -362,5 +384,15 @@ def test_assign_release_timeout_csp(
         [exception_message],
         unique_id[0],
         ResultCode.FAILED,
+    )
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
+        "Subarray Node device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        "is expected to be in RESOURCING obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "obsState",
+        ObsState.FAULT,
     )
     csp_subarray_sim.SetDefective(json.dumps(RESET_DEFECT))
