@@ -2,7 +2,7 @@ import json
 import logging
 from time import sleep
 
-from ska_control_model import ObsState
+from ska_control_model import AdminMode, ObsState
 from ska_ser_logging import configure_logging
 from ska_tango_base.control_model import HealthState
 from tango import DeviceProxy, DevState
@@ -281,6 +281,12 @@ class SubarrayNodeWrapperLow:
 
     def move_to_on(self):
         # Move subarray to ON state
+        if self.csp_subarray1.adminMode != AdminMode.ONLINE:
+            self.csp_subarray1.adminMode = AdminMode.ONLINE
+        if self.sdp_subarray1.adminMode != AdminMode.ONLINE:
+            self.sdp_subarray1.adminMode = AdminMode.ONLINE
+        if self.mccs_subarray1.adminMode != AdminMode.ONLINE:
+            self.mccs_subarray1.adminMode = AdminMode.ONLINE
         result, message = self.subarray_node.On()
         LOGGER.info("Invoked ON on SubarrayNode")
         return result, message

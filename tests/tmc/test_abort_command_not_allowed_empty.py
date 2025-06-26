@@ -19,7 +19,7 @@ from tests.resources.test_harness.subarray_node_low import (
 from tests.resources.test_support.constant_low import TIMEOUT
 
 
-@pytest.mark.aki
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_abort_command.feature",
     "TMC executes Abort Command in EMPTY obsState.",
