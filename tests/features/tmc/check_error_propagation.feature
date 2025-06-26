@@ -6,13 +6,13 @@
 		Then the command failure is reported by subarray with error message
 		Then the TMC SubarrayNode transitions to FAULT obsState
 		Examples:
-		            |initialObsState  | command | defectiveSubsystem
-		            |SCANNING         | ENDSCAN | CSP
-		            |SCANNING         | ENDSCAN | MCCS
-		            |READY            | SCAN    | CSP
-		            |READY            | SCAN    | MCCS
-		            |SCANNING         | ENDSCAN | SDP
-		            |READY            | SCAN    | SDP
+		            |initialObsState  | command | defectiveSubsystem |
+		            |SCANNING         | ENDSCAN | CSP |
+		            |SCANNING         | ENDSCAN | MCCS |
+		            |READY            | SCAN    | CSP |
+		            |READY            | SCAN    | MCCS |
+		            |SCANNING         | ENDSCAN | SDP |
+		            |READY            | SCAN    | SDP |
 
 
 
