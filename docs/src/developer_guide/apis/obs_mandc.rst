@@ -1,7 +1,8 @@
 .. _obs_apis:
 
+===========================
 Observation Execution APIs
-**************************
+===========================
 
 The observation execution can be done by following a sequence of APIs as follows:
 

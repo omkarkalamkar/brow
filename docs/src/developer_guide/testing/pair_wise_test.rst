@@ -1,16 +1,24 @@
-######################################
-TMC LOW integration Testing guidelines
-######################################
+====================================
+TMC LOW pair wise Testing guidelines
+====================================
 
-****************************
-Pair wise testing / Real-SDP
-****************************
+.. note::
+    Update as of June 2025: From PI 24 onwards the pairwise testing has been 
+    moved from this repository to SKA Low Software Integration repository. 
+    Currently, in that repo too, the pairwise testing is disabled by default. 
+    It is still possible to perform pair wise testing with certain settings 
+    and modifications. This article is kept here to maintain the knowledge 
+    base.
+
+
+TMC - SDP Pair
+===============
 
 Pair wise testing is way of testing the TMC code with real SDP subsystem in place. 
 using latest `test harness` implemented. 
 
 Commands implemented
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 To test with tmc_sdp execute the command::
 
     make k8s-test MARK=tmc_sdp SDP_SIMULATION_ENABLED=false
@@ -28,7 +36,7 @@ To test with tmc_sdp execute the command::
 * ``Restart`` - Testing Restart command TMC with Real-SDP in place.
 
 Negative Scenario implemented
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------
 
 * ``HealthState.DEGRADED Scenario``
 
@@ -38,21 +46,21 @@ Negative Scenario implemented
         - The scenario simulates a telescope setup consisting of Real SDP, and simulated devices for the CSP and the MCCS.
 
 Long command sequence implementation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+--------------------------------------
 
 * ``TMC Low executes configure-scan sequence of commands successfully`` - Testing TMC-SDP long sequence for configure-scan functionality by parameterizing the scan_types and scan_ids
 * ``TMC Low executes multiple scans with same configuration successfully`` - Testing TMC-SDP long sequence for multiple scans functionality by parameterizing the scan_types and scan_ids
 * ``TMC Low executes multiple scans with different resources and configurations``-  Testing TMC-SDP long sequence for multiple scan functionality by parameterizing new scan_type and new scan_ids
 
-****************************
-Pair wise testing / Real-CSP
-****************************
+
+TMC - CSP Pair
+==============
 
 Pair wise testing is way of testing the TMC code with real CSP subsystem in place. 
 using latest `test harness` implemented. 
 
 Commands implemented
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 To test with tmc_csp execute the command::
 
     `make k8s-test MARK=tmc_csp CSP_SIMULATION_ENABLED=false`
@@ -69,14 +77,13 @@ To test with tmc_csp execute the command::
 * ``Restart`` - Testing Restart command on TMC with real CSP controller and CSP Subarrays and mocked/simulated SDP and Mccs subsystems.
 
 
-*****************************
-Pair wise testing / Real-MCCS
-*****************************
+TMC - MCCS Pair
+===============
 
 Pair wise testing is way of testing the TMC code with real MCCS subsystem in place using latest `test harness` implemented.
 
 Commands implemented
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 To test with tmc_mccs execute the command::
 
     `make k8s-test MARK=tmc_mccs MCCS_SIMULATION_ENABLED=false`
@@ -91,7 +98,7 @@ To test with tmc_mccs execute the command::
 * ``EndScan`` - Testing EndScan command on TMC with real MCCS controller and MCCS Subarrays and mocked/simulated SDP and CSP subsystems.
 
 Negative Scenario implemented
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------------
 
 * ``HealthState.DEGRADED Scenario``
 
