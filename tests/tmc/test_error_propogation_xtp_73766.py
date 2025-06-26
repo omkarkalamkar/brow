@@ -38,7 +38,7 @@ from tests.tmc.conftest import (
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation.feature",
-    "Error Propagation Reported by TMC Low End/EndScan/Scan "
+    "Error Propagation Reported by TMC Low EndScan/Scan "
     "Commands for Defective Subarray",
 )
 def test_tmc_command_error_propagation():
