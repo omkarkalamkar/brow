@@ -149,7 +149,7 @@ def invoke_configure_command_with_mccs_defective(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         subarray_node_low.subarray_node,
         "obsState",
-        ObsState.CONFIGURING,
+        ObsState.FAULT,
     )
 
 
