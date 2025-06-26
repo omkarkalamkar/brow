@@ -3,6 +3,7 @@
 
 import pytest
 from assertpy import assert_that
+from ska_control_model import ObsState
 from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DevState
 
@@ -13,6 +14,9 @@ from tests.resources.test_harness.constant import (
     low_sdp_subarray_leaf_node,
     mccs_controller,
     mccs_master_leaf_node,
+)
+from tests.resources.test_harness.helpers import (
+    wait_and_validate_device_attribute_value,
 )
 from tests.resources.test_harness.simulator_factory import SimulatorFactory
 from tests.resources.test_harness.utils.common_utils import JsonFactory
@@ -47,6 +51,9 @@ class TestAssignCommandNotAllowedPropagation:
         )
         event_tracer.subscribe_event(
             central_node_low.central_node, "longRunningCommandResult"
+        )
+        event_tracer.subscribe_event(
+            central_node_low.subarray_node, "obsState"
         )
 
         # Preparing input arguments
@@ -94,6 +101,16 @@ class TestAssignCommandNotAllowedPropagation:
             [exception_message],
             unique_id[0],
             ResultCode.FAILED,
+        )
+        assert_that(event_tracer).described_as(
+            "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
+            "Subarray Node device"
+            f"({central_node_low.subarray_node.dev_name()}) "
+            "is expected to be in FAULT obstate",
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            central_node_low.subarray_node,
+            "obsState",
+            ObsState.FAULT,
         )
 
     @pytest.mark.SKA_low
@@ -144,7 +161,10 @@ class TestAssignCommandNotAllowedPropagation:
             "AssignResources", assign_input_json
         )
         log_events(
-            {central_node_low.central_node: ["longRunningCommandResult"]}
+            {
+                central_node_low.central_node: ["longRunningCommandResult"],
+                central_node_low.subarray_node: ["obsState"],
+            }
         )
         exception_message = (
             "Exception occurred on the following devices: "
@@ -164,6 +184,16 @@ class TestAssignCommandNotAllowedPropagation:
             [exception_message],
             unique_id[0],
             ResultCode.FAILED,
+        )
+        assert_that(event_tracer).described_as(
+            "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
+            "Subarray Node device"
+            f"({central_node_low.subarray_node.dev_name()}) "
+            "is expected to be in FAULT obstate",
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            central_node_low.subarray_node,
+            "obsState",
+            ObsState.FAULT,
         )
 
     @pytest.mark.SKA_low
@@ -246,4 +276,9 @@ class TestAssignCommandNotAllowedPropagation:
             [exception_message, exception_message2],
             unique_id[0],
             ResultCode.FAILED,
+        )
+        assert wait_and_validate_device_attribute_value(
+            central_node_low.subarray_node,
+            "obsState",
+            ObsState.EMPTY,
         )
