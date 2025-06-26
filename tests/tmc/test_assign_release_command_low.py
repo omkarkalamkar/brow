@@ -1,10 +1,12 @@
 """Test cases for AssignResources and ReleaseResources
  Command for low"""
 import json
+import logging
 
 import pytest
 from assertpy import assert_that
 from ska_control_model import ObsState, ResultCode
+from ska_ser_logging import configure_logging
 from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DevState
 
@@ -26,6 +28,9 @@ from tests.resources.test_support.constant_low import (
     RESET_DEFECT,
     tmc_subarraynode1,
 )
+
+configure_logging(logging.DEBUG)
+LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.SKA_low
@@ -372,7 +377,12 @@ def test_assign_release_timeout_csp(
         "AssignResources", assign_input_json
     )
     exception_message = "Timeout has occurred, command failed"
-    log_events({central_node_low.central_node: ["longRunningCommandResult"]})
+    log_events(
+        {
+            central_node_low.central_node: ["longRunningCommandResult"],
+            central_node_low.subarray_node: ["obsState"],
+        }
+    )
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION ATER ASSIGN RESOURCES: "
         "Central Node device"
@@ -385,11 +395,14 @@ def test_assign_release_timeout_csp(
         unique_id[0],
         ResultCode.FAILED,
     )
+    LOGGER.info(
+        "SA ObsState is: %s", central_node_low.subarray_node.obsState.value
+    )
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
         "Subarray Node device"
         f"({central_node_low.subarray_node.dev_name()}) "
-        "is expected to be in RESOURCING obstate",
+        "is expected to be in FAULT obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
