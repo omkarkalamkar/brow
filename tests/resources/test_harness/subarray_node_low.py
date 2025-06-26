@@ -2,7 +2,7 @@ import json
 import logging
 from time import sleep
 
-from ska_control_model import ObsState
+from ska_control_model import AdminMode, ObsState
 from ska_ser_logging import configure_logging
 from ska_tango_base.control_model import HealthState
 from tango import DeviceProxy, DevState
@@ -281,6 +281,13 @@ class SubarrayNodeWrapperLow:
 
     def move_to_on(self):
         # Move subarray to ON state
+        if self.csp_subarray1.adminMode != AdminMode.ONLINE:
+            self.csp_subarray1.adminMode = AdminMode.ONLINE
+        if self.sdp_subarray1.adminMode != AdminMode.ONLINE:
+            self.sdp_subarray1.adminMode = AdminMode.ONLINE
+        if self.mccs_subarray1.adminMode != AdminMode.ONLINE:
+            self.mccs_subarray1.adminMode = AdminMode.ONLINE
+
         result, message = self.subarray_node.On()
         LOGGER.info("Invoked ON on SubarrayNode")
         return result, message
@@ -428,7 +435,7 @@ class SubarrayNodeWrapperLow:
             self.execute_transition("Abort")
             wait_for_partial_or_complete_abort()
             self.restart_subarray()
-        elif self.subarray_node.obsState == ObsState.ABORTED:
+        elif self.subarray_node.obsState in [ObsState.ABORTED, ObsState.FAULT]:
             # Invoke Restart
             LOGGER.info("Invoking Restart on Subarray")
             self.restart_subarray()
@@ -436,12 +443,6 @@ class SubarrayNodeWrapperLow:
             # Invoke Release
             LOGGER.info("Invoking Release Resources on Subarray")
             self.release_resources(self.release_input)
-        elif self.subarray_node.obsState == ObsState.FAULT:
-            # make do approach for tear down
-            LOGGER.info("moving sdp, csp, mccs to aborted obsstate")
-            self.set_low_csp_sdp_mccs_to_obs_state(ObsState.ABORTED)
-            LOGGER.info("Invoking restart on subarray for fault obsstate")
-            self.restart_subarray()
 
         else:
             self.force_change_of_obs_state("EMPTY")
@@ -493,28 +494,3 @@ class SubarrayNodeWrapperLow:
             LOGGER.exception("Exception occurred while setting scan id: %s", e)
             raise
         return json.dumps(input_json)
-
-    def set_low_csp_sdp_mccs_to_obs_state(self, obs_state):
-        LOGGER.info("Setting ObsState to : %s", obs_state)
-
-        proxy_sdp_saln = DeviceProxy(low_sdp_subarray_leaf_node)
-        proxy_sdp_saln.SetSdpSubarrayLeafNodeObsState(obs_state)
-
-        proxy_csp_saln = DeviceProxy(low_csp_subarray_leaf_node)
-        proxy_csp_saln.SetCspSubarrayLeafNodeObsState(obs_state)
-
-        proxy_mccs_saln = DeviceProxy(mccs_subarray_leaf_node)
-        proxy_mccs_saln.SetDirectObsState(obs_state)
-
-        LOGGER.info(
-            "ObsState of csp subarray leaf node: %s",
-            proxy_csp_saln.cspSubarrayObsState,
-        )
-        LOGGER.info(
-            "ObsState of sdp subarray leaf node: %s",
-            proxy_sdp_saln.sdpSubarrayObsState,
-        )
-        LOGGER.info(
-            "ObsState of mccs subarray leaf node: %s",
-            proxy_mccs_saln.obsState,
-        )
