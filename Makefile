@@ -80,7 +80,7 @@ ADD_ARGS +=  --true-context
 MARK ?= $(shell echo $(TELESCOPE) | sed "s/-/_/g")
 endif
 
-PYTHON_VARS_AFTER_PYTEST ?= -m '$(MARK)' $(ADD_ARGS) $(FILE) --count=$(COUNT)
+PYTHON_VARS_AFTER_PYTEST ?= -m '$(MARK)' $(ADD_ARGS) $(FILE) -x --count=$(COUNT)
 
 ifeq ($(CSP_SIMULATION_ENABLED),false)
 CUSTOM_VALUES =	-f charts/ska-tmc-testing-low/tmc_csp_values.yaml

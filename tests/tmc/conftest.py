@@ -240,8 +240,8 @@ def perform_configure(
     configure_input_json = prepare_json_args_for_commands(
         "configure_low", command_input_factory
     )
-    _, pytest.unique_id = subarray_node_low.store_configuration_data(
-        configure_input_json
+    _, pytest.unique_id = subarray_node_low.execute_transition(
+        "Configure", configure_input_json
     )
 
 
