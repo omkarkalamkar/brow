@@ -616,6 +616,17 @@ def given_the_telescope_is_in_the_on_state(
 
 def move_to_idle(tmc: TMCFacade, event_tracer: TangoEventTracer):
     """Move subarray to idle state"""
+    event_tracer.subscribe_event(tmc.subarray_node, "obsState")
+    event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
+
+    log_events(
+        {
+            tmc.central_node: [
+                "longRunningCommandResult",
+            ]
+        }
+    )
+
     assign_input = MyFileJSONInput("centralnode", "assign_resources_low")
 
     _, unique_id = tmc.assign_resources(assign_input)
