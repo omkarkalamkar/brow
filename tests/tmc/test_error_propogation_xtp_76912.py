@@ -134,11 +134,22 @@ def error_reporting(
         pytest.unique_id[0],
         ResultCode.FAILED,
     )
-    mccs.mccs_controller.SetDefective(json.dumps({"enabled": False}))
-    tmc.subarray_node.Abort()
-    assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
-        tmc.subarray_node, "obsState", ObsState.ABORTED
+    assert_that(event_tracers).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the tmc subarray must be in the FAULT obsState' "
+        "TMC Subarray device"
+        f"({tmc.subarray_node.dev_name()}) "
+        "is expected to be in FAULT obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.FAULT,
     )
+    mccs.mccs_controller.SetDefective(json.dumps({"enabled": False}))
+    # tmc.subarray_node.Abort()
+    # assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
+    #     tmc.subarray_node, "obsState", ObsState.ABORTED
+    # )
 
     tmc.subarray_node.Restart()
     assert_that(event_tracers).within_timeout(5).has_change_event_occurred(
