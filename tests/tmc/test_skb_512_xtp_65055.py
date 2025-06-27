@@ -284,5 +284,15 @@ def check_obs_state_ready_for_leaf_nodes(
         "obsState",
         ObsState.READY,
     )
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'tmc subarray should be in FAULT obsstate'"
+        f"({subarray_node_low.subarray_node.dev_name()}) "
+        "is expected to be in READY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.subarray_node,
+        "obsState",
+        ObsState.FAULT,
+    )
 
     event_tracer.clear_events()

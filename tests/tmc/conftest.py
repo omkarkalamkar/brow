@@ -30,6 +30,9 @@ from tests.resources.test_harness.subarray_node_low import (
 )
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_harness.utils.enums import SimulatorDeviceType
+from tests.resources.test_harness.utils.my_file_json_input import (
+    MyFileJSONInput,
+)
 from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
     prepare_json_args_for_commands,
@@ -577,4 +580,134 @@ def validate_subarry_obsState(
         subarray_node_low.subarray_node,
         "obsState",
         ObsState.FAULT,
+    )
+
+
+@given("the telescope is in the ON state")
+def given_the_telescope_is_in_the_on_state(
+    tmc: TMCFacade,
+    event_tracers: TangoEventTracer,
+):
+    """Ensure the telescope is in ON state."""
+    tmc.move_to_on(wait_termination=True)
+    event_tracers.subscribe_event(tmc.central_node, "telescopeState")
+    event_tracers.subscribe_event(tmc.central_node, "longRunningCommandResult")
+    event_tracers.subscribe_event(tmc.subarray_node, "obsState")
+    event_tracers.subscribe_event(
+        tmc.subarray_node, "longRunningCommandResult"
+    )
+
+    # Logging setup
+    log_events(
+        {
+            tmc.central_node: [
+                "telescopeState",
+                "longRunningCommandResult",
+            ],
+            tmc.subarray_node: [
+                "obsState",
+                "longRunningCommandResult",
+            ],
+        }
+    )
+    # Assertions
+    event_tracers.clear_events()
+
+
+def move_to_idle(tmc: TMCFacade, event_tracer: TangoEventTracer):
+    """Move subarray to idle state"""
+    assign_input = MyFileJSONInput("centralnode", "assign_resources_low")
+
+    _, unique_id = tmc.assign_resources(assign_input)
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER ASSIGNRESOURCES COMMAND: "
+        "Subarray Node device"
+        f"({tmc.subarray_node.dev_name()}) "
+        "is expected to be in IDLE obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.IDLE,
+    )
+
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN" STEP: '
+        "Central Node device"
+        f"({tmc.central_node.dev_name()}) "
+        "is expected have longRunningCommand as"
+        '(unique_id,(ResultCode.OK,"Command Completed"))',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.central_node,
+        "longRunningCommandResult",
+        (
+            unique_id[0],
+            json.dumps((int(ResultCode.OK), "Command Completed")),
+        ),
+    )
+    event_tracer.clear_events()
+
+
+def move_to_ready(
+    tmc: TMCFacade, event_tracer: TangoEventTracer, is_single_subsystem=False
+):
+    """Send a Configure command to the subarray"""
+    configure_input = MyFileJSONInput("subarray", "configure_low")
+
+    configure_input_json = json.loads(configure_input.as_str())
+    configure_input_json[
+        "interface"
+    ] = "https://schema.skao.int/ska-low-tmc-configure/4.2"
+
+    if is_single_subsystem:
+        for subsystem in ["sdp", "csp"]:
+            del configure_input_json[subsystem]
+
+    configure_input_json = json.dumps(configure_input_json)
+
+    tmc.subarray_node.Configure(configure_input_json)
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'And the subarray is in the READY obsState'"
+        "Subarray Node device"
+        f"({tmc.subarray_node.dev_name()}) "
+        "is expected to be in READY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.READY,
+    )
+
+
+def move_to_scanning(tmc: TMCFacade, event_tracer: TangoEventTracer):
+    """invoke scan command"""
+    scan_input = MyFileJSONInput("subarray", "scan_low")
+
+    tmc.scan(scan_input)
+
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the subarray must be in the SCANNING obsState until finished'"
+        "Subarray Node device"
+        f"({tmc.subarray_node.dev_name()}) "
+        "is expected to be in SCANNING obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.SCANNING,
+    )
+
+
+def invoke_endscan(tmc: TMCFacade, event_tracer: TangoEventTracer):
+    """Invoke endscan command"""
+    tmc.end_scan()
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'And the subarray is in the READY obsState'"
+        "Subarray Node device"
+        f"({tmc.subarray_node.dev_name()}) "
+        "is expected to be in READY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.READY,
     )
