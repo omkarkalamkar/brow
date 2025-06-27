@@ -9,10 +9,9 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 ************
 Updated
 -------
-* Retry on responsiveness check of subarraynode was implemented on 
-central node and centralnode v0.19.7 was utilized to resolve SKB-860 .
-* Resolved the hardcoding and utilised the  tag v0.8.1 of mccssubarrayleafnode 
-to resolve bug SKB-939.
+* Retry on responsiveness check of subarraynode was implemented on central node and centralnode 
+v0.19.7 was utilized to resolve SKB-860 .
+* Resolved the hardcoding and utilised the tag v0.8.1 of mccssubarrayleafnode to resolve bug SKB-939.
 
 [1.2.1-rc.2]
 ************
