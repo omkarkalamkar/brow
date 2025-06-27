@@ -89,3 +89,7 @@ def centralnode_rejects_command():
         keyword in str(exc).lower()
         for keyword in ["not allowed", "adminmode", "rejected"]
     ), f"Unexpected error message: {exc}"
+    # perform tear down
+    for _, device in SUBSYSTEM_DEVICES.items():
+        proxy = tango.DeviceProxy(device)
+        proxy.adminMode = AdminMode.ONLINE
