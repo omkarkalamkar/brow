@@ -1,4 +1,4 @@
-@XTP-29003
+
 Scenario: Verify Abort in Resourcing
     Given a TMC
     And central node is busy assigning resources
