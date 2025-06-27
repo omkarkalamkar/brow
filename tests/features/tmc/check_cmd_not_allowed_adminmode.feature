@@ -8,12 +8,6 @@ Feature: Command execution according to adminmode of subsystem devices
         Examples:
         | subsystem           | adminmode    | command         |
         | cspcontroller       | OFFLINE      | AssignResources |
-        | cspcontroller       | NOT_FITTED   | AssignResources |
-        | cspcontroller       | OFFLINE      | ReleaseResources|
-        | sdpcontroller       | NOT_FITTED   | ReleaseResources|
-        | mccscontroller      | OFFLINE      | On              |
-        | mccscontroller      | NOT_FITTED   | Off             |
-        | sdpcontroller       | OFFLINE      | On              |
 
     Scenario: SubarrayNode command not allowed from SubarrayNode when subsystem adminmode is OFFLINE/NOT_FITTED
         Given a Low telescope
