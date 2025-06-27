@@ -31,7 +31,7 @@ from tests.resources.test_harness.utils.enums import SimulatorDeviceType
 from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_commands,
 )
-from tests.tmc.conftest import perform_idle_transition, perform_scan
+from tests.tmc.conftest import perform_idle_transition
 
 
 @pytest.mark.SKA_fault
@@ -60,9 +60,14 @@ def execute_command(
     match command:
 
         case "ENDSCAN":
-            subarray_node_low.execute_transition("EndScan")
+            subarray_node_low.subarray_node.EndScan()
         case "SCAN":
-            perform_scan(subarray_node_low, command_input_factory)
+            scan_input_json = prepare_json_args_for_commands(
+                "scan_low", command_input_factory
+            )
+            _, pytest.unique_id = subarray_node_low.subarray_node.Scan(
+                scan_input_json
+            )
 
 
 @given(
@@ -99,7 +104,7 @@ def move_to_obsstate(
                 del configure_input_json[subsystem]
 
             configure_input_json = json.dumps(configure_input_json)
-            _, unique_id = subarray_node_low.store_configuration_data(
+            _, unique_id = subarray_node_low.subarray_node.Configure(
                 configure_input_json
             )
             assert_that(event_tracer).described_as(
@@ -152,7 +157,12 @@ def move_to_obsstate(
                     json.dumps((int(ResultCode.OK), "Command Completed")),
                 ),
             )
-            perform_scan(subarray_node_low, command_input_factory)
+            scan_input_json = prepare_json_args_for_commands(
+                "scan_low", command_input_factory
+            )
+            _, pytest.unique_id = subarray_node_low.subarray_node.Scan(
+                scan_input_json
+            )
 
 
 @when(parsers.parse("{command} is invoked on a defective MCCS Subarray"))
