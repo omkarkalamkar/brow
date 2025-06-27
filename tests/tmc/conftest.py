@@ -629,7 +629,7 @@ def move_to_idle(tmc: TMCFacade, event_tracer: TangoEventTracer):
 
     assign_input = MyFileJSONInput("centralnode", "assign_resources_low")
 
-    _, unique_id = tmc.assign_resources(assign_input)
+    _, unique_id = tmc.central_node.AssignResources(assign_input.as_str())
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGNRESOURCES COMMAND: "
         "Subarray Node device"
@@ -693,7 +693,7 @@ def move_to_scanning(tmc: TMCFacade, event_tracer: TangoEventTracer):
     """invoke scan command"""
     scan_input = MyFileJSONInput("subarray", "scan_low")
 
-    tmc.scan(scan_input)
+    tmc.subarray_node.Scan(scan_input.as_str())
 
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
@@ -710,7 +710,7 @@ def move_to_scanning(tmc: TMCFacade, event_tracer: TangoEventTracer):
 
 def invoke_endscan(tmc: TMCFacade, event_tracer: TangoEventTracer):
     """Invoke endscan command"""
-    tmc.end_scan()
+    tmc.subarray_node.EndScan()
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         "'And the subarray is in the READY obsState'"
