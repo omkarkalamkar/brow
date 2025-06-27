@@ -15,17 +15,18 @@ Feature: Command execution according to adminmode of subsystem devices
 		| mccscontroller      | NOT_FITTED   | Off             |
 		| sdpcontroller       | OFFLINE      | On              |
 
-    Scenario: Command not allowed from SubarrayNode when subsystem adminmode is OFFLINE/NOT_FITTED
-        Given a Low telescope
-        When the adminmode of subsystem subarray <subsystem> is <adminmode>
-        And I invoke command <command> on subarraynode
-        Then the subarraynode rejects the command
-
-        Examples:
-        | subsystem         | adminmode    | command   |
-        | cspsubarray       | OFFLINE      | Configure |
-        | cspsubarray       | NOT_FITTED   | Scan      |
-        | sdpsubarray       | OFFLINE      | End       |
-        | sdpsubarray       | NOT_FITTED   | EndScan   |
-        | mccssubarray      | OFFLINE      | Configure |
-        | mccssubarray      | NOT_FITTED   | End       |
+	@XTP-83576 @XTP-83574 @TEAM_HIMALAYA
+	Scenario: Command not allowed from SubarrayNode when subsystem adminmode is OFFLINE/NOT_FITTED
+		Given a Low telescope
+		When the adminmode of subsystem subarray <subsystem> is <adminmode>
+		And I invoke command <command> on subarraynode
+		Then the subarraynode rejects the command
+		
+		Examples:
+		| subsystem         | adminmode    | command   |
+		| cspsubarray       | OFFLINE      | Configure |
+		| cspsubarray       | NOT_FITTED   | Scan      |
+		| sdpsubarray       | OFFLINE      | End       |
+		| sdpsubarray       | NOT_FITTED   | EndScan   |
+		| mccssubarray      | OFFLINE      | Configure |
+		| mccssubarray      | NOT_FITTED   | End       |
