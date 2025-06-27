@@ -140,7 +140,7 @@ def move_to_obsstate(
                 del configure_input_json[subsystem]
 
             configure_input_json = json.dumps(configure_input_json)
-            _, unique_id = subarray_node_low.store_configuration_data(
+            _, unique_id = subarray_node_low.subarray_node.Configure(
                 configure_input_json
             )
             assert_that(event_tracer).described_as(
