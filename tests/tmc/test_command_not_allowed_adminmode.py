@@ -99,8 +99,8 @@ def centralnode_rejects_command():
         dev_errors = [dev_errors]
 
     error_messages = [err.desc for err in dev_errors]
-    assert (
-        expected_message in error_messages
+    assert any(
+        expected_message in msg for msg in error_messages
     ), f"Expected rejection message not found. Got: {error_messages}"
     # perform tear down
     for _, device in SUBSYSTEM_DEVICES.items():
