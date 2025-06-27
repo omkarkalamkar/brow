@@ -90,15 +90,14 @@ def centralnode_rejects_command():
     )
 
     # Extract error descriptions from the DevFailed exception
-    error_messages = [err.desc for err in exc.args[0]]
 
     expected_message = (
         "One or more controller devices are "
         "in adminMode OFFLINE or NOT-FITTED"
     )
     assert (
-        expected_message in error_messages
-    ), f"Expected rejection message not found. Got: {error_messages}"
+        expected_message in exc
+    ), f"Expected rejection message not found. Got: {exc}"
     # perform tear down
     for _, device in SUBSYSTEM_DEVICES.items():
         proxy = tango.DeviceProxy(device)
