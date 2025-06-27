@@ -37,7 +37,7 @@ from tests.tmc.conftest import move_to_idle, move_to_ready, move_to_scanning
     "Error Propagation Reported by TMC Low EndScan/Scan "
     "Commands for Defective MCCS Subarray",
 )
-def test_tmc_command_error_propagation():
+def test_tmc_command_error_propagation_fault():
     """
     Test case to verify TMC Error Propagation functionality.
     """
@@ -64,7 +64,9 @@ def execute_command(
 
 
 @given(
-    parsers.parse("the TMC subarray is in the {obsState} observation state")
+    parsers.parse(
+        "the TMC subarraynode is in the {obsState} observation state"
+    )
 )
 def move_to_obsstate(tmc: TMCFacade, event_tracer: TangoEventTracer, obsState):
     """Move Tmc to the given obsstate"""
