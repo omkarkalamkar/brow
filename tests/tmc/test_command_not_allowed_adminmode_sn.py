@@ -38,7 +38,7 @@ def test_command_not_allowed():
 
 @when(
     parsers.parse(
-        "the adminmode of subsystem controller {subsystem} is {adminmode}"
+        "the adminmode of subsystem subarray {subsystem} is {adminmode}"
     )
 )
 def set_admin_mode(subsystem, adminmode):
@@ -52,7 +52,7 @@ def set_admin_mode(subsystem, adminmode):
     assert proxy.adminMode == mode_enum
 
 
-@when(parsers.parse("I invoke command {command} on centralnode"))
+@when(parsers.parse("I invoke command {command} on subarraynode"))
 def invoke_assignresources(
     tmc: TMCFacade,
     command,
