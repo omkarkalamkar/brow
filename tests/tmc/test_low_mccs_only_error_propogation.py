@@ -13,21 +13,25 @@ import json
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
-from ska_control_model import ObsState
-from ska_integration_test_harness.facades.tmc_facade import TMCFacade
+from ska_control_model import ObsState, ResultCode
 from ska_tango_testing.integration import TangoEventTracer
 
+from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.constant import (
     ERROR_PROPAGATION_DEFECT,
     TIMEOUT,
+    mccs_subarray_leaf_node,
 )
 from tests.resources.test_harness.simulator_factory import SimulatorFactory
-from tests.resources.test_harness.utils.enums import SimulatorDeviceType
-from tests.resources.test_harness.utils.my_file_json_input import (
-    MyFileJSONInput,
+from tests.resources.test_harness.subarray_node_low import (
+    SubarrayNodeWrapperLow,
 )
-from tests.resources.test_support.common_utils.result_code import ResultCode
-from tests.tmc.conftest import move_to_idle, move_to_ready, move_to_scanning
+from tests.resources.test_harness.utils.common_utils import JsonFactory
+from tests.resources.test_harness.utils.enums import SimulatorDeviceType
+from tests.resources.test_support.common_utils.tmc_helpers import (
+    prepare_json_args_for_commands,
+)
+from tests.tmc.conftest import perform_idle_transition, perform_scan
 
 
 @pytest.mark.SKA_fault
@@ -45,7 +49,8 @@ def test_tmc_command_error_propagation_fault():
 
 def execute_command(
     command,
-    tmc: TMCFacade,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    command_input_factory: JsonFactory,
 ):
     """
     Execute command
@@ -55,12 +60,9 @@ def execute_command(
     match command:
 
         case "ENDSCAN":
-            tmc.subarray_node.EndScan()
+            subarray_node_low.execute_transition("EndScan")
         case "SCAN":
-
-            scan_input = MyFileJSONInput("subarray", "scan_low")
-
-            tmc.scan(scan_input)
+            perform_scan(subarray_node_low, command_input_factory)
 
 
 @given(
@@ -68,25 +70,97 @@ def execute_command(
         "the TMC subarraynode is in the {obsState} observation state"
     )
 )
-def move_to_obsstate(tmc: TMCFacade, event_tracer: TangoEventTracer, obsState):
+def move_to_obsstate(
+    central_node_low: CentralNodeWrapperLow,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    obsState,
+    command_input_factory,
+):
     """Move Tmc to the given obsstate"""
 
     match obsState:
         case "READY":
-            move_to_idle(tmc, event_tracer)
-            move_to_ready(tmc, event_tracer, True)
+            perform_idle_transition(
+                central_node_low,
+                subarray_node_low,
+                event_tracer,
+                command_input_factory,
+            )
+            configure_input_json = prepare_json_args_for_commands(
+                "configure_low", command_input_factory
+            )
 
+            configure_input_json = json.loads(configure_input_json)
+            configure_input_json[
+                "interface"
+            ] = "https://schema.skao.int/ska-low-tmc-configure/4.2"
+            for subsystem in ["sdp", "csp"]:
+                del configure_input_json[subsystem]
+
+            configure_input_json = json.dumps(configure_input_json)
+            _, unique_id = subarray_node_low.store_configuration_data(
+                configure_input_json
+            )
+            assert_that(event_tracer).described_as(
+                'FAILED ASSUMPTION IN "GIVEN" STEP: '
+                "Subarray Node device"
+                f"({central_node_low.subarray_node.dev_name()}) "
+                "is expected have longRunningCommand as"
+                '(unique_id,(ResultCode.OK,"Command Completed"))',
+            ).within_timeout(TIMEOUT).has_change_event_occurred(
+                central_node_low.subarray_node,
+                "longRunningCommandResult",
+                (
+                    unique_id[0],
+                    json.dumps((int(ResultCode.OK), "Command Completed")),
+                ),
+            )
         case "SCANNING":
-            move_to_idle(tmc, event_tracer)
-            move_to_ready(tmc, event_tracer, True)
-            move_to_scanning(tmc, event_tracer)
+            perform_idle_transition(
+                central_node_low,
+                subarray_node_low,
+                event_tracer,
+                command_input_factory,
+            )
+            configure_input_json = prepare_json_args_for_commands(
+                "configure_low", command_input_factory
+            )
+
+            configure_input_json = json.loads(configure_input_json)
+            configure_input_json[
+                "interface"
+            ] = "https://schema.skao.int/ska-low-tmc-configure/4.2"
+            for subsystem in ["sdp", "csp"]:
+                del configure_input_json[subsystem]
+
+            configure_input_json = json.dumps(configure_input_json)
+            _, unique_id = subarray_node_low.store_configuration_data(
+                configure_input_json
+            )
+            assert_that(event_tracer).described_as(
+                'FAILED ASSUMPTION IN "GIVEN" STEP: '
+                "Subarray Node device"
+                f"({central_node_low.subarray_node.dev_name()}) "
+                "is expected have longRunningCommand as"
+                '(unique_id,(ResultCode.OK,"Command Completed"))',
+            ).within_timeout(TIMEOUT).has_change_event_occurred(
+                central_node_low.subarray_node,
+                "longRunningCommandResult",
+                (
+                    unique_id[0],
+                    json.dumps((int(ResultCode.OK), "Command Completed")),
+                ),
+            )
+            perform_scan(subarray_node_low, command_input_factory)
 
 
 @when(parsers.parse("{command} is invoked on a defective MCCS Subarray"))
 def execute_command_on_tmc_with_defectivesetup(
-    tmc: TMCFacade,
+    subarray_node_low: SubarrayNodeWrapperLow,
     simulator_factory: SimulatorFactory,
     command,
+    command_input_factory: JsonFactory,
 ):
     """
     Send next command on TMC
@@ -98,12 +172,9 @@ def execute_command_on_tmc_with_defectivesetup(
         )
     )
 
-    pytest.defective_device = tmc.mccs_subarray_leaf_node
+    pytest.defective_device = mccs_subarray_leaf_node
 
-    execute_command(
-        command,
-        tmc,
-    )
+    execute_command(command, subarray_node_low, command_input_factory)
 
 
 @then(
@@ -112,7 +183,7 @@ def execute_command_on_tmc_with_defectivesetup(
     )
 )
 def validate_error_message_reporting(
-    tmc: TMCFacade,
+    subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """
@@ -129,11 +200,11 @@ def validate_error_message_reporting(
         '"the command failure is reported by subarray with appropriate"'
         '"error message"'
         "Subarray Node device"
-        f"({tmc.subarray_node.dev_name()}) "
+        f"({subarray_node_low.subarray_node.dev_name()}) "
         "is expected have longRunningCommandResult"
         "(ResultCode.FAILED,exception)",
     ).within_timeout(120).has_desired_result_code_message_in_lrcr_event(
-        tmc.subarray_node,
+        subarray_node_low.subarray_node,
         [exception_message],
         pytest.unique_id[0],
         ResultCode.FAILED,
@@ -144,7 +215,7 @@ def validate_error_message_reporting(
 
 @then(parsers.parse("the TMC SubarrayNode transitions to FAULT obsState"))
 def validate_subarry_obsState(
-    tmc: TMCFacade,
+    subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """
@@ -153,10 +224,10 @@ def validate_subarry_obsState(
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         '"the TMC SubarrayNode transitions to FAULT obsState"'
-        f"({tmc.subarray_node.dev_name()}) "
+        f"({subarray_node_low.subarray_node.dev_name()}) "
         "is expected to be in FAULT obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        tmc.subarray_node,
+        subarray_node_low.subarray_node,
         "obsState",
         ObsState.FAULT,
     )

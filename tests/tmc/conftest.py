@@ -707,7 +707,7 @@ def move_to_scanning(tmc: TMCFacade, event_tracer: TangoEventTracer):
         ObsState.SCANNING,
     )
     assert_that(event_tracer).described_as(
-        "Central Node device"
+        "SubarrayNode device"
         f"({tmc.subarray_node.dev_name()}) "
         "is expected have longRunningCommand as"
         '(unique_id,(ResultCode.OK,"Command Completed"))',
