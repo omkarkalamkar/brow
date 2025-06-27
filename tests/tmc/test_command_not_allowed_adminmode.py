@@ -85,13 +85,20 @@ def invoke_assignresources(
 def centralnode_rejects_command():
     """Assert the previously invoked command was rejected due to adminMode."""
     exc = getattr(pytest, "command_failed_exception", None)
+    assert exc is not None, (
+        "Expected the command to be rejected, " "but it succeeded"
+    )
+
+    # Extract error descriptions from the DevFailed exception
+    error_messages = [err.desc for err in exc.args[0]]
+
+    expected_message = (
+        "One or more controller devices are "
+        "in adminMode OFFLINE or NOT-FITTED"
+    )
     assert (
-        exc is not None
-    ), "Expected the command to be rejected, but it succeeded"
-    assert any(
-        keyword in str(exc).lower()
-        for keyword in ["not allowed", "adminmode", "rejected"]
-    ), f"Unexpected error message: {exc}"
+        expected_message in error_messages
+    ), f"Expected rejection message not found. Got: {error_messages}"
     # perform tear down
     for _, device in SUBSYSTEM_DEVICES.items():
         proxy = tango.DeviceProxy(device)
