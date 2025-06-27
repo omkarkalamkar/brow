@@ -55,7 +55,7 @@ def execute_command(
     match command:
 
         case "ENDSCAN":
-            tmc.end_scan()
+            tmc.subarray_node.EndScan()
         case "SCAN":
 
             scan_input = MyFileJSONInput("subarray", "scan_low")

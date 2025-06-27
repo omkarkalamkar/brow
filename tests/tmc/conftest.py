@@ -693,7 +693,7 @@ def move_to_scanning(tmc: TMCFacade, event_tracer: TangoEventTracer):
     """invoke scan command"""
     scan_input = MyFileJSONInput("subarray", "scan_low")
 
-    tmc.subarray_node.Scan(scan_input.as_str())
+    _, unique_id = tmc.subarray_node.Scan(scan_input.as_str())
 
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
@@ -705,6 +705,19 @@ def move_to_scanning(tmc: TMCFacade, event_tracer: TangoEventTracer):
         tmc.subarray_node,
         "obsState",
         ObsState.SCANNING,
+    )
+    assert_that(event_tracer).described_as(
+        "Central Node device"
+        f"({tmc.subarray_node.dev_name()}) "
+        "is expected have longRunningCommand as"
+        '(unique_id,(ResultCode.OK,"Command Completed"))',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "longRunningCommandResult",
+        (
+            unique_id[0],
+            json.dumps((int(ResultCode.OK), "Command Completed")),
+        ),
     )
 
 
