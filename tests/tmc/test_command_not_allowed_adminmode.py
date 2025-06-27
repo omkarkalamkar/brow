@@ -1,4 +1,6 @@
 """Test the adminmode"""
+import time
+
 import pytest
 import tango
 from pytest_bdd import parsers, scenario, then, when
@@ -43,8 +45,9 @@ def set_admin_mode(subsystem, adminmode):
     """Set the admin mode of a given subsystem."""
     device_name = SUBSYSTEM_DEVICES[subsystem]
     proxy = tango.DeviceProxy(device_name)
-    mode_enum = AdminMode[adminmode]  # Converts string to AdminMode enum
+    mode_enum = AdminMode[adminmode]
     proxy.adminMode = mode_enum
+    time.sleep(0.1)
     # Optional: Assert adminMode is set
     assert proxy.adminMode == mode_enum
 
