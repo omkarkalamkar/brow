@@ -1,3 +1,4 @@
+@XTP-64114 @XTP-28348 
 Scenario: Starting up low telescope
     Given a Low telescope
     When I invoke the ON command on the telescope

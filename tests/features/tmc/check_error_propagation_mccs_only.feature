@@ -9,5 +9,3 @@
 		            |obsState  | command |
 		            |SCANNING         | ENDSCAN |
 		            |READY            | SCAN    |
-
-w

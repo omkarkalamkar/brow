@@ -1,7 +1,6 @@
 import copy
 import json
 import logging
-import os
 import time
 import uuid
 from typing import Any
@@ -45,9 +44,6 @@ configure_logging(logging.DEBUG)
 LOGGER = logging.getLogger(__name__)
 TIMEOUT = 20
 EB_PB_ID_LENGTH = 16
-SDP_SIMULATION_ENABLED = os.getenv("SDP_SIMULATION_ENABLED")
-CSP_SIMULATION_ENABLED = os.getenv("CSP_SIMULATION_ENABLED")
-MCCS_SIMULATION_ENABLED = os.getenv("MCCS_SIMULATION_ENABLED")
 
 
 device_dict = {
@@ -569,39 +565,6 @@ def check_assigned_resources_attribute_value(
     return False
 
 
-def get_simulated_devices_info() -> dict:
-    """
-    A method to get simulated devices present in low deployment.
-
-    return: dict
-    """
-
-    is_csp_simulated = CSP_SIMULATION_ENABLED.lower() == "true"
-    is_sdp_simulated = SDP_SIMULATION_ENABLED.lower() == "true"
-    is_mccs_simulated = MCCS_SIMULATION_ENABLED.lower() == "true"
-    return {
-        "csp_and_sdp": all(
-            [is_csp_simulated, is_sdp_simulated, not is_mccs_simulated]
-        ),  # real MCCS enabled
-        "csp_and_mccs": all(
-            [is_csp_simulated, is_mccs_simulated, not is_sdp_simulated]
-        ),  # real SDP enabled
-        "sdp_and_mccs": all(
-            [is_sdp_simulated, is_mccs_simulated, not is_csp_simulated]
-        ),  # real CSP.LMC enabled
-        "all_mocks": all(
-            [
-                is_csp_simulated,
-                is_sdp_simulated,
-                is_mccs_simulated,
-            ]
-        ),
-    }
-
-
-SIMULATED_DEVICES_DICT = get_simulated_devices_info()
-
-
 def check_lrcr_events(
     event_recorder,
     device,
@@ -748,40 +711,39 @@ def retry_communication(device_proxy: DeviceProxy, timeout: int = 30) -> None:
 def set_admin_mode_values_mccs():
     """Set the adminMode values of MCCS devices."""
     max_retries: int = 3
-    if MCCS_SIMULATION_ENABLED.lower() == "false":
-        controller = tango.DeviceProxy(mccs_controller)
-        if controller.adminMode != AdminMode.ONLINE:
-            db = tango.Database()
-            pasd_bus_trls = db.get_device_exported(mccs_pasdbus_prefix)
-            for pasd_bus_trl in pasd_bus_trls:
-                pasdbus = tango.DeviceProxy(pasd_bus_trl)
-                retry_communication(pasdbus, 30)
+    controller = tango.DeviceProxy(mccs_controller)
+    if controller.adminMode != AdminMode.ONLINE:
+        db = tango.Database()
+        pasd_bus_trls = db.get_device_exported(mccs_pasdbus_prefix)
+        for pasd_bus_trl in pasd_bus_trls:
+            pasdbus = tango.DeviceProxy(pasd_bus_trl)
+            retry_communication(pasdbus, 30)
 
-            device_trls = db.get_device_exported(mccs_prefix)
-            devices = []
-            for device_trl in device_trls:
-                if "daq" in device_trl or "calibrationstore" in device_trl:
-                    device = tango.DeviceProxy(device_trl)
-                    retry_communication(device, 30)
-                else:
-                    device = tango.DeviceProxy(device_trl)
-                    retry: int = 0
-                    while (
-                        device.adminMode != AdminMode.ONLINE
-                        and retry <= max_retries
-                    ):
-                        try:
-                            device.adminMode = AdminMode.ONLINE
-                            devices.append(device)
-                            time.sleep(0.1)
-                        except tango.DevFailed as df:
-                            LOGGER.info(
-                                "Issue occurred during setting the admin "
-                                "mode: %s",
-                                df,
-                            )
-                            retry += 1
-                            time.sleep(0.1)
+        device_trls = db.get_device_exported(mccs_prefix)
+        devices = []
+        for device_trl in device_trls:
+            if "daq" in device_trl or "calibrationstore" in device_trl:
+                device = tango.DeviceProxy(device_trl)
+                retry_communication(device, 30)
+            else:
+                device = tango.DeviceProxy(device_trl)
+                retry: int = 0
+                while (
+                    device.adminMode != AdminMode.ONLINE
+                    and retry <= max_retries
+                ):
+                    try:
+                        device.adminMode = AdminMode.ONLINE
+                        devices.append(device)
+                        time.sleep(0.1)
+                    except tango.DevFailed as df:
+                        LOGGER.info(
+                            "Issue occurred during setting the admin "
+                            "mode: %s",
+                            df,
+                        )
+                        retry += 1
+                        time.sleep(0.1)
 
 
 def set_receive_address(central_node) -> None:
