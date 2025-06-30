@@ -397,7 +397,8 @@ def test_assign_release_timeout_csp(
         ResultCode.FAILED,
     )
     LOGGER.info(
-        "SA ObsState is: %s", central_node_low.subarray_node.obsState.value
+        "SubarrayNode ObsState: %s",
+        central_node_low.subarray_node.obsState.value,
     )
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "

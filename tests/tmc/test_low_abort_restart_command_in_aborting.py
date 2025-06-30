@@ -23,7 +23,6 @@ from tests.resources.test_harness.utils.common_utils import JsonFactory
 
 
 @pytest.mark.SKA_low
-# @pytest.mark.skip(reason="To be done under HM-697")
 def test_low_abort_restart_in_aborting(
     central_node_low: CentralNodeWrapperLow,
     subarray_node_low: SubarrayNodeWrapperLow,
