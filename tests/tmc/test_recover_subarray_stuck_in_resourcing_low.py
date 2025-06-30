@@ -369,6 +369,8 @@ def test_restart_with_sdp_csp_in_empty(
 
     defective_device_proxy.SetDefective(json.dumps({"enabled": False}))
 
+    event_tracer.clear_events()
+
     central_node_low.subarray_node.Restart()
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER Restart COMMAND: "
@@ -474,7 +476,7 @@ def test_abort_with_mccs_in_empty(
         "FAILED ASSUMPTION AFTER ASSIGN_RESOURCES COMMAND: "
         "Subarray Node device"
         f"({central_node_low.subarray_node.dev_name()}) "
-        "is expected to be in RESOURCING obstate",
+        "is expected to be in FAULT obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
@@ -529,6 +531,7 @@ def test_abort_with_mccs_in_empty(
         json.dumps({"enabled": False}),
         is_json=True,
     )
+    event_tracer.clear_events()
     subarray_node_low.subarray_node.Restart()
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ABORT COMMAND: "
