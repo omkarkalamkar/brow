@@ -35,7 +35,7 @@ from tests.resources.test_support.constant_low import (
 )
 
 
-@pytest.mark.SKA_fault
+# @pytest.mark.SKA_fault
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/SKB_512.feature",
