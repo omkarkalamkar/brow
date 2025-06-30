@@ -27,7 +27,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 from tests.resources.test_support.constant_low import TIMEOUT
 
 
-@pytest.mark.SKA_low
+@pytest.mark.SKA_low15
 @scenario(
     "../features/tmc/SKB_477.feature",
     "Verify SKB-477 - with TMC entrypoint",

@@ -25,7 +25,7 @@ from tests.resources.test_harness.utils.my_file_json_input import (
 from tests.resources.test_support.common_utils.result_code import ResultCode
 
 
-@pytest.mark.SKA_low
+@pytest.mark.SKA_low15
 @scenario(
     "../features/tmc/check_mccs_only_end.feature",
     "Successful Execution of the End Command on a Low"

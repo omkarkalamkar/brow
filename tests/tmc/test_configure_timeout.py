@@ -31,7 +31,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 class TestConfigureTimeout:
     """Tests for testing timeout for Configure command on LOW TMC."""
 
-    @pytest.mark.SKA_low
+    @pytest.mark.SKA_low15
     def test_configure_timeout_csp_ln(
         self,
         central_node_low: CentralNodeWrapperLow,
@@ -111,11 +111,11 @@ class TestConfigureTimeout:
             "FAILED ASSUMPTION AFTER CONFIGURE COMMAND: "
             "Subarray Node device"
             f"({subarray_node_low.subarray_node.dev_name()}) "
-            "is expected to be in CONFIGURING obstate",
+            "is expected to be in FAULT obstate",
         ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.subarray_node,
             "obsState",
-            ObsState.CONFIGURING,
+            ObsState.FAULT,
         )
         exception_message = "Timeout has occurred, command failed"
 
@@ -212,11 +212,11 @@ class TestConfigureTimeout:
             "FAILED ASSUMPTION AFTER CONFIGURE COMMAND: "
             "Subarray Node device"
             f"({subarray_node_low.subarray_node.dev_name()}) "
-            "is expected to be in CONFIGURING obstate",
+            "is expected to be in FAULT obstate",
         ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.subarray_node,
             "obsState",
-            ObsState.CONFIGURING,
+            ObsState.FAULT,
         )
         exception_message = "Timeout has occurred, command failed"
         sdp_ln_timeout_exception = (
@@ -317,11 +317,11 @@ class TestConfigureTimeout:
             "FAILED ASSUMPTION AFTER CONFIGURE COMMAND: "
             "Subarray Node device"
             f"({subarray_node_low.subarray_node.dev_name()}) "
-            "is expected to be in CONFIGURING obstate",
+            "is expected to be in FAULT obstate",
         ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.subarray_node,
             "obsState",
-            ObsState.CONFIGURING,
+            ObsState.FAULT,
         )
         exception_message = "Timeout has occurred, command failed"
         assert_that(event_tracer).described_as(

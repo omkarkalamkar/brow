@@ -31,7 +31,7 @@ from tests.resources.test_support.constant_low import (
 )
 
 
-@pytest.mark.SKA_low
+@pytest.mark.SKA_low15
 @scenario(
     "../features/tmc/SKB_646.feature",
     "Verify SKB-646",
