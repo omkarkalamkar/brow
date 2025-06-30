@@ -675,10 +675,11 @@ def move_to_ready(
 
     configure_input_json = json.dumps(configure_input_json)
 
-    tmc.subarray_node.Configure(configure_input_json)
+    _, unique_id = tmc.subarray_node.Configure(configure_input_json)
+
     assert_that(event_tracer).described_as(
-        'FAILED ASSUMPTION IN "THEN" STEP: '
-        "'And the subarray is in the READY obsState'"
+        "FAILED ASSUMPTION : "
+        "'the subarray is in the READY obsState'"
         "Subarray Node device"
         f"({tmc.subarray_node.dev_name()}) "
         "is expected to be in READY obstate",
@@ -686,6 +687,20 @@ def move_to_ready(
         tmc.subarray_node,
         "obsState",
         ObsState.READY,
+    )
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION : "
+        "Subarray Node device"
+        f"({tmc.subarray_node.dev_name()}) "
+        "is expected have longRunningCommand as"
+        '(unique_id,(ResultCode.OK,"Command Completed"))',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "longRunningCommandResult",
+        (
+            unique_id[0],
+            json.dumps((int(ResultCode.OK), "Command Completed")),
+        ),
     )
 
 
@@ -696,8 +711,8 @@ def move_to_scanning(tmc: TMCFacade, event_tracer: TangoEventTracer):
     _, unique_id = tmc.subarray_node.Scan(scan_input.as_str())
 
     assert_that(event_tracer).described_as(
-        'FAILED ASSUMPTION IN "THEN" STEP: '
-        "'the subarray must be in the SCANNING obsState until finished'"
+        "FAILED ASSUMPTION : "
+        "'the subarray must be in the SCANNING obsState'"
         "Subarray Node device"
         f"({tmc.subarray_node.dev_name()}) "
         "is expected to be in SCANNING obstate",

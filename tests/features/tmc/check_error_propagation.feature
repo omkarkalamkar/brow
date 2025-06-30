@@ -22,15 +22,12 @@
 		And the TMC subarray is in the <initialObsState> observation state
 		When <command> is invoked on a <defectiveSubsystem> Subarray
 		Then the command failure is reported by subarray with appropriate error message
-		Then the TMC SubarrayNode remains in <stuck> obsState
+		Then the TMC SubarrayNode transitions to FAULT obsState
 		Examples:
-		            |initialObsState  | command | defectiveSubsystem  |stuck|
-		            |READY            | END     | CSP                  | READY |
-		            |READY            | END     | MCCS                 | READY |
-		            |SCANNING         | ENDSCAN | CSP                  | SCANNING |
-		            |SCANNING         | ENDSCAN | MCCS                 | SCANNING |
-		            |READY            | SCAN    | CSP                  | SCANNING |
-		            |READY            | SCAN    | MCCS                 | SCANNING |
-		            |READY            | END     | SDP                  | READY|
-		            |SCANNING         | ENDSCAN | SDP                  | SCANNING|
-		            |READY            | SCAN    | SDP                  | SCANNING|
+		            |initialObsState  | command | defectiveSubsystem  |
+		            |SCANNING         | ENDSCAN | CSP                  |
+		            |SCANNING         | ENDSCAN | MCCS                 |
+		            |READY            | SCAN    | CSP                  |
+		            |READY            | SCAN    | MCCS                 |
+		            |SCANNING         | ENDSCAN | SDP                  |
+		            |READY            | SCAN    | SDP                  |
