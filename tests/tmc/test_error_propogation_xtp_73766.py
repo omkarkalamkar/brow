@@ -48,7 +48,7 @@ def test_tmc_command_error_propagation():
     """
 
 
-@pytest.mark.SKA_low15
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation.feature",
     "TimeOut Reported by TMC Low End/EndScan/Scan "
