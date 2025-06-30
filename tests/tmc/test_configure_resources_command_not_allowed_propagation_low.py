@@ -119,6 +119,11 @@ class TestConfigureCommandNotAllowedPropagation:
             " The invocation of the Configure command failed on Csp "
             + "Subarray Device low-csp/subarray/01"
         )
+
+        exception_message = (
+            "ska_tmc_common.exceptions.CommandNotAllowed: "
+            "Command is not allowed"
+        )
         # log_events(
         #     {subarray_node_low.subarray_node: ["longRunningCommandResult"]}
         # )
