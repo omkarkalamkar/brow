@@ -233,8 +233,6 @@ def validate_error_message_reporting(
     pytest.defective_subarray.SetDefective(json.dumps({"enabled": False}))
     pytest.defective_subarray.ResetDelayInfo()
 
-    event_tracer.clear_events()
-
 
 @then(parsers.parse("the TMC SubarrayNode transitions to FAULT obsState"))
 def validate_subarry_obsState(
