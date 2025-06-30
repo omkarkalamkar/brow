@@ -1,8 +1,0 @@
-tmc-low:
-  deviceServers:
-    mocks:
-      is_simulated:
-        mccs: false
-        
-ska-low-mccs:
-  enabled: true

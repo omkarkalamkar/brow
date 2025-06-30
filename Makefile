@@ -8,10 +8,6 @@ TANGO_HOST_NAME ?= tango-databaseds
 TELESCOPE ?= SKA-low
 KUBE_NAMESPACE ?= ska-tmc-low-integration
 KUBE_NAMESPACE_SDP ?= ska-tmc-integration-sdp
-CSP_SIMULATION_ENABLED ?= true
-SDP_SIMULATION_ENABLED ?= true
-MCCS_SIMULATION_ENABLED ?= true
-SDP_PROCCONTROL_REPLICAS ?= 1
 K8S_TIMEOUT ?= 600s
 PYTHON_LINT_TARGET ?= tests/
 
@@ -80,23 +76,8 @@ ADD_ARGS +=  --true-context
 MARK ?= $(shell echo $(TELESCOPE) | sed "s/-/_/g")
 endif
 
-PYTHON_VARS_AFTER_PYTEST ?= -m '$(MARK)' $(ADD_ARGS) $(FILE) --count=$(COUNT)
+PYTHON_VARS_AFTER_PYTEST ?= -m '$(MARK)' $(ADD_ARGS) $(FILE) --count=$(COUNT) -x
 
-ifeq ($(CSP_SIMULATION_ENABLED),false)
-CUSTOM_VALUES =	-f charts/ska-tmc-testing-low/tmc_csp_values.yaml
-endif
-
-ifeq ($(MCCS_SIMULATION_ENABLED),false)
-CUSTOM_VALUES =	-f charts/ska-tmc-testing-low/tmc_mccs_values.yaml
-endif
-
-ifeq ($(SDP_SIMULATION_ENABLED),false)
-CUSTOM_VALUES =	-f charts/ska-tmc-testing-low/tmc_sdp_values.yaml \
-	--set global.sdp_master=$(SDP_MASTER)\
-	--set global.sdp_subarray_prefix=$(SDP_SUBARRAY_PREFIX)\
-	--set ska-sdp.proccontrol.replicas=$(SDP_PROCCONTROL_REPLICAS)\
-	--set ska-sdp.helmdeploy.namespace=$(KUBE_NAMESPACE_SDP)
-endif
 
 K8S_CHART_PARAMS = --set global.minikube=$(MINIKUBE) \
 	--set global.tango_host=$(TANGO_HOST) \
@@ -115,9 +96,6 @@ PYTHON_VARS_BEFORE_PYTEST ?= PYTHONPATH=.:./src \
 							 TELESCOPE=$(TELESCOPE) \
 							 KUBE_NAMESPACE=$(KUBE_NAMESPACE) \
 							 KUBE_NAMESPACE_SDP=$(KUBE_NAMESPACE_SDP) \
-							 CSP_SIMULATION_ENABLED=$(CSP_SIMULATION_ENABLED) \
-							 SDP_SIMULATION_ENABLED=$(SDP_SIMULATION_ENABLED) \
-							 MCCS_SIMULATION_ENABLED=$(MCCS_SIMULATION_ENABLED) \
 
 K8S_TEST_TEST_COMMAND ?= $(PYTHON_VARS_BEFORE_PYTEST) $(PYTHON_RUNNER) \
 						pytest \
@@ -133,25 +111,6 @@ K8S_TEST_TEST_COMMAND ?= $(PYTHON_VARS_BEFORE_PYTEST) $(PYTHON_RUNNER) \
 -include PrivateRules.mak
 -include resources/alarmhandler.mk
 
-# to create SDP namespace
-k8s-pre-install-chart:
-ifeq ($(SDP_SIMULATION_ENABLED),false)
-	@echo "k8s-pre-install-chart: creating the SDP namespace $(KUBE_NAMESPACE_SDP)"
-	@make k8s-namespace KUBE_NAMESPACE=$(KUBE_NAMESPACE_SDP)
-endif
-
-# to create SDP namespace
-k8s-pre-install-chart-car:
-ifeq ($(SDP_SIMULATION_ENABLED),false)
-	@echo "k8s-pre-install-chart-car: creating the SDP namespace $(KUBE_NAMESPACE_SDP)"
-	@make k8s-namespace KUBE_NAMESPACE=$(KUBE_NAMESPACE_SDP)
-endif
-# to delete SDP namespace
-k8s-post-uninstall-chart:
-ifeq ($(SDP_SIMULATION_ENABLED),false)
-	@echo "k8s-post-uninstall-chart: deleting the SDP namespace $(KUBE_NAMESPACE_SDP)"
-	@make k8s-delete-namespace KUBE_NAMESPACE=$(KUBE_NAMESPACE_SDP)
-endif
 
 
 taranta-link:

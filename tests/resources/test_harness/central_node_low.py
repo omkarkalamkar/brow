@@ -5,7 +5,7 @@ from time import sleep
 
 import tango
 from assertpy import assert_that
-from ska_control_model import AdminMode, ObsState, ResultCode
+from ska_control_model import ObsState, ResultCode
 from ska_ser_logging import configure_logging
 from ska_tango_base.control_model import HealthState
 from ska_tango_testing.integration import TangoEventTracer, log_events
@@ -26,11 +26,9 @@ from tests.resources.test_harness.constant import (
     mccs_controller,
     mccs_master_leaf_node,
     mccs_subarray1,
-    pst,
     tmc_low_subarraynode1,
 )
 from tests.resources.test_harness.event_recorder import EventRecorder
-from tests.resources.test_harness.helpers import SIMULATED_DEVICES_DICT
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_harness.utils.sync_decorators import (
     sync_abort,
@@ -104,8 +102,6 @@ class CentralNodeWrapperLow(object):
                 self.subarray_node: ["longRunningCommandResult"],
             }
         )
-        if SIMULATED_DEVICES_DICT["sdp_and_mccs"]:
-            self.pst = DeviceProxy(pst)
 
     def set_subarray_id(self, subarray_id):
         self.subarray_node = DeviceProxy(f"low-tmc/subarray/{subarray_id}")
@@ -195,116 +191,34 @@ class CentralNodeWrapperLow(object):
         put telescope in OFF state
 
         """
-        if SIMULATED_DEVICES_DICT["all_mocks"]:
-            LOGGER.info("Invoking TelescopeOff command with all Mocks")
-            _, unique_id = self.central_node.TelescopeOff()
-            self.set_values_with_all_mocks(DevState.OFF)
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER OFF COMMAND: "
-                "Central Node device"
-                f"({self.central_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.central_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
-
-        elif SIMULATED_DEVICES_DICT["csp_and_sdp"]:
-            LOGGER.info(
-                "Invoking TelescopeOff command with csp and sdp simulated"
-            )
-            _, unique_id = self.central_node.TelescopeOff()
-            self.set_value_with_csp_sdp_mocks(DevState.OFF)
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER OFF COMMAND: "
-                "Central Node device"
-                f"({self.central_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.central_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
-        elif SIMULATED_DEVICES_DICT["csp_and_mccs"]:
-            LOGGER.info(
-                "Invoking TelescopeOff command with csp and mccs simulated"
-            )
-            _, unique_id = self.central_node.TelescopeOff()
-            self.set_values_with_csp_mccs_mocks(DevState.OFF)
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER OFF COMMAND: "
-                "Central Node device"
-                f"({self.central_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.central_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
-        elif SIMULATED_DEVICES_DICT["sdp_and_mccs"]:
-            LOGGER.info(
-                "Invoking TelescopeOff command with sdp and mccs simulated"
-            )
-            _, unique_id = self.central_node.TelescopeOff()
-            self.set_values_with_sdp_mccs_mocks(DevState.OFF)
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER OFF COMMAND: "
-                "Central Node device"
-                f"({self.central_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.central_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
-        else:
-            LOGGER.info(
-                "Invoke TelescopeOff command with all real sub-systems"
-            )
-            _, unique_id = self.central_node.TelescopeOff()
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER OFF COMMAND: "
-                "Central Node device"
-                f"({self.central_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.central_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
+        LOGGER.info("Invoking TelescopeOff command with all Mocks")
+        _, unique_id = self.central_node.TelescopeOff()
+        self.set_values_with_all_mocks(DevState.OFF)
+        assert_that(self.event_tracer).described_as(
+            "FAILED ASSUMPTION AFTER OFF COMMAND: "
+            "Central Node device"
+            f"({self.central_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            self.central_node,
+            "longRunningCommandResult",
+            (
+                unique_id[0],
+                json.dumps((int(ResultCode.OK), "Command Completed")),
+            ),
+        )
 
     def _clear_command_call_and_transition_data(self, clear_transition=False):
         """Clears the command call data"""
-        if SIMULATED_DEVICES_DICT["all_mocks"]:
-            for sim_device in [
-                low_csp_subarray1,
-                low_sdp_subarray1,
-            ]:
-                device = DeviceProxy(sim_device)
-                device.ClearCommandCallInfo()
-                if clear_transition:
-                    device.ResetTransitions()
+        for sim_device in [
+            low_csp_subarray1,
+            low_sdp_subarray1,
+        ]:
+            device = DeviceProxy(sim_device)
+            device.ClearCommandCallInfo()
+            if clear_transition:
+                device.ResetTransitions()
 
     def tear_down(self):
         """Handle Tear down of central Node"""
@@ -383,27 +297,7 @@ class CentralNodeWrapperLow(object):
                     json.dumps((int(ResultCode.OK), "Command Completed")),
                 ),
             )
-        if SIMULATED_DEVICES_DICT["sdp_and_mccs"]:
-            if self.pst.obsState == ObsState.ABORTED:
-                log_events({self.pst: ["obsState"]})
-                self.event_tracer.subscribe_event(self.pst, "obsState")
-                self.pst.obsreset()
-                assert_that(self.event_tracer).described_as(
-                    "FAILED TEAR DOWN"
-                    "PST device"
-                    f"({self.pst.dev_name()}) "
-                    f"is expected to be in IDLE obstate",
-                ).within_timeout(TIMEOUT).has_change_event_occurred(
-                    self.pst,
-                    "obsState",
-                    ObsState.IDLE,
-                )
-            self.set_standby()
-        elif (
-            SIMULATED_DEVICES_DICT["csp_and_mccs"]
-            or SIMULATED_DEVICES_DICT["all_mocks"]
-        ):
-            self.move_to_off()
+        self.move_to_off()
         self._clear_command_call_and_transition_data(clear_transition=True)
         self.event_recorder.clear_events()
         self.event_tracer.clear_events()
@@ -419,118 +313,24 @@ class CentralNodeWrapperLow(object):
         LOGGER.info(
             "Starting up the Telescope %s", self.central_node.telescopeState
         )
-        LOGGER.info(f"Received simulated devices: {SIMULATED_DEVICES_DICT}")
-        if SIMULATED_DEVICES_DICT["all_mocks"]:
-            self.set_low_devices_admin_mode()
-            LOGGER.info("Invoking TelescopeOn command with all Mocks")
-            _, unique_id = self.central_node.TelescopeOn()
-            self.set_values_with_all_mocks(DevState.ON)
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER ON COMMAND: "
-                "Central Node device"
-                f"({self.central_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.central_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
-
-        elif SIMULATED_DEVICES_DICT["csp_and_sdp"]:
-            LOGGER.info(
-                "Invoking TelescopeOn command with csp and sdp simulated"
-            )
-            # Set adminMode to Online for mccs_master
-            if self.mccs_master.adminMode != AdminMode.ONLINE:
-                self.mccs_master.adminMode = AdminMode.ONLINE
-            # Set adminMode to Online for mccs_subarray
-            if self.mccs_subarray1.adminMode != AdminMode.ONLINE:
-                self.mccs_subarray1.adminMode = AdminMode.ONLINE
-            _, unique_id = self.central_node.TelescopeOn()
-            self.set_value_with_csp_sdp_mocks(DevState.ON)
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER ON COMMAND: "
-                "Central Node device"
-                f"({self.central_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.central_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
-        elif SIMULATED_DEVICES_DICT["csp_and_mccs"]:
-            LOGGER.info(
-                "Invoking TelescopeOn command with csp and MCCS simulated"
-            )
-            _, unique_id = self.central_node.TelescopeOn()
-
-            self.set_values_with_csp_mccs_mocks(DevState.ON)
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER ON COMMAND: "
-                "Central Node device"
-                f"({self.central_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.central_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
-        elif SIMULATED_DEVICES_DICT["sdp_and_mccs"]:
-            LOGGER.info(
-                "Invoking TelescopeOn command with sdp and mccss simulated"
-            )
-            # Set adminMode to Online for csp_master
-            if self.csp_master.adminMode != AdminMode.ONLINE:
-                self.csp_master.adminMode = AdminMode.ONLINE
-            # Set adminMode to Online for csp_subarray
-            if self.csp_subarray1.adminMode != AdminMode.ONLINE:
-                self.csp_subarray1.adminMode = AdminMode.ONLINE
-            time.sleep(3)
-            _, unique_id = self.central_node.TelescopeOn()
-            self.set_values_with_sdp_mccs_mocks(DevState.ON)
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER ON COMMAND: "
-                "Central Node device"
-                f"({self.central_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.central_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
-        else:
-            LOGGER.info("Invoke TelescopeOn command with all real sub-systems")
-            _, unique_id = self.central_node.TelescopeOn()
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER ON COMMAND: "
-                "Central Node device"
-                f"({self.central_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.central_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
+        self.set_low_devices_admin_mode()
+        LOGGER.info("Invoking TelescopeOn command with all Mocks")
+        _, unique_id = self.central_node.TelescopeOn()
+        self.set_values_with_all_mocks(DevState.ON)
+        assert_that(self.event_tracer).described_as(
+            "FAILED ASSUMPTION AFTER ON COMMAND: "
+            "Central Node device"
+            f"({self.central_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            self.central_node,
+            "longRunningCommandResult",
+            (
+                unique_id[0],
+                json.dumps((int(ResultCode.OK), "Command Completed")),
+            ),
+        )
 
     def set_standby(self):
         """
@@ -539,106 +339,24 @@ class CentralNodeWrapperLow(object):
 
         """
         LOGGER.info("Putting Telescope in Standby state")
-        if SIMULATED_DEVICES_DICT["all_mocks"]:
-            LOGGER.info("Invoking TelescopeStandby commands with all Mocks")
-            _, unique_id = self.central_node.TelescopeStandBy()
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER STANDBY COMMAND: "
-                "Central Node device"
-                f"({self.central_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.central_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
-            self.set_values_with_all_mocks(DevState.STANDBY)
 
-        elif SIMULATED_DEVICES_DICT["csp_and_sdp"]:
-            LOGGER.info(
-                "Invoking TelescopeStandby command with csp and sdp simulated"
-            )
-            _, unique_id = self.central_node.TelescopeStandBy()
-            self.set_value_with_csp_sdp_mocks(DevState.STANDBY)
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER STANDBY COMMAND: "
-                "Central Node device"
-                f"({self.central_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.central_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
-
-        elif SIMULATED_DEVICES_DICT["csp_and_mccs"]:
-            LOGGER.info(
-                "Invoking TelescopeStandby command with csp and mccs simulated"
-            )
-            _, unique_id = self.central_node.TelescopeStandBy()
-            self.set_values_with_csp_mccs_mocks(DevState.STANDBY)
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER STANDbY COMMAND: "
-                "Central Node device"
-                f"({self.central_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.central_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
-
-        elif SIMULATED_DEVICES_DICT["sdp_and_mccs"]:
-            LOGGER.info(
-                "Invoking TelescopeStandby command with sdp and mccs simulated"
-            )
-            _, unique_id = self.central_node.TelescopeStandBy()
-            self.set_values_with_sdp_mccs_mocks(DevState.STANDBY)
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER STANDbY COMMAND: "
-                "Central Node device"
-                f"({self.central_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.central_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
-        else:
-            LOGGER.info(
-                "Invoke TelescopeStandby command with all real sub-systems"
-            )
-            _, unique_id = self.central_node.TelescopeStandBy()
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER STANDbY COMMAND: "
-                "Central Node device"
-                f"({self.central_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.central_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
+        LOGGER.info("Invoking TelescopeStandby commands with all Mocks")
+        _, unique_id = self.central_node.TelescopeStandBy()
+        assert_that(self.event_tracer).described_as(
+            "FAILED ASSUMPTION AFTER STANDBY COMMAND: "
+            "Central Node device"
+            f"({self.central_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            self.central_node,
+            "longRunningCommandResult",
+            (
+                unique_id[0],
+                json.dumps((int(ResultCode.OK), "Command Completed")),
+            ),
+        )
+        self.set_values_with_all_mocks(DevState.STANDBY)
         sleep(0.15)
 
     @sync_assign_resources(device_dict=device_dict_low)
@@ -676,31 +394,14 @@ class CentralNodeWrapperLow(object):
 
     def _reset_health_state_for_mock_devices(self):
         """Reset Mock devices"""
-        if (
-            SIMULATED_DEVICES_DICT["csp_and_sdp"]
-            or SIMULATED_DEVICES_DICT["all_mocks"]
-        ):
-            for mock_device in [
-                self.sdp_master,
-                self.csp_master,
-                self.mccs_master,
-            ]:
-                device = DeviceProxy(mock_device)
-                device.SetDirectHealthState(HealthState.UNKNOWN)
-        elif SIMULATED_DEVICES_DICT["csp_and_mccs"]:
-            for mock_device in [
-                self.csp_master,
-            ]:
-                device = DeviceProxy(mock_device)
-                device.SetDirectHealthState(HealthState.UNKNOWN)
-        elif SIMULATED_DEVICES_DICT["sdp_and_mccs"]:
-            for mock_device in [
-                self.sdp_master,
-            ]:
-                device = DeviceProxy(mock_device)
-                device.SetDirectHealthState(HealthState.UNKNOWN)
-        else:
-            LOGGER.info("No devices to reset healthState")
+
+        for mock_device in [
+            self.sdp_master,
+            self.csp_master,
+            self.mccs_master,
+        ]:
+            device = DeviceProxy(mock_device)
+            device.SetDirectHealthState(HealthState.UNKNOWN)
 
     def perform_action(self, command_name: str, input_json: str = ""):
         """Execute provided command on centralnode
@@ -777,30 +478,16 @@ class CentralNodeWrapperLow(object):
 
     def reset_defects_for_devices(self):
         """Resets the defects for given devices."""
-        if SIMULATED_DEVICES_DICT["all_mocks"]:
-            for mock_device in [
-                self.csp_subarray1,
-                self.sdp_subarray1,
-                self.mccs_master,
-                self.mccs_subarray1,
-            ]:
-                mock_device.SetDefective(RESET_DEFECT)
-                if mock_device != self.mccs_master:
-                    mock_device.ResetDelayInfo()
 
-    def set_serial_number_of_cbf_processor(self):
-        """Sets serial number for cbf processor"""
-        if SIMULATED_DEVICES_DICT["sdp_and_mccs"]:
-            cbf_proc1 = DeviceProxy("low-cbf/processor/0.0.0")
-            cbf_proc2 = DeviceProxy("low-cbf/processor/0.0.1")
-
-            cbf_proc1.serialnumber = "XFL14SLO1LIF"
-            cbf_proc1.subscribetoallocator("low-cbf/allocator/0")
-            cbf_proc1.register()
-
-            cbf_proc2.serialnumber = "XFL1HOOQ1Y44"
-            cbf_proc2.subscribetoallocator("low-cbf/allocator/0")
-            cbf_proc2.register()
+        for mock_device in [
+            self.csp_subarray1,
+            self.sdp_subarray1,
+            self.mccs_master,
+            self.mccs_subarray1,
+        ]:
+            mock_device.SetDefective(RESET_DEFECT)
+            if mock_device != self.mccs_master:
+                mock_device.ResetDelayInfo()
 
     def are_sdp_components_online(self):
         start_time = time.time()
