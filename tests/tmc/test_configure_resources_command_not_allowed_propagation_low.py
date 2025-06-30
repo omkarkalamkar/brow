@@ -32,7 +32,7 @@ class TestConfigureCommandNotAllowedPropagation:
     """Test the command not allowed error propagation for the assign resources
     command for TMC."""
 
-    @pytest.mark.SKA_low_skip
+    @pytest.mark.SKA_low16
     def test_configure_command_not_allowed_propagation_csp_ln_low(
         self,
         central_node_low: CentralNodeWrapperLow,
@@ -116,12 +116,12 @@ class TestConfigureCommandNotAllowedPropagation:
         )
 
         exception_message = (
-            "The invocation of the Configure command failed on Csp "
+            " The invocation of the Configure command failed on Csp "
             + "Subarray Device low-csp/subarray/01"
         )
-        log_events(
-            {subarray_node_low.subarray_node: ["longRunningCommandResult"]}
-        )
+        # log_events(
+        #     {subarray_node_low.subarray_node: ["longRunningCommandResult"]}
+        # )
 
         assert_that(event_tracer).described_as(
             "FAILED ASSUMPTION AFTER CONFIGURE: "
