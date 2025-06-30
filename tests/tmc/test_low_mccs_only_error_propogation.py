@@ -60,7 +60,7 @@ def execute_command(
     match command:
 
         case "ENDSCAN":
-            subarray_node_low.subarray_node.EndScan()
+            _, pytest.unique_id = subarray_node_low.subarray_node.EndScan()
         case "SCAN":
             scan_input_json = prepare_json_args_for_commands(
                 "scan_low", command_input_factory
