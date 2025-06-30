@@ -31,6 +31,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 
 
 @pytest.mark.SKA_low
+@pytest.mark.skip(reason="To be done under sah-1735")
 @scenario(
     "../features/tmc/check_invalid_json_not_allowed.feature",
     "Invalid json rejected by TMC Low for Configure command",
