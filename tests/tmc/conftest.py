@@ -655,7 +655,6 @@ def move_to_idle(tmc: TMCFacade, event_tracer: TangoEventTracer):
             json.dumps((int(ResultCode.OK), "Command Completed")),
         ),
     )
-    event_tracer.clear_events()
 
 
 def move_to_ready(
@@ -679,17 +678,6 @@ def move_to_ready(
 
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION : "
-        "'the subarray is in the READY obsState'"
-        "Subarray Node device"
-        f"({tmc.subarray_node.dev_name()}) "
-        "is expected to be in READY obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        tmc.subarray_node,
-        "obsState",
-        ObsState.READY,
-    )
-    assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION : "
         "Subarray Node device"
         f"({tmc.subarray_node.dev_name()}) "
         "is expected have longRunningCommand as"
@@ -701,6 +689,17 @@ def move_to_ready(
             unique_id[0],
             json.dumps((int(ResultCode.OK), "Command Completed")),
         ),
+    )
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION : "
+        "'the subarray is in the READY obsState'"
+        "Subarray Node device"
+        f"({tmc.subarray_node.dev_name()}) "
+        "is expected to be in READY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.READY,
     )
 
 
