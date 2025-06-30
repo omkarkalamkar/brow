@@ -72,30 +72,18 @@ def given_the_telescope_is_in_on_state(
 @given("the TMC subarray is in the IDLE obsState")
 def perform_idle_transition(
     tmc: TMCFacade,
-    event_tracer: TangoEventTracer,
+    event_tracers: TangoEventTracer,
 ):
     """
     Execute Assign and verify
     """
-
-    event_tracer.subscribe_event(tmc.subarray_node, "obsState")
-    event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
-
-    log_events(
-        {
-            tmc.central_node: [
-                "longRunningCommandResult",
-            ]
-        }
-    )
-
     assign_input = MyFileJSONInput("centralnode", "assign_resources_low")
 
     _, pytest.unique_id = tmc.central_node.AssignResources(
         assign_input.as_str()
     )
 
-    assert_that(event_tracer).described_as(
+    assert_that(event_tracers).described_as(
         "FAILED ASSUMPTION AFTER ASSIGNRESOURCES COMMAND: "
         "Subarray Node device"
         f"({tmc.subarray_node.dev_name()}) "
@@ -106,7 +94,7 @@ def perform_idle_transition(
         ObsState.IDLE,
     )
 
-    assert_that(event_tracer).described_as(
+    assert_that(event_tracers).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
         "Central Node device"
         f"({tmc.central_node.dev_name()}) "
@@ -120,7 +108,7 @@ def perform_idle_transition(
             json.dumps((int(ResultCode.OK), "Command Completed")),
         ),
     )
-    event_tracer.clear_events()
+    event_tracers.clear_events()
 
 
 @given("I configure the TMC subarray with an MCCS-only configuration")
@@ -147,11 +135,10 @@ def mccs_only_configure(tmc: TMCFacade):
 @given("the TMC subarray is in the READY obsState")
 def check_subarray_obs_state_ready(
     tmc: TMCFacade,
-    event_tracer: TangoEventTracer,
+    event_tracers: TangoEventTracer,
 ):
     """Verify that the subarray is in the READY obsState."""
-
-    assert_that(event_tracer).described_as(
+    assert_that(event_tracers).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         "'And the subarray is in the READY obsState'"
         "Subarray Node device"
@@ -162,7 +149,7 @@ def check_subarray_obs_state_ready(
         "obsState",
         ObsState.READY,
     )
-    assert_that(event_tracer).described_as(
+    assert_that(event_tracers).described_as(
         "FAILED ASSUMPTION : "
         "Subarray Node device"
         f"({tmc.subarray_node.dev_name()}) "
@@ -192,10 +179,10 @@ def mccs_only_scan(
 @given("the TMC subarray is in the SCANNING obsState")
 def check_subarray_obs_state_idle_scanning(
     tmc: TMCFacade,
-    event_tracer: TangoEventTracer,
+    event_tracers: TangoEventTracer,
 ):
     """Verify that the subarray is in the SCANNING obsState."""
-    assert_that(event_tracer).described_as(
+    assert_that(event_tracers).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         "'the subarray must be in the SCANNING obsState until finished'"
         "Subarray Node device"
@@ -206,7 +193,7 @@ def check_subarray_obs_state_idle_scanning(
         "obsState",
         ObsState.SCANNING,
     )
-    assert_that(event_tracer).described_as(
+    assert_that(event_tracers).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
         "Subarray Node device"
         f"({tmc.subarray_node.dev_name()}) "
@@ -234,11 +221,11 @@ def mccs_only_end(
 @then("the TMC subarray transitions to the READY obsState")
 def check_subarray_obs_state_is_ready(
     tmc: TMCFacade,
-    event_tracer: TangoEventTracer,
+    event_tracers: TangoEventTracer,
 ):
     """Verify that the subarray is in the READY obsState."""
 
-    assert_that(event_tracer).described_as(
+    assert_that(event_tracers).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         "'And the subarray is in the READY obsState'"
         "Subarray Node device"
