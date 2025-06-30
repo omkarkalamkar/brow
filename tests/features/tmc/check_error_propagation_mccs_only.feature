@@ -8,9 +8,5 @@
 		Examples:
 		            |obsState  | command |
 		            |SCANNING         | ENDSCAN |
-		            |SCANNING         | ENDSCAN |
-		            |READY            | SCAN    |
-		            |READY            | SCAN    |
-		            |SCANNING         | ENDSCAN |
 		            |READY            | SCAN    |
 

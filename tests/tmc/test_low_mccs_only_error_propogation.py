@@ -163,6 +163,20 @@ def move_to_obsstate(
             _, pytest.unique_id = subarray_node_low.subarray_node.Scan(
                 scan_input_json
             )
+            assert_that(event_tracer).described_as(
+                'FAILED ASSUMPTION IN "GIVEN" STEP: '
+                "Subarray Node device"
+                f"({central_node_low.subarray_node.dev_name()}) "
+                "is expected have longRunningCommand as"
+                '(unique_id,(ResultCode.OK,"Command Completed"))',
+            ).within_timeout(TIMEOUT).has_change_event_occurred(
+                central_node_low.subarray_node,
+                "longRunningCommandResult",
+                (
+                    unique_id[0],
+                    json.dumps((int(ResultCode.OK), "Command Completed")),
+                ),
+            )
 
 
 @when(parsers.parse("{command} is invoked on a defective MCCS Subarray"))
