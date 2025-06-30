@@ -29,13 +29,14 @@ from tests.resources.test_harness.subarray_node_low import (
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_harness.utils.enums import SimulatorDeviceType
 from tests.tmc.conftest import (
+    perform_configure,
     perform_ready_transition_with_end,
     perform_scan,
     verify_scanning_transition_with_endscan,
 )
 
 
-@pytest.mark.SKA_low15
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation.feature",
     "Error Propagation Reported by TMC Low End/EndScan/Scan "
@@ -47,7 +48,7 @@ def test_tmc_command_error_propagation():
     """
 
 
-@pytest.mark.SKA_low
+@pytest.mark.SKA_low15
 @scenario(
     "../features/tmc/check_error_propagation.feature",
     "TimeOut Reported by TMC Low End/EndScan/Scan "
@@ -100,6 +101,14 @@ def execute_command(
                     subarray_node_low,
                     command_input_factory,
                 )
+            case "CONFIGURE":
+                pytest.defective_subarray.SetDefective(
+                    INTERMEDIATE_CONFIGURING_STATE_DEFECT
+                )
+                perform_configure(
+                    subarray_node_low,
+                    command_input_factory,
+                )
     elif device == "SDP":
 
         match command:
@@ -129,6 +138,14 @@ def execute_command(
                 )
 
                 perform_scan(
+                    subarray_node_low,
+                    command_input_factory,
+                )
+            case "CONFIGURE":
+                pytest.defective_subarray.SetDelayInfo(
+                    json.dumps({"Configure": 55})
+                )
+                perform_configure(
                     subarray_node_low,
                     command_input_factory,
                 )

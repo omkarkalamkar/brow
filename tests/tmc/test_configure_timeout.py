@@ -31,7 +31,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 class TestConfigureTimeout:
     """Tests for testing timeout for Configure command on LOW TMC."""
 
-    @pytest.mark.SKA_low15
+    @pytest.mark.SKA_low
     def test_configure_timeout_csp_ln(
         self,
         central_node_low: CentralNodeWrapperLow,

@@ -27,12 +27,9 @@
 		Then the TMC SubarrayNode remains in <stuck> obsState
 		Examples:
 		            |initialObsState  | command | defectiveSubsystem  |stuck|
-		            |READY            | END     | CSP                  | READY |
-		            |READY            | END     | MCCS                 | READY |
-		            |SCANNING         | ENDSCAN | CSP                  | SCANNING |
-		            |SCANNING         | ENDSCAN | MCCS                 | SCANNING |
-		            |READY            | SCAN    | CSP                  | SCANNING |
-		            |READY            | SCAN    | MCCS                 | SCANNING |
-		            |READY            | END     | SDP                  | READY|
-		            |SCANNING         | ENDSCAN | SDP                  | SCANNING|
-		            |READY            | SCAN    | SDP                  | SCANNING|
+		            |READY            | END     | CSP                  | FAULT |
+		            |READY            | END     | MCCS                 | FAULT |
+		            |READY            | END     | SDP                  | FAULT|
+		            |IDLE             | CONFIGURE | CSP                | FAULT |
+                    |IDLE             | CONFIGURE | MCCS               | FAULT |
+                    |IDLE             | CONFIGURE | CSP                | FAULT |

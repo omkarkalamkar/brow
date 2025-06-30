@@ -25,7 +25,7 @@ class TestLowCentralNodeStandbyCommand:
     devices(CSP, SDP, MCCS) and the overall telescope state.
     """
 
-    @pytest.mark.SKA_low15
+    @pytest.mark.SKA_low
     def test_low_central_node_standby_command(
         self,
         central_node_low: CentralNodeWrapperLow,
