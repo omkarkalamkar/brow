@@ -1,10 +1,12 @@
 """Test cases for AssignResources and ReleaseResources
  Command for low"""
 import json
+import logging
 
 import pytest
 from assertpy import assert_that
 from ska_control_model import ObsState, ResultCode
+from ska_ser_logging import configure_logging
 from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DevState
 
@@ -26,6 +28,9 @@ from tests.resources.test_support.constant_low import (
     RESET_DEFECT,
     tmc_subarraynode1,
 )
+
+configure_logging(logging.DEBUG)
+LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.SKA_low
@@ -93,6 +98,17 @@ def test_assign_release_defective_csp(
     )
 
     log_events({central_node_low.central_node: ["longRunningCommandResult"]})
+
+    assert_that(event_tracer).described_as(
+        "FAILED UNEXPECTED INITIAL OBSSTATE: "
+        "Subarray Node device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        "is expected to be in FAULT obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "obsState",
+        ObsState.FAULT,
+    )
 
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION ATER ASSIGN RESOURCES: "
@@ -168,6 +184,17 @@ def test_assign_release_timeout_sdp(
     exception_message = (
         f"{central_node_low.sdp_subarray_leaf_node.dev_name()}:"
         " Timeout has occurred, command failed"
+    )
+
+    assert_that(event_tracer).described_as(
+        "FAILED UNEXPECTED INITIAL OBSSTATE: "
+        "Subarray Node device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        "is expected to be in FAULT obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "obsState",
+        ObsState.FAULT,
     )
 
     assert_that(event_tracer).described_as(
@@ -250,16 +277,6 @@ def test_release_exception_propagation(
 
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
-        "Subarray Node device"
-        f"({central_node_low.subarray_node.dev_name()}) "
-        "is expected to be in RESOURCING obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
-        "obsState",
-        ObsState.RESOURCING,
-    )
-    assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
         "Csp Subarray device"
         f"({central_node_low.subarray_node.dev_name()}) "
         "is expected to be in RESOURCING obstate",
@@ -268,12 +285,22 @@ def test_release_exception_propagation(
         "obsState",
         ObsState.RESOURCING,
     )
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
+        "Subarray Node device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        "is expected to be in RESOURCING obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "obsState",
+        ObsState.FAULT,
+    )
     _, unique_id = central_node_low.perform_action(
         "ReleaseResources", release_input_json
     )
 
     exception_message = (
-        "ReleaseResources command not permitted in observation state 1"
+        "ReleaseResources command not permitted in observation state 9"
     )
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
@@ -322,6 +349,7 @@ def test_assign_release_timeout_csp(
     event_tracer.subscribe_event(
         central_node_low.central_node, "longRunningCommandResult"
     )
+    event_tracer.subscribe_event(central_node_low.subarray_node, "obsState")
 
     assign_input_json = prepare_json_args_for_centralnode_commands(
         "assign_resources_low", command_input_factory
@@ -350,7 +378,12 @@ def test_assign_release_timeout_csp(
         "AssignResources", assign_input_json
     )
     exception_message = "Timeout has occurred, command failed"
-    log_events({central_node_low.central_node: ["longRunningCommandResult"]})
+    log_events(
+        {
+            central_node_low.central_node: ["longRunningCommandResult"],
+            central_node_low.subarray_node: ["obsState"],
+        }
+    )
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION ATER ASSIGN RESOURCES: "
         "Central Node device"
@@ -362,5 +395,18 @@ def test_assign_release_timeout_csp(
         [exception_message],
         unique_id[0],
         ResultCode.FAILED,
+    )
+    LOGGER.info(
+        "SA ObsState is: %s", central_node_low.subarray_node.obsState.value
+    )
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
+        "Subarray Node device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        "is expected to be in FAULT obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "obsState",
+        ObsState.FAULT,
     )
     csp_subarray_sim.SetDefective(json.dumps(RESET_DEFECT))

@@ -36,6 +36,7 @@ from tests.tmc.conftest import (
 
 
 @pytest.mark.SKA_low
+@pytest.mark.skip(reason="To be done under SAH-1737")
 @scenario(
     "../features/tmc/check_error_propagation.feature",
     "Error Propagation Reported by TMC Low End/EndScan/Scan "
@@ -48,6 +49,7 @@ def test_tmc_command_error_propagation():
 
 
 @pytest.mark.SKA_low
+@pytest.mark.skip(reason="To be done under SAH-1737")
 @scenario(
     "../features/tmc/check_error_propagation.feature",
     "TimeOut Reported by TMC Low End/EndScan/Scan "
