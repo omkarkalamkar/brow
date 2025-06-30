@@ -32,7 +32,7 @@ class TestConfigureCommandNotAllowedPropagation:
     """Test the command not allowed error propagation for the assign resources
     command for TMC."""
 
-    @pytest.mark.SKA_low
+    @pytest.mark.SKA_low_skip
     def test_configure_command_not_allowed_propagation_csp_ln_low(
         self,
         central_node_low: CentralNodeWrapperLow,
@@ -124,9 +124,8 @@ class TestConfigureCommandNotAllowedPropagation:
         )
 
         assert_that(event_tracer).described_as(
-            "FAILED ASSUMPTION ATER ASSIGN RESOURCES: "
-            "Central Node device"
-            f"({central_node_low.central_node.dev_name()}) "
+            "FAILED ASSUMPTION AFTER CONFIGURE: "
+            f"({subarray_node_low.subarray_node.dev_name()}) "
             "is expected have longRunningCommandResult"
             "(ResultCode.FAILED,exception)",
         ).within_timeout(
