@@ -191,7 +191,7 @@ def test_recover_subarray_stuck_in_resourcing_low(
 
 
 @pytest.mark.SKA_low
-@pytest.mark.skip(reason="Restart timeout error")
+# @pytest.mark.skip(reason="Restart timeout error")
 @pytest.mark.parametrize("defective_device", ["csp_subarray", "sdp_subarray"])
 def test_restart_with_sdp_csp_in_empty(
     central_node_low: CentralNodeWrapperLow,
@@ -383,7 +383,7 @@ def test_restart_with_sdp_csp_in_empty(
 
 
 @pytest.mark.SKA_low
-@pytest.mark.skip(reason="Restart timeout error")
+# @pytest.mark.skip(reason="Restart timeout error")
 def test_abort_with_mccs_in_empty(
     subarray_node_low: SubarrayNodeWrapperLow,
     central_node_low: CentralNodeWrapperLow,
