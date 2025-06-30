@@ -160,7 +160,7 @@ def move_to_obsstate(
             scan_input_json = prepare_json_args_for_commands(
                 "scan_low", command_input_factory
             )
-            _, pytest.unique_id = subarray_node_low.subarray_node.Scan(
+            _, unique_id = subarray_node_low.subarray_node.Scan(
                 scan_input_json
             )
             assert_that(event_tracer).described_as(
