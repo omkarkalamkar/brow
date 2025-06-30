@@ -661,6 +661,7 @@ def move_to_ready(
     tmc: TMCFacade, event_tracer: TangoEventTracer, is_single_subsystem=False
 ):
     """Send a Configure command to the subarray"""
+    event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
     configure_input = MyFileJSONInput("subarray", "configure_low")
 
     configure_input_json = json.loads(configure_input.as_str())
