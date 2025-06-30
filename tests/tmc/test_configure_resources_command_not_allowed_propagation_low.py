@@ -55,6 +55,10 @@ class TestConfigureCommandNotAllowedPropagation:
             central_node_low.central_node, "longRunningCommandResult"
         )
 
+        event_tracer.subscribe_event(
+            subarray_node_low.subarray_node, "longRunningCommandResult"
+        )
+
         # Preparing input arguments
         # assign_input_json = prepare_json_args_for_centralnode_commands(
         #     "assign_resources_low", command_input_factory
