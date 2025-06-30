@@ -20,6 +20,7 @@ from ska_tango_testing.integration import TangoEventTracer
 from tests.resources.test_harness.constant import (
     ERROR_PROPAGATION_DEFECT,
     TIMEOUT,
+    mccs_subarray_leaf_node,
 )
 from tests.resources.test_harness.simulator_factory import SimulatorFactory
 from tests.resources.test_harness.utils.enums import SimulatorDeviceType
@@ -98,7 +99,7 @@ def execute_command_on_tmc_with_defectivesetup(
         )
     )
 
-    pytest.defective_device = tmc.mccs_subarray_leaf_node
+    pytest.defective_device = mccs_subarray_leaf_node
 
     execute_command(command, tmc)
 
