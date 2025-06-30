@@ -32,7 +32,7 @@ class TestConfigureCommandNotAllowedPropagation:
     """Test the command not allowed error propagation for the assign resources
     command for TMC."""
 
-    @pytest.mark.SKA_low15
+    @pytest.mark.SKA_low
     def test_configure_command_not_allowed_propagation_csp_ln_low(
         self,
         central_node_low: CentralNodeWrapperLow,
