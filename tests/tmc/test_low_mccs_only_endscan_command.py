@@ -26,6 +26,7 @@ from tests.resources.test_harness.utils.my_file_json_input import (
 from tests.resources.test_support.common_utils.result_code import ResultCode
 
 
+@pytest.mark.SKA_fault
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_mccs_only_endscan.feature",
@@ -138,7 +139,7 @@ def mccs_only_configure(tmc: TMCFacade):
 
     configure_input_json = json.dumps(configure_input_json)
 
-    tmc.subarray_node.Configure(configure_input_json)
+    _, pytest.unique_id = tmc.subarray_node.Configure(configure_input_json)
     # In an effort to reduce number of data files we are modifying the
     # existing configure_low.
 
@@ -160,6 +161,20 @@ def check_subarray_obs_state_ready(
         tmc.subarray_node,
         "obsState",
         ObsState.READY,
+    )
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION : "
+        "Subarray Node device"
+        f"({tmc.subarray_node.dev_name()}) "
+        "is expected have longRunningCommand as"
+        '(unique_id,(ResultCode.OK,"Command Completed"))',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "longRunningCommandResult",
+        (
+            pytest.unique_id[0],
+            json.dumps((int(ResultCode.OK), "Command Completed")),
+        ),
     )
 
 
