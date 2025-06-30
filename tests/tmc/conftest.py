@@ -586,16 +586,14 @@ def validate_subarry_obsState(
 @given("the telescope is in the ON state")
 def given_the_telescope_is_in_the_on_state(
     tmc: TMCFacade,
-    event_tracers: TangoEventTracer,
+    event_tracer: TangoEventTracer,
 ):
     """Ensure the telescope is in ON state."""
     tmc.move_to_on(wait_termination=True)
-    event_tracers.subscribe_event(tmc.central_node, "telescopeState")
-    event_tracers.subscribe_event(tmc.central_node, "longRunningCommandResult")
-    event_tracers.subscribe_event(tmc.subarray_node, "obsState")
-    event_tracers.subscribe_event(
-        tmc.subarray_node, "longRunningCommandResult"
-    )
+    event_tracer.subscribe_event(tmc.central_node, "telescopeState")
+    event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
+    event_tracer.subscribe_event(tmc.subarray_node, "obsState")
+    event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
 
     # Logging setup
     log_events(
@@ -611,22 +609,11 @@ def given_the_telescope_is_in_the_on_state(
         }
     )
     # Assertions
-    event_tracers.clear_events()
+    event_tracer.clear_events()
 
 
 def move_to_idle(tmc: TMCFacade, event_tracer: TangoEventTracer):
     """Move subarray to idle state"""
-    event_tracer.subscribe_event(tmc.subarray_node, "obsState")
-    event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
-
-    log_events(
-        {
-            tmc.central_node: [
-                "longRunningCommandResult",
-            ]
-        }
-    )
-
     assign_input = MyFileJSONInput("centralnode", "assign_resources_low")
 
     _, unique_id = tmc.central_node.AssignResources(assign_input.as_str())
@@ -661,7 +648,6 @@ def move_to_ready(
     tmc: TMCFacade, event_tracer: TangoEventTracer, is_single_subsystem=False
 ):
     """Send a Configure command to the subarray"""
-    event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
     configure_input = MyFileJSONInput("subarray", "configure_low")
 
     configure_input_json = json.loads(configure_input.as_str())

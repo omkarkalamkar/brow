@@ -30,7 +30,7 @@ from tests.resources.test_harness.utils.my_file_json_input import (
 from tests.tmc.conftest import move_to_idle, move_to_ready, move_to_scanning
 
 
-# @pytest.mark.SKA_fault
+@pytest.mark.SKA_fault
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation_mccs_only.feature",
