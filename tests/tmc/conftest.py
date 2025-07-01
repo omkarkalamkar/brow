@@ -583,35 +583,6 @@ def validate_subarry_obsState(
     )
 
 
-@given("the telescope is in the ON state")
-def given_the_telescope_is_in_the_on_state(
-    tmc: TMCFacade,
-    event_tracer: TangoEventTracer,
-):
-    """Ensure the telescope is in ON state."""
-    tmc.move_to_on(wait_termination=True)
-    event_tracer.subscribe_event(tmc.central_node, "telescopeState")
-    event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
-    event_tracer.subscribe_event(tmc.subarray_node, "obsState")
-    event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
-
-    # Logging setup
-    log_events(
-        {
-            tmc.central_node: [
-                "telescopeState",
-                "longRunningCommandResult",
-            ],
-            tmc.subarray_node: [
-                "obsState",
-                "longRunningCommandResult",
-            ],
-        }
-    )
-    # Assertions
-    event_tracer.clear_events()
-
-
 def move_to_idle(tmc: TMCFacade, event_tracer: TangoEventTracer):
     """Move subarray to idle state"""
     assign_input = MyFileJSONInput("centralnode", "assign_resources_low")
