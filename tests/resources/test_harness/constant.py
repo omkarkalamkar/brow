@@ -88,14 +88,6 @@ COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_EMPTY = {
     "target_obsstates": [ObsState.RESOURCING, ObsState.EMPTY],
 }
 
-COMMAND_FAILED_WITH_SDP_EXCEPTION_OBSSTATE_EMPTY = {
-    "enabled": True,
-    "fault_type": FaultType.SDP_BACK_TO_INITIAL_STATE,
-    "error_message": "Default exception.",
-    "result": ResultCode.FAILED,
-    "target_obsstates": [ObsState.RESOURCING, ObsState.EMPTY],
-}
-
 
 FAILED_RESULT_DEFECT = json.dumps(
     {

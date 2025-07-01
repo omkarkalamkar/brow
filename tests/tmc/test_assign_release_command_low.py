@@ -13,7 +13,6 @@ from tango import DevState
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.constant import (
     COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_EMPTY,
-    COMMAND_FAILED_WITH_SDP_EXCEPTION_OBSSTATE_EMPTY,
     TIMEOUT,
 )
 from tests.resources.test_harness.helpers import (
@@ -25,6 +24,7 @@ from tests.resources.test_harness.simulator_factory import SimulatorFactory
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_harness.utils.enums import SimulatorDeviceType
 from tests.resources.test_support.constant_low import (
+    COMMAND_FAILED_WITH_SDP_EXCEPTION_OBSSTATE_EMPTY,
     INTERMEDIATE_STATE_DEFECT,
     RESET_DEFECT,
     tmc_subarraynode1,

@@ -156,6 +156,14 @@ SDP_BACK_TO_INITIAL_STATE = {
     "target_obsstates": [ObsState.EMPTY],
 }
 
+COMMAND_FAILED_WITH_SDP_EXCEPTION_OBSSTATE_EMPTY = {
+    "enabled": True,
+    "fault_type": FaultType.SDP_BACK_TO_INITIAL_STATE,
+    "error_message": "Default exception.",
+    "result": ResultCode.FAILED,
+    "target_obsstates": [ObsState.RESOURCING, ObsState.EMPTY],
+}
+
 RESET_DEFECT = {"enabled": False}
 
 COMMAND_NOT_ALLOWED_DEFECT = {
