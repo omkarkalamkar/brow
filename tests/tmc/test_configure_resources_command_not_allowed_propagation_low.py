@@ -135,7 +135,7 @@ class TestConfigureCommandNotAllowedPropagation:
             ResultCode.FAILED,
         )
 
-    # @pytest.mark.SKA_low16
+    @pytest.mark.SKA_low16
     def test_configure_command_not_allowed_propagation_sdp_ln_low(
         self,
         central_node_low: CentralNodeWrapperLow,
