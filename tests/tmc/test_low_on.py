@@ -19,7 +19,7 @@ from ska_integration_test_harness.facades.tmc_facade import TMCFacade
 from ska_tango_testing.integration import TangoEventTracer
 from tango import DeviceProxy, DevState
 
-from tests.resources.test_harness.constant import low_sdp_master
+from tests.resources.test_harness.constant import low_csp_master
 
 # Constants
 TIMEOUT = 100
@@ -36,7 +36,7 @@ def test_telescope_on_command_flow():
     """
 
 
-@pytest.mark.SKA_low
+@pytest.mark.aki
 @scenario(
     "../features/tmc/check_on_command.feature",
     "Starting up low telescope if one subsystem in adminmode ENGINEERING",
@@ -45,12 +45,12 @@ def test_telescope_on_command_sdp_adminmode_engineering():
     """Test case to verify on command if sdp in adminmode ENGINEERING"""
 
 
-@given("SDP controller is in adminmode ENGINEERING")
+@given("CSP controller is in adminmode ENGINEERING")
 def set_adminmode_sdp():
     """Set the adminmode of sdp"""
-    sdp_proxy = DeviceProxy(low_sdp_master)
-    sdp_proxy.adminMode = AdminMode.ENGINEERING
-    assert sdp_proxy.adminMode == AdminMode.ENGINEERING
+    csp_proxy = DeviceProxy(low_csp_master)
+    csp_proxy.adminMode = AdminMode.ENGINEERING
+    assert csp_proxy.adminMode == AdminMode.ENGINEERING
 
 
 @when("I invoke the ON command on the telescope")

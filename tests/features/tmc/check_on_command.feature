@@ -9,7 +9,7 @@ Scenario: Starting up low telescope
 @XTP-84024 @XTP-83574 @TEAM_HIMALAYA
 Scenario: Starting up low telescope if one subsystem in adminmode ENGINEERING
     Given a Low telescope
-    And SDP controller is in adminmode ENGINEERING
+    And CSP controller is in adminmode ENGINEERING
     When I invoke the ON command on the telescope
     Then the SDP, CSP and MCCS go to the ON state
     And the telescope go to the ON state
