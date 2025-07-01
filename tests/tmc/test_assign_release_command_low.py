@@ -24,6 +24,7 @@ from tests.resources.test_harness.simulator_factory import SimulatorFactory
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_harness.utils.enums import SimulatorDeviceType
 from tests.resources.test_support.constant_low import (
+    COMMAND_FAILED_WITH_SDP_EXCEPTION_OBSSTATE_EMPTY,
     INTERMEDIATE_STATE_DEFECT,
     RESET_DEFECT,
     tmc_subarraynode1,
@@ -34,11 +35,13 @@ LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.SKA_low
-def test_assign_release_defective_csp(
+@pytest.mark.parametrize("defective_device", ["csp_subarray", "sdp_subarray"])
+def test_assign_release_defective_csp_sdp(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
     simulator_factory: SimulatorFactory,
     command_input_factory: JsonFactory,
+    defective_device: str,
 ):
     """Verify defective exception raised when csp set to defective."""
     event_tracer.subscribe_event(
@@ -81,11 +84,17 @@ def test_assign_release_defective_csp(
         ObsState.EMPTY,
     )
 
-    csp_sim, _, _ = get_device_simulators(simulator_factory)
-    event_tracer.subscribe_event(csp_sim, "obsState")
-    csp_sim.SetDefective(
-        json.dumps(COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_EMPTY)
-    )
+    csp_sim, sdp_sim, _ = get_device_simulators(simulator_factory)
+    if defective_device == "csp_subarray":
+        event_tracer.subscribe_event(csp_sim, "obsState")
+        csp_sim.SetDefective(
+            json.dumps(COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_EMPTY)
+        )
+    elif defective_device == "sdp_subarray":
+        event_tracer.subscribe_event(sdp_sim, "obsState")
+        sdp_sim.SetDefective(
+            json.dumps(COMMAND_FAILED_WITH_SDP_EXCEPTION_OBSSTATE_EMPTY)
+        )
     result, unique_id = central_node_low.perform_action(
         "AssignResources", assign_input_json
     )
@@ -122,8 +131,10 @@ def test_assign_release_defective_csp(
         unique_id[0],
         ResultCode.FAILED,
     )
-
-    csp_sim.SetDefective(json.dumps({"enabled": False}))
+    if defective_device == "csp_subarray":
+        csp_sim.SetDefective(json.dumps({"enabled": False}))
+    elif defective_device == "sdp_subarray":
+        sdp_sim.SetDefective(json.dumps({"enabled": False}))
 
 
 @pytest.mark.SKA_low
@@ -397,7 +408,8 @@ def test_assign_release_timeout_csp(
         ResultCode.FAILED,
     )
     LOGGER.info(
-        "SA ObsState is: %s", central_node_low.subarray_node.obsState.value
+        "SubarrayNode ObsState: %s",
+        central_node_low.subarray_node.obsState.value,
     )
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
