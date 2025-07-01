@@ -1,4 +1,4 @@
-"""Test cases for AssignResources Command not allowed for LOW."""
+"""Test cases for Configure Command not allowed for LOW."""
 
 
 import pytest
@@ -13,9 +13,6 @@ from tests.resources.test_harness.constant import (
     TIMEOUT,
     low_sdp_subarray_leaf_node,
 )
-
-# mccs_controller,; mccs_master_leaf_node,
-# ,
 from tests.resources.test_harness.simulator_factory import SimulatorFactory
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
@@ -30,7 +27,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 
 
 class TestConfigureCommandNotAllowedPropagation:
-    """Test the command not allowed error propagation for the assign resources
+    """Test the command not allowed error propagation for configure
     command for TMC."""
 
     @pytest.mark.SKA_low
@@ -147,7 +144,7 @@ class TestConfigureCommandNotAllowedPropagation:
         simulator_factory: SimulatorFactory,
         command_input_factory: JsonFactory,
     ):
-        """Verify command not allowed exception propagation from CSPLeafNodes
+        """Verify command not allowed exception propagation from SDPLeafNodes
         ."""
         sdp_subarray_sim = simulator_factory.get_or_create_simulator_device(
             SimulatorDeviceType.LOW_SDP_DEVICE
@@ -329,8 +326,9 @@ class TestConfigureCommandNotAllowedPropagation:
         )
 
         exception_message = (
-            " The invocation of the Configure command failed on Mccs "
-            + "Subarray Device low-mccs/subarray/01"
+            "The invocation of the Configure command is"
+            " failed on MCCS Subarray device"
+            " low-mccs/subarray/01."
         )
 
         log_events(
