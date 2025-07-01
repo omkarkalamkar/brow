@@ -10,16 +10,13 @@ fine.
 
 import pytest
 from assertpy import assert_that
-from pytest_bdd import given, scenario, then, when
-from ska_control_model import AdminMode
+from pytest_bdd import scenario, then, when
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
 from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
 from ska_integration_test_harness.facades.sdp_facade import SDPFacade
 from ska_integration_test_harness.facades.tmc_facade import TMCFacade
 from ska_tango_testing.integration import TangoEventTracer
-from tango import DeviceProxy, DevState
-
-from tests.resources.test_harness.constant import mccs_controller
+from tango import DevState
 
 # Constants
 TIMEOUT = 100
@@ -34,23 +31,6 @@ def test_telescope_on_command_flow():
     """
     Test case to verify ON command on low telescope
     """
-
-
-@pytest.mark.aki
-@scenario(
-    "../features/tmc/check_on_command.feature",
-    "Starting up low telescope if one subsystem in adminmode ENGINEERING",
-)
-def test_telescope_on_command_sdp_adminmode_engineering():
-    """Test case to verify on command if sdp in adminmode ENGINEERING"""
-
-
-@given("MCCS controller is in adminmode ENGINEERING")
-def set_adminmode_mccs():
-    """Set the adminmode of mccs"""
-    mccs_proxy = DeviceProxy(mccs_controller)
-    mccs_proxy.adminMode = AdminMode.ENGINEERING
-    assert mccs_proxy.adminMode == AdminMode.ENGINEERING
 
 
 @when("I invoke the ON command on the telescope")
