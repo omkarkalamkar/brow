@@ -389,9 +389,6 @@ def _tear_down(tmc: TMCFacade, event_tracers: TangoEventTracer):
     :type event_tracers: TangoEventTracer
     """
     event_tracers.subscribe_event(tmc.subarray_node, "obsState")
-    event_tracers.subscribe_event(
-        tmc.subarray_node, "longRunningCommandResult"
-    )
     if tmc.subarray_node.obsState == ObsState.FAULT:
         tmc.restart(wait_termination=True)
         assert_that(event_tracers).described_as(
@@ -431,7 +428,7 @@ def telescope_wrapper(
 
     # after a test is completed, reset the telescope to its initial state
     # (obsState=READY, telescopeState=OFF, no resources assigned)
-    _tear_down(TMCFacade(telescope), event_tracers)
+    # _tear_down(TMCFacade(telescope), event_tracers)
     telescope.tear_down()
 
 
