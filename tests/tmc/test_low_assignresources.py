@@ -36,6 +36,7 @@ def test_telescope_assign_resources():
 
 
 @pytest.mark.aki
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_assignresources_command.feature",
     "Assign resources to Low subarray if one subarray "
