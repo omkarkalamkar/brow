@@ -81,9 +81,9 @@ subarraynode:
 
 sdpleafnodes:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-sdpleafnodes
+    registry: artefact.skao.int
     image: ska-tmc-sdpleafnodes
-    tag: 0.23.2-dev.cb4fdd02b
+    tag: 0.23.1
     pullPolicy: IfNotPresent
 
 cspmasterleafnode:
