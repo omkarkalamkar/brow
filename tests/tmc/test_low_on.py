@@ -36,7 +36,7 @@ def test_telescope_on_command_flow():
     """
 
 
-@pytest.mark.aki
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_on_command.feature",
     "Starting up low telescope if one subsystem in adminmode ENGINEERING",
