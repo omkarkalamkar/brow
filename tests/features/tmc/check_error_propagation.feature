@@ -4,15 +4,15 @@
 		And the TMC subarray is in the <initialObsState> observation state
 		When <command> is invoked on a defectiveSubsystem <defectiveSubsystem>
 		Then the command failure is reported by subarray with error message
-		Then the TMC SubarrayNode remains in <stuck> obsState
+		Then the TMC SubarrayNode transitions to FAULT obsState
 		Examples:
-		            |initialObsState  | command | defectiveSubsystem  |stuck|
-		            |READY            | END     | CSP                  | FAULT |
-		            |READY            | END     | MCCS                 | FAULT |
-		            |READY            | END     | SDP                  | FAULT|
-		            |IDLE             | CONFIGURE | CSP                | FAULT |
-                    |IDLE             | CONFIGURE | MCCS               | FAULT |
-                    |IDLE             | CONFIGURE | CSP                | FAULT |
+		            |initialObsState  | command | defectiveSubsystem  |
+		            |READY            | END     | CSP                  |
+		            |READY            | END     | MCCS                 |
+		            |READY            | END     | SDP                  |
+		            |IDLE             | CONFIGURE | CSP                |
+                    |IDLE             | CONFIGURE | MCCS               |
+                    |IDLE             | CONFIGURE | CSP                | 
 
 
 
@@ -24,12 +24,12 @@
 		And the TMC subarray is in the <initialObsState> observation state
 		When <command> is invoked on a <defectiveSubsystem> Subarray
 		Then the command failure is reported by subarray with appropriate error message
-		Then the TMC SubarrayNode remains in <stuck> obsState
+		Then the TMC SubarrayNode transitions to FAULT obsState
 		Examples:
-		            |initialObsState  | command | defectiveSubsystem  |stuck|
-		            |READY            | END     | CSP                  | FAULT |
-		            |READY            | END     | MCCS                 | FAULT |
-		            |READY            | END     | SDP                  | FAULT|
-		            |IDLE             | CONFIGURE | CSP                | FAULT |
-                    |IDLE             | CONFIGURE | MCCS               | FAULT |
-                    |IDLE             | CONFIGURE | CSP                | FAULT |
+		            |initialObsState  | command | defectiveSubsystem  |
+		            |READY            | END     | CSP                  |
+		            |READY            | END     | MCCS                 |
+		            |READY            | END     | SDP                  |
+		            |IDLE             | CONFIGURE | CSP                |
+                    |IDLE             | CONFIGURE | MCCS               |
+                    |IDLE             | CONFIGURE | CSP                |

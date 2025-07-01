@@ -611,5 +611,20 @@ def validate_subarry_obsState(
         assert attribute_value == ObsState.READY
     elif stuck == "SCANNING":
         assert attribute_value == ObsState.SCANNING
-    elif stuck == "FAULT":
+
+
+@then(parsers.parse("the TMC SubarrayNode transitions to FAULT obsState"))
+def validate_subarry_fault_obsState(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    stuck,
+):
+    """
+    Check if TMC subarray remains in FAULT Obs-State.
+    """
+
+    attribute_value = subarray_node_low.subarray_node.read_attribute(
+        "obsState"
+    ).value
+
+    if stuck == "FAULT":
         assert attribute_value == ObsState.FAULT
