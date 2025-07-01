@@ -427,7 +427,7 @@ def telescope_wrapper(
 
     # after a test is completed, reset the telescope to its initial state
     # (obsState=READY, telescopeState=OFF, no resources assigned)
-    _tear_down(telescope.tmc, event_tracers)
+    _tear_down(TMCFacade(telescope), event_tracers)
     telescope.tear_down()
 
 
