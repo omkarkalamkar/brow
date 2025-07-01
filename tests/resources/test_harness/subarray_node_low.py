@@ -18,12 +18,10 @@ from tests.resources.test_harness.constant import (
     low_sdp_subarray_leaf_node,
     mccs_subarray1,
     mccs_subarray_leaf_node,
-    pst,
     tmc_low_subarraynode1,
 )
 from tests.resources.test_harness.event_recorder import EventRecorder
 from tests.resources.test_harness.helpers import (
-    SIMULATED_DEVICES_DICT,
     check_subarray_obs_state,
     update_eb_pb_ids,
     wait_for_partial_or_complete_abort,
@@ -105,9 +103,6 @@ class SubarrayNodeWrapperLow:
         self.IDLE_OBS_STATE = IDLE
         self.READY_OBS_STATE = READY
         self.ABORTED_OBS_STATE = ABORTED
-        if SIMULATED_DEVICES_DICT["sdp_and_mccs"]:
-            self.pst = DeviceProxy(pst)
-
         self.event_recorder = EventRecorder()
 
     @property
@@ -300,20 +295,12 @@ class SubarrayNodeWrapperLow:
 
     def _reset_simulator_devices(self):
         """Reset Simulator devices to it's original state"""
-        if SIMULATED_DEVICES_DICT["all_mocks"]:
-            sim_device_proxy_list = [
-                self.sdp_subarray1,
-                self.csp_subarray1,
-                self.mccs_subarray1,
-            ]
-        elif SIMULATED_DEVICES_DICT["csp_and_sdp"]:
-            sim_device_proxy_list = [self.sdp_subarray1, self.csp_subarray1]
-        elif SIMULATED_DEVICES_DICT["csp_and_mccs"]:
-            sim_device_proxy_list = [self.csp_subarray1, self.mccs_subarray1]
-        elif SIMULATED_DEVICES_DICT["sdp_and_mccs"]:
-            sim_device_proxy_list = [self.sdp_subarray1, self.mccs_subarray1]
-        else:
-            sim_device_proxy_list = []
+
+        sim_device_proxy_list = [
+            self.sdp_subarray1,
+            self.csp_subarray1,
+            self.mccs_subarray1,
+        ]
 
         for sim_device_proxy in sim_device_proxy_list:
             sim_device_proxy.ResetDelayInfo()
@@ -380,41 +367,15 @@ class SubarrayNodeWrapperLow:
 
     def _clear_command_call_and_transition_data(self, clear_transition=False):
         """Clears the command call data"""
-        if SIMULATED_DEVICES_DICT["csp_and_sdp"]:
-            for sim_device in [
-                self.sdp_subarray1,
-                self.csp_subarray1,
-            ]:
-                sim_device.ClearCommandCallInfo()
-                if clear_transition:
-                    sim_device.ResetTransitions()
-        elif SIMULATED_DEVICES_DICT["csp_and_mccs"]:
-            for sim_device in [
-                self.csp_subarray1,
-                self.mccs_subarray1,
-            ]:
-                sim_device.ClearCommandCallInfo()
-                if clear_transition:
-                    sim_device.ResetTransitions()
-        elif SIMULATED_DEVICES_DICT["sdp_and_mccs"]:
-            for sim_device in [
-                self.sdp_subarray1,
-                self.mccs_subarray1,
-            ]:
-                sim_device.ClearCommandCallInfo()
-                if clear_transition:
-                    sim_device.ResetTransitions()
-        elif SIMULATED_DEVICES_DICT["all_mocks"]:
-            for sim_device in [
-                self.sdp_subarray1,
-                self.csp_subarray1,
-                self.mccs_subarray1,
-            ]:
-                sim_device.ClearCommandCallInfo()
-                if clear_transition:
-                    sim_device.ResetTransitions()
-        else:
-            LOGGER.info("Devices deployed are real")
+
+        for sim_device in [
+            self.sdp_subarray1,
+            self.csp_subarray1,
+            self.mccs_subarray1,
+        ]:
+            sim_device.ClearCommandCallInfo()
+            if clear_transition:
+                sim_device.ResetTransitions()
 
     def tear_down(self):
         """Tear down after each test run"""
@@ -445,16 +406,6 @@ class SubarrayNodeWrapperLow:
 
         else:
             self.force_change_of_obs_state("EMPTY")
-        if SIMULATED_DEVICES_DICT["sdp_and_mccs"]:
-            if self.pst.obsState == ObsState.ABORTED:
-                self.event_recorder.subscribe_event(self.pst, "obsState")
-                self.pst.obsreset()
-                assert self.event_recorder.has_change_event_occurred(
-                    self.pst,
-                    "obsState",
-                    ObsState.IDLE,
-                    lookahead=4,
-                )
 
         # Move Subarray to OFF state
         self.move_to_off()

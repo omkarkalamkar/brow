@@ -1,3 +1,4 @@
+@XTP-64122 @XTP-28348 
 Scenario: Switch off the low telescope
     Given a Low telescope
     And the telescope is in the ON state
