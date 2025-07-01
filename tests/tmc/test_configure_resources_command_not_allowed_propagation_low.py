@@ -30,7 +30,7 @@ class TestConfigureCommandNotAllowedPropagation:
     """Test the command not allowed error propagation for configure
     command for TMC."""
 
-    @pytest.mark.SKA_low
+    @pytest.mark.SKA_low16
     def test_configure_command_not_allowed_propagation_csp_ln_low(
         self,
         central_node_low: CentralNodeWrapperLow,
