@@ -13,7 +13,7 @@ Feature: Command execution according to adminmode of subsystem devices
 		| sdpcontroller       | NOT_FITTED   | ReleaseResources|
 		| mccscontroller      | OFFLINE      | On              |
 		| mccscontroller      | NOT_FITTED   | AssignResources |
-		| sdpcontroller       | OFFLINE      | On              |
+		| sdpcontroller       | OFFLINE      | Off             |
 
 	@XTP-83576 @XTP-83574 @TEAM_HIMALAYA
 	Scenario: Command not allowed from SubarrayNode when subsystem adminmode is OFFLINE/NOT_FITTED
