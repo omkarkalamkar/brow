@@ -12,7 +12,7 @@ Feature: Command execution according to adminmode of subsystem devices
 		| cspcontroller       | OFFLINE      | ReleaseResources|
 		| sdpcontroller       | NOT_FITTED   | ReleaseResources|
 		| mccscontroller      | OFFLINE      | On              |
-		| mccscontroller      | NOT_FITTED   | Off             |
+		| mccscontroller      | NOT_FITTED   | AssignResources |
 		| sdpcontroller       | OFFLINE      | On              |
 
 	@XTP-83576 @XTP-83574 @TEAM_HIMALAYA
