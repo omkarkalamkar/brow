@@ -388,6 +388,7 @@ def _tear_down(tmc: TMCFacade, event_tracers: TangoEventTracer):
     :param event_tracers: TangoEventTracer object for event handling
     :type event_tracers: TangoEventTracer
     """
+    event_tracers.subscribe_event(tmc.subarray_node, "obsState")
     if tmc.subarray_node.obsState == ObsState.FAULT:
         tmc.restart(wait_termination=True)
         assert_that(event_tracers).described_as(
