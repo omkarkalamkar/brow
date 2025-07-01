@@ -9,3 +9,5 @@
 		            |obsState  | command |
 		            |SCANNING         | ENDSCAN |
 		            |READY            | SCAN    |
+		            |IDLE            | CONFIGURE    |
+		            |READY            | END    |

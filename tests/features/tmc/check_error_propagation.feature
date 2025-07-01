@@ -13,6 +13,14 @@
 		            |READY            | SCAN    | MCCS |
 		            |SCANNING         | ENDSCAN | SDP |
 		            |READY            | SCAN    | SDP |
+		            |READY            | END     | CSP |
+		            |READY            | END     | MCCS |
+		            |READY            | END     | SDP |
+		            |IDLE             | CONFIGURE | CSP |
+                    |IDLE             | CONFIGURE | MCCS |
+                    |IDLE             | CONFIGURE | CSP |
+
+
 
 
 
@@ -31,3 +39,9 @@
 		            |READY            | SCAN    | MCCS                 |
 		            |SCANNING         | ENDSCAN | SDP                  |
 		            |READY            | SCAN    | SDP                  |
+		            |READY            | END     | CSP                  |
+		            |READY            | END     | MCCS                 |
+		            |READY            | END     | SDP                  |
+		            |IDLE             | CONFIGURE | CSP                |
+                    |IDLE             | CONFIGURE | MCCS               |
+                    |IDLE             | CONFIGURE | CSP                |

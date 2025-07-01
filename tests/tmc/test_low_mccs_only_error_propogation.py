@@ -59,6 +59,24 @@ def execute_command(
         case "SCAN":
             scan_input = MyFileJSONInput("subarray", "scan_low")
             _, pytest.unique_id = tmc.subarray_node.Scan(scan_input.as_str())
+        case "CONFIGURE":
+            configure_input = MyFileJSONInput("subarray", "configure_low")
+
+            configure_input_json = json.loads(configure_input.as_str())
+            configure_input_json[
+                "interface"
+            ] = "https://schema.skao.int/ska-low-tmc-configure/4.2"
+
+            for subsystem in ["sdp", "csp"]:
+                del configure_input_json[subsystem]
+
+            configure_input_json = json.dumps(configure_input_json)
+
+            _, pytest.unique_id = tmc.subarray_node.Configure(
+                configure_input_json
+            )
+        case "END":
+            _, pytest.unique_id = tmc.subarray_node.End()
 
 
 @given(
@@ -81,6 +99,8 @@ def move_to_obsstate(
             move_to_idle(tmc, event_tracer)
             move_to_ready(tmc, event_tracer, is_single_subsystem=True)
             move_to_scanning(tmc, event_tracer)
+        case "IDLE":
+            move_to_idle(tmc, event_tracer)
 
 
 @when(parsers.parse("{command} is invoked on a defective MCCS Subarray"))
@@ -140,7 +160,7 @@ def validate_error_message_reporting(
     pytest.defective_subarray.SetDefective(json.dumps({"enabled": False}))
 
 
-@then(parsers.parse("the TMC SubarrayNode transitions to FAULT obsState"))
+@then("the TMC SubarrayNode transitions to FAULT obsState")
 def validate_subarry_obsState(
     tmc: TMCFacade,
     event_tracer: TangoEventTracer,

@@ -232,6 +232,22 @@ def perform_ready_transition_with_end(
     )
 
 
+def perform_configure(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    command_input_factory: JsonFactory,
+):
+    """
+    Perform Configure
+    """
+
+    configure_input_json = prepare_json_args_for_commands(
+        "configure_low", command_input_factory
+    )
+    _, pytest.unique_id = subarray_node_low.execute_transition(
+        "Configure", configure_input_json
+    )
+
+
 def perform_scan(
     subarray_node_low: SubarrayNodeWrapperLow,
     command_input_factory: JsonFactory,
@@ -421,6 +437,15 @@ def move_tmc_to_intial_state(
     """
 
     match initialObsState:
+
+        case "IDLE":
+            perform_idle_transition(
+                central_node_low,
+                subarray_node_low,
+                event_tracer,
+                command_input_factory,
+            )
+
         case "READY":
 
             perform_idle_transition(
@@ -507,6 +532,13 @@ def execute_command_on_tmc_with_defectivesetup(
             pytest.defective_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
 
     match command:
+
+        case "CONFIGURE":
+            perform_configure(
+                subarray_node_low,
+                command_input_factory,
+            )
+
         case "END":
 
             perform_ready_transition_with_end(
@@ -563,7 +595,7 @@ def validate_error_message_reporting(
     pytest.defective_subarray.SetDefective(json.dumps({"enabled": False}))
 
 
-@then(parsers.parse("the TMC SubarrayNode transitions to FAULT obsState"))
+@then("the TMC SubarrayNode transitions to FAULT obsState")
 def validate_subarry_obsState(
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,

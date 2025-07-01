@@ -30,6 +30,7 @@ from tests.resources.test_harness.subarray_node_low import (
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_harness.utils.enums import SimulatorDeviceType
 from tests.tmc.conftest import (
+    perform_configure,
     perform_ready_transition_with_end,
     perform_scan,
     verify_scanning_transition_with_endscan,
@@ -103,6 +104,14 @@ def execute_command(
                     subarray_node_low,
                     command_input_factory,
                 )
+            case "CONFIGURE":
+                pytest.defective_subarray.SetDefective(
+                    INTERMEDIATE_CONFIGURING_STATE_DEFECT
+                )
+                perform_configure(
+                    subarray_node_low,
+                    command_input_factory,
+                )
     elif device == "SDP":
 
         match command:
@@ -132,6 +141,14 @@ def execute_command(
                 )
 
                 perform_scan(
+                    subarray_node_low,
+                    command_input_factory,
+                )
+            case "CONFIGURE":
+                pytest.defective_subarray.SetDelayInfo(
+                    json.dumps({"Configure": 55})
+                )
+                perform_configure(
                     subarray_node_low,
                     command_input_factory,
                 )
@@ -234,7 +251,7 @@ def validate_error_message_reporting(
     pytest.defective_subarray.ResetDelayInfo()
 
 
-@then(parsers.parse("the TMC SubarrayNode transitions to FAULT obsState"))
+@then("the TMC SubarrayNode transitions to FAULT obsState")
 def validate_subarry_obsState(
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
