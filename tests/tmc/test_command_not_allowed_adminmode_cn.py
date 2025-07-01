@@ -73,8 +73,8 @@ def invoke_assignresources(
             tmc.release_resources(release_input)
         elif "On" in command:
             tmc.move_to_on()
-        elif "Off" in command:
-            tmc.move_to_off()
+        elif "standby" in command:
+            tmc.set_standby()
         else:
             raise ValueError(f"Unsupported command: {command}")
     except (tango.DevFailed, RuntimeError, ValueError) as e:
