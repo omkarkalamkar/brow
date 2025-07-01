@@ -37,7 +37,6 @@ from tests.tmc.conftest import (
 )
 
 
-@pytest.mark.SKA_fault
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation.feature",
@@ -50,7 +49,6 @@ def test_tmc_command_error_propagation():
     """
 
 
-@pytest.mark.SKA_fault
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation.feature",
