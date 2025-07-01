@@ -36,6 +36,7 @@ def test_telescope_on_command_flow():
     """
 
 
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_on_command.feature",
     "Starting up low telescope if one subsystem in adminmode ENGINEERING",
@@ -44,7 +45,7 @@ def test_telescope_on_command_sdp_adminmode_engineering():
     """Test case to verify on command if sdp in adminmode ENGINEERING"""
 
 
-@given("SDP is in adminmode ENGINEERING")
+@given("SDP controller is in adminmode ENGINEERING")
 def set_adminmode_sdp():
     """Set the adminmode of sdp"""
     sdp_proxy = DeviceProxy(low_sdp_master)
