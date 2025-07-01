@@ -96,6 +96,9 @@ def given_a_tmc(
             subarray_node_low.sdp_subarray_leaf_node: ["sdpSubarrayobsState"],
         }
     )
+
+    event_tracer.clear_events()
+
     central_node_low.move_to_on()
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
@@ -147,8 +150,8 @@ def given_a_tmc(
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
-    event_tracer.clear_events()
 
+    event_tracer.clear_events()
     # Invoke release all  resource on csp, sdp, mccs
     subarray_node_low.mccs_subarray1.ReleaseAllResources()
     subarray_node_low.csp_subarray1.ReleaseAllResources()

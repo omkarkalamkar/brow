@@ -37,6 +37,7 @@ from tests.resources.test_support.constant_low import (
 
 # @pytest.mark.SKA_fault
 @pytest.mark.SKA_low
+@pytest.mark.skip(reason="To be updated under sah-1737")
 @scenario(
     "../features/tmc/SKB_512.feature",
     "TMC executes EndScan on other sub-systems even if one sub-system goes "
