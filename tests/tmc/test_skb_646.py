@@ -97,8 +97,6 @@ def given_a_tmc(
         }
     )
 
-    event_tracer.clear_events()
-
     central_node_low.move_to_on()
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
@@ -121,6 +119,7 @@ def given_a_tmc(
         "obsState",
         ObsState.EMPTY,
     )
+    event_tracer.clear_events()
 
     set_receive_address(central_node_low)
     assign_input_json = prepare_json_args_for_centralnode_commands(
