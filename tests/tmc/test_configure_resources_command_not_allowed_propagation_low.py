@@ -11,10 +11,11 @@ from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.constant import (
     COMMAND_NOT_ALLOWED_DEFECT,
     TIMEOUT,
+    low_sdp_subarray_leaf_node,
 )
 
 # mccs_controller,; mccs_master_leaf_node,
-# low_sdp_subarray_leaf_node,
+# ,
 from tests.resources.test_harness.simulator_factory import SimulatorFactory
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
@@ -220,8 +221,10 @@ class TestConfigureCommandNotAllowedPropagation:
         )
 
         exception_message = (
-            " The invocation of the Configure command failed on Sdp "
-            + "Subarray Device low-sdp/subarray/01"
+            f"Exception occurred on the following devices:"
+            f" {low_sdp_subarray_leaf_node}:"
+            " ska_tmc_common.exceptions.CommandNotAllowed:"
+            " Command is not allowed"
         )
 
         log_events(
