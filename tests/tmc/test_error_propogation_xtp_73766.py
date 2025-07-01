@@ -13,11 +13,12 @@ import json
 import pytest
 from assertpy import assert_that
 from pytest_bdd import parsers, scenario, then, when
-from ska_control_model import ResultCode
+from ska_control_model import ObsState, ResultCode
 from ska_tango_testing.integration import TangoEventTracer
 
 from tests.resources.test_harness.constant import (
     INTERMEDIATE_CONFIGURING_STATE_DEFECT,
+    TIMEOUT,
     low_csp_subarray_leaf_node,
     low_sdp_subarray_leaf_node,
     mccs_subarray_leaf_node,
@@ -248,3 +249,23 @@ def validate_error_message_reporting(
     pytest.defective_subarray.ResetDelayInfo()
 
     event_tracer.clear_events()
+
+
+@then("the TMC SubarrayNode transitions to FAULT obsState")
+def validate_subarry_obsState(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """
+    Check if TMC subarray remains in stuck Obs-State.
+    """
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        '"the TMC SubarrayNode transitions to FAULT obsState"'
+        f"({subarray_node_low.subarray_node.dev_name()}) "
+        "is expected to be in FAULT obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.subarray_node,
+        "obsState",
+        ObsState.FAULT,
+    )
