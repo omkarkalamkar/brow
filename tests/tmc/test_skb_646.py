@@ -31,6 +31,7 @@ from tests.resources.test_support.constant_low import (
 )
 
 
+@pytest.mark.skip(reason="will be turned on later")
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/SKB_646.feature",

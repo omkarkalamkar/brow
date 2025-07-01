@@ -13,8 +13,6 @@ from pytest_bdd import given, scenario, then, when
 from ska_control_model import ObsState
 from ska_tango_base.commands import ResultCode
 from ska_tango_testing.integration import TangoEventTracer, log_events
-
-# from ska_tango_testing.mock.placeholders import Anything
 from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
@@ -35,7 +33,6 @@ from tests.resources.test_support.constant_low import (
 )
 
 
-# @pytest.mark.SKA_fault
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/SKB_512.feature",
