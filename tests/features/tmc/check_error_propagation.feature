@@ -1,4 +1,4 @@
-@SKA_low @XTP- @XTP-
+@SKA_low @XTP-73592 @XTP-73766
 	Scenario Outline: Error Propagation Reported by TMC Low Configure/End/EndScan/Scan Commands for Defective Subarray
 		Given the telescope is is ON state
 		And the TMC subarray is in the <initialObsState> observation state
