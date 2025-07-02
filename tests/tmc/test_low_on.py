@@ -116,3 +116,6 @@ def check_telescope_state(tmc: TMCFacade, event_tracer: TangoEventTracer):
         "telescopeState",
         DevState.ON,
     )
+    csp_proxy = DeviceProxy(low_csp_master)
+    if csp_proxy.adminMode != AdminMode.ONLINE:
+        csp_proxy.adminMode = AdminMode.ONLINE

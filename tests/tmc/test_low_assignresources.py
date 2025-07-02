@@ -113,3 +113,6 @@ def subsystems_subarray_idle(
 ):
     """Check if all subarrays are in IDLE obsState."""
     check_subarray_obsstate(tmc, csp, sdp, mccs, event_tracer, ObsState.IDLE)
+    sdp_proxy = DeviceProxy(low_sdp_subarray1)
+    if sdp_proxy.adminMode != AdminMode.ONLINE:
+        sdp_proxy.adminMode = AdminMode.ONLINE
