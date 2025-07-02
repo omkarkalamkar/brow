@@ -52,7 +52,7 @@ def test_tmc_command_error_propagation():
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation.feature",
-    "TimeOut Reported by TMC Low End/Configure/End/EndScan/Scan "
+    "TimeOut Reported by TMC Low Configure/End/EndScan/Scan "
     "Commands for Defective Subarray",
 )
 def test_tmc_command_timeout_error_propagation():
