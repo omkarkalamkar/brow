@@ -44,7 +44,8 @@ Impact of AdminMode on HealthState
 
 Although **AdminMode** is not aggregated separately, it influences HealthState aggregation.
 
-### AdminMode States:
+AdminMode States:
+-----------------
 
 - **ONLINE** – Fully operational and configurable.
 - **OFFLINE** – Not available for operations.
@@ -52,7 +53,8 @@ Although **AdminMode** is not aggregated separately, it influences HealthState a
 - **NOT_FITTED** – Not installed or part of the system.
 - **STANDBY** – Inactive or low-power state.
 
-### Impact of AdminMode on HealthState:
+Impact of AdminMode on HealthState:
+-----------------------------------
 
 1. If **AdminMode is OFFLINE**, the subsystem’s HealthState is ignored.
 2. If **AdminMode is NOT_FITTED**, the subsystem is excluded from aggregation.
@@ -66,7 +68,8 @@ Impact of AdminMode on command execution:
 2. The command invocation is not allowed from TMC SubarrayNode if the adminMode of any subsystem's subarray is  either **OFFLINE or NOT_FITTED**
 3. The command invocation will allowed if the adminMode of subsystem is either **ONLINE or ENGINEERING**
 
-#### Example:
+Example:
+--------
 
 +---------------+------------+-------------+---------------+-------------+
 | Subsystem     | AdminMode  | HealthState | System Health | System Mode |
