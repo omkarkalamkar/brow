@@ -69,7 +69,7 @@ centralnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-centralnode
-    tag: 0.19.7
+    tag: 0.20.0
     pullPolicy: IfNotPresent
 
 subarraynode:
@@ -104,14 +104,14 @@ mccsmasterleafnode:
   image:
     registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
     image: ska-tmc-mccsleafnodes
-    tag: 0.9.1-dev.c72dac065
+    tag: 0.9.1
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
     registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
     image: ska-tmc-mccsleafnodes
-    tag: 0.9.1-dev.c72dac065
+    tag: 0.9.1
     pullPolicy: IfNotPresent
 
 resources:

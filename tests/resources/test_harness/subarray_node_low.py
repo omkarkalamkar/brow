@@ -282,7 +282,6 @@ class SubarrayNodeWrapperLow:
             self.sdp_subarray1.adminMode = AdminMode.ONLINE
         if self.mccs_subarray1.adminMode != AdminMode.ONLINE:
             self.mccs_subarray1.adminMode = AdminMode.ONLINE
-
         result, message = self.subarray_node.On()
         LOGGER.info("Invoked ON on SubarrayNode")
         return result, message
