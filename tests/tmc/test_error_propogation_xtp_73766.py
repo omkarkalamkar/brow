@@ -37,11 +37,10 @@ from tests.tmc.conftest import (
 )
 
 
-# @pytest.mark.SKA_fault
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation.feature",
-    "Error Propagation Reported by TMC Low EndScan/Scan "
+    "Error Propagation Reported by TMC Low Configure/End/EndScan/Scan "
     "Commands for Defective Subarray",
 )
 def test_tmc_command_error_propagation():
@@ -50,11 +49,10 @@ def test_tmc_command_error_propagation():
     """
 
 
-# @pytest.mark.SKA_fault
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation.feature",
-    "TimeOut Reported by TMC Low End/EndScan/Scan "
+    "TimeOut Reported by TMC Low End/Configure/End/EndScan/Scan "
     "Commands for Defective Subarray",
 )
 def test_tmc_command_timeout_error_propagation():

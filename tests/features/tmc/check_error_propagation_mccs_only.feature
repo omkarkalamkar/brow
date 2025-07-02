@@ -1,5 +1,5 @@
 @SKA_low @XTP- @XTP-
-	Scenario Outline: Error Propagation Reported by TMC Low EndScan/Scan Commands for Defective MCCS Subarray
+	Scenario Outline: Error Propagation Reported by TMC Low Configure/End/EndScan/Scan Commands for Defective MCCS Subarray
 		Given the telescope is in the ON state
 		And the TMC subarraynode is in the <obsState> observation state
 		When <command> is invoked on a defective MCCS subarray
