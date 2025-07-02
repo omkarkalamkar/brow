@@ -59,15 +59,12 @@ Although **AdminMode** is not aggregated separately, it influences HealthState a
 3. If **AdminMode is MAINTENANCE**, HealthState is informative but does not affect system-wide aggregation.
 4. Otherwise, HealthState aggregation follows the rules mentioned earlier.
 
-Impact of AdminMode on command execution
+Impact of AdminMode on command execution:
 -----------------------------------------
 
-1. The command invocation is not allowed from TMC CentralNode if the adminMode of
-any subsystem's controller is  either **OFFLINE or NOT_FITTED**
-2. The command invocation is not allowed from TMC SubarrayNode if the adminMode of
-any subsystem's subarray is  either **OFFLINE or NOT_FITTED**
-3. The command invocation will allowed if the adminMode of subsystem is either
-**ONLINE or ENGINEERING**
+1. The command invocation is not allowed from TMC CentralNode if the adminMode of any subsystem's controller is  either **OFFLINE or NOT_FITTED**
+2. The command invocation is not allowed from TMC SubarrayNode if the adminMode of any subsystem's subarray is  either **OFFLINE or NOT_FITTED**
+3. The command invocation will allowed if the adminMode of subsystem is either **ONLINE or ENGINEERING**
 
 #### Example:
 
