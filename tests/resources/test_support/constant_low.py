@@ -181,9 +181,18 @@ INTERMEDIATE_CONFIGURING_OBS_STATE_DEFECT = {
     "result": ResultCode.FAILED,
     "intermediate_state": ObsState.CONFIGURING,
 }
+
 INTERMEDIATE_FAULT_OBS_STATE_DEFECT = {
     "enabled": True,
     "fault_type": FaultType.STUCK_IN_INTERMEDIATE_STATE,
+    "error_message": "Device stuck in intermediate state",
+    "result": ResultCode.FAILED,
+    "intermediate_state": ObsState.FAULT,
+}
+
+INTERMEDIATE_SDP_FAULT_OBS_STATE_DEFECT = {
+    "enabled": True,
+    "fault_type": FaultType.FAILED_RESULT,
     "error_message": "Device stuck in intermediate state",
     "result": ResultCode.FAILED,
     "intermediate_state": ObsState.FAULT,

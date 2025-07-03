@@ -386,7 +386,7 @@ class TestLowCentralNodeAssignResources:
         )
 
         mccs_subarray_sim.setDefective(json.dumps(RESET_DEFECT))
-        central_node_low.subarray_node.Abort()
+        central_node_low.subarray_node.Restart()
         assert_that(event_tracer).described_as(
             "FAILED ASSUMPTION AFTER ABORT COMMAND:"
             "Subarray Node device"
@@ -395,7 +395,7 @@ class TestLowCentralNodeAssignResources:
         ).within_timeout(TIMEOUT).has_change_event_occurred(
             central_node_low.subarray_node,
             "obsState",
-            ObsState.ABORTED,
+            ObsState.EMPTY,
         )
 
     @pytest.mark.SKA_low
@@ -524,7 +524,7 @@ class TestLowCentralNodeAssignResources:
             ResultCode.FAILED,
         )
         sdp_subarray_sim.ResetDelayInfo()
-        central_node_low.subarray_node.Abort()
+        central_node_low.subarray_node.Restart()
 
         # Verify ObsState is Aborted
         assert_that(event_tracer).described_as(
@@ -535,5 +535,5 @@ class TestLowCentralNodeAssignResources:
         ).within_timeout(TIMEOUT).has_change_event_occurred(
             central_node_low.subarray_node,
             "obsState",
-            ObsState.ABORTED,
+            ObsState.EMPTY,
         )

@@ -2,7 +2,7 @@ import json
 import logging
 from time import sleep
 
-from ska_control_model import ObsState
+from ska_control_model import AdminMode, ObsState
 from ska_ser_logging import configure_logging
 from ska_tango_base.control_model import HealthState
 from tango import DeviceProxy, DevState
@@ -280,6 +280,13 @@ class SubarrayNodeWrapperLow:
         )
 
     def move_to_on(self):
+        """Move the Subarray to On State"""
+        if self.csp_subarray1.adminMode != AdminMode.ONLINE:
+            self.csp_subarray1.adminMode = AdminMode.ONLINE
+        if self.sdp_subarray1.adminMode != AdminMode.ONLINE:
+            self.sdp_subarray1.adminMode = AdminMode.ONLINE
+        if self.mccs_subarray1.adminMode != AdminMode.ONLINE:
+            self.mccs_subarray1.adminMode = AdminMode.ONLINE
         # Move subarray to ON state
         result, message = self.subarray_node.On()
         LOGGER.info("Invoked ON on SubarrayNode")
@@ -414,6 +421,10 @@ class SubarrayNodeWrapperLow:
         """Tear down after each test run"""
 
         LOGGER.info("Calling Tear down for subarray")
+        LOGGER.info(
+            "Current Subarray Node ObsState is: %s",
+            self.subarray_node.obsState,
+        )
         self._reset_simulator_devices()
         self._clear_command_call_and_transition_data(clear_transition=True)
 
@@ -438,7 +449,8 @@ class SubarrayNodeWrapperLow:
             self.release_resources(self.release_input)
 
         else:
-            self.force_change_of_obs_state("EMPTY")
+            if self.subarray_node.obsstate != ObsState.EMPTY:
+                self.force_change_of_obs_state("EMPTY")
         if SIMULATED_DEVICES_DICT["sdp_and_mccs"]:
             if self.pst.obsState == ObsState.ABORTED:
                 self.event_recorder.subscribe_event(self.pst, "obsState")
@@ -450,9 +462,9 @@ class SubarrayNodeWrapperLow:
                     lookahead=4,
                 )
 
+        assert check_subarray_obs_state("EMPTY")
         # Move Subarray to OFF state
         self.move_to_off()
-        assert check_subarray_obs_state("EMPTY")
         # Adding a small sleep to allow the systems to clean up processes
         sleep(1)
 
