@@ -13,7 +13,6 @@ stages:
   - build
   - on-demand
   - test
-  - test-tmc-low-restart
   - integration
   - publish
   - staging
@@ -129,7 +128,6 @@ k8s-test-tmc-low-restart:
   environment:
     name: test/$CI_COMMIT_REF_SLUG
     on_stop: stop-k8s-test-tmc-low-restart
-  when: manual
 
 stop-k8s-test-tmc-low-restart:
   extends:
