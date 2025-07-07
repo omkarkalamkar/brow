@@ -61,7 +61,6 @@ Feature: SP-5340
 		| Scan            | SCANNING     | FAULT            | SCANNING      |
 		| Scan            | SCANNING     | FAULT            | FAULT         |
 		| Scan            | SCANNING     | SCANNING         | READY         |
-#		| Scan            | SCANNING     | SCANNING         | SCANNING      |
 		| Scan            | SCANNING     | SCANNING         | FAULT         |
 	    | ReleaseResources| FAULT        | IDLE             | IDLE          |
 		| ReleaseResources| IDLE         | FAULT            | IDLE          |
