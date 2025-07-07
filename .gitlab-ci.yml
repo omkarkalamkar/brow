@@ -117,6 +117,12 @@ k8s-test-tmc-low-restart:
     MARK: 'SKA_restart'
     SUBARRAY_COMMAND_TIMEOUT: 10
     COUNT: 1
+  before_script:
+    - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
+    - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
+    - 'make help | grep k8s-test'
+    - make k8s-install-chart
+    - make k8s-wait
   after_script:
     - pip3 install -q -U ska-ser-xray
     - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
