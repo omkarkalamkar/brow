@@ -14,6 +14,8 @@ MCCS_SIMULATION_ENABLED ?= true
 SDP_PROCCONTROL_REPLICAS ?= 1
 K8S_TIMEOUT ?= 600s
 PYTHON_LINT_TARGET ?= tests/
+SN_COMMAND_TIMEOUT ?= 10
+
 
 DEPLOYMENT_TYPE = $(shell echo $(TELESCOPE) | cut -d '-' -f2)
 MARK ?= $(shell echo $(TELESCOPE) | sed "s/-/_/g") ## What -m opt to pass to pytest
@@ -108,6 +110,7 @@ K8S_CHART_PARAMS = --set global.minikube=$(MINIKUBE) \
 	--set global.operator=true \
 	--set ska-taranta.enabled=$(TARANTA_ENABLED)\
 	--set tmc-low.subarray_count=$(SUBARRAY_COUNT)\
+	--set tmc-low.deviceServers.subarraynode.CommandTimeOut=$(SN_COMMAND_TIMEOUT) \
 	$(CUSTOM_VALUES)
 
 PYTHON_VARS_BEFORE_PYTEST ?= PYTHONPATH=.:./src \

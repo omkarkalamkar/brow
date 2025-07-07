@@ -13,6 +13,7 @@ stages:
   - build
   - on-demand
   - test
+  - test-tmc-low-restart
   - integration
   - publish
   - staging
@@ -106,6 +107,29 @@ k8s-test:
   after_script:
     - pip3 install -q -U ska-ser-xray
     - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
+
+k8s-test-tmc-low-restart:
+  extends:
+    - k8s-test
+  variables:
+    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-restart'
+    SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-restart"
+    MARK: 'SKA_restart'
+    SN_COMMAND_TIMEOUT: 10
+    COUNT: 1
+  after_script:
+    - pip3 install -q -U ska-ser-xray
+    - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
+  environment:
+    name: test/$CI_COMMIT_REF_SLUG
+    on_stop: stop-k8s-test-tmc-low-restart
+  when: manual
+
+stop-k8s-test-tmc-low-restart:
+  extends:
+    - stop-k8s-test
+  variables:
+    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-restart'
 
 k8s-test-tmc-with-csp:
   extends:
