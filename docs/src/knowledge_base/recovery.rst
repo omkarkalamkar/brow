@@ -57,13 +57,17 @@ and on the device where the obsState is RESOURCING invoke Abort() command follow
 
 TMC Low in FAULT ObsState
 -------------------------
+
+TMC Low can go into an ObsState.FAULT with the below scenarios. 
+To recover from the ObsState.FAULT please follow the steps to recover.
+
 +-----------------------------------+------------------------------------------------------------------------+ 
 | Scenario                          |               Steps to recover                                         | 
 +===================================+========================================================================+ 
-| When TMC Low stuck in FAULT       |- Using Subarray Node                                                   |
-| ObsState                          |    - Create device proxy of subarray node                              |
-|                                   |    - To recover TMC Low stuck in FAULT from Subarray node execute:     |
-|                                   |      RESTART command.                                                  |
-|                                   |    - subarray_node = tango.DeviceProxy("low-tmc/subarray/01")          |
+| 1. When a command gets time out   |- Using Subarray Node                                                   |
+| 2. When a command fails on any    |    - Create device proxy of subarray node                              |
+|    of the subsystem               |    - When TMC Low is in ObsState.FAULT, execute Restart() command on   |
+| 3. When any of the subsystem      |      TMC Subarray Node to bring it back to initial ObsState.EMPTY      |
+|    transitions to FAULT ObsState  |    - subarray_node = tango.DeviceProxy("low-tmc/subarray/01")          |
 |                                   |    - subarray_node.Restart()                                           |
 +-----------------------------------+------------------------------------------------------------------------+
