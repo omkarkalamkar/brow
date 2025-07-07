@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ska-tmc-low-integration"
-version = "1.2.1-rc.2"
+version = "1.3.1-rc.1"
 description = "Repository for integration of TMC Low components"
 authors = ["Team Himalaya", "Team Sahyadri"]
 license = "BSD-3-Clause"
@@ -32,6 +32,7 @@ msgpack = "1.0.7"
 msgpack_numpy = "0.4.8"
 ska-telmodel = "^1.17.0"
 ska-integration-test-harness= "0.3.0"
+
 [tool.poetry.group.dev.dependencies]
 black = "^22.8.0"
 isort = "^5.10.1"

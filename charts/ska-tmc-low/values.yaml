@@ -88,30 +88,30 @@ sdpleafnodes:
 
 cspmasterleafnode:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-cspleafnodes
+    registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.27.0-dev.c11865f5d
+    tag: 0.27.1
     pullPolicy: IfNotPresent
 
 cspsubarrayleafnode:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-cspleafnodes
+    registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.27.0-dev.c11865f5d
+    tag: 0.27.1
     pullPolicy: IfNotPresent
 
 mccsmasterleafnode:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
+    registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.9.1-dev.c61b70389
+    tag: 0.9.1
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
+    registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.9.1-dev.c61b70389
+    tag: 0.9.1
     pullPolicy: IfNotPresent
 
 resources:
@@ -157,7 +157,7 @@ deviceServers:
     AdapterTimeOut: 2
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
-    SDPSubarrayAdminModeEnabled: false
+    SDPSubarrayAdminModeEnabled: true
     family: "subarray-leaf-node-sdp"
 
   sdpmasterleafnode:
@@ -167,7 +167,7 @@ deviceServers:
     AdapterTimeOut: 2
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
-    SDPMasterAdminModeEnabled: false
+    SDPMasterAdminModeEnabled: true
     family: "leaf-node-sdp"
     member: "0"
 

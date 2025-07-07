@@ -1,7 +1,7 @@
 """
 This module defines a BDD (Behavior-Driven Development) test scenario
 using pytest-bdd to verify the behavior of the Telescope Monitoring and
-Control (TMC) system resolution of SKB-476.
+Control (TMC) system resolution of SKB-837.
 """
 
 import json
@@ -38,7 +38,7 @@ from tests.resources.test_support.constant_low import (
     " receiveAddresses",
 )
 def test_verify_skb_837():
-    """BDD test scenario for verifying SKB-476"""
+    """BDD test scenario for verifying SKB-837"""
 
 
 @given("subarray is in observation state IDLE")

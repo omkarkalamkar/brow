@@ -4,14 +4,18 @@ Module: test_low_assignresources
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, scenario, then, when
-from ska_control_model import ObsState
+from ska_control_model import AdminMode, ObsState
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
 from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
 from ska_integration_test_harness.facades.sdp_facade import SDPFacade
 from ska_integration_test_harness.facades.tmc_facade import TMCFacade
 from ska_tango_testing.integration import TangoEventTracer
+from tango import DeviceProxy
 
-from tests.resources.test_harness.constant import COMMAND_COMPLETED
+from tests.resources.test_harness.constant import (
+    COMMAND_COMPLETED,
+    low_sdp_subarray1,
+)
 from tests.resources.test_harness.helpers import check_subarray_obsstate
 from tests.resources.test_harness.utils.my_file_json_input import (
     MyFileJSONInput,
@@ -31,12 +35,31 @@ def test_telescope_assign_resources():
     """
 
 
+@pytest.mark.SKA_low
+@scenario(
+    "../features/tmc/check_assignresources_command.feature",
+    "Assign resources to Low subarray if one subarray "
+    "in adminmode ENGINEERING",
+)
+def test_assignresources_command_sdp_adminmode_engineering():
+    """Test case to verify assignresources
+    command if sdp in adminmode ENGINEERING"""
+
+
 @given("subarray is in the EMPTY ObsState")
 def subarray_in_empty_obsstate(
     tmc: TMCFacade,
 ):
     """Checks if SubarrayNode's obsState attribute value is EMPTY"""
     assert tmc.subarray_node.obsState == ObsState.EMPTY
+
+
+@given("sdp subarray is in adminmode ENGINEERING")
+def set_adminmode_sdp():
+    """Set the adminmode of sdp subarray"""
+    sdp_proxy = DeviceProxy(low_sdp_subarray1)
+    sdp_proxy.adminMode = AdminMode.ENGINEERING
+    assert sdp_proxy.adminMode == AdminMode.ENGINEERING
 
 
 @when("I assign resources to the subarray")
@@ -90,3 +113,6 @@ def subsystems_subarray_idle(
 ):
     """Check if all subarrays are in IDLE obsState."""
     check_subarray_obsstate(tmc, csp, sdp, mccs, event_tracer, ObsState.IDLE)
+    sdp_proxy = DeviceProxy(low_sdp_subarray1)
+    if sdp_proxy.adminMode != AdminMode.ONLINE:
+        sdp_proxy.adminMode = AdminMode.ONLINE
