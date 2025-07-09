@@ -21,10 +21,12 @@ from ska_integration_test_harness.structure.telescope_wrapper import (
     TelescopeWrapper,
 )
 from ska_tango_testing.integration import TangoEventTracer
+from tango import DeviceProxy
 
 from tests.resources.test_harness.constant import (
     low_csp_subarray1,
     low_sdp_subarray1,
+    mccs_controller,
     mccs_subarray1,
 )
 from tests.resources.test_harness.utils.my_file_json_input import (
@@ -182,12 +184,10 @@ def event_tracer() -> TangoEventTracer:
 
 @pytest.fixture
 def admin_mode() -> None:
-    from tango import DeviceProxy
-
     csp_subarray1 = DeviceProxy(low_csp_subarray1)
     sdp_subarray1 = DeviceProxy(low_sdp_subarray1)
     mccs_subarray = DeviceProxy(mccs_subarray1)
-    mccs_control = DeviceProxy("low-mccs/control/control")
+    mccs_control = DeviceProxy(mccs_controller)
     mccs_control.adminMode = 0
     mccs_control.on()
     if csp_subarray1.adminMode != AdminMode.ONLINE:
