@@ -64,7 +64,7 @@ To recover from the ObsState.FAULT please follow the steps to recover.
 +-----------------------------------+------------------------------------------------------------------------+ 
 | Scenario                          |               Steps to recover                                         | 
 +===================================+========================================================================+ 
-| 1. When a command gets time out   |- Using Subarray Node                                                   |
+| 1. When a command times out       |- Using Subarray Node                                                   |
 | 2. When a command fails on any    |    - Create device proxy of subarray node                              |
 |    of the subsystem               |    - When TMC Low is in ObsState.FAULT, execute Restart() command on   |
 | 3. When any of the subsystem      |      TMC Subarray Node to bring it back to initial ObsState.EMPTY      |
