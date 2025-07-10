@@ -203,10 +203,10 @@ def verify_tmc_subarray_observation_state_fault(
     log_events({tmc.subarray_node: ["longRunningCommandResult"]})
 
     assert_that(event_tracer).described_as(
-        f"FAILED ASSUMPTION AFTER Scan: "
+        f"FAILED ASSUMPTION: "
         "Subarray Node device"
         f"({tmc.subarray_node}) "
-        "is expected have longRunningCommandResult"
+        "is expected to have longRunningCommandResult"
         "(ResultCode.FAILED,Timeout has occurred, command failed)",
     ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
         tmc.subarray_node,
