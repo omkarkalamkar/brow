@@ -99,14 +99,14 @@ k8s-test:
     MARK: 'SKA_low'
   before_script:
     - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
-    # Below instructions will be uncommented in SAH-1737
-    # - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
-    # - 'make help | grep k8s-test'
-    # - make k8s-install-chart
-    # - make k8s-wait
-  # after_script:
-  #   - pip3 install -q -U ska-ser-xray
-  #   - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
+    - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
+    - 'make help | grep k8s-test'
+    - make k8s-install-chart
+    - make k8s-wait
+  after_script:
+    - pip3 install -q -U ska-ser-xray
+    - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
+  when: manual
 
 k8s-test-tmc-low-restart:
   extends:
