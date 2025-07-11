@@ -96,7 +96,7 @@ k8s-test:
   variables:
     KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA'
     SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA"
-    MARK: 'SKA_low'
+    MARK: 'SKA_low_test'
   before_script:
     - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
     - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
@@ -106,7 +106,6 @@ k8s-test:
   after_script:
     - pip3 install -q -U ska-ser-xray
     - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
-  when: manual
 
 k8s-test-tmc-low-restart:
   extends:
