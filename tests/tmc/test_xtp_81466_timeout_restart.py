@@ -131,6 +131,8 @@ def error_reporting(
         event_tracer: Used to monitor Tango events for error reporting.
         defective_subsystem: The subsystem name that triggered the timeout.
     """
+    event_tracer.subscribe_event(tmc.mccs_subarray_leaf_node, "obsState")
+
     expected_msg = exception_messages[defective_subsystem]
 
     assert_that(event_tracer).within_timeout(
@@ -164,5 +166,10 @@ def error_reporting(
             TIMEOUT
         ).has_change_event_occurred(
             mccs.mccs_subarray, "obsState", ObsState.EMPTY
+        )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            tmc.mccs_subarray_leaf_node, "obsState", ObsState.EMPTY
         )
     event_tracer.clear_events()
