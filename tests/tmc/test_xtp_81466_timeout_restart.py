@@ -22,7 +22,6 @@ from tests.resources.test_harness.constant import TIMEOUT_DEFECT
 TIMEOUT = 60
 
 
-@pytest.mark.SKA_fault
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
@@ -132,6 +131,12 @@ def error_reporting(
         defective_subsystem: The subsystem name that triggered the timeout.
     """
     event_tracer.subscribe_event(tmc.mccs_subarray_leaf_node, "obsState")
+    event_tracer.subscribe_event(
+        tmc.csp_subarray_leaf_node, "cspSubarrayObsState"
+    )
+    event_tracer.subscribe_event(
+        tmc.sdp_subarray_leaf_node, "sdpSubarrayObsState"
+    )
 
     expected_msg = exception_messages[defective_subsystem]
 
@@ -151,6 +156,11 @@ def error_reporting(
         ).has_change_event_occurred(
             csp.csp_subarray, "obsState", ObsState.EMPTY
         )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            tmc.csp_subarray_leaf_node, "cspSubarrayObsState", ObsState.EMPTY
+        )
     elif defective_subsystem == "SDP":
         sdp.sdp_subarray.ResetDelayInfo()
         sdp.sdp_subarray.Restart()
@@ -158,6 +168,11 @@ def error_reporting(
             135
         ).has_change_event_occurred(
             sdp.sdp_subarray, "obsState", ObsState.EMPTY
+        )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            tmc.sdp_subarray_leaf_node, "sdpSubarrayObsState", ObsState.EMPTY
         )
     elif defective_subsystem == "MCCS":
         mccs.mccs_controller.SetDefective(json.dumps({"enabled": False}))
