@@ -212,17 +212,18 @@ INITIAL_LOW_DELAY_JSON = {
     "cadence_sec": 0.1,
     "validity_period_sec": 0.1,
     "config_id": "",
-    "station_beam": 1,
     "subarray": 1,
     "station_beam_delays": [
         {
             "station_id": 1,
+            "station_beam": 1,
             "substation_id": 1,
             "xypol_coeffs_ns": [],
             "ypol_offset_ns": 0.0,
         },
         {
             "station_id": 1,
+            "station_beam": 1,
             "substation_id": 1,
             "xypol_coeffs_ns": [],
             "ypol_offset_ns": 0.0,
