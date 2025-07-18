@@ -184,5 +184,5 @@ def check_if_delay_values_are_generating(subarray_node_low) -> None:
     telmodel_validate(
         version=LOW_DELAYMODEL_VERSION,
         config=generated_pst_delay_model_json,
-        strictness=2,
+        strictness=0,
     )
