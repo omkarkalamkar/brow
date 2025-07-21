@@ -4,11 +4,13 @@ and checks whether CspSubarrayLeafNode starts generating delay value for
 PST Beams.
 """
 import json
+import logging
 
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, scenario, then, when
 from ska_control_model import ObsState
+from ska_ser_logging import configure_logging
 from ska_tango_base.commands import ResultCode
 from ska_tango_testing.integration import TangoEventTracer, log_events
 from ska_telmodel.schema import validate as telmodel_validate
@@ -29,6 +31,9 @@ from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
 from tests.resources.test_harness.utils.common_utils import JsonFactory
+
+configure_logging(logging.DEBUG)
+LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.SKA_low
@@ -171,18 +176,21 @@ def invoke_configure_command(
     )
 
 
-@then("CSP Subarray Leaf Node starts generating delay values for PST Beams")
-def check_if_delay_values_are_generating(subarray_node_low) -> None:
+@then("CSP Subarray Leaf Node starts generating delay values for {attribute}")
+def check_if_delay_values_are_generating(subarray_node_low, attribute) -> None:
     """Check if delay values are generating."""
     generated_pst_delay_model = (
         subarray_node_low.csp_subarray_leaf_node.read_attribute(
-            "delayModelPSTBeam1"
+            attribute
         ).value
     )
     generated_pst_delay_model_json = json.loads(generated_pst_delay_model)
-    assert generated_pst_delay_model_json != json.dumps(INITIAL_LOW_DELAY_JSON)
+    assert generated_pst_delay_model_json != json.dumps(
+        INITIAL_LOW_DELAY_JSON
+    ), f"{attribute} has not been updated from initial values."
+
     telmodel_validate(
         version=LOW_DELAYMODEL_VERSION,
         config=generated_pst_delay_model_json,
-        strictness=0,
+        strictness=2,
     )

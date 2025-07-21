@@ -193,5 +193,5 @@ def check_multiple_delay_attributes(subarray_node_low, attribute):
     telmodel_validate(
         version=LOW_DELAYMODEL_VERSION,
         config=generated_delay_model_json,
-        strictness=0,
+        strictness=2,
     )
