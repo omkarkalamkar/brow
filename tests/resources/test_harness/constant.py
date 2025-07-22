@@ -216,14 +216,14 @@ INITIAL_LOW_DELAY_JSON = {
     "station_beam_delays": [
         {
             "station_id": 1,
-            "station_beam": 1,
+            "station_beam_id": 1,
             "substation_id": 1,
             "xypol_coeffs_ns": [],
             "ypol_offset_ns": 0.0,
         },
         {
             "station_id": 1,
-            "station_beam": 1,
+            "station_beam_id": 1,
             "substation_id": 1,
             "xypol_coeffs_ns": [],
             "ypol_offset_ns": 0.0,
