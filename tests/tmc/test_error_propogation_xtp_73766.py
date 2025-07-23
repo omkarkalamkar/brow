@@ -13,11 +13,12 @@ import json
 import pytest
 from assertpy import assert_that
 from pytest_bdd import parsers, scenario, then, when
-from ska_control_model import ResultCode
+from ska_control_model import ObsState, ResultCode
 from ska_tango_testing.integration import TangoEventTracer
 
 from tests.resources.test_harness.constant import (
     INTERMEDIATE_CONFIGURING_STATE_DEFECT,
+    TIMEOUT,
     low_csp_subarray_leaf_node,
     low_sdp_subarray_leaf_node,
     mccs_subarray_leaf_node,
@@ -29,6 +30,7 @@ from tests.resources.test_harness.subarray_node_low import (
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_harness.utils.enums import SimulatorDeviceType
 from tests.tmc.conftest import (
+    perform_configure,
     perform_ready_transition_with_end,
     perform_scan,
     verify_scanning_transition_with_endscan,
@@ -38,7 +40,7 @@ from tests.tmc.conftest import (
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation.feature",
-    "Error Propagation Reported by TMC Low End/EndScan/Scan "
+    "Error Propagation Reported by TMC Low Configure/End/EndScan/Scan "
     "Commands for Defective Subarray",
 )
 def test_tmc_command_error_propagation():
@@ -50,7 +52,7 @@ def test_tmc_command_error_propagation():
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation.feature",
-    "TimeOut Reported by TMC Low End/EndScan/Scan "
+    "TimeOut Reported by TMC Low Configure/End/EndScan/Scan "
     "Commands for Defective Subarray",
 )
 def test_tmc_command_timeout_error_propagation():
@@ -100,6 +102,14 @@ def execute_command(
                     subarray_node_low,
                     command_input_factory,
                 )
+            case "CONFIGURE":
+                pytest.defective_subarray.SetDefective(
+                    INTERMEDIATE_CONFIGURING_STATE_DEFECT
+                )
+                perform_configure(
+                    subarray_node_low,
+                    command_input_factory,
+                )
     elif device == "SDP":
 
         match command:
@@ -129,6 +139,14 @@ def execute_command(
                 )
 
                 perform_scan(
+                    subarray_node_low,
+                    command_input_factory,
+                )
+            case "CONFIGURE":
+                pytest.defective_subarray.SetDelayInfo(
+                    json.dumps({"Configure": 55})
+                )
+                perform_configure(
                     subarray_node_low,
                     command_input_factory,
                 )
@@ -230,4 +248,22 @@ def validate_error_message_reporting(
     pytest.defective_subarray.SetDefective(json.dumps({"enabled": False}))
     pytest.defective_subarray.ResetDelayInfo()
 
-    event_tracer.clear_events()
+
+@then("the TMC SubarrayNode transitions to FAULT obsState")
+def validate_subarry_obsState(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """
+    Check if TMC subarray remains in stuck Obs-State.
+    """
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        '"the TMC SubarrayNode transitions to FAULT obsState"'
+        f"({subarray_node_low.subarray_node.dev_name()}) "
+        "is expected to be in FAULT obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.subarray_node,
+        "obsState",
+        ObsState.FAULT,
+    )
