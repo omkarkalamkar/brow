@@ -13,8 +13,6 @@ from pytest_bdd import given, scenario, then, when
 from ska_control_model import ObsState
 from ska_tango_base.commands import ResultCode
 from ska_tango_testing.integration import TangoEventTracer, log_events
-
-# from ska_tango_testing.mock.placeholders import Anything
 from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
@@ -283,6 +281,16 @@ def check_obs_state_ready_for_leaf_nodes(
         subarray_node_low.mccs_subarray_leaf_node,
         "obsState",
         ObsState.READY,
+    )
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'tmc subarray should be in FAULT obsstate'"
+        f"({subarray_node_low.subarray_node.dev_name()}) "
+        "is expected to be in READY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.subarray_node,
+        "obsState",
+        ObsState.FAULT,
     )
 
     event_tracer.clear_events()

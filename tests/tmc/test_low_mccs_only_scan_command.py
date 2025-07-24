@@ -16,7 +16,7 @@ from assertpy import assert_that
 from pytest_bdd import given, scenario, then, when
 from ska_control_model import ObsState
 from ska_integration_test_harness.facades.tmc_facade import TMCFacade
-from ska_tango_testing.integration import TangoEventTracer, log_events
+from ska_tango_testing.integration import TangoEventTracer
 
 from tests.resources.test_harness.constant import TIMEOUT
 from tests.resources.test_harness.utils.my_file_json_input import (
@@ -36,37 +36,6 @@ def test_tmc_mccs_only_scan_command():
     the Low End command in a TMC with MCCS only subsystem."""
 
 
-@given("the telescope is in the ON state")
-def given_the_telescope_is_in_on_state(
-    tmc: TMCFacade,
-    event_tracers: TangoEventTracer,
-):
-    """Ensure the telescope is in ON state."""
-    tmc.move_to_on(wait_termination=True)
-    event_tracers.subscribe_event(tmc.central_node, "telescopeState")
-    event_tracers.subscribe_event(tmc.central_node, "longRunningCommandResult")
-    event_tracers.subscribe_event(tmc.subarray_node, "obsState")
-    event_tracers.subscribe_event(
-        tmc.subarray_node, "longRunningCommandResult"
-    )
-
-    # Logging setup
-    log_events(
-        {
-            tmc.central_node: [
-                "telescopeState",
-                "longRunningCommandResult",
-            ],
-            tmc.subarray_node: [
-                "obsState",
-                "longRunningCommandResult",
-            ],
-        }
-    )
-    # Assertions
-    event_tracers.clear_events()
-
-
 @given("the TMC subarray is in the IDLE obsState")
 def perform_idle_transition(
     tmc: TMCFacade,
@@ -75,17 +44,6 @@ def perform_idle_transition(
     """
     Execute Assign and verify
     """
-
-    event_tracer.subscribe_event(tmc.subarray_node, "obsState")
-    event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
-
-    log_events(
-        {
-            tmc.central_node: [
-                "longRunningCommandResult",
-            ]
-        }
-    )
 
     assign_input = MyFileJSONInput("centralnode", "assign_resources_low")
 
@@ -184,6 +142,30 @@ def check_subarray_obs_state_scanning_ready(
         "'the subarray must be in the SCANNING obsState until finished'"
         "Subarray Node device"
         f"({tmc.subarray_node.dev_name()}) "
+        "is expected to be in SCANNING obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.SCANNING,
+    )
+    assert_that(event_tracer).described_as(
+        "SubarrayNode device"
+        f"({tmc.subarray_node.dev_name()}) "
+        "is expected have longRunningCommand as"
+        '(unique_id,(ResultCode.OK,"Command Completed"))',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "longRunningCommandResult",
+        (
+            pytest.unique_id[0],
+            json.dumps((int(ResultCode.OK), "Command Completed")),
+        ),
+    )
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the MCCS subarray leafnode must be in the SCANNING obsState '"
+        "MCCS SubarrayLeafNode device"
+        f"({tmc.mccs_subarray_leaf_node.dev_name()}) "
         "is expected to be in SCANNING obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node,

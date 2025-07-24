@@ -385,18 +385,18 @@ class TestLowCentralNodeAssignResources:
             ResultCode.FAILED,
         )
 
-        mccs_subarray_sim.setDefective(json.dumps(RESET_DEFECT))
-        central_node_low.subarray_node.Restart()
         assert_that(event_tracer).described_as(
-            "FAILED ASSUMPTION AFTER ABORT COMMAND:"
+            "FAILED ASSUMPTION AFTER ASSIGN_RESOURCES COMMAND: "
             "Subarray Node device"
             f"({central_node_low.subarray_node.dev_name()}) "
-            "is expected to be in ABORTED obstate",
+            "is expected to be in FAULT obstate",
         ).within_timeout(TIMEOUT).has_change_event_occurred(
             central_node_low.subarray_node,
             "obsState",
-            ObsState.EMPTY,
+            ObsState.FAULT,
         )
+
+        mccs_subarray_sim.setDefective(json.dumps(RESET_DEFECT))
 
     @pytest.mark.SKA_low
     def test_low_centralnode_release_resources_exception_propagation(
@@ -523,17 +523,14 @@ class TestLowCentralNodeAssignResources:
             unique_id[0],
             ResultCode.FAILED,
         )
-        sdp_subarray_sim.ResetDelayInfo()
-        central_node_low.subarray_node.Restart()
-
-        # Verify ObsState is Aborted
         assert_that(event_tracer).described_as(
-            "FAILED ASSUMPTION AFTER ABORT COMMAND:"
+            "FAILED ASSUMPTION AFTER RELEASE_RESOURCES COMMAND: "
             "Subarray Node device"
             f"({central_node_low.subarray_node.dev_name()}) "
-            "is expected to be in ABORTED obstate",
+            "is expected to be in FAULT obstate",
         ).within_timeout(TIMEOUT).has_change_event_occurred(
             central_node_low.subarray_node,
             "obsState",
-            ObsState.EMPTY,
+            ObsState.FAULT,
         )
+        sdp_subarray_sim.ResetDelayInfo()

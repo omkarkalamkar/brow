@@ -22,7 +22,7 @@ server:
           devices:
           - name: "low-csp/control/0"
     - name: "02"
-      classes: 
+      classes:
         - name: "HelperSubArrayDevice"
           devices:
           - name: "low-csp/subarray/01"

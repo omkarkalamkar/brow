@@ -116,11 +116,11 @@ def test_recover_subarray_stuck_in_resourcing_low(
         "FAILED ASSUMPTION AFTER ASSIGN_RESOURCES COMMAND: "
         "Subarray Node device"
         f"({central_node_low.subarray_node.dev_name()}) "
-        "is expected to be in RESOURCING obstate",
+        "is expected to be in FAULT obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
-        ObsState.RESOURCING,
+        ObsState.FAULT,
     )
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGN_RESOURCES COMMAND: "
@@ -153,12 +153,11 @@ def test_recover_subarray_stuck_in_resourcing_low(
         ObsState.IDLE,
     )
     event_tracer.clear_events()
-    sdp_sim.SetDirectObsState(ObsState.EMPTY)
-    csp_sim.ReleaseAllResources()
-    mccs_sim.ReleaseAllResources()
+
+    central_node_low.subarray_node.Restart()
 
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER RELEASE_RESOURCES COMMAND: "
+        "FAILED ASSUMPTION AFTER Restart COMMAND: "
         "SDP Subarray device"
         f"({central_node_low.subarray_devices['sdp_subarray'].dev_name()})"
         "is expected to be in EMPTY obstate",
@@ -168,7 +167,7 @@ def test_recover_subarray_stuck_in_resourcing_low(
         ObsState.EMPTY,
     )
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER RELEASE_RESOURCES COMMAND: "
+        "FAILED ASSUMPTION AFTER Restart COMMAND: "
         "CSP Subarray device"
         f"({csp_sim.dev_name()})"
         "is expected to be in EMPTY obstate",
@@ -178,7 +177,7 @@ def test_recover_subarray_stuck_in_resourcing_low(
         ObsState.EMPTY,
     )
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER RELEASE_RESOURCES COMMAND: "
+        "FAILED ASSUMPTION AFTER Restart COMMAND: "
         "MCCS Subarray device"
         f"({mccs_sim.dev_name()})"
         "is expected to be in EMPTY obstate",
@@ -187,18 +186,28 @@ def test_recover_subarray_stuck_in_resourcing_low(
         "obsState",
         ObsState.EMPTY,
     )
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER Restart COMMAND: "
+        "Subarray Node device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        "is expected to be in EMPTY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "obsState",
+        ObsState.EMPTY,
+    )
 
 
 @pytest.mark.SKA_low
 @pytest.mark.parametrize("defective_device", ["csp_subarray", "sdp_subarray"])
-def test_abort_with_sdp_csp_in_empty(
+def test_restart_with_sdp_csp_in_empty(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
     simulator_factory: SimulatorFactory,
     command_input_factory: JsonFactory,
     defective_device: str,
 ):
-    """recover subarray when SDP and CSP is in empty with abort."""
+    """recover subarray when SDP and CSP is in empty with restart."""
     event_tracer.subscribe_event(
         central_node_low.central_node, "telescopeState"
     )
@@ -304,11 +313,11 @@ def test_abort_with_sdp_csp_in_empty(
         "FAILED ASSUMPTION AFTER ASSIGN_RESOURCES COMMAND: "
         "Subarray Node device"
         f"({central_node_low.subarray_node.dev_name()}) "
-        "is expected to be in RESOURCING obstate",
+        "is expected to be in FAULT obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
-        ObsState.RESOURCING,
+        ObsState.FAULT,
     )
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGN_RESOURCES COMMAND: "
@@ -366,9 +375,12 @@ def test_abort_with_sdp_csp_in_empty(
     )
 
     defective_device_proxy.SetDefective(json.dumps({"enabled": False}))
+
+    event_tracer.clear_events()
+
     central_node_low.subarray_node.Restart()
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER RESTART COMMAND: "
+        "FAILED ASSUMPTION AFTER Restart COMMAND: "
         "Subarray Node device"
         f"({central_node_low.subarray_node.dev_name()}) "
         "is expected to be in EMPTY obstate",
@@ -380,14 +392,14 @@ def test_abort_with_sdp_csp_in_empty(
 
 
 @pytest.mark.SKA_low
-def test_abort_with_mccs_in_empty(
+def test_restart_with_mccs_in_empty(
     subarray_node_low: SubarrayNodeWrapperLow,
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
     simulator_factory: SimulatorFactory,
     command_input_factory: JsonFactory,
 ):
-    """recover subarray when MCCS is in empty with abort."""
+    """recover subarray when MCCS is in empty with restart."""
     csp_sim, sdp_sim, _ = get_device_simulators(simulator_factory)
     mccs_sim = simulator_factory.get_or_create_simulator_device(
         SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
@@ -450,7 +462,7 @@ def test_abort_with_mccs_in_empty(
     )
 
     exception_message = (
-        f" {tmc_subarraynode1}: " + "Timeout has occurred, command failed"
+        f" {tmc_subarraynode1}: Timeout has occurred, command failed"
     )
 
     assert_that(event_tracer).described_as(
@@ -470,7 +482,7 @@ def test_abort_with_mccs_in_empty(
         "FAILED ASSUMPTION AFTER ASSIGN_RESOURCES COMMAND: "
         "Subarray Node device"
         f"({central_node_low.subarray_node.dev_name()}) "
-        "is expected to be in RESOURCING obstate",
+        "is expected to be in FAULT obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
@@ -525,9 +537,11 @@ def test_abort_with_mccs_in_empty(
         json.dumps({"enabled": False}),
         is_json=True,
     )
+    event_tracer.clear_events()
+
     subarray_node_low.subarray_node.Restart()
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER RESTART COMMAND: "
+        "FAILED ASSUMPTION AFTER Restart COMMAND: "
         "CSP Subarray device"
         f"({csp_sim.dev_name()}) "
         "is expected to be in EMPTY obstate",
@@ -537,7 +551,7 @@ def test_abort_with_mccs_in_empty(
         ObsState.EMPTY,
     )
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER RESTART COMMAND: "
+        "FAILED ASSUMPTION AFTER Restart COMMAND: "
         "SDP Subarray device"
         f"({sdp_sim.dev_name()}) "
         "is expected to be in EMPTY obstate",
@@ -547,7 +561,7 @@ def test_abort_with_mccs_in_empty(
         ObsState.EMPTY,
     )
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER ABORT COMMAND: "
+        "FAILED ASSUMPTION AFTER Restart COMMAND: "
         "Subarray Node device"
         f"({central_node_low.subarray_node.dev_name()}) "
         "is expected to be in EMPTY obstate",
