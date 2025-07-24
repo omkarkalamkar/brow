@@ -9,4 +9,4 @@ Scenario: TMC generates delay values for PST Beams
     Examples:
         | attribute          |
         | delayModelPSTBeam1 |
-        | delayModelPSTBeam1 |
+        | delayModelPSTBeam2 |
