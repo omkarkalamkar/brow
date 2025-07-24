@@ -57,10 +57,30 @@ INTERMEDIATE_CONFIGURING_STATE_DEFECT = json.dumps(
 INTERMEDIATE_SCANNING_STATE_DEFECT = json.dumps(
     {
         "enabled": True,
-        "fault_type": FaultType.COMMAND_NOT_ALLOWED_AFTER_QUEUING,
+        "fault_type": FaultType.STUCK_IN_INTERMEDIATE_STATE,
         "error_message": "Device stuck in intermediate state",
         "result": ResultCode.FAILED,
         "intermediate_state": ObsState.SCANNING,
+    }
+)
+
+READY_STATE_DEFECT = json.dumps(
+    {
+        "enabled": True,
+        "fault_type": FaultType.STUCK_IN_INTERMEDIATE_STATE,
+        "error_message": "Device stuck in intermediate state",
+        "result": ResultCode.FAILED,
+        "intermediate_state": ObsState.READY,
+    }
+)
+
+IDLE_STATE_DEFECT = json.dumps(
+    {
+        "enabled": True,
+        "fault_type": FaultType.STUCK_IN_INTERMEDIATE_STATE,
+        "error_message": "Device stuck in intermediate state",
+        "result": ResultCode.FAILED,
+        "intermediate_state": ObsState.IDLE,
     }
 )
 

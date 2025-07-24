@@ -102,6 +102,17 @@ def test_recover_subarray_stuck_in_resourcing_low(
     )
 
     assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER RELEASE_RESOURCES COMMAND: "
+        "Subarray Node device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        "is expected to be in FAULT obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "obsState",
+        ObsState.FAULT,
+    )
+
+    assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGN_RESOURCES COMMAND: "
         "Subarray Node device"
         f"({central_node_low.subarray_node.dev_name()}) "

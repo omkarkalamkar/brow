@@ -60,6 +60,12 @@ def given_a_tmc(
         central_node_low.mccs_master_leaf_node, "longRunningCommandResult"
     )
     event_tracer.subscribe_event(central_node_low.subarray_node, "obsState")
+    event_tracer.subscribe_event(
+        central_node_low.csp_subarray_leaf_node, "cspSubarrayobsState"
+    )
+    event_tracer.subscribe_event(
+        central_node_low.sdp_subarray_leaf_node, "sdpSubarrayobsState"
+    )
 
     log_events(
         {
@@ -68,6 +74,8 @@ def given_a_tmc(
                 "longRunningCommandResult",
             ],
             central_node_low.subarray_node: ["obsState"],
+            central_node_low.csp_subarray_leaf_node: ["cspSubarrayObsState"],
+            central_node_low.sdp_subarray_leaf_node: ["sdpSubarrayObsState"],
         }
     )
     central_node_low.move_to_on()
@@ -139,6 +147,29 @@ def subarray_node_obs_state_resourcing(
     event_tracer.subscribe_event(mccs_sim, "obsState")
 
     mccs_sim.setDelayInfo(json.dumps({"AssignResources": 50}))
+
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the subarray must be in the RESOURCING obsState'"
+        "CSP Subarray Leaf Node device"
+        f"({central_node_low.csp_subarray_leaf_node.dev_name()}) "
+        "is expected to be in RESOURCING obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.csp_subarray_leaf_node,
+        "cspSubarrayObsState",
+        ObsState.RESOURCING,
+    )
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the subarray must be in the RESOURCING obsState'"
+        "SDP Subarray Leaf Node device"
+        f"({central_node_low.sdp_subarray_leaf_node.dev_name()}) "
+        "is expected to be in RESOURCING obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.sdp_subarray_leaf_node,
+        "sdpSubarrayObsState",
+        ObsState.RESOURCING,
+    )
 
     assert_that(event_tracer).described_as(
         "FAILED UNEXPECTED OBSSTATE: "

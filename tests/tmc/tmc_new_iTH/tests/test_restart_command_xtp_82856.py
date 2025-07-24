@@ -9,7 +9,9 @@ from ska_integration_test_harness.facades.tmc_facade import TMCFacade
 from ska_integration_test_harness.inputs.test_harness_inputs import (
     TestHarnessInputs,
 )
+from ska_tango_base.commands import ResultCode
 from ska_tango_testing.integration import TangoEventTracer, log_events
+from ska_tango_testing.mock.placeholders import Anything
 
 from tests.tmc.tmc_new_iTH.conftest import TestContextData
 from tests.tmc.tmc_new_iTH.utils import (
@@ -106,10 +108,7 @@ def _check_abort_flow(
         )
 
 
-@pytest.mark.skip(
-    reason="Will be enabled after completion of SP-5340 implementation"
-)
-@pytest.mark.SKA_low
+@pytest.mark.SKA_tmc_low_restart
 @scenario(
     "../tmc/tmc_new_iTH/features/xtp_82856.feature",
     "Test Restart Command when TMC subarray transitions to "
@@ -127,6 +126,7 @@ def test_restart_command_in_observation_state_fault():
     )
 )
 def verify_subsystem_after_command(
+    admin_mode,
     csp_obsstate: str,
     sdp_obsstate: str,
     mccs_obsstate: str,
@@ -181,7 +181,7 @@ def verify_subsystem_after_command(
     context_data.mccs_obsstate = ObsState[mccs_obsstate]
 
 
-@given("TMC subarray in observation state FAULT")
+@given("TMC Subarray in observation state FAULT")
 def verify_tmc_subarray_observation_state_fault(
     event_tracer: TangoEventTracer,
     tmc: TMCFacade,
@@ -193,16 +193,32 @@ def verify_tmc_subarray_observation_state_fault(
     assert_that(event_tracer).described_as(
         f"TMC Subarray Node device ({tmc.subarray_node})"
         "ObsState attribute value should move "
-        f" to EMPTY."
+        f" to FAULT."
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node,
         "obsState",
         ObsState.FAULT,
     )
+
+    log_events({tmc.subarray_node: ["longRunningCommandResult"]})
+
+    assert_that(event_tracer).described_as(
+        f"FAILED ASSUMPTION: "
+        "Subarray Node device"
+        f"({tmc.subarray_node}) "
+        "is expected to have longRunningCommandResult"
+        "(ResultCode.FAILED,Timeout has occurred, command failed)",
+    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+        tmc.subarray_node,
+        ["occurred"],
+        Anything,
+        ResultCode.FAILED,
+    )
+
     reset_defects(csp, sdp, mccs)
 
 
-@when("I invoke Restart Command on the TMC Subarray")
+@when("I invoke restart command on the TMC Subarray")
 def invoke_restart_command(tmc: TMCFacade):
     """Invokes restart command on the TMC Subarray."""
     tmc.restart()

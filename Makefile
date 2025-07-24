@@ -59,6 +59,7 @@ JIVE ?= false# Enable jive
 TARANTA ?= false
 MINIKUBE ?= false ## Minikube or not
 FAKE_DEVICES ?= false ## Install fake devices or not
+SUBARRAY_COMMAND_TIMEOUT ?= 70
 
 ITANGO_DOCKER_IMAGE = $(CAR_OCI_REGISTRY_HOST)/ska-tango-images-tango-itango:9.3.10
 
@@ -71,7 +72,7 @@ CI_ENVIRONMENT_SLUG ?= ska-tmc-low-integration
 
 
 ifeq ($(MAKECMDGOALS),k8s-test)
-ADD_ARGS +=  --true-context
+ADD_ARGS +=  --true-context -x
 MARK ?= $(shell echo $(TELESCOPE) | sed "s/-/_/g")
 endif
 
@@ -88,6 +89,7 @@ K8S_CHART_PARAMS = --set global.minikube=$(MINIKUBE) \
 	--set global.operator=true \
 	--set ska-taranta.enabled=$(TARANTA_ENABLED)\
 	--set tmc-low.subarray_count=$(SUBARRAY_COUNT)\
+	--set tmc-low.deviceServers.subarraynode.CommandTimeOut=$(SUBARRAY_COMMAND_TIMEOUT) \
 	$(CUSTOM_VALUES)
 
 PYTHON_VARS_BEFORE_PYTEST ?= PYTHONPATH=.:./src \
