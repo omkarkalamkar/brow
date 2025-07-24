@@ -10,8 +10,8 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
 )
 
 from tests.resources.test_harness.constant import (
-    COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_EMPTY,
-    INTERMEDIATE_SCANNING_STATE_DEFECT,
+    IDLE_STATE_DEFECT,
+    READY_STATE_DEFECT,
     RESET_DEFECT,
 )
 from tests.resources.test_support.constant_low import (
@@ -36,22 +36,23 @@ command_defect_mapping = {
     "AssignResources": {
         "RESOURCING": json.dumps(INTERMEDIATE_STATE_DEFECT),
         "FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT),
-        "EMPTY": json.dumps(COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_EMPTY),
+        "EMPTY": json.dumps(INTERMEDIATE_STATE_DEFECT),
     },
     "Configure": {
         "CONFIGURING": json.dumps(INTERMEDIATE_CONFIGURING_OBS_STATE_DEFECT),
         "FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT),
     },
     "Scan": {
-        "SCANNING": INTERMEDIATE_SCANNING_STATE_DEFECT,
+        "READY": READY_STATE_DEFECT,
         "FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT),
     },
     "ReleaseResources": {
+        "IDLE": json.dumps(IDLE_STATE_DEFECT),
         "RESOURCING": json.dumps(INTERMEDIATE_STATE_DEFECT),
         "FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT),
     },
-    "ENDSCAN": {"FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT)},
-    "END": {"FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT)},
+    "EndScan": {"FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT)},
+    "End": {"FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT)},
 }
 
 
@@ -67,6 +68,7 @@ def set_subsystem_defects(
     csp.csp_subarray.SetDefective(
         command_defect_mapping.get(command).get(csp_obsstate, RESET_DEFECT)
     )
+
     mccs.mccs_subarray.SetDefective(
         command_defect_mapping.get(command).get(mccs_obsstate, RESET_DEFECT)
     )
@@ -119,7 +121,7 @@ def invoke_command_with_defect(
             tmc.configure(
                 default_commands_inputs.configure_input, wait_termination=False
             )
-        case "SCAN":
+        case "Scan":
             tmc.force_change_of_obs_state(
                 ObsState.READY, default_commands_inputs, wait_termination=True
             )

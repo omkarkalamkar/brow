@@ -6,7 +6,7 @@ from typing import Any
 
 import pytest
 from assertpy import assert_that
-from ska_control_model import ObsState
+from ska_control_model import AdminMode, ObsState
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
 from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
 from ska_integration_test_harness.facades.sdp_facade import SDPFacade
@@ -21,7 +21,14 @@ from ska_integration_test_harness.structure.telescope_wrapper import (
     TelescopeWrapper,
 )
 from ska_tango_testing.integration import TangoEventTracer
+from tango import DeviceProxy
 
+from tests.resources.test_harness.constant import (
+    low_csp_subarray1,
+    low_sdp_subarray1,
+    mccs_controller,
+    mccs_subarray1,
+)
 from tests.resources.test_harness.utils.my_file_json_input import (
     MyFileJSONInput,
 )
@@ -173,3 +180,19 @@ def event_tracer() -> TangoEventTracer:
     return TangoEventTracer(
         event_enum_mapping={"obsState": ObsState},
     )
+
+
+@pytest.fixture
+def admin_mode() -> None:
+    csp_subarray1 = DeviceProxy(low_csp_subarray1)
+    sdp_subarray1 = DeviceProxy(low_sdp_subarray1)
+    mccs_subarray = DeviceProxy(mccs_subarray1)
+    mccs_control = DeviceProxy(mccs_controller)
+    mccs_control.adminMode = 0
+    mccs_control.on()
+    if csp_subarray1.adminMode != AdminMode.ONLINE:
+        csp_subarray1.adminMode = AdminMode.ONLINE
+    if sdp_subarray1.adminMode != AdminMode.ONLINE:
+        sdp_subarray1.adminMode = AdminMode.ONLINE
+    if mccs_subarray.adminMode != AdminMode.ONLINE:
+        mccs_subarray.adminMode = AdminMode.ONLINE

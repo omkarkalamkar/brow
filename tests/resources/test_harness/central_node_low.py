@@ -226,6 +226,7 @@ class CentralNodeWrapperLow(object):
         # reset HealthState.UNKNOWN for mock devices
         self._reset_health_state_for_mock_devices()
         self.reset_defects_for_devices()
+        LOGGER.info("Subarray Node ObsState: %s", self.subarray_node.obsstate)
         if self.subarray_node.obsState in [
             ObsState.RESOURCING,
         ]:
