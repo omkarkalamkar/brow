@@ -2384,32 +2384,33 @@ reference = "ska-nexus"
 
 [[package]]
 name = "ska-telmodel"
-version = "1.23.0"
+version = "1.23.1"
 description = "SKA telescope model library"
 optional = false
-python-versions = "^3.10.0"
+python-versions = ">=3.10.0,<4.0.0"
 groups = ["main"]
-files = []
-develop = false
+files = [
+    {file = "ska_telmodel-1.23.1-py3-none-any.whl", hash = "sha256:201a8f0e5296bcd28162e3f61fd63df5d0baf84f41f2156873d729dfb71dcb13"},
+    {file = "ska_telmodel-1.23.1.tar.gz", hash = "sha256:f2dcb3cedde7238d660f0b9cbefea14cd09f2ab1cced09687411c36235915800"},
+]
 
 [package.dependencies]
-appdirs = "^1.4.4"
-filelock = "^3.15.4"
-gitpython = "^3.1.41"
-jsonschema = "^4.0.0"
-overrides = ">= 7.7.0"
-prettytable = "^3.11.0"
-python-gitlab = "^3.8.0"
-pyyaml = "^6.0"
-schema = "^0.7.5"
-tomli = "^2.0.1"
-toolz = "^0.12.0"
+appdirs = ">=1.4.4,<2.0.0"
+filelock = ">=3.15.4,<4.0.0"
+gitpython = ">=3.1.41,<4.0.0"
+jsonschema = ">=4.0.0,<5.0.0"
+overrides = ">=7.7.0"
+prettytable = ">=3.11.0,<4.0.0"
+python-gitlab = ">=3.8.0,<4.0.0"
+pyyaml = ">=6.0,<7.0"
+schema = ">=0.7.5,<0.8.0"
+tomli = ">=2.0.1,<3.0.0"
+toolz = ">=0.12.0,<0.13.0"
 
 [package.source]
-type = "git"
-url = "https://gitlab.com/ska-telescope/ska-telmodel.git"
-reference = "sah-1730"
-resolved_reference = "3be1f53ab92235dc0383e0fb037e06808a33ce05"
+type = "legacy"
+url = "https://artefact.skao.int/repository/pypi-internal/simple"
+reference = "ska-nexus"
 
 [[package]]
 name = "smmap"
@@ -3002,4 +3003,4 @@ reference = "PyPI-public"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "2f7c11ee833fa513574425176aeb461d8f669ccd8ccb8337bbff66182a3f3a2e"
+content-hash = "d38786807517043d2bae125447528822e8f691dd92a805c1cc3b2f5f0d4d825e"
