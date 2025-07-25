@@ -44,7 +44,9 @@ def test_tmc_pst_scan_without_sdp_command():
 
 @given("a TMC")
 def given_tmc(
-    central_node_low: CentralNodeWrapperLow, event_tracer: TangoEventTracer
+    central_node_low: CentralNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    subarray_node_low: SubarrayNodeWrapperLow,
 ):
     """Set up a TMC and ensure it is in the ON state."""
     event_tracer.subscribe_event(
@@ -59,10 +61,10 @@ def given_tmc(
                 "telescopeState",
                 "longRunningCommandResult",
             ],
-            central_node_low.subarray_node: ["obsState"],
+            subarray_node_low.subarray_node: ["obsState"],
         }
     )
-    event_tracer.subscribe_event(central_node_low.subarray_node, "obsState")
+    event_tracer.subscribe_event(subarray_node_low.subarray_node, "obsState")
     central_node_low.move_to_on()
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN STEP: '
@@ -79,10 +81,10 @@ def given_tmc(
         'FAILED ASSUMPTION IN "GIVEN STEP: '
         '"a TMC'
         "Subarray Node device"
-        f"({central_node_low.subarray_node.dev_name()}) "
+        f"({subarray_node_low.subarray_node.dev_name()}) "
         f"is expected to be in EMPTY obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
+        subarray_node_low.subarray_node,
         "obsState",
         ObsState.EMPTY,
     )
@@ -114,10 +116,10 @@ def given_subarray_in_ready(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
         "'a subarray in READY obsState'"
         "Subarray Node device"
-        f"({central_node_low.subarray_node.dev_name()}) "
+        f"({subarray_node_low.subarray_node.dev_name()}) "
         "is expected to be in IDLE obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
+        subarray_node_low.subarray_node,
         "obsState",
         ObsState.IDLE,
     )
@@ -146,10 +148,10 @@ def given_subarray_in_ready(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
         "'a subarray in READY obsState'"
         "Subarray Node device"
-        f"({central_node_low.subarray_node.dev_name()}) "
+        f"({subarray_node_low.subarray_node.dev_name()}) "
         "is expected to be in READY obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
+        subarray_node_low.subarray_node,
         "obsState",
         ObsState.READY,
     )
@@ -157,14 +159,15 @@ def given_subarray_in_ready(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
         "'a subarray in READY obsState'"
         "Subarray Node device"
-        f"({central_node_low.subarray_node.dev_name()}) "
+        f"({subarray_node_low.subarray_node.dev_name()}) "
         "is expected have longRunningCommand as"
         '(unique_id,(ResultCode.OK,"Command Completed"))',
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
+        subarray_node_low.subarray_node,
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
+    event_tracer.clear_events()
 
 
 @when("I execute PST scan for a given period")
@@ -223,10 +226,10 @@ def take_subarray_to_empty_obsstate(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
         "'a subarray in IDLE obsState'"
         "Subarray Node device"
-        f"({central_node_low.subarray_node.dev_name()}) "
+        f"({subarray_node_low.subarray_node.dev_name()}) "
         "is expected to be in IDLE obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
+        subarray_node_low.subarray_node,
         "obsState",
         ObsState.IDLE,
     )
@@ -234,11 +237,11 @@ def take_subarray_to_empty_obsstate(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
         "'a subarray in IDLE obsState'"
         "Subarray Node device"
-        f"({central_node_low.subarray_node.dev_name()}) "
+        f"({subarray_node_low.subarray_node.dev_name()}) "
         "is expected have longRunningCommand as"
         '(unique_id,(ResultCode.OK,"Command Completed"))',
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
+        subarray_node_low.subarray_node,
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
@@ -254,10 +257,10 @@ def take_subarray_to_empty_obsstate(
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER RELEASE_RESOURCES COMMAND: "
         "Subarray Node device"
-        f"({central_node_low.subarray_node.dev_name()}) "
+        f"({subarray_node_low.subarray_node.dev_name()}) "
         "is expected to be in EMPTY obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
+        subarray_node_low.subarray_node,
         "obsState",
         ObsState.EMPTY,
     )
@@ -292,10 +295,10 @@ def take_subarray_to_empty_obsstate(
         'FAILED ASSUMPTION IN "GIVEN STEP: '
         '"a TMC'
         "Subarray Node device"
-        f"({central_node_low.subarray_node.dev_name()}) "
+        f"({subarray_node_low.subarray_node.dev_name()}) "
         f"is expected to be in EMPTY obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
+        subarray_node_low.subarray_node,
         "obsState",
         ObsState.EMPTY,
     )
