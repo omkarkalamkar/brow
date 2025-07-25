@@ -5,31 +5,31 @@
     "subarray_beams": [
       {
         "subarray_beam_id": 1,
-        "update_rate": 10.0,
+        "update_rate": 0.0,
         "logical_bands": [
           {
-            "start_channel": 192,
-            "number_of_channels": 96
+            "start_channel": 80,
+            "number_of_channels": 16
+          },
+          {
+            "start_channel": 384,
+            "number_of_channels": 16
           }
         ],
         "apertures": [
           {
-            "aperture_id": "AP345.01",
-            "weighting_key_ref": "aperture1"
+            "aperture_id": "AP001.01",
+            "weighting_key_ref": "aperture2"
           },
           {
-            "aperture_id": "AP350.01",
-            "weighting_key_ref": "aperture1"
-          },
-          {
-            "aperture_id": "AP352.01",
-            "weighting_key_ref": "aperture1"
+            "aperture_id": "AP002.01",
+            "weighting_key_ref": "aperture2"
           }
         ],
         "sky_coordinates": {
           "reference_frame": "ICRS",
-          "c1": 128.83588121,
-          "c2": -45.17635419
+          "c1": 180.0,
+          "c2": 45.0
         }
       }
     ]
@@ -38,21 +38,33 @@
     "interface": "https://schema.skao.int/ska-low-csp-configure/3.2",
     "common": {
       "config_id": "sbi-mvp01-20200325-00001-science_A",
-      "eb_id": "eb-notebook-20250701-80645"
+      "eb_id": "eb-test-20220916-00000"
     },
     "lowcbf": {
       "stations": {
         "stns": [
           [
-            345,
+            1,
             1
           ],
           [
-            350,
+            2,
             1
           ],
           [
-            352,
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            6,
             1
           ]
         ],
@@ -60,124 +72,56 @@
           {
             "beam_id": 1,
             "freq_ids": [
-              192,
-              193,
-              194,
-              195,
-              196,
-              197,
-              198,
-              199,
-              200,
-              201,
-              202,
-              203,
-              204,
-              205,
-              206,
-              207,
-              208,
-              209,
-              210,
-              211,
-              212,
-              213,
-              214,
-              215,
-              216,
-              217,
-              218,
-              219,
-              220,
-              221,
-              222,
-              223,
-              224,
-              225,
-              226,
-              227,
-              228,
-              229,
-              230,
-              231,
-              232,
-              233,
-              234,
-              235,
-              236,
-              237,
-              238,
-              239,
-              240,
-              241,
-              242,
-              243,
-              244,
-              245,
-              246,
-              247,
-              248,
-              249,
-              250,
-              251,
-              252,
-              253,
-              254,
-              255,
-              256,
-              257,
-              258,
-              259,
-              260,
-              261,
-              262,
-              263,
-              264,
-              265,
-              266,
-              267,
-              268,
-              269,
-              270,
-              271,
-              272,
-              273,
-              274,
-              275,
-              276,
-              277,
-              278,
-              279,
-              280,
-              281,
-              282,
-              283,
-              284,
-              285,
-              286,
-              287
+              400
             ]
           }
         ]
       },
-      "timing_beams": {
-        "beams": [
-          {
-            "pst_beam_id": 1,
-            "stn_beam_id": 1,
-            "stn_weights": [
-              1.0,
-              1.0,
-              1.0
-            ]
-          }
-        ],
+      "vis": {
         "fsp": {
-          "firmware": "pst:1.0.4",
+          "firmware": "vis",
           "fsp_ids": [
             1
           ]
-        }
+        },
+        "stn_beams": [
+          {
+            "stn_beam_id": 1,
+            "integration_ms": 849
+          }
+        ]
+      },
+      "timing_beams": {
+        "fsp": {
+          "firmware": "pst",
+          "fsp_ids": [
+            2
+          ]
+        },
+        "beams": [
+          {
+            "pst_beam_id": 1,
+            "field": {
+              "target_name": "PSR J0024-7204R",
+              "reference_frame": "icrs",
+              "attrs": {
+                "c1": 6.023625,
+                "c2": -72.08128333,
+                "pm_c1": 4.8,
+                "pm_c2": -3.3
+              }
+            },
+            "stn_beam_id": 1,
+            "stn_weights": [
+              0.9,
+              1.0,
+              1.0,
+              1.0,
+              0.9,
+              1.0
+            ]
+          }
+        ]
       }
     },
     "pst": {
@@ -185,60 +129,81 @@
         {
           "beam_id": 1,
           "scan": {
-            "activation_time": "2025-07-01T06:51:23.704839Z",
+            "activation_time": "2022-01-19T23:07:45Z",
             "bits_per_sample": 32,
-            "centre_frequency": 187107567.0,
-            "channelization_stages": [
-              
-            ],
-            "coordinates": {
-              "equinox": 2000.0,
-              "ra": "8:35:20.6",
-              "dec": "-45:10:34.9"
-            },
-            "feed_angle": 0.0,
-            "feed_handedness": 1,
-            "feed_polarization": "LIN",
-            "feed_position_angle": 10.0,
-            "feed_tracking_mode": "FA",
+            "num_of_polarizations": 2,
+            "udp_nsamp": 32,
+            "wt_nsamp": 32,
+            "udp_nchan": 24,
+            "num_frequency_channels": 432,
+            "centre_frequency": 200000000.0,
+            "total_bandwidth": 1562500.0,
+            "observation_mode": "VOLTAGE_RECORDER",
+            "observer_id": "jdoe",
+            "project_id": "project1",
+            "pointing_id": "pointing1",
+            "source": "J1921+2153",
             "itrf": [
               5109360.133,
               2006852.586,
               -3238948.127
             ],
-            "max_scan_length": 300.0,
-            "num_channelization_stages": 1,
-            "num_frequency_channels": 20736,
-            "num_of_polarizations": 2,
-            "observation_mode": "VOLTAGE_RECORDER",
-            "observer_id": "jdoe",
+            "receiver_id": "receiver3",
+            "feed_polarization": "LIN",
+            "feed_handedness": 1,
+            "feed_angle": 1.234,
+            "feed_tracking_mode": "FA",
+            "feed_position_angle": 10.0,
             "oversampling_ratio": [
               8,
               7
             ],
-            "pointing_id": "pointing_0",
-            "project_id": "project_0",
-            "receiver_id": "receiver_0",
-            "receptor_weights": [
-              0.0
-            ],
-            "receptors": [
-              "s8-1",
-              "s8-6",
-              "s9-2"
-            ],
-            "source": "J0835-4510",
+            "coordinates": {
+              "equinox": 2000.0,
+              "ra": "19:21:44.815",
+              "dec": "21:53:02.400"
+            },
+            "max_scan_length": 20000.0,
             "subint_duration": 30.0,
-            "total_bandwidth": 75000000.0,
-            "udp_nchan": 24,
-            "udp_nsamp": 32,
-            "wt_nsamp": 32
+            "receptors": [
+              "receptor1",
+              "receptor2"
+            ],
+            "receptor_weights": [
+              0.4,
+              0.6
+            ],
+            "num_channelization_stages": 2,
+            "channelization_stages": [
+              {
+                "num_filter_taps": 1,
+                "filter_coefficients": [
+                  1.0
+                ],
+                "num_frequency_channels": 1024,
+                "oversampling_ratio": [
+                  32,
+                  27
+                ]
+              },
+              {
+                "num_filter_taps": 1,
+                "filter_coefficients": [
+                  1.0
+                ],
+                "num_frequency_channels": 256,
+                "oversampling_ratio": [
+                  4,
+                  3
+                ]
+              }
+            ]
           }
         }
       ]
     }
   },
   "tmc": {
-    "scan_duration": 300.0
+    "scan_duration": 10.0
   }
 }
