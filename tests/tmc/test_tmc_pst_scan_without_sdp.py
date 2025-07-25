@@ -4,11 +4,13 @@ Scan Command of a Low Telescope Subarray in the Telescope Monitoring and
 Control (TMC) system.
 """
 import json
+import logging
 
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, scenario, then, when
 from ska_control_model import ObsState
+from ska_ser_logging import configure_logging
 from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DevState
 
@@ -23,6 +25,9 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
     prepare_json_args_for_commands,
 )
+
+configure_logging(logging.DEBUG)
+LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.sah1753
@@ -99,7 +104,12 @@ def given_subarray_in_ready(
     assign_input_json = prepare_json_args_for_centralnode_commands(
         "pst_assign_without_sdp_low", command_input_factory
     )
-    _, unique_id = central_node_low.store_resources(assign_input_json)
+
+    _, unique_id = central_node_low.perform_action(
+        "AssignResources", assign_input_json
+    )
+    LOGGER.info("Invoked AssignResources on CentralNode")
+
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
         "'a subarray in READY obsState'"
@@ -127,9 +137,11 @@ def given_subarray_in_ready(
     configure_input_json = prepare_json_args_for_commands(
         "pst_configure_without_sdp_low", command_input_factory
     )
-    _, unique_id = subarray_node_low.store_configuration_data(
-        configure_input_json
+
+    _, unique_id = subarray_node_low.execute_transition(
+        "Configure", configure_input_json
     )
+
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
         "'a subarray in READY obsState'"
@@ -194,4 +206,96 @@ def check_scan_completion(
         subarray_node_low.subarray_node,
         "obsState",
         ObsState.READY,
+    )
+
+
+@then("the subarray is taken to the initial obsState EMPTY")
+def take_subarray_to_empty_obsstate(
+    central_node_low: CentralNodeWrapperLow,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    command_input_factory: JsonFactory,
+):
+    """Put the TMC in initial obsstate"""
+    _, unique_id = subarray_node_low.execute_transition("End")
+
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN" STEP: '
+        "'a subarray in IDLE obsState'"
+        "Subarray Node device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        "is expected to be in IDLE obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "obsState",
+        ObsState.IDLE,
+    )
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN" STEP: '
+        "'a subarray in IDLE obsState'"
+        "Subarray Node device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        "is expected have longRunningCommand as"
+        '(unique_id,(ResultCode.OK,"Command Completed"))',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "longRunningCommandResult",
+        (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
+    )
+
+    # Execute release command and verify command completed successfully
+    release_resource_json = prepare_json_args_for_centralnode_commands(
+        "release_resources_low", command_input_factory
+    )
+    _, unique_id = central_node_low.perform_action(
+        "ReleaseResources", release_resource_json
+    )
+
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER RELEASE_RESOURCES COMMAND: "
+        "Subarray Node device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        "is expected to be in EMPTY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "obsState",
+        ObsState.EMPTY,
+    )
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER RELEASE_RESOURCES COMMAND: "
+        "Central Node device"
+        f"({central_node_low.central_node.dev_name()}) "
+        "is expected have longRunningCommand as"
+        '(unique_id,(ResultCode.OK,"Command Completed"))',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.central_node,
+        "longRunningCommandResult",
+        (
+            unique_id[0],
+            json.dumps((int(ResultCode.OK), "Command Completed")),
+        ),
+    )
+
+    central_node_low.move_to_off()
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN STEP: '
+        '"a TMC'
+        "Central Node device"
+        f"({central_node_low.central_node.dev_name()}) "
+        "is expected to be in TelescopeState ON",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.central_node,
+        "telescopeState",
+        DevState.OFF,
+    )
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN STEP: '
+        '"a TMC'
+        "Subarray Node device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        f"is expected to be in EMPTY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "obsState",
+        ObsState.EMPTY,
     )
