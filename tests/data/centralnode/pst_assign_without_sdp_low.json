@@ -6,7 +6,7 @@
       ]
     }
   },
-  "interface": "https://schema.skao.int/ska-low-tmc-assignresources/4.0",
+  "interface": "https://schema.skao.int/ska-low-tmc-assignresources/4.2",
   "mccs": {
     "interface": "https://schema.skao.int/ska-low-mccs-controller-allocate/3.0",
     "subarray_beams": [
