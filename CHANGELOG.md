@@ -5,6 +5,14 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[2.0.0-rc.1]
+************
+Added
+-----
+* Support for multiple station and PST beams for LOW.
+* Updated tel-model to version 1.23.1
+* Updated cspleafnode image to 0.28.0
+
 [1.4.0-rc.1]
 ************
 Added

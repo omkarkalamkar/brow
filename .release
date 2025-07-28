@@ -1,11 +1,11 @@
-release=1.4.0-rc.1
-tag=1.4.0-rc.1
+release=2.0.0-rc.1
+tag=2.0.0-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 1.4.0-rc.1**
+**1. ska-tmc-low-integration 2.0.0-rc.1**
 
-    **1.1 ska-tmc-low  1.3.1-rc.1 - 1.4.0-rc.1 :**
+    **1.1 ska-tmc-low  1.4.0-rc.1 - 2.0.0-rc.1 :**
             * TMC Subarray moves to FAULT after command timed out
             * TMC Restart command is updated to invoke abort and restart on sub system to bring obs state to EMPTY
             * TMC Subarray is updated to transition Obs State to FAULT after command failure
@@ -15,7 +15,7 @@ release_notes=
 
 **1. ska-tmc-low-integration 1.4.0-rc.1**
 
-    **1.1 ska-tmc-low  1.3.1-rc.1 - 1.4.0-rc.1 :**
+    **1.1 ska-tmc-low  1.4.0-rc.1 - 2.0.0-rc.1 :**
             * TMC Subarray moves to FAULT after command timed out
             * TMC Restart command is updated to invoke abort and restart on sub system to bring obs state to EMPTY
             * TMC Subarray is updated to transition Obs State to FAULT after command failure
