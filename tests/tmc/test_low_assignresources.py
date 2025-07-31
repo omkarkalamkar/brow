@@ -26,7 +26,7 @@ TIMEOUT = 100
 
 @pytest.mark.SKA_low
 @pytest.mark.parametrize(
-    "json_input_file", ["assign_resources_low", "assign_resources_low_v_4_0"]
+    "json_input_file", ["assign_resources_low", "assign_resources_low_v4_0"]
 )
 @scenario(
     "../features/tmc/check_assignresources_command.feature",
@@ -43,7 +43,7 @@ def test_telescope_assign_resources(
 
 @pytest.mark.SKA_low
 @pytest.mark.parametrize(
-    "json_input_file", ["assign_resources_low", "assign_resources_low_v_4_0"]
+    "json_input_file", ["assign_resources_low", "assign_resources_low_v4_0"]
 )
 @scenario(
     "../features/tmc/check_assignresources_command.feature",
