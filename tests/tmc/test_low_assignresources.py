@@ -2,6 +2,7 @@
 Module: test_low_assignresources
 """
 import pytest
+from pytest_bdd import parsers
 from assertpy import assert_that
 from pytest_bdd import given, scenario, then, when
 from ska_control_model import AdminMode, ObsState
@@ -64,7 +65,7 @@ def set_adminmode_sdp():
     assert sdp_proxy.adminMode == AdminMode.ENGINEERING
 
 
-@when("I assign resources to the subarray with {assign_json}")
+@when(parsers.parse("I assign resources to the subarray with {assign_json}"))
 def invoke_assignresources(
     tmc: TMCFacade,
     event_tracer: TangoEventTracer,
