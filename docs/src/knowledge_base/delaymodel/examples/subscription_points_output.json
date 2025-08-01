@@ -1,0 +1,551 @@
+// delayModelStationBeam01
+{
+  "interface": "https://schema.skao.int/ska-low-csp-delaymodel/1.1",
+  "start_validity_sec": 805557541.088861,
+  "cadence_sec": 300.0,
+  "validity_period_sec": 600.0,
+  "config_id": "sbi-mvp01-20200325-00001-science_A",
+  "subarray": 1,
+  "station_beam_delays": [
+    {
+      "station_id": 1,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 2,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 3,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 4,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 5,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 6,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    }
+  ]
+}
+
+// delayModelStationBeam02
+{
+  "interface": "https://schema.skao.int/ska-low-csp-delaymodel/1.1",
+  "start_validity_sec": 805557541.088861,
+  "cadence_sec": 300.0,
+  "validity_period_sec": 600.0,
+  "config_id": "sbi-mvp01-20200325-00001-science_A",
+  "subarray": 1,
+  "station_beam_delays": [
+    {
+      "station_id": 1,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 2,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 3,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 4,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 5,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 6,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    }
+  ]
+}
+
+
+
+
+// delayModelStationBeam03
+{
+  "interface": "https://schema.skao.int/ska-low-csp-delaymodel/1.1",
+  "start_validity_sec": 805557541.088861,
+  "cadence_sec": 300.0,
+  "validity_period_sec": 600.0,
+  "config_id": "sbi-mvp01-20200325-00001-science_A",
+  "subarray": 1,
+  "station_beam_delays": [
+    {
+      "station_id": 1,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 2,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 3,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 4,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 5,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 6,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    }
+  ]
+}
+
+
+
+
+// delayModelStationBeam04
+{
+  "interface": "https://schema.skao.int/ska-low-csp-delaymodel/1.1",
+  "start_validity_sec": 805557541.088861,
+  "cadence_sec": 300.0,
+  "validity_period_sec": 600.0,
+  "config_id": "sbi-mvp01-20200325-00001-science_A",
+  "subarray": 1,
+  "station_beam_delays": [
+    {
+      "station_id": 1,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 2,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 3,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 4,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 5,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 6,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    }
+  ]
+}
+
+
+
+
+// delayModelPSTBeam1
+{
+  "interface": "https://schema.skao.int/ska-low-csp-delaymodel/1.1",
+  "start_validity_sec": 805557541.088861,
+  "cadence_sec": 300.0,
+  "validity_period_sec": 600.0,
+  "config_id": "sbi-mvp01-20200325-00001-science_A",
+  "subarray": 1,
+  "station_beam_delays": [
+    {
+      "station_id": 1,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 2,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 3,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 4,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 5,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 6,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    }
+  ]
+}
+
+
+
+
+// delayModelPSTBeam2
+{
+  "interface": "https://schema.skao.int/ska-low-csp-delaymodel/1.1",
+  "start_validity_sec": 805557541.088861,
+  "cadence_sec": 300.0,
+  "validity_period_sec": 600.0,
+  "config_id": "sbi-mvp01-20200325-00001-science_A",
+  "subarray": 1,
+  "station_beam_delays": [
+    {
+      "station_id": 1,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 2,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 3,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 4,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 5,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    },
+    {
+      "station_id": 6,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        "#p1",
+        "#p2",
+        "#p3",
+        "#p4",
+        "#p5",
+        "#p6"
+      ],
+      "ypol_offset_ns": 0.0
+    }
+  ]
+}

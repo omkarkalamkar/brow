@@ -44,7 +44,17 @@ configuration:
         code_push_event: true
       isSubsystemAvailable:
         code_push_event: true
-      delayModel:
+      delayModelStationBeam01:
+        code_push_event: true
+      delayModelStationBeam02:
+        code_push_event: true
+      delayModelStationBeam03:
+        code_push_event: true
+      delayModelStationBeam04:
+        code_push_event: true
+      delayModelPSTBeam1:
+        code_push_event: true
+      delayModelPSTBeam2:
         code_push_event: true
       cspSubarrayObsState:
         code_push_event: true

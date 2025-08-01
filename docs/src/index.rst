@@ -10,6 +10,7 @@ This project is integration of the TMC components for the `Square Kilometre Arra
    getting_started/tmc_intro.rst
    knowledge_base/knowledge_base
    developer_guide/developer_guide
+   knowledge_base/delaymodel/delay_model_attributes.rst
 
 .. toctree::
    :maxdepth: 1
