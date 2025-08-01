@@ -96,7 +96,6 @@ k8s-test:
   variables:
     KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA'
     SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA"
-    MARK: 'SKA_low'
   before_script:
     - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
     - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
@@ -107,99 +106,33 @@ k8s-test:
     - pip3 install -q -U ska-ser-xray
     - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
 
-k8s-test-tmc-with-csp:
+k8s-test-tmc-low-restart:
   extends:
     - k8s-test
   variables:
-    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-csp-low'
-    SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-csp-low"
-    MARK: 'tmc_csp'
+    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-restart'
+    SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-restart"
+    MARK: 'SKA_tmc_low_restart'
+    SUBARRAY_COMMAND_TIMEOUT: 10
     COUNT: 1
-    CSP_SIMULATION_ENABLED: 'false'
-  environment:
-    name: test/$CI_COMMIT_REF_SLUG
-    on_stop: stop-k8s-test-tmc-with-csp
-  when: manual
-  after_script:
-    - pip3 install -q -U ska-ser-xray
-    - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
-
-stop-k8s-test-tmc-with-csp:
-  extends:
-    - stop-k8s-test
-  variables:
-    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-csp-low'
-
-k8s-test-tmc-with-sdp:
-  extends:
-    - k8s-test
-  tags:
-    - ska-k8s
-  variables:
-    TELESCOPE: 'SKA-low'
-    PORT: "10000"
-    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-sdp'
-    KUBE_NAMESPACE_SDP: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-sdp'
-    SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-sdp"
-    SDP_SIMULATION_ENABLED: 'false'
-  script:
-    - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
-    - make cred KUBE_NAMESPACE=$KUBE_NAMESPACE_SDP
-    - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
-    - 'make help | grep k8s-test'
-    - make k8s-install-chart SDP_PROCCONTROL_REPLICAS=0
-    - make k8s-wait
-    - make k8s-wait KUBE_APP="ska-sdp"
-    - make k8s-test MARK='tmc_sdp_unhappy_path'
-    - make k8s-uninstall-chart
-    - kubectl -n $KUBE_NAMESPACE delete pods,svc,daemonsets,deployments,replicasets,statefulsets,cronjobs,jobs,ingresses,configmaps --all
-    - make k8s-delete-namespace
-    - make k8s-install-chart SDP_PROCCONTROL_REPLICAS=1
-    - make k8s-wait
-    - make k8s-wait KUBE_APP="ska-sdp"
-    - make k8s-test MARK='tmc_sdp'
-  after_script:
-    - pip3 install -q -U ska-ser-xray
-    - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
-  environment:
-    name: test/$CI_COMMIT_REF_SLUG
-    on_stop: stop-k8s-test-tmc-with-sdp
-  when: manual
-
-stop-k8s-test-tmc-with-sdp:
-  extends:
-    - stop-k8s-test
-  variables:
-    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-sdp'
-    SDP_SIMULATION_ENABLED: 'false'
-
-k8s-test-tmc-with-mccs:
-  extends:
-    - k8s-test
-  variables:
-    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-mccs-low'
-    SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-mccs-low"
-    MARK: 'tmc_mccs'
-    MCCS_SIMULATION_ENABLED: 'false'
   before_script:
     - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
     - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
     - 'make help | grep k8s-test'
     - make k8s-install-chart
     - make k8s-wait
-  environment:
-    name: test/$CI_COMMIT_REF_SLUG
-    on_stop: stop-k8s-test-tmc-with-mccs
-  when: manual
   after_script:
     - pip3 install -q -U ska-ser-xray
     - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
+  environment:
+    name: test/$CI_COMMIT_REF_SLUG
+    on_stop: stop-k8s-test-tmc-low-restart
 
-stop-k8s-test-tmc-with-mccs:
+stop-k8s-test-tmc-low-restart:
   extends:
     - stop-k8s-test
   variables:
-    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-mccs-low'
+    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-restart'
 
 deploy-integration:
   when: manual

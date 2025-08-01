@@ -165,7 +165,7 @@ def subarray_start_generating_delay_values(
     )
     generated_delay_model = (
         subarray_node_low.csp_subarray_leaf_node.read_attribute(
-            "delayModel"
+            "delayModelStationBeam01"
         ).value
     )
     generated_delay_model_json = json.loads(generated_delay_model)
@@ -219,7 +219,7 @@ def check_if_delay_values_are_not_generating(subarray_node_low) -> None:
     """Check if delay values are stopped generating."""
     assert wait_and_validate_device_attribute_value(
         subarray_node_low.csp_subarray_leaf_node,
-        "delayModel",
+        "delayModelStationBeam01",
         json.dumps(INITIAL_LOW_DELAY_JSON),
         is_json=True,
     )

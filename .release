@@ -1,16 +1,21 @@
-release=1.2.1-rc.2
-tag=1.2.1-rc.2
+release=2.0.0-rc.1
+tag=2.0.0-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 1.2.1-rc.2**
+**1. ska-tmc-low-integration 2.0.0-rc.1**
 
-    **1.1 ska-tmc-low  1.2.1-rc.1 - 1.2.1-rc.2 :**
-            * Utilised latest version of centralnode v0.19.7 to resolve SKB-860
+    **1.1 ska-tmc-low  1.4.0-rc.1 - 2.0.0-rc.1 :**
+            * Support for multiple station and PST beams for LOW.
+            * Updated tel-model to version 1.23.1
+            * Updated cspleafnode image to 0.28.0
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 1.2.1-rc.2**
+**1. ska-tmc-low-integration 1.4.0-rc.1**
 
-    **1.1 ska-tmc-low  1.2.1-rc.1 - 1.2.1-rc.2 :**
-            * Utilised latest version of centralnode v0.19.7 to resolve SKB-860
+    **1.1 ska-tmc-low  1.4.0-rc.1 - 2.0.0-rc.1 :**
+            * Support for multiple station and PST beams for LOW.
+            * Updated tel-model to version 1.23.1
+            * Updated cspleafnode image to 0.28.0
+

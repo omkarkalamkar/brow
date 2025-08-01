@@ -1,38 +1,37 @@
-"""Test Timeout for Configure command for SDP, CSP and MCCS Leaf Nodes."""
-import json
+"""Test cases for Configure Command not allowed for LOW."""
+
 
 import pytest
 from assertpy import assert_that
-from ska_control_model import ObsState, ResultCode
+from ska_control_model import ObsState
 from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
-
-# low_csp_subarray_leaf_node, low_sdp_subarray_leaf_node,
-# mccs_subarray_leaf_node
 from tests.resources.test_harness.constant import (
-    INTERMEDIATE_CONFIGURING_STATE_DEFECT,
+    COMMAND_NOT_ALLOWED_DEFECT,
     TIMEOUT,
+    low_sdp_subarray_leaf_node,
 )
-from tests.resources.test_harness.helpers import set_receive_address
 from tests.resources.test_harness.simulator_factory import SimulatorFactory
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_harness.utils.enums import SimulatorDeviceType
+from tests.resources.test_support.common_utils.result_code import ResultCode
 from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
     prepare_json_args_for_commands,
 )
 
 
-class TestConfigureTimeout:
-    """Tests for testing timeout for Configure command on LOW TMC."""
+class TestConfigureCommandNotAllowedPropagation:
+    """Test the command not allowed error propagation for configure
+    command for TMC."""
 
     @pytest.mark.SKA_low
-    def test_configure_timeout_csp_ln(
+    def test_configure_command_not_allowed_propagation_csp_ln_low(
         self,
         central_node_low: CentralNodeWrapperLow,
         subarray_node_low: SubarrayNodeWrapperLow,
@@ -40,44 +39,27 @@ class TestConfigureTimeout:
         simulator_factory: SimulatorFactory,
         command_input_factory: JsonFactory,
     ):
-        """Test timeout on CSP Leaf Nodes for Configure command by inducing
-        fault into the system."""
+        """Verify command not allowed exception propagation from CSPLeafNodes
+        ."""
         csp_subarray_sim = simulator_factory.get_or_create_simulator_device(
             SimulatorDeviceType.LOW_CSP_DEVICE
         )
+
         # Event Subscriptions
-        event_tracer.subscribe_event(subarray_node_low.subarray_node, "State")
         event_tracer.subscribe_event(
-            subarray_node_low.subarray_node, "obsState"
-        )
-        event_tracer.subscribe_event(
-            subarray_node_low.subarray_node, "longRunningCommandResult"
+            central_node_low.central_node, "telescopeState"
         )
         event_tracer.subscribe_event(
             central_node_low.central_node, "longRunningCommandResult"
         )
+
         event_tracer.subscribe_event(
-            central_node_low.central_node, "telescopeState"
+            subarray_node_low.subarray_node, "longRunningCommandResult"
         )
-        # Preparing input files
-        assign_input_str = prepare_json_args_for_centralnode_commands(
-            "assign_resources_low", command_input_factory
+        event_tracer.subscribe_event(
+            subarray_node_low.subarray_node, "obsState"
         )
-        configure_input_str = prepare_json_args_for_commands(
-            "configure_low", command_input_factory
-        )
-        log_events(
-            {
-                central_node_low.central_node: [
-                    "longRunningCommandResult",
-                    "telescopeState",
-                ],
-                subarray_node_low.subarray_node: [
-                    "longRunningCommandResult",
-                    "obsState",
-                ],
-            }
-        )
+
         central_node_low.move_to_on()
         assert_that(event_tracer).described_as(
             "FAILED ASSUMPTION AFTER ON COMMAND: "
@@ -89,10 +71,14 @@ class TestConfigureTimeout:
             "telescopeState",
             DevState.ON,
         )
-        set_receive_address(central_node_low)
-        _, unique_id = central_node_low.store_resources(assign_input_str)
+
+        assign_input_str = prepare_json_args_for_centralnode_commands(
+            "assign_resources_low", command_input_factory
+        )
+        central_node_low.store_resources(assign_input_str)
+
         assert_that(event_tracer).described_as(
-            "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
+            "FAILED ASSUMPTION AFTER ASSIGNRESOURCES COMMAND: "
             "Subarray Node device"
             f"({subarray_node_low.subarray_node.dev_name()}) "
             "is expected to be in IDLE obstate",
@@ -101,14 +87,22 @@ class TestConfigureTimeout:
             "obsState",
             ObsState.IDLE,
         )
-        # Inducing Fault
-        csp_subarray_sim.SetDefective(INTERMEDIATE_CONFIGURING_STATE_DEFECT)
 
-        _, unique_id = subarray_node_low.execute_transition(
+        # Preparing input files
+        configure_input_str = prepare_json_args_for_commands(
+            "configure_low", command_input_factory
+        )
+        # Inducing Fault
+        #
+        # Setting Defects on Devices
+        csp_subarray_sim.SetDefective(COMMAND_NOT_ALLOWED_DEFECT)
+
+        _, pytest.unique_id = subarray_node_low.execute_transition(
             "Configure", configure_input_str
         )
         assert_that(event_tracer).described_as(
-            "FAILED ASSUMPTION AFTER CONFIGURE COMMAND: "
+            'FAILED ASSUMPTION IN "WHEN" STEP: '
+            '"Configure command is invoked on a defective CSP Subarray"'
             "Subarray Node device"
             f"({subarray_node_low.subarray_node.dev_name()}) "
             "is expected to be in FAULT obstate",
@@ -117,11 +111,18 @@ class TestConfigureTimeout:
             "obsState",
             ObsState.FAULT,
         )
-        exception_message = "Timeout has occurred, command failed"
+
+        exception_message = (
+            " The invocation of the Configure command failed on Csp "
+            + "Subarray Device low-csp/subarray/01"
+        )
+
+        log_events(
+            {subarray_node_low.subarray_node: ["longRunningCommandResult"]}
+        )
 
         assert_that(event_tracer).described_as(
-            "FAILED ASSUMPTION AFTER CONFIGURE COMMAND: "
-            "Subarray Node device"
+            "FAILED ASSUMPTION AFTER CONFIGURE: "
             f"({subarray_node_low.subarray_node.dev_name()}) "
             "is expected have longRunningCommandResult"
             "(ResultCode.FAILED,exception)",
@@ -130,57 +131,40 @@ class TestConfigureTimeout:
         ).has_desired_result_code_message_in_lrcr_event(
             subarray_node_low.subarray_node,
             [exception_message],
-            unique_id[0],
+            pytest.unique_id[0],
             ResultCode.FAILED,
         )
 
     @pytest.mark.SKA_low
-    def test_configure_timeout_sdp_ln(
+    def test_configure_command_not_allowed_propagation_sdp_ln_low(
         self,
         central_node_low: CentralNodeWrapperLow,
         subarray_node_low: SubarrayNodeWrapperLow,
         event_tracer: TangoEventTracer,
-        command_input_factory: JsonFactory,
         simulator_factory: SimulatorFactory,
+        command_input_factory: JsonFactory,
     ):
-        """Test timeout on SDP Leaf Nodes for Configure command by inducing
-        fault into the system."""
-        # Event Subscriptions
-        event_tracer.subscribe_event(subarray_node_low.subarray_node, "State")
-        event_tracer.subscribe_event(
-            subarray_node_low.subarray_node, "obsState"
+        """Verify command not allowed exception propagation from SDPLeafNodes
+        ."""
+        sdp_subarray_sim = simulator_factory.get_or_create_simulator_device(
+            SimulatorDeviceType.LOW_SDP_DEVICE
         )
+
+        # Event Subscriptions
         event_tracer.subscribe_event(
-            subarray_node_low.subarray_node, "longRunningCommandResult"
+            central_node_low.central_node, "telescopeState"
         )
         event_tracer.subscribe_event(
             central_node_low.central_node, "longRunningCommandResult"
         )
+
         event_tracer.subscribe_event(
-            central_node_low.central_node, "telescopeState"
+            subarray_node_low.subarray_node, "longRunningCommandResult"
         )
-        sdp_sim = simulator_factory.get_or_create_simulator_device(
-            SimulatorDeviceType.LOW_SDP_DEVICE
+        event_tracer.subscribe_event(
+            subarray_node_low.subarray_node, "obsState"
         )
-        # Preparing input files
-        assign_input_str = prepare_json_args_for_centralnode_commands(
-            "assign_resources_low", command_input_factory
-        )
-        configure_input_str = prepare_json_args_for_commands(
-            "configure_low", command_input_factory
-        )
-        log_events(
-            {
-                central_node_low.central_node: [
-                    "longRunningCommandResult",
-                    "telescopeState",
-                ],
-                subarray_node_low.subarray_node: [
-                    "longRunningCommandResult",
-                    "obsState",
-                ],
-            }
-        )
+
         central_node_low.move_to_on()
         assert_that(event_tracer).described_as(
             "FAILED ASSUMPTION AFTER ON COMMAND: "
@@ -193,23 +177,37 @@ class TestConfigureTimeout:
             DevState.ON,
         )
 
-        _, unique_id = central_node_low.store_resources(assign_input_str)
+        assign_input_str = prepare_json_args_for_centralnode_commands(
+            "assign_resources_low", command_input_factory
+        )
+        central_node_low.store_resources(assign_input_str)
+
         assert_that(event_tracer).described_as(
             "FAILED ASSUMPTION AFTER ASSIGNRESOURCES COMMAND: "
             "Subarray Node device"
-            f"({central_node_low.subarray_node.dev_name()}) "
+            f"({subarray_node_low.subarray_node.dev_name()}) "
             "is expected to be in IDLE obstate",
         ).within_timeout(TIMEOUT).has_change_event_occurred(
-            central_node_low.subarray_node,
+            subarray_node_low.subarray_node,
             "obsState",
             ObsState.IDLE,
         )
-        sdp_sim.SetDelayInfo(json.dumps({"Configure": 55}))
-        _, unique_id = subarray_node_low.execute_transition(
+
+        # Preparing input files
+        configure_input_str = prepare_json_args_for_commands(
+            "configure_low", command_input_factory
+        )
+        # Inducing Fault
+        #
+        # Setting Defects on Devices
+        sdp_subarray_sim.SetDefective(COMMAND_NOT_ALLOWED_DEFECT)
+
+        _, pytest.unique_id = subarray_node_low.execute_transition(
             "Configure", configure_input_str
         )
         assert_that(event_tracer).described_as(
-            "FAILED ASSUMPTION AFTER CONFIGURE COMMAND: "
+            'FAILED ASSUMPTION IN "WHEN" STEP: '
+            '"Configure command is invoked on a defective SDP Subarray"'
             "Subarray Node device"
             f"({subarray_node_low.subarray_node.dev_name()}) "
             "is expected to be in FAULT obstate",
@@ -218,27 +216,34 @@ class TestConfigureTimeout:
             "obsState",
             ObsState.FAULT,
         )
-        exception_message = "Timeout has occurred, command failed"
-        sdp_ln_timeout_exception = (
-            "Exception occurred on the following "
-            f"devices: {subarray_node_low.sdp_subarray_leaf_node.dev_name()}"
+
+        exception_message = (
+            f"Exception occurred on the following devices:"
+            f" {low_sdp_subarray_leaf_node}:"
+            " ska_tmc_common.exceptions.CommandNotAllowed:"
+            " Command is not allowed"
         )
+
+        log_events(
+            {subarray_node_low.subarray_node: ["longRunningCommandResult"]}
+        )
+
         assert_that(event_tracer).described_as(
-            "FAILED ASSUMPTION AFTER CONFIGURE COMMAND: "
-            "Subarray Node device"
+            "FAILED ASSUMPTION AFTER CONFIGURE: "
             f"({subarray_node_low.subarray_node.dev_name()}) "
             "is expected have longRunningCommandResult"
             "(ResultCode.FAILED,exception)",
-        ).within_timeout(52).has_desired_result_code_message_in_lrcr_event(
+        ).within_timeout(
+            TIMEOUT
+        ).has_desired_result_code_message_in_lrcr_event(
             subarray_node_low.subarray_node,
-            [exception_message, sdp_ln_timeout_exception],
-            unique_id[0],
+            [exception_message],
+            pytest.unique_id[0],
             ResultCode.FAILED,
         )
-        sdp_sim.ResetDelayInfo()
 
     @pytest.mark.SKA_low
-    def test_configure_timeout_mccs_ln(
+    def test_configure_command_not_allowed_propagation_mccs_ln_low(
         self,
         central_node_low: CentralNodeWrapperLow,
         subarray_node_low: SubarrayNodeWrapperLow,
@@ -246,43 +251,28 @@ class TestConfigureTimeout:
         simulator_factory: SimulatorFactory,
         command_input_factory: JsonFactory,
     ):
-        """Test timeout on Mccs Leaf Nodes for Configure command by inducing
-        fault into the system."""
+        """Verify command not allowed exception propagation from MCCSLeafNodes
+        ."""
+
         mccs_subarray_sim = simulator_factory.get_or_create_simulator_device(
             SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
         )
+
         # Event Subscriptions
-        event_tracer.subscribe_event(
-            central_node_low.central_node, "longRunningCommandResult"
-        )
         event_tracer.subscribe_event(
             central_node_low.central_node, "telescopeState"
         )
         event_tracer.subscribe_event(
-            subarray_node_low.subarray_node, "obsState"
+            central_node_low.central_node, "longRunningCommandResult"
         )
+
         event_tracer.subscribe_event(
             subarray_node_low.subarray_node, "longRunningCommandResult"
         )
-        log_events(
-            {
-                central_node_low.central_node: [
-                    "longRunningCommandResult",
-                    "telescopeState",
-                ],
-                subarray_node_low.subarray_node: [
-                    "longRunningCommandResult",
-                    "obsState",
-                ],
-            }
+        event_tracer.subscribe_event(
+            subarray_node_low.subarray_node, "obsState"
         )
-        # Preparing input files
-        assign_input_str = prepare_json_args_for_centralnode_commands(
-            "assign_resources_low", command_input_factory
-        )
-        configure_input_str = prepare_json_args_for_commands(
-            "configure_low", command_input_factory
-        )
+
         central_node_low.move_to_on()
         assert_that(event_tracer).described_as(
             "FAILED ASSUMPTION AFTER ON COMMAND: "
@@ -294,7 +284,11 @@ class TestConfigureTimeout:
             "telescopeState",
             DevState.ON,
         )
-        _, unique_id = central_node_low.store_resources(assign_input_str)
+
+        assign_input_str = prepare_json_args_for_centralnode_commands(
+            "assign_resources_low", command_input_factory
+        )
+        central_node_low.store_resources(assign_input_str)
 
         assert_that(event_tracer).described_as(
             "FAILED ASSUMPTION AFTER ASSIGNRESOURCES COMMAND: "
@@ -307,14 +301,21 @@ class TestConfigureTimeout:
             ObsState.IDLE,
         )
 
+        # Preparing input files
+        configure_input_str = prepare_json_args_for_commands(
+            "configure_low", command_input_factory
+        )
         # Inducing Fault
-        mccs_subarray_sim.SetDefective(INTERMEDIATE_CONFIGURING_STATE_DEFECT)
+        #
+        # Setting Defects on Devices
+        mccs_subarray_sim.SetDefective(COMMAND_NOT_ALLOWED_DEFECT)
 
-        _, unique_id = subarray_node_low.execute_transition(
+        _, pytest.unique_id = subarray_node_low.execute_transition(
             "Configure", configure_input_str
         )
         assert_that(event_tracer).described_as(
-            "FAILED ASSUMPTION AFTER CONFIGURE COMMAND: "
+            'FAILED ASSUMPTION IN "WHEN" STEP: '
+            '"Configure command is invoked on a defective MCCS Subarray"'
             "Subarray Node device"
             f"({subarray_node_low.subarray_node.dev_name()}) "
             "is expected to be in FAULT obstate",
@@ -323,10 +324,19 @@ class TestConfigureTimeout:
             "obsState",
             ObsState.FAULT,
         )
-        exception_message = "Timeout has occurred, command failed"
+
+        exception_message = (
+            "The invocation of the Configure command is"
+            " failed on MCCS Subarray device"
+            " low-mccs/subarray/01."
+        )
+
+        log_events(
+            {subarray_node_low.subarray_node: ["longRunningCommandResult"]}
+        )
+
         assert_that(event_tracer).described_as(
-            "FAILED ASSUMPTION AFTER CONFIGURE COMMAND: "
-            "Subarray Node device"
+            "FAILED ASSUMPTION AFTER CONFIGURE: "
             f"({subarray_node_low.subarray_node.dev_name()}) "
             "is expected have longRunningCommandResult"
             "(ResultCode.FAILED,exception)",
@@ -335,6 +345,6 @@ class TestConfigureTimeout:
         ).has_desired_result_code_message_in_lrcr_event(
             subarray_node_low.subarray_node,
             [exception_message],
-            unique_id[0],
+            pytest.unique_id[0],
             ResultCode.FAILED,
         )

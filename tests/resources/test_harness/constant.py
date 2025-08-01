@@ -57,10 +57,30 @@ INTERMEDIATE_CONFIGURING_STATE_DEFECT = json.dumps(
 INTERMEDIATE_SCANNING_STATE_DEFECT = json.dumps(
     {
         "enabled": True,
-        "fault_type": FaultType.COMMAND_NOT_ALLOWED_AFTER_QUEUING,
+        "fault_type": FaultType.STUCK_IN_INTERMEDIATE_STATE,
         "error_message": "Device stuck in intermediate state",
         "result": ResultCode.FAILED,
         "intermediate_state": ObsState.SCANNING,
+    }
+)
+
+READY_STATE_DEFECT = json.dumps(
+    {
+        "enabled": True,
+        "fault_type": FaultType.STUCK_IN_INTERMEDIATE_STATE,
+        "error_message": "Device stuck in intermediate state",
+        "result": ResultCode.FAILED,
+        "intermediate_state": ObsState.READY,
+    }
+)
+
+IDLE_STATE_DEFECT = json.dumps(
+    {
+        "enabled": True,
+        "fault_type": FaultType.STUCK_IN_INTERMEDIATE_STATE,
+        "error_message": "Device stuck in intermediate state",
+        "result": ResultCode.FAILED,
+        "intermediate_state": ObsState.IDLE,
     }
 )
 
@@ -204,15 +224,14 @@ SIMULATOR_DEVICE_FQDN_DICT = {
     SimulatorDeviceType.MCCS_SUBARRAY_DEVICE: [mccs_subarray1],
 }
 
-LOW_DELAYMODEL_VERSION = "https://schema.skao.int/ska-low-csp-delaymodel/1.0"
+LOW_DELAYMODEL_VERSION = "https://schema.skao.int/ska-low-csp-delaymodel/1.1"
 
 INITIAL_LOW_DELAY_JSON = {
-    "interface": "https://schema.skao.int/ska-low-csp-delaymodel/1.0",
+    "interface": "https://schema.skao.int/ska-low-csp-delaymodel/1.1",
     "start_validity_sec": 0.1,
     "cadence_sec": 0.1,
     "validity_period_sec": 0.1,
     "config_id": "",
-    "station_beam": 1,
     "subarray": 1,
     "station_beam_delays": [
         {

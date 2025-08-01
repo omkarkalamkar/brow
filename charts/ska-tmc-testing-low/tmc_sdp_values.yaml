@@ -1,9 +1,0 @@
-tmc-low:
-  deviceServers:
-    mocks:
-      is_simulated:
-        sdp: false
-ska-sdp:
-  enabled: true
-  lmc:
-    loadBalancer: true
