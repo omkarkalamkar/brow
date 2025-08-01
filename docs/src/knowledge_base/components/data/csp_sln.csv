@@ -7,8 +7,12 @@ commandedState,commandedState,No,
 controlMode,ControlMode,No,
 cspSubarrayDevName,DevString,No,
 cspSubarrayObsState,ObsState (DevEnum),Yes,Change Event
-delayModel,DevString,Yes,Change Event
-delayModelPSTBeam1,DevString,No,
+delayModelStationBeam01,DevString,Yes,Change Event
+delayModelStationBeam02,DevString,Yes,Change Event
+delayModelStationBeam03,DevString,Yes,Change Event
+delayModelStationBeam04,DevString,Yes,Change Event
+delayModelPSTBeam1,DevString,Yes,Change Event
+delayModelPSTBeam2,DevString,Yes,Change Event
 isSubsystemAvailable,DevBoolean,Yes,Change Event
 cspSubarrayAdminMode,AdminMode (DevEnum),No,
 healthState,HealthState (DevEnum),Yes,Change Event
