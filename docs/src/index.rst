@@ -17,8 +17,6 @@ This project is integration of the TMC components for the `Square Kilometre Arra
 
    CHANGELOG.rst
 
-This is delimiter text. The contents below will be modified as part of documentation reorganisation.
-
 Indices and tables
 ------------------
 * :ref:`genindex`

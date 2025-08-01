@@ -12,3 +12,4 @@ Knowledge Base
    recovery
    healthstate/healthstate_adminmode_aggregation
    fqdns
+   delaymodel/delay_model_calculations

@@ -59,6 +59,7 @@ typing_extensions  = "^4.3.0"
 sphinx-rtd-theme = "^1.2.2"
 myst_parser = "*"
 markupsafe = "*"
+sphinx-jsonschema = "*"
 
 [tool.flake8]
 rst-directives = "literalinclude"

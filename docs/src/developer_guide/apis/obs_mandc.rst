@@ -13,3 +13,52 @@ The observation execution can be done by following a sequence of APIs as follows
 * `Resource de-allocation <https://developer.skao.int/projects/ska-tmc-centralnode/en/latest/api/ska_tmc_centralnode.commands.html#ska-tmc-centralnode-commands-release-resources-command-module>`_
 
 Before performing any observation related operation it is necessary that the telescope is in ON state.
+
+Additionally, monitoring of individual subarray can be done by reading/subscribing 
+to the attributes exposed by various Subarray Node. Please refer to 
+:ref:`Knowledge Base <knowledge_base>` > :ref:`Components <components>` > :ref:`Subarray Node <components_sn>`
+for more details.
+
+
+Delay Model
+=================
+
+The delay models are exposed by CSP Subarray Leaf Node in the respective 
+subarray. A separate attribute is implemented for each of the beam for which 
+delays are calculated. 
+
+Following are the details of the attributes exposed for Subarray beams:
+
++-----------------------------+------------------------------------------------+
+| **Attribute**               | **Description**                                |
++=============================+================================================+
+| delayModelStationBeam01     | Delay model data for MCCS Station Beam 01.     |
+|                             | Maps to `mccs.subarray_beams[0]`. Includes     |
+|                             | logical bands, apertures, and sky coordinates. |
++-----------------------------+------------------------------------------------+
+| delayModelStationBeam02     | Delay model data for MCCS Station Beam 02      |
+|                             | (`mccs.subarray_beams[1]`).                    |
++-----------------------------+------------------------------------------------+
+| delayModelStationBeam03     | Delay model data for MCCS Station Beam 03      |
+|                             | (`mccs.subarray_beams[2]`).                    |
++-----------------------------+------------------------------------------------+
+| delayModelStationBeam02     | Delay model data for MCCS Station Beam 04      |
+|                             | (`mccs.subarray_beams[3]`).                    |
++-----------------------------+------------------------------------------------+
+
+
+Following are the details of the attributes exposed for PST beams:
+
++-----------------------------+------------------------------------------------+
+| **Attribute**               | **Description**                                |
++=============================+================================================+
+| delayModelPSTBeam1          | Delay model data for PST Beam 1. Maps to       |
+|                             | `csp.lowcbf.timing_beams.beams[0]`. Includes   |
+|                             | station beam reference, weights, and sky field |
+|                             | attributes.                                    |
++-----------------------------+------------------------------------------------+
+| delayModelPSTBeam2          | Delay model data for PST Beam 2. Maps to       |
+|                             | `csp.lowcbf.timing_beams.beams[1]`. Includes   |
+|                             | station beam reference, weights, and sky field |
+|                             | attributes.                                    |
++-----------------------------+------------------------------------------------+

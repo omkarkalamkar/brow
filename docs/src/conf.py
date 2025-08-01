@@ -17,6 +17,7 @@ autodoc_mock_imports = []
 
 import os
 import sys
+
 import yaml
 
 sys.path.insert(0, os.path.abspath("../../src"))
@@ -59,7 +60,9 @@ extensions = [
     "sphinx.ext.doctest",
     "sphinx.ext.githubpages",
     "sphinx.ext.napoleon",
-    "myst_parser"
+    "myst_parser",
+    "sphinx.ext.intersphinx",
+    "sphinx-jsonschema"
 ]
 
 # Add any paths that contain templates here, relative to this directory.
