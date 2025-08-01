@@ -2,9 +2,8 @@
 Module: test_low_assignresources
 """
 import pytest
-from pytest_bdd import parsers
 from assertpy import assert_that
-from pytest_bdd import given, scenario, then, when
+from pytest_bdd import given, parsers, scenario, then, when
 from ska_control_model import AdminMode, ObsState
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
 from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
