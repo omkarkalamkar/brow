@@ -25,16 +25,11 @@ TIMEOUT = 100
 
 
 @pytest.mark.SKA_low
-@pytest.mark.parametrize(
-    "json_input_file", ["assign_resources_low", "assign_resources_low_v4_0"]
-)
 @scenario(
     "../features/tmc/check_assignresources_command.feature",
     "Assign resources to Low subarray",
 )
-def test_telescope_assign_resources(
-    json_input_file,
-):  # pylint: disable=unused-argument
+def test_telescope_assign_resources():
 
     """
     Test case to verify AssignResources functionality
@@ -42,17 +37,12 @@ def test_telescope_assign_resources(
 
 
 @pytest.mark.SKA_low
-@pytest.mark.parametrize(
-    "json_input_file", ["assign_resources_low", "assign_resources_low_v4_0"]
-)
 @scenario(
     "../features/tmc/check_assignresources_command.feature",
     "Assign resources to Low subarray if one subarray "
     "in adminmode ENGINEERING",
 )
-def test_assignresources_command_sdp_adminmode_engineering(
-    json_input_file,
-):  # pylint: disable=unused-argument
+def test_assignresources_command_sdp_adminmode_engineering():
 
     """Test case to verify assignresources
     command if sdp in adminmode ENGINEERING"""
@@ -74,14 +64,14 @@ def set_adminmode_sdp():
     assert sdp_proxy.adminMode == AdminMode.ENGINEERING
 
 
-@when("I assign resources to the subarray")
+@when("I assign resources to the subarray with {assign_json}")
 def invoke_assignresources(
     tmc: TMCFacade,
     event_tracer: TangoEventTracer,
-    json_input_file: str,
+    assign_json: str,
 ):
     """Invokes AssignResources command on TMC"""
-    assign_input = MyFileJSONInput("centralnode", json_input_file)
+    assign_input = MyFileJSONInput("centralnode", assign_json)
     _, unique_id = tmc.assign_resources(assign_input)
 
     assert_that(event_tracer).described_as(
