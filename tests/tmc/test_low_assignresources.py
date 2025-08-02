@@ -3,7 +3,7 @@ Module: test_low_assignresources
 """
 import pytest
 from assertpy import assert_that
-from pytest_bdd import given, scenario, then, when
+from pytest_bdd import given, parsers, scenario, then, when
 from ska_control_model import AdminMode, ObsState
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
 from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
@@ -30,6 +30,7 @@ TIMEOUT = 100
     "Assign resources to Low subarray",
 )
 def test_telescope_assign_resources():
+
     """
     Test case to verify AssignResources functionality
     """
@@ -42,6 +43,7 @@ def test_telescope_assign_resources():
     "in adminmode ENGINEERING",
 )
 def test_assignresources_command_sdp_adminmode_engineering():
+
     """Test case to verify assignresources
     command if sdp in adminmode ENGINEERING"""
 
@@ -62,14 +64,14 @@ def set_adminmode_sdp():
     assert sdp_proxy.adminMode == AdminMode.ENGINEERING
 
 
-@when("I assign resources to the subarray")
+@when(parsers.parse("I assign resources to the subarray with {assign_json}"))
 def invoke_assignresources(
     tmc: TMCFacade,
     event_tracer: TangoEventTracer,
+    assign_json: str,
 ):
     """Invokes AssignResources command on TMC"""
-    assign_input = MyFileJSONInput("centralnode", "assign_resources_low")
-
+    assign_input = MyFileJSONInput("centralnode", assign_json)
     _, unique_id = tmc.assign_resources(assign_input)
 
     assert_that(event_tracer).described_as(
