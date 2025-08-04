@@ -1,17 +1,17 @@
 """
-This module defines a BDD (Behaviour-Driven Development) test scenario,
-verifying SKB-985: the TMC SubarrayNode's Restart command must abort any
-ongoing work (threads/commands) and complete successfully, after which the
-system is left in a clean state.
+SKB-985 – Restart must abort an in-flight Configure when the Subarray is in
+obsState FAULT (caused by a CSP defect), then complete successfully and leave
+the Subarray in a clean EMPTY state.
 
-The scenario exercises the path:
-  1. Subarray ⇢ On
-  2. CentralNode ⇢ AssignResources  (resources move Subarray to IDLE)
+Sequence exercised:
+  1. Subarray  →  ON
+  2. CentralNode → AssignResources  (Subarray moves to IDLE)
   3. Inject CSP Leaf-Node defect
-  4. Subarray ⇢ Configure  → transitions to FAULT
-  5. Clear defects, Subarray ⇢ Restart
-     • Restart must abort Configure (ResultCode.ABORTED)
-     • Restart must complete (ResultCode.OK)
+  4. Subarray → Configure   ⟹   transitions to FAULT
+  5. Clear defect, Subarray → Restart
+     • Restart must abort Configure         (ResultCode.ABORTED)
+     • Restart must complete successfully   (ResultCode.OK)
+     • Subarray must return to obsState EMPTY
 """
 
 import json
@@ -41,18 +41,20 @@ from tests.resources.test_support.constant_low import (
 TIMEOUT = 30  # seconds
 
 
+# ────────────────────────────── Scenario ──────────────────────────────
 @pytest.mark.test
 @pytest.mark.post_deployment
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_restart_cleanup.feature",
-    "TMC closes ongoing commands on Restart after Fault",
+    "Restart when Subarray is in obsState FAULT with"
+    " CSP defective during Configure",
 )
 def test_restart_cleanup_skb_985():
-    """BDD shell for SKB-985 Restart-cleanup scenario."""
+    """Root test function created by pytest-bdd (does nothing by itself)."""
 
 
-# ─────────────────────────── GIVEN ────────────────────────────
+# ─────────────────────────── GIVEN steps ────────────────────────────
 @given("a Subarray in IDLE obsState with resources assigned")
 def given_subarray_ready(
     central_node_low: CentralNodeWrapperLow,
@@ -61,12 +63,14 @@ def given_subarray_ready(
     event_tracer: TangoEventTracer,
 ):
     """
-    • Sets admin modes ONLINE,
-    • Turns Subarray ON,
-    • Assigns resources from the CentralNode (moving Subarray to IDLE).
-    """
+    Bring the system to a usable IDLE state:
 
-    # Subscribe for state & LRCR events used later
+    • Set admin modes ONLINE,
+    • Turn the Subarray ON,
+    • Assign resources (CentralNode → AssignResources),
+    • Verify the Subarray reaches ObsState.IDLE.
+    """
+    # Subscribe to events needed later
     event_tracer.subscribe_event(subarray_node_low.subarray_node, "obsState")
     event_tracer.subscribe_event(
         subarray_node_low.subarray_node, "longRunningCommandResult"
@@ -90,62 +94,53 @@ def given_subarray_ready(
         }
     )
 
-    # 1) Subarray -> ON
+    # 1) Telescope → ON
     central_node_low.move_to_on()
-    assert_that(event_tracer).described_as(
-        'FAILED ASSUMPTION IN "GIVEN" STEP: '
-        "'the telescope is is ON state'"
-        "Central Node device"
-        f"({central_node_low.central_node.dev_name()}) "
-        "is expected to be in TelescopeState ON",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.central_node,
-        "telescopeState",
-        DevState.ON,
-    )
-    assert_that(event_tracer).described_as(
-        "FAILED UNEXPECTED INITIAL OBSSTATE: "
-        "Subarray Node device"
-        f"({central_node_low.subarray_node.dev_name()}) "
-        "is expected to be in EMPTY obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
-        "obsState",
-        ObsState.EMPTY,
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        central_node_low.central_node, "telescopeState", DevState.ON
     )
 
-    # 2) CentralNode -> AssignResources
+    # Subarray starts EMPTY
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        central_node_low.subarray_node, "obsState", ObsState.EMPTY
+    )
+
+    # 2) Assign resources → Subarray should become IDLE
     assign_json = prepare_json_args_for_centralnode_commands(
         "assign_resources_low", command_input_factory
     )
     central_node_low.perform_action("AssignResources", assign_json)
-
-    # Helper: MCCS Subarray LN reports IDLE once resources are assigned
-
-    # Wait for Subarray to land in IDLE
-    assert_that(event_tracer).described_as(
-        "Subarray should enter IDLE after AssignResources"
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
         subarray_node_low.subarray_node, "obsState", ObsState.IDLE
     )
 
 
-# ─────────────────────────── WHEN ─────────────────────────────
 @given("the CSP Subarray is set to defective")
 def inject_csp_defect(subarray_node_low: SubarrayNodeWrapperLow):
-    """Introduce a fault on the CSP Subarray LN to force FAULT."""
-    # Set the CSP Subarray LN to defective
-    # csp_device = subarray_node_low.subarray_devices["csp_subarray"]
-    # csp_device.SetDefective(FAULT_DEFECT)
-    csp_device = subarray_node_low.subarray_devices["csp_subarray"]
-    csp_device.SetDefective(FAULT_DEFECT)
+    """
+    Introduce a fault in the CSP Subarray Leaf-Node to force a later FAULT
+    transition during Configure.
+    """
+    subarray_node_low.subarray_devices["csp_subarray"].SetDefective(
+        FAULT_DEFECT
+    )
 
 
-@when("I Configure the Subarray")
+@given("I Configure the Subarray")
 def configure_subarray(
-    subarray_node_low: SubarrayNodeWrapperLow, command_input_factory
+    subarray_node_low: SubarrayNodeWrapperLow,
+    command_input_factory: JsonFactory,
 ):
-    """Issue Configure; store command-id for later assertions."""
+    """
+    Invoke the Configure transition and stash its command-ID in pytest
+    so we can check its final result later.
+    """
     configure_json = prepare_json_args_for_commands(
         "configure_low", command_input_factory
     )
@@ -154,82 +149,73 @@ def configure_subarray(
     )
 
 
-# ─────────────────────────── THEN ─────────────────────────────
-@then("the Subarray transitions to observation state ObsState.FAULT")
-def verify_fault_state(
-    event_tracer: TangoEventTracer,
-    central_node_low: CentralNodeWrapperLow,
+@given("the Subarray transitions to observation state ObsState.FAULT")
+def wait_for_fault(
+    event_tracer: TangoEventTracer, central_node_low: CentralNodeWrapperLow
 ):
-    """Wait for FAULT transition caused by defective CSP LN."""
-    assert_that(event_tracer).described_as(
-        "FAILED UNEXPECTED INITIAL OBSSTATE: "
-        "Subarray Node device"
-        f"({central_node_low.subarray_node.dev_name()}) "
-        "is expected to be in FAULT obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
-        "obsState",
-        ObsState.FAULT,
+    """Block until the Subarray reports ObsState.FAULT."""
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        central_node_low.subarray_node, "obsState", ObsState.FAULT
     )
 
 
-# ─────────────────────────── WHEN ─────────────────────────────
+# ─────────────────────────── WHEN step ──────────────────────────────
 @when("I Restart the Subarray")
-def restart_subarray(subarray_node_low):
+def restart_subarray(subarray_node_low: SubarrayNodeWrapperLow):
     """
-    • Clears CSP defects,
-    • Invokes Restart,
-    • Stores restart-command id for later checks.
+    Clear the CSP defect and issue the Restart command, storing its command-ID
+    for later verification.
     """
     csp_device = subarray_node_low.subarray_devices["csp_subarray"]
     csp_device.SetDefective(json.dumps(RESET_DEFECT))
     pytest.restart_id = subarray_node_low.execute_transition("Restart")
 
 
-# ─────────────────────────── THEN ─────────────────────────────
-@then("the Restart command completes and the Configure command is aborted")
-def verify_restart_cleanup(subarray_node_low, event_tracer: TangoEventTracer):
-    """
-    Validate:
-      • Configure ended ABORTED,
-      • Restart completed OK,
-      • Subarray left FAULT and re-entered IDLE (implicit in completion).
-    """
-    print(pytest.configure_id[1])
-    print(">>>>>>>>>>>>>>")
-    assert (
-        assert_that(event_tracer)
-        .described_as(
-            "FAILED UNEXPECTED INITIAL OBSSTATE: "
-            "Subarray Node device"
-            f"({subarray_node_low.subarray_node.dev_name()}) "
-            "is expected to be in EMPTY obstate",
-        )
-        .within_timeout(TIMEOUT)
-        .has_change_event_occurred(
-            subarray_node_low.subarray_node,
-            "longRunningCommandResult",
-            (
-                pytest.configure_id[1],
-                json.dumps([ResultCode.ABORTED, "Command has been aborted"]),
-            ),
-        )
+# ─────────────────────────── THEN steps ─────────────────────────────
+@then("the Configure command is aborted")
+def verify_configure_aborted(
+    subarray_node_low: SubarrayNodeWrapperLow, event_tracer: TangoEventTracer
+):
+    """Ensure the original Configure command
+    finished with ResultCode.ABORTED."""
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        subarray_node_low.subarray_node,
+        "longRunningCommandResult",
+        (
+            pytest.configure_id[1][0],
+            json.dumps([ResultCode.ABORTED, "Command has been aborted"]),
+        ),
     )
-    assert (
-        assert_that(event_tracer)
-        .described_as(
-            "FAILED UNEXPECTED INITIAL OBSSTATE: "
-            "Subarray Node device"
-            f"({subarray_node_low.subarray_node.dev_name()}) "
-            "is expected to be in EMPTY obstate",
-        )
-        .within_timeout(TIMEOUT)
-        .has_change_event_occurred(
-            subarray_node_low.subarray_node,
-            "longRunningCommandResult",
-            (
-                pytest.restart_id[0],
-                json.dumps([int(ResultCode.OK), "Command Completed"]),
-            ),
-        )
+
+
+@then("the Restart command is completed")
+def verify_restart_completed(
+    subarray_node_low: SubarrayNodeWrapperLow, event_tracer: TangoEventTracer
+):
+    """Ensure Restart itself completed with ResultCode.OK."""
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        subarray_node_low.subarray_node,
+        "longRunningCommandResult",
+        (
+            pytest.restart_id[1][0],
+            json.dumps([int(ResultCode.OK), "Command Completed"]),
+        ),
+    )
+
+
+@then("the Subarray node goes to obsState EMPTY")
+def verify_subarray_empty(
+    subarray_node_low: SubarrayNodeWrapperLow, event_tracer: TangoEventTracer
+):
+    """Ensure the Subarray returns to a clean EMPTY state."""
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        subarray_node_low.subarray_node, "obsState", ObsState.EMPTY
     )
