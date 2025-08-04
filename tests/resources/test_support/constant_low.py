@@ -172,6 +172,15 @@ COMMAND_NOT_ALLOWED_DEFECT = {
     "error_message": "Exception to test exception propagation",
     "result": ResultCode.FAILED,
 }
+FAULT_DEFECT = json.dumps(
+    {
+        "enabled": True,
+        "fault_type": FaultType.STUCK_IN_INTERMEDIATE_STATE,
+        "error_message": "Device stuck in intermediate state",
+        "result": ResultCode.FAILED,
+        "intermediate_state": ObsState.FAULT,
+    }
+)
 
 DEVICE_OBS_STATE_ABORT_IN_EMPTY_SDP = {
     csp_subarray1: ["ABORTED"],
