@@ -1,21 +1,17 @@
-release=2.0.0-rc.1
-tag=2.0.0-rc.1
+release=2.0.0-rc.2
+tag=2.0.0-rc.2
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.0.0-rc.1**
+**1. ska-tmc-low-integration 2.0.0-rc.2**
 
-    **1.1 ska-tmc-low  1.4.0-rc.1 - 2.0.0-rc.1 :**
-            * Support for multiple station and PST beams for LOW.
-            * Updated tel-model to version 1.23.1
-            * Updated cspleafnode image to 0.28.0
+    **1.1 ska-tmc-low  2.0.0-rc.1 - 2.0.0-rc.2 :**
+            * This update includes documentation changes related to the delay model interface. TMC-Low has recently been enhanced to support four subarray station beams and two PST beams, and the document has been updated accordingly.
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 1.4.0-rc.1**
+**1. ska-tmc-low-integration 2.0.0-rc.2**
 
-    **1.1 ska-tmc-low  1.4.0-rc.1 - 2.0.0-rc.1 :**
-            * Support for multiple station and PST beams for LOW.
-            * Updated tel-model to version 1.23.1
-            * Updated cspleafnode image to 0.28.0
+    **1.1 ska-tmc-low  2.0.0-rc.1 - 2.0.0-rc.2 :**
+            * This update includes documentation changes related to the delay model interface. TMC-Low has recently been enhanced to support four subarray station beams and two PST beams, and the document has been updated accordingly.
 

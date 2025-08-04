@@ -5,6 +5,12 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[2.0.0-rc.2]
+************
+Added
+-----
+* This update includes documentation changes related to the delay model interface. TMC-Low has recently been enhanced to support four subarray station beams and two PST beams, and the document has been updated accordingly.
+
 [2.0.0-rc.1]
 ************
 Added
