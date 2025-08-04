@@ -41,7 +41,7 @@ from tests.resources.test_support.constant_low import (
 TIMEOUT = 90  # seconds
 
 
-@pytest.mark.test1
+@pytest.mark.test
 @pytest.mark.post_deployment
 @pytest.mark.SKA_low
 @scenario(
@@ -181,7 +181,7 @@ def restart_subarray(subarray_node_low):
     """
     csp_device = subarray_node_low.subarray_devices["csp_subarray"]
     csp_device.SetDefective(json.dumps(RESET_DEFECT))
-    pytest.restart_id = subarray_node_low.invoke_command("Restart")
+    pytest.restart_id = subarray_node_low.execute_transition("Restart")
 
 
 # ─────────────────────────── THEN ─────────────────────────────
