@@ -38,7 +38,7 @@ from tests.resources.test_support.constant_low import (
     RESET_DEFECT,
 )
 
-TIMEOUT = 90  # seconds
+TIMEOUT = 30  # seconds
 
 
 @pytest.mark.test
@@ -82,9 +82,11 @@ def given_subarray_ready(
             subarray_node_low.subarray_node: [
                 "obsState",
                 "longRunningCommandResult",
+            ],
+            central_node_low.central_node: [
+                "longRunningCommandResult",
                 "telescopeState",
             ],
-            central_node_low.central_node: ["longRunningCommandResult"],
         }
     )
 
@@ -129,7 +131,7 @@ def given_subarray_ready(
 
 
 # ─────────────────────────── WHEN ─────────────────────────────
-@when("the CSP Subarray is set to defective")
+@given("the CSP Subarray is set to defective")
 def inject_csp_defect(subarray_node_low: SubarrayNodeWrapperLow):
     """Introduce a fault on the CSP Subarray LN to force FAULT."""
     # Set the CSP Subarray LN to defective
@@ -193,7 +195,8 @@ def verify_restart_cleanup(subarray_node_low, event_tracer: TangoEventTracer):
       • Restart completed OK,
       • Subarray left FAULT and re-entered IDLE (implicit in completion).
     """
-
+    print(pytest.configure_id[1])
+    print(">>>>>>>>>>>>>>")
     assert (
         assert_that(event_tracer)
         .described_as(
@@ -207,10 +210,8 @@ def verify_restart_cleanup(subarray_node_low, event_tracer: TangoEventTracer):
             subarray_node_low.subarray_node,
             "longRunningCommandResult",
             (
-                pytest.configure_id,
-                json.dumps(
-                    (int(ResultCode.ABORTED), "Command has been aborted")
-                ),
+                pytest.configure_id[1],
+                json.dumps([ResultCode.ABORTED, "Command has been aborted"]),
             ),
         )
     )
@@ -227,8 +228,8 @@ def verify_restart_cleanup(subarray_node_low, event_tracer: TangoEventTracer):
             subarray_node_low.subarray_node,
             "longRunningCommandResult",
             (
-                pytest.restart_id,
-                json.dumps((int(ResultCode.OK), "Command Completed")),
+                pytest.restart_id[0],
+                json.dumps([int(ResultCode.OK), "Command Completed"]),
             ),
         )
     )
