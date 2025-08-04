@@ -5,6 +5,15 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[2.0.0-rc.2]
+************
+Added
+-----
+* This update includes documentation changes related to the delay model interface. TMC-Low has recently been enhanced to support four subarray station beams and two PST beams, and the document has been updated accordingly.
+* TMC low supports new TMC AssignResources json v4.1 with SDP v1.0.
+* Utilised latest version of centralnode v0.20.2.
+* Hardcoding of sdpleafnode is now removed and attribute is created to make it runtime configurable.This resolves SKB-927.
+
 [2.0.0-rc.1]
 ************
 Added
