@@ -9,6 +9,7 @@ cache:
     - build
 
 stages:
+  - lint
   - build
   - on-demand
   - test
@@ -132,6 +133,10 @@ stop-k8s-test-tmc-low-restart:
     - stop-k8s-test
   variables:
     KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-restart'
+
+python-lint:
+when: never
+
 
 deploy-integration:
   when: manual
