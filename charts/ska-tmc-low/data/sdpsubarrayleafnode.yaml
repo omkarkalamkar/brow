@@ -14,8 +14,8 @@ entrypoints:
 server:
   name: "sdp_subarray_leaf_node"
   instances:
-  {{ $sdp_sa_fqdn_prefix:= .Values.global.sdp_subarray_prefix}}
-  {{- range  ( regexSplit " " ((.Values.subarray_count | int) | seq ) -1 ) }}
+  {{ $sdp_sa_fqdn_prefix:= .Values.devices_fqdn.sdp_subarray_prefix}}
+  {{- range  ( regexSplit " " ((.Values.global.subarray_count | int) | seq ) -1 ) }}
     - name: "{{ printf "%02s" . }}"
       classes:
       - name: "SdpSubarrayLeafNode"

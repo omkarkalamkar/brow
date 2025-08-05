@@ -18,7 +18,7 @@ server:
         properties:
         - name: "SdpMasterFQDN"
           values:
-          - "{{.Values.global.sdp_master}}"
+          - "{{.Values.devices_fqdn.sdp_master}}"
         - name: "SkaLevel"
           values:
             - "3"

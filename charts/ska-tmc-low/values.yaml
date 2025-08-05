@@ -15,13 +15,12 @@ annotations:
   app.gitlab.com/app: CI_PROJECT_PATH_SLUG
   app.gitlab.com/env: CI_ENVIRONMENT_SLUG
 
-#  .Values.subarray_count
-# subarray_count, this will be expanded (1 to N inclusive)
-subarray_count: 1
 global:
   minikube: false
   tango_host: databaseds-tango-base-test:10000
-
+  #  .Values.global.subarray_count
+  # subarray_count, this will be expanded (1 to N inclusive)
+  subarray_count: 1
   ##  Order of instances resolution ##
   # .Values.deviceServers.<device>.instances
   # File, data/<device>.yaml, instances
@@ -35,7 +34,9 @@ global:
 
   domain: "low-tmc"
 
-  # fqdn for low devices
+# FQDN details are specific to TMC, shouldn't be overridden in global unless
+#  absolutely necessary.
+devices_fqdn:
   tmc_subarray_prefix: "low-tmc/subarray"
   csp_subarray_ln_prefix: "low-tmc/subarray-leaf-node-csp/"
   sdp_subarray_ln_prefix: "low-tmc/subarray-leaf-node-sdp/"

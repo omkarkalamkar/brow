@@ -18,7 +18,7 @@ server:
         properties:
         - name: "CspMasterFQDN"
           values:
-          - "{{.Values.global.csp_master}}"
+          - "{{.Values.devices_fqdn.csp_master}}"
         - name: "SkaLevel"
           values:
             - "3"

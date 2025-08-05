@@ -52,6 +52,10 @@ affects the number of instances of following components.
 #. SDP Subarray Leaf Node 
 #. MCCS Subarray Leaf Node 
 
+.. note:: The value of **subarray_count** is controlled under global section of
+    `values.yaml`.
+
+
 Tango host
 ----------
 

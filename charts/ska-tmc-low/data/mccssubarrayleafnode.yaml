@@ -7,16 +7,16 @@ entrypoints:
 server:
   name: "mccs_subarray_leaf_node"
   instances:
-  {{ $mccs_sa_fqdn_prefix:= .Values.global.mccs_subarray_prefix}} 
-  {{ $mccs_master_fqdn := .Values.global.mccs_master }}
-  {{ $mccs_master_ln_fqdn := .Values.global.mccs_master_ln}}
+  {{ $mccs_sa_fqdn_prefix:= .Values.devices_fqdn.mccs_subarray_prefix}}
+  {{ $mccs_master_fqdn := .Values.devices_fqdn.mccs_master }}
+  {{ $mccs_master_ln_fqdn := .Values.devices_fqdn.mccs_master_ln}}
   {{ $CommandTimeOut := .Values.deviceServers.mccssubarrayleafnode.CommandTimeOut }}
   {{ $LivelinessCheckPeriod := .Values.deviceServers.mccssubarrayleafnode.LivelinessCheckPeriod }}
   {{ $EventSubscriptionCheckPeriod := .Values.deviceServers.mccssubarrayleafnode.EventSubscriptionCheckPeriod }}
   {{ $AdapterTimeOut := .Values.deviceServers.mccssubarrayleafnode.AdapterTimeOut}}
   {{ $domain := .Values.global.domain}}
   {{ $family := .Values.deviceServers.mccssubarrayleafnode.family }}
-  {{- range  ( regexSplit " " ((.Values.subarray_count | int) | seq ) -1 ) }}
+  {{- range  ( regexSplit " " ((.Values.global.subarray_count | int) | seq ) -1 ) }}
     - name: "{{ printf "%02s" . }}"
       classes:
       - name: "LowTmcLeafNodeMccsSubarray"
