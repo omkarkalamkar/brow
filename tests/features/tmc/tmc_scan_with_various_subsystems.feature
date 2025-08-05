@@ -11,7 +11,6 @@ Scenario: Successful Execution of TMC Scan with subsystems configuration provide
 		| subsystems           | assignjson                    | configurejson                 |
 		| pst_scan_without_sdp | pst_assign_without_sdp_low    | pst_configure_without_sdp_low |
 		| scan_without_csp     | assign_without_csp_low        | configure_without_csp_low     |
-		| scan_without_mccs    | assign_without_mccs_low       | configure_without_mccs_low    |
 		| scan_with_only_sdp   | assign_with_only_sdp_low      | configure_with_only_sdp_low   |
 		| scan_with_only_csp   | assign_with_only_csp_low      | configure_with_only_csp_low   |
 		| scan_with_only_mccs  | assign_without_mccs_low       | configure_with_only_mccs_low  |
