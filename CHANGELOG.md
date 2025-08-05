@@ -8,7 +8,9 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 [2.0.0-rc.3]
 Fixed
 -----
-* Resolved bug SKB-985.
+* This update include the fix of bug SKB-985.
+* This update include the fix of bug SKB-949.
+* This update include the fix of bug SKB-967.
 * Updated the subarraynode tag to v0.39.1.
 * Refactored the Restart command to ensure it properly cleans up any processes still running from a command in progress.
 
