@@ -41,8 +41,6 @@ from tests.resources.test_support.constant_low import (
 TIMEOUT = 30  # seconds
 
 
-# ────────────────────────────── Scenario ──────────────────────────────
-@pytest.mark.test
 @pytest.mark.post_deployment
 @pytest.mark.SKA_low
 @scenario(
@@ -54,7 +52,6 @@ def test_restart_cleanup_skb_985():
     """Root test function created by pytest-bdd (does nothing by itself)."""
 
 
-# ─────────────────────────── GIVEN steps ────────────────────────────
 @given("a Subarray in IDLE obsState with resources assigned")
 def given_subarray_ready(
     central_node_low: CentralNodeWrapperLow,
@@ -161,7 +158,6 @@ def wait_for_fault(
     )
 
 
-# ─────────────────────────── WHEN step ──────────────────────────────
 @when("I Restart the Subarray")
 def restart_subarray(subarray_node_low: SubarrayNodeWrapperLow):
     """
@@ -173,7 +169,6 @@ def restart_subarray(subarray_node_low: SubarrayNodeWrapperLow):
     pytest.restart_id = subarray_node_low.execute_transition("Restart")
 
 
-# ─────────────────────────── THEN steps ─────────────────────────────
 @then("the Configure command is aborted")
 def verify_configure_aborted(
     subarray_node_low: SubarrayNodeWrapperLow, event_tracer: TangoEventTracer
