@@ -1,23 +1,20 @@
-release=2.0.0-rc.2
-tag=2.0.0-rc.2
+release=2.0.0-rc.3
+tag=2.0.0-rc.3
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.0.0-rc.2**
+**1. ska-tmc-low-integration 2.0.0-rc.3**
 
-    **1.1 ska-tmc-low  2.0.0-rc.1 - 2.0.0-rc.2 :**
-            * This update includes documentation changes related to the delay model interface. TMC-Low has recently been enhanced to support four subarray station beams and two PST beams, and the document has been updated accordingly.
-            * TMC low supports new TMC AssignResources json v4.1 with SDP v1.0.
-            * Utilised latest version of centralnode v0.20.2.
-            * Hardcoding of sdpleafnode is now removed and attribute is created to make it runtime configurable.This resolves SKB-927.
+    **1.1 ska-tmc-low  2.0.0-rc.2 - 2.0.0-rc.3 :**
+            * This update include the fix of bug SKB-985.
+            * Utilised subarraynode tag is updated to 0.39.1.
+            * The Restart command is refactored such that it does cleans up the processes running from command in progress.
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.0.0-rc.2**
+**1. ska-tmc-low-integration 2.0.0-rc.3**
 
-    **1.1 ska-tmc-low  2.0.0-rc.1 - 2.0.0-rc.2 :**
-            * This update includes documentation changes related to the delay model interface. TMC-Low has recently been enhanced to support four subarray station beams and two PST beams, and the document has been updated accordingly.
-            * TMC low supports new TMC AssignResources json v4.1 with SDP v1.0.
-            * Utilised latest version of centralnode v0.20.2.
-            * Hardcoding of sdpleafnode is now removed and attribute is created to make it runtime configurable.This resolves SKB-927.
-
+    **1.1 ska-tmc-low  2.0.0-rc.2 - 2.0.0-rc.3 :**
+            * This update include the fix of bug SKB-985.
+            * Utilised subarraynode tag is updated to 0.39.1.
+            * The Restart command is refactored such that it does cleans up the processes running from command in progress.
