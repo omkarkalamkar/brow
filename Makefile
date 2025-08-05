@@ -47,7 +47,7 @@ SDP_SUBARRAY_PREFIX ?= tango://$(TANGO_HOST_NAME).$(KUBE_NAMESPACE).svc.$(CLUSTE
 CSP_MASTER ?= tango://$(TANGO_HOST_NAME).$(KUBE_NAMESPACE).svc.$(CLUSTER_DOMAIN):$(PORT)/low-csp/control/0
 CSP_SUBARRAY_PREFIX ?= tango://$(TANGO_HOST_NAME).$(KUBE_NAMESPACE).svc.$(CLUSTER_DOMAIN):$(PORT)/low-csp/subarray
 CI_REGISTRY ?= gitlab.com
-K8S_TEST_IMAGE_TO_TEST ?=  harbor.skao.int/production/ska-tango-images-pytango-builder:9.4.2## docker image that will be run for testing purpose
+K8S_TEST_IMAGE_TO_TEST=$(CAR_OCI_REGISTRY_HOST)/ska-build-python:0.3.1
 TARANTA_ENABLED ?= false
 
 CI_PROJECT_DIR ?= .
