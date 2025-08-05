@@ -220,7 +220,6 @@ def verify_subarray_empty(
 # test case with assignResources command
 
 
-@pytest.mark.test1
 @pytest.mark.post_deployment
 @pytest.mark.SKA_low
 @scenario(
