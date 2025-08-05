@@ -226,6 +226,7 @@ class CentralNodeWrapperLow(object):
         # reset HealthState.UNKNOWN for mock devices
         self._reset_health_state_for_mock_devices()
         self.reset_defects_for_devices()
+        LOGGER.info("Subarray Node ObsState: %s", self.subarray_node.obsstate)
         if self.subarray_node.obsState in [
             ObsState.RESOURCING,
         ]:
@@ -264,7 +265,7 @@ class CentralNodeWrapperLow(object):
                 ),
             )
 
-        elif self.subarray_node.obsState == ObsState.ABORTED:
+        elif self.subarray_node.obsState in [ObsState.ABORTED, ObsState.FAULT]:
             _, unique_id = self.subarray_restart()
             assert_that(self.event_tracer).described_as(
                 "FAILED ASSUMPTION AFTER RESTART COMMAND: "

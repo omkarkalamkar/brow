@@ -5,6 +5,31 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[2.0.0-rc.2]
+************
+Added
+-----
+* This update includes documentation changes related to the delay model interface. TMC-Low has recently been enhanced to support four subarray station beams and two PST beams, and the document has been updated accordingly.
+* TMC low supports new TMC AssignResources json v4.1 with SDP v1.0.
+* Utilised latest version of centralnode v0.20.2.
+* Hardcoding of sdpleafnode is now removed and attribute is created to make it runtime configurable.This resolves SKB-927.
+
+[2.0.0-rc.1]
+************
+Added
+-----
+* Support for multiple station and PST beams for LOW.
+* Updated tel-model to version 1.23.1
+* Updated cspleafnode image to 0.28.0
+
+[1.4.0-rc.1]
+************
+Added
+-----
+* TMC Subarray moves to FAULT after command timed out
+* TMC Restart command is updated to invoke abort and restart on sub system to bring obs state to EMPTY 
+* TMC Subarray is updated to transition Obs State to FAULT after command failure 
+
 [1.3.1-rc.1]
 ************
 Added

@@ -55,10 +55,7 @@ def _setup_event_subscriptions(
     )
 
 
-@pytest.mark.skip(
-    reason="Will be enabled after completion of SP-5340 implementation"
-)
-@pytest.mark.SKA_low
+@pytest.mark.SKA_tmc_low_restart
 @scenario(
     "../tmc/tmc_new_iTH/features/xtp_82857.feature",
     "Test Restart Command flow when TMC Subarray observation state is FAULT"
@@ -94,7 +91,7 @@ def verify_tmc_subarray_resourcing_fault(
     assert_that(event_tracer).described_as(
         f"TMC Subarray Node device ({tmc.subarray_node})"
         "ObsState attribute value should move "
-        f"from {ObsState.FAULT}."
+        f"to {ObsState.FAULT}."
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node, "obsState", ObsState.FAULT
     )
@@ -105,7 +102,7 @@ def verify_csp_mccs_sdp_obs_state_empty(
     csp: CSPFacade, sdp: SDPFacade, mccs: MCCSFacade
 ):
     """Verifies observation states of the subsystems."""
-    assert csp.csp_subarray.obsState == ObsState.IDLE
+    assert csp.csp_subarray.obsState == ObsState.RESOURCING
     assert sdp.sdp_subarray.obsState == ObsState.EMPTY
     assert mccs.mccs_subarray.obsState == ObsState.EMPTY
     reset_defects(csp, sdp, mccs)
