@@ -22,6 +22,7 @@ from pytest_bdd import given, scenario, then, when
 from ska_control_model import ObsState
 from ska_tango_base.commands import ResultCode
 from ska_tango_testing.integration import TangoEventTracer, log_events
+from ska_tango_testing.mock.placeholders import Anything
 from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
@@ -213,4 +214,116 @@ def verify_subarray_empty(
         TIMEOUT
     ).has_change_event_occurred(
         subarray_node_low.subarray_node, "obsState", ObsState.EMPTY
+    )
+
+
+# test case with assignResources command
+
+
+@pytest.mark.test1
+@pytest.mark.post_deployment
+@pytest.mark.SKA_low
+@scenario(
+    "../features/tmc/check_restart_cleanup.feature",
+    "Restart when Subarray is in obsState FAULT with"
+    " CSP defective during AssignResources",
+)
+def test_restart_cleanup_csp_defective_before_assign():
+    """Root test function created by pytest-bdd (does nothing by itself)."""
+
+
+@given("a Subarray in EMPTY obsState with no resources assigned")
+def given_subarray_empty(
+    central_node_low: CentralNodeWrapperLow,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """
+    Bring the system to an EMPTY state(Subarray ON with no resources assigned):
+    - Set admin modes ONLINE (handled internally by move_to_on),
+    - Turn the Subarray ON (via CentralNode),
+    - Verify the Subarray reaches ObsState.EMPTY.
+    """
+    # Subscribe to events needed for the test
+    event_tracer.subscribe_event(subarray_node_low.subarray_node, "obsState")
+    event_tracer.subscribe_event(
+        subarray_node_low.subarray_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(
+        central_node_low.central_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(
+        central_node_low.central_node, "telescopeState"
+    )
+    log_events(
+        {
+            subarray_node_low.subarray_node: [
+                "obsState",
+                "longRunningCommandResult",
+            ],
+            central_node_low.central_node: [
+                "longRunningCommandResult",
+                "telescopeState",
+            ],
+        }
+    )
+
+    # 1) Turn the telescope (CentralNode) ON
+    central_node_low.move_to_on()
+    # Ensure the CentralNode reports state ON
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        central_node_low.central_node, "telescopeState", DevState.ON
+    )
+    # The Subarray should start in EMPTY obsState (no resources assigned yet)
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        subarray_node_low.subarray_node, "obsState", ObsState.EMPTY
+    )
+
+
+@given("I Assign resources to the Subarray")
+def assign_resources_to_subarray(
+    central_node_low: CentralNodeWrapperLow,
+    command_input_factory: JsonFactory,
+):
+    """
+    Invoke the AssignResources command on the CentralNode.
+    """
+    assign_json = prepare_json_args_for_centralnode_commands(
+        "assign_resources_low", command_input_factory
+    )
+    pytest.assign_id = central_node_low.perform_action(
+        "AssignResources", assign_json
+    )
+
+
+@then("the AssignResources command is aborted")
+def verify_assign_aborted(
+    subarray_node_low, central_node_low, event_tracer: TangoEventTracer
+):
+    """Ensure the AssignResources command finished with ResultCode.ABORTED."""
+    # testing with Anything placeholder as
+    # we don't have commandid of assign resources command on subarray node
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        subarray_node_low.subarray_node,
+        "longRunningCommandResult",
+        (
+            Anything,
+            json.dumps([ResultCode.ABORTED, "Command has been aborted"]),
+        ),
+    )
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        central_node_low.central_node,
+        "longRunningCommandResult",
+        (
+            pytest.assign_id[1][0],
+            Anything,
+        ),
     )
