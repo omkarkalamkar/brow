@@ -100,6 +100,10 @@ nodes. Defaults are:
 #. Variables under **global** section
 
     #. **domain** : This value is present under global. It is the domain name of TMC TANGO device. The value is set to "low-tmc".
+    #. **subarray_count** : This value is present under global. It is the count of subarray. Value is set to 1.
+
+#. Variables under **devices_fqdn** section
+
     #. **tmc_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of SubarrayNode.
     #. **csp_subarray_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of CspSubarrayLeafNode.
     #. **sdp_subarray_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of SdpSubarrayLeafNode.
