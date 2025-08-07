@@ -88,7 +88,7 @@ K8S_CHART_PARAMS = --set global.minikube=$(MINIKUBE) \
 	--set global.cluster_domain=$(CLUSTER_DOMAIN) \
 	--set global.operator=true \
 	--set ska-taranta.enabled=$(TARANTA_ENABLED)\
-	--set tmc-low.subarray_count=$(SUBARRAY_COUNT)\
+	--set tmc-low.global.subarray_count=$(SUBARRAY_COUNT)\
 	--set tmc-low.deviceServers.subarraynode.CommandTimeOut=$(SUBARRAY_COMMAND_TIMEOUT) \
 	$(CUSTOM_VALUES)
 

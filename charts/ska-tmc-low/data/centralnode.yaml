@@ -7,10 +7,10 @@ entrypoints:
 server:
   name: "central_node_low"
   instances:
-  {{ $tmc_sa_fqdn_prefix:= .Values.global.tmc_subarray_prefix}}
-  {{ $csp_sa_ln_fqdn_prefix:= .Values.global.csp_subarray_ln_prefix}}
-  {{ $sdp_sa_ln_fqdn_prefix:= .Values.global.sdp_subarray_ln_prefix}}
-  {{ $domain := .Values.global.domain}}
+  {{ $tmc_sa_fqdn_prefix:= .Values.devices_fqdn.tmc_subarray_prefix}}
+  {{ $csp_sa_ln_fqdn_prefix:= .Values.devices_fqdn.csp_subarray_ln_prefix}}
+  {{ $sdp_sa_ln_fqdn_prefix:= .Values.devices_fqdn.sdp_subarray_ln_prefix}}
+  {{ $domain := .Values.domain}}
   {{ $family := .Values.deviceServers.centralnode.family }}
   {{ $member := .Values.deviceServers.centralnode.member }}
   - name: "01"
@@ -21,22 +21,22 @@ server:
         properties:
         - name: "CspMasterLeafNodeFQDN"
           values:
-          - "{{.Values.global.csp_master_ln}}"
+          - "{{.Values.devices_fqdn.csp_master_ln}}"
         - name: "CspMasterFQDN"
           values:
-          - "{{.Values.global.csp_master}}"
+          - "{{.Values.devices_fqdn.csp_master}}"
         - name: "SdpMasterLeafNodeFQDN"
           values:
-          - "{{.Values.global.sdp_master_ln}}"
+          - "{{.Values.devices_fqdn.sdp_master_ln}}"
         - name: "SdpMasterFQDN"
           values:
-          - "{{.Values.global.sdp_master}}"
+          - "{{.Values.devices_fqdn.sdp_master}}"
         - name: "MccsMasterLeafNodeFQDN"
           values:
-            - "{{.Values.global.mccs_master_ln}}"
+            - "{{.Values.devices_fqdn.mccs_master_ln}}"
         - name: "MccsMasterFQDN"
           values:
-            - "{{.Values.global.mccs_master}}"
+            - "{{.Values.devices_fqdn.mccs_master}}"
         - name: "SkuidService"
           values:
             - "{{.Values.deviceServers.centralnode.SkuidService}}"
@@ -48,17 +48,17 @@ server:
             - "{{.Values.deviceServers.centralnode.ReleaseResourcesInterface}}"
         - name: "TMCSubarrayNodes"
           values:
-          {{- range  ( regexSplit " " ((.Values.subarray_count | int) | seq ) -1 )  }}
+          {{- range  ( regexSplit " " ((.Values.global.subarray_count | int) | seq ) -1 )  }}
           - "{{ $tmc_sa_fqdn_prefix }}/{{ printf "%02s" . }}"
           {{- end }}
         - name: "CspSubarrayLeafNodes"
           values:
-          {{- range  ( regexSplit " " ((.Values.subarray_count | int) | seq ) -1 )  }}
+          {{- range  ( regexSplit " " ((.Values.global.subarray_count | int) | seq ) -1 )  }}
           - "{{ $csp_sa_ln_fqdn_prefix }}{{ printf "%02s" . }}"
           {{- end }}
         - name: "SdpSubarrayLeafNodes"
           values:
-          {{- range  ( regexSplit " " ((.Values.subarray_count | int) | seq ) -1 )  }}
+          {{- range  ( regexSplit " " ((.Values.global.subarray_count | int) | seq ) -1 )  }}
           - "{{ $sdp_sa_ln_fqdn_prefix }}{{ printf "%02s" . }}"
           {{- end }}
         - name: "SkaLevel"
