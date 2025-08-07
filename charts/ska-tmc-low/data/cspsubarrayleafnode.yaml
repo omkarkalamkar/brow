@@ -16,13 +16,13 @@ entrypoints:
 {{- $AdapterTimeOut := .Values.deviceServers.cspsubarrayleafnode.AdapterTimeOut }}
 {{- $LivelinessCheckPeriod := .Values.deviceServers.cspsubarrayleafnode.LivelinessCheckPeriod }}
 {{- $EventSubscriptionCheckPeriod := .Values.deviceServers.cspsubarrayleafnode.EventSubscriptionCheckPeriod }}
-{{ $domain := .Values.global.domain}}
+{{ $domain := .Values.domain}}
 {{ $family := .Values.deviceServers.cspsubarrayleafnode.family }}
 server:
   name: "csp_subarray_leaf_node_low"
   instances:
-  {{ $csp_sa_fqdn_prefix:= .Values.global.csp_subarray_prefix}}
-  {{- range  ( regexSplit " " ((.Values.subarray_count | int) | seq ) -1 ) }}
+  {{ $csp_sa_fqdn_prefix:= .Values.devices_fqdn.csp_subarray_prefix}}
+  {{- range  ( regexSplit " " ((.Values.global.subarray_count | int) | seq ) -1 ) }}
     - name: "{{ printf "%02s" . }}"
       classes:
       - name: "LowTmcLeafNodeCspSubarray"

@@ -52,6 +52,10 @@ affects the number of instances of following components.
 #. SDP Subarray Leaf Node 
 #. MCCS Subarray Leaf Node 
 
+.. note:: The value of **subarray_count** is controlled under global section of
+    `values.yaml`.
+
+
 Tango host
 ----------
 
@@ -93,9 +97,14 @@ nodes. Defaults are:
 
 #. **enabled** : User can opt to disable any node by setting this value to False.Default is True for all nodes.
 
+#. **domain** : It is the domain name of TMC TANGO device. The value is set to "low-tmc".
+
 #. Variables under **global** section
 
-    #. **domain** : This value is present under global. It is the domain name of TMC TANGO device. The value is set to "low-tmc".
+    #. **subarray_count** : This value is present under global. It is the count of subarray. Value is set to 1.
+
+#. Variables under **devices_fqdn** section
+
     #. **tmc_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of SubarrayNode.
     #. **csp_subarray_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of CspSubarrayLeafNode.
     #. **sdp_subarray_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of SdpSubarrayLeafNode.
@@ -109,6 +118,8 @@ nodes. Defaults are:
     #. **mccs_master_ln** : This value is present under global, User can use this to change the FQDN of MCCS Master Leaf Node.
     #. **mccs_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Subarray.
     #. **mccs_subarray_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Subarray Leaf Node.
+
+#. **subarray_devices** : List of subarray-devices
 
 Component specific configuration
 ---------------------------------

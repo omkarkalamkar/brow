@@ -8,7 +8,7 @@
 
 # Determine which subarray instances to use
 ## Unpack the subarray_count int into a list 1 to N (inclusive)
-{{- $unpacked_subarray_devices:=  ( regexSplit " " ((  $localchart.Values.subarray_count | int) | seq ) -1 ) }}
+{{- $unpacked_subarray_devices:=  ( regexSplit " " ((  $localchart.Values.global.subarray_count | int) | seq ) -1 ) }}
 ## Prepend a zero to every subarray number by making use of a dictionary if N < 10
 {{ $prepended_subarray_devices := list  }}
 {{- range $unpacked_subarray_devices }}
@@ -22,7 +22,7 @@
 {{- $_ := set $filedeviceserver "instances" (coalesce $localchart.Values.global.instances $deviceserver.instances $filedeviceserver.instances) }}
 
 # If it's a subarray device, update the instances
-{{- if has $key $localchart.Values.global.subarray_devices }}
+{{- if has $key $localchart.Values.subarray_devices }}
 {{- $_ := set $filedeviceserver "instances" $localchart.Values.coalesced_subarray_devices }}
 {{- end }}
 
@@ -41,7 +41,7 @@
 
 # Determine which subarray instances to use
 ## Unpack the subarray_count int into a list 1 to N (inclusive)
-{{- $unpacked_subarray_devices:=  ( regexSplit " " ((  $localchart.Values.subarray_count | int) | seq ) -1 ) }}
+{{- $unpacked_subarray_devices:=  ( regexSplit " " ((  $localchart.Values.global.subarray_count | int) | seq ) -1 ) }}
 ## Prepend a zero to every subarray number by making use of a dictionary if N < 10
 {{ $prepended_subarray_devices := list  }}
 {{- range $unpacked_subarray_devices }}
@@ -55,7 +55,7 @@
 {{- $_ := set $filedeviceserver "instances" (coalesce $localchart.Values.global.instances $deviceserver.instances $filedeviceserver.instances) }}
 
 # If it's a subarray device, update the instances
-{{- if has $key $localchart.Values.global.subarray_devices }}
+{{- if has $key $localchart.Values.subarray_devices }}
 {{- $_ := set $filedeviceserver "instances" $localchart.Values.coalesced_subarray_devices }}
 {{- end }}
 
@@ -69,7 +69,7 @@
 
 # Determine which subarray instances to use
 ## Unpack the subarray_count int into a list 1 to N (inclusive)
-{{- $unpacked_subarray_devices:=  ( regexSplit " " ((  $localchart.Values.subarray_count | int) | seq ) -1 ) }}
+{{- $unpacked_subarray_devices:=  ( regexSplit " " ((  $localchart.Values.global.subarray_count | int) | seq ) -1 ) }}
 ## Prepend a zero to every subarray number by making use of a dictionary if N < 10
 {{ $prepended_subarray_devices := list  }}
 {{- range $unpacked_subarray_devices }}
@@ -83,7 +83,7 @@
 {{- $_ := set $filedeviceserver "instances" (coalesce $localchart.Values.global.instances $deviceserver.instances $filedeviceserver.instances) }}
 
 # If it's a subarray device, update the instances
-{{- if has $key $localchart.Values.global.subarray_devices }}
+{{- if has $key $localchart.Values.subarray_devices }}
 {{- $_ := set $filedeviceserver "instances" $localchart.Values.coalesced_subarray_devices }}
 {{- end }}
 
