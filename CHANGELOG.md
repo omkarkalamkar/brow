@@ -5,7 +5,15 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[2.0.0-rc.4]
+************
+Updated
+-----
+* This update enables updating subarray_count variable via global section of yaml.
+* This update also includes `devices_fqdn` tag for listing fqdn of devices
+
 [2.0.0-rc.3]
+************
 Fixed
 -----
 * This update include the fix of bug SKB-985.
