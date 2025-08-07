@@ -1,65 +1,20 @@
-
 .. _`Recovering TMC Low`:
 
-Recovering when system stucks in an ObsState for long time
-==========================================================
-The following table list down the steps to recover TMC Low when it is stuck in one 
-of the intermediate ObsState (Example: RESOURCING, CONFIGURING).
+TMC Recovery mechanism in case of subsystem failure
+===================================================
+- This guide provides instructions to recover TMC Low when it enters the ``FAULT`` observation state.
 
-The provided steps consist of command-line instructions that are executable from any python 
-runtime environment/script.
+- The recovery steps involve issuing command-line instructions that can be executed from any Python runtime environment or script.
 
-
-Using Abort() & Restart() Command
----------------------------------
-+-----------------------------------+------------------------------------------------------------------------+ 
-| Scenario                          |               Steps to recover                                         | 
-+===================================+========================================================================+ 
-| When TMC Low stuck in             |- Using Subarray Node                                                   |
-| one of the ObsState while running |    - Create device proxy of subarray node                              |
-|                                   |    - To recover TMC Low stuck in RESOURCING from Subarray node execute:|
-|                                   |      Abort() command followed by Restart() command.                    |
-|                                   |                                                                        |
-|                                   |      - subarray_node = tango.DeviceProxy("low-tmc/subarray/01")        |
-| + RESOURCING                      |      - subarray_node.Abort()                                           |
-|                                   |      - subarray_node.Restart()                                         |
-| + CONFIGURING                     |                                                                        |
-+-----------------------------------+------------------------------------------------------------------------+   
-
-Using ReleaseAllResources() command
-------------------------------------
-
-When TMC Low AssignResources() command executed on some of the devices successfully and TMC subarray goes in
-RESOURCING due to one of the device gets stuck in RESOURCING.
-So instead of doing Abort and Restart, invoke ReleaseAllResources() command on the subarray where the ObsState 
-is IDLE.
-and on the device where the obsState is RESOURCING invoke Abort() command followed by Restart() command.
-
-
-+-----------------------------------+------------------------------------------------------------------------+ 
-| Scenario                          |               Steps to recover                                         | 
-+===================================+========================================================================+ 
-| When TMC Low stuck in RESOURCING  | - Create device proxy of cspleafnode, sdpleafnode and mccsleafnode     |
-|                                   | - Check the ObsState of each device                                    |
-|                                   | - If the ObsState of the device is IDLE, invoke ReleaseAllResources()  |
-|                                   |   command on that device. For Ex.                                      |
-|                                   | -  cspleafnode_proxy =                                                 |
-|                                   |    tango.DeviceProxy("low-tmc/subarray-leaf-node-csp/01")              |
-|                                   | - To check ObsState of cspleafnode, execute                            |
-|                                   |   `cspleafnode_proxy.obsState`                                         |
-|                                   | - To release resources of the device, execute                          |
-|                                   |   `cspleafnode_proxy.ReleaseAllResources()`                            |
-|                                   | - To recover the device in RESOURCING obsState, execute                |
-|                                   |   Abort() command followed by Restart() command                        |
-|                                   | - `stuck_device_proxy.Abort()`                                         |
-|                                   | - `stuck_device_proxy.Restart()`                                       |
-+-----------------------------------+------------------------------------------------------------------------+ 
 
 TMC Low in FAULT ObsState
 -------------------------
 
-TMC Low can go into an ObsState.FAULT with the below scenarios. 
-To recover from the ObsState.FAULT please follow the steps to recover.
+- TMC will not get stuck in a particular transitional observation states like for ex. ``RESOURCING``, ``CONFIGURING``, etc.
+
+- Instead it moves to the Observation state ``FAULT`` in the following scenarios.
+
+- To recover from the Observation state ``FAULT``, please follow the steps to recover.
 
 +-----------------------------------+------------------------------------------------------------------------+ 
 | Scenario                          |               Steps to recover                                         | 
@@ -71,3 +26,21 @@ To recover from the ObsState.FAULT please follow the steps to recover.
 |    transitions to FAULT ObsState  |    - subarray_node = tango.DeviceProxy("low-tmc/subarray/01")          |
 |                                   |    - subarray_node.Restart()                                           |
 +-----------------------------------+------------------------------------------------------------------------+
+
+
+TMC Low not recovering from FAULT obsState
+-------------------------------------------
+
+If the ``Restart()`` command fails to transition the TMC Low to the ``EMPTY`` observation state, please follow these steps:
+
+- **Inspect all TMC Low leaf nodes:**  
+  Manually visit each leaf node within the TMC Low hierarchy.
+
+- **Identify the faulty subsystem:**  
+  Check the ``obsState`` of each node to locate any subsystem that is not in the expected state.
+
+- **Manually reset the faulty subsystem:**  
+  Attempt to bring the identified faulty subsystem to the ``EMPTY`` observation state by applying corrective actions or issuing necessary commands.
+
+- **Re-invoke Restart() on the TMC Low Subarray Node:**  
+  After all subsystems are in a recoverable state, issue the ``Restart()`` command on the TMC Low Subarray Node to transition the system back to the ``EMPTY`` obsState.
