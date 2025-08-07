@@ -22,7 +22,7 @@
 {{- $_ := set $filedeviceserver "instances" (coalesce $localchart.Values.global.instances $deviceserver.instances $filedeviceserver.instances) }}
 
 # If it's a subarray device, update the instances
-{{- if has $key $localchart.Values.global.subarray_devices }}
+{{- if has $key $localchart.Values.subarray_devices }}
 {{- $_ := set $filedeviceserver "instances" $localchart.Values.coalesced_subarray_devices }}
 {{- end }}
 
@@ -55,7 +55,7 @@
 {{- $_ := set $filedeviceserver "instances" (coalesce $localchart.Values.global.instances $deviceserver.instances $filedeviceserver.instances) }}
 
 # If it's a subarray device, update the instances
-{{- if has $key $localchart.Values.global.subarray_devices }}
+{{- if has $key $localchart.Values.subarray_devices }}
 {{- $_ := set $filedeviceserver "instances" $localchart.Values.coalesced_subarray_devices }}
 {{- end }}
 
@@ -83,7 +83,7 @@
 {{- $_ := set $filedeviceserver "instances" (coalesce $localchart.Values.global.instances $deviceserver.instances $filedeviceserver.instances) }}
 
 # If it's a subarray device, update the instances
-{{- if has $key $localchart.Values.global.subarray_devices }}
+{{- if has $key $localchart.Values.subarray_devices }}
 {{- $_ := set $filedeviceserver "instances" $localchart.Values.coalesced_subarray_devices }}
 {{- end }}
 

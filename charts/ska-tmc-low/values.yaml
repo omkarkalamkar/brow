@@ -21,18 +21,18 @@ global:
   #  .Values.global.subarray_count
   # subarray_count, this will be expanded (1 to N inclusive)
   subarray_count: 1
-  ##  Order of instances resolution ##
-  # .Values.deviceServers.<device>.instances
-  # File, data/<device>.yaml, instances
-  # deviceServers.cspsubarrayleafnode, deviceServers.sdpsubarrayleafnode,
-  # deviceServers.subarraynode , deviceServers.mccssubarrayleafnode
-  subarray_devices:
+  domain: "low-tmc"
+
+##  Order of instances resolution ##
+# .Values.deviceServers.<device>.instances
+# File, data/<device>.yaml, instances
+# deviceServers.cspsubarrayleafnode, deviceServers.sdpsubarrayleafnode,
+# deviceServers.subarraynode , deviceServers.mccssubarrayleafnode
+subarray_devices:
     - "cspsubarrayleafnode"
     - "sdpsubarrayleafnode"
     - "subarraynode"
     - "mccssubarrayleafnode"
-
-  domain: "low-tmc"
 
 # FQDN details are specific to TMC, shouldn't be overridden in global unless
 #  absolutely necessary.

@@ -118,6 +118,8 @@ nodes. Defaults are:
     #. **mccs_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Subarray.
     #. **mccs_subarray_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Subarray Leaf Node.
 
+#. **subarray_devices** : List of subarray-devices
+
 Component specific configuration
 ---------------------------------
 
