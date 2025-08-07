@@ -97,9 +97,10 @@ nodes. Defaults are:
 
 #. **enabled** : User can opt to disable any node by setting this value to False.Default is True for all nodes.
 
+#. **domain** : It is the domain name of TMC TANGO device. The value is set to "low-tmc".
+
 #. Variables under **global** section
 
-    #. **domain** : This value is present under global. It is the domain name of TMC TANGO device. The value is set to "low-tmc".
     #. **subarray_count** : This value is present under global. It is the count of subarray. Value is set to 1.
 
 #. Variables under **devices_fqdn** section

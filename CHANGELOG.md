@@ -5,14 +5,7 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
-[2.0.0-rc.4]
-************
-Updated
--------
-* `subarray_count` variable is supported in global section of yaml
-
 [2.0.0-rc.3]
-************
 Fixed
 -----
 * This update include the fix of bug SKB-985.

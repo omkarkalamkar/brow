@@ -21,8 +21,8 @@ global:
   #  .Values.global.subarray_count
   # subarray_count, this will be expanded (1 to N inclusive)
   subarray_count: 1
-  domain: "low-tmc"
 
+domain: "low-tmc"
 ##  Order of instances resolution ##
 # .Values.deviceServers.<device>.instances
 # File, data/<device>.yaml, instances

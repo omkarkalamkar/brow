@@ -16,7 +16,7 @@ entrypoints:
 {{- $AdapterTimeOut := .Values.deviceServers.cspsubarrayleafnode.AdapterTimeOut }}
 {{- $LivelinessCheckPeriod := .Values.deviceServers.cspsubarrayleafnode.LivelinessCheckPeriod }}
 {{- $EventSubscriptionCheckPeriod := .Values.deviceServers.cspsubarrayleafnode.EventSubscriptionCheckPeriod }}
-{{ $domain := .Values.global.domain}}
+{{ $domain := .Values.domain}}
 {{ $family := .Values.deviceServers.cspsubarrayleafnode.family }}
 server:
   name: "csp_subarray_leaf_node_low"

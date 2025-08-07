@@ -10,7 +10,7 @@ server:
   {{ $tmc_sa_fqdn_prefix:= .Values.devices_fqdn.tmc_subarray_prefix}}
   {{ $csp_sa_ln_fqdn_prefix:= .Values.devices_fqdn.csp_subarray_ln_prefix}}
   {{ $sdp_sa_ln_fqdn_prefix:= .Values.devices_fqdn.sdp_subarray_ln_prefix}}
-  {{ $domain := .Values.global.domain}}
+  {{ $domain := .Values.domain}}
   {{ $family := .Values.deviceServers.centralnode.family }}
   {{ $member := .Values.deviceServers.centralnode.member }}
   - name: "01"

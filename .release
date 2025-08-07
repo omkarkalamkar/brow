@@ -1,17 +1,24 @@
-release=2.0.0-rc.4
-tag=2.0.0-rc.4
+release=2.0.0-rc.3
+tag=2.0.0-rc.3
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.0.0-rc.4**
+**1. ska-tmc-low-integration 2.0.0-rc.3**
 
-    **1.1 ska-tmc-low  2.0.0-rc.3 - 2.0.0-rc.4 :**
-            * This update include support for subarray_count variable in global section.
+    **1.1 ska-tmc-low  2.0.0-rc.2 - 2.0.0-rc.3 :**
+            * This update include the fix of bug SKB-985.
+            * This update include the fix of bug SKB-949.
+            * This update include the fix of bug SKB-967.
+            * Utilised subarraynode tag is updated to 0.39.1.
+            * The Restart command is refactored such that it does cleans up the processes running from command in progress.
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.0.0-rc.4**
+**1. ska-tmc-low-integration 2.0.0-rc.3**
 
-    **1.1 ska-tmc-low  2.0.0-rc.3 - 2.0.0-rc.4 :**
-            * This update include support for subarray_count variable in global section of yaml.
-
+    **1.1 ska-tmc-low  2.0.0-rc.2 - 2.0.0-rc.3 :**
+            * This update include the fix of bug SKB-985.
+            * This update include the fix of bug SKB-949.
+            * This update include the fix of bug SKB-967.
+            * Utilised subarraynode tag is updated to 0.39.1.
+            * The Restart command is refactored such that it does cleans up the processes running from command in progress.

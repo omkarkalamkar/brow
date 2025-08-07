@@ -9,7 +9,7 @@ entrypoints:
 {{ $LivelinessCheckPeriod := .Values.deviceServers.sdpsubarrayleafnode.LivelinessCheckPeriod }}
 {{ $EventSubscriptionCheckPeriod := .Values.deviceServers.sdpsubarrayleafnode.EventSubscriptionCheckPeriod }}
 {{ $SDPSubarrayAdminModeEnabled := .Values.deviceServers.sdpsubarrayleafnode.SDPSubarrayAdminModeEnabled }}
-{{ $domain := .Values.global.domain}}
+{{ $domain := .Values.domain}}
 {{ $family := .Values.deviceServers.sdpsubarrayleafnode.family }}
 server:
   name: "sdp_subarray_leaf_node"
