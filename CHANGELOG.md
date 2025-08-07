@@ -10,7 +10,9 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 Updated
 -----
 * This update enables updating subarray_count variable via global section of yaml.
-* This update also includes `devices_fqdn` tag for listing fqdn of devices
+* This update also includes `devices_fqdn` tag for listing fqdn of devices.
+* This update also includes moving `domain` and `subarray_devices` from global section.
+
 
 [2.0.0-rc.3]
 ************
