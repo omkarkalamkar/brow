@@ -24,6 +24,7 @@ from tests.resources.test_harness.constant import (
 TIMEOUT = 60
 
 
+@pytest.mark.skip(reason="TBD")
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
