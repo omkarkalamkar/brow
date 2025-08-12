@@ -26,3 +26,30 @@ The TRLs of all the TMC LOW devices are updated to comply with ADR-9
 +-----------------------------------------+---------------------------------------+
 | `ska_low/tm_leaf_node/mccs_subarray01`  | `low-tmc/subarray-leaf-node-mccs/01`  |
 +-----------------------------------------+---------------------------------------+
+
+
+
+TRL for TMC LOW station and PST beams
+=====================================
+TRLs for station and PST beams
+
++-------------------------------------------------------------------+
+| Station Beams                                                     |
++-------------------------------------------------------------------+
+| `low-tmc/subarray-leaf-node-csp/01/delayModelStationBeam01`       |
++-------------------------------------------------------------------+
+| `low-tmc/subarray-leaf-node-csp/01/delayModelStationBeam02`       |
++-------------------------------------------------------------------+
+| `low-tmc/subarray-leaf-node-csp/01/delayModelStationBeam03`       |
++-------------------------------------------------------------------+
+| `low-tmc/subarray-leaf-node-csp/01/delayModelStationBeam04`       |
++-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------+
+| PST Beams                                                     |
++---------------------------------------------------------------+
+| `low-tmc/subarray-leaf-node-csp/01/delayModelPSTBeam1`        |
++---------------------------------------------------------------+
+| `low-tmc/subarray-leaf-node-csp/01/delayModelPSTBeam2`        |
++---------------------------------------------------------------+
