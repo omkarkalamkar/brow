@@ -13,6 +13,31 @@ TRL
    In such case, only the last part of the TRL indicates the id of the subarray.
    E.g. `low-tmc/subarray-node/2`, `low-tmc/subarray-node/3` and so on.
 
+TRL for TMC LOW station and PST beams
+=====================================
+TRLs for station and PST beams
+
++-------------------------------------------------------------------+
+| Station Beams                                                     |
++-------------------------------------------------------------------+
+| `low-tmc/subarray-leaf-node-csp/01/delayModelStationBeam01`       |
++-------------------------------------------------------------------+
+| `low-tmc/subarray-leaf-node-csp/01/delayModelStationBeam02`       |
++-------------------------------------------------------------------+
+| `low-tmc/subarray-leaf-node-csp/01/delayModelStationBeam03`       |
++-------------------------------------------------------------------+
+| `low-tmc/subarray-leaf-node-csp/01/delayModelStationBeam04`       |
++-------------------------------------------------------------------+
+
+
++---------------------------------------------------------------+
+| PST Beams                                                     |
++---------------------------------------------------------------+
+| `low-tmc/subarray-leaf-node-csp/01/delayModelPSTBeam1`        |
++---------------------------------------------------------------+
+| `low-tmc/subarray-leaf-node-csp/01/delayModelPSTBeam2`        |
++---------------------------------------------------------------+
+
 Attributes
 ==============
 
