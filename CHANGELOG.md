@@ -10,7 +10,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 Updated
 -------
  * Fixed string formation of FQDNs for multiple station and PST beams.
- * Utilised the latest tag form subarraynode 0.39.4
+ * Utilised the latest tag of subarraynode 0.39.4
 
 [2.0.0-rc.4]
 ************
