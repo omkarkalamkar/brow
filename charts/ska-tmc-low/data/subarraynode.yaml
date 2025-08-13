@@ -23,7 +23,7 @@ server:
   {{ $sdp_sa_fqdn_prefix:= .Values.devices_fqdn.sdp_subarray_prefix}}
   {{ $mccs_sa_ln_fqdn_prefix:= .Values.devices_fqdn.mccs_subarray_ln_prefix}}
   {{ $mccs_sa_fqdn_prefix:= .Values.devices_fqdn.mccs_subarray_prefix}}
-  {{ $CommandTimeOutDefault := .Values.deviceServers.subarraynode.CommandTimeOutDefault }}
+  {{ $CommandTimeOut := .Values.deviceServers.subarraynode.CommandTimeOut }}
   {{ $domain := .Values.domain}}
   {{ $family := .Values.deviceServers.subarraynode.family }}
   {{- range  ( regexSplit " " ((.Values.global.subarray_count | int) | seq ) -1 ) }}
@@ -60,9 +60,9 @@ server:
           - name: "LoggingLevelDefault"
             values:
               - "5"
-          - name: "CommandTimeOutDefault"
+          - name: "CommandTimeOut"
             values:
-              - "{{ $CommandTimeOutDefault }}"
+              - "{{ $CommandTimeOut }}"
           - name: "CspAssignResourcesInterfaceURL"
             values:
               - "{{ $csp_assign_interface }}"

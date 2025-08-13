@@ -37,9 +37,9 @@ server:
         - name: "AdapterTimeOut"
           values:
           - "{{.Values.deviceServers.mccsmasterleafnode.AdapterTimeOut}}"
-        - name: "CommandTimeOutDefault"
+        - name: "CommandTimeOut"
           values:
-          - "{{.Values.deviceServers.mccsmasterleafnode.CommandTimeOutDefault}}"
+          - "{{.Values.deviceServers.mccsmasterleafnode.CommandTimeOut}}"
 depends_on:
   - device: sys/database/2
 image:

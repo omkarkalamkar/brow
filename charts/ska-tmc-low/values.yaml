@@ -147,7 +147,7 @@ deviceServers:
     JonesURI: "tango://jones.skao.int/low/stn-beam/1"
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
-    CommandTimeOutDefault: 70
+    CommandTimeOut: 70
     AbortCommandTimeOut: 40
     family: "subarray"
 
@@ -186,7 +186,7 @@ deviceServers:
     enabled: true
     instances: ["01"]
     file: "data/mccsmasterleafnode.yaml"
-    CommandTimeOutDefault: 50
+    CommandTimeOut: 50
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     AdapterTimeOut: 2.0
@@ -215,7 +215,7 @@ deviceServers:
     file: "data/mccssubarrayleafnode.yaml"
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
-    CommandTimeOutDefault: 50
+    CommandTimeOut: 50
     AdapterTimeOut: 2.0
     family: "subarray-leaf-node-mccs"
 

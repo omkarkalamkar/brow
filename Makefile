@@ -89,7 +89,7 @@ K8S_CHART_PARAMS = --set global.minikube=$(MINIKUBE) \
 	--set global.operator=true \
 	--set ska-taranta.enabled=$(TARANTA_ENABLED)\
 	--set tmc-low.global.subarray_count=$(SUBARRAY_COUNT)\
-	--set tmc-low.deviceServers.subarraynode.CommandTimeOutDefault=$(SUBARRAY_COMMAND_TIMEOUT) \
+	--set tmc-low.deviceServers.subarraynode.CommandTimeOut=$(SUBARRAY_COMMAND_TIMEOUT) \
 	$(CUSTOM_VALUES)
 
 PYTHON_VARS_BEFORE_PYTEST ?= PYTHONPATH=.:./src \

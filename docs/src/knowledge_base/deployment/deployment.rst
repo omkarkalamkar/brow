@@ -150,7 +150,7 @@ Subarray Node
     #. **JonesURI** : URI for Jones Matrix. Currently defaults to "tango://jones.skao.int/low/stn-beam/1".
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
     #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
-    #. **CommandTimeOutDefault** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 70 seconds.
+    #. **CommandTimeOut** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 70 seconds.
     #. **AbortCommandTimeOut** :  This refers to the timeout for the Subarray ABORTED obsState transition. Once the AbortCommandTimeOut exceeds, SubarrayNode transitions to obsState FAULT. Currently defaults to 40 seconds.
     #. **family** :  This refers to the family name of SubarrayNode TANGO device. Currently defaults to "subarray".
 
@@ -201,7 +201,7 @@ MCCS Master Leaf Node
 
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
     #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
-    #. **CommandTimeOutDefault** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.
+    #. **CommandTimeOut** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
     #. **family** :  This refers to the family name of MCCS Master Leaf Node TANGO device. Currently defaults to "leaf-node-mccs".
     #. **member** :  This refers to the member of MCCS Master Leaf Node TANGO device. Currently defaults to "0".
@@ -211,6 +211,6 @@ MCCS Master Leaf Node
 
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
     #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
-    #. **CommandTimeOutDefault** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.
+    #. **CommandTimeOut** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
     #. **family** :  This refers to the family name of MCCS Subarray Leaf Node TANGO device. Currently defaults to "subarray-leaf-node-mccs".
