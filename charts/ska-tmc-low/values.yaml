@@ -130,7 +130,7 @@ deviceServers:
     SkuidService: "ska-ser-skuid-test-svc.ska-tmc-centralnode.svc.techops.internal.skao.int:9870"
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
-    CommandTimeOut: 80
+    CommandTimeOutDefault: 80
     AssignResourcesInterface: "https://schema.skao.int/ska-low-tmc-assignresources/4.0"
     ReleaseResourcesInterface: "https://schema.skao.int/ska-low-tmc-releaseresources/3.0"
     family: "central-node"
@@ -147,14 +147,14 @@ deviceServers:
     JonesURI: "tango://jones.skao.int/low/stn-beam/1"
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
-    CommandTimeOut: 70
+    CommandTimeOutDefault: 70
     AbortCommandTimeOut: 40
     family: "subarray"
 
   sdpsubarrayleafnode:
     enabled: true
     file: "data/sdpsubarrayleafnode.yaml"
-    CommandTimeOut: 50
+    CommandTimeOutDefault: 50
     AdapterTimeOut: 2
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
@@ -186,7 +186,7 @@ deviceServers:
     enabled: true
     instances: ["01"]
     file: "data/mccsmasterleafnode.yaml"
-    CommandTimeOut: 50
+    CommandTimeOutDefault: 50
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     AdapterTimeOut: 2.0
@@ -204,7 +204,7 @@ deviceServers:
     PSTDelayCadence: 300.0
     PSTDelayValidityPeriod: 600.0
     PSTDelayModelTimeInAdvance: 600
-    CommandTimeOut: 50
+    CommandTimeOutDefault: 50
     AdapterTimeOut: 2.0
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
@@ -215,7 +215,7 @@ deviceServers:
     file: "data/mccssubarrayleafnode.yaml"
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
-    CommandTimeOut: 50
+    CommandTimeOutDefault: 50
     AdapterTimeOut: 2.0
     family: "subarray-leaf-node-mccs"
 

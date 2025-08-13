@@ -70,9 +70,9 @@ server:
         - name: "LoggingLevelDefault"
           values:
             - "5"
-        - name: "CommandTimeOut"
+        - name: "CommandTimeOutDefault"
           values:
-            - "{{.Values.deviceServers.centralnode.CommandTimeOut}}"
+            - "{{.Values.deviceServers.centralnode.CommandTimeOutDefault}}"
         - name: "LivelinessCheckPeriod"
           values:
             - "{{.Values.deviceServers.centralnode.LivelinessCheckPeriod}}"
