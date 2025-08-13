@@ -5,6 +5,13 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[2.0.0-rc.5]
+************
+Updated
+-------
+ * Fixed string formation of FQDNs for multiple station and PST beams.
+ * Utilised the latest tag of subarraynode 0.39.4
+
 [2.0.0-rc.4]
 ************
 Updated
