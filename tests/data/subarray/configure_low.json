@@ -161,7 +161,25 @@
         ],
         "stn_beams": [
           {
+            "beam_id": 3,
+            "freq_ids": [
+              400
+            ]
+          },
+          {
+            "beam_id": 2,
+            "freq_ids": [
+              400
+            ]
+          },
+          {
             "beam_id": 1,
+            "freq_ids": [
+              400
+            ]
+          },
+          {
+            "beam_id": 4,
             "freq_ids": [
               400
             ]
