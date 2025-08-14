@@ -4,7 +4,7 @@ domain: general-monitoring
 instances: ["01"]
 entrypoints:
   - name: "ska_tmc_sdpsubarrayleafnode.sdp_subarray_leaf_node.SdpSubarrayLeafNode"
-{{ $CommandTimeOut := .Values.deviceServers.sdpsubarrayleafnode.CommandTimeOut }}
+{{ $CommandTimeOutDefault := .Values.deviceServers.sdpsubarrayleafnode.CommandTimeOutDefault }}
 {{ $AdapterTimeOut := .Values.deviceServers.sdpsubarrayleafnode.AdapterTimeOut }}
 {{ $LivelinessCheckPeriod := .Values.deviceServers.sdpsubarrayleafnode.LivelinessCheckPeriod }}
 {{ $EventSubscriptionCheckPeriod := .Values.deviceServers.sdpsubarrayleafnode.EventSubscriptionCheckPeriod }}
@@ -34,9 +34,9 @@ server:
               - name: "LoggingLevelDefault"
                 values:
                 - "5"
-              - name: "CommandTimeOut"
+              - name: "CommandTimeOutDefault"
                 values:
-                - "{{ $CommandTimeOut }}"
+                - "{{ $CommandTimeOutDefault }}"
               - name: "AdapterTimeOut"
                 values:
                 - "{{ $AdapterTimeOut }}"
