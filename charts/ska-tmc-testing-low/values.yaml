@@ -73,3 +73,19 @@ ska-ser-skuid:
     use_pv: false
     config:
       generator_id: mvp01
+
+ska-taranta:
+  enabled: false
+  ingress:
+    enabled: true
+    nginx: true
+    hostname: k8s.stfc.skao.int
+  tangogql:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m # 100m = 0.1 CPU
+        memory: 100Mi # 100Mi = 0.1 GB mem
+      limits:
+        cpu: 200m # 200m = 0.2CPU
+        memory: 200Mi # 200Mi = 0.2 GB mem
