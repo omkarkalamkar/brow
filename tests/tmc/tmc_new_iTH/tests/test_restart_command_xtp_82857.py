@@ -86,7 +86,7 @@ def verify_tmc_subarray_resourcing_fault(
         csp, sdp, mccs, "EMPTY", "EMPTY", "IDLE", "AssignResources"
     )
     tmc.assign_resources(
-        default_commands_inputs.assign_input, wait_termination=False
+        default_commands_inputs.assign_input, wait_termination=True
     )
     assert_that(event_tracer).described_as(
         f"TMC Subarray Node device ({tmc.subarray_node})"
