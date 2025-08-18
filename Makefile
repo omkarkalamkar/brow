@@ -41,7 +41,7 @@ K8S_CHART ?= $(HELM_CHART)
 
 CLUSTER_DOMAIN ?= cluster.local
 PORT ?= 10000
-SUBARRAY_COUNT ?= 1
+SUBARRAY_COUNT ?= 4
 SDP_MASTER ?= tango://$(TANGO_HOST_NAME).$(KUBE_NAMESPACE).svc.$(CLUSTER_DOMAIN):$(PORT)/low-sdp/control/0
 SDP_SUBARRAY_PREFIX ?= tango://$(TANGO_HOST_NAME).$(KUBE_NAMESPACE).svc.$(CLUSTER_DOMAIN):$(PORT)/low-sdp/subarray
 CSP_MASTER ?= tango://$(TANGO_HOST_NAME).$(KUBE_NAMESPACE).svc.$(CLUSTER_DOMAIN):$(PORT)/low-csp/control/0
@@ -86,7 +86,7 @@ K8S_CHART_PARAMS = --set global.minikube=$(MINIKUBE) \
 	--set ska-tango-base.jive.enabled=$(JIVE) \
 	--set global.exposeAllDS=false \
 	--set global.cluster_domain=$(CLUSTER_DOMAIN) \
-	--set global.operator=true \
+	--set global.operator=false \
 	--set ska-taranta.enabled=$(TARANTA_ENABLED)\
 	--set tmc-low.global.subarray_count=$(SUBARRAY_COUNT)\
 	--set tmc-low.deviceServers.subarraynode.CommandTimeOut=$(SUBARRAY_COMMAND_TIMEOUT) \

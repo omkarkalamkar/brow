@@ -134,6 +134,47 @@ stop-k8s-test-tmc-low-restart:
   variables:
     KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-restart'
 
+k8s-scaling-subarrays:
+  stage: on-demand
+  tags:
+    - ska-k8s
+  variables:
+    SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-scaling-subarrays"
+    KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-scaling-subarrays"
+    SUBARRAY_COUNT: 4
+  script:
+    - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
+    - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
+    - 'make help | grep k8s-test'
+    - make k8s-install-chart
+    - make k8s-wait
+  environment:
+    name: $CI_PROJECT_NAME/$CI_COMMIT_REF_SLUG/scaling-subarrays
+    kubernetes:
+      namespace: $KUBE_NAMESPACE
+    on_stop: stop-scaling-subarrays
+  when: manual
+  allow_failure: true
+
+k8s-stop-scaling-subarrays:
+  stage: on-demand
+  tags:
+    - ska-k8s
+  variables:
+    SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-scaling-subarrays"
+    KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-scaling-subarrays"
+  script:
+    - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
+    - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
+    - make k8s-uninstall-chart
+  environment:
+    name: $CI_PROJECT_NAME/$CI_COMMIT_REF_SLUG/scaling-subarrays
+    kubernetes:
+      namespace: $KUBE_NAMESPACE
+    action: stop
+  when: manual
+  allow_failure: true
+
 deploy-integration:
   when: manual
   rules:
