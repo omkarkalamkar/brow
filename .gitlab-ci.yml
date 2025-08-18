@@ -11,8 +11,8 @@ cache:
 stages:
   - lint
   - build
-  - on-demand
   - scaling
+  - on-demand
   - test
   - integration
   - publish
