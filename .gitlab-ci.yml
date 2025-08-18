@@ -12,6 +12,7 @@ stages:
   - lint
   - build
   - on-demand
+  - scaling
   - test
   - integration
   - publish
@@ -134,46 +135,39 @@ stop-k8s-test-tmc-low-restart:
   variables:
     KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-restart'
 
-k8s-scaling-subarrays:
-  stage: on-demand
-  tags:
-    - ska-k8s
-  variables:
-    SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-scaling-subarrays"
-    KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-scaling-subarrays"
-    SUBARRAY_COUNT: 4
-  script:
-    - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
-    - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
-    - 'make help | grep k8s-test'
-    - make k8s-install-chart
-    - make k8s-wait
-  environment:
-    name: $CI_PROJECT_NAME/$CI_COMMIT_REF_SLUG/scaling-subarrays
-    kubernetes:
-      namespace: $KUBE_NAMESPACE
-    on_stop: stop-scaling-subarrays
+k8s-tmc-scaling:
+  stage: scaling
   when: manual
-  allow_failure: true
-
-k8s-stop-scaling-subarrays:
-  stage: on-demand
+  extends:
+    - k8s-test
   tags:
-    - ska-k8s
+    - ska-staging-tmc
   variables:
-    SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-scaling-subarrays"
-    KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-scaling-subarrays"
+    SUBARRAY_COUNT: 4
+    COUNT: 1
+    KUBE_NAMESPACE: "staging-ska-tmc-mid"
+    CI_KEEP_NAMESPACE: true
+    K8S_TIMEOUT: "1800s"
+    TARANTA_ENABLED: "true"
   script:
-    - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
-    - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
-    - make k8s-uninstall-chart
+    - make taranta-link
   environment:
-    name: $CI_PROJECT_NAME/$CI_COMMIT_REF_SLUG/scaling-subarrays
-    kubernetes:
-      namespace: $KUBE_NAMESPACE
+    name: ska-tmc-staging-env
+    auto_stop_in: never
+    on_stop: stop-k8s-tmc-scaling
+
+stop-k8s-tmc-scaling:
+  stage: scaling
+  extends:
+    - stop-k8s-test
+  tags:
+    - ska-staging-tmc
+  variables:
+    KUBE_NAMESPACE: "staging-ska-tmc-mid"
+  environment:
+    name: ska-tmc-staging-env
     action: stop
   when: manual
-  allow_failure: true
 
 deploy-integration:
   when: manual
