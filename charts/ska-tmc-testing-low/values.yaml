@@ -73,3 +73,13 @@ ska-ser-skuid:
     use_pv: false
     config:
       generator_id: mvp01
+
+ska-taranta:
+  enabled: false
+  ingress:
+    enabled: true
+    nginx: true
+    hostname: k8s.stfc.skao.int
+  tangogql:
+    replicas: 1
+    
