@@ -123,7 +123,7 @@ alarm-handler-configurator-link:
 
 cred:
 	make k8s-namespace
-	make k8s-namespace-credentials
+	curl -s https://gitlab.com/ska-telescope/templates-repository/-/raw/master/scripts/namespace_auth.sh | bash -s $(SERVICE_ACCOUNT) $(KUBE_NAMESPACE) || true
 test-requirements:
 	@poetry export --without-hashes --with dev --format requirements.txt --output tests/requirements.txt
 k8s-pre-test: test-requirements
