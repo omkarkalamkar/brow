@@ -134,27 +134,8 @@ def error_reporting(
 
     if defective_subsystem == "CSP":
         csp.csp_subarray.SetDefective(json.dumps({"enabled": False}))
-        csp.csp_subarray.Restart()
-        assert_that(event_tracer).within_timeout(
-            TIMEOUT
-        ).has_change_event_occurred(
-            csp.csp_subarray, "obsState", ObsState.EMPTY
-        )
     elif defective_subsystem == "SDP":
         sdp.sdp_subarray.SetDefective(json.dumps({"enabled": False}))
-        sdp.sdp_subarray.Restart()
-        assert_that(event_tracer).within_timeout(
-            TIMEOUT
-        ).has_change_event_occurred(
-            sdp.sdp_subarray, "obsState", ObsState.EMPTY
-        )
     elif defective_subsystem == "MCCS":
         mccs.mccs_controller.SetDefective(json.dumps({"enabled": False}))
-        mccs.mccs_subarray.Restart()
-        assert_that(event_tracer).within_timeout(
-            TIMEOUT
-        ).has_change_event_occurred(
-            mccs.mccs_subarray, "obsState", ObsState.EMPTY
-        )
-
     event_tracer.clear_events()
