@@ -76,6 +76,3 @@ ska-ser-skuid:
 
 ska-taranta:
   enabled: false
-  tangogql:
-    enabled: false
-    
