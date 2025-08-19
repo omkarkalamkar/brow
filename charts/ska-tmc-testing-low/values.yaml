@@ -76,8 +76,19 @@ ska-ser-skuid:
 
 ska-taranta:
   enabled: false
-  ska-tango-base:
-    enabled: false
+  ingress:
+    enabled: true
+    nginx: true
+    hostname: k8s.stfc.skao.int
+  tangogql:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m 
+        memory: 100Mi 
+      limits:
+        cpu: 200m 
+        memory: 200Mi 
 
 ska-tango-tangogql:
   enabled: false
