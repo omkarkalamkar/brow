@@ -47,7 +47,7 @@ command_defect_mapping = {
         "FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT),
     },
     "ReleaseResources": {
-        "IDLE": json.dumps(IDLE_STATE_DEFECT),
+        "IDLE": IDLE_STATE_DEFECT,
         "RESOURCING": json.dumps(INTERMEDIATE_STATE_DEFECT),
         "FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT),
     },
