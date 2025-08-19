@@ -82,6 +82,10 @@ def verify_tmc_subarray_resourcing_fault(
     AssignResources failure.
     """
     _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
+
+    # Invoke TelescopeOn command
+    tmc.move_to_on()
+
     set_subsystem_defects(
         csp, sdp, mccs, "EMPTY", "EMPTY", "IDLE", "AssignResources"
     )
@@ -102,9 +106,9 @@ def verify_csp_mccs_sdp_obs_state_empty(
     csp: CSPFacade, sdp: SDPFacade, mccs: MCCSFacade
 ):
     """Verifies observation states of the subsystems."""
-    assert csp.csp_subarray.obsState == ObsState.RESOURCING
+    assert csp.csp_subarray.obsState == ObsState.EMPTY
     assert sdp.sdp_subarray.obsState == ObsState.EMPTY
-    assert mccs.mccs_subarray.obsState == ObsState.EMPTY
+    assert mccs.mccs_subarray.obsState == ObsState.IDLE
     reset_defects(csp, sdp, mccs)
 
 
