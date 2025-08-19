@@ -76,10 +76,6 @@ ska-ser-skuid:
 
 ska-taranta:
   enabled: false
-  ingress:
-    enabled: true
-    nginx: true
-    hostname: k8s.stfc.skao.int
   tangogql:
     replicas: 1
     resources:
