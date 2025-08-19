@@ -76,3 +76,10 @@ ska-ser-skuid:
 
 ska-taranta:
   enabled: false
+  ska-tango-base:
+    enabled: false
+
+ska-tango-tangogql:
+  enabled: false
+  ska-tango-base:
+    enabled: false
