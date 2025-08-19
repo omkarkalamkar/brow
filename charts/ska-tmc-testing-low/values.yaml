@@ -81,5 +81,13 @@ ska-taranta:
     nginx: true
     hostname: k8s.stfc.skao.int
   tangogql:
+    enabled: false
     replicas: 1
+    resources:
+      requests:
+        cpu: 100m 
+        memory: 100Mi 
+      limits:
+        cpu: 200m 
+        memory: 200Mi 
     
