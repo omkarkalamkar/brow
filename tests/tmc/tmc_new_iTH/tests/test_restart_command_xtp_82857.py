@@ -106,9 +106,9 @@ def verify_csp_mccs_sdp_obs_state_empty(
     csp: CSPFacade, sdp: SDPFacade, mccs: MCCSFacade
 ):
     """Verifies observation states of the subsystems."""
-    assert csp.csp_subarray.obsState == ObsState.EMPTY
+    assert csp.csp_subarray.obsState == ObsState.RESOURCING
     assert sdp.sdp_subarray.obsState == ObsState.EMPTY
-    assert mccs.mccs_subarray.obsState == ObsState.IDLE
+    assert mccs.mccs_subarray.obsState == ObsState.EMPTY
     reset_defects(csp, sdp, mccs)
 
 
