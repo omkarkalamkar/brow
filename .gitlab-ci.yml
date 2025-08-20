@@ -11,6 +11,7 @@ cache:
 stages:
   - lint
   - build
+  - scaling
   - on-demand
   - test
   - integration
@@ -133,6 +134,40 @@ stop-k8s-test-tmc-low-restart:
     - stop-k8s-test
   variables:
     KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-restart'
+
+k8s-tmc-scaling:
+  stage: scaling
+  when: manual
+  extends:
+    - k8s-test
+  tags:
+    - ska-staging-tmc
+  variables:
+    SUBARRAY_COUNT: 4
+    COUNT: 1
+    KUBE_NAMESPACE: "staging-ska-tmc-low"
+    CI_KEEP_NAMESPACE: true
+    K8S_TIMEOUT: "1800s"
+    TARANTA_ENABLED: "true"
+  script:
+    - make taranta-link
+  environment:
+    name: ska-tmc-staging-env
+    auto_stop_in: never
+    on_stop: stop-k8s-tmc-scaling
+
+stop-k8s-tmc-scaling:
+  stage: scaling
+  extends:
+    - stop-k8s-test
+  tags:
+    - ska-staging-tmc
+  variables:
+    KUBE_NAMESPACE: "staging-ska-tmc-low"
+  environment:
+    name: ska-tmc-staging-env
+    action: stop
+  when: manual
 
 deploy-integration:
   when: manual
