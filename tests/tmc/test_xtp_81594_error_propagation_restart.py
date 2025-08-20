@@ -96,7 +96,7 @@ def execute_command_restart(
     elif defective_subsystem == "SDP":
         sdp.sdp_subarray.SetDefective(FAILED_RESULT_DEFECT)
     elif defective_subsystem == "MCCS":
-        mccs.mccs_controller.SetDefective(ERROR_PROPAGATION_DEFECT)
+        mccs.mccs_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
     context_data.when_action_name = "Restart"
     _, pytest.unique_id = tmc.subarray_node.Restart()
 
