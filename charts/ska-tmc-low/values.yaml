@@ -186,7 +186,7 @@ deviceServers:
     enabled: true
     instances: ["01"]
     file: "data/mccsmasterleafnode.yaml"
-    CommandTimeOut: 50
+    CommandTimeOutDefault: 50
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     AdapterTimeOut: 2.0
