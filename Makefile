@@ -72,7 +72,7 @@ CI_ENVIRONMENT_SLUG ?= ska-tmc-low-integration
 
 
 ifeq ($(MAKECMDGOALS),k8s-test)
-ADD_ARGS +=  --true-context -x
+ADD_ARGS +=  --true-context
 MARK ?= $(shell echo $(TELESCOPE) | sed "s/-/_/g")
 endif
 
