@@ -86,3 +86,13 @@ image:
   tag: "{{.Values.cspsubarrayleafnode.image.tag}}"
   pullPolicy: "{{.Values.cspsubarrayleafnode.image.pullPolicy}}"
 
+{{- with $.Values.astroDataVolume }}
+extraVolumes:
+- name: astro-data
+  persistentVolumeClaim:
+    claimName: {{.}}
+extraVolumeMounts:
+  - name: astro-data
+    mountPath: /root/.astropy
+    readOnly: true
+{{- end}}
