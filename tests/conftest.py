@@ -505,7 +505,6 @@ def _setup_event_subscriptions(
     event_tracer.subscribe_event(csp.csp_subarray, "obsState")
     event_tracer.subscribe_event(sdp.sdp_subarray, "obsState")
     event_tracer.subscribe_event(mccs.mccs_subarray, "obsState")
-    event_tracer.subscribe_event(tmc.mccs_subarray_leaf_node, "obsState")
     event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
     event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
 
@@ -515,7 +514,6 @@ def _setup_event_subscriptions(
                 "obsState",
                 "longRunningCommandResult",
             ],
-            tmc.mccs_subarray_leaf_node: ["obsState"],
             csp.csp_subarray: ["obsState"],
             mccs.mccs_subarray: ["obsState"],
             sdp.sdp_subarray: ["obsState", "commandCallInfo"],
