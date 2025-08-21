@@ -73,3 +73,20 @@ ska-ser-skuid:
     use_pv: false
     config:
       generator_id: mvp01
+
+ska-tango-taranta:
+  enabled: false
+  tangogql:
+    replicas: 1
+    resources:
+      requests:
+        cpu: 100m 
+        memory: 100Mi 
+      limits:
+        cpu: 200m 
+        memory: 200Mi 
+
+ska-tango-tangogql:
+  enabled: false
+  ska-tango-base:
+    enabled: false

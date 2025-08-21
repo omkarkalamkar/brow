@@ -5,6 +5,25 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+
+[2.0.0]
+************
+Updated
+-------
+* Support for multiple station and PST beams for LOW.
+* Updated tel-model to version 1.23.1
+* Updated cspleafnode image to 0.28.0
+* Fixed string formation of FQDNs for multiple station and PST beams.
+* Utilised the latest tag of subarraynode 0.39.4
+* This update enables updating subarray_count variable via global section of yaml.
+* This update also includes `devices_fqdn` tag for listing fqdn of devices.
+* This update also includes moving `domain` and `subarray_devices` from global section.
+
+Fixed
+-----
+* This update include the fix of bug SKB-985,SKB-949,SKB-967.
+* Refactored the Restart command to ensure it properly cleans up any processes still running from a command in progress.
+
 [2.0.0-rc.5]
 ************
 Updated
