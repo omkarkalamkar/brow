@@ -148,7 +148,7 @@ deviceServers:
     JonesURI: "tango://jones.skao.int/low/stn-beam/1"
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
-    CommandTimeOut: 70
+    CommandTimeOutDefault: 70
     AbortCommandTimeOut: 40
     family: "subarray"
 
