@@ -7,10 +7,10 @@ Deployment
 Standard deployment
 ====================
 
-The TMC Low is packaged as a `helm chart <https://helm.sh/>`_ and can be 
-deployed uing helm commands. The default deployment configuration is 
+The TMC Low is packaged as a `helm chart <https://helm.sh/>`_ and can be
+deployed uing helm commands. The default deployment configuration is
 assumed to be the SKA production environment. In the current version,
-TMC supports `one` subarray operation. Following list shows default number 
+TMC supports `one` subarray operation. Following list shows default number
 of instances deployed for each of the TMC component.
 
 #. Central Node - 1
@@ -22,8 +22,8 @@ of instances deployed for each of the TMC component.
 #. MCCS Master Leaf Node - 1
 #. MCCS Subarray Leaf Node - 1
 
-.. warning:: The number of instances of Central Node, MCCS Master Leaf Node, 
-    SDP Master, Leaf Node and CSP Master Leaf Node should always be one even 
+.. warning:: The number of instances of Central Node, MCCS Master Leaf Node,
+    SDP Master, Leaf Node and CSP Master Leaf Node should always be one even
     though it is technically possible to deploy multiple instances.
 
 To deploy the TMC use following command on the terminal:
@@ -32,25 +32,25 @@ To deploy the TMC use following command on the terminal:
 
     helm install my-tmc-release https://artefact.skao.int/repository/helm-internal/ska-tmc-low --namespace ska-tmc-low
 
-It is possible to customize the deployment as per need. To do so, the 
-`values.yaml` file in TMC chart needs to be modified. The same can be done by 
-using `--set` option in the command line while using the `helm install` 
+It is possible to customize the deployment as per need. To do so, the
+`values.yaml` file in TMC chart needs to be modified. The same can be done by
+using `--set` option in the command line while using the `helm install`
 command.
 
 Basic Customization options
 ===========================
 
-Number of subarrays 
+Number of subarrays
 --------------------
 
-The number of subarrays can be deployed according to the need. A variable 
-named **subarray_count** need to be set to the desired value. This option 
+The number of subarrays can be deployed according to the need. A variable
+named **subarray_count** need to be set to the desired value. This option
 affects the number of instances of following components.
 
 #. Subarray Node
 #. CSP Subarray Leaf Node
-#. SDP Subarray Leaf Node 
-#. MCCS Subarray Leaf Node 
+#. SDP Subarray Leaf Node
+#. MCCS Subarray Leaf Node
 
 .. note:: The value of **subarray_count** is controlled under global section of
     `values.yaml`.
@@ -59,40 +59,43 @@ affects the number of instances of following components.
 Tango host
 ----------
 
-This option allows to specify the desired Tango facility. The variable 
-**tango_host** is used to specify the tango facility. By default, the value 
+This option allows to specify the desired Tango facility. The variable
+**tango_host** is used to specify the tango facility. By default, the value
 of this variable is set to `databaseds-tango-base-test:10000`.
 
 Command timeout
 ---------------
 
-This option sets the timeout value till which the TMC components wait for
-completion of commands invoked on lower level Tango devices. This timeout 
-should be set for each TMC component. To set the desired timeout value, 
-navigate to **deviceServers -> <component name>** in `values.yaml` file. 
-Locate **CommandTimeOutDefault** variable and set an integer value equivalant in 
-seconds.
+The ``CommandTimeout`` attribute is introduced to allow updating the timeout value
+for commands without requiring a redeployment. This provides flexibility in tuning
+the timeout dynamically at runtime based on operational needs.
 
-.. warning::
-    When setting the command timeout values, it is essential to set bigger
-    timeout values Central Node and Subarray Node than any Leaf Node. This is 
-    because the as per TMC architecture, Central Node and Subarray Node are
-    higher level in the hierarchy and Leaf Nodes are at lower level. The 
-    commands flow from Central Node, Subarray Node, to Leaf Nodes and then to the 
-    subsystems. The higher level nodes need to factor in the command timeout 
-    set on lower level components.  
+The ``CommandTimeOutDefault`` property is also introduced, which can be used to set
+a default timeout value during the deployment phase. This ensures that an initial
+timeout value is preconfigured when the component starts for the first time.
+
+Usage
+-----
+
+* **CommandTimeout attribute**
+  - Can be updated at runtime without redeployment.
+  - Helps in adapting to varying command execution times.
+
+* **CommandTimeOutDefault property**
+  - Configurable in the deployment configuration (e.g., ``values.yaml``).
+  - Sets the initial timeout value at startup.
 
 
 Advanced Customization options
 ===============================
 
-Following are the advance options. These options are mainly useful for developers 
-and AIV engineers for testing purpose. Customizing these parameters should be 
+Following are the advance options. These options are mainly useful for developers
+and AIV engineers for testing purpose. Customizing these parameters should be
 done carefully.
 
 
-#. **file** : User can provide custom device server configuration file to 
-nodes. Defaults are: 
+#. **file** : User can provide custom device server configuration file to
+nodes. Defaults are:
 `configuration files <https://gitlab.com/ska-telescope/ska-tmc/ska-tmc-low-integration/-/blob/main/charts/ska-tmc-low/data/>`_.
 
 #. **enabled** : User can opt to disable any node by setting this value to False.Default is True for all nodes.
@@ -124,8 +127,8 @@ nodes. Defaults are:
 Component specific configuration
 ---------------------------------
 
-This section specifies the configuration options for individual TMC component. 
-Navigate to **deviceServers.<component>** section in values.yaml file. 
+This section specifies the configuration options for individual TMC component.
+Navigate to **deviceServers.<component>** section in values.yaml file.
 
 Central Node
 ^^^^^^^^^^^^^
