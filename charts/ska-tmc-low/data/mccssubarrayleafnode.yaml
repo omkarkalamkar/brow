@@ -10,7 +10,7 @@ server:
   {{ $mccs_sa_fqdn_prefix:= .Values.devices_fqdn.mccs_subarray_prefix}}
   {{ $mccs_master_fqdn := .Values.devices_fqdn.mccs_master }}
   {{ $mccs_master_ln_fqdn := .Values.devices_fqdn.mccs_master_ln}}
-  {{ $CommandTimeOut := .Values.deviceServers.mccssubarrayleafnode.CommandTimeOut }}
+  {{ $CommandTimeOutDefault := .Values.deviceServers.mccssubarrayleafnode.CommandTimeOutDefault }}
   {{ $LivelinessCheckPeriod := .Values.deviceServers.mccssubarrayleafnode.LivelinessCheckPeriod }}
   {{ $EventSubscriptionCheckPeriod := .Values.deviceServers.mccssubarrayleafnode.EventSubscriptionCheckPeriod }}
   {{ $AdapterTimeOut := .Values.deviceServers.mccssubarrayleafnode.AdapterTimeOut}}
@@ -41,9 +41,9 @@ server:
               - name: "LoggingLevelDefault"
                 values:
                 - "5"
-              - name: "CommandTimeOut"
+              - name: "CommandTimeOutDefault"
                 values:
-                - "{{ $CommandTimeOut }}"
+                - "{{ $CommandTimeOutDefault }}"
               - name: "LivelinessCheckPeriod"
                 values:
                 - "{{ $LivelinessCheckPeriod }}"
