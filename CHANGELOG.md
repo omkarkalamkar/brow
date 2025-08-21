@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 
+[2.1.0]
+************
+Updated
+-------
+* Support for the observation workflow with the subsystem configurations specified in input JSON
+* Added astroDataClaim in cspleafnodes to cache the astrodata in cspleafnodes as resolution of SKB-949
+* Verified the observation with scaled up TMC
+
 [2.0.0]
 ************
 Updated

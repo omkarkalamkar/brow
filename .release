@@ -1,36 +1,22 @@
-release=2.0.0
-tag=2.0.0
+release=2.1.0
+tag=2.1.0
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.0.0**
+**1. ska-tmc-low-integration 2.1.0**
 
-    **1.1 ska-tmc-low  2.0.0-rc.5 - 2.0.0 :**
-            * Support for multiple station and PST beams for LOW.
-            * Updated tel-model to version 1.23.1
-            * Updated cspleafnode image to 0.28.0
-            * Fixed string formation of FQDNs for multiple station and PST beams.
-            * Utilised the latest tag of subarraynode 0.39.4
-            * This update enables updating subarray_count variable via global section of yaml.
-            * This update also includes `devices_fqdn` tag for listing fqdn of devices.
-            * This update also includes moving `domain` and `subarray_devices` from global section.
-            * This update include the fix of bug SKB-985,SKB-949,SKB-967.
-            * Refactored the Restart command to ensure it properly cleans up any processes still running from a command in progress.
+    **1.1 ska-tmc-low  2.0.0 - 2.1.0 :**
+            * Support for the observation workflow with the subsystem configurations specified in input JSON
+            * Added astroDataClaim in cspleafnodes to cache the astrodata in cspleafnodes as resolution of SKB-949
+            * Verified the observation with scaled up TMC
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.0.0**
+**1. ska-tmc-low-integration 2.1.0**
 
-    **1.1 ska-tmc-low  2.0.0-rc.5 - 2.0.0 :**
-            * Support for multiple station and PST beams for LOW.
-            * Updated tel-model to version 1.23.1
-            * Updated cspleafnode image to 0.28.0
-            * Fixed string formation of FQDNs for multiple station and PST beams.
-            * Utilised the latest tag of subarraynode 0.39.4
-            * This update enables updating subarray_count variable via global section of yaml.
-            * This update also includes `devices_fqdn` tag for listing fqdn of devices.
-            * This update also includes moving `domain` and `subarray_devices` from global section.
-            * This update include the fix of bug SKB-985,SKB-949,SKB-967.
-            * Refactored the Restart command to ensure it properly cleans up any processes still running from a command in progress.
+    **1.1 ska-tmc-low  2.0.0 - 2.1.0 :**
+            * Support for the observation workflow with the subsystem configurations specified in input JSON
+            * Added astroDataClaim in cspleafnodes to cache the astrodata in cspleafnodes as resolution of SKB-949
+            * Verified the observation with scaled up TMC
 
