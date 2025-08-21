@@ -73,14 +73,43 @@ navigate to **deviceServers -> <component name>** in `values.yaml` file.
 Locate **CommandTimeOut** variable and set an integer value equivalant in 
 seconds.
 
+Command timeout for TMC CentralNode
+-----------------------------------
+
+The ``CommandTimeout`` attribute is introduced to allow updating the timeout value
+for commands without requiring a redeployment. This provides flexibility in tuning
+the timeout dynamically at runtime based on operational needs.
+
+The ``CommandTimeOutDefault`` property is also introduced, which can be used to set
+a default timeout value during the deployment phase. This ensures that an initial
+timeout value is preconfigured when the component starts for the first time.
+
+Usage
+-----
+
+* **CommandTimeout attribute**
+  - Can be updated at runtime without redeployment.
+  - Helps in adapting to varying command execution times.
+
+* **CommandTimeOutDefault property**
+  - Configurable in the deployment configuration (e.g., ``values.yaml``).
+  - Sets the initial timeout value at startup.
+
+This option sets the timeout value till which the TMC components wait for
+completion of commands invoked on lower level Tango devices. This timeout 
+should be set for TMC CentralNode. To set the desired timeout value, 
+navigate to **deviceServers -> centralnode** in `values.yaml` file. 
+Locate **CommandTimeOutDefault** variable and set an integer value equivalant in 
+seconds.
+
 .. warning::
     When setting the command timeout values, it is essential to set bigger
-    timeout values Central Node and Subarray Node than any Leaf Node. This is 
-    because the as per TMC architecture, Central Node and Subarray Node are
+    timeout values for Central Node and Subarray Node than any Leaf Node. This 
+    is because the as per TMC architecture, Central Node and Subarray Node are 
     higher level in the hierarchy and Leaf Nodes are at lower level. The 
     commands flow from Central Node, Subarray Node, to Leaf Nodes and then to the 
     subsystems. The higher level nodes need to factor in the command timeout 
-    set on lower level components.  
+    set on lower level components.
 
 
 Advanced Customization options
