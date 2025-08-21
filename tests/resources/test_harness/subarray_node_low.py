@@ -2,9 +2,11 @@ import json
 import logging
 from time import sleep
 
+from assertpy import assert_that
 from ska_control_model import AdminMode, ObsState
 from ska_ser_logging import configure_logging
 from ska_tango_base.control_model import HealthState
+from ska_tango_testing.integration import TangoEventTracer
 from tango import DeviceProxy, DevState
 
 from tests.resources.test_harness.constant import (
@@ -47,6 +49,8 @@ from tests.resources.test_harness.utils.sync_decorators import (
     sync_restart,
 )
 from tests.resources.test_support.common_utils.common_helpers import Resource
+
+TIMEOUT = 100
 
 configure_logging(logging.DEBUG)
 LOGGER = logging.getLogger(__name__)
@@ -187,7 +191,24 @@ class SubarrayNodeWrapperLow:
 
     @sync_abort(device_dict=device_dict_low)
     def abort_subarray(self):
+        evt_tracer = TangoEventTracer()
+        evt_tracer.subscribe_event(
+            self.subarray_node, "longRunningCommandResult"
+        )
+        LOGGER.info("SubarrayNode LRCR subscribed")
         result, message = self.subarray_node.Abort()
+        LOGGER.info("ABORT RESULT and Message: %s, %s", result, message)
+        LOGGER.info(
+            "SubarrayNode LRCR %s", self.subarray_node.longRunningCommandResult
+        )
+        assert_that(evt_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            self.subarray_node,
+            "longRunningCommandResult",
+            (message[0], '[0, "Abort command completed"]'),
+        )
+
         LOGGER.info("Invoked Abort on SubarrayNode")
         return result, message
 

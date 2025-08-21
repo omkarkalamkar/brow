@@ -30,7 +30,7 @@ ska-ser-logging = "^0.4.3"
 httpx = "^0.19.0"
 msgpack = "1.0.7"
 msgpack_numpy = "0.4.8"
-ska-telmodel = "1.23.1"
+ska-telmodel = "1.23.2"
 ska-integration-test-harness= "0.3.0"
 
 [tool.poetry.group.dev.dependencies]

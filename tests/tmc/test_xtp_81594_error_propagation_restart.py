@@ -130,7 +130,7 @@ def error_reporting(
         tmc.sdp_subarray_leaf_node, "sdpSubarrayObsState"
     )
     expected_msg = exception_messages[defective_subsystem]
-
+    event_tracer.subscribe_event(tmc.mccs_subarray_leaf_node, "obsState")
     assert_that(event_tracer).within_timeout(
         TIMEOUT
     ).has_change_event_occurred(
@@ -178,4 +178,8 @@ def error_reporting(
         ).has_change_event_occurred(
             tmc.mccs_subarray_leaf_node, "obsState", ObsState.EMPTY
         )
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(tmc.subarray_node, "obsState", ObsState.EMPTY)
+
     event_tracer.clear_events()

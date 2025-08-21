@@ -1,0 +1,11 @@
+{
+  "interface": "https://schema.skao.int/ska-low-tmc-configure/4.2",
+  "transaction_id": "txn-....-00001",  
+  "sdp": {
+    "interface": "https://schema.skao.int/ska-sdp-configure/0.4",
+    "scan_type": "target:a"
+  },
+  "tmc": {
+    "scan_duration": 10.0
+  }
+}

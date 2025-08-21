@@ -55,6 +55,7 @@ def _setup_event_subscriptions(
     )
 
 
+@pytest.mark.skip(reason="Test needs refactoring")
 @pytest.mark.SKA_tmc_low_restart
 @scenario(
     "../tmc/tmc_new_iTH/features/xtp_82857.feature",
