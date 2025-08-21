@@ -97,8 +97,8 @@ Usage
 
 This option sets the timeout value till which the TMC components wait for
 completion of commands invoked on lower level Tango devices. This timeout 
-should be set for each TMC component. To set the desired timeout value, 
-navigate to **deviceServers -> <component name>** in `values.yaml` file. 
+should be set for TMC CentralNode. To set the desired timeout value, 
+navigate to **deviceServers -> centralnode** in `values.yaml` file. 
 Locate **CommandTimeOutDefault** variable and set an integer value equivalant in 
 seconds.
 

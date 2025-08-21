@@ -198,7 +198,9 @@ class SubarrayNodeWrapperLow:
         LOGGER.info("SubarrayNode LRCR subscribed")
         result, message = self.subarray_node.Abort()
         LOGGER.info("ABORT RESULT and Message: %s, %s", result, message)
-        LOGGER.info("SA LRCR %s", self.subarray_node.longRunningCommandResult)
+        LOGGER.info(
+            "SubarrayNode LRCR %s", self.subarray_node.longRunningCommandResult
+        )
         assert_that(evt_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
