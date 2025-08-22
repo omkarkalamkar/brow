@@ -85,6 +85,21 @@ Usage
   - Configurable in the deployment configuration (e.g., ``values.yaml``).
   - Sets the initial timeout value at startup.
 
+This option sets the timeout value till which the TMC components wait for
+completion of commands invoked on lower level Tango devices. This timeout
+should be set for each TMC component. To set the desired timeout value,
+navigate to **deviceServers -> <component name>** in `values.yaml` file.
+Locate **CommandTimeOutDefault** variable and set an integer value equivalant in
+seconds.
+
+.. warning::
+    When setting the command timeout values, it is essential to set bigger
+    timeout values for Central Node and Subarray Node than any Leaf Node. This
+    is because the as per TMC architecture, Central Node and Subarray Node are
+    higher level in the hierarchy and Leaf Nodes are at lower level. The
+    commands flow from Central Node, Subarray Node, to Leaf Nodes and then to the
+    subsystems. The higher level nodes need to factor in the command timeout
+    set on lower level components.
 
 Advanced Customization options
 ===============================
@@ -153,7 +168,7 @@ Subarray Node
     #. **JonesURI** : URI for Jones Matrix. Currently defaults to "tango://jones.skao.int/low/stn-beam/1".
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
     #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
-    #. **CommandTimeOut** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 70 seconds.
+    #. **CommandTimeOutDefault** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 70 seconds.
     #. **AbortCommandTimeOut** :  This refers to the timeout for the Subarray ABORTED obsState transition. Once the AbortCommandTimeOut exceeds, SubarrayNode transitions to obsState FAULT. Currently defaults to 40 seconds.
     #. **family** :  This refers to the family name of SubarrayNode TANGO device. Currently defaults to "subarray".
 
@@ -204,16 +219,16 @@ MCCS Master Leaf Node
 
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
     #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
-    #. **CommandTimeOut** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.
+    #. **CommandTimeOutDefault** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
     #. **family** :  This refers to the family name of MCCS Master Leaf Node TANGO device. Currently defaults to "leaf-node-mccs".
     #. **member** :  This refers to the member of MCCS Master Leaf Node TANGO device. Currently defaults to "0".
 
-MCCS Master Leaf Node
+MCCS Subarray Leaf Node
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
     #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
-    #. **CommandTimeOut** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.
+    #. **CommandTimeOutDefault** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
     #. **family** :  This refers to the family name of MCCS Subarray Leaf Node TANGO device. Currently defaults to "subarray-leaf-node-mccs".
