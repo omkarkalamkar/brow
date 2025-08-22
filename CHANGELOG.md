@@ -7,14 +7,16 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 [2.2.0-rc.1]
 ************
+Added
+-----
+* CommandTimeout attribute is introduced which can help to update timeout without redeployment.
+* CommandTimeOutDefault property is introduced which can be used to set default value at the time of deployment.
+
 Updated
 -------
 * Update to TMC Configure command to stop sending field parameter to csp subarray.
-* used EventManager in subarraynode, centralnode, cspleafnodes, mccsleafnodes.
-* changes for skb-808 on subarraynode, centralnode, cspleafnodes, mccsleafnodes.
-* CommandTimeout attribute is introduced which can help to update timeout without redeployment.
-* CommandTimeOutDefault property is introduced which
-  can be used to set default value at the time of deployment.
+* Used EventManager in subarraynode, centralnode, cspleafnodes, mccsleafnodes.
+* Changes for skb-808 on subarraynode, centralnode, cspleafnodes, mccsleafnodes.
 * Updated TMC tags:
     centralnode: 0.21.1
     subarraynode: 0.41.0
