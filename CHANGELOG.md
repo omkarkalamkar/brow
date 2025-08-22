@@ -5,8 +5,25 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[2.2.0-rc.1]
+************
+Updated
+-------
+* Update to TMC Configure command to stop sending field parameter to csp subarray.
+* used EventManager in subarraynode, centralnode, cspleafnodes, mccsleafnodes.
+* changes for skb-808 on subarraynode, centralnode, cspleafnodes, mccsleafnodes.
+* CommandTimeout attribute is introduced which can help to update timeout without redeployment.
+* CommandTimeOutDefault property is introduced which
+  can be used to set default value at the time of deployment.
+* Updated TMC tags:
+    centralnode: 0.21.1
+    subarraynode: 0.41.0
+    sdpleafnodes:0.24.0
+    cspleafnodes: 0.31.0
+    mccssleafnodes: 0.10.1
+    tmccommon: 0.30.0
 
-[2.1.0]
+[2.2.0-rc.1]
 ************
 Updated
 -------
@@ -80,8 +97,8 @@ Added
 Added
 -----
 * TMC Subarray moves to FAULT after command timed out
-* TMC Restart command is updated to invoke abort and restart on sub system to bring obs state to EMPTY 
-* TMC Subarray is updated to transition Obs State to FAULT after command failure 
+* TMC Restart command is updated to invoke abort and restart on sub system to bring obs state to EMPTY
+* TMC Subarray is updated to transition Obs State to FAULT after command failure
 
 [1.3.1-rc.1]
 ************
@@ -149,7 +166,7 @@ Updated
 * ska-tmc-common version 0.27.5 is utilized for the same
 * Deployed 4 mock Subarrays instances of CSP, SDP and MCCS
 * Moved the processing from Tango event handler to call back functions
-* Improved health state aggregation 
+* Improved health state aggregation
 * Used rule engine for aggregation process
 
 [1.1.0-rc.3]
@@ -176,7 +193,7 @@ Updated
 ************
 Updated
 -----------
-* Improved health state aggregation 
+* Improved health state aggregation
 * Used rule engine for aggregation process
 
 [1.0.0]
