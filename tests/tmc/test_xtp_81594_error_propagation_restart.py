@@ -122,6 +122,13 @@ def error_reporting(
     MCCS Controller.
     It verifies the error reporting mechanism by asserting the expected
     failure message in the longRunningCommandResult event."""
+    event_tracer.subscribe_event(tmc.mccs_subarray_leaf_node, "obsState")
+    event_tracer.subscribe_event(
+        tmc.csp_subarray_leaf_node, "cspSubarrayObsState"
+    )
+    event_tracer.subscribe_event(
+        tmc.sdp_subarray_leaf_node, "sdpSubarrayObsState"
+    )
     expected_msg = exception_messages[defective_subsystem]
     event_tracer.subscribe_event(tmc.mccs_subarray_leaf_node, "obsState")
     assert_that(event_tracer).within_timeout(
@@ -140,6 +147,11 @@ def error_reporting(
         ).has_change_event_occurred(
             csp.csp_subarray, "obsState", ObsState.EMPTY
         )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            tmc.csp_subarray_leaf_node, "cspSubarrayObsState", ObsState.EMPTY
+        )
     elif defective_subsystem == "SDP":
         sdp.sdp_subarray.SetDefective(json.dumps({"enabled": False}))
         sdp.sdp_subarray.Restart()
@@ -147,6 +159,11 @@ def error_reporting(
             TIMEOUT
         ).has_change_event_occurred(
             sdp.sdp_subarray, "obsState", ObsState.EMPTY
+        )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            tmc.sdp_subarray_leaf_node, "sdpSubarrayObsState", ObsState.EMPTY
         )
     elif defective_subsystem == "MCCS":
         mccs.mccs_controller.SetDefective(json.dumps({"enabled": False}))
@@ -161,5 +178,8 @@ def error_reporting(
         ).has_change_event_occurred(
             tmc.mccs_subarray_leaf_node, "obsState", ObsState.EMPTY
         )
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(tmc.subarray_node, "obsState", ObsState.EMPTY)
 
     event_tracer.clear_events()

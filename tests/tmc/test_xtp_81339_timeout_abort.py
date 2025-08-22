@@ -173,6 +173,14 @@ def error_reporting(
         event_tracer: Used to monitor Tango events for error reporting.
         defective_subsystem: The subsystem name that triggered the timeout.
     """
+    event_tracer.subscribe_event(tmc.mccs_subarray_leaf_node, "obsState")
+    event_tracer.subscribe_event(
+        tmc.csp_subarray_leaf_node, "cspSubarrayObsState"
+    )
+    event_tracer.subscribe_event(
+        tmc.sdp_subarray_leaf_node, "sdpSubarrayObsState"
+    )
+
     expected_msg = exception_messages[defective_subsystem]
 
     assert_that(event_tracer).within_timeout(
@@ -192,11 +200,21 @@ def error_reporting(
         ).has_change_event_occurred(
             csp.csp_subarray, "obsState", ObsState.ABORTED
         )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            tmc.csp_subarray_leaf_node, "cspSubarrayObsState", ObsState.ABORTED
+        )
     elif defective_subsystem == "SDP":
         sdp.sdp_subarray.ResetDelayInfo()
         sdp.sdp_subarray.Abort()
         assert_that(event_tracer).within_timeout(60).has_change_event_occurred(
             sdp.sdp_subarray, "obsState", ObsState.ABORTED
+        )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            tmc.sdp_subarray_leaf_node, "sdpSubarrayObsState", ObsState.ABORTED
         )
     elif defective_subsystem == "MCCS":
         mccs.mccs_subarray.SetDefective(json.dumps({"enabled": False}))
@@ -205,6 +223,11 @@ def error_reporting(
             TIMEOUT
         ).has_change_event_occurred(
             mccs.mccs_subarray, "obsState", ObsState.ABORTED
+        )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            tmc.mccs_subarray_leaf_node, "obsState", ObsState.ABORTED
         )
 
     tmc.restart()
