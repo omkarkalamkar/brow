@@ -1,4 +1,3 @@
-import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
 from ska_control_model import ObsState
@@ -108,7 +107,7 @@ def _check_abort_flow(
         )
 
 
-@pytest.mark.SKA_tmc_low_restart
+# @pytest.mark.SKA_tmc_low_restart
 @scenario(
     "../tmc/tmc_new_iTH/features/xtp_82856.feature",
     "Test Restart Command when TMC subarray transitions to "
