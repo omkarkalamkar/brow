@@ -99,11 +99,26 @@ def verify_tmc_subarray_resourcing_fault(
 
 @given("CSP,SDP and MCCS in observation state EMPTY,EMPTY and IDLE")
 def verify_csp_mccs_sdp_obs_state_empty(
-    csp: CSPFacade, sdp: SDPFacade, mccs: MCCSFacade
+    csp: CSPFacade,
+    sdp: SDPFacade,
+    mccs: MCCSFacade,
+    event_tracer: TangoEventTracer,
 ):
     """Verifies observation states of the subsystems."""
-    assert csp.csp_subarray.obsState == ObsState.EMPTY
-    assert sdp.sdp_subarray.obsState == ObsState.EMPTY
+    assert_that(event_tracer).described_as(
+        f"CSP Subarray device ({csp.csp_subarray})"
+        "ObsState attribute value should move "
+        f"from {ObsState.RESOURCING} to EMPTY."
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        csp.csp_subarray, "obsState", ObsState.EMPTY
+    )
+    assert_that(event_tracer).described_as(
+        f"SDP Subarray device ({sdp.sdp_subarray})"
+        "ObsState attribute value should move "
+        f"from {ObsState.RESOURCING} to EMPTY."
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        sdp.sdp_subarray.obsState, "obsState", ObsState.EMPTY
+    )
     assert mccs.mccs_subarray.obsState == ObsState.IDLE
     reset_defects(csp, sdp, mccs)
 
