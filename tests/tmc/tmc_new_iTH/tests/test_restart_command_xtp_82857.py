@@ -55,7 +55,6 @@ def _setup_event_subscriptions(
     )
 
 
-@pytest.mark.skip(reason="Test needs refactoring")
 @pytest.mark.SKA_tmc_low_restart
 @scenario(
     "../tmc/tmc_new_iTH/features/xtp_82857.feature",
@@ -103,9 +102,9 @@ def verify_csp_mccs_sdp_obs_state_empty(
     csp: CSPFacade, sdp: SDPFacade, mccs: MCCSFacade
 ):
     """Verifies observation states of the subsystems."""
-    assert csp.csp_subarray.obsState == ObsState.RESOURCING
+    assert csp.csp_subarray.obsState == ObsState.EMPTY
     assert sdp.sdp_subarray.obsState == ObsState.EMPTY
-    assert mccs.mccs_subarray.obsState == ObsState.EMPTY
+    assert mccs.mccs_subarray.obsState == ObsState.IDLE
     reset_defects(csp, sdp, mccs)
 
 
