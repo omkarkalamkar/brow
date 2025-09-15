@@ -122,15 +122,18 @@ def get_long_run_command_id(context_data: TestContextData) -> str:
     return context_data.when_action_result[1][0]
 
 
-def _tear_down(tmc: TMCFacade, event_tracer: TangoEventTracer):
+def _tear_down(
+    telescope_wrapper: TelescopeWrapper, event_tracer: TangoEventTracer
+):
     """Function to handle TMC tear down in observation
     state FAULT.
 
-    :param tmc: TMCFacade object to invoke TMC commands
-    :type tmc: TMCFacade
+    :param telescope_wrapper: TelescopeWrapper object to invoke TMC commands
+    :type telescope_wrapper: TelescopeWrapper
     :param event_tracer: TangoEventTracer object for event handling
     :type event_tracer: TangoEventTracer
     """
+    tmc = TMCFacade(telescope_wrapper)
     if tmc.subarray_node.obsState == ObsState.FAULT:
         tmc.restart(wait_termination=True)
         assert_that(event_tracer).described_as(
@@ -152,8 +155,9 @@ def telescope_wrapper(
 
     # import from a configuration file device names and emulation directives
     # for TMC, CSP, SDP and MCCS
+
     test_harness_builder.read_config_file(
-        "../../../../app/tests/resources/test_harness/test_harness_config.yaml"
+        os.path.join(os.path.dirname(__file__), "test_harness_config.yaml")
     )
     test_harness_builder.validate_configurations()
 
