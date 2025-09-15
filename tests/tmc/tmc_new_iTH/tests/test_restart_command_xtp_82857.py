@@ -85,6 +85,7 @@ def verify_tmc_subarray_resourcing_fault(
     set_subsystem_defects(
         csp, sdp, mccs, "EMPTY", "EMPTY", "IDLE", "AssignResources"
     )
+    tmc.move_to_on()
     tmc.assign_resources(
         default_commands_inputs.assign_input, wait_termination=False
     )
@@ -117,7 +118,7 @@ def verify_csp_mccs_sdp_obs_state_empty(
         "ObsState attribute value should move "
         f"from {ObsState.RESOURCING} to EMPTY."
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        sdp.sdp_subarray.obsState, "obsState", ObsState.EMPTY
+        sdp.sdp_subarray, "obsState", ObsState.EMPTY
     )
     assert mccs.mccs_subarray.obsState == ObsState.IDLE
     reset_defects(csp, sdp, mccs)
