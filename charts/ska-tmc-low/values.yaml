@@ -30,10 +30,10 @@ domain: "low-tmc"
 # deviceServers.cspsubarrayleafnode, deviceServers.sdpsubarrayleafnode,
 # deviceServers.subarraynode , deviceServers.mccssubarrayleafnode
 subarray_devices:
-    - "cspsubarrayleafnode"
-    - "sdpsubarrayleafnode"
-    - "subarraynode"
-    - "mccssubarrayleafnode"
+  - "cspsubarrayleafnode"
+  - "sdpsubarrayleafnode"
+  - "subarraynode"
+  - "mccssubarrayleafnode"
 
 # FQDN details are specific to TMC, shouldn't be overridden in global unless
 #  absolutely necessary.
@@ -90,16 +90,16 @@ sdpleafnodes:
 
 cspmasterleafnode:
   image:
-    registry: artefact.skao.int
+    registry: http://registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-cspleafnodes
     image: ska-tmc-cspleafnodes
-    tag: 0.31.0
+    tag: 0.31.0-dev.c7029b1a8
     pullPolicy: IfNotPresent
 
 cspsubarrayleafnode:
   image:
-    registry: artefact.skao.int
+    registry: http://registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-cspleafnodes
     image: ska-tmc-cspleafnodes
-    tag: 0.31.0
+    tag: 0.31.0-dev.c7029b1a8
     pullPolicy: IfNotPresent
 
 mccsmasterleafnode:
