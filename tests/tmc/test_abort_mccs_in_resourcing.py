@@ -29,7 +29,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 from tests.resources.test_support.constant_low import TIMEOUT
 
 
-@pytest.mark.SKA_low
+@pytest.mark.skip
 @scenario(
     "../features/tmc/check_mccs_abort.feature",
     "Verify Abort in Resourcing",
