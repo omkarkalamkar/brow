@@ -108,7 +108,7 @@ def _check_abort_flow(
         )
 
 
-@pytest.mark.skip
+@pytest.mark.SKA_tmc_low_restart
 @scenario(
     "../tmc/tmc_new_iTH/features/xtp_82856.feature",
     "Test Restart Command when TMC subarray transitions to "
