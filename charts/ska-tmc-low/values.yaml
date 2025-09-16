@@ -30,10 +30,10 @@ domain: "low-tmc"
 # deviceServers.cspsubarrayleafnode, deviceServers.sdpsubarrayleafnode,
 # deviceServers.subarraynode , deviceServers.mccssubarrayleafnode
 subarray_devices:
-  - "cspsubarrayleafnode"
-  - "sdpsubarrayleafnode"
-  - "subarraynode"
-  - "mccssubarrayleafnode"
+    - "cspsubarrayleafnode"
+    - "sdpsubarrayleafnode"
+    - "subarraynode"
+    - "mccssubarrayleafnode"
 
 # FQDN details are specific to TMC, shouldn't be overridden in global unless
 #  absolutely necessary.
