@@ -18,6 +18,7 @@ from tests.resources.test_support.constant_low import (
     INTERMEDIATE_CONFIGURING_OBS_STATE_DEFECT,
     INTERMEDIATE_FAULT_OBS_STATE_DEFECT,
     INTERMEDIATE_STATE_DEFECT,
+    INTERMEDIATE_STATE_DEFECT_EMPTY,
     SDP_BACK_TO_INITIAL_STATE,
 )
 
@@ -36,7 +37,7 @@ command_defect_mapping = {
     "AssignResources": {
         "RESOURCING": json.dumps(INTERMEDIATE_STATE_DEFECT),
         "FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT),
-        "EMPTY": json.dumps(INTERMEDIATE_STATE_DEFECT),
+        "EMPTY": json.dumps(INTERMEDIATE_STATE_DEFECT_EMPTY),
     },
     "Configure": {
         "CONFIGURING": json.dumps(INTERMEDIATE_CONFIGURING_OBS_STATE_DEFECT),

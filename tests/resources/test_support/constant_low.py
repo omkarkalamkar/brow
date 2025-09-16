@@ -140,6 +140,14 @@ INTERMEDIATE_STATE_DEFECT = {
     "intermediate_state": ObsState.RESOURCING,
 }
 
+INTERMEDIATE_STATE_DEFECT_EMPTY = {
+    "enabled": True,
+    "fault_type": FaultType.STUCK_IN_INTERMEDIATE_STATE,
+    "error_message": "Device stuck in intermediate state",
+    "result": ResultCode.FAILED,
+    "intermediate_state": ObsState.EMPTY,
+}
+
 FAILED_RESULT_DEFECT = {
     "enabled": True,
     "fault_type": FaultType.FAILED_RESULT,
