@@ -1,11 +1,11 @@
-release=2.2.0-rc.1
-tag=2.2.0-rc.1
+release=2.3.0-dev.1
+tag=2.3.0-dev.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.2.0-rc.1**
+**1. ska-tmc-low-integration 2.3.0-dev.1**
 
-    **1.1 ska-tmc-low  2.1.0 - 2.2.0-rc.1 :**
+    **1.1 ska-tmc-low  2.1.0 - 2.3.0-dev.1 :**
             * Support for the observation workflow with the subsystem configurations specified in input JSON
             * Added astroDataClaim in cspleafnodes to cache the astrodata in cspleafnodes as resolution of SKB-949
             * Verified the observation with scaled up TMC
@@ -13,9 +13,9 @@ tag_description=
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.2.0-rc.1**
+**1. ska-tmc-low-integration 2.3.0-dev.1**
 
-    **1.1 ska-tmc-low  2.1.0 - 2.2.0-rc.1 :**
+    **1.1 ska-tmc-low  2.1.0 - 2.3.0-dev.1 :**
             * Support for the observation workflow with the subsystem configurations specified in input JSON
             * Added astroDataClaim in cspleafnodes to cache the astrodata in cspleafnodes as resolution of SKB-949
             * Verified the observation with scaled up TMC
