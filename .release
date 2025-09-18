@@ -5,18 +5,16 @@ tag_description=
 
 **1. ska-tmc-low-integration 2.3.0-dev.1**
 
-    **1.1 ska-tmc-low  2.1.0 - 2.3.0-dev.1 :**
-            * Support for the observation workflow with the subsystem configurations specified in input JSON
-            * Added astroDataClaim in cspleafnodes to cache the astrodata in cspleafnodes as resolution of SKB-949
-            * Verified the observation with scaled up TMC
+    **1.1 ska-tmc-low  2.2.0-rc.1 - 2.3.0-dev.1 :**
+            * Extending the support of multiple station up to 8 station beams.
+            * Utilised the latest dev tag from CSP (0.32.0) and latest tag of central node (0.22.0)
 
 release_notes=
 **Charts:**
 
 **1. ska-tmc-low-integration 2.3.0-dev.1**
 
-    **1.1 ska-tmc-low  2.1.0 - 2.3.0-dev.1 :**
-            * Support for the observation workflow with the subsystem configurations specified in input JSON
-            * Added astroDataClaim in cspleafnodes to cache the astrodata in cspleafnodes as resolution of SKB-949
-            * Verified the observation with scaled up TMC
+    **1.1 ska-tmc-low  2.2.0-rc.1 - 2.3.0-dev.1 :**
+            * Extending the support of multiple station up to 8 station beams.
+            * Utilised the latest dev tag from CSP (0.32.0) and latest tag of central node (0.22.0)
 
