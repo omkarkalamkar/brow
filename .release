@@ -1,20 +1,20 @@
-release=2.3.0-dev.1
-tag=2.3.0-dev.1
+release=2.3.0-rc.1
+tag=2.3.0-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.3.0-dev.1**
+**1. ska-tmc-low-integration 2.3.0-rc.1**
 
-    **1.1 ska-tmc-low  2.2.0-rc.1 - 2.3.0-dev.1 :**
+    **1.1 ska-tmc-low  2.2.0-rc.1 - 2.3.0-rc.1 :**
             * Extending the support of multiple station up to 8 station beams.
             * Utilised the latest dev tag from CSP (0.32.0) and latest tag of central node (0.22.0)
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.3.0-dev.1**
+**1. ska-tmc-low-integration 2.3.0-rc.1**
 
-    **1.1 ska-tmc-low  2.2.0-rc.1 - 2.3.0-dev.1 :**
+    **1.1 ska-tmc-low  2.2.0-rc.1 - 2.3.0-rc.1 :**
             * Extending the support of multiple station up to 8 station beams.
             * Utilised the latest dev tag from CSP (0.32.0) and latest tag of central node (0.22.0)
 

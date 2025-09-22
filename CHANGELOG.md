@@ -5,6 +5,13 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[2.3.0-rc.1]
+************
+Updated
+------------
+* Extending the support of multiple station up to 8 station beams.
+* Utilised the latest dev tag from CSP (0.32.0) and latest tag of central node (0.22.0)
+
 [2.3.0-dev.1]
 *************
 Updated
