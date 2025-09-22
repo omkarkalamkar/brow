@@ -43,7 +43,7 @@ The contents of the delay model are:
   * Offset of y ploynomial (in nanoseconds. Currently hard coded to 0.0)
 
 
-.. note:: Currently TMC supports four subarray beams per subarray. Please refer 
+.. note:: Currently TMC supports 8 subarray beams per subarray. Please refer
    :ref:`Observation Execution APIs <obs_apis>` section for the specific 
    details of the APIs.
 
