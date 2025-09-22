@@ -10,7 +10,8 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 Updated
 ------------
 * Extending the support of multiple station up to 8 station beams.
-* Utilised the latest dev tag from CSP (0.32.0) and latest tag of central node (0.22.0)
+* Utilised the latest dev tag from CSP (0.32.0) and latest tag of central node (0.22.0).
+* RTD improvements to reflect support for 8 station beams. 
 
 [2.3.0-dev.1]
 *************
