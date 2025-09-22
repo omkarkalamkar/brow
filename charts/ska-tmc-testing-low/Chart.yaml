@@ -18,7 +18,7 @@ dependencies:
     version: 0.4.24
     repository: https://artefact.skao.int/repository/helm-internal
   - name: ska-tmc-low
-    version: 2.3.0-rc.1
+    version: 2.3.1-rc.1
     repository: file://../ska-tmc-low
     alias: tmc-low
   - name: ska-tango-taranta
