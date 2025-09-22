@@ -52,6 +52,14 @@ configuration:
         code_push_event: true
       delayModelStationBeam04:
         code_push_event: true
+      delayModelStationBeam05:
+        code_push_event: true
+      delayModelStationBeam06:
+        code_push_event: true
+      delayModelStationBeam07:
+        code_push_event: true
+      delayModelStationBeam08:
+        code_push_event: true
       delayModelPSTBeam1:
         code_push_event: true
       delayModelPSTBeam2:

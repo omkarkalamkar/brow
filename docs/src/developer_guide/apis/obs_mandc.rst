@@ -42,8 +42,20 @@ Following are the details of the attributes exposed for Subarray beams:
 | delayModelStationBeam03     | Delay model data for MCCS Station Beam 03      |
 |                             | (`mccs.subarray_beams[2]`).                    |
 +-----------------------------+------------------------------------------------+
-| delayModelStationBeam02     | Delay model data for MCCS Station Beam 04      |
+| delayModelStationBeam04     | Delay model data for MCCS Station Beam 04      |
 |                             | (`mccs.subarray_beams[3]`).                    |
++-----------------------------+------------------------------------------------+
+| delayModelStationBeam05     | Delay model data for MCCS Station Beam 05      |
+|                             | (`mccs.subarray_beams[4]`).                    |
++-----------------------------+------------------------------------------------+
+| delayModelStationBeam06     | Delay model data for MCCS Station Beam 06      |
+|                             | (`mccs.subarray_beams[5]`).                    |
++-----------------------------+------------------------------------------------+
+| delayModelStationBeam07     | Delay model data for MCCS Station Beam 07      |
+|                             | (`mccs.subarray_beams[6]`).                    |
++-----------------------------+------------------------------------------------+
+| delayModelStationBeam08     | Delay model data for MCCS Station Beam 08      |
+|                             | (`mccs.subarray_beams[7]`).                    |
 +-----------------------------+------------------------------------------------+
 
 

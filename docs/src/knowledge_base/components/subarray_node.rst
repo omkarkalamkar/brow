@@ -28,6 +28,14 @@ TRLs for station and PST beams
 +-------------------------------------------------------------------+
 | `low-tmc/subarray-leaf-node-csp/01/delayModelStationBeam04`       |
 +-------------------------------------------------------------------+
+| `low-tmc/subarray-leaf-node-csp/01/delayModelStationBeam05`       |
++-------------------------------------------------------------------+
+| `low-tmc/subarray-leaf-node-csp/01/delayModelStationBeam06`       |
++-------------------------------------------------------------------+
+| `low-tmc/subarray-leaf-node-csp/01/delayModelStationBeam07`       |
++-------------------------------------------------------------------+
+| `low-tmc/subarray-leaf-node-csp/01/delayModelStationBeam08`       |
++-------------------------------------------------------------------+
 
 
 +---------------------------------------------------------------+

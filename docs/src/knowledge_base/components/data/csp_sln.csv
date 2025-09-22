@@ -11,6 +11,10 @@ delayModelStationBeam01,DevString,Yes,Change Event
 delayModelStationBeam02,DevString,Yes,Change Event
 delayModelStationBeam03,DevString,Yes,Change Event
 delayModelStationBeam04,DevString,Yes,Change Event
+delayModelStationBeam05,DevString,Yes,Change Event
+delayModelStationBeam06,DevString,Yes,Change Event
+delayModelStationBeam07,DevString,Yes,Change Event
+delayModelStationBeam08,DevString,Yes,Change Event
 delayModelPSTBeam1,DevString,Yes,Change Event
 delayModelPSTBeam2,DevString,Yes,Change Event
 isSubsystemAvailable,DevBoolean,Yes,Change Event

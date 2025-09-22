@@ -11,3 +11,7 @@ Scenario: TMC generates delay values
         | delayModelStationBeam02 |
         | delayModelStationBeam03 |
         | delayModelStationBeam04 |
+        | delayModelStationBeam05 |
+        | delayModelStationBeam06 |
+        | delayModelStationBeam07 |
+        | delayModelStationBeam08 |
