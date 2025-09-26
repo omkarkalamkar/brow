@@ -116,9 +116,8 @@ def central_node_assign_resources(
     central_node_low.set_subarray_id(2)
     assign_data = json.loads(assign_input_json)
     assign_data["subarray_id"] = 2
-    central_node_low.store_resources(json.dumps(assign_data))
+    central_node_low.perform_action("AssignResources", json.dumps(assign_data))
     assert_that(event_tracer).described_as(
-        "FAILED UNEXPECTED OBSSTATE: "
         "TMC subarray device"
         f"({central_node_low.subarray_node.dev_name()}) "
         "is expected to be in RESOURCING obstate",
@@ -142,7 +141,9 @@ def release_resources_from_both_subarrays(
     central_node_low.invoke_release_resources(release_input_json)
     release_data = json.loads(release_input_json)
     release_data["subarray_id"] = 2
-    central_node_low.invoke_release_resources(json.dumps(release_data))
+    central_node_low.perform_action(
+        "ReleaseResources", json.dumps(release_data)
+    )
 
 
 @then(
