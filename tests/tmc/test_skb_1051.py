@@ -30,7 +30,7 @@ from tests.resources.test_support.constant_low import TIMEOUT
     "../features/tmc/skb_1051.feature",
     "Verify SKB_1051",
 )
-def test_verify_skb_438():
+def test_verify_skb_1051():
     """BDD test scenario for verifying SKB-1051"""
 
 
