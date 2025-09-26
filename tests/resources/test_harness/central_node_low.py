@@ -192,6 +192,8 @@ class CentralNodeWrapperLow(object):
 
         """
         LOGGER.info("Invoking TelescopeOff command with all Mocks")
+        device = DeviceProxy(low_csp_subarray1)
+        device.Off()
         _, unique_id = self.central_node.TelescopeOff()
         self.set_values_with_all_mocks(DevState.OFF)
         assert_that(self.event_tracer).described_as(
