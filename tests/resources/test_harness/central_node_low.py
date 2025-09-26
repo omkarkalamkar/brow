@@ -104,8 +104,8 @@ class CentralNodeWrapperLow(object):
         )
 
     def set_subarray_id(self, subarray_id):
+        subarray_id = f"{subarray_id:02}"
         self.subarray_node = DeviceProxy(f"low-tmc/subarray/{subarray_id}")
-        subarray_id = "{:02d}".format(int(subarray_id))
         self.subarray_devices = {
             "csp_subarray": DeviceProxy(f"low-csp/subarray/{subarray_id}"),
             "sdp_subarray": DeviceProxy(f"low-sdp/subarray/{subarray_id}"),
