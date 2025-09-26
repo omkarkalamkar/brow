@@ -11,6 +11,7 @@ import pytest
 from assertpy import assert_that
 from pytest_bdd import given, scenario, then, when
 from ska_control_model import ObsState
+from ska_tango_base.commands import ResultCode
 from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DevState
 
@@ -140,17 +141,40 @@ def central_node_assign_resources(
 def release_resources_from_both_subarrays(
     central_node_low: CentralNodeWrapperLow,
     command_input_factory: JsonFactory,
+    event_tracer: TangoEventTracer,
 ):
     """Invokes release resources on two subarrays"""
     central_node_low.set_subarray_id(1)
     release_input_json = prepare_json_args_for_centralnode_commands(
         "release_resources_low", command_input_factory
     )
-    central_node_low.invoke_release_resources(release_input_json)
+    _, unique_id = central_node_low.invoke_release_resources(
+        release_input_json
+    )
+    assert_that(event_tracer).described_as(
+        "Central Node device"
+        f"({central_node_low.central_node.dev_name()}) "
+        "is expected have longRunningCommand as"
+        '(unique_id,(ResultCode.OK,"Command Completed"))',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.central_node,
+        "longRunningCommandResult",
+        (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
+    )
     release_data = json.loads(release_input_json)
     release_data["subarray_id"] = 2
-    central_node_low.perform_action(
+    _, unique_id = central_node_low.perform_action(
         "ReleaseResources", json.dumps(release_data)
+    )
+    assert_that(event_tracer).described_as(
+        "Central Node device"
+        f"({central_node_low.central_node.dev_name()}) "
+        "is expected have longRunningCommand as"
+        '(unique_id,(ResultCode.OK,"Command Completed"))',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.central_node,
+        "longRunningCommandResult",
+        (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
 
 
