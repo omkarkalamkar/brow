@@ -1,5 +1,5 @@
 #This test verifies the behaviour of Release Resources on TMC with multiple subarrays.
-@XTP-90244 @XTP-28348 @SKA_low @new
+@XTP-90244 @XTP-28348 @SKA_low
 Scenario: Verify SKB-1051
     Given the telescope is in the ON state
     And subarray 1 and 2 are in the IDLE ObsState

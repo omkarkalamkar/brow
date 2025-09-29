@@ -1,4 +1,4 @@
-@new
+@SKA_low
 Scenario: Verify SKB-980 for assign resources flow
     Given the telescope is in the ON state
     And subarray 1 and 2 are in the EMPTY ObsState
@@ -7,7 +7,7 @@ Scenario: Verify SKB-980 for assign resources flow
     And the TMC, CSP, SDP, and MCCS subarray 1 transition to the IDLE obsState
     And the TMC, CSP, SDP, and MCCS subarray 2 transition to the IDLE obsState
 
-@new
+@SKA_low
 Scenario: Verify SKB-980 for release resources flow
     Given the telescope is in the ON state
     And subarray 1 and 2 are in the IDLE ObsState
