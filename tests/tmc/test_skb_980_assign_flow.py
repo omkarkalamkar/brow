@@ -273,9 +273,7 @@ def verify_subarrays_in_idle(
     )
 
 
-@then(
-    "the TMC, CSP, SDP, and MCCS subarray 2 transition to the EMPTY obsState"
-)
+@then("the TMC, CSP, SDP, and MCCS subarray 2 transition to the IDLE obsState")
 def verify_subarrays2_in_idle(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
