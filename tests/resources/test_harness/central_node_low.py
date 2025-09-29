@@ -225,9 +225,7 @@ class CentralNodeWrapperLow(object):
     def tear_down_subarray(self, subarray: DeviceProxy):
         """Tear down subarray"""
         LOGGER.info("Subarray Node ObsState: %s", self.subarray_node.obsstate)
-        if subarray.obsState not in [
-            ObsState.EMPTY,
-        ]:
+        if subarray.obsState not in [ObsState.EMPTY, ObsState.IDLE]:
             LOGGER.info("Calling Restart on SubarrayNode")
             _, unique_id = self.subarray_restart()
             assert_that(self.event_tracer).described_as(
@@ -238,6 +236,29 @@ class CentralNodeWrapperLow(object):
                 '(unique_id,(ResultCode.OK,"Command Completed"))',
             ).within_timeout(TIMEOUT).has_change_event_occurred(
                 self.subarray_node,
+                "longRunningCommandResult",
+                (
+                    unique_id[0],
+                    json.dumps((int(ResultCode.OK), "Command Completed")),
+                ),
+            )
+        elif subarray.obsState == ObsState.IDLE:
+            LOGGER.info("Calling Release Resource on centralnode")
+            release_data = json.loads(self.release_input)
+            release_data["subarray_id"] = int(
+                subarray.dev_name().split("/")[-1]
+            )
+            _, unique_id = self.invoke_release_resources(
+                json.dumps(release_data)
+            )
+            assert_that(self.event_tracer).described_as(
+                "FAILEDASSUMPTION AFTER RELEASE_RESOURCES COMMAND: "
+                "SubarrayNode device"
+                f"({self.central_node.dev_name()}) "
+                "is expected have longRunningCommand as"
+                '(unique_id,(ResultCode.OK,"Command Completed"))',
+            ).within_timeout(TIMEOUT).has_change_event_occurred(
+                self.central_node,
                 "longRunningCommandResult",
                 (
                     unique_id[0],
