@@ -178,7 +178,8 @@ def verify_result_ok(
 
 
 @then(
-    "the TMC, CSP, SDP, and MCCS subarray 1 transition to the EMPTY obsState"
+    "the TMC, CSP, SDP, and MCCS subarray 1"
+    " and 2 transition to the EMPTY obsState"
 )
 def verify_subarrays_in_idle(
     central_node_low: CentralNodeWrapperLow,
@@ -283,18 +284,6 @@ def verify_subarrays_in_idle(
         ObsState.EMPTY,
     )
 
-
-@then(
-    "the TMC, CSP, SDP, and MCCS subarray 2 transition to the EMPTY obsState"
-)
-def verify_subarrays2_in_idle(
-    central_node_low: CentralNodeWrapperLow,
-    event_tracer: TangoEventTracer,
-    simulator_factory: SimulatorFactory,
-):
-    """Method checks the subarray node 2 observation state EMPTY after
-    ReleaseResources is invoked on central node.
-    """
     central_node_low.set_subarray_id(2)
     sdp_sim2 = simulator_factory.get_or_create_simulator_device(
         SimulatorDeviceType.LOW_SDP_DEVICE2

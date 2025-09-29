@@ -252,7 +252,7 @@ class CentralNodeWrapperLow(object):
                 json.dumps(release_data)
             )
             assert_that(self.event_tracer).described_as(
-                "FAILEDASSUMPTION AFTER RELEASE_RESOURCES COMMAND: "
+                "FAILED ASSUMPTION AFTER RELEASE_RESOURCES COMMAND: "
                 "SubarrayNode device"
                 f"({self.central_node.dev_name()}) "
                 "is expected have longRunningCommand as"
