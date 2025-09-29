@@ -1,7 +1,7 @@
 """
 This module defines a BDD (Behavior-Driven Development) test scenario
 using pytest-bdd to verify the behavior of the Telescope Monitoring and
-Control (TMC) system to verify the SKB-980.
+Control (TMC) system to verify the SKB-908.
 """
 
 
@@ -27,11 +27,11 @@ from tests.resources.test_support.constant_low import TIMEOUT
 
 @pytest.mark.SKA_low
 @scenario(
-    "../features/tmc/skb_980.feature",
-    "Verify SKB-980 for assign resources flow",
+    "../features/tmc/skb_908.feature",
+    "Verify SKB-908 for assign resources flow",
 )
-def test_verify_skb_980():
-    """BDD test scenario for verifying SKB-980"""
+def test_verify_skb_908():
+    """BDD test scenario for verifying SKB-908"""
 
 
 @given("the telescope is in the ON state")

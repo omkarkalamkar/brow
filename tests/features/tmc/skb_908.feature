@@ -1,6 +1,6 @@
 #This test verifies Assign Resources flow with multiple subarrays
 @XTP-90283 @XTP-28348 @SKA_low
-Scenario: Verify SKB-980 for assign resources flow
+Scenario: Verify SKB-908 for assign resources flow
     Given the telescope is in the ON state
     And subarray 1 and 2 are in the EMPTY ObsState
     When I assign resources to both the subarrays simultaneously
@@ -10,7 +10,7 @@ Scenario: Verify SKB-980 for assign resources flow
 
 #This test verifies Release Resources flow with multiple subarrays
 @XTP-90284 @XTP-28348 @SKA_low
-Scenario: Verify SKB-980 for release resources flow
+Scenario: Verify SKB-908 for release resources flow
     Given the telescope is in the ON state
     And subarray 1 and 2 are in the IDLE ObsState
     When I release resources from both the subarrays simultaneously
