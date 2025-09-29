@@ -112,7 +112,7 @@ def verify_subarrys_in_empty(
     )
 
 
-@when("I assign resources from the both the subarrays simultaneously")
+@when("I assign resources to the both the subarrays simultaneously")
 def central_node_assign_resources(
     central_node_low: CentralNodeWrapperLow,
     command_input_factory: JsonFactory,
