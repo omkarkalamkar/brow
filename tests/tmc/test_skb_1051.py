@@ -25,7 +25,6 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 from tests.resources.test_support.constant_low import TIMEOUT
 
 
-@pytest.mark.skb_1051
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/skb_1051.feature",
@@ -101,13 +100,7 @@ def central_node_assign_resources(
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
 ):
-    """
-    This method invokes AssignResources command on central node.
-
-    Args:
-        central_node (CentralNodeWrapperLow): Object of Central node wrapper
-        command_input_factory (JsonFactory): Object of json factory
-    """
+    """Invokes assign resources on two subarrays."""
     assign_input_json = prepare_json_args_for_centralnode_commands(
         "assign_resources_low", command_input_factory
     )
@@ -143,7 +136,7 @@ def release_resources_from_both_subarrays(
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
 ):
-    """Invokes release resources on two subarrays"""
+    """Invokes release resources on two subarrays."""
     central_node_low.set_subarray_id(1)
     release_input_json = prepare_json_args_for_centralnode_commands(
         "release_resources_low", command_input_factory
@@ -186,15 +179,8 @@ def verify_subarrays_in_empty(
     event_tracer: TangoEventTracer,
     simulator_factory: SimulatorFactory,
 ):
-    """
-    This method checks the subarray node observation state RESOURCING after
-    AssignResources is invoked on central node.
-    Args:
-        central_node (CentralNodeWrapperLow): Object of Central node wrapper
-        event_tracer(TangoEventTracer): Object of TangoEventTracer used for
-        managing the device events
-        command_input_factory (JsonFactory): Object of json factory
-    """
+    """Method checks the subarray node observation state EMPTY after
+    ReleaseResources is invoked on central node."""
     central_node_low.set_subarray_id(1)
     sdp_sim = simulator_factory.get_or_create_simulator_device(
         SimulatorDeviceType.LOW_SDP_DEVICE
@@ -202,13 +188,21 @@ def verify_subarrays_in_empty(
     csp_sim = simulator_factory.get_or_create_simulator_device(
         SimulatorDeviceType.LOW_CSP_DEVICE
     )
+    mccs_sim = simulator_factory.get_or_create_simulator_device(
+        SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
+    )
     event_tracer.subscribe_event(csp_sim, "obsState")
     event_tracer.subscribe_event(sdp_sim, "obsState")
+    event_tracer.subscribe_event(mccs_sim, "obsState")
+
     event_tracer.subscribe_event(
         central_node_low.csp_subarray_leaf_node, "cspSubarrayObsState"
     )
     event_tracer.subscribe_event(
         central_node_low.sdp_subarray_leaf_node, "sdpSubarrayObsState"
+    )
+    event_tracer.subscribe_event(
+        central_node_low.mccs_subarray_leaf_node, "obsState"
     )
     log_events(
         {
@@ -216,6 +210,7 @@ def verify_subarrays_in_empty(
             sdp_sim: ["obsState"],
             central_node_low.csp_subarray_leaf_node: ["cspSubarrayObsState"],
             central_node_low.sdp_subarray_leaf_node: ["sdpSubarrayObsState"],
+            central_node_low.mccs_subarray_leaf_node: ["obsState"],
         }
     )
     assert_that(event_tracer).described_as(
@@ -263,6 +258,24 @@ def verify_subarrays_in_empty(
         "obsState",
         ObsState.EMPTY,
     )
+    assert_that(event_tracer).described_as(
+        "MCCS subarray leaf device"
+        f"({central_node_low.mccs_subarray_leaf_node.dev_name()}) "
+        "is expected to be in EMPTY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.mccs_subarray_leaf_node,
+        "obsState",
+        ObsState.EMPTY,
+    )
+    assert_that(event_tracer).described_as(
+        "MCCS subarray device"
+        f"({mccs_sim.dev_name()}) "
+        "is expected to be in EMPTY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        mccs_sim,
+        "obsState",
+        ObsState.EMPTY,
+    )
 
 
 @then(
@@ -273,14 +286,8 @@ def verify_subarrays2_in_empty(
     event_tracer: TangoEventTracer,
     simulator_factory: SimulatorFactory,
 ):
-    """
-    This method checks the subarray node observation state RESOURCING after
-    AssignResources is invoked on central node.
-    Args:
-        central_node (CentralNodeWrapperLow): Object of Central node wrapper
-        event_tracer(TangoEventTracer): Object of TangoEventTracer used for
-        managing the device events
-        command_input_factory (JsonFactory): Object of json factory
+    """Method checks the subarray node 2 observation state EMPTY after
+    ReleaseResources is invoked on central node.
     """
     central_node_low.set_subarray_id(2)
     sdp_sim2 = simulator_factory.get_or_create_simulator_device(
@@ -289,20 +296,30 @@ def verify_subarrays2_in_empty(
     csp_sim2 = simulator_factory.get_or_create_simulator_device(
         SimulatorDeviceType.LOW_CSP_DEVICE2
     )
+    mccs_sim2 = simulator_factory.get_or_create_simulator_device(
+        SimulatorDeviceType.MCCS_SUBARRAY_DEVICE2
+    )
     event_tracer.subscribe_event(csp_sim2, "obsState")
     event_tracer.subscribe_event(sdp_sim2, "obsState")
+    event_tracer.subscribe_event(mccs_sim2, "obsState")
+
     event_tracer.subscribe_event(
         central_node_low.csp_subarray_leaf_node, "cspSubarrayObsState"
     )
     event_tracer.subscribe_event(
         central_node_low.sdp_subarray_leaf_node, "sdpSubarrayObsState"
     )
+    event_tracer.subscribe_event(
+        central_node_low.mccs_subarray_leaf_node, "obsState"
+    )
     log_events(
         {
             csp_sim2: ["obsState"],
             sdp_sim2: ["obsState"],
+            mccs_sim2: ["obsState"],
             central_node_low.csp_subarray_leaf_node: ["cspSubarrayObsState"],
             central_node_low.sdp_subarray_leaf_node: ["sdpSubarrayObsState"],
+            central_node_low.mccs_subarray_leaf_node: ["obsState"],
         }
     )
     assert_that(event_tracer).described_as(
@@ -333,20 +350,20 @@ def verify_subarrays2_in_empty(
         ObsState.EMPTY,
     )
     assert_that(event_tracer).described_as(
-        "CSP subarray leaf device"
-        f"({central_node_low.csp_subarray_leaf_node.dev_name()}) "
+        "MCCS subarray leaf device"
+        f"({central_node_low.mccs_subarray_leaf_node.dev_name()}) "
         "is expected to be in EMPTY obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.csp_subarray_leaf_node,
-        "cspSubarrayObsState",
+        central_node_low.mccs_subarray_leaf_node,
+        "obsState",
         ObsState.EMPTY,
     )
     assert_that(event_tracer).described_as(
-        "CSP subarray device"
-        f"({csp_sim2.dev_name()}) "
+        "MCCS subarray device"
+        f"({mccs_sim2.dev_name()}) "
         "is expected to be in EMPTY obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        csp_sim2,
+        mccs_sim2,
         "obsState",
         ObsState.EMPTY,
     )
