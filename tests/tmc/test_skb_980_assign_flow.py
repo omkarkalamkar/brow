@@ -121,7 +121,9 @@ def central_node_assign_resources(
     assign_input_json = prepare_json_args_for_centralnode_commands(
         "assign_resources_low", command_input_factory
     )
-    _, pytest.unique_id = central_node_low.store_resources(assign_input_json)
+    _, pytest.unique_id = central_node_low.perform_action(
+        "AssignResources", assign_input_json
+    )
     central_node_low.set_subarray_id(2)
     assign_data = json.loads(assign_input_json)
     assign_data["subarray_id"] = 2

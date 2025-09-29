@@ -128,8 +128,8 @@ def central_node_assign_resources(
     release_input_json = prepare_json_args_for_centralnode_commands(
         "release_resources_low", command_input_factory
     )
-    _, pytest.unique_id = central_node_low.invoke_release_resources(
-        release_input_json
+    _, pytest.unique_id = central_node_low.perform_action(
+        "ReleaseResources", release_input_json
     )
     central_node_low.set_subarray_id(2)
     release_data = json.loads(release_input_json)
