@@ -28,7 +28,7 @@ from tests.resources.test_support.constant_low import TIMEOUT
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/skb_1051.feature",
-    "Verify SKB_1051",
+    "Verify SKB-1051",
 )
 def test_verify_skb_1051():
     """BDD test scenario for verifying SKB-1051"""
