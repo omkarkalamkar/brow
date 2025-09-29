@@ -171,7 +171,7 @@ def verify_result_ok(
         central_node_low.central_node,
         "longRunningCommandResult",
         (
-            pytest.unqiue_id2[0],
+            pytest.unique_id2[0],
             json.dumps((int(ResultCode.OK), "Command Completed")),
         ),
     )
