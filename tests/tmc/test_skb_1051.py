@@ -129,7 +129,7 @@ def central_node_assign_resources(
     )
 
 
-@when("I release resources from the both the subarrays")
+@when("I release resources from both the subarrays")
 def release_resources_from_both_subarrays(
     central_node_low: CentralNodeWrapperLow,
     command_input_factory: JsonFactory,

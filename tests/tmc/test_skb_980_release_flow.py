@@ -119,7 +119,7 @@ def verify_subarrys_in_idle(
     )
 
 
-@when("I release resources from the both the subarrays simultaneously")
+@when("I release resources from both the subarrays simultaneously")
 def central_node_assign_resources(
     central_node_low: CentralNodeWrapperLow,
     command_input_factory: JsonFactory,
