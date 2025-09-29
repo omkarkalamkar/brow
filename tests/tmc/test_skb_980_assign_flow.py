@@ -1,7 +1,7 @@
 """
 This module defines a BDD (Behavior-Driven Development) test scenario
 using pytest-bdd to verify the behavior of the Telescope Monitoring and
-Control (TMC) system to verify the SKB-1051.
+Control (TMC) system to verify the SKB-980.
 """
 
 
@@ -27,11 +27,11 @@ from tests.resources.test_support.constant_low import TIMEOUT
 
 @pytest.mark.SKA_low
 @scenario(
-    "../features/tmc/skb_1051.feature",
-    "Verify SKB-1051",
+    "../features/tmc/skb_980.feature",
+    "Verify SKB-980 for assign resources flow",
 )
-def test_verify_skb_1051():
-    """BDD test scenario for verifying SKB-1051"""
+def test_verify_skb_980():
+    """BDD test scenario for verifying SKB-980"""
 
 
 @given("the telescope is in the ON state")
@@ -82,9 +82,27 @@ def given_a_telescope_is_in_on(
         "telescopeState",
         DevState.ON,
     )
+
+
+@given("subarray 1 and 2 are in the EMPTY ObsState")
+def verify_subarrys_in_empty(
+    central_node_low: CentralNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Verifies subarray in EMPTY ObsState."""
+    central_node_low.set_subarray_id(1)
     assert_that(event_tracer).described_as(
-        "FAILED UNEXPECTED INITIAL OBSSTATE: "
-        "Subarray Node device"
+        "TMC subarray device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        "is expected to be in EMPTY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "obsState",
+        ObsState.EMPTY,
+    )
+    central_node_low.set_subarray_id(2)
+    assert_that(event_tracer).described_as(
+        "TMC subarray device"
         f"({central_node_low.subarray_node.dev_name()}) "
         "is expected to be in EMPTY obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
@@ -94,86 +112,64 @@ def given_a_telescope_is_in_on(
     )
 
 
-@given("subarray 1 and 2 are in the IDLE ObsState")
+@when("I assign resources from the both the subarrays simultaneously")
 def central_node_assign_resources(
     central_node_low: CentralNodeWrapperLow,
     command_input_factory: JsonFactory,
-    event_tracer: TangoEventTracer,
 ):
     """Invokes assign resources on two subarrays."""
     assign_input_json = prepare_json_args_for_centralnode_commands(
         "assign_resources_low", command_input_factory
     )
-    central_node_low.store_resources(assign_input_json)
-    assert_that(event_tracer).described_as(
-        "TMC subarray device"
-        f"({central_node_low.subarray_node.dev_name()}) "
-        "is expected to be in IDLE obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
-        "obsState",
-        ObsState.IDLE,
-    )
+    _, pytest.unique_id = central_node_low.store_resources(assign_input_json)
     central_node_low.set_subarray_id(2)
     assign_data = json.loads(assign_input_json)
     assign_data["subarray_id"] = 2
-    central_node_low.perform_action("AssignResources", json.dumps(assign_data))
-    assert_that(event_tracer).described_as(
-        "TMC subarray device"
-        f"({central_node_low.subarray_node.dev_name()}) "
-        "is expected to be in IDLE obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
-        "obsState",
-        ObsState.IDLE,
-    )
-
-
-@when("I release resources from the both the subarrays")
-def release_resources_from_both_subarrays(
-    central_node_low: CentralNodeWrapperLow,
-    command_input_factory: JsonFactory,
-    event_tracer: TangoEventTracer,
-):
-    """Invokes release resources on two subarrays."""
-    central_node_low.set_subarray_id(1)
-    release_input_json = prepare_json_args_for_centralnode_commands(
-        "release_resources_low", command_input_factory
-    )
-    _, unique_id = central_node_low.invoke_release_resources(
-        release_input_json
-    )
-    assert_that(event_tracer).described_as(
-        "Central Node device"
-        f"({central_node_low.central_node.dev_name()}) "
-        "is expected have longRunningCommand as"
-        '(unique_id,(ResultCode.OK,"Command Completed"))',
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.central_node,
-        "longRunningCommandResult",
-        (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
-    )
-    release_data = json.loads(release_input_json)
-    release_data["subarray_id"] = 2
-    _, unique_id = central_node_low.perform_action(
-        "ReleaseResources", json.dumps(release_data)
-    )
-    assert_that(event_tracer).described_as(
-        "Central Node device"
-        f"({central_node_low.central_node.dev_name()}) "
-        "is expected have longRunningCommand as"
-        '(unique_id,(ResultCode.OK,"Command Completed"))',
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.central_node,
-        "longRunningCommandResult",
-        (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
+    _, pytest.unique_id2 = central_node_low.perform_action(
+        "AssignResources", json.dumps(assign_data)
     )
 
 
 @then(
-    "the TMC, CSP, SDP, and MCCS subarray 1 transition to the EMPTY obsState"
+    "the TMC central node long running command results"
+    " for both subarrys are OK"
 )
-def verify_subarrays_in_empty(
+def verify_result_ok(
+    central_node_low: CentralNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Verifies result code OK"""
+    central_node_low.set_subarray_id(1)
+    assert_that(event_tracer).described_as(
+        "Central Node device"
+        f"({central_node_low.central_node.dev_name()}) "
+        "is expected have longRunningCommand as"
+        '(unique_id,(ResultCode.OK,"Command Completed"))',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.central_node,
+        "longRunningCommandResult",
+        (
+            pytest.unique_id[0],
+            json.dumps((int(ResultCode.OK), "Command Completed")),
+        ),
+    )
+    assert_that(event_tracer).described_as(
+        "Central Node device"
+        f"({central_node_low.central_node.dev_name()}) "
+        "is expected have longRunningCommand as"
+        '(unique_id,(ResultCode.OK,"Command Completed"))',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.central_node,
+        "longRunningCommandResult",
+        (
+            pytest.unqiue_id2[0],
+            json.dumps((int(ResultCode.OK), "Command Completed")),
+        ),
+    )
+
+
+@then("the TMC, CSP, SDP, and MCCS subarray 1 transition to the IDLE obsState")
+def verify_subarrays_in_idle(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
     simulator_factory: SimulatorFactory,
@@ -215,72 +211,72 @@ def verify_subarrays_in_empty(
     assert_that(event_tracer).described_as(
         "Subarray Node device"
         f"({central_node_low.subarray_node.dev_name()}) "
-        "is expected to be in EMPTY obstate",
+        "is expected to be in IDLE obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
-        ObsState.EMPTY,
+        ObsState.IDLE,
     )
     assert_that(event_tracer).described_as(
         "SDP subarray device"
         f"({sdp_sim.dev_name()}) "
-        "is expected to be in EMPTY obstate",
+        "is expected to be in IDLE obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         sdp_sim,
         "obsState",
-        ObsState.EMPTY,
+        ObsState.IDLE,
     )
     assert_that(event_tracer).described_as(
         "SDP subarray leaf device"
         f"({central_node_low.sdp_subarray_leaf_node.dev_name()}) "
-        "is expected to be in EMPTY obstate",
+        "is expected to be in IDLE obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.sdp_subarray_leaf_node,
         "sdpSubarrayObsState",
-        ObsState.EMPTY,
+        ObsState.IDLE,
     )
     assert_that(event_tracer).described_as(
         "CSP subarray leaf device"
         f"({central_node_low.csp_subarray_leaf_node.dev_name()}) "
-        "is expected to be in EMPTY obstate",
+        "is expected to be in IDLE obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.csp_subarray_leaf_node,
         "cspSubarrayObsState",
-        ObsState.EMPTY,
+        ObsState.IDLE,
     )
     assert_that(event_tracer).described_as(
         "CSP subarray device"
         f"({csp_sim.dev_name()}) "
-        "is expected to be in EMPTY obstate",
+        "is expected to be in IDLE obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         csp_sim,
         "obsState",
-        ObsState.EMPTY,
+        ObsState.IDLE,
     )
     assert_that(event_tracer).described_as(
         "MCCS subarray leaf device"
         f"({central_node_low.mccs_subarray_leaf_node.dev_name()}) "
-        "is expected to be in EMPTY obstate",
+        "is expected to be in IDLE obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.mccs_subarray_leaf_node,
         "obsState",
-        ObsState.EMPTY,
+        ObsState.IDLE,
     )
     assert_that(event_tracer).described_as(
         "MCCS subarray device"
         f"({mccs_sim.dev_name()}) "
-        "is expected to be in EMPTY obstate",
+        "is expected to be in IDLE obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         mccs_sim,
         "obsState",
-        ObsState.EMPTY,
+        ObsState.IDLE,
     )
 
 
 @then(
     "the TMC, CSP, SDP, and MCCS subarray 2 transition to the EMPTY obsState"
 )
-def verify_subarrays2_in_empty(
+def verify_subarrays2_in_idle(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
     simulator_factory: SimulatorFactory,
@@ -324,45 +320,45 @@ def verify_subarrays2_in_empty(
     assert_that(event_tracer).described_as(
         "Subarray Node device"
         f"({central_node_low.subarray_node.dev_name()}) "
-        "is expected to be in EMPTY obstate",
+        "is expected to be in IDLE obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
-        ObsState.EMPTY,
+        ObsState.IDLE,
     )
     assert_that(event_tracer).described_as(
         "SDP subarray device"
         f"({sdp_sim2.dev_name()}) "
-        "is expected to be in EMPTY obstate",
+        "is expected to be in IDLE obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         sdp_sim2,
         "obsState",
-        ObsState.EMPTY,
+        ObsState.IDLE,
     )
     assert_that(event_tracer).described_as(
         "SDP subarray leaf device"
         f"({central_node_low.sdp_subarray_leaf_node.dev_name()}) "
-        "is expected to be in EMPTY obstate",
+        "is expected to be in IDLE obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.sdp_subarray_leaf_node,
         "sdpSubarrayObsState",
-        ObsState.EMPTY,
+        ObsState.IDLE,
     )
     assert_that(event_tracer).described_as(
         "MCCS subarray leaf device"
         f"({central_node_low.mccs_subarray_leaf_node.dev_name()}) "
-        "is expected to be in EMPTY obstate",
+        "is expected to be in IDLE obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.mccs_subarray_leaf_node,
         "obsState",
-        ObsState.EMPTY,
+        ObsState.IDLE,
     )
     assert_that(event_tracer).described_as(
         "MCCS subarray device"
         f"({mccs_sim2.dev_name()}) "
-        "is expected to be in EMPTY obstate",
+        "is expected to be in IDLE obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         mccs_sim2,
         "obsState",
-        ObsState.EMPTY,
+        ObsState.IDLE,
     )

@@ -1,7 +1,7 @@
 """
 This module defines a BDD (Behavior-Driven Development) test scenario
 using pytest-bdd to verify the behavior of the Telescope Monitoring and
-Control (TMC) system to verify the SKB-1051.
+Control (TMC) system to verify the SKB-980.
 """
 
 
@@ -27,11 +27,11 @@ from tests.resources.test_support.constant_low import TIMEOUT
 
 @pytest.mark.SKA_low
 @scenario(
-    "../features/tmc/skb_1051.feature",
-    "Verify SKB-1051",
+    "../features/tmc/skb_980.feature",
+    "Verify SKB-980 for release resources flow",
 )
-def test_verify_skb_1051():
-    """BDD test scenario for verifying SKB-1051"""
+def test_verify_skb_980():
+    """BDD test scenario for verifying SKB-980"""
 
 
 @given("the telescope is in the ON state")
@@ -82,25 +82,15 @@ def given_a_telescope_is_in_on(
         "telescopeState",
         DevState.ON,
     )
-    assert_that(event_tracer).described_as(
-        "FAILED UNEXPECTED INITIAL OBSSTATE: "
-        "Subarray Node device"
-        f"({central_node_low.subarray_node.dev_name()}) "
-        "is expected to be in EMPTY obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
-        "obsState",
-        ObsState.EMPTY,
-    )
 
 
 @given("subarray 1 and 2 are in the IDLE ObsState")
-def central_node_assign_resources(
+def verify_subarrys_in_idle(
     central_node_low: CentralNodeWrapperLow,
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
 ):
-    """Invokes assign resources on two subarrays."""
+    """Verifies subarray in IDLE ObsState."""
     assign_input_json = prepare_json_args_for_centralnode_commands(
         "assign_resources_low", command_input_factory
     )
@@ -129,34 +119,48 @@ def central_node_assign_resources(
     )
 
 
-@when("I release resources from the both the subarrays")
-def release_resources_from_both_subarrays(
+@when("I release resources from the both the subarrays simultaneously")
+def central_node_assign_resources(
     central_node_low: CentralNodeWrapperLow,
     command_input_factory: JsonFactory,
-    event_tracer: TangoEventTracer,
 ):
     """Invokes release resources on two subarrays."""
-    central_node_low.set_subarray_id(1)
     release_input_json = prepare_json_args_for_centralnode_commands(
         "release_resources_low", command_input_factory
     )
-    _, unique_id = central_node_low.invoke_release_resources(
+    _, pytest.unique_id = central_node_low.invoke_release_resources(
         release_input_json
     )
-    assert_that(event_tracer).described_as(
-        "Central Node device"
-        f"({central_node_low.central_node.dev_name()}) "
-        "is expected have longRunningCommand as"
-        '(unique_id,(ResultCode.OK,"Command Completed"))',
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.central_node,
-        "longRunningCommandResult",
-        (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
-    )
+    central_node_low.set_subarray_id(2)
     release_data = json.loads(release_input_json)
     release_data["subarray_id"] = 2
-    _, unique_id = central_node_low.perform_action(
+    _, pytest.unique_id2 = central_node_low.perform_action(
         "ReleaseResources", json.dumps(release_data)
+    )
+
+
+@then(
+    "the TMC central node long running command results"
+    " for both subarrys are OK"
+)
+def verify_result_ok(
+    central_node_low: CentralNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Verifies result code OK"""
+    central_node_low.set_subarray_id(1)
+    assert_that(event_tracer).described_as(
+        "Central Node device"
+        f"({central_node_low.central_node.dev_name()}) "
+        "is expected have longRunningCommand as"
+        '(unique_id,(ResultCode.OK,"Command Completed"))',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.central_node,
+        "longRunningCommandResult",
+        (
+            pytest.unique_id[0],
+            json.dumps((int(ResultCode.OK), "Command Completed")),
+        ),
     )
     assert_that(event_tracer).described_as(
         "Central Node device"
@@ -166,14 +170,17 @@ def release_resources_from_both_subarrays(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.central_node,
         "longRunningCommandResult",
-        (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
+        (
+            pytest.unqiue_id2[0],
+            json.dumps((int(ResultCode.OK), "Command Completed")),
+        ),
     )
 
 
 @then(
     "the TMC, CSP, SDP, and MCCS subarray 1 transition to the EMPTY obsState"
 )
-def verify_subarrays_in_empty(
+def verify_subarrays_in_idle(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
     simulator_factory: SimulatorFactory,
@@ -280,7 +287,7 @@ def verify_subarrays_in_empty(
 @then(
     "the TMC, CSP, SDP, and MCCS subarray 2 transition to the EMPTY obsState"
 )
-def verify_subarrays2_in_empty(
+def verify_subarrays2_in_idle(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
     simulator_factory: SimulatorFactory,
