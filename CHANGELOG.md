@@ -5,6 +5,12 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[Main]
+************
+Fixed
+------
+* Updated Central node tag v0.24.0 to fix SKB-908 and SKB-1051.
+
 [2.3.1-rc.1]
 ************
 Updated

@@ -218,10 +218,13 @@ device_dict_low = {
 SIMULATOR_DEVICE_FQDN_DICT = {
     SimulatorDeviceType.LOW_SDP_DEVICE: [low_sdp_subarray1],
     SimulatorDeviceType.LOW_CSP_DEVICE: [low_csp_subarray1],
+    SimulatorDeviceType.LOW_SDP_DEVICE2: [low_sdp_subarray2],
+    SimulatorDeviceType.LOW_CSP_DEVICE2: [low_csp_subarray2],
     SimulatorDeviceType.LOW_SDP_MASTER_DEVICE: [low_sdp_master],
     SimulatorDeviceType.LOW_CSP_MASTER_DEVICE: [low_csp_master],
     SimulatorDeviceType.MCCS_MASTER_DEVICE: [mccs_controller],
     SimulatorDeviceType.MCCS_SUBARRAY_DEVICE: [mccs_subarray1],
+    SimulatorDeviceType.MCCS_SUBARRAY_DEVICE2: [mccs_subarray2],
 }
 
 LOW_DELAYMODEL_VERSION = "https://schema.skao.int/ska-low-csp-delaymodel/1.1"

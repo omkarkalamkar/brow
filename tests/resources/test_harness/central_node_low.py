@@ -104,8 +104,8 @@ class CentralNodeWrapperLow(object):
         )
 
     def set_subarray_id(self, subarray_id):
+        subarray_id = f"{subarray_id:02}"
         self.subarray_node = DeviceProxy(f"low-tmc/subarray/{subarray_id}")
-        subarray_id = "{:02d}".format(int(subarray_id))
         self.subarray_devices = {
             "csp_subarray": DeviceProxy(f"low-csp/subarray/{subarray_id}"),
             "sdp_subarray": DeviceProxy(f"low-sdp/subarray/{subarray_id}"),
@@ -192,6 +192,8 @@ class CentralNodeWrapperLow(object):
 
         """
         LOGGER.info("Invoking TelescopeOff command with all Mocks")
+        device = DeviceProxy(low_csp_subarray1)
+        device.Off()
         _, unique_id = self.central_node.TelescopeOff()
         self.set_values_with_all_mocks(DevState.OFF)
         assert_that(self.event_tracer).described_as(
@@ -220,35 +222,11 @@ class CentralNodeWrapperLow(object):
             if clear_transition:
                 device.ResetTransitions()
 
-    def tear_down(self):
-        """Handle Tear down of central Node"""
-        LOGGER.info("Calling Tear down for Central node.")
-        # reset HealthState.UNKNOWN for mock devices
-        self._reset_health_state_for_mock_devices()
-        self.reset_defects_for_devices()
+    def tear_down_subarray(self, subarray: DeviceProxy):
+        """Tear down subarray"""
         LOGGER.info("Subarray Node ObsState: %s", self.subarray_node.obsstate)
-        if self.subarray_node.obsState in [
-            ObsState.RESOURCING,
-        ]:
-            LOGGER.info("Calling Abort and Restart on SubarrayNode")
-            _, unique_id = self.subarray_abort()
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER ABORT COMMAND: "
-                "SubarrayNode device"
-                f"({self.subarray_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Abort command completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.subarray_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps(
-                        (int(ResultCode.OK), "Abort command completed")
-                    ),
-                ),
-            )
-
+        if subarray.obsState not in [ObsState.EMPTY, ObsState.IDLE]:
+            LOGGER.info("Calling Restart on SubarrayNode")
             _, unique_id = self.subarray_restart()
             assert_that(self.event_tracer).described_as(
                 "FAILED ASSUMPTION AFTER RESTART COMMAND: "
@@ -264,26 +242,15 @@ class CentralNodeWrapperLow(object):
                     json.dumps((int(ResultCode.OK), "Command Completed")),
                 ),
             )
-
-        elif self.subarray_node.obsState in [ObsState.ABORTED, ObsState.FAULT]:
-            _, unique_id = self.subarray_restart()
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER RESTART COMMAND: "
-                "SubarrayNode device"
-                f"({self.subarray_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.subarray_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
-        elif self.subarray_node.obsState == ObsState.IDLE:
+        elif subarray.obsState == ObsState.IDLE:
             LOGGER.info("Calling Release Resource on centralnode")
-            _, unique_id = self.invoke_release_resources(self.release_input)
+            release_data = json.loads(self.release_input)
+            release_data["subarray_id"] = int(
+                subarray.dev_name().split("/")[-1]
+            )
+            _, unique_id = self.invoke_release_resources(
+                json.dumps(release_data)
+            )
             assert_that(self.event_tracer).described_as(
                 "FAILED ASSUMPTION AFTER RELEASE_RESOURCES COMMAND: "
                 "SubarrayNode device"
@@ -298,6 +265,17 @@ class CentralNodeWrapperLow(object):
                     json.dumps((int(ResultCode.OK), "Command Completed")),
                 ),
             )
+
+    def tear_down(self):
+        """Handle Tear down of central Node"""
+        LOGGER.info("Calling Tear down for Central node.")
+        # reset HealthState.UNKNOWN for mock devices
+        self._reset_health_state_for_mock_devices()
+        self.reset_defects_for_devices()
+        self.set_subarray_id(1)
+        self.tear_down_subarray(self.subarray_node)
+        self.set_subarray_id(2)
+        self.tear_down_subarray(self.subarray_node)
         self.move_to_off()
         self._clear_command_call_and_transition_data(clear_transition=True)
         self.event_recorder.clear_events()
