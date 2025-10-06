@@ -131,7 +131,7 @@ deviceServers:
     SkuidService: "ska-ser-skuid-test-svc.ska-tmc-centralnode.svc.techops.internal.skao.int:9870"
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
-    CommandTimeOutDefault: 85
+    CommandTimeOutDefault: 80
     AssignResourcesInterface: "https://schema.skao.int/ska-low-tmc-assignresources/4.0"
     ReleaseResourcesInterface: "https://schema.skao.int/ska-low-tmc-releaseresources/3.0"
     family: "central-node"
@@ -148,7 +148,7 @@ deviceServers:
     JonesURI: "tango://jones.skao.int/low/stn-beam/1"
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
-    CommandTimeOutDefault: 75
+    CommandTimeOutDefault: 70
     AbortCommandTimeOut: 40
     family: "subarray"
     IsAutoRecoveryEnabled: "false"
@@ -159,7 +159,7 @@ deviceServers:
   sdpsubarrayleafnode:
     enabled: true
     file: "data/sdpsubarrayleafnode.yaml"
-    CommandTimeOutDefault: 60
+    CommandTimeOutDefault: 50
     AdapterTimeOut: 2
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
