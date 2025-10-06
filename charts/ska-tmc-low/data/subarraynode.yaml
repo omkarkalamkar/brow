@@ -13,7 +13,6 @@ entrypoints:
 {{- $AbortCommandTimeOut := .Values.deviceServers.subarraynode.AbortCommandTimeOut }}
 {{- $LivelinessCheckPeriod := .Values.deviceServers.subarraynode.LivelinessCheckPeriod }}
 {{- $EventSubscriptionCheckPeriod := .Values.deviceServers.subarraynode.EventSubscriptionCheckPeriod }}
-{{- $AutoRecoveryEnabled := .Values.deviceServers.subarraynode.IsAutoRecoveryEnabled }}
 {{- $TelmodelSource := .Values.deviceServers.subarraynode.TelmodelSource }}
 {{- $TelmodelPath := .Values.deviceServers.subarraynode.TelmodelPath }}
 
@@ -99,9 +98,6 @@ server:
           - name: "AbortCommandTimeOut"
             values:
               - "{{ $AbortCommandTimeOut }}"
-          - name: "IsAutoRecoveryEnabled"
-            values:
-              - "{{ $AutoRecoveryEnabled }}"
           - name: "TelmodelSource"
             values:
               - "{{ $TelmodelSource }}"

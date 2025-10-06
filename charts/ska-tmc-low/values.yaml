@@ -151,7 +151,6 @@ deviceServers:
     CommandTimeOutDefault: 70
     AbortCommandTimeOut: 40
     family: "subarray"
-    IsAutoRecoveryEnabled: "false"
     TelmodelSource: "car://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     TelmodelPath: "instrument/ska1_low/layout/low-layout.json"
 
