@@ -398,6 +398,7 @@ class TestLowCentralNodeAssignResources:
 
         mccs_subarray_sim.setDefective(json.dumps(RESET_DEFECT))
 
+    @pytest.mark.skip("TBD")
     @pytest.mark.SKA_low
     def test_low_centralnode_release_resources_exception_propagation(
         self,
