@@ -1,21 +1,21 @@
-release=2.3.2-rc.1
-tag=2.3.2-rc.1
+release=2.3.2-rc.2
+tag=2.3.2-rc.2
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.3.2-rc.1**
+**1. ska-tmc-low-integration 2.3.2-rc.2**
 
-    **1.1 ska-tmc-low  2.3.1-rc.1 - 2.3.2-rc.1 :**
-        * Updated Central node tag v0.24.0 to resolve SKB-908 and SKB-1051.
+    **1.1 ska-tmc-low  2.3.2-rc.1 - 2.3.2-rc.2 :**
+        * Updated Central node tag v0.24.1 to resolve SKB-860.
 
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.3.2-rc.1**
+**1. ska-tmc-low-integration 2.3.2-rc.2**
 
-    **1.1 ska-tmc-low  2.3.1-rc.1 - 2.3.2-rc.1 :**
-        * Updated Central node tag v0.24.0 to resolve SKB-908 and SKB-1051.
+    **1.1 ska-tmc-low  2.3.2-rc.1 - 2.3.2-rc.2 :**
+        * Updated Central node tag v0.24.1 to resolve SKB-860.
 
 
 
