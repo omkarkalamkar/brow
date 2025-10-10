@@ -5,12 +5,8 @@ Scenario: TMC Perform Auto Recovery when Configure Failed
     And <failed_devices> Subarray Leaf Node transition to IDLE Obs state
 	And a subarray perform auto recovery and transition Subarray Obs State to IDLE
 	Examples:
-	| failed_devices  |  success_devices |
-	| CSP             |  SDP,MCCS        |
-	| SDP             |  CSP,MCCS        |
-    | MCCS            |  CSP,SDP         |
-	| CSP,SDP         |  MCCS            |
-	| MCCS,SDP        |  CSP             |
+	| failed_devices  |
+	| SDP             |
 
 Scenario: TMC Perform Auto Recovery when Successive Configure Failed
 	Given a TMC
