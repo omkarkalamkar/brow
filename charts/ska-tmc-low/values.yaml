@@ -136,6 +136,7 @@ deviceServers:
     ReleaseResourcesInterface: "https://schema.skao.int/ska-low-tmc-releaseresources/3.0"
     family: "central-node"
     member: "0"
+    IsAutoRecoveryEnabled: "true"
 
   subarraynode:
     enabled: true
@@ -151,6 +152,7 @@ deviceServers:
     CommandTimeOutDefault: 70
     AbortCommandTimeOut: 40
     family: "subarray"
+    IsAutoRecoveryEnabled: "true"
 
   sdpsubarrayleafnode:
     enabled: true

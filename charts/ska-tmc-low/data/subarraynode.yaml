@@ -13,6 +13,7 @@ entrypoints:
 {{- $AbortCommandTimeOut := .Values.deviceServers.subarraynode.AbortCommandTimeOut }}
 {{- $LivelinessCheckPeriod := .Values.deviceServers.subarraynode.LivelinessCheckPeriod }}
 {{- $EventSubscriptionCheckPeriod := .Values.deviceServers.subarraynode.EventSubscriptionCheckPeriod }}
+{{- $AutoRecoveryEnabled := .Values.deviceServers.subarraynode.IsAutoRecoveryEnabled }}
 
 server:
   name: "subarray_node_low"
@@ -90,6 +91,9 @@ server:
           - name: "AbortCommandTimeOut"
             values:
               - "{{ $AbortCommandTimeOut }}"
+          - name: "IsAutoRecoveryEnabled"
+            values:
+              - "{{ $AutoRecoveryEnabled }}"
 {{- end}}
 depends_on:
   - device: sys/database/2
