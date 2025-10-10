@@ -97,6 +97,9 @@ server:
           - name: "IsAutoRecoveryEnabled"
             values:
               - "{{ $AutoRecoveryEnabled }}"
+          - name: "MCCSControllerFQDN"
+            values:
+              - "low-mccs/control/control"
 {{- end}}
 depends_on:
   - device: sys/database/2
