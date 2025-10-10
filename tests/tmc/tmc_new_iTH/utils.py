@@ -8,6 +8,7 @@ from ska_integration_test_harness.facades.tmc_facade import TMCFacade
 from ska_integration_test_harness.inputs.test_harness_inputs import (
     TestHarnessInputs,
 )
+from ska_tango_testing.integration import TangoEventTracer, log_events
 
 from tests.resources.test_harness.constant import (
     IDLE_STATE_DEFECT,
@@ -190,3 +191,39 @@ def reset_defects(csp: CSPFacade, sdp: SDPFacade, mccs: MCCSFacade):
     csp.csp_subarray.SetDefective(RESET_DEFECT)
     sdp.sdp_subarray.SetDefective(RESET_DEFECT)
     mccs.mccs_subarray.SetDefective(RESET_DEFECT)
+
+
+def setup_event_subscriptions(
+    tmc: TMCFacade,
+    csp: CSPFacade,
+    sdp: SDPFacade,
+    mccs: MCCSFacade,
+    event_tracer: TangoEventTracer,
+):
+    """Subscribe TMC, CSP and SDP devices to track and log obsState events.
+
+    :param tmc: the TMC facade.
+    :param csp: the CSP facade.
+    :param sdp: the SDP facade.
+    :param event_tracer: the event tracer.
+    """
+    event_tracer.subscribe_event(tmc.subarray_node, "obsState")
+    event_tracer.subscribe_event(csp.csp_subarray, "obsState")
+    event_tracer.subscribe_event(sdp.sdp_subarray, "obsState")
+    event_tracer.subscribe_event(mccs.mccs_subarray, "obsState")
+    event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
+    event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
+
+    log_events(
+        {
+            tmc.subarray_node: [
+                "obsState",
+                "longRunningCommandResult",
+            ],
+            csp.csp_subarray: ["obsState"],
+            sdp.sdp_subarray: ["obsState"],
+            mccs.mccs_subarray: ["obsState"],
+            tmc.central_node: ["longRunningCommandResult"],
+        },
+        event_enum_mapping={"obsState": ObsState},
+    )

@@ -43,6 +43,9 @@ server:
           - name: "MccsSubarrayLNFQDN"
             values:
               - "{{ $mccs_sa_ln_fqdn_prefix}}{{ printf "%02s" . }}"
+          - name: "MCCSControllerFQDN"
+            values:
+              - "{{.Values.devices_fqdn.mccs_master_ln}}"
           - name: "CspSubarrayFQDN"
             values:
             - "{{ $csp_sa_fqdn_prefix}}/{{ printf "%02s" . }}"
