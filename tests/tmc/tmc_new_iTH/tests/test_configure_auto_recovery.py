@@ -29,7 +29,6 @@ FAILED_DEVICE_MAP = {
 }
 
 
-@pytest.mark.auto_recovery
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
@@ -37,6 +36,19 @@ FAILED_DEVICE_MAP = {
 )
 def test_configure_auto_recovery():
     """BDD test scenario for verifying auto recovery when configure failed"""
+
+
+@pytest.mark.auto_recovery
+@pytest.mark.SKA_low
+@scenario(
+    "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
+    "TMC Perform Auto Recovery when Successive Configure Failed",
+)
+def test_successive_configure_auto_recovery():
+    """
+    BDD test scenario for verifying auto recovery
+    when successive configure failed
+    """
 
 
 @given("a subarray is in the IDLE obsState")
@@ -57,6 +69,28 @@ def verify_tmc_subarray_observation_state_idle(
     context_data.csp_obsstate = ObsState.IDLE
     context_data.sdp_obsstate = ObsState.IDLE
     context_data.mccs_obsstate = ObsState.IDLE
+    pytest.is_successive_configure = False
+
+
+@given("a subarray is in the READY obsState")
+def verify_tmc_subarray_observation_state_ready(
+    event_tracer: TangoEventTracer,
+    tmc: TMCFacade,
+    csp: CSPFacade,
+    sdp: SDPFacade,
+    mccs: MCCSFacade,
+    default_commands_inputs: TestHarnessInputs,
+    context_data: TestContextData,
+):
+    setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
+    tmc.move_to_on(wait_termination=True)
+    tmc.force_change_of_obs_state(
+        ObsState.READY, default_commands_inputs, wait_termination=True
+    )
+    context_data.csp_obsstate = ObsState.READY
+    context_data.sdp_obsstate = ObsState.READY
+    context_data.mccs_obsstate = ObsState.READY
+    pytest.is_successive_configure = True
 
 
 @when(
@@ -109,27 +143,6 @@ def verify_configure_failed_on_subarray_leaf_node(
         )
 
 
-# @then(
-#     parsers.parse(
-#         "{failed_devices} Subarray Leaf Node transition to IDLE Obs state"
-#     )
-# )
-# def verify_subarray_leaf_node_to_idle(
-#     event_tracer: TangoEventTracer, failed_devices: str
-# ):
-#     """Verifies that configure failed on subarray leaf node."""
-#     for failed_device in failed_devices.split(","):
-#         assert_that(event_tracer).described_as(
-#             f"Subarray device ({FAILED_DEVICE_MAP[failed_device]})"
-#             "ObsState attribute value should move "
-#             f" to IDLE."
-#         ).within_timeout(TIMEOUT).has_change_event_occurred(
-#             FAILED_DEVICE_MAP[failed_device],
-#             "obsState",
-#             ObsState.IDLE,
-#         )
-
-
 @then(
     "a subarray perform auto recovery and transition Subarray Obs State "
     + "to IDLE"
@@ -150,6 +163,25 @@ def verify_tmc_subarray_to_idle(
 
 
 @then(
+    "a subarray perform auto recovery and transition Subarray Obs State "
+    + "to READY"
+)
+def verify_tmc_subarray_to_ready(
+    event_tracer: TangoEventTracer, tmc: TMCFacade
+):
+    """Verifies that tmc subarray moved to IDLE."""
+    assert_that(event_tracer).described_as(
+        "TMC Subarray Leaf Node)"
+        "ObsState attribute value should move "
+        " to READY."
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.READY,
+    )
+
+
+@then(
     parsers.parse(
         "{failed_devices} Failure is reported on Long Running Command Result"
     )
@@ -163,12 +195,21 @@ def verify_tmc_subarray_lrcr_failed(
     failed_devices: str,
 ):
     """Verifies that tmc subarray lrcr failed."""
-    failed_message = (
-        "Exception occurred on the following devices: "
-        "low-tmc/subarray-leaf-node-sdp/01: Device defective. "
-        "and Recovery Successful, "
-        "Subarray transitioned back to IDLE"
-    )
+    if pytest.is_successive_configure:
+        failed_message = (
+            "Exception occurred on the following devices: "
+            "low-tmc/subarray-leaf-node-sdp/01: Device defective. "
+            "and Recovery Successful, "
+            "Subarray transitioned back to READY"
+            " with previous configuration."
+        )
+    else:
+        failed_message = (
+            "Exception occurred on the following devices: "
+            "low-tmc/subarray-leaf-node-sdp/01: Device defective. "
+            "and Recovery Successful, "
+            "Subarray transitioned back to IDLE"
+        )
     assert_that(event_tracer).described_as(
         "TMC Subarray Leaf Node "
         f"({tmc.subarray_node}) "
