@@ -45,6 +45,7 @@ def verify_tmc_subarray_observation_state_idle(
     default_commands_inputs: TestHarnessInputs,
 ):
     setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
+    tmc.move_to_on(wait_termination=True)
     tmc.force_change_of_obs_state(
         ObsState.IDLE, default_commands_inputs, wait_termination=True
     )
