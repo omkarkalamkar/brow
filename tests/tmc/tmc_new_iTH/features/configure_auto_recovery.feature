@@ -25,7 +25,6 @@ Scenario: TMC Auto Recovery Failed
 	Then configure failed on <failed_devices> Subarray Leaf Node
 	And auto recovery failed due to <auto_recovery_failed_devices> failure
 	And TMC Subarray Obs State transition to FAULT Obs State
-	And Configure command failure, auto recovery failure reported on LRCR
 	Examples:
 	| failed_devices  | auto_recovery_failed_devices |
 	| SDP             | CSP                          |
