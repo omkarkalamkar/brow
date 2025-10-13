@@ -74,11 +74,11 @@ def invoke_configure_command(
 
 @then(parsers.parse("configure failed on {failed_devices} Subarray Leaf Node"))
 def verify_configure_failed_on_subarray_leaf_node(
-    event_tracer: TangoEventTracer, tmc: TMCFacade, failed_devices: list
+    event_tracer: TangoEventTracer, tmc: TMCFacade, failed_devices: str
 ):
     """Verifies that configure failed on subarray leaf node."""
 
-    for failed_device in failed_devices:
+    for failed_device in failed_devices.split(","):
         assert_that(event_tracer).described_as(
             "TMC Subarray Leaf Node "
             f"({tmc.subarray_node}) "
@@ -97,10 +97,10 @@ def verify_configure_failed_on_subarray_leaf_node(
     )
 )
 def verify_subarray_leaf_node_to_idle(
-    event_tracer: TangoEventTracer, failed_devices: list
+    event_tracer: TangoEventTracer, failed_devices: str
 ):
     """Verifies that configure failed on subarray leaf node."""
-    for failed_device in failed_devices:
+    for failed_device in failed_devices.split(","):
         assert_that(event_tracer).described_as(
             f"Subarray device ({FAILED_DEVICE_MAP[failed_device]})"
             "ObsState attribute value should move "
