@@ -87,7 +87,7 @@ def verify_configure_failed_on_subarray_leaf_node(
         ).within_timeout(20).has_change_event_occurred(
             FAILED_DEVICE_MAP[failed_device],
             "longRunningCommandResult",
-            (Anything, (ResultCode.FAILED,)),
+            (Anything, (ResultCode.FAILED, [3, "Device defective."])),
         )
 
 
