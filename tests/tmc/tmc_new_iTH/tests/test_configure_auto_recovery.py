@@ -114,7 +114,7 @@ def verify_subarray_leaf_node_to_idle(
 
 @then(
     "a subarray perform auto recovery and transition Subarray "
-    "Obs State to IDLE"
+    + "Obs State to IDLE"
 )
 def verify_tmc_subarray_to_idle(
     event_tracer: TangoEventTracer, tmc: TMCFacade
