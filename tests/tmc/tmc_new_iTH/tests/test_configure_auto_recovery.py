@@ -58,11 +58,11 @@ def invoke_configure_command(
     tmc: TMCFacade,
     sdp: SDPFacade,
     default_commands_inputs: TestHarnessInputs,
-    failed_devices: list,
+    failed_devices: str,
 ):
     """Invokes configure command on the TMC Subarray."""
     # Set device defective
-    for failed_device in failed_devices:
+    for failed_device in failed_devices.split(","):
         if failed_device == "SDP":
             sdp.sdp_subarray.SetDefective(
                 json.dumps(SDP_BACK_TO_INITIAL_STATE)
