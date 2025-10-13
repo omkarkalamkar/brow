@@ -24,6 +24,11 @@ FAILED_DEVICE_MAP = {
     "MCCS": "low-tmc/subarray-leaf-node-mccs/01",
 }
 
+THEN_STR = (
+    "a subarray perform auto recovery and transition Subarray Obs State "
+    "to IDLE"
+)
+
 
 @pytest.mark.auto_recovery
 @pytest.mark.SKA_low
@@ -112,10 +117,7 @@ def verify_subarray_leaf_node_to_idle(
         )
 
 
-@then(
-    "a subarray perform auto recovery and transition Subarray "
-    + "Obs State to IDLE"
-)
+@then(THEN_STR)
 def verify_tmc_subarray_to_idle(
     event_tracer: TangoEventTracer, tmc: TMCFacade
 ):
