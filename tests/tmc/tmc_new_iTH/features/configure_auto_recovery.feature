@@ -3,6 +3,7 @@ Scenario: TMC Perform Auto Recovery when Configure Failed
 	When I configure it for a scan with defective <failed_devices>
 	Then configure failed on <failed_devices> Subarray Leaf Node
 	And a subarray perform auto recovery and transition Subarray Obs State to IDLE
+	And <failed_devices> Failure is reported on Long Running Command Result
 	Examples:
 	| failed_devices  |
 	| SDP             |
