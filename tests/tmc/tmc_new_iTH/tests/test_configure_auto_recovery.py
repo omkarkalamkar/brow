@@ -24,11 +24,6 @@ FAILED_DEVICE_MAP = {
     "MCCS": "low-tmc/subarray-leaf-node-mccs/01",
 }
 
-THEN_STR = (
-    "a subarray perform auto recovery and transition Subarray Obs State "
-    "to IDLE"
-)
-
 
 @pytest.mark.auto_recovery
 @pytest.mark.SKA_low
@@ -102,7 +97,7 @@ def verify_configure_failed_on_subarray_leaf_node(
     )
 )
 def verify_subarray_leaf_node_to_idle(
-    event_tracer: TangoEventTracer, tmc: TMCFacade, failed_devices: list
+    event_tracer: TangoEventTracer, failed_devices: list
 ):
     """Verifies that configure failed on subarray leaf node."""
     for failed_device in failed_devices:
@@ -117,7 +112,10 @@ def verify_subarray_leaf_node_to_idle(
         )
 
 
-@then(THEN_STR)
+@then(
+    "a subarray perform auto recovery and transition Subarray Obs State "
+    + "to IDLE"
+)
 def verify_tmc_subarray_to_idle(
     event_tracer: TangoEventTracer, tmc: TMCFacade
 ):
