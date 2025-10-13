@@ -168,5 +168,5 @@ def verify_tmc_subarray_lrcr_failed(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node,
         "longRunningCommandResult",
-        (pytest.unique_id[0], f"[3, {failed_message}]"),
+        (pytest.unique_id[0], f'[3, "{failed_message}"]'),
     )
