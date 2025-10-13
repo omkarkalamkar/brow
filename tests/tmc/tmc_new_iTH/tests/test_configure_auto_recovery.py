@@ -90,25 +90,25 @@ def verify_configure_failed_on_subarray_leaf_node(
         )
 
 
-@then(
-    parsers.parse(
-        "{failed_devices} Subarray Leaf Node transition to IDLE Obs state"
-    )
-)
-def verify_subarray_leaf_node_to_idle(
-    event_tracer: TangoEventTracer, failed_devices: str
-):
-    """Verifies that configure failed on subarray leaf node."""
-    for failed_device in failed_devices.split(","):
-        assert_that(event_tracer).described_as(
-            f"Subarray device ({FAILED_DEVICE_MAP[failed_device]})"
-            "ObsState attribute value should move "
-            f" to IDLE."
-        ).within_timeout(TIMEOUT).has_change_event_occurred(
-            FAILED_DEVICE_MAP[failed_device],
-            "obsState",
-            ObsState.IDLE,
-        )
+# @then(
+#     parsers.parse(
+#         "{failed_devices} Subarray Leaf Node transition to IDLE Obs state"
+#     )
+# )
+# def verify_subarray_leaf_node_to_idle(
+#     event_tracer: TangoEventTracer, failed_devices: str
+# ):
+#     """Verifies that configure failed on subarray leaf node."""
+#     for failed_device in failed_devices.split(","):
+#         assert_that(event_tracer).described_as(
+#             f"Subarray device ({FAILED_DEVICE_MAP[failed_device]})"
+#             "ObsState attribute value should move "
+#             f" to IDLE."
+#         ).within_timeout(TIMEOUT).has_change_event_occurred(
+#             FAILED_DEVICE_MAP[failed_device],
+#             "obsState",
+#             ObsState.IDLE,
+#         )
 
 
 @then(

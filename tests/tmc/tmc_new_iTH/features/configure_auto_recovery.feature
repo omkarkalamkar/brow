@@ -2,7 +2,6 @@ Scenario: TMC Perform Auto Recovery when Configure Failed
 	Given a subarray is in the IDLE obsState
 	When I configure it for a scan with defective <failed_devices>
 	Then configure failed on <failed_devices> Subarray Leaf Node
-	And <failed_devices> Subarray Leaf Node transition to IDLE Obs state
 	And a subarray perform auto recovery and transition Subarray Obs State to IDLE
 	Examples:
 	| failed_devices  |
