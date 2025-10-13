@@ -213,6 +213,15 @@ def setup_event_subscriptions(
     event_tracer.subscribe_event(mccs.mccs_subarray, "obsState")
     event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
     event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
+    event_tracer.subscribe_event(
+        tmc.sdp_subarray_leaf_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(
+        tmc.csp_subarray_leaf_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(
+        tmc.mccs_subarray_leaf_node, "longRunningCommandResult"
+    )
 
     log_events(
         {
@@ -224,6 +233,9 @@ def setup_event_subscriptions(
             sdp.sdp_subarray: ["obsState"],
             mccs.mccs_subarray: ["obsState"],
             tmc.central_node: ["longRunningCommandResult"],
+            tmc.sdp_subarray_leaf_node: ["longRunningCommandResult"],
+            tmc.csp_subarray_leaf_node: ["longRunningCommandResult"],
+            tmc.mccs_subarray_leaf_node: ["longRunningCommandResult"],
         },
         event_enum_mapping={"obsState": ObsState},
     )

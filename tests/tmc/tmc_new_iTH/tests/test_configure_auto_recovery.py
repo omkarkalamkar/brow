@@ -11,7 +11,6 @@ from ska_integration_test_harness.facades.tmc_facade import TMCFacade
 from ska_integration_test_harness.inputs.test_harness_inputs import (
     TestHarnessInputs,
 )
-from ska_tango_base.commands import ResultCode
 from ska_tango_testing.integration import TangoEventTracer
 from ska_tango_testing.mock.placeholders import Anything
 
@@ -87,7 +86,7 @@ def verify_configure_failed_on_subarray_leaf_node(
         ).within_timeout(20).has_change_event_occurred(
             FAILED_DEVICE_MAP[failed_device],
             "longRunningCommandResult",
-            (Anything, (ResultCode.FAILED, [3, "Device defective."])),
+            (Anything, '[3, "Device defective."]'),
         )
 
 
