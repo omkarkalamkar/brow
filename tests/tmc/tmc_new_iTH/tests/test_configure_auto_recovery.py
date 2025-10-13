@@ -16,7 +16,11 @@ from ska_tango_testing.mock.placeholders import Anything
 
 from tests.resources.test_support.constant_low import SDP_BACK_TO_INITIAL_STATE
 from tests.tmc.tmc_new_iTH.conftest import TestContextData
-from tests.tmc.tmc_new_iTH.utils import TIMEOUT, setup_event_subscriptions
+from tests.tmc.tmc_new_iTH.utils import (
+    TIMEOUT,
+    reset_defects,
+    setup_event_subscriptions,
+)
 
 FAILED_DEVICE_MAP = {
     "CSP": "low-tmc/subarray-leaf-node-csp/01",
@@ -151,7 +155,12 @@ def verify_tmc_subarray_to_idle(
     )
 )
 def verify_tmc_subarray_lrcr_failed(
-    event_tracer: TangoEventTracer, tmc: TMCFacade, failed_devices: str
+    event_tracer: TangoEventTracer,
+    tmc: TMCFacade,
+    csp: CSPFacade,
+    sdp: SDPFacade,
+    mccs: MCCSFacade,
+    failed_devices: str,
 ):
     """Verifies that tmc subarray lrcr failed."""
     failed_message = (
@@ -170,3 +179,4 @@ def verify_tmc_subarray_lrcr_failed(
         "longRunningCommandResult",
         (pytest.unique_id[0], f'[3, "{failed_message}"]'),
     )
+    reset_defects(csp, sdp, mccs)
