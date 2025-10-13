@@ -25,6 +25,7 @@ FAILED_DEVICE_MAP = {
 }
 
 
+@pytest.mark.auto_recovery
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
