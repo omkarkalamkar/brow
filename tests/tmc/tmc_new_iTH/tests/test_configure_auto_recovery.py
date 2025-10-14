@@ -195,7 +195,7 @@ def verify_auto_recovery_failed_on_subarray_leaf_node(
                 "ObsState attribute value should move "
                 " to READY."
             ).within_timeout(TIMEOUT).has_change_event_occurred(
-                FAILED_DEVICE_MAP[auto_recovery_failed_device],
+                csp.csp_subarray,
                 "obsState",
                 ObsState.READY,
             )
