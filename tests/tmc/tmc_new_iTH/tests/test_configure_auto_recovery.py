@@ -114,6 +114,7 @@ def verify_tmc_subarray_observation_state_ready(
 def invoke_configure_command(
     tmc: TMCFacade,
     sdp: SDPFacade,
+    csp: CSPFacade,
     default_commands_inputs: TestHarnessInputs,
     event_tracer: TangoEventTracer,
     failed_devices: str,
@@ -124,12 +125,13 @@ def invoke_configure_command(
         logging.info("Setting Failed result %s", failed_device)
         logging.info("is successive %s", pytest.is_successive_configure)
         if failed_device == "SDP":
-            if pytest.is_successive_configure:
-                sdp.sdp_subarray.SetDefective(json.dumps(FAILED_RESULT_DEFECT))
-            else:
+            if not pytest.is_successive_configure:
                 sdp.sdp_subarray.SetDefective(
                     json.dumps(SDP_BACK_TO_INITIAL_STATE)
                 )
+        elif failed_device == "CSP":
+            if pytest.is_successive_configure:
+                csp.csp_subarray.SetDefective(json.dumps(FAILED_RESULT_DEFECT))
     _, pytest.unique_id = tmc.configure(
         default_commands_inputs.configure_input, wait_termination=False
     )

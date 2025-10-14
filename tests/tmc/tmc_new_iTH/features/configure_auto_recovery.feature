@@ -17,7 +17,7 @@ Scenario: TMC Perform Auto Recovery when Successive Configure Failed
 	Examples:
 	Examples:
 	| failed_devices  |
-	| SDP             |
+	| CSP             |
 
 Scenario: TMC Auto Recovery Failed
 	Given a subarray is in the IDLE obsState
