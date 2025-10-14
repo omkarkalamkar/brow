@@ -1,3 +1,4 @@
+import copy
 import json
 import logging
 
@@ -131,7 +132,9 @@ def invoke_configure_command(
                 )
         elif failed_device == "CSP":
             if pytest.is_successive_configure:
-                csp.csp_subarray.SetDefective(json.dumps(FAILED_RESULT_DEFECT))
+                failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT)
+                failed_result_defect["target_obsstates"] = [ObsState.READY]
+                csp.csp_subarray.SetDefective(json.dumps(failed_result_defect))
     _, pytest.unique_id = tmc.configure(
         default_commands_inputs.configure_input, wait_termination=False
     )
