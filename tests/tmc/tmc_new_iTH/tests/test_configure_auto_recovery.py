@@ -155,6 +155,13 @@ def verify_configure_failed_on_subarray_leaf_node(
 ):
     """Verifies that configure failed on subarray leaf node."""
     for failed_device in failed_devices.split(","):
+        if pytest.is_successive_configure:
+            if failed_device == "CSP":
+                error_message = (
+                    '[3, "Exception occurred on device: low-csp/subarray/01"]'
+                )
+        else:
+            error_message = '[3, "Device defective."]'
         assert_that(event_tracer).described_as(
             "TMC Subarray Leaf Node "
             f"({tmc.subarray_node}) "
@@ -163,7 +170,7 @@ def verify_configure_failed_on_subarray_leaf_node(
         ).within_timeout(20).has_change_event_occurred(
             FAILED_DEVICE_MAP[failed_device],
             "longRunningCommandResult",
-            (Anything, '[3, "Device defective."]'),
+            (Anything, error_message),
         )
 
 
@@ -256,10 +263,9 @@ def verify_tmc_subarray_lrcr_failed(
     if pytest.is_successive_configure:
         failed_message = (
             "Exception occurred on the following devices: "
-            "low-tmc/subarray-leaf-node-sdp/01: Device defective. "
-            "and Recovery Successful, "
-            "Subarray transitioned back to READY"
-            " with previous configuration."
+            "low-tmc/subarray-leaf-node-csp/01: Exception occurred "
+            "on device: low-csp/subarray/01 and Recovery Successful, "
+            "Subarray transitioned back to READY with previous configuration."
         )
     else:
         failed_message = (
