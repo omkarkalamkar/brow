@@ -37,7 +37,7 @@ from tests.resources.test_harness.utils.common_utils import JsonFactory
 logger = logging.getLogger(__name__)
 
 
-@pytest.mark.SKA_low12
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/xtp_32140_low_delay_model.feature",
     "TMC generates delay values",
