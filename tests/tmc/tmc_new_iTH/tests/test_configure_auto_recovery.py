@@ -256,7 +256,11 @@ def verify_tmc_subarray_to_idle(
 
 @then("TMC Subarray Obs State transition to FAULT Obs State")
 def verify_tmc_subarray_to_fault(
-    event_tracer: TangoEventTracer, tmc: TMCFacade
+    event_tracer: TangoEventTracer,
+    tmc: TMCFacade,
+    csp: CSPFacade,
+    sdp: SDPFacade,
+    mccs: MCCSFacade,
 ):
     """Verifies that tmc subarray moved to FAULT."""
     assert_that(event_tracer).described_as(
@@ -268,6 +272,7 @@ def verify_tmc_subarray_to_fault(
         "obsState",
         ObsState.FAULT,
     )
+    reset_defects(csp, sdp, mccs)
 
 
 @then(
