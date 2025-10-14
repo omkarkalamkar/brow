@@ -183,6 +183,7 @@ def verify_configure_failed_on_subarray_leaf_node(
 def verify_auto_recovery_failed_on_subarray_leaf_node(
     event_tracer: TangoEventTracer,
     csp: CSPFacade,
+    mccs: MCCSFacade,
     auto_recovery_failed_devices: str,
 ):
     """Verifies that configure failed on subarray leaf node."""
@@ -209,6 +210,27 @@ def verify_auto_recovery_failed_on_subarray_leaf_node(
                 ObsState.READY,
             )
             csp.csp_subarray.SetDefective(json.dumps(FAILED_RESULT_DEFECT))
+        elif auto_recovery_failed_device == "MCCS":
+            # First assert configure is successful
+            assert_that(event_tracer).described_as(
+                "MCCS Subarray"
+                "ObsState attribute value should move "
+                " to CONFIGURING."
+            ).within_timeout(TIMEOUT).has_change_event_occurred(
+                mccs.mccs_subarray,
+                "obsState",
+                ObsState.CONFIGURING,
+            )
+            assert_that(event_tracer).described_as(
+                "MCCS Subarray"
+                "ObsState attribute value should move "
+                " to READY."
+            ).within_timeout(TIMEOUT).has_change_event_occurred(
+                mccs.mccs_subarray,
+                "obsState",
+                ObsState.READY,
+            )
+            mccs.mccs_subarray.SetDefective(json.dumps(FAILED_RESULT_DEFECT))
 
 
 @then(

@@ -27,4 +27,4 @@ Scenario: TMC Auto Recovery Failed
 	And TMC Subarray Obs State transition to FAULT Obs State
 	Examples:
 	| failed_devices  | auto_recovery_failed_devices |
-	| SDP             | CSP                          |
+	| SDP             | MCCS                         |
