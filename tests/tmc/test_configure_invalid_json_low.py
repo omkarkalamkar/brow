@@ -124,7 +124,7 @@ def send(subarray_node_low, invalid_json, command_input_factory):
     """Invoke the Configure command with different invalid JSON inputs."""
 
     configure_json = prepare_json_args_for_commands(
-        "configure_low", command_input_factory
+        "configure_low_4.1", command_input_factory
     )
     if invalid_json == "csp_key_missing":
         invalid_configure_json = json.loads(configure_json)
