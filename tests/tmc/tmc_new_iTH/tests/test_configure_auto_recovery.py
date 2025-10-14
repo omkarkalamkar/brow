@@ -232,7 +232,7 @@ def verify_auto_recovery_failed_on_subarray_leaf_node(
             )
             failed_result = copy.deepcopy(FAILED_RESULT_DEFECT)
             failed_result["target_obsstates"] = [ObsState.READY]
-            mccs.mccs_subarray.SetDefective(json.dumps(FAILED_RESULT_DEFECT))
+            mccs.mccs_subarray.SetDefective(json.dumps(failed_result))
 
 
 @then(
