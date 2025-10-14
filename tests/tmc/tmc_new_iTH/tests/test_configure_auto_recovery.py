@@ -140,7 +140,7 @@ def invoke_configure_command(
         default_commands_inputs.configure_input, wait_termination=False
     )
     assert_that(event_tracer).described_as(
-        "TMC Subarray Leaf Node)"
+        "TMC Subarray Leaf Node"
         "ObsState attribute value should move "
         " to CONFIGURING."
     ).within_timeout(TIMEOUT).has_change_event_occurred(
@@ -181,6 +181,7 @@ def verify_configure_failed_on_subarray_leaf_node(
     )
 )
 def verify_auto_recovery_failed_on_subarray_leaf_node(
+    event_tracer: TangoEventTracer,
     csp: CSPFacade,
     auto_recovery_failed_devices: str,
 ):
@@ -188,6 +189,17 @@ def verify_auto_recovery_failed_on_subarray_leaf_node(
 
     for auto_recovery_failed_device in auto_recovery_failed_devices.split(","):
         if auto_recovery_failed_device == "CSP":
+            # First assert configure is successful
+            assert_that(event_tracer).described_as(
+                "Csp Subarray "
+                f"({csp.csp_subarray}) "
+                "is expected to report a"
+                "longRunningCommand successful failure."
+            ).within_timeout(20).has_change_event_occurred(
+                FAILED_DEVICE_MAP[auto_recovery_failed_device],
+                "longRunningCommandResult",
+                (Anything, '[0, "Command Completed"]'),
+            )
             csp.csp_subarray.SetDefective(json.dumps(FAILED_RESULT_DEFECT))
 
 
