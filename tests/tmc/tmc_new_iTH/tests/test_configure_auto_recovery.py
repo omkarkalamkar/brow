@@ -197,6 +197,15 @@ def verify_auto_recovery_failed_on_subarray_leaf_node(
             ).within_timeout(TIMEOUT).has_change_event_occurred(
                 csp.csp_subarray,
                 "obsState",
+                ObsState.CONFIGURING,
+            )
+            assert_that(event_tracer).described_as(
+                "CSP Subarray Leaf Node"
+                "ObsState attribute value should move "
+                " to READY."
+            ).within_timeout(TIMEOUT).has_change_event_occurred(
+                csp.csp_subarray,
+                "obsState",
                 ObsState.READY,
             )
             csp.csp_subarray.SetDefective(json.dumps(FAILED_RESULT_DEFECT))
