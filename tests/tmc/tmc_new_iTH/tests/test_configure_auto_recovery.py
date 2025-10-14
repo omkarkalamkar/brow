@@ -56,6 +56,7 @@ def test_successive_configure_auto_recovery():
     """
 
 
+@pytest.mark.auto_recovery
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
@@ -180,8 +181,6 @@ def verify_configure_failed_on_subarray_leaf_node(
     )
 )
 def verify_auto_recovery_failed_on_subarray_leaf_node(
-    event_tracer: TangoEventTracer,
-    tmc: TMCFacade,
     csp: CSPFacade,
     auto_recovery_failed_devices: str,
 ):
