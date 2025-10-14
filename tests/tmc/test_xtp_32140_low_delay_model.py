@@ -7,6 +7,7 @@ and checks whether CspSubarrayLeafNode starts generating delay value.
 """
 import json
 import logging
+import time
 
 import pytest
 from assertpy import assert_that
@@ -173,6 +174,8 @@ def invoke_configure_command(
             json.dumps((int(ResultCode.OK), "Command Completed")),
         ),
     )
+
+    time.sleep(5)  # wait for delay model to be generated
 
 
 @then(
