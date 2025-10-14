@@ -33,7 +33,7 @@ from tests.resources.test_harness.subarray_node_low import (
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 
 
-@pytest.mark.SKA_low
+@pytest.mark.SKA_low12
 @scenario(
     "../features/tmc/xtp_32140_low_delay_model.feature",
     "TMC generates delay values",
