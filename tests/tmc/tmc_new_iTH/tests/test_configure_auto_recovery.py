@@ -1,4 +1,5 @@
 import json
+import logging
 
 import pytest
 from assertpy import assert_that
@@ -120,6 +121,8 @@ def invoke_configure_command(
     """Invokes configure command on the TMC Subarray."""
     # Set device defective
     for failed_device in failed_devices.split(","):
+        logging.info("Setting Failed result %s", failed_device)
+        logging.info("is successive %s", pytest.is_successive_configure)
         if failed_device == "SDP":
             if pytest.is_successive_configure:
                 sdp.sdp_subarray.SetDefective(json.dumps(FAILED_RESULT_DEFECT))
@@ -146,7 +149,6 @@ def verify_configure_failed_on_subarray_leaf_node(
     event_tracer: TangoEventTracer, tmc: TMCFacade, failed_devices: str
 ):
     """Verifies that configure failed on subarray leaf node."""
-
     for failed_device in failed_devices.split(","):
         assert_that(event_tracer).described_as(
             "TMC Subarray Leaf Node "
