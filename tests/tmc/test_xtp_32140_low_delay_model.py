@@ -6,6 +6,7 @@ The scenario includes steps to set up the TMC, configure the subarray,
 and checks whether CspSubarrayLeafNode starts generating delay value.
 """
 import json
+import logging
 
 import pytest
 from assertpy import assert_that
@@ -31,6 +32,8 @@ from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
 from tests.resources.test_harness.utils.common_utils import JsonFactory
+
+logger = logging.getLogger(__name__)
 
 
 @pytest.mark.SKA_low12
@@ -185,6 +188,7 @@ def check_multiple_delay_attributes(subarray_node_low, attribute):
         ).value
     )
     generated_delay_model_json = json.loads(generated_delay_model)
+    logger.info("Generated %s: %s", attribute, generated_delay_model_json)
 
     assert (
         generated_delay_model_json != INITIAL_LOW_DELAY_JSON
