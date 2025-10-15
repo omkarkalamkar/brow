@@ -156,7 +156,7 @@ COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE = {
 COMMAND_NOT_ALLOWED_DEFECT = json.dumps(
     {
         "enabled": True,
-        "fault_type": FaultType.COMMAND_NOT_ALLOWED,
+        "fault_type": FaultType.COMMAND_NOT_ALLOWED_BEFORE_QUEUING,
         "error_message": "Command is not allowed",
         "result": ResultCode.FAILED,
     }
