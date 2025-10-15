@@ -1,0 +1,154 @@
+{
+    "interface": "https://schema.skao.int/ska-low-tmc-assignresources/4.0",
+    "transaction_id": "txn-....-00001",
+    "subarray_id": 1,
+    "mccs": {
+      "interface": "https://schema.skao.int/ska-low-mccs-controller-allocate/3.0",
+      "subarray_beams": [
+        {
+          "subarray_beam_id": 5,
+          "apertures": [
+            {
+              "station_id": 1,
+              "aperture_id": "AP001.01"
+            },
+            {
+              "station_id": 2,
+              "aperture_id": "AP002.01"
+            }
+          ],
+          "number_of_channels": 8
+        }
+      ]
+    },
+    "sdp": {
+      "interface": "https://schema.skao.int/ska-sdp-assignres/0.4",
+      "resources": {
+        "csp_links": [
+          1,
+          1
+        ],
+        "receive_nodes": 1,
+        "receptors": [
+          "itf1",
+          "itf2"
+        ]
+      },
+      "execution_block": {
+        "eb_id": "eb-notebook-20251001-91582",
+        "max_length": 21600.0,
+        "context": {},
+        "scan_types": [
+          {
+            "scan_type_id": "target:default_observation_0_96_8",
+            "beams": {
+              "vis0": {
+                "field_id": "field_default_observation_0_0",
+                "channels_id": "vis_96_8",
+                "polarisations_id": "all"
+              }
+            }
+          }
+        ],
+        "beams": [
+          {
+            "beam_id": "vis0",
+            "function": "visibilities",
+            "visibility_beam_id": 5
+          }
+        ],
+        "channels": [
+          {
+            "channels_id": "vis_96_8",
+            "spectral_windows": [
+              {
+                "spectral_window_id": "96_8",
+                "count": 1152,
+                "start": 0,
+                "stride": 1,
+                "freq_min": 74609261.97193287,
+                "freq_max": 80859261.97193287
+              }
+            ]
+          }
+        ],
+        "polarisations": [
+          {
+            "polarisations_id": "all",
+            "corr_type": [
+              "XX",
+              "XY",
+              "YX",
+              "YY"
+            ]
+          }
+        ],
+        "fields": [
+          {
+            "field_id": "field_default_observation_0_0",
+            "phase_dir": {
+              "ra": [
+                180.0
+              ],
+              "dec": [
+                -30.0
+              ],
+              "reference_time": "...",
+              "reference_frame": "ICRF3"
+            }
+          }
+        ]
+      },
+      "processing_blocks": [
+        {
+          "pb_id": "pb-notebook-20251001-91583",
+          "script": {
+            "kind": "realtime",
+            "name": "vis-receive",
+            "version": "6.1.1"
+          },
+          "parameters": {
+            "extra_helm_values": {
+              "receiver": {
+                "readinessProbe": {
+                  "initialDelaySeconds": 2,
+                  "periodSeconds": 1
+                },
+                "options": {
+                  "telescope_model": {
+                    "telmodel_source_uris": "gitlab://gitlab.com/ska-telescope/aiv/ska-low-itf?96de71d3ae2bd111e4cfa3ac339aad3ba8704063#tmdata",
+                    "telmodel_key": "instrument/ska1_low/layout/low-layout.json"
+                  }
+                }
+              }
+            },
+            "processes_per_node": null,
+            "signal_display": {
+              "metrics": [
+                "all"
+              ]
+            },
+            "processors": {
+              "mswriter": {
+                "args": [
+                  "realtime.receive.processors.sdp.mswriter_processor.MSWriterProcessor",
+                  "--plasma_socket",
+                  "/plasma/socket",
+                  "--readiness-file=/tmp/processor_ready",
+                  "--ms-closed-notification-topic=ska-sdp-dataproduct-ingest",
+                  "output.ms"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "csp": {
+      "pst": {
+        "pst_beam_ids": [
+          1
+        ]
+      }
+    }
+  }
