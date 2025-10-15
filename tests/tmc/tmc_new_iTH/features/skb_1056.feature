@@ -1,4 +1,4 @@
-@new
+@SKA_low
 Scenario: Successful Configuration of Low Telescope Subarray in TMC
 	Given a TMC
 	Given a subarray in the IDLE obsState

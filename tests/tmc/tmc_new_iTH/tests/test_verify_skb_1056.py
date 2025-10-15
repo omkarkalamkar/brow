@@ -50,14 +50,13 @@ def _setup_event_subscriptions(
     )
 
 
-@pytest.mark.new
+@pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/skb_1056.feature",
     "Successful Configuration of Low Telescope Subarray in TMC",
 )
-def test_restart_command_in_observation_state_fault():
-    """BDD test scenario for verifying execution of the Restart
-    command in FAULT obsState in TMC."""
+def test_configure_command_with_itf_jsons_to_verify_skb_1056():
+    """BDD test scenario for verifying SKB-1056."""
 
 
 @given("a TMC")
@@ -68,7 +67,7 @@ def tmc(
     mccs: MCCSFacade,
     event_tracer: TangoEventTracer,
 ):
-    """Verifies the the subsystem obsStates after command is invoked"""
+    """Verifies TMC initial state."""
     _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
     tmc.move_to_on()
     assert_that(event_tracer).described_as(
@@ -97,7 +96,7 @@ def tmc(
 
 
 @given("a subarray in the IDLE obsState")
-def verify_tmc_subarray_observation_state_fault(
+def verify_tmc_subarray_observation_state_idle(
     event_tracer: TangoEventTracer,
     tmc: TMCFacade,
     csp: CSPFacade,
@@ -144,7 +143,7 @@ def invoke_configure_command(tmc: TMCFacade):
 
 
 @then("the subarray must be in the READY obsState")
-def verify_sdp_csp_mccs_in_empty_observation_state(
+def verify_sdp_csp_mccs_in_ready_observation_state(
     event_tracer: TangoEventTracer,
     csp: CSPFacade,
     sdp: SDPFacade,
