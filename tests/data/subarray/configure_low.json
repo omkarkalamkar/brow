@@ -251,13 +251,12 @@
         "lowcbf": {
             "stations": {
                 "stns": [
-                    [1, 0],
-                    [2, 0],
-                    [3, 0],
-                    [4, 0],
-                    [5, 0],
-                    [6, 0]
-                   
+                    [1, 1],
+                    [2, 1],
+                    [3, 1],
+                    [4, 1],
+                    [5, 1],
+                    [6, 1]
                 ],
                 "stn_beams": [{
                     "beam_id": 1,
@@ -349,8 +348,87 @@
                     "rfi_frequency_masks": []
                     
                 }
+            }, 
+            {
+                "beam_id": 2,
+                "scan": {
+                    "centre_frequency": 200000000.0,
+                    "total_bandwidth": 1562500.0,
+                    "pst_processing_mode": "VOLTAGE_RECORDER",
+                    "observer_id": "jdoe",
+                    "project_id": "project1",
+                    "target": {
+                        "target_name": "J1921+2153",
+                        "reference_frame": "icrs",
+                        "attrs": {
+                            "c1": 6.023625,
+                            "c2": -72.08128333,
+                            "epoch": 2000.0
+                        }
+                    },
+                    "receiver_id": "receiver3",
+                    "max_scan_length": 20000.0,
+                    "subint_duration": 30.0,
+                    "receptors": ["receptor1", "receptor2"],
+                    "receptor_weights": [0.4, 0.6],
+                    "rfi_frequency_masks": []
+                    
+                }
+            },
+        {
+                "beam_id": 3,
+                "scan": {
+                    "centre_frequency": 200000000.0,
+                    "total_bandwidth": 1562500.0,
+                    "pst_processing_mode": "VOLTAGE_RECORDER",
+                    "observer_id": "jdoe",
+                    "project_id": "project1",
+                    "target": {
+                        "target_name": "J1921+2153",
+                        "reference_frame": "icrs",
+                        "attrs": {
+                            "c1": 6.023625,
+                            "c2": -72.08128333,
+                            "epoch": 2000.0
+                        }
+                    },
+                    "receiver_id": "receiver3",
+                    "max_scan_length": 20000.0,
+                    "subint_duration": 30.0,
+                    "receptors": ["receptor1", "receptor2"],
+                    "receptor_weights": [0.4, 0.6]
+                    
+                    
+                }
+            },
+
+            {
+                "beam_id": 4,
+                "scan": {
+                    "delay_centre": [-254.433249, 5083.694774, -21062.439952],
+                    "centre_frequency": 200000000.0,
+                    "total_bandwidth": 1562500.0,
+                    "pst_processing_mode": "VOLTAGE_RECORDER",
+                    "observer_id": "jdoe",
+                    "project_id": "project1",
+                    "target": {
+                        "target_name": "J1921+2153",
+                        "reference_frame": "icrs",
+                        "attrs": {
+                            "c1": 6.023625,
+                            "c2": -72.08128333,
+                            "epoch": 2000.0
+                        }
+                    },
+                    "receiver_id": "receiver3",
+                    "max_scan_length": 20000.0,
+                    "subint_duration": 30.0,
+                    "receptors": ["receptor1", "receptor2"],
+                    "receptor_weights": [0.4, 0.6]
+                    
+                    
+                }
             }
-           
         
         ]
         }
