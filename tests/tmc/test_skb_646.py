@@ -31,8 +31,8 @@ from tests.resources.test_support.constant_low import (
 )
 
 
-@pytest.mark.skip(reason="SKB-908 to be resolved under sah-1798")
-@pytest.mark.SKA_low
+# @pytest.mark.skip(reason="SKB-908 to be resolved under sah-1798")
+@pytest.mark.SKA_low_skb646
 @scenario(
     "../features/tmc/SKB_646.feature",
     "Verify SKB-646",
