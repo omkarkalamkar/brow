@@ -156,7 +156,7 @@ def verify_tmc_subarray_observation_state_idle(
     )
 
 
-@when("I configure it for a scan")
+@when("I configure it for a voltage scan")
 def invoke_configure_command(tmc: TMCFacade):
     """Invokes Configure command on the TMC Subarray."""
     json_input = MyFileJSONInput("subarray", "configure_low_itf")
