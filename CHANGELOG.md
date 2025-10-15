@@ -5,12 +5,12 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
-[main]
-*******
+[unreleased]
+*************
 Fixed
 ------
 * Updated Csp subarray leaf node v0.32.2 to fix SKB-1056.
-* *Please note: The 'field' key section with "c1 & c2" are required under timing beams-> beams for PST beams delay generation*.
+
 
 [2.3.2-rc.2]
 ************
