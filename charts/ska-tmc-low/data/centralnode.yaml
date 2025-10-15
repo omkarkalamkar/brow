@@ -13,6 +13,7 @@ server:
   {{ $domain := .Values.domain}}
   {{ $family := .Values.deviceServers.centralnode.family }}
   {{ $member := .Values.deviceServers.centralnode.member }}
+  {{ $AutoRecoveryEnabled := .Values.deviceServers.centralnode.IsAutoRecoveryEnabled }}
   - name: "01"
     classes:
     - name: "LowTmcCentralNode"
@@ -79,6 +80,10 @@ server:
         - name: "EventSubscriptionCheckPeriod"
           values:
             - "{{.Values.deviceServers.centralnode.EventSubscriptionCheckPeriod}}"
+        - name: "IsAutoRecoveryEnabled"
+          values:
+            - "{{ $AutoRecoveryEnabled }}"
+
 
 depends_on:
   - device: sys/database/2

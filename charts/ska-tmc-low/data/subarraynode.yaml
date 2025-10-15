@@ -15,6 +15,7 @@ entrypoints:
 {{- $EventSubscriptionCheckPeriod := .Values.deviceServers.subarraynode.EventSubscriptionCheckPeriod }}
 {{- $TelmodelSource := .Values.deviceServers.subarraynode.TelmodelSource }}
 {{- $TelmodelPath := .Values.deviceServers.subarraynode.TelmodelPath }}
+{{- $AutoRecoveryEnabled := .Values.deviceServers.subarraynode.IsAutoRecoveryEnabled }}
 
 server:
   name: "subarray_node_low"
@@ -104,6 +105,10 @@ server:
           - name: "TelmodelPath"
             values:
               - "{{ $TelmodelPath }}"
+          - name: "IsAutoRecoveryEnabled"
+            values:
+              - "{{ $AutoRecoveryEnabled }}"
+
 {{- end}}
 depends_on:
   - device: sys/database/2
