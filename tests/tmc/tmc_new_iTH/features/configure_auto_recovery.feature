@@ -15,7 +15,6 @@ Scenario: TMC Perform Auto Recovery when Successive Configure Failed
 	And a subarray perform auto recovery and transition Subarray Obs State to READY
 	And <failed_devices> Failure is reported on Long Running Command Result
 	Examples:
-	Examples:
 	| failed_devices  |
 	| CSP             |
 
