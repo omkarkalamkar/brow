@@ -64,10 +64,10 @@ def _update_tel_model_for_csp(tmc: TMCFacade, telmodel_src: str):
     ()
     db = tango.Database()
     db.put_device_property(
-        tmc.csp_subarray_leaf_node.dev_name,
+        tmc.csp_subarray_leaf_node.dev_name(),
         {"TelmodelSource": itf_telmodel},
     )
-    cspsal_node = tango.DeviceProxy(tmc.csp_subarray_leaf_node.dev_name)
+    cspsal_node = tango.DeviceProxy(tmc.csp_subarray_leaf_node.dev_name())
     cspsal_node.init()
 
 
