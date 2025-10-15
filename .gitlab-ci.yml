@@ -103,6 +103,7 @@ k8s-test:
     - 'make help | grep k8s-test'
     - make k8s-install-chart
     - make k8s-wait
+    - make k8s-test MARK=SKB_1056
   after_script:
     - pip3 install -q -U ska-ser-xray
     - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish

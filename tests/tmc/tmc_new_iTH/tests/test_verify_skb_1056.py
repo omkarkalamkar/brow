@@ -1,4 +1,5 @@
 import pytest
+import tango
 from assertpy import assert_that
 from pytest_bdd import given, scenario, then, when
 from ska_control_model import ObsState
@@ -6,6 +7,9 @@ from ska_integration_test_harness.facades.csp_facade import CSPFacade
 from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
 from ska_integration_test_harness.facades.sdp_facade import SDPFacade
 from ska_integration_test_harness.facades.tmc_facade import TMCFacade
+from ska_integration_test_harness.inputs.test_harness_inputs import (
+    TestHarnessInputs,
+)
 from ska_tango_testing.integration import TangoEventTracer, log_events
 
 from tests.resources.test_harness.utils.my_file_json_input import (
@@ -50,7 +54,24 @@ def _setup_event_subscriptions(
     )
 
 
-@pytest.mark.SKA_low
+def _update_tel_model_for_csp(tmc: TMCFacade, telmodel_src: str):
+    """Updates Tel model source.
+
+    :param csp: _description_
+    :type csp: CSPFacade
+    """
+    itf_telmodel = telmodel_src
+    ()
+    db = tango.Database()
+    db.put_device_property(
+        tmc.csp_subarray_leaf_node.dev_name,
+        {"TelmodelSource": itf_telmodel},
+    )
+    cspsal_node = tango.DeviceProxy(tmc.csp_subarray_leaf_node.dev_name)
+    cspsal_node.init()
+
+
+@pytest.mark.SKB_1056
 @scenario(
     "../tmc/tmc_new_iTH/features/skb_1056.feature",
     "Successful Configuration of Low Telescope Subarray in TMC",
@@ -68,6 +89,9 @@ def tmc(
     event_tracer: TangoEventTracer,
 ):
     """Verifies TMC initial state."""
+    _update_tel_model_for_csp(
+        tmc, "gitlab://gitlab.com/ska-telescope/aiv/ska-low-itf?main#tmdata"
+    )
     _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
     tmc.move_to_on()
     assert_that(event_tracer).described_as(
@@ -149,6 +173,7 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
     sdp: SDPFacade,
     mccs: MCCSFacade,
     tmc: TMCFacade,
+    default_commands_inputs: TestHarnessInputs,
 ):
     """Verifies the observation states of SDP,CSP and MCCS
     after command Configure.
@@ -175,4 +200,9 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
         mccs.mccs_subarray,
         "obsState",
         ObsState.READY,
+    )
+
+    tmc.force_change_of_obs_state(ObsState.EMPTY, default_commands_inputs)
+    _update_tel_model_for_csp(
+        tmc, "gitlab://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     )
