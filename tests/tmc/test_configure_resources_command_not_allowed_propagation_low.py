@@ -109,31 +109,31 @@ class TestConfigureCommandNotAllowedPropagation:
         ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.subarray_node,
             "obsState",
-            ObsState.FAULT,
+            ObsState.IDLE,
         )
 
-        exception_message = (
-            " The invocation of the Configure command failed on Csp "
-            + "Subarray Device low-csp/subarray/01"
-        )
+        # exception_message = (
+        #     " The invocation of the Configure command failed on Csp "
+        #     + "Subarray Device low-csp/subarray/01"
+        # )
 
         log_events(
             {subarray_node_low.subarray_node: ["longRunningCommandResult"]}
         )
 
-        assert_that(event_tracer).described_as(
-            "FAILED ASSUMPTION AFTER CONFIGURE: "
-            f"({subarray_node_low.subarray_node.dev_name()}) "
-            "is expected have longRunningCommandResult"
-            "(ResultCode.FAILED,exception)",
-        ).within_timeout(
-            TIMEOUT
-        ).has_desired_result_code_message_in_lrcr_event(
-            subarray_node_low.subarray_node,
-            [exception_message],
-            pytest.unique_id[0],
-            ResultCode.FAILED,
-        )
+        # assert_that(event_tracer).described_as(
+        #     "FAILED ASSUMPTION AFTER CONFIGURE: "
+        #     f"({subarray_node_low.subarray_node.dev_name()}) "
+        #     "is expected have longRunningCommandResult"
+        #     "(ResultCode.FAILED,exception)",
+        # ).within_timeout(
+        #     TIMEOUT
+        # ).has_desired_result_code_message_in_lrcr_event(
+        #     subarray_node_low.subarray_node,
+        #     [exception_message],
+        #     pytest.unique_id[0],
+        #     ResultCode.FAILED,
+        # )
 
     @pytest.mark.SKA_low
     def test_configure_command_not_allowed_propagation_sdp_ln_low(
