@@ -92,14 +92,14 @@ cspmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.32.0
+    tag: 0.32.2
     pullPolicy: IfNotPresent
 
 cspsubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.32.0
+    tag: 0.32.2
     pullPolicy: IfNotPresent
 
 mccsmasterleafnode:
