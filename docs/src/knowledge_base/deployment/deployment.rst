@@ -171,6 +171,8 @@ Subarray Node
     #. **CommandTimeOutDefault** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 70 seconds.
     #. **AbortCommandTimeOut** :  This refers to the timeout for the Subarray ABORTED obsState transition. Once the AbortCommandTimeOut exceeds, SubarrayNode transitions to obsState FAULT. Currently defaults to 40 seconds.
     #. **family** :  This refers to the family name of SubarrayNode TANGO device. Currently defaults to "subarray".
+    #. **TelmodelSource** :  This refers to the TelmodelSource of SubarrayNode TANGO device. Currently defaults to "car://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
+    #. **TelmodelPath** :  This refers to the TelmodelPath of SubarrayNode TANGO device. Currently defaults to "instrument/ska1_low/layout/low-layout.json".
 
 SDP Subarray Leaf Node
 ^^^^^^^^^^^^^^^^^^^^^^^^
