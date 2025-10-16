@@ -276,6 +276,8 @@ def invoke_init_on_subarray(subarray_node_low: SubarrayNodeWrapperLow):
     wait_and_validate_device_attribute_value(
         subarray_node_low.subarray_node, "State", DevState.ON
     )
+    # Wait for all events to receive
+    time.sleep(1)
 
 
 @when("wait for TMC Subarray Observation State transition to EMPTY")
