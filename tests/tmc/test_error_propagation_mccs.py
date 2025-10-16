@@ -149,7 +149,7 @@ def invoke_configure_command_with_mccs_defective(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         subarray_node_low.subarray_node,
         "obsState",
-        ObsState.FAULT,
+        ObsState.IDLE,
     )
 
 
@@ -172,7 +172,9 @@ def configure_command_reports_error_propagate(
     exception_message = (
         "Exception occurred on the following devices:"
         + f" {mccs_subarray_leaf_node}:"
-        + " Exception occurred, command failed."
+        + " Exception occurred, command failed. "
+        + "and Recovery Successful, Subarray "
+        + "transitioned back to IDLE"
     )
 
     assert_that(event_tracer).described_as(
