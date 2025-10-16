@@ -16,7 +16,7 @@ Fixed
 ************
 Fixed
 ------
-Updated Central node tag v0.24.1 to resolve SKB-860
+Updated Central node tag v0.24.1 to resolve SKB-860.
 
 [2.3.2-rc.1]
 ************
