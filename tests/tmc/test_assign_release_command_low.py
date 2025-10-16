@@ -137,7 +137,6 @@ def test_assign_release_defective_csp_sdp(
         sdp_sim.SetDefective(json.dumps({"enabled": False}))
 
 
-# @pytest.mark.skip(reason="TBD")
 @pytest.mark.SKA_low
 def test_assign_release_timeout_sdp(
     central_node_low: CentralNodeWrapperLow,
@@ -272,11 +271,6 @@ def test_release_exception_propagation(
     )
     csp_sim, _, _ = get_device_simulators(simulator_factory)
     event_tracer.subscribe_event(csp_sim, "obsState")
-
-    _, assign_unique_id = central_node_low.perform_action(
-        "AssignResources", assign_input_json
-    )
-
     csp_sim.SetDefective(json.dumps(INTERMEDIATE_STATE_DEFECT))
 
     assert wait_and_validate_device_attribute_value(
@@ -284,6 +278,9 @@ def test_release_exception_propagation(
         "defective",
         json.dumps(INTERMEDIATE_STATE_DEFECT),
         is_json=True,
+    )
+    _, assign_unique_id = central_node_low.perform_action(
+        "AssignResources", assign_input_json
     )
     log_events({central_node_low.subarray_node: ["obsState"]})
 

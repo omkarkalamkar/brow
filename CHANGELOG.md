@@ -5,6 +5,13 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[unreleased]
+*************
+Fixed
+------
+* Updated Csp subarray leaf node v0.32.2 to fix SKB-1056.
+
+
 [2.3.2-rc.2]
 ************
 Fixed
