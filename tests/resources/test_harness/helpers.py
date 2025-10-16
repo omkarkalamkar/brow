@@ -966,4 +966,5 @@ def wait_for_partial_or_complete_abort(timeout: int = 110) -> None:
                 dev_proxy,
                 attribute_name,
                 [ObsState.FAULT, ObsState.ABORTED, ObsState.EMPTY],
+                lookahead=10,
             )
