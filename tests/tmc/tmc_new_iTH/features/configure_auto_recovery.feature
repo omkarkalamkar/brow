@@ -1,3 +1,4 @@
+@XTP-91743 @XTP-91746 @XTP-28348 @Team_HIMALAYA
 Scenario: TMC Perform Auto Recovery when Configure Failed
 	Given a subarray is in the IDLE obsState
 	When I configure it for a scan with defective <failed_devices>
@@ -8,6 +9,7 @@ Scenario: TMC Perform Auto Recovery when Configure Failed
 	| failed_devices  |
 	| SDP             |
 
+@XTP-91744 @XTP-91746 @XTP-28348 @Team_HIMALAYA
 Scenario: TMC Perform Auto Recovery when Successive Configure Failed
 	Given a subarray is in the READY obsState
 	When I configure it for a scan with defective <failed_devices>
@@ -18,6 +20,7 @@ Scenario: TMC Perform Auto Recovery when Successive Configure Failed
 	| failed_devices  |
 	| CSP             |
 
+@XTP-91745 @XTP-91746 @XTP-28348 @Team_HIMALAYA
 Scenario: TMC Auto Recovery Failed
 	Given a subarray is in the IDLE obsState
 	When I configure it for a scan with defective <failed_devices>

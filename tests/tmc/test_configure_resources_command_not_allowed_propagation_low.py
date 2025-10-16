@@ -221,8 +221,7 @@ class TestConfigureCommandNotAllowedPropagation:
             f"Exception occurred on the following devices:"
             f" {low_sdp_subarray_leaf_node}:"
             " ska_tmc_common.exceptions.CommandNotAllowed:"
-            " Command is not allowed and Recovery Successful, "
-            "Subarray transitioned back to IDLE"
+            " Command is not allowed"
         )
 
         log_events(
