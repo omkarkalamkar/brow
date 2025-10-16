@@ -31,7 +31,6 @@ from tests.resources.test_support.constant_low import (
 )
 
 
-@pytest.mark.skip
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/SKB_646.feature",
@@ -226,7 +225,7 @@ def given_a_tmc(
     )
     # This sleep is required because after empty event
     # received in subarray it take some time to process
-    time.sleep(0.3)
+    time.sleep(1)
 
 
 @given("TMC Subarray is in RESOURCING Observation State")
