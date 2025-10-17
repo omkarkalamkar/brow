@@ -153,6 +153,9 @@ deviceServers:
     AbortCommandTimeOut: 40
     family: "subarray"
     IsAutoRecoveryEnabled: "true"
+    TelmodelSource: "car://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
+    TelmodelPath: "instrument/ska1_low/layout/low-layout.json"
+
 
   sdpsubarrayleafnode:
     enabled: true
