@@ -10,6 +10,8 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 Fixed
 ------
 * Updated Csp subarray leaf node v0.32.2 to fix SKB-1056.
+* Integrated latest SubarrayNode v0.44.1
+* Fixed SKB-1041
 
 
 [2.3.2-rc.2]
