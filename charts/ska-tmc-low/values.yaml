@@ -104,16 +104,16 @@ cspsubarrayleafnode:
 
 mccsmasterleafnode:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
+    registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.10.2-dev.c31fcbc7d
+    tag: 0.10.3
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
+    registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.10.2-dev.c31fcbc7d
+    tag: 0.10.3
     pullPolicy: IfNotPresent
 
 resources:
@@ -155,7 +155,6 @@ deviceServers:
     TelmodelSource: "car://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     TelmodelPath: "instrument/ska1_low/layout/low-layout.json"
     IsAutoRecoveryEnabled: "false"
-
 
   sdpsubarrayleafnode:
     enabled: true
