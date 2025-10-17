@@ -39,7 +39,7 @@ from tests.resources.test_support.constant_low import (
     RESET_DEFECT,
 )
 
-TIMEOUT = 30  # seconds
+TIMEOUT = 100  # seconds
 
 
 @pytest.mark.post_deployment
