@@ -6,6 +6,8 @@ The scenario includes steps to set up the TMC, configure the subarray,
 and checks whether CspSubarrayLeafNode starts generating delay value.
 """
 import json
+import logging
+import time
 
 import pytest
 from assertpy import assert_that
@@ -31,6 +33,8 @@ from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
 from tests.resources.test_harness.utils.common_utils import JsonFactory
+
+logger = logging.getLogger(__name__)
 
 
 @pytest.mark.SKA_low
@@ -179,16 +183,26 @@ def invoke_configure_command(
 )
 def check_multiple_delay_attributes(subarray_node_low, attribute):
     """Check delay model is generated for a specific beam attribute."""
-    generated_delay_model = (
-        subarray_node_low.csp_subarray_leaf_node.read_attribute(
-            attribute
-        ).value
-    )
-    generated_delay_model_json = json.loads(generated_delay_model)
+    # Poll the attribute for up to 5 seconds (1s interval) until it changes
+    wait_time = time.time() + 5
+    generated_delay_model_json = INITIAL_LOW_DELAY_JSON
+    while time.time() < wait_time:
+        generated_delay_model = (
+            subarray_node_low.csp_subarray_leaf_node.read_attribute(
+                attribute
+            ).value
+        )
+        generated_delay_model_json = json.loads(generated_delay_model)
+        logger.info(
+            "Generated %s (poll): %s", attribute, generated_delay_model_json
+        )
+        if generated_delay_model_json != INITIAL_LOW_DELAY_JSON:
+            break
+        time.sleep(1)
 
     assert (
         generated_delay_model_json != INITIAL_LOW_DELAY_JSON
-    ), f"{attribute} has not been updated from initial values."
+    ), f"{attribute} has not been updated from initial values"
 
     telmodel_validate(
         version=LOW_DELAYMODEL_VERSION,
