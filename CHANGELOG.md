@@ -15,7 +15,7 @@ is fixed and test case is enabled.
 Updated
 --------
 * Integrated latest SubarrayNode v0.44.1
-* Update TMC to support ska-low-tmc-configure/5.0 and ska-low-csp-configure/5.0
+* Update TMC to support ska-low-tmc-configure/5.0 and ska-low-csp-configure/5.0.
 
 Fixed
 ------
