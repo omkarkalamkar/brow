@@ -78,7 +78,7 @@ subarraynode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-subarraynode
-    tag: 0.41.0
+    tag: 0.44.1
     pullPolicy: IfNotPresent
 
 sdpleafnodes:
@@ -136,6 +136,7 @@ deviceServers:
     ReleaseResourcesInterface: "https://schema.skao.int/ska-low-tmc-releaseresources/3.0"
     family: "central-node"
     member: "0"
+    IsAutoRecoveryEnabled: "false"
 
   subarraynode:
     enabled: true
@@ -151,6 +152,10 @@ deviceServers:
     CommandTimeOutDefault: 70
     AbortCommandTimeOut: 40
     family: "subarray"
+    TelmodelSource: "car://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
+    TelmodelPath: "instrument/ska1_low/layout/low-layout.json"
+    IsAutoRecoveryEnabled: "false"
+
 
   sdpsubarrayleafnode:
     enabled: true
