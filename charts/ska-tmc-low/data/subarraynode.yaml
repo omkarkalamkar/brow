@@ -47,7 +47,7 @@ server:
               - "{{ $mccs_sa_ln_fqdn_prefix}}{{ printf "%02s" . }}"
           - name: "MccsMasterLNFQDN"
             values:
-              - "low-tmc/leaf-node-mccs/0"
+              - {{ .Values.devices_fqdn.mccs_master_ln}}
           - name: "CspSubarrayFQDN"
             values:
             - "{{ $csp_sa_fqdn_prefix}}/{{ printf "%02s" . }}"
@@ -59,7 +59,7 @@ server:
               - "{{ $mccs_sa_fqdn_prefix}}/{{ printf "%02s" . }}"
           - name: "MCCSControllerFQDN"  
             values:
-              - "low-mccs/control/control"
+              - {( .Values.devices_fqdns.mccs_master)}
           - name: "SkaLevel"
             values:
               - "2"
