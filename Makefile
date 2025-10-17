@@ -20,9 +20,9 @@ FILE_NAME?= alarm_rules.txt
 EXIT_AT_FAIL = true ## Flag for determining exit at failure. Set 'true' to exit at first failure.
 COUNT ?= 1
 
-ifeq ($(EXIT_AT_FAIL),true)
-ADD_ARGS += -x
-endif
+#ifeq ($(EXIT_AT_FAIL),true)
+#ADD_ARGS += -x
+#endif
 
 # KUBE_NAMESPACE defines the Kubernetes Namespace that will be deployed to
 # using Helm.  If this does not already exist it will be created
