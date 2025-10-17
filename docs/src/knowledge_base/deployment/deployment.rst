@@ -156,6 +156,7 @@ Central Node
     #. **ReleaseResourcesInterface** :  This refers to the interface value of ReleaseResources schema. Currently defaults to "https://schema.skao.int/ska-low-tmc-releaseresources/3.0".
     #. **family** :  This refers to the family name of CentralNode TANGO device. Currently defaults to "central-node".
     #. **member** :  This refers to the member of CentralNode TANGO device. Currently defaults to "0".
+    #. **IsAutoRecoveryEnabled** :  This refers to the feature flag i.e used temporarily till all the nodes are tested with auto recovery functionality. Currently defaults to "false".
 
 Subarray Node
 ^^^^^^^^^^^^^^
@@ -171,6 +172,9 @@ Subarray Node
     #. **CommandTimeOutDefault** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 70 seconds.
     #. **AbortCommandTimeOut** :  This refers to the timeout for the Subarray ABORTED obsState transition. Once the AbortCommandTimeOut exceeds, SubarrayNode transitions to obsState FAULT. Currently defaults to 40 seconds.
     #. **family** :  This refers to the family name of SubarrayNode TANGO device. Currently defaults to "subarray".
+    #. **IsAutoRecoveryEnabled** :  This refers to the feature flag i.e used temporarily till all the nodes are tested with auto recovery functionality. Currently defaults to "false".
+    #. **TelmodelSource** :  This refers to the TelmodelSource of SubarrayNode TANGO device. Currently defaults to "car://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata".
+    #. **TelmodelPath** :  This refers to the TelmodelPath of SubarrayNode TANGO device. Currently defaults to "instrument/ska1_low/layout/low-layout.json".
 
 SDP Subarray Leaf Node
 ^^^^^^^^^^^^^^^^^^^^^^^^
