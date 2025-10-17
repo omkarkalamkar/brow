@@ -1,4 +1,4 @@
-@SKA_low @XTP-74377
+@SKA_tmc_low_restart @XTP-74377
 Scenario Outline: Verify SKB-646
     Given ReleaseAllResource completed on CSP, MCCS, SDP Subarray
     And TMC Subarray is in RESOURCING Observation State

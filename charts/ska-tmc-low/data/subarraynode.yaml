@@ -13,6 +13,9 @@ entrypoints:
 {{- $AbortCommandTimeOut := .Values.deviceServers.subarraynode.AbortCommandTimeOut }}
 {{- $LivelinessCheckPeriod := .Values.deviceServers.subarraynode.LivelinessCheckPeriod }}
 {{- $EventSubscriptionCheckPeriod := .Values.deviceServers.subarraynode.EventSubscriptionCheckPeriod }}
+{{- $TelmodelSource := .Values.deviceServers.subarraynode.TelmodelSource }}
+{{- $TelmodelPath := .Values.deviceServers.subarraynode.TelmodelPath }}
+{{- $AutoRecoveryEnabled := .Values.deviceServers.subarraynode.IsAutoRecoveryEnabled }}
 
 server:
   name: "subarray_node_low"
@@ -42,6 +45,9 @@ server:
           - name: "MccsSubarrayLNFQDN"
             values:
               - "{{ $mccs_sa_ln_fqdn_prefix}}{{ printf "%02s" . }}"
+          - name: "MccsMasterLNFQDN"
+            values:
+              - "low-tmc/leaf-node-mccs/0"
           - name: "CspSubarrayFQDN"
             values:
             - "{{ $csp_sa_fqdn_prefix}}/{{ printf "%02s" . }}"
@@ -51,6 +57,9 @@ server:
           - name: "MccsSubarrayFQDN"
             values:
               - "{{ $mccs_sa_fqdn_prefix}}/{{ printf "%02s" . }}"
+          - name: "MCCSControllerFQDN"  
+            values:
+              - "low-mccs/control/control"
           - name: "SkaLevel"
             values:
               - "2"
@@ -90,6 +99,16 @@ server:
           - name: "AbortCommandTimeOut"
             values:
               - "{{ $AbortCommandTimeOut }}"
+          - name: "TelmodelSource"
+            values:
+              - "{{ $TelmodelSource }}"
+          - name: "TelmodelPath"
+            values:
+              - "{{ $TelmodelPath }}"
+          - name: "IsAutoRecoveryEnabled"
+            values:
+              - "{{ $AutoRecoveryEnabled }}"
+
 {{- end}}
 depends_on:
   - device: sys/database/2

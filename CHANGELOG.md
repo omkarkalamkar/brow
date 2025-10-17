@@ -5,6 +5,21 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[unreleased]
+*************
+
+Note: This commit has observed SKB-908 on MCCS Master Leaf Node. The test test_skb_908_release_flow
+is disabled. The issue is being fixed under SAH-1798. This note needs to be removed once the issue 
+is fixed and test case is enabled.
+
+Updated
+--------
+* Integrated latest SubarrayNode v0.44.1
+
+Fixed
+------
+* Fixed SKB-1041
+
 [2.3.3]
 *************
 Fixed
