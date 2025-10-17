@@ -5,8 +5,11 @@ tag_description=
 
 **1. ska-tmc-low-integration 2.3.4**
 
-    **1.1 ska-tmc-low  2.3.2-rc.2 - 2.3.4 :**
-        * Updated Csp subarray leaf node v0.32.2 to fix SKB-1056.
+    **1.1 ska-tmc-low  2.3.3 - 2.3.4 :**
+        * Updated MCCS leaf node v.0.10.3 to fix SKB-908
+        * Integrated latest SubarrayNode v0.44.1
+        * Fixed SKB-1041
+
 
 
 release_notes=
@@ -14,8 +17,10 @@ release_notes=
 
 **1. ska-tmc-low-integration 2.3.4**
 
-    **1.1 ska-tmc-low  2.3.2-rc.2 - 2.3.4:**
-        * Updated Csp subarray leaf node v0.32.2 to fix SKB-1056.
+    **1.1 ska-tmc-low  2.3.3 - 2.3.4:**
+        * Updated MCCS leaf node v.0.10.3 to fix SKB-908
+        * Integrated latest SubarrayNode v0.44.1
+        * Fixed SKB-1041
 
 
 
