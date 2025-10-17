@@ -5,22 +5,19 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
-[2.3.5]
-*************
-Updated
--------
-* Updated MCCS leaf node to 0.10.3 to fix SKB-908
-
 [2.3.4]
 *************
 Updated
 -------
 * Integrated latest SubarrayNode v0.44.1
 * Update TMC to support ska-low-tmc-configure/5.0 and ska-low-csp-configure/5.0
+* Updated MCCS leaf node to v0.10.3
+
 
 Fixed
 ------
 * Fixed SKB-1041
+* Fixed SKB-908
 
 [2.3.3]
 *************
