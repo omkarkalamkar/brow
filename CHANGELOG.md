@@ -11,7 +11,7 @@ Updated
 -------
 * Integrated latest SubarrayNode v0.44.1
 * Update TMC to support ska-low-tmc-configure/5.0 and ska-low-csp-configure/5.0
-* Updated MCCS leaf node to v0.10.3
+* Updated MCCS leaf node to v0.10.3.
 
 
 Fixed
