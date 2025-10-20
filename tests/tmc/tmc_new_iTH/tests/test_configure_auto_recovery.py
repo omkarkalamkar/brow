@@ -314,21 +314,20 @@ def verify_tmc_subarray_lrcr_failed(
     failed_devices: str,
 ):
     """Verifies that tmc subarray lrcr failed."""
-    # if pytest.is_successive_configure:
-    #     failed_message = (
-    #         "Exception occurred on the following devices: "
-    #         "low-tmc/subarray-leaf-node-csp/01: Exception occurred "
-    #         "on device: low-csp/subarray/01 and Recovery Successful, "
-    #         "Subarray transitioned back to READY with previous
-    #         configuration."
-    #     )
-    # else:
-    failed_message = (
-        "Exception occurred on the following devices: "
-        "low-tmc/subarray-leaf-node-sdp/01: Device defective. "
-        "and Recovery Successful, "
-        "Subarray transitioned back to IDLE"
-    )
+    if pytest.is_successive_configure:
+        failed_message = (
+            "Exception occurred on the following devices: "
+            "low-tmc/subarray-leaf-node-csp/01: Exception occurred "
+            "on device: low-csp/subarray/01 and Recovery Successful, "
+            "Subarray transitioned back to READY with previous configuration."
+        )
+    else:
+        failed_message = (
+            "Exception occurred on the following devices: "
+            "low-tmc/subarray-leaf-node-sdp/01: Device defective. "
+            "and Recovery Successful, "
+            "Subarray transitioned back to IDLE"
+        )
     assert_that(event_tracer).described_as(
         "TMC Subarray Leaf Node "
         f"({tmc.subarray_node}) "
