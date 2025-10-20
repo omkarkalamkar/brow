@@ -10,7 +10,7 @@ Feature: TMC closes ongoing commands on Restart after Fault
     And the Restart command is completed
     And the Subarray node goes to obsState EMPTY
 
-  @XTP-86748
+  @XTP-86748 @test
   Scenario: Restart when Subarray is in obsState FAULT with CSP defective during AssignResources
     Given a Subarray in EMPTY obsState with no resources assigned
     And the CSP Subarray is set to defective

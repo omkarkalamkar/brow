@@ -81,7 +81,7 @@ ska-tango-taranta:
     resources:
       requests:
         cpu: 100m 
-        memory: 100Mi 
+        memory: 100Mi test_restart_cleanup_csp_defective_before_assign
       limits:
         cpu: 200m 
         memory: 200Mi 
