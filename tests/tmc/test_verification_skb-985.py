@@ -99,6 +99,9 @@ def given_subarray_ready(
                 "longRunningCommandResult",
                 "telescopeState",
             ],
+            subarray_node_low.sdp_subarray_leaf_node: ["sdpSubarrayObsState"],
+            subarray_node_low.csp_subarray_leaf_node: ["cspSubarrayObsState"],
+            subarray_node_low.mccs_subarray_leaf_node: ["obsState"],
         }
     )
 
