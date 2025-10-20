@@ -12,10 +12,10 @@ TMC Low Auto Recovery
 Overview
 --------
 
-The **Telescope Monitoring and Control (TMC) Low** system implements an **auto-recovery mechanism** to handle failures
+The **Telescope Monitoring and Control (TMC) Low** system supports an **auto-recovery mechanism** to handle failures
 that occur during the ``Configure`` command execution.
 
-When a ``Configure`` command fails, TMC attempts to recover the affected subsystems automatically, depending on their
+When a TMC detects failure on the ``Configure`` command, TMC attempts to recover the affected subsystems automatically, depending on their
 observation (Obs) states.
 
 ---
@@ -42,9 +42,9 @@ If the ``Configure`` command fails for any reason and the subsystems are in the 
   The ``Configure`` command fails due to a timeout in MCCS configuration.
 
 - **Subsystem States:**
-  - CSP → ``IDLE``
-  - SDP → ``READY``
-  - MCCS → ``READY``
+  - CSP -> Transitions -> ``IDLE``
+  - SDP -> Transitions -> ``READY``
+  - MCCS -> Transitions -> ``READY``
 
 - **Action Taken:**
   TMC automatically issues ``End`` on SDP and MCCS subarrays, returning all subsystems (and the TMC Subarray)
@@ -72,9 +72,9 @@ If a successive ``Configure`` command fails for any reason, and all subsystems r
   parameters.
 
 - **Subsystem States:**
-  - CSP → ``READY``
-  - SDP → ``READY``
-  - MCCS → ``READY``
+  - CSP -> Transitions -> ``READY``
+  - SDP -> Transitions -> ``READY``
+  - MCCS -> Transitions -> ``READY``
 
 - **Action Taken:**
   TMC re-invokes ``Configure`` on SDP with the **previous successful configuration data**.
