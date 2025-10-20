@@ -128,10 +128,12 @@ def invoke_configure_command(
         logging.info("Setting Failed result %s", failed_device)
         logging.info("is successive %s", pytest.is_successive_configure)
         if failed_device == "SDP":
-            # if not pytest.is_successive_configure:
-            sdp.sdp_subarray.SetDefective(
-                json.dumps(SDP_BACK_TO_INITIAL_STATE)
-            )
+            if not pytest.is_successive_configure:
+                sdp.sdp_subarray.SetDefective(
+                    json.dumps(SDP_BACK_TO_INITIAL_STATE)
+                )
+            else:
+                sdp.sdp_subarray.SetDefective(json.dumps(FAILED_RESULT_DEFECT))
         elif failed_device == "CSP":
             if pytest.is_successive_configure:
                 failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT)
