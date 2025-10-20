@@ -26,6 +26,8 @@ server:
   {{ $sdp_sa_fqdn_prefix:= .Values.devices_fqdn.sdp_subarray_prefix}}
   {{ $mccs_sa_ln_fqdn_prefix:= .Values.devices_fqdn.mccs_subarray_ln_prefix}}
   {{ $mccs_sa_fqdn_prefix:= .Values.devices_fqdn.mccs_subarray_prefix}}
+  {{ $mccs_mln_fqdn := .Values.devices_fqdn.mccs_master_ln}}
+  {{ $mccs_controller_fqdn := .Values.devices_fqdn.mccs_master}}
   {{ $CommandTimeOutDefault := .Values.deviceServers.subarraynode.CommandTimeOutDefault }}
   {{ $domain := .Values.domain}}
   {{ $family := .Values.deviceServers.subarraynode.family }}
@@ -47,7 +49,7 @@ server:
               - "{{ $mccs_sa_ln_fqdn_prefix}}{{ printf "%02s" . }}"
           - name: "MccsMasterLNFQDN"
             values:
-              - "low-tmc/leaf-node-mccs/0"
+              - "{{ $mccs_mln_fqdn }}"
           - name: "CspSubarrayFQDN"
             values:
             - "{{ $csp_sa_fqdn_prefix}}/{{ printf "%02s" . }}"
@@ -59,7 +61,7 @@ server:
               - "{{ $mccs_sa_fqdn_prefix}}/{{ printf "%02s" . }}"
           - name: "MCCSControllerFQDN"  
             values:
-              - "low-mccs/control/control"
+              - "{( $mccs_controller_fqdn }}"
           - name: "SkaLevel"
             values:
               - "2"
