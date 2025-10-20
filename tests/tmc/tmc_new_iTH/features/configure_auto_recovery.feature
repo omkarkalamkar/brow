@@ -18,7 +18,7 @@ Scenario: TMC Perform Auto Recovery when Successive Configure Failed
 	And <failed_devices> Failure is reported on Long Running Command Result
 	Examples:
 	| failed_devices  |
-	| CSP             |
+	| SDP             |
 
 @XTP-91745 @XTP-91746 @XTP-28348 @Team_HIMALAYA
 Scenario: TMC Auto Recovery Failed
