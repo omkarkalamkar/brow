@@ -71,6 +71,16 @@ def given_subarray_ready(
     # Subscribe to events needed later
     event_tracer.subscribe_event(subarray_node_low.subarray_node, "obsState")
     event_tracer.subscribe_event(
+        subarray_node_low.sdp_subarray_leaf_node, "sdpSubarrayObsState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.csp_subarray_leaf_node, "cspSubarrayObsState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.mccs_subarray_leaf_node, "obsState"
+    )
+
+    event_tracer.subscribe_event(
         subarray_node_low.subarray_node, "longRunningCommandResult"
     )
     event_tracer.subscribe_event(
@@ -152,6 +162,42 @@ def wait_for_fault(
     event_tracer: TangoEventTracer, central_node_low: CentralNodeWrapperLow
 ):
     """Block until the Subarray reports ObsState.FAULT."""
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        central_node_low.subarray_node, "obsState", ObsState.FAULT
+    )
+
+
+@given(
+    "the Subarray transitions to observation state ObsState.FAULT"
+    " from RESOURCING"
+)
+def wait_for_fault_resourcing(
+    event_tracer: TangoEventTracer, central_node_low: CentralNodeWrapperLow
+):
+    """Block until the Subarray reports ObsState.FAULT."""
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        central_node_low.sdp_subarray_leaf_node,
+        "sdpSubarrayObsState",
+        ObsState.RESOURCING,
+    )
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        central_node_low.mccs_subarray_leaf_node,
+        "obsState",
+        ObsState.RESOURCING,
+    )
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        central_node_low.csp_subarray_leaf_node,
+        "cspSubarrayObsState",
+        ObsState.FAULT,
+    )
     assert_that(event_tracer).within_timeout(
         TIMEOUT
     ).has_change_event_occurred(
