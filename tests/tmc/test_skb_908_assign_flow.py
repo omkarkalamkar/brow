@@ -25,7 +25,6 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 from tests.resources.test_support.constant_low import TIMEOUT
 
 
-@pytest.mark.skip
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/skb_908.feature",
