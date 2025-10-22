@@ -105,6 +105,7 @@ k8s-test:
     - make k8s-wait
   script:
     - make k8s-test
+    - make k8s-test MARK=SKB_1056
     - |
       if [[ "$CI_KEEP_NAMESPACE" != "true" ]]; then
         make k8s-uninstall-chart || true
