@@ -70,15 +70,6 @@ def given_subarray_ready(
     """
     # Subscribe to events needed later
     event_tracer.subscribe_event(subarray_node_low.subarray_node, "obsState")
-    event_tracer.subscribe_event(
-        subarray_node_low.sdp_subarray_leaf_node, "sdpSubarrayObsState"
-    )
-    event_tracer.subscribe_event(
-        subarray_node_low.csp_subarray_leaf_node, "cspSubarrayObsState"
-    )
-    event_tracer.subscribe_event(
-        subarray_node_low.mccs_subarray_leaf_node, "obsState"
-    )
 
     event_tracer.subscribe_event(
         subarray_node_low.subarray_node, "longRunningCommandResult"
@@ -99,9 +90,6 @@ def given_subarray_ready(
                 "longRunningCommandResult",
                 "telescopeState",
             ],
-            subarray_node_low.sdp_subarray_leaf_node: ["sdpSubarrayObsState"],
-            subarray_node_low.csp_subarray_leaf_node: ["cspSubarrayObsState"],
-            subarray_node_low.mccs_subarray_leaf_node: ["obsState"],
         }
     )
 
@@ -299,6 +287,15 @@ def given_subarray_empty(
         subarray_node_low.subarray_node, "longRunningCommandResult"
     )
     event_tracer.subscribe_event(
+        subarray_node_low.sdp_subarray_leaf_node, "sdpSubarrayObsState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.csp_subarray_leaf_node, "cspSubarrayObsState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.mccs_subarray_leaf_node, "obsState"
+    )
+    event_tracer.subscribe_event(
         central_node_low.central_node, "longRunningCommandResult"
     )
     event_tracer.subscribe_event(
@@ -314,6 +311,9 @@ def given_subarray_empty(
                 "longRunningCommandResult",
                 "telescopeState",
             ],
+            subarray_node_low.sdp_subarray_leaf_node: ["sdpSubarrayObsState"],
+            subarray_node_low.csp_subarray_leaf_node: ["cspSubarrayObsState"],
+            subarray_node_low.mccs_subarray_leaf_node: ["obsState"],
         }
     )
 
