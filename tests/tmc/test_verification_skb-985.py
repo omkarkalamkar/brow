@@ -259,7 +259,6 @@ def verify_subarray_empty(
 
 @pytest.mark.post_deployment
 @pytest.mark.SKA_low
-@pytest.mark.test
 @scenario(
     "../features/tmc/check_restart_cleanup.feature",
     "Restart when Subarray is in obsState FAULT with"
