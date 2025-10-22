@@ -30,10 +30,10 @@ domain: "low-tmc"
 # deviceServers.cspsubarrayleafnode, deviceServers.sdpsubarrayleafnode,
 # deviceServers.subarraynode , deviceServers.mccssubarrayleafnode
 subarray_devices:
-    - "cspsubarrayleafnode"
-    - "sdpsubarrayleafnode"
-    - "subarraynode"
-    - "mccssubarrayleafnode"
+  - "cspsubarrayleafnode"
+  - "sdpsubarrayleafnode"
+  - "subarraynode"
+  - "mccssubarrayleafnode"
 
 # FQDN details are specific to TMC, shouldn't be overridden in global unless
 #  absolutely necessary.
@@ -83,9 +83,9 @@ subarraynode:
 
 sdpleafnodes:
   image:
-    registry: artefact.skao.int
+    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-sdpleafnodes
     image: ska-tmc-sdpleafnodes
-    tag: 0.24.2
+    tag: 0.24.2-dev.cae75baa8
     pullPolicy: IfNotPresent
 
 cspmasterleafnode:
@@ -106,14 +106,14 @@ mccsmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.10.2
+    tag: 0.10.3
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.10.2
+    tag: 0.10.3
     pullPolicy: IfNotPresent
 
 resources:
@@ -155,7 +155,6 @@ deviceServers:
     IsAutoRecoveryEnabled: "true"
     TelmodelSource: "car://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     TelmodelPath: "instrument/ska1_low/layout/low-layout.json"
-
 
   sdpsubarrayleafnode:
     enabled: true

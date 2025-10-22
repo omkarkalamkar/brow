@@ -5,39 +5,36 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
-[unreleased]
+[2.3.4]
 *************
-
-Note: This commit has observed SKB-908 on MCCS Master Leaf Node. The test test_skb_908_release_flow
-is disabled. The issue is being fixed under SAH-1798. This note needs to be removed once the issue 
-is fixed and test case is enabled.
-
 Updated
---------
+-------
 * Integrated latest SubarrayNode v0.44.1
 * Update TMC to support ska-low-tmc-configure/5.0 and ska-low-csp-configure/5.0
+* Updated MCCS leaf node to v0.10.3
+
 
 Fixed
 ------
 * Fixed SKB-1041
+* Fixed SKB-908
 
 [2.3.3]
 *************
 Fixed
-------
+-----
 * SKB-1056: Updated CSP subarray leaf node v0.32.2 to fix the bug.
-
 
 [2.3.2-rc.2]
 ************
 Fixed
-------
+-----
 Updated Central node tag v0.24.1 to resolve SKB-860.
 
 [2.3.2-rc.1]
 ************
 Fixed
-------
+-----
 * Updated Central node tag v0.24.0 to resolve SKB-908 and SKB-1051.
 
 [2.3.1-rc.1]
@@ -53,7 +50,7 @@ Updated
 ------------
 * Extending the support of multiple station up to 8 station beams.
 * Utilised the latest dev tag from CSP (0.32.0) and latest tag of central node (0.22.0).
-* RTD improvements to reflect support for 8 station beams. 
+* RTD improvements to reflect support for 8 station beams.
 
 [2.3.0-dev.1]
 *************

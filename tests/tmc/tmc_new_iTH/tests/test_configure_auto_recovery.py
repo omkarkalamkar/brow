@@ -34,7 +34,6 @@ FAILED_DEVICE_MAP = {
 }
 
 
-# @pytest.mark.auto_recovery
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
@@ -44,7 +43,6 @@ def test_configure_auto_recovery():
     """BDD test scenario for verifying auto recovery when configure failed"""
 
 
-# @pytest.mark.auto_recovery
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
@@ -57,7 +55,6 @@ def test_successive_configure_auto_recovery():
     """
 
 
-# @pytest.mark.auto_recovery
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
@@ -128,10 +125,9 @@ def invoke_configure_command(
         logging.info("Setting Failed result %s", failed_device)
         logging.info("is successive %s", pytest.is_successive_configure)
         if failed_device == "SDP":
-            if not pytest.is_successive_configure:
-                sdp.sdp_subarray.SetDefective(
-                    json.dumps(SDP_BACK_TO_INITIAL_STATE)
-                )
+            sdp.sdp_subarray.SetDefective(
+                json.dumps(SDP_BACK_TO_INITIAL_STATE)
+            )
         elif failed_device == "CSP":
             if pytest.is_successive_configure:
                 failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT)
@@ -157,17 +153,19 @@ def verify_configure_failed_on_subarray_leaf_node(
 ):
     """Verifies that configure failed on subarray leaf node."""
     for failed_device in failed_devices.split(","):
-        if pytest.is_successive_configure:
-            if failed_device == "CSP":
-                error_message = (
-                    '[3, "Exception occurred on device: low-csp/subarray/01"]'
-                )
-            elif failed_device == "MCCS":
-                error_message = (
-                    '[3, "Exception occurred on device: low-mccs/subarray/01"]'
-                )
-        else:
+        # if pytest.is_successive_configure:
+        if failed_device == "CSP":
+            error_message = (
+                '[3, "Exception occurred on device: low-csp/subarray/01"]'
+            )
+        elif failed_device == "MCCS":
+            error_message = (
+                '[3, "Exception occurred on device: low-mccs/subarray/01"]'
+            )
+        elif failed_device == "SDP":
             error_message = '[3, "Device defective."]'
+        # else:
+        #     error_message = '[3, "Device defective."]'
         assert_that(event_tracer).described_as(
             "TMC Subarray Leaf Node "
             f"({tmc.subarray_node}) "
