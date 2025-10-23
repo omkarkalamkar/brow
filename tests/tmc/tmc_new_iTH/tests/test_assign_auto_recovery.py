@@ -96,7 +96,7 @@ def invoke_assign_resources_command(
             failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT_EMPTY)
             failed_result_defect["target_obsstates"] = [ObsState.IDLE]
             csp.csp_subarray.SetDefective(json.dumps(failed_result_defect))
-    _, pytest.unique_id = tmc.AssignResources(
+    _, pytest.unique_id = tmc.assign_resources(
         default_commands_inputs.assign_input, wait_termination=False
     )
     assert_that(event_tracer).described_as(
