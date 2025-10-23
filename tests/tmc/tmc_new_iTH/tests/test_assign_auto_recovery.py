@@ -17,7 +17,6 @@ from ska_tango_testing.integration import TangoEventTracer
 from ska_tango_testing.mock.placeholders import Anything
 
 from tests.resources.test_support.constant_low import (
-    FAILED_RESULT_DEFECT,
     FAILED_RESULT_DEFECT_EMPTY,
     SDP_BACK_TO_INITIAL_STATE,
 )
@@ -40,11 +39,11 @@ FAILED_DEVICE_MAP = {
     "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
     "TMC Perform Auto Recovery when AssignResources Failed",
 )
-def test_configure_auto_recovery():
+def test_assign_auto_recovery():
     """BDD test scenario to verify auto recovery when assignresources failed"""
 
 
-@pytest.mark.aki
+# @pytest.mark.aki
 @scenario(
     "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
     "TMC Auto Recovery Failed",
@@ -169,7 +168,7 @@ def verify_auto_recovery_failed_on_subarray_leaf_node(
             ).within_timeout(TIMEOUT).has_change_event_occurred(
                 csp.csp_subarray,
                 "obsState",
-                ObsState.CONFIGURING,
+                ObsState.RESOURCING,
             )
             assert_that(event_tracer).described_as(
                 "CSP Subarray Leaf Node"
@@ -178,9 +177,11 @@ def verify_auto_recovery_failed_on_subarray_leaf_node(
             ).within_timeout(TIMEOUT).has_change_event_occurred(
                 csp.csp_subarray,
                 "obsState",
-                ObsState.READY,
+                ObsState.IDLE,
             )
-            csp.csp_subarray.SetDefective(json.dumps(FAILED_RESULT_DEFECT))
+            csp.csp_subarray.SetDefective(
+                json.dumps(FAILED_RESULT_DEFECT_EMPTY)
+            )
         elif auto_recovery_failed_device == "MCCS":
             # First assert configure is successful
             assert_that(event_tracer).described_as(
@@ -190,7 +191,7 @@ def verify_auto_recovery_failed_on_subarray_leaf_node(
             ).within_timeout(TIMEOUT).has_change_event_occurred(
                 mccs.mccs_subarray,
                 "obsState",
-                ObsState.CONFIGURING,
+                ObsState.RESOURCING,
             )
             assert_that(event_tracer).described_as(
                 "MCCS Subarray"
@@ -199,10 +200,10 @@ def verify_auto_recovery_failed_on_subarray_leaf_node(
             ).within_timeout(TIMEOUT).has_change_event_occurred(
                 mccs.mccs_subarray,
                 "obsState",
-                ObsState.READY,
+                ObsState.IDLE,
             )
-            failed_result = copy.deepcopy(FAILED_RESULT_DEFECT)
-            failed_result["target_obsstates"] = [ObsState.READY]
+            failed_result = copy.deepcopy(FAILED_RESULT_DEFECT_EMPTY)
+            failed_result["target_obsstates"] = [ObsState.IDLE]
             mccs.mccs_subarray.SetDefective(json.dumps(failed_result))
 
 
