@@ -16,7 +16,7 @@ The **Telescope Monitoring and Control (TMC) Low** system supports an **auto-rec
 that occur during the ``Configure`` command execution.
 
 When a TMC detects failure on the ``Configure`` command, TMC attempts to recover the affected subsystems automatically, depending on their
-observation (Obs) states.
+observation states.
 
 ---
 
