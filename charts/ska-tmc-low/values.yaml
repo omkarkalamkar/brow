@@ -155,6 +155,8 @@ deviceServers:
     IsAutoRecoveryEnabled: "true"
     TelmodelSource: "car://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     TelmodelPath: "instrument/ska1_low/layout/low-layout.json"
+    MccsReleaseInterfaceURL: "https://schema.skatelescope.org/ska-low-mccs-controller-release/2.0"
+
 
   sdpsubarrayleafnode:
     enabled: true
