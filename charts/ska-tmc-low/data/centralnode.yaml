@@ -84,7 +84,6 @@ server:
           values:
             - "{{ $AutoRecoveryEnabled }}"
 
-
 depends_on:
   - device: sys/database/2
 image:

@@ -101,6 +101,9 @@ server:
           - name: "AbortCommandTimeOut"
             values:
               - "{{ $AbortCommandTimeOut }}"
+          - name: "MCCSControllerFQDN"
+            values:
+              - "low-mccs/control/control"
           - name: "TelmodelSource"
             values:
               - "{{ $TelmodelSource }}"

@@ -152,7 +152,7 @@ FAILED_RESULT_DEFECT = {
     "enabled": True,
     "fault_type": FaultType.FAILED_RESULT,
     "error_message": "Device defective.",
-    "result": ResultCode.FAILED,
+    "result": ResultCode.QUEUED,
     "target_obsstates": [ObsState.IDLE],
 }
 

@@ -109,7 +109,7 @@ class TestConfigureCommandNotAllowedPropagation:
         ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.subarray_node,
             "obsState",
-            ObsState.FAULT,
+            ObsState.IDLE,
         )
 
         exception_message = (
@@ -214,7 +214,7 @@ class TestConfigureCommandNotAllowedPropagation:
         ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.subarray_node,
             "obsState",
-            ObsState.FAULT,
+            ObsState.IDLE,
         )
 
         exception_message = (
@@ -322,7 +322,7 @@ class TestConfigureCommandNotAllowedPropagation:
         ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.subarray_node,
             "obsState",
-            ObsState.FAULT,
+            ObsState.IDLE,
         )
 
         exception_message = (

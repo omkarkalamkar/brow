@@ -6,6 +6,101 @@ TMC Recovery mechanism in case of subsystem failure
 
 - The recovery steps involve issuing command-line instructions that can be executed from any Python runtime environment or script.
 
+TMC Low Auto Recovery
+=====================
+
+Overview
+--------
+
+The **Telescope Monitoring and Control (TMC) Low** system supports an **auto-recovery mechanism** to handle failures
+that occur during the ``Configure`` command execution.
+
+When a TMC detects failure on the ``Configure`` command, TMC attempts to recover the affected subsystems automatically, depending on their
+observation states.
+
+---
+
+Auto Recovery Scenarios
+-----------------------
+
+1. Configure Command Failure — Subsystems in Recoverable State
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If the ``Configure`` command fails for any reason and the subsystems are in the following states:
+
++-------------------+-------------------+-------------------+---------------------------------------------------------------+
+| **CSP Obs State** | **SDP Obs State** | **MCCS Obs State** | **Auto Recovery Action**                                     |
++===================+===================+===================+===============================================================+
+| ``IDLE``          | ``READY``         | ``READY``          | TMC invokes the **End** command on **MCCS** and **SDP**      |
+|                   |                   |                   | subarrays to bring them back to ``IDLE``. Once complete, the  |
+|                   |                   |                   | **TMC Subarray** also transitions to ``IDLE``.                |
++-------------------+-------------------+-------------------+---------------------------------------------------------------+
+
+**Example**
+
+- **Scenario:**
+  The ``Configure`` command fails due to a timeout in MCCS configuration.
+
+- **Subsystem States:**
+  - CSP -> Transitions -> ``IDLE``
+  - SDP -> Transitions -> ``READY``
+  - MCCS -> Transitions -> ``READY``
+
+- **Action Taken:**
+  TMC automatically issues ``End`` on SDP and MCCS subarrays, returning all subsystems (and the TMC Subarray)
+  to the ``IDLE`` state.
+
+---
+
+2. Successive Configure Command Failure — All Subsystems in READY State
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If a successive ``Configure`` command fails for any reason, and all subsystems remain in the ``READY`` state:
+
++-------------------+-------------------+-------------------+---------------------------------------------------------------+
+| **CSP Obs State** | **SDP Obs State** | **MCCS Obs State** | **Auto Recovery Action**                                     |
++===================+===================+===================+===============================================================+
+| ``READY``         | ``READY``         | ``READY``          | TMC re-invokes the **Configure** command **only** on the     |
+|                   |                   |                    | failed subsystem, using the **last successful config data**, |
+|                   |                   |                    | to restore the **TMC Subarray ObsState** to ``READY``.       |
++-------------------+-------------------+-------------------+---------------------------------------------------------------+
+
+**Example**
+
+- **Scenario:**
+  The first ``Configure`` command succeeds. The next ``Configure`` command fails for SDP due to invalid configuration
+  parameters.
+
+- **Subsystem States:**
+  - CSP -> Transitions -> ``READY``
+  - SDP -> Transitions -> ``READY``
+  - MCCS -> Transitions -> ``READY``
+
+- **Action Taken:**
+  TMC re-invokes ``Configure`` on SDP with the **previous successful configuration data**.
+  Once successful, the **TMC Subarray ObsState** transitions back to ``READY``.
+
+---
+
+Summary
+-------
+
++-----------------------------------------+------------------------------------------+-------------------------------------------------------------+
+| **Condition**                           | **Subsystem States**                     | **Recovery Action**                                         |
++=========================================+==========================================+=============================================================+
+| First ``Configure`` fails               | CSP: ``IDLE``                            | Invoke ``End`` on MCCS and SDP → all subsystems return to   |
+|                                         | SDP: ``READY``                           | ``IDLE``.                                                   |
+|                                         | MCCS: ``READY``                          |                                                             |
++-----------------------------------------+------------------------------------------+-------------------------------------------------------------+
+| Successive ``Configure`` fails          | CSP: ``READY``                           | Re-invoke ``Configure`` on failed subsystem → return to     |
+|                                         | SDP: ``READY``                           | ``READY``.                                                  |
+|                                         | MCCS: ``READY``                          |                                                             |
++-----------------------------------------+------------------------------------------+-------------------------------------------------------------+
+
+---
+
+
+
 
 TMC Low in FAULT ObsState
 -------------------------
