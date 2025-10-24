@@ -5,7 +5,7 @@ import logging
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
-from ska_control_model import ObsState
+from ska_control_model import ObsState, ResultCode
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
 from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
 from ska_integration_test_harness.facades.sdp_facade import SDPFacade
@@ -258,24 +258,23 @@ def verify_tmc_subarray_lrcr_failed(
     csp: CSPFacade,
     sdp: SDPFacade,
     mccs: MCCSFacade,
-    failed_devices: str,
 ):
     """Verifies that tmc subarray lrcr failed."""
 
     failed_message = (
-        "Exception occurred on the following devices: "
-        "low-tmc/subarray-leaf-node-sdp/01: Device defective. "
-        "and Recovery Successful, "
-        "Subarray transitioned back to EMPTY"
+        "low-tmc/subarray/01: Exception occurred on the following devices: "
+        "low-tmc/subarray-leaf-node-sdp/01: Device defective. and Recovery "
+        "Successful, Subarray transitioned back to EMPTY"
     )
     assert_that(event_tracer).described_as(
         "TMC Subarray Leaf Node "
         f"({tmc.subarray_node}) "
         "is expected to report a"
         "longRunningCommand successful failure."
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        tmc.subarray_node,
-        "longRunningCommandResult",
-        (pytest.unique_id[0], f'[3, "{failed_message}"]'),
+    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+        tmc.central_node,
+        [failed_message],
+        pytest.unique_id[0],
+        ResultCode.FAILED,
     )
     reset_defects(csp, sdp, mccs)
