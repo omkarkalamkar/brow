@@ -136,7 +136,7 @@ def test_assign_release_defective_csp_sdp(
         sdp_sim.SetDefective(json.dumps({"enabled": False}))
 
 
-# @pytest.mark.aki
+@pytest.mark.aki
 def test_assign_release_timeout_sdp(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
@@ -204,7 +204,7 @@ def test_assign_release_timeout_sdp(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
-        ObsState.RESOURCING,
+        ObsState.FAULT,
     )
 
     assert_that(event_tracer).described_as(
