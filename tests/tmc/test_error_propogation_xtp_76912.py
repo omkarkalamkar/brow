@@ -25,6 +25,7 @@ from tests.resources.test_harness.utils.my_file_json_input import (
 TIMEOUT = 80
 
 
+@pytest.mark.aki
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation_ith.feature",
@@ -143,7 +144,7 @@ def error_reporting(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node,
         "obsState",
-        ObsState.FAULT,
+        ObsState.EMPTY,
     )
     mccs.mccs_controller.SetDefective(json.dumps({"enabled": False}))
 
