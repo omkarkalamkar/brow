@@ -35,7 +35,6 @@ configure_logging(logging.DEBUG)
 LOGGER = logging.getLogger(__name__)
 
 
-@pytest.mark.aki
 @pytest.mark.parametrize("defective_device", ["csp_subarray", "sdp_subarray"])
 def test_assign_release_defective_csp_sdp(
     central_node_low: CentralNodeWrapperLow,
@@ -153,13 +152,7 @@ def test_assign_release_timeout_sdp(
         "assign_resources_low", command_input_factory
     )
     _, sdp_sim, _ = get_device_simulators(simulator_factory)
-    sdp_sim.SetDefective(json.dumps(INTERMEDIATE_STATE_DEFECT_EMPTY))
-    assert wait_and_validate_device_attribute_value(
-        sdp_sim,
-        "defective",
-        json.dumps(INTERMEDIATE_STATE_DEFECT_EMPTY),
-        is_json=True,
-    )
+    sdp_sim.SetDelayInfo(json.dumps({"AssignResources": 52}))
     event_tracer.subscribe_event(
         central_node_low.central_node, "longRunningCommandResult"
     )
@@ -212,7 +205,7 @@ def test_assign_release_timeout_sdp(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
-        ObsState.FAULT,
+        ObsState.RESOURCING,
     )
 
     assert_that(event_tracer).described_as(
@@ -221,7 +214,7 @@ def test_assign_release_timeout_sdp(
         f"({central_node_low.central_node.dev_name()}) "
         "is expected have longRunningCommandResult"
         "(ResultCode.FAILED,exception)",
-    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+    ).within_timeout(52).has_desired_result_code_message_in_lrcr_event(
         central_node_low.central_node,
         [exception_message],
         unique_id[0],
@@ -230,7 +223,6 @@ def test_assign_release_timeout_sdp(
     sdp_sim.ResetDelayInfo()
 
 
-@pytest.mark.aki
 def test_release_exception_propagation(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
@@ -383,11 +375,11 @@ def test_assign_release_timeout_csp(
         DevState.ON,
     )
 
-    csp_subarray_sim.SetDefective(json.dumps(INTERMEDIATE_STATE_DEFECT_EMPTY))
+    csp_subarray_sim.SetDefective(json.dumps(INTERMEDIATE_STATE_DEFECT))
     assert wait_and_validate_device_attribute_value(
         csp_subarray_sim,
         "defective",
-        json.dumps(INTERMEDIATE_STATE_DEFECT_EMPTY),
+        json.dumps(INTERMEDIATE_STATE_DEFECT),
         is_json=True,
     )
     _, unique_id = central_node_low.perform_action(
