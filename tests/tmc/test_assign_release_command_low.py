@@ -26,6 +26,7 @@ from tests.resources.test_harness.utils.enums import SimulatorDeviceType
 from tests.resources.test_support.constant_low import (
     COMMAND_FAILED_WITH_SDP_EXCEPTION_OBSSTATE_EMPTY,
     INTERMEDIATE_STATE_DEFECT,
+    INTERMEDIATE_STATE_DEFECT_EMPTY,
     RESET_DEFECT,
     tmc_subarraynode1,
 )
@@ -152,7 +153,13 @@ def test_assign_release_timeout_sdp(
         "assign_resources_low", command_input_factory
     )
     _, sdp_sim, _ = get_device_simulators(simulator_factory)
-    sdp_sim.SetDelayInfo(json.dumps({"AssignResources": 52}))
+    sdp_sim.SetDefective(json.dumps(INTERMEDIATE_STATE_DEFECT_EMPTY))
+    assert wait_and_validate_device_attribute_value(
+        sdp_sim,
+        "defective",
+        json.dumps(INTERMEDIATE_STATE_DEFECT_EMPTY),
+        is_json=True,
+    )
     event_tracer.subscribe_event(
         central_node_low.central_node, "longRunningCommandResult"
     )
@@ -376,11 +383,11 @@ def test_assign_release_timeout_csp(
         DevState.ON,
     )
 
-    csp_subarray_sim.SetDefective(json.dumps(INTERMEDIATE_STATE_DEFECT))
+    csp_subarray_sim.SetDefective(json.dumps(INTERMEDIATE_STATE_DEFECT_EMPTY))
     assert wait_and_validate_device_attribute_value(
         csp_subarray_sim,
         "defective",
-        json.dumps(INTERMEDIATE_STATE_DEFECT),
+        json.dumps(INTERMEDIATE_STATE_DEFECT_EMPTY),
         is_json=True,
     )
     _, unique_id = central_node_low.perform_action(
