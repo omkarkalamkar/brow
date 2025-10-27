@@ -152,14 +152,7 @@ def test_assign_release_timeout_sdp(
         "assign_resources_low", command_input_factory
     )
     _, sdp_sim, _ = get_device_simulators(simulator_factory)
-    # sdp_sim.SetDelayInfo(json.dumps({"AssignResources": 52}))
-    sdp_sim.SetDefective(json.dumps(INTERMEDIATE_STATE_DEFECT))
-    assert wait_and_validate_device_attribute_value(
-        sdp_sim,
-        "defective",
-        json.dumps(INTERMEDIATE_STATE_DEFECT),
-        is_json=True,
-    )
+    sdp_sim.SetDelayInfo(json.dumps({"AssignResources": 52}))
     event_tracer.subscribe_event(
         central_node_low.central_node, "longRunningCommandResult"
     )
@@ -212,7 +205,7 @@ def test_assign_release_timeout_sdp(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
-        ObsState.EMPTY,
+        ObsState.FAULT,
     )
 
     assert_that(event_tracer).described_as(
