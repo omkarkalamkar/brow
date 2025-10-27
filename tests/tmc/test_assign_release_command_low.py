@@ -302,7 +302,7 @@ def test_release_exception_propagation(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
-        ObsState.EMPTY,
+        ObsState.FAULT,
     )
     _, unique_id = central_node_low.perform_action(
         "ReleaseResources", release_input_json
