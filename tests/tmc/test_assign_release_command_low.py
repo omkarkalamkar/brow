@@ -26,7 +26,6 @@ from tests.resources.test_harness.utils.enums import SimulatorDeviceType
 from tests.resources.test_support.constant_low import (
     COMMAND_FAILED_WITH_SDP_EXCEPTION_OBSSTATE_EMPTY,
     INTERMEDIATE_STATE_DEFECT,
-    INTERMEDIATE_STATE_DEFECT_EMPTY,
     RESET_DEFECT,
     tmc_subarraynode1,
 )
