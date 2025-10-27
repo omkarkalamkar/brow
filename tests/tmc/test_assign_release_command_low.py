@@ -34,6 +34,7 @@ configure_logging(logging.DEBUG)
 LOGGER = logging.getLogger(__name__)
 
 
+@pytest.mark.aki
 @pytest.mark.parametrize("defective_device", ["csp_subarray", "sdp_subarray"])
 def test_assign_release_defective_csp_sdp(
     central_node_low: CentralNodeWrapperLow,
@@ -222,6 +223,7 @@ def test_assign_release_timeout_sdp(
     sdp_sim.ResetDelayInfo()
 
 
+@pytest.mark.aki
 def test_release_exception_propagation(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
@@ -337,7 +339,7 @@ def test_release_exception_propagation(
     csp_sim.SetDefective(json.dumps(RESET_DEFECT))
 
 
-# @pytest.mark.aki
+@pytest.mark.aki
 def test_assign_release_timeout_csp(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
