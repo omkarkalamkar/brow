@@ -116,7 +116,7 @@ def test_assign_release_defective_csp_sdp(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
-        ObsState.FAULT,
+        ObsState.EMPTY,
     )
 
     assert_that(event_tracer).described_as(
@@ -205,7 +205,7 @@ def test_assign_release_timeout_sdp(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
-        ObsState.FAULT,
+        ObsState.EMPTY,
     )
 
     assert_that(event_tracer).described_as(
@@ -302,7 +302,7 @@ def test_release_exception_propagation(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
-        ObsState.FAULT,
+        ObsState.EMPTY,
     )
     _, unique_id = central_node_low.perform_action(
         "ReleaseResources", release_input_json
@@ -417,6 +417,6 @@ def test_assign_release_timeout_csp(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
-        ObsState.FAULT,
+        ObsState.EMPTY,
     )
     csp_subarray_sim.SetDefective(json.dumps(RESET_DEFECT))
