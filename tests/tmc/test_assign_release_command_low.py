@@ -34,7 +34,7 @@ configure_logging(logging.DEBUG)
 LOGGER = logging.getLogger(__name__)
 
 
-@pytest.mark.SKA_low
+@pytest.mark.aki
 @pytest.mark.parametrize("defective_device", ["csp_subarray", "sdp_subarray"])
 def test_assign_release_defective_csp_sdp(
     central_node_low: CentralNodeWrapperLow,
@@ -137,7 +137,7 @@ def test_assign_release_defective_csp_sdp(
         sdp_sim.SetDefective(json.dumps({"enabled": False}))
 
 
-@pytest.mark.SKA_low
+@pytest.mark.aki
 def test_assign_release_timeout_sdp(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
@@ -152,7 +152,14 @@ def test_assign_release_timeout_sdp(
         "assign_resources_low", command_input_factory
     )
     _, sdp_sim, _ = get_device_simulators(simulator_factory)
-    sdp_sim.SetDelayInfo(json.dumps({"AssignResources": 52}))
+    # sdp_sim.SetDelayInfo(json.dumps({"AssignResources": 52}))
+    sdp_sim.SetDefective(json.dumps(INTERMEDIATE_STATE_DEFECT))
+    assert wait_and_validate_device_attribute_value(
+        sdp_sim,
+        "defective",
+        json.dumps(INTERMEDIATE_STATE_DEFECT),
+        is_json=True,
+    )
     event_tracer.subscribe_event(
         central_node_low.central_node, "longRunningCommandResult"
     )
@@ -223,7 +230,7 @@ def test_assign_release_timeout_sdp(
     sdp_sim.ResetDelayInfo()
 
 
-@pytest.mark.SKA_low
+@pytest.mark.aki
 def test_release_exception_propagation(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
@@ -339,7 +346,7 @@ def test_release_exception_propagation(
     csp_sim.SetDefective(json.dumps(RESET_DEFECT))
 
 
-@pytest.mark.SKA_low
+@pytest.mark.aki
 def test_assign_release_timeout_csp(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
