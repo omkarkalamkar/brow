@@ -136,7 +136,7 @@ def test_assign_release_defective_csp_sdp(
         sdp_sim.SetDefective(json.dumps({"enabled": False}))
 
 
-@pytest.mark.aki
+# @pytest.mark.aki
 def test_assign_release_timeout_sdp(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
@@ -337,7 +337,7 @@ def test_release_exception_propagation(
     csp_sim.SetDefective(json.dumps(RESET_DEFECT))
 
 
-@pytest.mark.aki
+# @pytest.mark.aki
 def test_assign_release_timeout_csp(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,

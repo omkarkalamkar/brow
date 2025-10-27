@@ -134,7 +134,7 @@ class TestConfigureTimeout:
             ResultCode.FAILED,
         )
 
-    @pytest.mark.SKA_low
+    @pytest.mark.aki
     def test_configure_timeout_sdp_ln(
         self,
         central_node_low: CentralNodeWrapperLow,
