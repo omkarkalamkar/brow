@@ -54,6 +54,17 @@ def test_auto_recovery_failed():
     """
 
 
+@pytest.mark.aki
+@scenario(
+    "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
+    "Succesive AssignResources command execution after recovery",
+)
+def test_assign_after_recovery():
+    """
+    BDD test scenario for verifying assign after recovery
+    """
+
+
 @given("a subarray is in the EMPTY obsState")
 def verify_tmc_subarray_observation_state_empty(
     event_tracer: TangoEventTracer,
@@ -72,10 +83,10 @@ def verify_tmc_subarray_observation_state_empty(
 
 @when(
     parsers.parse(
-        "I AssignResources to subarray with " "defective {failed_devices}"
+        "I AssignResources to subarray with defective {failed_devices}"
     )
 )
-def invoke_assign_resources_command(
+def invoke_second_assign_resources_command(
     tmc: TMCFacade,
     sdp: SDPFacade,
     csp: CSPFacade,
@@ -109,6 +120,42 @@ def invoke_assign_resources_command(
     )
 
 
+@when("I invoke second AssignResources command on subarray")
+def invoke_assign_resources_command(
+    tmc: TMCFacade,
+    default_commands_inputs: TestHarnessInputs,
+    event_tracer: TangoEventTracer,
+):
+    _, pytest.unique_id = tmc.assign_resources(
+        default_commands_inputs.assign_input, wait_termination=False
+    )
+    assert_that(event_tracer).described_as(
+        "TMC Subarray Leaf Node"
+        "ObsState attribute value should move "
+        " to RESOURCING."
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.RESOURCING,
+    )
+
+
+@then("AssignResources command is executed succesfully")
+def verify_assign_resources_success(
+    event_tracer: TangoEventTracer, tmc: TMCFacade
+):
+    """Verifies that AssignResources command is executed successfully."""
+    assert_that(event_tracer).described_as(
+        "TMC Subarray Leaf Node"
+        "ObsState attribute value should move "
+        " to RESOURCING."
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.IDLE,
+    )
+
+
 @then(
     parsers.parse(
         "AssignResources command fails on {failed_devices} "
@@ -131,8 +178,6 @@ def verify_configure_failed_on_subarray_leaf_node(
             )
         elif failed_device == "SDP":
             error_message = '[3, "Device defective."]'
-        # else:
-        #     error_message = '[3, "Device defective."]'
         assert_that(event_tracer).described_as(
             "TMC Subarray Leaf Node "
             f"({tmc.subarray_node}) "
@@ -143,6 +188,55 @@ def verify_configure_failed_on_subarray_leaf_node(
             "longRunningCommandResult",
             (Anything, error_message),
         )
+
+
+@given(
+    parsers.parse(
+        "failed AssignResources is succesfully "
+        "recovered with {failed_devices}  "
+    )
+)
+def recovery_successful(
+    tmc: TMCFacade,
+    sdp: SDPFacade,
+    csp: CSPFacade,
+    default_commands_inputs: TestHarnessInputs,
+    event_tracer: TangoEventTracer,
+    failed_devices: str,
+):
+    """Invokes assign command on the TMC Subarray."""
+    # Set device defective
+    for failed_device in failed_devices.split(","):
+        logging.info("Setting Failed result %s", failed_device)
+        if failed_device == "SDP":
+            sdp.sdp_subarray.SetDefective(
+                json.dumps(SDP_BACK_TO_INITIAL_STATE)
+            )
+        elif failed_device == "CSP":
+            failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT_EMPTY)
+            failed_result_defect["target_obsstates"] = [ObsState.IDLE]
+            csp.csp_subarray.SetDefective(json.dumps(failed_result_defect))
+    _, pytest.unique_id = tmc.assign_resources(
+        default_commands_inputs.assign_input, wait_termination=False
+    )
+    assert_that(event_tracer).described_as(
+        "TMC Subarray Leaf Node"
+        "ObsState attribute value should move "
+        " to RESOURCING."
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.RESOURCING,
+    )
+    assert_that(event_tracer).described_as(
+        "TMC Subarray Leaf Node)"
+        "ObsState attribute value should move "
+        " to EMPTY."
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.EMPTY,
+    )
 
 
 @then(
@@ -160,7 +254,7 @@ def verify_auto_recovery_failed_on_subarray_leaf_node(
 
     for auto_recovery_failed_device in auto_recovery_failed_devices.split(","):
         if auto_recovery_failed_device == "CSP":
-            # First assert configure is successful
+            # First assert assign is successful
             assert_that(event_tracer).described_as(
                 "CSP Subarray Leaf Node"
                 "ObsState attribute value should move "
@@ -183,7 +277,7 @@ def verify_auto_recovery_failed_on_subarray_leaf_node(
                 json.dumps(FAILED_RESULT_DEFECT_EMPTY)
             )
         elif auto_recovery_failed_device == "MCCS":
-            # First assert configure is successful
+            # First assert assign is successful
             assert_that(event_tracer).described_as(
                 "MCCS Subarray"
                 "ObsState attribute value should move "
