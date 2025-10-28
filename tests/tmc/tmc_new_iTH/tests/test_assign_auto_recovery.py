@@ -192,8 +192,8 @@ def verify_configure_failed_on_subarray_leaf_node(
 
 @given(
     parsers.parse(
-        "failed AssignResources is succesfully "
-        "recovered with {failed_devices}  "
+        "failed AssignResources is successfully "
+        "recovered with {failed_devices}"
     )
 )
 def recovery_successful(
