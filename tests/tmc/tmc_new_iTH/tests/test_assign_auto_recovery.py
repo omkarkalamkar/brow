@@ -229,13 +229,29 @@ def recovery_successful(
         ObsState.RESOURCING,
     )
     assert_that(event_tracer).described_as(
-        "TMC Subarray Node)"
+        "TMC Subarray Node"
         "ObsState attribute value should move "
         " to EMPTY."
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node,
         "obsState",
         ObsState.EMPTY,
+    )
+    failed_message = (
+        "low-tmc/subarray/01: Exception occurred on the following devices: "
+        "low-tmc/subarray-leaf-node-sdp/01: Device defective. and Recovery "
+        "Successful, Subarray transitioned back to EMPTY"
+    )
+    assert_that(event_tracer).described_as(
+        "TMC Subarray Leaf Node "
+        f"({tmc.subarray_node}) "
+        "is expected to report a"
+        "longRunningCommand successful failure."
+    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+        tmc.central_node,
+        [failed_message],
+        pytest.unique_id[0],
+        ResultCode.FAILED,
     )
     logging.info("Resetting devices")
     reset_defects(csp, sdp, mccs)
