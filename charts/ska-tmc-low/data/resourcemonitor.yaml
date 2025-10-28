@@ -7,7 +7,7 @@ entrypoints:
 
 {{- $LivelinessCheckPeriod := .Values.deviceServers.resourcemonitor.LivelinessCheckPeriod }}
 {{- $EventSubscriptionCheckPeriod := .Values.deviceServers.resourcemonitor.EventSubscriptionCheckPeriod }}
-{{- $Domain := .Values.global.mid.domain }}
+{{- $Domain := .Values.global.domain }}
 {{- $Family := .Values.deviceServers.resourcemonitor.family }}
 command: "python3 /app/src/ska_tmc_resource_monitor/resource_monitor_low.py"
 server:
