@@ -148,8 +148,18 @@ def invoke_assign_resources_command_csp_empty(
 ):
     """Invokes AssignResources command on the TMC Subarray."""
     # Set device defective
-    logging.info("Setting defective %s", failed_devices)
-    csp.csp_subarray.SetDefective(json.dumps(FAILED_RESULT_DEFECT_EMPTY))
+
+    for failed_device in failed_devices.split(","):
+        logging.info("Setting Failed result %s", failed_device)
+        if failed_device == "SDP":
+            sdp.sdp_subarray.SetDefective(
+                json.dumps(SDP_BACK_TO_INITIAL_STATE)
+            )
+        elif failed_device == "CSP":
+            logging.info("Setting defective %s", failed_devices)
+            failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT_EMPTY)
+            failed_result_defect["target_obsstates"] = [ObsState.EMPTY]
+            csp.csp_subarray.SetDefective(json.dumps(failed_result_defect))
     _, pytest.unique_id = tmc.assign_resources(
         default_commands_inputs.assign_input, wait_termination=False
     )
