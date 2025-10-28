@@ -45,6 +45,7 @@ def test_assign_auto_recovery():
     """BDD test scenario to verify auto recovery when assignresources failed"""
 
 
+@pytest.mark.aki
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
