@@ -148,9 +148,8 @@ def invoke_assign_resources_command_csp_empty(
 ):
     """Invokes AssignResources command on the TMC Subarray."""
     # Set device defective
-    if failed_devices:
-        logging.info("Setting defective %s", failed_devices)
-        csp.csp_subarray.SetDefective(json.dumps(FAILED_RESULT_DEFECT_EMPTY))
+    logging.info("Setting defective %s", failed_devices)
+    csp.csp_subarray.SetDefective(json.dumps(FAILED_RESULT_DEFECT_EMPTY))
     _, pytest.unique_id = tmc.assign_resources(
         default_commands_inputs.assign_input, wait_termination=False
     )
