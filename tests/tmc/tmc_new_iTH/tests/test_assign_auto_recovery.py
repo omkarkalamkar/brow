@@ -200,6 +200,7 @@ def recovery_successful(
     tmc: TMCFacade,
     sdp: SDPFacade,
     csp: CSPFacade,
+    mccs: MCCSFacade,
     default_commands_inputs: TestHarnessInputs,
     event_tracer: TangoEventTracer,
     failed_devices: str,
@@ -237,6 +238,7 @@ def recovery_successful(
         "obsState",
         ObsState.EMPTY,
     )
+    reset_defects(csp, sdp, mccs)
 
 
 @then(
