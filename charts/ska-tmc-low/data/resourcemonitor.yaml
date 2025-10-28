@@ -18,7 +18,7 @@ server:
       classes:
       - name: "LowResourceMonitor"
         devices:
-        - name: "{{ $.Values.global.low.domain }}/{{ $.Values.deviceServers.resourcemonitor.family }}/{{ . }}"
+        - name: "{{ $.Values.global.domain }}/{{ $.Values.deviceServers.resourcemonitor.family }}/{{ . }}"
   {{- end}}
 depends_on:
   - device: sys/database/2
