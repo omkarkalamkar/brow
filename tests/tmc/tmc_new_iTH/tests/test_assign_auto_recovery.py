@@ -107,7 +107,7 @@ def invoke_assign_resources_command(
     event_tracer: TangoEventTracer,
     failed_devices: str,
 ):
-    """Invokes configure command on the TMC Subarray."""
+    """Invokes AssignResources command on the TMC Subarray."""
     # Set device defective
     for failed_device in failed_devices.split(","):
         logging.info("Setting Failed result %s", failed_device)
@@ -146,17 +146,11 @@ def invoke_assign_resources_command_csp_empty(
     event_tracer: TangoEventTracer,
     failed_devices: str,
 ):
-    """Invokes configure command on the TMC Subarray."""
+    """Invokes AssignResources command on the TMC Subarray."""
     # Set device defective
-    for failed_device in failed_devices.split(","):
-        logging.info("Setting Failed result %s", failed_device)
-        if failed_device == "SDP":
-            sdp.sdp_subarray.SetDefective(
-                json.dumps(SDP_BACK_TO_INITIAL_STATE)
-            )
-        elif failed_device == "CSP":
-            failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT_EMPTY)
-            csp.csp_subarray.SetDefective(json.dumps(failed_result_defect))
+    if failed_devices:
+        logging.info("Setting defective %s", failed_devices)
+        csp.csp_subarray.SetDefective(json.dumps(FAILED_RESULT_DEFECT_EMPTY))
     _, pytest.unique_id = tmc.assign_resources(
         default_commands_inputs.assign_input, wait_termination=False
     )
@@ -213,12 +207,11 @@ def verify_assign_resources_success(
         "Subarray Leaf Node"
     )
 )
-def verify_configure_failed_on_subarray_leaf_node(
+def verify_assign_failed_on_subarray_leaf_node(
     event_tracer: TangoEventTracer, tmc: TMCFacade, failed_devices: str
 ):
-    """Verifies that configure failed on subarray leaf node."""
+    """Verifies that AssignResources failed on subarray leaf node."""
     for failed_device in failed_devices.split(","):
-        # if pytest.is_successive_configure:
         if failed_device == "CSP":
             error_message = (
                 '[3, "Exception occurred on device: low-csp/subarray/01"]'
@@ -317,7 +310,7 @@ def verify_auto_recovery_failed_on_subarray_leaf_node(
     mccs: MCCSFacade,
     auto_recovery_failed_devices: str,
 ):
-    """Verifies that configure failed on subarray leaf node."""
+    """Verifies that AssignResources failed on subarray leaf node."""
 
     for auto_recovery_failed_device in auto_recovery_failed_devices.split(","):
         if auto_recovery_failed_device == "CSP":
