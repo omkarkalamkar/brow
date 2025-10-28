@@ -1,6 +1,7 @@
 import copy
 import json
 import logging
+import time
 
 import pytest
 from assertpy import assert_that
@@ -86,7 +87,7 @@ def verify_tmc_subarray_observation_state_empty(
         "I AssignResources to subarray with defective {failed_devices}"
     )
 )
-def invoke_second_assign_resources_command(
+def invoke_assign_resources_command(
     tmc: TMCFacade,
     sdp: SDPFacade,
     csp: CSPFacade,
@@ -121,7 +122,7 @@ def invoke_second_assign_resources_command(
 
 
 @when("I invoke second AssignResources command on subarray")
-def invoke_assign_resources_command(
+def invoke_second_assign_resources_command(
     tmc: TMCFacade,
     default_commands_inputs: TestHarnessInputs,
     event_tracer: TangoEventTracer,
@@ -213,15 +214,11 @@ def recovery_successful(
             sdp.sdp_subarray.SetDefective(
                 json.dumps(SDP_BACK_TO_INITIAL_STATE)
             )
-        elif failed_device == "CSP":
-            failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT_EMPTY)
-            failed_result_defect["target_obsstates"] = [ObsState.IDLE]
-            csp.csp_subarray.SetDefective(json.dumps(failed_result_defect))
     _, pytest.unique_id = tmc.assign_resources(
         default_commands_inputs.assign_input, wait_termination=False
     )
     assert_that(event_tracer).described_as(
-        "TMC Subarray Leaf Node"
+        "TMC Subarray Node"
         "ObsState attribute value should move "
         " to RESOURCING."
     ).within_timeout(TIMEOUT).has_change_event_occurred(
@@ -230,7 +227,7 @@ def recovery_successful(
         ObsState.RESOURCING,
     )
     assert_that(event_tracer).described_as(
-        "TMC Subarray Leaf Node)"
+        "TMC Subarray Node)"
         "ObsState attribute value should move "
         " to EMPTY."
     ).within_timeout(TIMEOUT).has_change_event_occurred(
@@ -238,7 +235,9 @@ def recovery_successful(
         "obsState",
         ObsState.EMPTY,
     )
+    logging.info("Resetting devices")
     reset_defects(csp, sdp, mccs)
+    time.sleep(2)
 
 
 @then(
