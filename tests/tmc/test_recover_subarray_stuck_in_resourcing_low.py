@@ -391,7 +391,7 @@ def test_restart_with_sdp_csp_in_empty(
     )
 
 
-@pytest.mark.SKA_low
+@pytest.mark.aki
 def test_restart_with_mccs_in_empty(
     subarray_node_low: SubarrayNodeWrapperLow,
     central_node_low: CentralNodeWrapperLow,
@@ -480,16 +480,6 @@ def test_restart_with_mccs_in_empty(
 
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGN_RESOURCES COMMAND: "
-        "Subarray Node device"
-        f"({central_node_low.subarray_node.dev_name()}) "
-        "is expected to be in FAULT obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.subarray_node,
-        "obsState",
-        ObsState.FAULT,
-    )
-    assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER ASSIGN_RESOURCES COMMAND: "
         "MCCS Subarray device"
         f"({mccs_sim.dev_name()})"
         "is expected to be in RESOURCING obstate",
@@ -526,6 +516,17 @@ def test_restart_with_mccs_in_empty(
         "is expected to be in EMPTY obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         subarray_node_low.subarray_devices["mccs_subarray"],
+        "obsState",
+        ObsState.EMPTY,
+    )
+    # SN empty after recovery
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER ASSIGN_RESOURCES COMMAND: "
+        "Subarray Node device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        "is expected to be in FAULT obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
         "obsState",
         ObsState.EMPTY,
     )
