@@ -140,7 +140,7 @@ def invoke_assign_resources_command(
     )
 
 
-@then("AssignResources command is executed succesfully")
+@then("AssignResources command is executed successfully")
 def verify_assign_resources_success(
     event_tracer: TangoEventTracer, tmc: TMCFacade
 ):

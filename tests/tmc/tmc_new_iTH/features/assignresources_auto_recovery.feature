@@ -20,9 +20,9 @@ Scenario: TMC Auto Recovery Failed
 
 Scenario: Succesive AssignResources command execution after recovery
 	Given a subarray is in the EMPTY obsState
-	And failed AssignResources is succesfully recovered with <failed_devices>
+	And failed AssignResources is successfully recovered with <failed_devices>
 	When I invoke second AssignResources command on subarray
-	Then AssignResources command is executed succesfully
+	Then AssignResources command is executed successfully
 	Examples:
 	| failed_devices  |
 	| SDP             |
