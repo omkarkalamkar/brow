@@ -110,7 +110,7 @@ class TestAssignCommandNotAllowedPropagation:
         ).within_timeout(TIMEOUT).has_change_event_occurred(
             central_node_low.subarray_node,
             "obsState",
-            ObsState.FAULT,
+            ObsState.EMPTY,
         )
 
     @pytest.mark.SKA_low
@@ -193,7 +193,7 @@ class TestAssignCommandNotAllowedPropagation:
         ).within_timeout(TIMEOUT).has_change_event_occurred(
             central_node_low.subarray_node,
             "obsState",
-            ObsState.FAULT,
+            ObsState.EMPTY,
         )
 
     @pytest.mark.SKA_low
