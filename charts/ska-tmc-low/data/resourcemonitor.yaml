@@ -1,0 +1,29 @@
+name: "resourcemonitor-test"
+function: telescope-monitoring
+domain: resource-monitoring
+instances: ["01"]
+entrypoints:
+  - name: "ska_tmc_resource_monitor.resource_monitor_low.LowResourceMonitor"
+
+{{- $LivelinessCheckPeriod := .Values.deviceServers.resourcemonitor.LivelinessCheckPeriod }}
+{{- $EventSubscriptionCheckPeriod := .Values.deviceServers.resourcemonitor.EventSubscriptionCheckPeriod }}
+{{- $Domain := .Values.global.mid.domain }}
+{{- $Family := .Values.deviceServers.resourcemonitor.family }}
+command: "python3 /app/src/ska_tmc_resource_monitor/resource_monitor_low.py"
+server:
+  name: "resource_monitor_low"
+  instances:
+  {{- range  .Values.deviceServers.resourcemonitor.instances }}
+    - name: "{{ . }}"
+      classes:
+      - name: "LowResourceMonitor"
+        devices:
+        - name: "{{ $.Values.global.low.domain }}/{{ $.Values.deviceServers.resourcemonitor.family }}/{{ . }}"
+  {{- end}}
+depends_on:
+  - device: sys/database/2
+image:
+  registry: "{{.Values.resource_monitor.image.registry}}"
+  image: "{{.Values.resource_monitor.image.image}}"
+  tag: "{{.Values.resource_monitor.image.tag}}"
+  pullPolicy: "{{.Values.resource_monitor.image.pullPolicy}}"
