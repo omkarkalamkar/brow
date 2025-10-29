@@ -30,7 +30,7 @@ Scenario: Succesive AssignResources command execution after recovery
 
 Scenario: TMC Perform Auto Recovery when AssignResources Failed CSP EMPTY
 	Given a subarray is in the EMPTY obsState
-	When I AssignResources to subarray with defective <failed_devices>
+	When I AssignResources to subarray with defective <failed_devices> EMPTY
 	Then AssignResources command fails on <failed_devices> Subarray Leaf Node
 	And a subarray perform auto recovery and transition Subarray Obs State to EMPTY
 	And <failed_devices> Failure is reported on Long Running Command Result

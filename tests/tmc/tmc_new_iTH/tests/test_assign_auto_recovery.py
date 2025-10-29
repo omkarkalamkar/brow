@@ -131,7 +131,7 @@ def invoke_assign_resources_command(
 
 @when(
     parsers.parse(
-        "I AssignResources to subarray with defective {failed_devices}"
+        "I AssignResources to subarray with defective {failed_devices} EMPTY"
     )
 )
 def invoke_assign_resources_command_csp_empty(
