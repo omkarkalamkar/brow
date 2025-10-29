@@ -194,6 +194,7 @@ def test_recover_subarray_stuck_in_resourcing_low(
     )
 
 
+@pytest.mark.aki
 @pytest.mark.SKA_low
 @pytest.mark.parametrize("defective_device", ["csp_subarray", "sdp_subarray"])
 def test_restart_with_sdp_csp_in_empty(
@@ -387,5 +388,5 @@ def test_restart_with_sdp_csp_in_empty(
     )
 
 
-# Removeing the test case the scenario will lead to auto recovery
+# Removing the test case, the scenario will lead to auto recovery
 # being executed twice
