@@ -93,7 +93,7 @@ def verify_tmc_subarray_observation_state_empty(
 @when(
     parsers.parse(
         "I AssignResources to subarray with defective {failed_devices} "
-        "with {obsState}"
+        "with {obsstate}"
     )
 )
 @when(
@@ -108,7 +108,7 @@ def invoke_assign_resources_command(
     default_commands_inputs: TestHarnessInputs,
     event_tracer: TangoEventTracer,
     failed_devices: str,
-    obsState: str = "IDLE",
+    obsstate: str = "IDLE",
 ):
     """Invokes AssignResources command on the TMC Subarray."""
     # Set device defective
@@ -122,7 +122,7 @@ def invoke_assign_resources_command(
             )
         elif failed_device == "CSP":
             failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT_EMPTY)
-            if obsState != "EMPTY":
+            if obsstate != "EMPTY":
                 failed_result_defect["target_obsstates"] = [ObsState.IDLE]
             csp.csp_subarray.SetDefective(json.dumps(failed_result_defect))
     _, pytest.unique_id = tmc.assign_resources(
