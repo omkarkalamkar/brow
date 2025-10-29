@@ -1,3 +1,4 @@
+@XTP-93186 @XTP-28348 @XTP-91746 @Team_HIMALAYA
 Scenario: TMC Perform Auto Recovery when AssignResources Failed
 	Given a subarray is in the EMPTY obsState
 	When I AssignResources to subarray with defective <failed_devices>
@@ -8,7 +9,8 @@ Scenario: TMC Perform Auto Recovery when AssignResources Failed
 	| failed_devices  |
 	| SDP             |
 
-Scenario: TMC Auto Recovery Failed
+@XTP-93187 @XTP-28348 @XTP-91746 @Team_HIMALAYA
+Scenario Outline: TMC Auto Recovery Failed for AssignResources
 	Given a subarray is in the EMPTY obsState
 	When I AssignResources to subarray with defective <failed_devices>
 	Then AssignResources command fails on <failed_devices> Subarray Leaf Node
@@ -18,7 +20,9 @@ Scenario: TMC Auto Recovery Failed
 	| failed_devices  | auto_recovery_failed_devices |
 	| SDP             | MCCS                         |
 
-Scenario: Succesive AssignResources command execution after recovery
+
+@XTP-93188 @XTP-28348 @XTP-91746 @Team_HIMALAYA
+Scenario Outline: Succesive AssignResources command execution after recovery
 	Given a subarray is in the EMPTY obsState
 	And failed AssignResources is successfully recovered with <failed_devices>
 	When I invoke second AssignResources command on subarray

@@ -46,7 +46,7 @@ def test_assign_auto_recovery():
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
-    "TMC Auto Recovery Failed",
+    "TMC Auto Recovery Failed for AssignResources",
 )
 def test_auto_recovery_failed():
     """
