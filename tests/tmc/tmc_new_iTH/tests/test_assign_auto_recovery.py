@@ -34,7 +34,7 @@ FAILED_DEVICE_MAP = {
 }
 
 
-@pytest.mark.aki
+@pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
     "TMC Perform Auto Recovery when AssignResources Failed",
@@ -90,6 +90,7 @@ def invoke_assign_resources_command(
     tmc: TMCFacade,
     sdp: SDPFacade,
     csp: CSPFacade,
+    mccs: MCCSFacade,
     default_commands_inputs: TestHarnessInputs,
     event_tracer: TangoEventTracer,
     failed_devices: str,
@@ -106,6 +107,10 @@ def invoke_assign_resources_command(
             failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT_EMPTY)
             failed_result_defect["target_obsstates"] = [ObsState.IDLE]
             csp.csp_subarray.SetDefective(json.dumps(failed_result_defect))
+        elif failed_device == "MCCS":
+            failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT_EMPTY)
+            failed_result_defect["target_obsstates"] = [ObsState.IDLE]
+            mccs.mccs_subarray.SetDefective(json.dumps(failed_result_defect))
     _, pytest.unique_id = tmc.assign_resources(
         default_commands_inputs.assign_input, wait_termination=False
     )

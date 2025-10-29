@@ -6,8 +6,8 @@ Scenario: TMC Perform Auto Recovery when AssignResources Failed
 	And a subarray perform auto recovery and transition Subarray Obs State to EMPTY
 	And <failed_devices> Failure is reported on Long Running Command Result
 	Examples:
-	| failed_devices  |
-	| SDP             |
+	| failed_devices   |
+	| MCCS             |
 
 @XTP-93187 @XTP-91746 @Team_HIMALAYA
 Scenario Outline: TMC Auto Recovery Failed for AssignResources
