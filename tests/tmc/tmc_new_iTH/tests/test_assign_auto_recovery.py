@@ -371,14 +371,34 @@ def verify_tmc_subarray_lrcr_failed(
     csp: CSPFacade,
     sdp: SDPFacade,
     mccs: MCCSFacade,
+    failed_devices: str,
 ):
     """Verifies that tmc subarray lrcr failed."""
-
-    failed_message = (
-        "low-tmc/subarray/01: Exception occurred on the following devices: "
-        "low-tmc/subarray-leaf-node-sdp/01: Device defective. and Recovery "
-        "Successful, Subarray transitioned back to EMPTY"
-    )
+    for failed_device in failed_devices.split(","):
+        if failed_device == "SDP":
+            failed_message = (
+                "low-tmc/subarray/01: Exception occurred on the following "
+                "devices: "
+                "low-tmc/subarray-leaf-node-sdp/01: Device defective. "
+                "and Recovery "
+                "Successful, Subarray transitioned back to EMPTY"
+            )
+        elif failed_device == "CSP":
+            failed_message = (
+                "low-tmc/subarray/01: Exception occurred on the following "
+                "devices: "
+                "low-tmc/subarray-leaf-node-csp/01: Device defective. "
+                "and Recovery "
+                "Successful, Subarray transitioned back to EMPTY"
+            )
+        elif failed_device == "MCCS":
+            failed_message = (
+                "low-tmc/subarray/01: Exception occurred on the following "
+                "devices: "
+                "low-tmc/subarray-leaf-node-mccs/01: Device defective. "
+                "and Recovery "
+                "Successful, Subarray transitioned back to EMPTY"
+            )
     assert_that(event_tracer).described_as(
         "TMC Subarray Leaf Node "
         f"({tmc.subarray_node}) "
