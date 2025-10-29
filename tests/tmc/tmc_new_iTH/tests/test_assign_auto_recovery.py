@@ -108,7 +108,6 @@ def invoke_assign_resources_command(
             failed_result_defect["target_obsstates"] = [ObsState.IDLE]
             csp.csp_subarray.SetDefective(json.dumps(failed_result_defect))
         elif failed_device == "MCCS":
-            logging.info("Setting Failed result %s", failed_device)
             failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT_EMPTY)
             failed_result_defect["target_obsstates"] = [ObsState.IDLE]
             mccs.mccs_subarray.SetDefective(json.dumps(failed_result_defect))
