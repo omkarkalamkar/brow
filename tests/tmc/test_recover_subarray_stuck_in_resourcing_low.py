@@ -12,16 +12,11 @@ from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.helpers import (
     get_device_simulators,
     prepare_json_args_for_centralnode_commands,
-    wait_and_validate_device_attribute_value,
 )
 from tests.resources.test_harness.simulator_factory import SimulatorFactory
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_harness.utils.enums import SimulatorDeviceType
-from tests.resources.test_support.constant_low import (
-    FAILED_RESULT_DEFECT,
-    SDP_BACK_TO_INITIAL_STATE,
-    TIMEOUT,
-)
+from tests.resources.test_support.constant_low import TIMEOUT
 
 
 @pytest.mark.SKA_low
