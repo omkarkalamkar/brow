@@ -105,12 +105,12 @@ def invoke_assign_resources_command(
             )
         elif failed_device == "CSP":
             failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT_EMPTY)
-            failed_result_defect["target_obsstates"] = [ObsState.IDLE]
+            failed_result_defect["target_obsstates"] = [ObsState.EMPTY]
             csp.csp_subarray.SetDefective(json.dumps(failed_result_defect))
         elif failed_device == "MCCS":
             failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT_EMPTY)
-            failed_result_defect["target_obsstates"] = [ObsState.IDLE]
-            mccs.mccs_subarray.SetDefective(json.dumps(failed_result_defect))
+            failed_result_defect["target_obsstates"] = [ObsState.EMPTY]
+            mccs.mccs_controller.SetDefective(json.dumps(failed_result_defect))
     _, pytest.unique_id = tmc.assign_resources(
         default_commands_inputs.assign_input, wait_termination=False
     )
