@@ -387,16 +387,16 @@ def verify_tmc_subarray_lrcr_failed(
             failed_message = (
                 "low-tmc/subarray/01: Exception occurred on the following "
                 "devices: "
-                "low-tmc/subarray-leaf-node-csp/01: Device defective. "
-                "and Recovery "
+                "low-tmc/subarray-leaf-node-csp/01: Exception occurred on "
+                "device: low-csp/subarray/01 and Recovery "
                 "Successful, Subarray transitioned back to EMPTY"
             )
         elif failed_device == "MCCS":
             failed_message = (
                 "low-tmc/subarray/01: Exception occurred on the following "
                 "devices: "
-                "low-tmc/subarray-leaf-node-mccs/01: Device defective. "
-                "and Recovery "
+                "low-tmc/subarray-leaf-node-mccs/01: Exception occurred on "
+                "device: low-mccs/subarray/01 and Recovery "
                 "Successful, Subarray transitioned back to EMPTY"
             )
     assert_that(event_tracer).described_as(
