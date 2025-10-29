@@ -302,7 +302,6 @@ def recovery_successful(
     )
     logging.info("Resetting devices")
     reset_defects(csp, sdp, mccs)
-    time.sleep(2)
 
 
 @then(
