@@ -34,7 +34,7 @@ FAILED_DEVICE_MAP = {
 }
 
 
-@pytest.mark.SKA_low
+@pytest.mark.aki
 @scenario(
     "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
     "TMC Perform Auto Recovery when AssignResources Failed",
@@ -52,7 +52,7 @@ def test_assign_auto_recovery_csp_empty():
     """BDD test scenario to verify auto recovery when assignresources failed"""
 
 
-@pytest.mark.SKA_low
+@pytest.mark.aki
 @scenario(
     "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
     "TMC Auto Recovery Failed",
@@ -63,7 +63,7 @@ def test_auto_recovery_failed():
     """
 
 
-@pytest.mark.SKA_low
+@pytest.mark.aki
 @scenario(
     "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
     "Succesive AssignResources command execution after recovery",
@@ -108,27 +108,23 @@ def invoke_assign_resources_command(
     default_commands_inputs: TestHarnessInputs,
     event_tracer: TangoEventTracer,
     failed_devices: str,
-    obsState: str,
+    obsState: str = "IDLE",
 ):
     """Invokes AssignResources command on the TMC Subarray."""
     # Set device defective
     for failed_device in failed_devices.split(","):
-        logging.info("Setting Failed result %s", failed_device)
+        failed_device = failed_device.strip().upper()
+        logging.info("Setting Failed result for %s", failed_device)
+
         if failed_device == "SDP":
             sdp.sdp_subarray.SetDefective(
                 json.dumps(SDP_BACK_TO_INITIAL_STATE)
             )
         elif failed_device == "CSP":
-            if obsState == "EMPTY":
-                csp.csp_subarray.SetDefective(
-                    json.dumps(FAILED_RESULT_DEFECT_EMPTY)
-                )
-            else:
-                failed_result_defect = copy.deepcopy(
-                    FAILED_RESULT_DEFECT_EMPTY
-                )
+            failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT_EMPTY)
+            if obsState != "EMPTY":
                 failed_result_defect["target_obsstates"] = [ObsState.IDLE]
-                csp.csp_subarray.SetDefective(json.dumps(failed_result_defect))
+            csp.csp_subarray.SetDefective(json.dumps(failed_result_defect))
     _, pytest.unique_id = tmc.assign_resources(
         default_commands_inputs.assign_input, wait_termination=False
     )
