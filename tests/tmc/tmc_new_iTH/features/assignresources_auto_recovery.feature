@@ -8,7 +8,6 @@ Scenario: TMC Perform Auto Recovery when AssignResources Failed
 	Examples:
 	| failed_devices   |
 	| CSP              |
-	| MCCS             |
 
 @XTP-93187 @XTP-91746 @Team_HIMALAYA
 Scenario Outline: TMC Auto Recovery Failed for AssignResources

@@ -34,7 +34,7 @@ FAILED_DEVICE_MAP = {
 }
 
 
-@pytest.mark.aki
+@pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
     "TMC Perform Auto Recovery when AssignResources Failed",
