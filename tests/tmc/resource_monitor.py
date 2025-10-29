@@ -1,10 +1,11 @@
 import json
+
 import pytest
-import tango
 from assertpy import assert_that
 from pytest_bdd import given, scenario, then, when
-from ska_tmc_common import DevFactory
 from ska_tango_testing.integration import TangoEventTracer
+from ska_tmc_common import DevFactory
+
 
 @pytest.mark.test1
 @pytest.mark.SKA_low
@@ -13,7 +14,8 @@ from ska_tango_testing.integration import TangoEventTracer
     "Test Resource Monitoring attribute updates on SubarrayNode change",
 )
 def test_resource_monitoring_low_updates():
-    """BDD test scenario for verifying Resource Monitoring attribute updates."""
+    """BDD test scenario for verifying Resource Monitoring attribute
+    updates."""
 
 
 @given("the LOW SubarrayHelper and ResourceMonitoring devices are available")
@@ -29,25 +31,31 @@ def setup_devices():
 def trigger_subarray_change(setup_devices):
     """Trigger a change in SubarrayHelper that RM should reflect."""
     subarray_helper, _ = setup_devices
-    assign_json = json.dumps({
-        "subarray_beam_ids": ["1"],
-        "station_beam_ids": ["1"],
-        "station_ids": ["1", "2", "3"],
-        "apertures": [
-            "AP001.01",
-            "AP001.02",
-            "AP002.01",
-            "AP002.02",
-            "AP003.01",
-        ],
-        "channels": [32],
-    })
+    assign_json = json.dumps(
+        {
+            "subarray_beam_ids": ["1"],
+            "station_beam_ids": ["1"],
+            "station_ids": ["1", "2", "3"],
+            "apertures": [
+                "AP001.01",
+                "AP001.02",
+                "AP002.01",
+                "AP002.02",
+                "AP003.01",
+            ],
+            "channels": [32],
+        }
+    )
     subarray_helper.SetDirectassignedResources(assign_json)
 
 
-@then("the ResourceMonitoring stationsData attribute should publish the updated event")
+@then(
+    "the ResourceMonitoring stationsData attribute "
+    "should publish the updated event"
+)
 def verify_rm_event_update(setup_devices):
-    """Verify that the ResourceMonitoring device sends updated stationsData event."""
+    """Verify that the ResourceMonitoring device sends updated stationsData
+    event."""
     _, rm_device = setup_devices
     event_tracer = TangoEventTracer()
 
@@ -57,9 +65,7 @@ def verify_rm_event_update(setup_devices):
     # Wait for the event
     assert_that(event_tracer).described_as(
         "ResourceMonitoring stationsData should publish an updated event"
-    ).within_timeout(10).has_change_event_occurred(
-        rm_device, "stationsData"
-    )
+    ).within_timeout(10).has_change_event_occurred(rm_device, "stationsData")
 
     # Get the latest value from the event tracer
     latest_event = event_tracer.get_last_event(rm_device, "stationsData")
