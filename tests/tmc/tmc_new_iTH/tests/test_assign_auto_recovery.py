@@ -92,6 +92,12 @@ def verify_tmc_subarray_observation_state_empty(
 
 @when(
     parsers.parse(
+        "I AssignResources to subarray with defective {failed_devices} "
+        "with {obsState}"
+    )
+)
+@when(
+    parsers.parse(
         "I AssignResources to subarray with defective {failed_devices}"
     )
 )
@@ -102,6 +108,7 @@ def invoke_assign_resources_command(
     default_commands_inputs: TestHarnessInputs,
     event_tracer: TangoEventTracer,
     failed_devices: str,
+    obsState: str,
 ):
     """Invokes AssignResources command on the TMC Subarray."""
     # Set device defective
@@ -112,50 +119,16 @@ def invoke_assign_resources_command(
                 json.dumps(SDP_BACK_TO_INITIAL_STATE)
             )
         elif failed_device == "CSP":
-            failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT_EMPTY)
-            failed_result_defect["target_obsstates"] = [ObsState.IDLE]
-            csp.csp_subarray.SetDefective(json.dumps(failed_result_defect))
-    _, pytest.unique_id = tmc.assign_resources(
-        default_commands_inputs.assign_input, wait_termination=False
-    )
-    assert_that(event_tracer).described_as(
-        "TMC Subarray Leaf Node"
-        "ObsState attribute value should move "
-        " to RESOURCING."
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        tmc.subarray_node,
-        "obsState",
-        ObsState.RESOURCING,
-    )
-
-
-@when(
-    parsers.parse(
-        "I AssignResources to subarray with defective {failed_devices} EMPTY"
-    )
-)
-def invoke_assign_resources_command_csp_empty(
-    tmc: TMCFacade,
-    sdp: SDPFacade,
-    csp: CSPFacade,
-    default_commands_inputs: TestHarnessInputs,
-    event_tracer: TangoEventTracer,
-    failed_devices: str,
-):
-    """Invokes AssignResources command on the TMC Subarray."""
-    # Set device defective
-
-    for failed_device in failed_devices.split(","):
-        logging.info("Setting Failed result %s", failed_device)
-        if failed_device == "SDP":
-            sdp.sdp_subarray.SetDefective(
-                json.dumps(SDP_BACK_TO_INITIAL_STATE)
-            )
-        elif failed_device == "CSP":
-            logging.info("Setting defective %s", failed_devices)
-            failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT_EMPTY)
-            failed_result_defect["target_obsstates"] = [ObsState.EMPTY]
-            csp.csp_subarray.SetDefective(json.dumps(failed_result_defect))
+            if obsState == "EMPTY":
+                csp.csp_subarray.SetDefective(
+                    json.dumps(FAILED_RESULT_DEFECT_EMPTY)
+                )
+            else:
+                failed_result_defect = copy.deepcopy(
+                    FAILED_RESULT_DEFECT_EMPTY
+                )
+                failed_result_defect["target_obsstates"] = [ObsState.IDLE]
+                csp.csp_subarray.SetDefective(json.dumps(failed_result_defect))
     _, pytest.unique_id = tmc.assign_resources(
         default_commands_inputs.assign_input, wait_termination=False
     )
