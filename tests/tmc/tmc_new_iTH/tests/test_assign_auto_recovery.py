@@ -43,7 +43,7 @@ def test_assign_auto_recovery():
     """BDD test scenario to verify auto recovery when assignresources failed"""
 
 
-# @pytest.mark.SKA_low
+@pytest.mark.aki
 @scenario(
     "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
     "TMC Perform Auto Recovery when AssignResources Failed CSP EMPTY",
@@ -113,7 +113,7 @@ def invoke_assign_resources_command(
             )
         elif failed_device == "CSP":
             failed_result_defect = copy.deepcopy(FAILED_RESULT_DEFECT_EMPTY)
-            # failed_result_defect["target_obsstates"] = [ObsState.IDLE]
+            failed_result_defect["target_obsstates"] = [ObsState.IDLE]
             csp.csp_subarray.SetDefective(json.dumps(failed_result_defect))
     _, pytest.unique_id = tmc.assign_resources(
         default_commands_inputs.assign_input, wait_termination=False
