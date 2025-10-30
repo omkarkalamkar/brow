@@ -78,7 +78,7 @@ subarraynode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-subarraynode
-    tag: 0.44.4
+    tag: 0.45.2
     pullPolicy: IfNotPresent
 
 sdpleafnodes:
@@ -155,6 +155,8 @@ deviceServers:
     IsAutoRecoveryEnabled: "true"
     TelmodelSource: "car://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     TelmodelPath: "instrument/ska1_low/layout/low-layout.json"
+    MccsReleaseInterfaceURL: "https://schema.skatelescope.org/ska-low-mccs-controller-release/2.0"
+
 
   sdpsubarrayleafnode:
     enabled: true

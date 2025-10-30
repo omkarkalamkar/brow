@@ -143,7 +143,7 @@ def error_reporting(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node,
         "obsState",
-        ObsState.FAULT,
+        ObsState.EMPTY,
     )
     mccs.mccs_controller.SetDefective(json.dumps({"enabled": False}))
 

@@ -116,7 +116,7 @@ def test_assign_release_defective_csp_sdp(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
-        ObsState.FAULT,
+        ObsState.EMPTY,
     )
 
     assert_that(event_tracer).described_as(
@@ -214,7 +214,7 @@ def test_assign_release_timeout_sdp(
         f"({central_node_low.central_node.dev_name()}) "
         "is expected have longRunningCommandResult"
         "(ResultCode.FAILED,exception)",
-    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+    ).within_timeout(52).has_desired_result_code_message_in_lrcr_event(
         central_node_low.central_node,
         [exception_message],
         unique_id[0],
@@ -417,6 +417,6 @@ def test_assign_release_timeout_csp(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
-        ObsState.FAULT,
+        ObsState.EMPTY,
     )
     csp_subarray_sim.SetDefective(json.dumps(RESET_DEFECT))
