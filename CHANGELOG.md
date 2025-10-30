@@ -5,6 +5,13 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[2.4.0-rc.1]
+************
+Added
+-----
+* Functionality of auto recovery of AssignResources and Configure command from inconsistent stage
+* Added MccsReleaseInterfaceURL in values.yaml
+
 [2.3.4]
 *************
 Updated

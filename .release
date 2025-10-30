@@ -1,21 +1,23 @@
-release=2.3.4
-tag=2.3.4
+release=2.4.0-rc.1
+tag=2.4.0-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.3.4**
+**1. ska-tmc-low-integration 2.4.0-rc.1**
 
-    **1.1 ska-tmc-low  2.3.3 - 2.3.4 :**
-        * Updated MCCS leaf node v.0.10.3 to fix SKB-908
+    **1.1 ska-tmc-low  2.3.4 - 2.4.0-rc.1 :**
+        * Integrated AssignResources and Configure Command AutoRecovery functionality
+        * Added MccsReleaseInterfaceURL in values.yaml
 
 
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.3.4**
+**1. ska-tmc-low-integration 2.4.0-rc.1**
 
-    **1.1 ska-tmc-low  2.3.3 - 2.3.4:**
-        * Updated MCCS leaf node v.0.10.3 to fix SKB-908
+    **1.1 ska-tmc-low  2.3.4 - 2.4.0-rc.1:**
+        * Integrated AssignResources and Configure Command AutoRecovery functionality
+        * Added MccsReleaseInterfaceURL in values.yaml
 
 
