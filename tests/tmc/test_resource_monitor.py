@@ -13,7 +13,9 @@ from tango import DeviceProxy
 from ska_control_model import ObsState
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.simulator_factory import SimulatorFactory
-
+from tests.resources.test_harness.helpers import generate_and_get_assign_resource_json
+import json
+import time
 # from tests.resources.test_harness.subarray_node_low import (
 #     SubarrayNodeWrapperLow,
 # )
@@ -89,11 +91,9 @@ def trigger_sn_resource_change(
         SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
     )
     # Generate correct JSON for assigned resources
-    from tests.resources.test_harness.helpers import generate_and_get_assign_resource_json
-    import json
     assigned_resources = json.loads(generate_and_get_assign_resource_json(assign_input_json))
     # Update station_ids to match expected keys in ResourceMonitor
-    assigned_resources = {
+    assigned_resources = """{
                 "subarray_beam_ids": ["1"],
                 "station_beam_ids": ["1"],
                 "station_ids": ["1", "2", "3"],
@@ -102,12 +102,14 @@ def trigger_sn_resource_change(
                     "AP001.02",
                     "AP002.01",
                     "AP002.02",
-                    "AP003.01",
+                    "AP003.01"
                 ],
-                "channels": [32],
-            }
+                "channels": [32]
+            }"""
     # assigned_resources_json = json.loads(assigned_resources)
     mccs_sim.SetDirectassignedResources(assigned_resources)
+    print("Sent assigned resources update to MCCS simulator")
+    time.sleep(5)
 
 
 @then(
@@ -127,12 +129,12 @@ def check_resource_monitor_update(event_tracer: TangoEventTracer):
                     "station_2": {"subarray_allocation": 1},
                     "station_3": {"subarray_allocation": 1},
                 }
-            },
+            }
     # expected_stations_data = {
     #     "stations": {station_id: {"subarray_allocation": 1} for station_id in station_ids}
     # }
     assert_that(event_tracer).within_timeout(TIMEOUT).has_change_event_occurred(
         resource_monitor,
-        "stationsData",
-        station_ids,
+        "stationsdata",
+        json.dumps(station_ids)
     )
