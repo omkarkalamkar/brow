@@ -11,6 +11,7 @@ Added
 -----
 * Functionality of auto recovery of AssignResources and Configure command from inconsistent stage
 * Added MccsReleaseInterfaceURL in values.yaml
+* SubarrayNode v0.45.2 integrated to support auto recovery functionality
 
 [2.3.4]
 *************
