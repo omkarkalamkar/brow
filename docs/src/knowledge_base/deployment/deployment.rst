@@ -165,6 +165,7 @@ Subarray Node
     #. **CspScanInterfaceURL** : Interface version for CSP scan command. Currently defaults to "https://schema.skao.int/ska-low-csp-scan/2.0"
     #. **SdpScanInterfaceURL** : Interface version for SDP scan command. Currently defaults to "https://schema.skao.int/ska-sdp-scan/0.4"
     #. **MccsConfigureInterfaceURL** : Interface version for MCCS configure command. Currently defaults to "https://schema.skao.int/ska-low-mccs-configure/1.0"
+    #. **MccsReleaseInterfaceURL** : Interface version for MCCS release command. Currently defaults to "https://schema.skatelescope.org/ska-low-mccs-controller-release/2.0"
     #. **MccsScanInterfaceURL** : Interface version for MCCS scan command. Currently defaults to "https://schema.skao.int/ska-low-mccs-scan/3.0"
     #. **JonesURI** : URI for Jones Matrix. Currently defaults to "tango://jones.skao.int/low/stn-beam/1".
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.

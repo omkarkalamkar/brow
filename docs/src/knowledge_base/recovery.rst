@@ -23,6 +23,8 @@ observation states.
 Auto Recovery Scenarios
 -----------------------
 
+**Pre-Requisite**: Recovery is only possible after a command failure if the subsystems have either reached their target ObsState or successfully rolled back to their previous ObsState.
+
 1. Configure Command Failure — Subsystems in Recoverable State
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -126,7 +128,7 @@ Summary
 |                                         | MCCS: ``READY``                          |                                                             |
 +-----------------------------------------+------------------------------------------+-------------------------------------------------------------+
 | ``AssignResources`` fails               | CSP: ``EMPTY``                           | Invoke ``ReleaseAllResources`` on MCCS and SDP → all        |
-|                                         | SDP: ``IDLE``                            | subsystems return to ``EMPTY``.                              |
+|                                         | SDP: ``IDLE``                            | subsystems return to ``EMPTY``.                             |
 |                                         | MCCS: ``IDLE``                           |                                                             |
 +-----------------------------------------+------------------------------------------+-------------------------------------------------------------+
 
