@@ -23,6 +23,8 @@ observation states.
 Auto Recovery Scenarios
 -----------------------
 
+**Pre-Requisite**: Recovery is only possible after a command failure if the subsystems have either reached their target ObsState or successfully rolled back to their previous ObsState.
+
 1. Configure Command Failure — Subsystems in Recoverable State
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
