@@ -6,7 +6,6 @@ ResourceMonitor device
 reflects the update in its stationsData attribute.
 """
 import json
-import time
 
 import pytest
 from assertpy import assert_that
@@ -20,10 +19,6 @@ from tests.resources.test_harness.helpers import (
     generate_and_get_assign_resource_json,
 )
 from tests.resources.test_harness.simulator_factory import SimulatorFactory
-
-# from tests.resources.test_harness.subarray_node_low import (
-#     SubarrayNodeWrapperLow,
-# )
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_harness.utils.enums import SimulatorDeviceType
 from tests.resources.test_support.common_utils.tmc_helpers import (
@@ -85,6 +80,7 @@ def trigger_sn_resource_change(
         "assign_resources_low", command_input_factory
     )
     central_node_low.perform_action("AssignResources", assign_input_json)
+
     # Check that obsState transitions to IDLE after assigning resources
     assert_that(event_tracer).within_timeout(
         TIMEOUT
@@ -97,26 +93,12 @@ def trigger_sn_resource_change(
         SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
     )
     # Generate correct JSON for assigned resources
-    assigned_resources = json.loads(
-        generate_and_get_assign_resource_json(assign_input_json)
+    assigned_resources = generate_and_get_assign_resource_json(
+        assign_input_json
     )
-    # Update station_ids to match expected keys in ResourceMonitor
-    assigned_resources = """{
-                "subarray_beam_ids": ["1"],
-                "station_beam_ids": ["1"],
-                "station_ids": ["1", "2", "3"],
-                "apertures": [
-                    "AP001.01",
-                    "AP001.02",
-                    "AP002.01",
-                    "AP002.02",
-                    "AP003.01"
-                ],
-                "channels": [32]
-            }"""
-    assigned_resources_json = json.dumps(assigned_resources)
-    mccs_sim.SetDirectassignedResources(assigned_resources_json)
-    time.sleep(5)
+
+    mccs_sim.SetDirectassignedResources(assigned_resources)
+    trigger_sn_resource_change.assigned_resources = assigned_resources
 
 
 @then(
@@ -127,22 +109,19 @@ def check_resource_monitor_update(event_tracer: TangoEventTracer):
     Assert that the ResourceMonitor device's stationsData attribute has
     been updated to reflect the new assigned resources from the SubarrayNode.
     """
+    # Get required data from previous steps
     resource_monitor = setup_devices.resource_monitor
-    # Get the assigned resources JSON from the previous step
-    # For simplicity, reconstruct the expected dict from the same station_ids
-    station_ids = {
+    assigned_resources = json.loads(
+        trigger_sn_resource_change.assigned_resources
+    )
+    expected_stations_data = {
         "stations": {
-            "station_1": {"subarray_allocation": 1},
-            "station_2": {"subarray_allocation": 1},
-            "station_3": {"subarray_allocation": 1},
+            f"station_{station_id}": {"subarray_allocation": 1}
+            for station_id in assigned_resources.get("station_ids")
         }
     }
-    # expected_stations_data = {
-    #     "stations": {station_id: {"subarray_allocation": 1}
-    # for station_id in station_ids}
-    # }
     assert_that(event_tracer).within_timeout(
         TIMEOUT
     ).has_change_event_occurred(
-        resource_monitor, "stationsData", json.dumps(station_ids)
+        resource_monitor, "stationsData", json.dumps(expected_stations_data)
     )
