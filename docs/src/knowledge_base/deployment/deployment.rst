@@ -21,6 +21,7 @@ of instances deployed for each of the TMC component.
 #. SDP Subarray Leaf Node - 1
 #. MCCS Master Leaf Node - 1
 #. MCCS Subarray Leaf Node - 1
+#. Resource Monitor - 1
 
 .. warning:: The number of instances of Central Node, MCCS Master Leaf Node,
     SDP Master, Leaf Node and CSP Master Leaf Node should always be one even
@@ -237,3 +238,10 @@ MCCS Subarray Leaf Node
     #. **CommandTimeOutDefault** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
     #. **family** :  This refers to the family name of MCCS Subarray Leaf Node TANGO device. Currently defaults to "subarray-leaf-node-mccs".
+
+Resource Monitor
+^^^^^^^^^^^^^^^^^^^^^
+
+    #. **LivelinessCheckPeriod** :  This defines the period (in seconds) for the liveliness probe to monitor each connected device in a loop. Currently defaults to **0.5 seconds**.
+    #. **EventSubscriptionCheckPeriod** :  This defines the period (in seconds) for the event subscriber to verify and maintain active subscriptions. Currently defaults to **0.5 seconds**.
+    #. **family** :  This refers to the family name of the Resource Monitor Tango device. Currently defaults to **"resource-monitor"**.

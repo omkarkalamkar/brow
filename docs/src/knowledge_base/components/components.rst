@@ -17,3 +17,4 @@ This section specifies the attributes exposed by each of the TMC Low component.
    sdp_subarray_leaf_node
    mccs_master_leaf_node
    mccs_subarray_leaf_node
+   resource_monitor
