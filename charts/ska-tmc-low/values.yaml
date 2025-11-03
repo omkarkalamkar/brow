@@ -120,7 +120,7 @@ resource_monitor:
   image:
     registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-resource-monitor
     image: ska-tmc-resource-monitor
-    tag: 0.3.0-dev.c0f574f17
+    tag: 0.3.0-dev.cab6e1847
     pullPolicy: IfNotPresent
 
 resources:

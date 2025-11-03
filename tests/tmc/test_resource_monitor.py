@@ -29,7 +29,6 @@ from tests.resources.test_support.constant_low import TIMEOUT
 RESOURCE_MONITOR_FQDN = "low-tmc/resource-monitor/01"
 
 
-@pytest.mark.test1
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/resource_monitor.feature",
