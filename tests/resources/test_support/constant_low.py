@@ -156,6 +156,14 @@ FAILED_RESULT_DEFECT = {
     "target_obsstates": [ObsState.IDLE],
 }
 
+FAILED_RESULT_DEFECT_EMPTY = {
+    "enabled": True,
+    "fault_type": FaultType.FAILED_RESULT,
+    "error_message": "Device defective.",
+    "result": ResultCode.QUEUED,
+    "target_obsstates": [ObsState.EMPTY],
+}
+
 SDP_BACK_TO_INITIAL_STATE = {
     "enabled": True,
     "fault_type": FaultType.SDP_BACK_TO_INITIAL_STATE,

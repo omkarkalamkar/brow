@@ -13,15 +13,17 @@ Overview
 --------
 
 The **Telescope Monitoring and Control (TMC) Low** system supports an **auto-recovery mechanism** to handle failures
-that occur during the ``Configure`` command execution.
+that occur during the ``AssignResources`` and ``Configure`` command execution.
 
-When a TMC detects failure on the ``Configure`` command, TMC attempts to recover the affected subsystems automatically, depending on their
+When a TMC detects failure on the ``AssignResources`` and ``Configure`` command, TMC attempts to recover the affected subsystems automatically, depending on their
 observation states.
 
 ---
 
 Auto Recovery Scenarios
 -----------------------
+
+**Pre-Requisite**: Recovery is only possible after a command failure if the subsystems have either reached their target ObsState or successfully rolled back to their previous ObsState.
 
 1. Configure Command Failure — Subsystems in Recoverable State
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -82,6 +84,35 @@ If a successive ``Configure`` command fails for any reason, and all subsystems r
 
 ---
 
+3. AssignResources Command Failure — Subsystems in Recoverable State
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If the ``AssignResources`` command fails for any reason and the subsystems are in the following states:
+
++-------------------+-------------------+-------------------+------------------------------------------------------------------------------+
+| **CSP Obs State** | **SDP Obs State** | **MCCS Obs State** | **Auto Recovery Action**                                                    |
++===================+===================+===================+==============================================================================+
+| ``EMPTY``         | ``IDLE``          | ``IDLE``          | TMC invokes the **ReleaseAllResources** command on **MCCS** and **SDP**      |
+|                   |                   |                   | subarrays to bring them back to ``EMPTY``. Once complete, the                |
+|                   |                   |                   | **TMC Subarray** also transitions to ``EMPTY``.                              |
++-------------------+-------------------+-------------------+------------------------------------------------------------------------------+
+
+**Example**
+
+- **Scenario:**
+  The ``AssignResources`` command fails due to a timeout in MCCS configuration.
+
+- **Subsystem States:**
+  - CSP  -> Current ObsState -> ``EMPTY``
+  - SDP  -> Transitions      -> ``IDLE``
+  - MCCS -> Transitions      -> ``IDLE``
+
+- **Action Taken:**
+  TMC automatically issues ``ReleaseAllResources`` on SDP and MCCS subarrays, returning all subsystems (and the TMC Subarray)
+  to the ``EMPTY`` state.
+
+---
+
 Summary
 -------
 
@@ -96,9 +127,12 @@ Summary
 |                                         | SDP: ``READY``                           | ``READY``.                                                  |
 |                                         | MCCS: ``READY``                          |                                                             |
 +-----------------------------------------+------------------------------------------+-------------------------------------------------------------+
+| ``AssignResources`` fails               | CSP: ``EMPTY``                           | Invoke ``ReleaseAllResources`` on MCCS and SDP → all        |
+|                                         | SDP: ``IDLE``                            | subsystems return to ``EMPTY``.                             |
+|                                         | MCCS: ``IDLE``                           |                                                             |
++-----------------------------------------+------------------------------------------+-------------------------------------------------------------+
 
 ---
-
 
 
 
