@@ -3,7 +3,7 @@ Test case for verifying Resource Monitor updates when SubarrayNode assigned
 resources change.
 This test simulates a change in assigned resources and checks that the
 ResourceMonitor device
-reflects the update in its stationsData attribute.
+reflects the update in its stationsData attribute
 """
 import json
 
