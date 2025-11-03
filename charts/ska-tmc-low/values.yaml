@@ -239,7 +239,7 @@ deviceServers:
     file: "data/resourcemonitor.yaml"
     LivelinessCheckPeriod: 1.0
     EventSubscriptionCheckPeriod: 1.0
-    family: "resource_monitor"
+    family: "resource-monitor"
 
   mocks:
     enabled: false
