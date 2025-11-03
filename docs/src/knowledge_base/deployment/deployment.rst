@@ -242,6 +242,6 @@ MCCS Subarray Leaf Node
 Resource Monitor
 ^^^^^^^^^^^^^^^^^^^^^
 
-    #. **LivelinessCheckPeriod** :  This defines the period (in seconds) for the liveliness probe to monitor each connected device in a loop. Currently defaults to **0.5 seconds**.
-    #. **EventSubscriptionCheckPeriod** :  This defines the period (in seconds) for the event subscriber to verify and maintain active subscriptions. Currently defaults to **0.5 seconds**.
+    #. **LivelinessCheckPeriod** : This defines how often (in seconds) the system checks if each connected device is active. The default value is 0.5 seconds.
+    #. **EventSubscriptionCheckPeriod** :  This defines the period (in seconds) for the event subscriber to verify and maintain active subscriptions. Currently defaults to 0.5 seconds.
     #. **family** :  This refers to the family name of the Resource Monitor Tango device. Currently defaults to **"resource-monitor"**.
