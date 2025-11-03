@@ -4,5 +4,5 @@ Feature: Resource Monitoring updates for LOW
   @SKA_tmc_low
   Scenario: Test Resource Monitoring updates when SubarrayNode attributes change
     Given the LOW SubarrayNode and ResourceMonitoring devices are available
-    When a change is triggered on the SubarrayNode assigned resources
+    When the SubarrayNode assignedResources attribute changes after AssignResources command
     Then the ResourceMonitoring stationsData attribute should reflect the change

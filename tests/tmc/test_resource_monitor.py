@@ -28,7 +28,7 @@ from tests.resources.test_support.constant_low import TIMEOUT
 
 RESOURCE_MONITOR_FQDN = "low-tmc/resource_monitor/01"
 
-
+@pytest.mark.test1
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/resource_monitor.feature",
@@ -63,7 +63,10 @@ def setup_devices(
     setup_devices.resource_monitor = resource_monitor
 
 
-@when("a change is triggered on the SubarrayNode assigned resources")
+@when(
+    "the SubarrayNode assignedResources attribute "
+    "changes after AssignResources command"
+)
 def trigger_sn_resource_change(
     central_node_low: CentralNodeWrapperLow,
     simulator_factory: SimulatorFactory,
