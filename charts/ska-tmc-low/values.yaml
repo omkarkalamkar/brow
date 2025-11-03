@@ -237,8 +237,8 @@ deviceServers:
     enabled: true
     instances: [ "01" ]
     file: "data/resourcemonitor.yaml"
-    LivelinessCheckPeriod: 1.0
-    EventSubscriptionCheckPeriod: 1.0
+    LivelinessCheckPeriod: 0.5
+    EventSubscriptionCheckPeriod: 0.5
     family: "resource-monitor"
 
   mocks:
