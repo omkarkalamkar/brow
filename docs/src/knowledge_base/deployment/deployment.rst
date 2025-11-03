@@ -137,6 +137,7 @@ nodes. Defaults are:
     #. **mccs_master_ln** : This value is present under global, User can use this to change the FQDN of MCCS Master Leaf Node.
     #. **mccs_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Subarray.
     #. **mccs_subarray_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Subarray Leaf Node.
+    #. **resource_monitor_prefix** : This value is present under global. It can be used to change the FQDN prefix of the Resource Monitor device.
 
 #. **subarray_devices** : List of subarray-devices
 

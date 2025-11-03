@@ -13,6 +13,7 @@ command: "python3 /app/src/ska_tmc_resource_monitor/resource_monitor_low.py"
 server:
   name: "resource_monitor_low"
   instances:
+  {{ $resource_monitor_fqdn_prefix:= .Values.devices_fqdn.resource_monitor_prefix}}
   {{- range  .Values.deviceServers.resourcemonitor.instances }}
     - name: "{{ . }}"
       classes:

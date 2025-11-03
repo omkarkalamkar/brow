@@ -51,6 +51,7 @@ devices_fqdn:
   mccs_master: "low-mccs/control/control"
   mccs_subarray_ln_prefix: "low-tmc/subarray-leaf-node-mccs/"
   mccs_subarray_prefix: "low-mccs/subarray"
+  resource_monitor_prefix: "low-tmc/resource-monitor/"
 
 dsconfig:
   configuration_file: data/tmc-low-config.json
