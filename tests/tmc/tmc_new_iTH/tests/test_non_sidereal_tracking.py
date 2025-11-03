@@ -1,5 +1,3 @@
-import copy
-import json
 import logging
 
 import pytest
@@ -14,30 +12,22 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
     TestHarnessInputs,
 )
 from ska_tango_testing.integration import TangoEventTracer
-from ska_tango_testing.mock.placeholders import Anything
+
 from tests.resources.test_harness.utils.my_file_json_input import (
     MyFileJSONInput,
 )
-from tests.resources.test_support.constant_low import (
-    FAILED_RESULT_DEFECT,
-    SDP_BACK_TO_INITIAL_STATE,
-)
 from tests.tmc.tmc_new_iTH.conftest import TestContextData
-from tests.tmc.tmc_new_iTH.utils import (
-    TIMEOUT,
-    reset_defects,
-    setup_event_subscriptions,
-)
+from tests.tmc.tmc_new_iTH.utils import TIMEOUT, setup_event_subscriptions
 
 
-@pytest.mark.SKB_1056
 @scenario(
     "../tmc/tmc_new_iTH/features/non_sidereal_tracking.feature",
     "Non sidereal tracking in TMC Low",
 )
 def test_non_sidereal_tracking():
     """BDD test scenario for verifying non sidereal tracking."""
-    
+
+
 @given("a Subarray with resources assigned")
 def verify_tmc_subarray_observation_state_idle(
     event_tracer: TangoEventTracer,
@@ -59,18 +49,16 @@ def verify_tmc_subarray_observation_state_idle(
     pytest.is_successive_configure = False
 
 
-
 @when(
-    parsers.parse("I Configure it for tracking a non-sidereal object "
-    "from {non_sidereal_objects}")
+    parsers.parse(
+        "I Configure it for tracking a non-sidereal object "
+        "from {non_sidereal_objects}"
+    )
 )
 def invoke_configure_command(
     tmc: TMCFacade,
-    sdp: SDPFacade,
-    csp: CSPFacade,
     non_sidereal_objects: str,
     event_tracer: TangoEventTracer,
-    failed_devices: str,
 ):
     """Invokes configure command on the TMC Subarray."""
     logging.info(
@@ -91,6 +79,7 @@ def invoke_configure_command(
         "obsState",
         ObsState.CONFIGURING,
     )
+
 
 @then("the Subarray is configured successfully")
 def verify_sdp_csp_mccs_in_ready_observation_state(

@@ -27,8 +27,8 @@
           }
         ],
         "sky_coordinates": {
-          "reference_frame": "special",
-          "target_name": "Sun"
+            "reference_frame": "special",
+            "target_name": "Sun"
         }
       }
     ]
