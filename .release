@@ -1,23 +1,29 @@
-release=2.4.0-rc.1
-tag=2.4.0-rc.1
+release=3.0.0-rc.1
+tag=3.0.0-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.4.0-rc.1**
+**1. ska-tmc-low-integration 3.0.0-rc.1**
 
-    **1.1 ska-tmc-low  2.3.4 - 2.4.0-rc.1 :**
-        * Integrated AssignResources and Configure Command AutoRecovery functionality
-        * Added MccsReleaseInterfaceURL in values.yaml
+    **1.1 ska-tmc-low 2.4.0-rc.1 - 3.0.0-rc.1 :**
+        * Introduced ResourceMonitor device in the ska-tmc-low.
+        * Added device configuration and FQDN under chart templates.
+        * TMC Low now supports reporting subarray allocations for stations through the stationsData attribute of the Resource Monitor.
+        * Updated documentation to include ResourceMonitor configuration details and usage.
+        * Utilised the latest ResourceMonitor release version v0.3.0 for integration and verification.
 
 
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.4.0-rc.1**
+**1. ska-tmc-low-integration 3.0.0-rc.1**
 
-    **1.1 ska-tmc-low  2.3.4 - 2.4.0-rc.1:**
-        * Integrated AssignResources and Configure Command AutoRecovery functionality
-        * Added MccsReleaseInterfaceURL in values.yaml
+    **1.1 ska-tmc-low 2.4.0-rc.1 - 3.0.0-rc.1:**
+        * Introduced ResourceMonitor device in the ska-tmc-low.
+        * Added device configuration and FQDN under chart templates.
+        * TMC Low now supports reporting subarray allocations for stations through the stationsData attribute of the Resource Monitor.
+        * Updated documentation to include ResourceMonitor configuration details and usage.
+        * Utilised the latest ResourceMonitor release version v0.3.0 for integration and verification.
 
 

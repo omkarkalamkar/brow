@@ -5,6 +5,17 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[3.0.0-rc.1]
+************
+Added
+-----
+* Introduced ResourceMonitor device in the ska-tmc-low.
+* Added device configuration and FQDN under chart templates.
+* TMC Low now supports reporting subarray allocations for stations through the stationsData attribute of the Resource Monitor.
+* Updated documentation to include ResourceMonitor configuration details and usage.
+* Utilised the latest ResourceMonitor release version v0.3.0 for integration and verification.
+
+
 [2.4.0-rc.1]
 ************
 Added
