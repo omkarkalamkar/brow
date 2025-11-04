@@ -1,3 +1,4 @@
+import json
 import logging
 
 import pytest
@@ -65,10 +66,31 @@ def invoke_configure_command(
         f"Invoking Configure command on TMC Subarray "
         f"for non-sidereal object: {non_sidereal_objects}"
     )
+
+    # Load the base JSON from file
     json_input = MyFileJSONInput("subarray", "non_sidereal_tracking")
-    tmc.configure(
-        json_input,
-        wait_termination=False,
+
+    # Parse its data into a dict
+    json_input_data = json.loads(json_input.as_str())
+
+    # Update the target_name
+    if (
+        "mccs" in json_input_data
+        and "subarray_beams" in json_input_data["mccs"]
+    ):
+        for beam in json_input_data["mccs"]["subarray_beams"]:
+            if "sky_coordinates" in beam and isinstance(
+                beam["sky_coordinates"], dict
+            ):
+                beam["sky_coordinates"]["target_name"] = non_sidereal_objects
+            else:
+                beam["sky_coordinates"] = {"target_name": non_sidereal_objects}
+
+    # Create a modified input that uses updated data
+    updated_json_input = json.dumps(json_input_data)
+
+    tmc.subarray_node.Configure(
+        updated_json_input,
     )
     assert_that(event_tracer).described_as(
         "TMC Subarray Leaf Node"
@@ -115,3 +137,57 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
         "obsState",
         ObsState.READY,
     )
+
+
+@then(
+    parsers.parse(
+        "the MCCS Subarray commandCallInfo json has "
+        "record of {non_sidereal_objects}"
+    )
+)
+def verify_mccs_command_call_info(
+    tmc: TMCFacade,
+    mccs: MCCSFacade,
+    non_sidereal_objects: str,
+    event_tracer: TangoEventTracer,
+):
+    """Verifies that the MCCS commandCallInfo json has record of
+    non-sidereal objects.
+    """
+    event_tracer.subscribe_event(mccs.mccs_subarray, "CommandCallInfo")
+    logging.info(
+        f"MCCS Command Call Info: {mccs.mccs_subarray.commandCallInfo}"
+    )
+    command_call_info = mccs.mccs_subarray.commandCallInfo
+
+    # Ensure subarray_beams exist
+    if (
+        isinstance(command_call_info, (tuple, list))
+        and len(command_call_info) > 0
+    ):
+        command_entry = command_call_info[0]
+        assert isinstance(
+            command_entry, (tuple, list)
+        ), "Invalid command entry format."
+        command_name, command_json_str = command_entry
+    else:
+        raise AssertionError(
+            f"Unexpected commandCallInfo format: {command_call_info}"
+        )
+
+    assert (
+        command_name == "Configure"
+    ), f"Unexpected command name: {command_name}"
+
+    command_data = json.loads(command_json_str)
+    assert (
+        "subarray_beams" in command_data
+    ), "Missing 'subarray_beams' in commandCallInfo JSON."
+
+    for beam in command_data["subarray_beams"]:
+        sky_coords = beam.get("sky_coordinates", {})
+        assert sky_coords.get("reference_frame") == "special"
+        assert (
+            sky_coords.get("target_name").lower()
+            == non_sidereal_objects.lower()
+        )
