@@ -51,6 +51,7 @@ devices_fqdn:
   mccs_master: "low-mccs/control/control"
   mccs_subarray_ln_prefix: "low-tmc/subarray-leaf-node-mccs/"
   mccs_subarray_prefix: "low-mccs/subarray"
+  resource_monitor_prefix: "low-tmc/resource-monitor/"
 
 dsconfig:
   configuration_file: data/tmc-low-config.json
@@ -114,6 +115,13 @@ mccssubarrayleafnode:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
     tag: 0.10.3
+    pullPolicy: IfNotPresent
+
+resource_monitor:
+  image:
+    registry: artefact.skao.int
+    image: ska-tmc-resource-monitor
+    tag: 0.3.0
     pullPolicy: IfNotPresent
 
 resources:
@@ -225,6 +233,14 @@ deviceServers:
     CommandTimeOutDefault: 50
     AdapterTimeOut: 2.0
     family: "subarray-leaf-node-mccs"
+
+  resourcemonitor:
+    enabled: true
+    instances: [ "01" ]
+    file: "data/resourcemonitor.yaml"
+    LivelinessCheckPeriod: 0.5
+    EventSubscriptionCheckPeriod: 0.5
+    family: "resource-monitor"
 
   mocks:
     enabled: false

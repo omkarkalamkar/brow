@@ -26,3 +26,5 @@ The TRLs of all the TMC LOW devices are updated to comply with ADR-9
 +-----------------------------------------+---------------------------------------+
 | `ska_low/tm_leaf_node/mccs_subarray01`  | `low-tmc/subarray-leaf-node-mccs/01`  |
 +-----------------------------------------+---------------------------------------+
+| `ska_low/tm_resource_monitor/01`        | `low-tmc/resource-monitor/01`         |
++-----------------------------------------+---------------------------------------+
