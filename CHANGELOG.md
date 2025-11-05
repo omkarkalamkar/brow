@@ -18,9 +18,6 @@ Added
 ************
 Added
 -----
-* Enable non sidereal object tracking for TMC low
-* Updated SubarrayNode to v0.47.1
-* Updated CspleafNode to v0.33.2
 * Introduced ResourceMonitor device in the ska-tmc-low.
 * Added device configuration and FQDN under chart templates.
 * TMC Low now supports reporting subarray allocations for stations through the stationsData attribute of the Resource Monitor.
