@@ -5,6 +5,15 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[2.6.0-rc.1]
+************
+Added
+-----
+
+* Enable non sidereal object tracking for TMC low
+* Updated SubarrayNode to v0.47.1
+* Updated CspleafNode to v0.33.2
+
 [2.5.0-rc.1]
 ************
 Added

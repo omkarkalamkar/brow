@@ -1,29 +1,25 @@
-release=2.5.0-rc.1
-tag=2.5.0-rc.1
+release=2.6.0-rc.1
+tag=2.6.0-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.5.0-rc.1**
+**1. ska-tmc-low-integration 2.6.0-rc.1**
 
-    **1.1 ska-tmc-low 2.4.0-rc.1 - 2.5.0-rc.1 :**
-        * Introduced ResourceMonitor device in the ska-tmc-low.
-        * Added device configuration and FQDN under chart templates.
-        * TMC Low now supports reporting subarray allocations for stations through the stationsData attribute of the Resource Monitor.
-        * Updated documentation to include ResourceMonitor configuration details and usage.
-        * Utilised the latest ResourceMonitor release version v0.3.0 for integration and verification.
+    **1.1 ska-tmc-low 2.5.0-rc.1 - 2.6.0-rc.1 :**
+        * Enable non sidereal object tracking for TMC low
+        * Updated SubarrayNode to v0.47.1
+        * Updated CspleafNode to v0.33.2
 
 
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.5.0-rc.1**
+**1. ska-tmc-low-integration 2.6.0-rc.1**
 
-    **1.1 ska-tmc-low 2.4.0-rc.1 - 2.5.0-rc.1:**
-        * Introduced ResourceMonitor device in the ska-tmc-low.
-        * Added device configuration and FQDN under chart templates.
-        * TMC Low now supports reporting subarray allocations for stations through the stationsData attribute of the Resource Monitor.
-        * Updated documentation to include ResourceMonitor configuration details and usage.
-        * Utilised the latest ResourceMonitor release version v0.3.0 for integration and verification.
+    **1.1 ska-tmc-low  2.5.0-rc.1 - 2.6.0-rc.1:**
+        * Enable non sidereal object tracking for TMC low
+        * Updated SubarrayNode to v0.47.1
+        * Updated CspleafNode to v0.33.2
 
 
