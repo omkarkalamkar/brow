@@ -21,6 +21,7 @@ from tests.tmc.tmc_new_iTH.conftest import TestContextData
 from tests.tmc.tmc_new_iTH.utils import TIMEOUT, setup_event_subscriptions
 
 
+@pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/non_sidereal_tracking.feature",
     "Non sidereal tracking in TMC Low",
@@ -160,7 +161,6 @@ def verify_mccs_command_call_info(
     )
     command_call_info = mccs.mccs_subarray.commandCallInfo
 
-    # Ensure subarray_beams exist
     if (
         isinstance(command_call_info, (tuple, list))
         and len(command_call_info) > 0
