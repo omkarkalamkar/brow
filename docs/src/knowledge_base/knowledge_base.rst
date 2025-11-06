@@ -13,4 +13,3 @@ Knowledge Base
    healthstate/healthstate_adminmode_aggregation
    fqdns
    delaymodel/delay_model_calculations
-   array_layout
