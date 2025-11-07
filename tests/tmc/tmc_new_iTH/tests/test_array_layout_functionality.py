@@ -15,18 +15,26 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
 )
 from ska_tango_testing.integration import TangoEventTracer
 from ska_tango_testing.mock.placeholders import Anything
+from ska_telmodel.data import TMData
 from ska_telmodel.schema import validate as telmodel_validate
+from tango import DeviceProxy
 
 from tests.resources.test_harness.constant import (
     INITIAL_LOW_DELAY_JSON,
     LOW_DELAYMODEL_VERSION,
     TIMEOUT,
 )
+from tests.resources.test_harness.helpers import (
+    wait_and_validate_device_attribute_value,
+)
 from tests.tmc.tmc_new_iTH.conftest import TestContextData
 from tests.tmc.tmc_new_iTH.utils import setup_event_subscriptions
 
 
-@pytest.mark.SKA_low
+@pytest.mark.test_end
+@pytest.mark.xfail(
+    reason="Pod may get unstable due to restart,can lead to test failure."
+)
 @scenario(
     "../tmc/tmc_new_iTH/features/array_layout.feature",
     "Array layout functionality in TMC Low",
@@ -86,6 +94,9 @@ def invoke_assign_resources_command(
         "array_layout_path": table_dict["array_layout_path"],
     }
 
+    pytest.source_uris = telmodel["source_uris"]
+    pytest.array_layout_path = telmodel["array_layout_path"]
+
     logging.info(
         f"Invoking AssignResources command on TMC Subarray "
         f"with array layout: {telmodel}"
@@ -123,8 +134,6 @@ def verify_subarray_array_layout(
     after command AssignResources.
     """
 
-    from ska_telmodel.data import TMData
-
     assert_that(event_tracer).described_as(
         f"TMC Subarray Node device ({tmc.subarray_node})"
         "arrayLayout attribute holds downloaded layout data."
@@ -134,14 +143,19 @@ def verify_subarray_array_layout(
         Anything,
     )
 
-    source_uri = json.loads(tmc.central_node.defaultarraylayouturl)[
+    source_uris = json.loads(tmc.central_node.defaultarraylayouturl)[
         "source_uris"
     ]
+
     layout_path = json.loads(tmc.central_node.defaultarraylayouturl)[
         "array_layout_path"
     ]
 
-    array_layout_data = TMData(source_uri)[layout_path].get_dict()
+    # Verify array layout links
+    assert pytest.source_uris == source_uris
+    assert pytest.array_layout_path == layout_path
+
+    array_layout_data = TMData(source_uris)[layout_path].get_dict()
 
     for antenna_data in array_layout_data["receptors"]:
         assert "station_id" in antenna_data
@@ -207,3 +221,38 @@ def delay_calculation_on_cspsln_starts(
             config=generated_delay_model_json,
             strictness=2,
         )
+
+
+@then("TMC is able to memorize the array layout link on restart")
+def tmc_able_to_memorize_the_array_layout(
+    tmc, default_commands_inputs: TestHarnessInputs
+):
+    """
+    Verifies that TMC is able to memorize the array layout
+    link on restart.
+    """
+
+    tmc.force_change_of_obs_state(
+        ObsState.EMPTY, default_commands_inputs, wait_termination=True
+    )
+
+    # Restart TMC central node device server
+    cn_device_server = DeviceProxy(
+        f"dserver/{tmc.central_node.info().server_id}"
+    )
+    cn_device_server.restartserver()
+    wait_and_validate_device_attribute_value(
+        tmc.central_node,
+        "state",
+        "ON",
+    )
+    assert (
+        pytest.source_uris
+        == json.loads(tmc.central_node.defaultarraylayouturl)["source_uris"]
+    )
+    assert (
+        pytest.array_layout_path
+        == json.loads(tmc.central_node.defaultarraylayouturl)[
+            "array_layout_path"
+        ]
+    )

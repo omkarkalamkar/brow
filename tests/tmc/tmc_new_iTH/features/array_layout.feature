@@ -5,3 +5,4 @@ Scenario: Array layout functionality in TMC Low
     | array_layout_path | instrument/ska1_low/layout/low-layout.json |
   Then TMC subarray node "arrayLayout" attribute is updated with layout data
   And invoking Configure command on TMC starts delay calculation on TMC CSPSLN
+  And TMC is able to memorize the array layout link on restart

@@ -71,7 +71,7 @@ def _update_tel_model_for_csp(tmc: TMCFacade, telmodel_src: str):
     cspsal_node.init()
 
 
-@pytest.mark.SKB_1056
+@pytest.mark.test_end
 @scenario(
     "../tmc/tmc_new_iTH/features/skb_1056.feature",
     "Verify SKB-1056",
