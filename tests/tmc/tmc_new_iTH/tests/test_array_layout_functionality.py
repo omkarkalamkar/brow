@@ -36,7 +36,7 @@ from tests.tmc.tmc_new_iTH.utils import setup_event_subscriptions
     reason="Pod may get unstable due to restart,can lead to test failure."
 )
 @scenario(
-    "../tmc/tmc_new_iTH/features/array_layout.feature",
+    "../tmc/tmc_new_iTH/features/xtp_94138_array_layout.feature",
     "Array layout functionality in TMC Low",
 )
 def test_array_layout_functionality():
@@ -53,7 +53,7 @@ def verify_tmc_subarray_observation_state_empty(
     context_data: TestContextData,
 ):
     setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
-    event_tracer.subscribe_event(tmc.subarray_node, "arraylayouturi")
+    event_tracer.subscribe_event(tmc.subarray_node, "arraylayouturl")
     tmc.move_to_on(wait_termination=True)
     context_data.csp_obsstate = ObsState.EMPTY
     context_data.sdp_obsstate = ObsState.EMPTY
@@ -125,7 +125,9 @@ def invoke_assign_resources_command(
     )
 
 
-@then('TMC subarray node "arrayLayout" attribute is updated with layout data')
+@then(
+    'TMC subarray node "arraylayouturl" attribute is updated with layout data'
+)
 def verify_subarray_array_layout(
     event_tracer: TangoEventTracer,
     tmc: TMCFacade,
@@ -139,7 +141,7 @@ def verify_subarray_array_layout(
         "arrayLayout attribute holds downloaded layout data."
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node,
-        "arraylayouturi",
+        "arraylayouturl",
         Anything,
     )
 
@@ -235,17 +237,34 @@ def tmc_able_to_memorize_the_array_layout(
     tmc.force_change_of_obs_state(
         ObsState.EMPTY, default_commands_inputs, wait_termination=True
     )
+    cn_versionId = tmc.central_node.versionId
+    sn_versionId = tmc.subarray_node.versionId
 
     # Restart TMC central node device server
     cn_device_server = DeviceProxy(
         f"dserver/{tmc.central_node.info().server_id}"
     )
-    cn_device_server.restartserver()
-    wait_and_validate_device_attribute_value(
-        tmc.central_node,
-        "state",
-        "ON",
+
+    sn_device_server = DeviceProxy(
+        f"dserver/{tmc.subarray_node.info().server_id}"
     )
+
+    cn_device_server.restartserver()
+    sn_device_server.restartserver()
+
+    assert wait_and_validate_device_attribute_value(
+        tmc.central_node,
+        "versionId",
+        cn_versionId,
+    )
+
+    assert wait_and_validate_device_attribute_value(
+        tmc.subarray_node,
+        "versionId",
+        sn_versionId,
+    )
+
+    # Central node should remember the array layout link
     assert (
         pytest.source_uris
         == json.loads(tmc.central_node.defaultarraylayouturl)["source_uris"]
@@ -256,3 +275,24 @@ def tmc_able_to_memorize_the_array_layout(
             "array_layout_path"
         ]
     )
+    # assert (
+    #     pytest.source_uris
+    #     == json.loads(tmc.central_node.arraylayouturl)["source_uris"]
+    # )
+    # assert (
+    #     pytest.array_layout_path
+    #     == json.loads(tmc.central_node.arraylayouturl)[
+    #         "array_layout_path"
+    #     ]
+    # )
+    # # Subarray node should remember the array layout link
+    # assert (
+    #     pytest.source_uris
+    #     == json.loads(tmc.subarray_node.arraylayouturl)["source_uris"]
+    # )
+    # assert (
+    #     pytest.array_layout_path
+    #     == json.loads(tmc.subarray_node.arraylayouturl)[
+    #         "array_layout_path"
+    #     ]
+    # )

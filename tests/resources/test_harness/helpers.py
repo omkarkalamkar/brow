@@ -516,10 +516,10 @@ def wait_and_validate_device_attribute_value(
             # the exception log is suppressed by storing into variable
             # the error is printed later into the log in case of failure
             error = e
-        count += 10
+        count += 1
         # When device restart it will at least take 10 sec to up again
         # so added 10 sec sleep and to avoid frequent attribute read.
-        time.sleep(10)
+        time.sleep(1)
 
     logging.exception(
         "Exception occurred while reading attribute %s and cnt is %s",
