@@ -68,7 +68,7 @@ The Array Layout is specified during the **AssignResources** step using the ``te
 
 2. **Send the AssignResources command**
 
-   - Send the above JSON to the **Subarray Node** using the standard AssignResources interface.  
+   - Send the above JSON to the **Central Node** using the standard AssignResources interface.  
    - TMC automatically retrieves and validates the specified Array Layout.
 
    If the ``telmodel`` section is not provided, the **default Array Layout** configured in the Central Node will be used.
