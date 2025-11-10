@@ -50,6 +50,7 @@ def given_a_tmc(
         event_tracer(TangoEventTracer): object of TangoEventTracer used for
         managing the device events
     """
+    event_tracer.clear_events()
     event_tracer.subscribe_event(
         central_node_low.central_node, "telescopeState"
     )
