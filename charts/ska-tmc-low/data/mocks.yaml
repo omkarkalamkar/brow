@@ -64,7 +64,7 @@ server:
 depends_on:
   - device: sys/database/2
 image:
-  registry: "{{.Values.sdpleafnodes.image.registry}}"
-  image: "{{.Values.sdpleafnodes.image.image}}"
-  tag: "{{.Values.sdpleafnodes.image.tag}}"
-  pullPolicy: "{{.Values.sdpleafnodes.image.pullPolicy}}"
+  registry: "{{.Values.skatmcsimulators.image.registry}}"
+  image: "{{.Values.skatmcsimulators.image.image}}"
+  tag: "{{.Values.skatmcsimulators.image.tag}}"
+  pullPolicy: "{{.Values.skatmcsimulators.image.pullPolicy}}"
