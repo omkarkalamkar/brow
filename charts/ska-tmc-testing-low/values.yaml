@@ -63,6 +63,8 @@ tmc-low:
         sdp: true
         mccs: true
         csp: true
+    mock_csp_subarray:
+      enabled: true
 
 # SKUID
 ska-ser-skuid:

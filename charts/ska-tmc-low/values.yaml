@@ -257,6 +257,11 @@ deviceServers:
       csp: false
       mccs: false
 
+  mock_csp_subarray:
+    enabled: false
+    file: "data/mock_csp_subarray.yaml"
+
+
 nodeSelector: {}
 
 affinity: {}
