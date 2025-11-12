@@ -1,25 +1,23 @@
-release=2.6.0-rc.1
-tag=2.6.0-rc.1
+release=2.6.1-rc.1
+tag=2.6.1-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.6.0-rc.1**
+**1. ska-tmc-low-integration 2.6.1-rc.1**
 
-    **1.1 ska-tmc-low 2.5.0-rc.1 - 2.6.0-rc.1 :**
-        * Enable non sidereal object tracking for TMC low
-        * Updated SubarrayNode to v0.47.1
-        * Updated CspleafNode to v0.33.2
+    **1.1 ska-tmc-low 2.6.0-rc.1 - 2.6.1-rc.1 :**
+        * Fixed SKB-1074
+        * Added new RTD page to document Array Layout support
 
 
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.6.0-rc.1**
+**1. ska-tmc-low-integration 2.6.1-rc.1**
 
-    **1.1 ska-tmc-low  2.5.0-rc.1 - 2.6.0-rc.1:**
-        * Enable non sidereal object tracking for TMC low
-        * Updated SubarrayNode to v0.47.1
-        * Updated CspleafNode to v0.33.2
+    **1.1 ska-tmc-low  2.6.0-rc.1 - 2.6.1-rc.1:**
+        * Fixed SKB-1074
+        * Added new RTD page to document Array Layout support
 
 
