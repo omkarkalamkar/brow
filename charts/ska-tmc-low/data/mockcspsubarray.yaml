@@ -1,3 +1,5 @@
+{{- $isSimulatedCsp := .Values.deviceServers.mocks.is_simulated.csp }}
+{{- if eq $isSimulatedCsp true }}
 name: "mocks-{{.Release.Name}}"
 function: testing
 domain: mocks
@@ -7,8 +9,6 @@ entrypoints:
 server:
   name: "mocks"
   instances:
-    {{- $isSimulatedCsp := .Values.deviceServers.mocks.is_simulated.csp }}
-    {{- if eq $isSimulatedCsp true }}
     - name: "02"
       classes:
         - name: "HelperSubArrayDevice"
@@ -17,8 +17,6 @@ server:
           - name: "low-csp/subarray/02"
           - name: "low-csp/subarray/03"
           - name: "low-csp/subarray/04"
-    {{- end }}
-
 depends_on:
   - device: sys/database/2
 image:
@@ -26,3 +24,4 @@ image:
   image: "{{.Values.skatmcsimulators.image.image}}"
   tag: "{{.Values.skatmcsimulators.image.tag}}"
   pullPolicy: "{{.Values.skatmcsimulators.image.pullPolicy}}"
+{{- end }}
