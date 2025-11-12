@@ -234,9 +234,20 @@ def tmc_able_to_memorize_the_array_layout(
     link on restart.
     """
 
+    # Subarray node should remember the array layout link
+    assert (
+        pytest.source_uris
+        == json.loads(tmc.subarray_node.arraylayouturl)["source_uris"]
+    )
+    assert (
+        pytest.array_layout_path
+        == json.loads(tmc.subarray_node.arraylayouturl)["array_layout_path"]
+    )
+
     tmc.force_change_of_obs_state(
         ObsState.EMPTY, default_commands_inputs, wait_termination=True
     )
+
     cn_versionId = tmc.central_node.versionId
     sn_versionId = tmc.subarray_node.versionId
 
@@ -275,24 +286,12 @@ def tmc_able_to_memorize_the_array_layout(
             "array_layout_path"
         ]
     )
-    # assert (
-    #     pytest.source_uris
-    #     == json.loads(tmc.central_node.arraylayouturl)["source_uris"]
-    # )
-    # assert (
-    #     pytest.array_layout_path
-    #     == json.loads(tmc.central_node.arraylayouturl)[
-    #         "array_layout_path"
-    #     ]
-    # )
-    # # Subarray node should remember the array layout link
-    # assert (
-    #     pytest.source_uris
-    #     == json.loads(tmc.subarray_node.arraylayouturl)["source_uris"]
-    # )
-    # assert (
-    #     pytest.array_layout_path
-    #     == json.loads(tmc.subarray_node.arraylayouturl)[
-    #         "array_layout_path"
-    #     ]
-    # )
+
+    assert (
+        pytest.source_uris
+        == json.loads(tmc.central_node.arraylayouturl)["source_uris"]
+    )
+    assert (
+        pytest.array_layout_path
+        == json.loads(tmc.central_node.arraylayouturl)["array_layout_path"]
+    )

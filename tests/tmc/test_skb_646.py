@@ -272,9 +272,11 @@ def tmc_subarray_is_in_resourcing(
 @when("I invoke init command on TMC Subarray")
 def invoke_init_on_subarray(subarray_node_low: SubarrayNodeWrapperLow):
     """Invoke Init command on subarray"""
+
+    version_id = subarray_node_low.subarray_node.versionid
     subarray_node_low.subarray_node.init()
     wait_and_validate_device_attribute_value(
-        subarray_node_low.subarray_node, "State", DevState.ON
+        subarray_node_low.subarray_node, "versionid", version_id
     )
     # Wait for all events to receive
     time.sleep(1)
