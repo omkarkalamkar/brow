@@ -63,7 +63,7 @@ tmc-low:
         sdp: true
         mccs: true
         csp: true
-    mock_csp_subarray:
+    mock-csp-subarray:
       enabled: true
 
 # SKUID
