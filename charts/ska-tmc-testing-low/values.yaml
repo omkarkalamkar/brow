@@ -96,10 +96,10 @@ ska-tango-tangogql:
 
 ska-tmc-simulators:
   enabled: true
-  telescope: SKA-mid
+  telescope: SKA-low
   deviceServers:
     mocks:
       enabled: true
-      mid:
+      low:
         is_simulated:
           csp: false
