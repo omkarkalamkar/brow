@@ -92,3 +92,14 @@ ska-tango-tangogql:
   enabled: false
   ska-tango-base:
     enabled: false
+
+
+ska-tmc-simulators:
+  enabled: true
+  telescope: SKA-mid
+  deviceServers:
+    mocks:
+      enabled: true
+      mid:
+        is_simulated:
+          csp: false

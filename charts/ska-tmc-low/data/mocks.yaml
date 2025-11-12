@@ -1,62 +1,62 @@
-name: "mocks-{{.Release.Name}}"
-function: testing
-domain: mocks
-instances: ["01","03","04","05","06"]
-entrypoints:
-  - name: "ska_tmc_common.test_helpers.helper_subarray_device.HelperSubArrayDevice"
-  - name: "ska_tmc_common.test_helpers.helper_base_device.HelperBaseDevice"
-  - name: "ska_tmc_common.test_helpers.helper_csp_master_device.HelperCspMasterDevice"
-  - name: "ska_tmc_common.test_helpers.helper_sdp_subarray.HelperSdpSubarray"
-  - name: "ska_tmc_common.test_helpers.helper_mccs_controller_device.HelperMCCSController"
-  - name: "ska_tmc_common.test_helpers.helper_mccs_subarray_device.HelperMccsSubarrayDevice"
-server:
-  name: "mocks"
-  instances:
-    {{- $isSimulatedCsp := .Values.deviceServers.mocks.is_simulated.csp }}
-    {{- $isSimulatedSdp := .Values.deviceServers.mocks.is_simulated.sdp }}
-    {{- $isSimulatedMccs := .Values.deviceServers.mocks.is_simulated.mccs }}
-    {{- if eq $isSimulatedCsp true }}
-    - name: "01"
-      classes:
-        - name: "HelperCspMasterDevice"
-          devices:
-          - name: "low-csp/control/0"
-    {{- end }}
-    {{- if eq $isSimulatedSdp true }}
-    - name: "03"
-      classes:
-        - name: "HelperBaseDevice"
-          devices:
-          - name: "low-sdp/control/0"
-    - name: "04"
-      classes:
-        - name: "HelperSdpSubarray"
-          devices:
-          - name: "low-sdp/subarray/01"
-          - name: "low-sdp/subarray/02"
-          - name: "low-sdp/subarray/03"
-          - name: "low-sdp/subarray/04"
-    {{- end }}
-    {{- if eq $isSimulatedMccs true }}
-    - name: "05"
-      classes:
-        - name: "HelperMCCSController"
-          devices:
-          - name: "low-mccs/control/control"
-    - name: "06"
-      classes:
-        - name: "HelperMccsSubarrayDevice"
-          devices:
-          - name: "low-mccs/subarray/01"
-          - name: "low-mccs/subarray/02"
-          - name: "low-mccs/subarray/03"
-          - name: "low-mccs/subarray/04"
-    {{- end }}
+# name: "mocks-{{.Release.Name}}"
+# function: testing
+# domain: mocks
+# instances: ["01","03","04","05","06"]
+# entrypoints:
+#   - name: "ska_tmc_common.test_helpers.helper_subarray_device.HelperSubArrayDevice"
+#   - name: "ska_tmc_common.test_helpers.helper_base_device.HelperBaseDevice"
+#   - name: "ska_tmc_common.test_helpers.helper_csp_master_device.HelperCspMasterDevice"
+#   - name: "ska_tmc_common.test_helpers.helper_sdp_subarray.HelperSdpSubarray"
+#   - name: "ska_tmc_common.test_helpers.helper_mccs_controller_device.HelperMCCSController"
+#   - name: "ska_tmc_common.test_helpers.helper_mccs_subarray_device.HelperMccsSubarrayDevice"
+# server:
+#   name: "mocks"
+#   instances:
+#     {{- $isSimulatedCsp := .Values.deviceServers.mocks.is_simulated.csp }}
+#     {{- $isSimulatedSdp := .Values.deviceServers.mocks.is_simulated.sdp }}
+#     {{- $isSimulatedMccs := .Values.deviceServers.mocks.is_simulated.mccs }}
+#     {{- if eq $isSimulatedCsp true }}
+#     - name: "01"
+#       classes:
+#         - name: "HelperCspMasterDevice"
+#           devices:
+#           - name: "low-csp/control/0"
+#     {{- end }}
+#     {{- if eq $isSimulatedSdp true }}
+#     - name: "03"
+#       classes:
+#         - name: "HelperBaseDevice"
+#           devices:
+#           - name: "low-sdp/control/0"
+#     - name: "04"
+#       classes:
+#         - name: "HelperSdpSubarray"
+#           devices:
+#           - name: "low-sdp/subarray/01"
+#           - name: "low-sdp/subarray/02"
+#           - name: "low-sdp/subarray/03"
+#           - name: "low-sdp/subarray/04"
+#     {{- end }}
+#     {{- if eq $isSimulatedMccs true }}
+#     - name: "05"
+#       classes:
+#         - name: "HelperMCCSController"
+#           devices:
+#           - name: "low-mccs/control/control"
+#     - name: "06"
+#       classes:
+#         - name: "HelperMccsSubarrayDevice"
+#           devices:
+#           - name: "low-mccs/subarray/01"
+#           - name: "low-mccs/subarray/02"
+#           - name: "low-mccs/subarray/03"
+#           - name: "low-mccs/subarray/04"
+#     {{- end }}
 
-depends_on:
-  - device: sys/database/2
-image:
-  registry: "{{.Values.sdpleafnodes.image.registry}}"
-  image: "{{.Values.sdpleafnodes.image.image}}"
-  tag: "{{.Values.sdpleafnodes.image.tag}}"
-  pullPolicy: "{{.Values.sdpleafnodes.image.pullPolicy}}"
+# depends_on:
+#   - device: sys/database/2
+# image:
+#   registry: "{{.Values.sdpleafnodes.image.registry}}"
+#   image: "{{.Values.sdpleafnodes.image.image}}"
+#   tag: "{{.Values.sdpleafnodes.image.tag}}"
+#   pullPolicy: "{{.Values.sdpleafnodes.image.pullPolicy}}"
