@@ -7,6 +7,10 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 [Unreleased]
 ************
+Fixed
+------
+* Fixed SKB-1074
+
 Added
 -----
 * Added new RTD page to document Array Layout support.

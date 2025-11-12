@@ -79,14 +79,14 @@ subarraynode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-subarraynode
-    tag: 0.47.1
+    tag: 0.47.2
     pullPolicy: IfNotPresent
 
 sdpleafnodes:
   image:
     registry: artefact.skao.int
     image: ska-tmc-sdpleafnodes
-    tag: 0.24.3
+    tag: 0.24.5
     pullPolicy: IfNotPresent
 
 cspmasterleafnode:
@@ -107,14 +107,14 @@ mccsmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.10.3
+    tag: 0.10.5
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.10.3
+    tag: 0.10.5
     pullPolicy: IfNotPresent
 
 resource_monitor:
@@ -122,6 +122,13 @@ resource_monitor:
     registry: artefact.skao.int
     image: ska-tmc-resource-monitor
     tag: 0.3.0
+    pullPolicy: IfNotPresent
+
+skatmcsimulators:
+  image:
+    registry: artefact.skao.int
+    image: ska-tmc-simulators
+    tag: 1.2.1
     pullPolicy: IfNotPresent
 
 resources:
@@ -249,6 +256,11 @@ deviceServers:
       sdp: false
       csp: false
       mccs: false
+
+  mock-csp-subarray:
+    enabled: false
+    file: "data/mockcspsubarray.yaml"
+
 
 nodeSelector: {}
 

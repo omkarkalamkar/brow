@@ -1,7 +1,7 @@
 name: "mocks-{{.Release.Name}}"
 function: testing
 domain: mocks
-instances: ["01","02","03","04","05","06"]
+instances: ["01","03","04","05","06"]
 entrypoints:
   - name: "ska_tmc_common.test_helpers.helper_subarray_device.HelperSubArrayDevice"
   - name: "ska_tmc_common.test_helpers.helper_base_device.HelperBaseDevice"
@@ -21,14 +21,6 @@ server:
         - name: "HelperCspMasterDevice"
           devices:
           - name: "low-csp/control/0"
-    - name: "02"
-      classes:
-        - name: "HelperSubArrayDevice"
-          devices:
-          - name: "low-csp/subarray/01"
-          - name: "low-csp/subarray/02"
-          - name: "low-csp/subarray/03"
-          - name: "low-csp/subarray/04"
     {{- end }}
     {{- if eq $isSimulatedSdp true }}
     - name: "03"
