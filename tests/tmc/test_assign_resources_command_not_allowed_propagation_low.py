@@ -262,7 +262,7 @@ class TestAssignCommandNotAllowedPropagation:
         )
 
         exception_message2 = (
-            "ska_tmc_simulators.dependecies.exceptions.CommandNotAllowed"
+            "ska_tmc_simulators.dependencies.exceptions.CommandNotAllowed"
         )
 
         assert_that(event_tracer).described_as(
