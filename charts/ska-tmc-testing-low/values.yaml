@@ -91,11 +91,4 @@ ska-tango-tangogql:
   ska-tango-base:
     enabled: false
 
-ska-tmc-simulators:
-  labels: 
-    app: ska-tmc-low-integration
-  enabled: true
-  deviceServers:
-    mocks:
-      enabled: true
 
