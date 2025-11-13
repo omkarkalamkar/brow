@@ -56,7 +56,7 @@ server:
 depends_on:
   - device: sys/database/2
 image:
-  registry: "{{.Values.resource_monitor.image.registry}}"
-  image: "{{.Values.resource_monitor.image.image}}"
-  tag: "{{.Values.resource_monitor.image.tag}}"
-  pullPolicy: "{{.Values.resource_monitor.image.pullPolicy}}"
+  registry: "{{.Values.skatmcsimulators.image.registry}}"
+  image: "{{.Values.skatmcsimulators.image.image}}"
+  tag: "{{.Values.skatmcsimulators.image.tag}}"
+  pullPolicy: "{{.Values.skatmcsimulators.image.pullPolicy}}"

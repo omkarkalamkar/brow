@@ -257,7 +257,7 @@ deviceServers:
     is_simulated:
       sdp: false
       csp: false
-      mccs: false
+      mccs: true
 
   mock-csp-subarray:
     enabled: false
