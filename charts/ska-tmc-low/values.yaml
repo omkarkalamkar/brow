@@ -72,7 +72,7 @@ centralnode:
   image:
     registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-centralnode
     image: ska-tmc-centralnode
-    tag: 0.25.1-dev.c80e922a1
+    tag: 0.25.1-dev.ceda688ea
     pullPolicy: IfNotPresent
 
 subarraynode:
@@ -152,6 +152,8 @@ deviceServers:
     family: "central-node"
     member: "0"
     IsAutoRecoveryEnabled: "true"
+    DefaultArrayLayoutSourceURIs: "gitlab://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
+    DefaultArrayLayoutPath: "instrument/ska1_low/layout/low-layout.json"
 
   subarraynode:
     enabled: true

@@ -32,6 +32,7 @@ from tests.tmc.tmc_new_iTH.utils import setup_event_subscriptions
 
 
 @pytest.mark.test_end
+@pytest.mark.order(-1)
 @pytest.mark.xfail(
     reason="Pod may get unstable due to restart,can lead to test failure."
 )

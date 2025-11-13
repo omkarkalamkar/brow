@@ -12,6 +12,9 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
 )
 from ska_tango_testing.integration import TangoEventTracer, log_events
 
+from tests.resources.test_harness.helpers import (
+    wait_and_validate_device_attribute_value,
+)
 from tests.resources.test_harness.utils.my_file_json_input import (
     MyFileJSONInput,
 )
@@ -93,7 +96,7 @@ def tmc(
         tmc, "gitlab://gitlab.com/ska-telescope/aiv/ska-low-itf?main#tmdata"
     )
     _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
-    tmc.move_to_on()
+    tmc.move_to_on(wait_termination=True)
     assert_that(event_tracer).described_as(
         f"Both TMC Subarray Node device ({tmc.subarray_node})"
         f", CSP Subarray device ({csp.csp_subarray}) "
@@ -130,7 +133,7 @@ def verify_tmc_subarray_observation_state_idle(
     """Verifies the TMC subarray observation state IDLE"""
     json_input = MyFileJSONInput("centralnode", "assign_low_itf")
 
-    tmc.assign_resources(json_input)
+    tmc.assign_resources(json_input, wait_termination=True)
     assert_that(event_tracer).described_as(
         f"Both TMC Subarray Node device ({tmc.subarray_node})"
         f", CSP Subarray device ({csp.csp_subarray}) "
@@ -202,7 +205,13 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
         ObsState.READY,
     )
 
-    tmc.force_change_of_obs_state(ObsState.EMPTY, default_commands_inputs)
-    _update_tel_model_for_csp(
-        tmc, "gitlab://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
+    tmc.force_change_of_obs_state(
+        ObsState.EMPTY, default_commands_inputs, wait_termination=True
+    )
+    version_id = tmc.csp_subarray_leaf_node.versionid
+    tango.DeviceProxy(
+        f"dserver/{tmc.csp_subarray_leaf_node.info().server_id}"
+    ).restartserver()
+    wait_and_validate_device_attribute_value(
+        tmc.csp_subarray_leaf_node, "versionid", version_id
     )
