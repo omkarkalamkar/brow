@@ -7,7 +7,7 @@ entrypoints:
   - name: "ska_tmc_common.test_helpers.helper_base_device.HelperBaseDevice"
   - name: "ska_tmc_common.test_helpers.helper_csp_master_device.HelperCspMasterDevice"
   - name: "ska_tmc_common.test_helpers.helper_sdp_subarray.HelperSdpSubarray"
-  - name: "ska_tmc_common.test_helpers.helper_mccs_controller_device.HelperMCCSController"
+  - name: "ska_tmc_simulators.helper_mccs_controller_device.HelperMCCSController"
   - name: "ska_tmc_common.test_helpers.helper_mccs_subarray_device.HelperMccsSubarrayDevice"
 server:
   name: "mocks"
