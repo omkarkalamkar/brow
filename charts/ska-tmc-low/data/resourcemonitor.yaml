@@ -20,6 +20,12 @@ server:
       - name: "LowResourceMonitor"
         devices:
         - name: "{{ $.Values.domain }}/{{ $.Values.deviceServers.resourcemonitor.family }}/{{ . }}"
+          properties:
+            - name: "LowSubarrayNodeFQDN"
+              values: "{{ $.Values.deviceServers.resourcemonitor.LowSubarrayNodeFQDN }}"
+            - name: "MCCSControllerFQDN"
+              values: "{{ $.Values.deviceServers.resourcemonitor.MCCSControllerFQDN }}"
+
   {{- end}}
 depends_on:
   - device: sys/database/2
