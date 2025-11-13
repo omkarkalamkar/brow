@@ -26,7 +26,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
 )
 from tests.resources.test_support.constant_low import TIMEOUT
-from ska_tmc_simulators import HelperMCCSController
+
 RESOURCE_MONITOR_FQDN = "low-tmc/resource-monitor/01"
 
 
