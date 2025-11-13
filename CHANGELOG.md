@@ -10,6 +10,13 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 Added
 -----
 
+* TMC Low now supports to update antenna layout at runtime.
+
+[2.6.0-rc.1]
+************
+Added
+-----
+
 * Enable non sidereal object tracking for TMC low
 * Updated SubarrayNode to v0.47.1
 * Updated CspleafNode to v0.33.2
