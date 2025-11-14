@@ -259,7 +259,6 @@ def tmc_able_to_memorize_the_array_layout(
         f"dserver/{tmc.central_node.info().server_id}"
     )
 
-    # tmc.central_node.init()
     cn_device_server.restartserver()
 
     assert wait_and_validate_device_attribute_value(
@@ -272,12 +271,6 @@ def tmc_able_to_memorize_the_array_layout(
             }
         ),
         is_json=True,
-        timeout=30,
-    )
-
-    logging.info(
-        ">>>>>>>> Central node Arraylayouturl: %s",
-        tmc.central_node.arraylayouturl,
     )
 
     assert wait_and_validate_device_attribute_value(
@@ -290,7 +283,6 @@ def tmc_able_to_memorize_the_array_layout(
             }
         ),
         is_json=True,
-        timeout=30,
     )
 
     assert tmc.subarray_node.obsstate == ObsState.EMPTY
