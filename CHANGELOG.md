@@ -9,8 +9,17 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 ************
 Added
 -----
-
 * TMC Low now supports to update antenna layout at runtime.
+
+[2.6.1-rc.1]
+************
+Fixed
+------
+* Fixed SKB-1074
+
+Added
+-----
+* Added new RTD page to document Array Layout support.
 
 [2.6.0-rc.1]
 ************
