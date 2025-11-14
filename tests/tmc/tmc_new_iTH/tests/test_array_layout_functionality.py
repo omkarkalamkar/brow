@@ -32,10 +32,10 @@ from tests.tmc.tmc_new_iTH.utils import setup_event_subscriptions
 
 
 @pytest.mark.test_end
-@pytest.mark.order(-1)
-@pytest.mark.xfail(
-    reason="Pod may get unstable due to restart,can lead to test failure."
-)
+# @pytest.mark.order(-1)
+# @pytest.mark.xfail(
+#     reason="Pod may get unstable due to restart,can lead to test failure."
+# )
 @scenario(
     "../tmc/tmc_new_iTH/features/xtp_94138_array_layout.feature",
     "Array layout functionality in TMC Low",
@@ -228,7 +228,7 @@ def delay_calculation_on_cspsln_starts(
 
 @then("TMC is able to memorize the array layout link on restart")
 def tmc_able_to_memorize_the_array_layout(
-    tmc, default_commands_inputs: TestHarnessInputs
+    tmc: TMCFacade, default_commands_inputs: TestHarnessInputs
 ):
     """
     Verifies that TMC is able to memorize the array layout
@@ -250,7 +250,6 @@ def tmc_able_to_memorize_the_array_layout(
     )
 
     cn_versionId = tmc.central_node.versionId
-    sn_versionId = tmc.subarray_node.versionId
 
     # Restart TMC central node device server
     cn_device_server = DeviceProxy(
@@ -272,8 +271,8 @@ def tmc_able_to_memorize_the_array_layout(
 
     assert wait_and_validate_device_attribute_value(
         tmc.subarray_node,
-        "versionId",
-        sn_versionId,
+        "obsstate",
+        ObsState.EMPTY,
     )
 
     # Central node should remember the array layout link
@@ -296,3 +295,8 @@ def tmc_able_to_memorize_the_array_layout(
         pytest.array_layout_path
         == json.loads(tmc.central_node.arraylayouturl)["array_layout_path"]
     )
+
+    assert tmc.subarray_node.obsstate == ObsState.EMPTY
+    assert tmc.csp_subarray_leaf_node.cspsubarrayobsstate == ObsState.EMPTY
+    assert tmc.sdp_subarray_leaf_node.sdpsubarrayobsstate == ObsState.EMPTY
+    assert tmc.mccs_subarray_leaf_node.obsstate == ObsState.EMPTY

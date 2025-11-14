@@ -12,9 +12,6 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
 )
 from ska_tango_testing.integration import TangoEventTracer, log_events
 
-from tests.resources.test_harness.helpers import (
-    wait_and_validate_device_attribute_value,
-)
 from tests.resources.test_harness.utils.my_file_json_input import (
     MyFileJSONInput,
 )
@@ -205,13 +202,9 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
         ObsState.READY,
     )
 
-    tmc.force_change_of_obs_state(
-        ObsState.EMPTY, default_commands_inputs, wait_termination=True
-    )
-    version_id = tmc.csp_subarray_leaf_node.versionid
-    tango.DeviceProxy(
-        f"dserver/{tmc.csp_subarray_leaf_node.info().server_id}"
-    ).restartserver()
-    wait_and_validate_device_attribute_value(
-        tmc.csp_subarray_leaf_node, "versionid", version_id
+    # tmc.force_change_of_obs_state(
+    #     ObsState.EMPTY, default_commands_inputs, wait_termination=True
+    # )
+    _update_tel_model_for_csp(
+        tmc, "gitlab://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     )
