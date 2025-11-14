@@ -253,11 +253,14 @@ def tmc_able_to_memorize_the_array_layout(
     # cn_versionId = tmc.central_node.versionId
 
     # # Restart TMC central node device server
-    # cn_device_server = DeviceProxy(
-    #     f"dserver/{tmc.central_node.info().server_id}"
-    # )
+    from tango import DeviceProxy
 
-    tmc.central_node.init()
+    cn_device_server = DeviceProxy(
+        f"dserver/{tmc.central_node.info().server_id}"
+    )
+
+    # tmc.central_node.init()
+    cn_device_server.restartserver()
 
     assert wait_and_validate_device_attribute_value(
         tmc.central_node,
@@ -269,6 +272,7 @@ def tmc_able_to_memorize_the_array_layout(
             }
         ),
         is_json=True,
+        timeout=30,
     )
 
     logging.info(
@@ -286,6 +290,7 @@ def tmc_able_to_memorize_the_array_layout(
             }
         ),
         is_json=True,
+        timeout=30,
     )
 
     assert tmc.subarray_node.obsstate == ObsState.EMPTY
