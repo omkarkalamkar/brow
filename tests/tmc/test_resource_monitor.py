@@ -140,12 +140,12 @@ def trigger_sn_resource_change(
     assigned_resources = generate_and_get_assign_resource_json(
         assign_input_json
     )
-    mccs_controller_sim = simulator_factory.get_or_create_simulator_device(
-        SimulatorDeviceType.MCCS_MASTER_DEVICE
-    )
-    mccs_input = json.dumps(mccs_input)
-    mccs_controller_sim.SetDirectResourceSummary(mccs_input)
-    mccs_sim.SetDirectassignedResources(assigned_resources)
+    # mccs_controller_sim = simulator_factory.get_or_create_simulator_device(
+    #     SimulatorDeviceType.MCCS_MASTER_DEVICE
+    # )
+    # mccs_input = json.dumps(mccs_input)
+    # mccs_controller_sim.SetDirectResourceSummary(mccs_input)
+    mccs_sim.SetDirectassignedResources((assigned_resources,))
     trigger_sn_resource_change.assigned_resources = assigned_resources
 
 
