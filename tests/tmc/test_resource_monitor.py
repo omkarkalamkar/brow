@@ -14,13 +14,15 @@ from ska_control_model import ObsState
 from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DeviceProxy
 
-from tests.conftest import LOGGER
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.helpers import (
     generate_and_get_assign_resource_json,
 )
 from tests.resources.test_harness.simulator_factory import SimulatorFactory
-from tests.resources.test_harness.utils.common_utils import JsonFactory
+from tests.resources.test_harness.utils.common_utils import (
+    JsonFactory,
+    get_subarray_input_json,
+)
 from tests.resources.test_harness.utils.enums import SimulatorDeviceType
 from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
@@ -54,10 +56,11 @@ def setup_devices(
     )
     event_tracer.subscribe_event(central_node_low.subarray_node, "obsState")
     event_tracer.subscribe_event(resource_monitor, "stations")
+    event_tracer.subscribe_event(resource_monitor, "stationBeams")
     log_events(
         {
             central_node_low.subarray_node: ["assignedResources"],
-            resource_monitor: ["stations"],
+            resource_monitor: ["stations", "stationBeams"],
         }
     )
     central_node_low.move_to_on()
@@ -80,46 +83,7 @@ def trigger_sn_resource_change(
     AssignResources and SetDirectassignedResources, and check obsState
     transitions to IDLE.
     """
-    # mccs_input = {
-    #     "resources": {
-    #         "channel_blocks": {
-    #             "available": {"count": 64},
-    #             "allocated": {
-    #                 "count": 32,
-    #                 "usage": {
-    #                     "low-mccs/subarray/01": 16,
-    #                     "low-mccs/subarray/02": 16,
-    #                 },
-    #             },
-    #             "by_station": {
-    #                 "ci-1": {"total": 48, "available": 16, "allocated": 32},
-    #                 "ci-2": {"total": 48, "available": 48, "allocated": 0},
-    #             },
-    #         },
-    #         "station_beams": {
-    #             "total": {"count": 8},
-    #             "available": {"count": 4},
-    #             "allocated": {
-    #                 "count": 4,
-    #                 "usage": {
-    #                     "low-mccs/beam/ci-1-01": "low-mccs/subarray/01",
-    #                     "low-mccs/beam/ci-1-02": "low-mccs/subarray/01",
-    #                 },
-    #             },
-    #         },
-    #         "subarray_beams": {
-    #             "total": {"count": 4},
-    #             "available": {"count": 2},
-    #             "allocated": {
-    #                 "count": 2,
-    #                 "usage": {
-    #                     "low-mccs/subarraybeam/01": "low-mccs/subarray/01",
-    #                     "low-mccs/subarraybeam/02": "low-mccs/subarray/02",
-    #                 },
-    #             },
-    #         },
-    #     }
-    # }
+    mccs_input = get_subarray_input_json("ResourceSummary_MCCS")
     assign_input_json = prepare_json_args_for_centralnode_commands(
         "assign_resources_low", command_input_factory
     )
@@ -140,12 +104,11 @@ def trigger_sn_resource_change(
     assigned_resources = generate_and_get_assign_resource_json(
         assign_input_json
     )
-    # mccs_controller_sim = simulator_factory.get_or_create_simulator_device(
-    #     SimulatorDeviceType.MCCS_MASTER_DEVICE
-    # )
-    # mccs_input = json.dumps(mccs_input)
-    # mccs_controller_sim.SetDirectResourceSummary(mccs_input)
-    mccs_sim.SetDirectassignedResources((assigned_resources,))
+    mccs_controller_sim = simulator_factory.get_or_create_simulator_device(
+        SimulatorDeviceType.MCCS_MASTER_DEVICE
+    )
+    mccs_controller_sim.SetDirectResourceSummary(mccs_input)
+    mccs_sim.SetDirectassignedResources(assigned_resources)
     trigger_sn_resource_change.assigned_resources = assigned_resources
 
 
@@ -162,6 +125,12 @@ def check_resource_monitor_update(event_tracer: TangoEventTracer):
     assigned_resources = json.loads(
         trigger_sn_resource_change.assigned_resources
     )
+    expected_station_beams_data = {
+        "station_1": [
+            {"station_beam": "01", "subarray_allocation": 1},
+            {"station_beam": "02", "subarray_allocation": 1},
+        ]
+    }
     expected_stations_data = {
         f"station_{station_id}": {"subarray_allocation": 1}
         for station_id in assigned_resources.get("station_ids")
@@ -171,5 +140,11 @@ def check_resource_monitor_update(event_tracer: TangoEventTracer):
     ).has_change_event_occurred(
         resource_monitor, "stations", json.dumps(expected_stations_data)
     )
-    attr_val = resource_monitor.read_attribute("stationBeams").value
-    LOGGER.info("Attr val of attr val is %s", attr_val)
+
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        resource_monitor,
+        "stationBeams",
+        json.dumps(expected_station_beams_data),
+    )
