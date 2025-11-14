@@ -17,6 +17,7 @@ from ska_tango_testing.integration import TangoEventTracer
 from ska_tango_testing.mock.placeholders import Anything
 from ska_telmodel.data import TMData
 from ska_telmodel.schema import validate as telmodel_validate
+from tango import DeviceProxy
 
 from tests.resources.test_harness.constant import (
     INITIAL_LOW_DELAY_JSON,
@@ -33,10 +34,6 @@ from tests.tmc.tmc_new_iTH.utils import setup_event_subscriptions
 
 
 @pytest.mark.test_end
-# @pytest.mark.order(-1)
-# @pytest.mark.xfail(
-#     reason="Pod may get unstable due to restart,can lead to test failure."
-# )
 @scenario(
     "../tmc/tmc_new_iTH/features/xtp_94138_array_layout.feature",
     "Array layout functionality in TMC Low",
@@ -253,8 +250,6 @@ def tmc_able_to_memorize_the_array_layout(
     # cn_versionId = tmc.central_node.versionId
 
     # # Restart TMC central node device server
-    from tango import DeviceProxy
-
     cn_device_server = DeviceProxy(
         f"dserver/{tmc.central_node.info().server_id}"
     )
