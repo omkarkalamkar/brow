@@ -80,46 +80,46 @@ def trigger_sn_resource_change(
     AssignResources and SetDirectassignedResources, and check obsState
     transitions to IDLE.
     """
-    mccs_input = {
-        "resources": {
-            "channel_blocks": {
-                "available": {"count": 64},
-                "allocated": {
-                    "count": 32,
-                    "usage": {
-                        "low-mccs/subarray/01": 16,
-                        "low-mccs/subarray/02": 16,
-                    },
-                },
-                "by_station": {
-                    "ci-1": {"total": 48, "available": 16, "allocated": 32},
-                    "ci-2": {"total": 48, "available": 48, "allocated": 0},
-                },
-            },
-            "station_beams": {
-                "total": {"count": 8},
-                "available": {"count": 4},
-                "allocated": {
-                    "count": 4,
-                    "usage": {
-                        "low-mccs/beam/ci-1-01": "low-mccs/subarray/01",
-                        "low-mccs/beam/ci-1-02": "low-mccs/subarray/01",
-                    },
-                },
-            },
-            "subarray_beams": {
-                "total": {"count": 4},
-                "available": {"count": 2},
-                "allocated": {
-                    "count": 2,
-                    "usage": {
-                        "low-mccs/subarraybeam/01": "low-mccs/subarray/01",
-                        "low-mccs/subarraybeam/02": "low-mccs/subarray/02",
-                    },
-                },
-            },
-        }
-    }
+    # mccs_input = {
+    #     "resources": {
+    #         "channel_blocks": {
+    #             "available": {"count": 64},
+    #             "allocated": {
+    #                 "count": 32,
+    #                 "usage": {
+    #                     "low-mccs/subarray/01": 16,
+    #                     "low-mccs/subarray/02": 16,
+    #                 },
+    #             },
+    #             "by_station": {
+    #                 "ci-1": {"total": 48, "available": 16, "allocated": 32},
+    #                 "ci-2": {"total": 48, "available": 48, "allocated": 0},
+    #             },
+    #         },
+    #         "station_beams": {
+    #             "total": {"count": 8},
+    #             "available": {"count": 4},
+    #             "allocated": {
+    #                 "count": 4,
+    #                 "usage": {
+    #                     "low-mccs/beam/ci-1-01": "low-mccs/subarray/01",
+    #                     "low-mccs/beam/ci-1-02": "low-mccs/subarray/01",
+    #                 },
+    #             },
+    #         },
+    #         "subarray_beams": {
+    #             "total": {"count": 4},
+    #             "available": {"count": 2},
+    #             "allocated": {
+    #                 "count": 2,
+    #                 "usage": {
+    #                     "low-mccs/subarraybeam/01": "low-mccs/subarray/01",
+    #                     "low-mccs/subarraybeam/02": "low-mccs/subarray/02",
+    #                 },
+    #             },
+    #         },
+    #     }
+    # }
     assign_input_json = prepare_json_args_for_centralnode_commands(
         "assign_resources_low", command_input_factory
     )
