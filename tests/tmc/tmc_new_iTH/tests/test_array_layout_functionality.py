@@ -17,7 +17,6 @@ from ska_tango_testing.integration import TangoEventTracer
 from ska_tango_testing.mock.placeholders import Anything
 from ska_telmodel.data import TMData
 from ska_telmodel.schema import validate as telmodel_validate
-from tango import DeviceProxy
 
 from tests.resources.test_harness.constant import (
     INITIAL_LOW_DELAY_JSON,
@@ -29,6 +28,8 @@ from tests.resources.test_harness.helpers import (
 )
 from tests.tmc.tmc_new_iTH.conftest import TestContextData
 from tests.tmc.tmc_new_iTH.utils import setup_event_subscriptions
+
+# from tango import DeviceProxy
 
 
 @pytest.mark.test_end
@@ -249,51 +250,42 @@ def tmc_able_to_memorize_the_array_layout(
         ObsState.EMPTY, default_commands_inputs, wait_termination=True
     )
 
-    cn_versionId = tmc.central_node.versionId
+    # cn_versionId = tmc.central_node.versionId
 
-    # Restart TMC central node device server
-    cn_device_server = DeviceProxy(
-        f"dserver/{tmc.central_node.info().server_id}"
-    )
+    # # Restart TMC central node device server
+    # cn_device_server = DeviceProxy(
+    #     f"dserver/{tmc.central_node.info().server_id}"
+    # )
 
-    sn_device_server = DeviceProxy(
-        f"dserver/{tmc.subarray_node.info().server_id}"
-    )
-
-    cn_device_server.restartserver()
-    sn_device_server.restartserver()
+    tmc.central_node.init()
 
     assert wait_and_validate_device_attribute_value(
         tmc.central_node,
-        "versionId",
-        cn_versionId,
+        "defaultarraylayouturl",
+        expected_value=json.dumps(
+            {
+                "source_uris": pytest.source_uris,
+                "array_layout_path": pytest.array_layout_path,
+            }
+        ),
+        is_json=True,
+    )
+
+    logging.info(
+        ">>>>>>>> Central node Arraylayouturl: %s",
+        tmc.central_node.arraylayouturl,
     )
 
     assert wait_and_validate_device_attribute_value(
-        tmc.subarray_node,
-        "obsstate",
-        ObsState.EMPTY,
-    )
-
-    # Central node should remember the array layout link
-    assert (
-        pytest.source_uris
-        == json.loads(tmc.central_node.defaultarraylayouturl)["source_uris"]
-    )
-    assert (
-        pytest.array_layout_path
-        == json.loads(tmc.central_node.defaultarraylayouturl)[
-            "array_layout_path"
-        ]
-    )
-
-    assert (
-        pytest.source_uris
-        == json.loads(tmc.central_node.arraylayouturl)["source_uris"]
-    )
-    assert (
-        pytest.array_layout_path
-        == json.loads(tmc.central_node.arraylayouturl)["array_layout_path"]
+        tmc.central_node,
+        "arraylayouturl",
+        expected_value=json.dumps(
+            {
+                "source_uris": pytest.source_uris,
+                "array_layout_path": pytest.array_layout_path,
+            }
+        ),
+        is_json=True,
     )
 
     assert tmc.subarray_node.obsstate == ObsState.EMPTY

@@ -202,9 +202,9 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
         ObsState.READY,
     )
 
-    # tmc.force_change_of_obs_state(
-    #     ObsState.EMPTY, default_commands_inputs, wait_termination=True
-    # )
+    tmc.force_change_of_obs_state(
+        ObsState.EMPTY, default_commands_inputs, wait_termination=True
+    )
     _update_tel_model_for_csp(
         tmc, "gitlab://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     )
