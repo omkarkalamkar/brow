@@ -1,23 +1,21 @@
-release=2.6.1-rc.1
-tag=2.6.1-rc.1
+release=2.7.0-rc.1
+tag=2.7.0-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.6.1-rc.1**
+**1. ska-tmc-low-integration 2.7.0-rc.1**
 
-    **1.1 ska-tmc-low 2.6.0-rc.1 - 2.6.1-rc.1 :**
-        * Fixed SKB-1074
-        * Added new RTD page to document Array Layout support
+    **1.1 ska-tmc-low 2.6.1-rc.1 - 2.7.0-rc.1 :**
+        * TMC Low now supports to antenna layout update at runtime.
 
 
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.6.1-rc.1**
+**1. ska-tmc-low-integration 2.7.0-rc.1**
 
-    **1.1 ska-tmc-low  2.6.0-rc.1 - 2.6.1-rc.1:**
-        * Fixed SKB-1074
-        * Added new RTD page to document Array Layout support
+    **1.1 ska-tmc-low  2.6.1-rc.1 - 2.7.0-rc.1:**
+        *  TMC Low now supports to antenna layout update at runtime.
 
 
