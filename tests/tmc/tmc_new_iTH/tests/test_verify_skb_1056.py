@@ -71,7 +71,7 @@ def _update_tel_model_for_csp(tmc: TMCFacade, telmodel_src: str):
     cspsal_node.init()
 
 
-@pytest.mark.SKB_1056
+@pytest.mark.test_end
 @scenario(
     "../tmc/tmc_new_iTH/features/skb_1056.feature",
     "Verify SKB-1056",
@@ -93,7 +93,7 @@ def tmc(
         tmc, "gitlab://gitlab.com/ska-telescope/aiv/ska-low-itf?main#tmdata"
     )
     _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
-    tmc.move_to_on()
+    tmc.move_to_on(wait_termination=True)
     assert_that(event_tracer).described_as(
         f"Both TMC Subarray Node device ({tmc.subarray_node})"
         f", CSP Subarray device ({csp.csp_subarray}) "
@@ -130,7 +130,7 @@ def verify_tmc_subarray_observation_state_idle(
     """Verifies the TMC subarray observation state IDLE"""
     json_input = MyFileJSONInput("centralnode", "assign_low_itf")
 
-    tmc.assign_resources(json_input)
+    tmc.assign_resources(json_input, wait_termination=True)
     assert_that(event_tracer).described_as(
         f"Both TMC Subarray Node device ({tmc.subarray_node})"
         f", CSP Subarray device ({csp.csp_subarray}) "
@@ -202,7 +202,9 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
         ObsState.READY,
     )
 
-    tmc.force_change_of_obs_state(ObsState.EMPTY, default_commands_inputs)
+    tmc.force_change_of_obs_state(
+        ObsState.EMPTY, default_commands_inputs, wait_termination=True
+    )
     _update_tel_model_for_csp(
         tmc, "gitlab://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     )

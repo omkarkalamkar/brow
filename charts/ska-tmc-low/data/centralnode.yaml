@@ -83,6 +83,12 @@ server:
         - name: "IsAutoRecoveryEnabled"
           values:
             - "{{ $AutoRecoveryEnabled }}"
+        - name: "DefaultArrayLayoutSourceURIs"
+          values:
+            - "{{ .Values.deviceServers.centralnode.DefaultArrayLayoutSourceURIs }}"
+        - name: "DefaultArrayLayoutPath"
+          values:
+            - "{{ .Values.deviceServers.centralnode.DefaultArrayLayoutPath }}"
 
 depends_on:
   - device: sys/database/2

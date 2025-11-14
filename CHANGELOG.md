@@ -5,6 +5,12 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[Unreleased]
+************
+Added
+-----
+* TMC Low now supports to update antenna layout at runtime.
+
 [2.6.1-rc.1]
 ************
 Fixed
