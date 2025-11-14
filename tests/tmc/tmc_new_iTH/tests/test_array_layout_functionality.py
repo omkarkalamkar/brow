@@ -125,7 +125,7 @@ def invoke_assign_resources_command(
 
 
 @then(
-    'TMC subarray node "arraylayouturl" attribute is updated with layout data'
+    'TMC central node "arraylayouturl" attribute is updated with layout data'
 )
 def verify_subarray_array_layout(
     event_tracer: TangoEventTracer,
