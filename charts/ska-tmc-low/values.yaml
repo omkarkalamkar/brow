@@ -119,9 +119,9 @@ mccssubarrayleafnode:
 
 resource_monitor:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-resource-monitor
+    registry: artefact.skao.int
     image: ska-tmc-resource-monitor
-    tag: 0.4.0-dev.cfbcf12ac
+    tag: 0.4.0
     pullPolicy: IfNotPresent
 
 skatmcsimulators:
