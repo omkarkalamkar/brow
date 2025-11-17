@@ -250,7 +250,7 @@ deviceServers:
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     family: "resource-monitor"
-    LowSubarrayNodeFQDN: "low-tmc/subarray/01"
+    LowSubarrayNodeFQDN: "low-tmc/subarray/02"
     MCCSControllerFQDN: "low-mccs/control/control"
 
   mocks:
