@@ -149,7 +149,7 @@ def invoke_configure_command_with_mccs_defective(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         subarray_node_low.subarray_node,
         "obsState",
-        ObsState.FAULT,
+        ObsState.CONFIGURING,
     )
 
 
@@ -174,7 +174,9 @@ def configure_command_reports_error_propagate(
         + f" {mccs_subarray_leaf_node}:"
         + " Exception occurred, command failed."
     )
-
+    exception_message2 = (
+        "Recovery Successful, Subarray transitioned back to IDLE"
+    )
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         '"the command failure is reported by subarray with appropriate"'
@@ -185,7 +187,17 @@ def configure_command_reports_error_propagate(
         "(ResultCode.FAILED,exception)",
     ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
         subarray_node_low.subarray_node,
-        [exception_message],
+        [exception_message, exception_message2],
         pytest.unique_id[0],
         ResultCode.FAILED,
+    )
+
+    assert_that(event_tracer).described_as(
+        "Subarray Node device"
+        f"({subarray_node_low.subarray_node.dev_name()}) "
+        "is expected to be in IDLE obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.subarray_node,
+        "obsState",
+        ObsState.IDLE,
     )

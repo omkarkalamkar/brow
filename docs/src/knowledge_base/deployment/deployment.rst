@@ -21,6 +21,7 @@ of instances deployed for each of the TMC component.
 #. SDP Subarray Leaf Node - 1
 #. MCCS Master Leaf Node - 1
 #. MCCS Subarray Leaf Node - 1
+#. Resource Monitor - 1
 
 .. warning:: The number of instances of Central Node, MCCS Master Leaf Node,
     SDP Master, Leaf Node and CSP Master Leaf Node should always be one even
@@ -136,6 +137,7 @@ nodes. Defaults are:
     #. **mccs_master_ln** : This value is present under global, User can use this to change the FQDN of MCCS Master Leaf Node.
     #. **mccs_subarray_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Subarray.
     #. **mccs_subarray_ln_prefix** : This value is present under global, User can use this to change the FQDN prefix of MCCS Subarray Leaf Node.
+    #. **resource_monitor_prefix** : This value is present under global. It can be used to change the FQDN prefix of the Resource Monitor device.
 
 #. **subarray_devices** : List of subarray-devices
 
@@ -156,6 +158,7 @@ Central Node
     #. **ReleaseResourcesInterface** :  This refers to the interface value of ReleaseResources schema. Currently defaults to "https://schema.skao.int/ska-low-tmc-releaseresources/3.0".
     #. **family** :  This refers to the family name of CentralNode TANGO device. Currently defaults to "central-node".
     #. **member** :  This refers to the member of CentralNode TANGO device. Currently defaults to "0".
+    #. **IsAutoRecoveryEnabled** :  This refers to the feature flag i.e used temporarily till all the nodes are tested with auto recovery functionality. Currently defaults to "false".
 
 Subarray Node
 ^^^^^^^^^^^^^^
@@ -164,6 +167,7 @@ Subarray Node
     #. **CspScanInterfaceURL** : Interface version for CSP scan command. Currently defaults to "https://schema.skao.int/ska-low-csp-scan/2.0"
     #. **SdpScanInterfaceURL** : Interface version for SDP scan command. Currently defaults to "https://schema.skao.int/ska-sdp-scan/0.4"
     #. **MccsConfigureInterfaceURL** : Interface version for MCCS configure command. Currently defaults to "https://schema.skao.int/ska-low-mccs-configure/1.0"
+    #. **MccsReleaseInterfaceURL** : Interface version for MCCS release command. Currently defaults to "https://schema.skatelescope.org/ska-low-mccs-controller-release/2.0"
     #. **MccsScanInterfaceURL** : Interface version for MCCS scan command. Currently defaults to "https://schema.skao.int/ska-low-mccs-scan/3.0"
     #. **JonesURI** : URI for Jones Matrix. Currently defaults to "tango://jones.skao.int/low/stn-beam/1".
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
@@ -171,6 +175,9 @@ Subarray Node
     #. **CommandTimeOutDefault** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 70 seconds.
     #. **AbortCommandTimeOut** :  This refers to the timeout for the Subarray ABORTED obsState transition. Once the AbortCommandTimeOut exceeds, SubarrayNode transitions to obsState FAULT. Currently defaults to 40 seconds.
     #. **family** :  This refers to the family name of SubarrayNode TANGO device. Currently defaults to "subarray".
+    #. **IsAutoRecoveryEnabled** :  This refers to the feature flag i.e used temporarily till all the nodes are tested with auto recovery functionality. Currently defaults to "false".
+    #. **TelmodelSource** :  This refers to the TelmodelSource of SubarrayNode TANGO device. Currently defaults to "car://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata".
+    #. **TelmodelPath** :  This refers to the TelmodelPath of SubarrayNode TANGO device. Currently defaults to "instrument/ska1_low/layout/low-layout.json".
 
 SDP Subarray Leaf Node
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -232,3 +239,10 @@ MCCS Subarray Leaf Node
     #. **CommandTimeOutDefault** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.
     #. **AdapterTimeOut** :  This refers to the timeout (in seconds) for the adapter creation. This property is for internal use. Currently defaults to 2 seconds.
     #. **family** :  This refers to the family name of MCCS Subarray Leaf Node TANGO device. Currently defaults to "subarray-leaf-node-mccs".
+
+Resource Monitor
+^^^^^^^^^^^^^^^^^^^^^
+
+    #. **LivelinessCheckPeriod** : This defines how often (in seconds) the system checks if each connected device is active. The default value is 0.5 seconds.
+    #. **EventSubscriptionCheckPeriod** :  This defines the period (in seconds) for the event subscriber to verify and maintain active subscriptions. Currently defaults to 0.5 seconds.
+    #. **family** :  This refers to the family name of the Resource Monitor Tango device. Currently defaults to **"resource-monitor"**.

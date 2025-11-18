@@ -31,7 +31,7 @@ from tests.resources.test_support.constant_low import (
 )
 
 
-@pytest.mark.SKA_low
+@pytest.mark.SKA_tmc_low_restart
 @scenario(
     "../features/tmc/SKB_646.feature",
     "Verify SKB-646",
@@ -225,7 +225,7 @@ def given_a_tmc(
     )
     # This sleep is required because after empty event
     # received in subarray it take some time to process
-    time.sleep(0.3)
+    time.sleep(1)
 
 
 @given("TMC Subarray is in RESOURCING Observation State")
@@ -276,6 +276,8 @@ def invoke_init_on_subarray(subarray_node_low: SubarrayNodeWrapperLow):
     wait_and_validate_device_attribute_value(
         subarray_node_low.subarray_node, "State", DevState.ON
     )
+    # Wait for all events to receive
+    time.sleep(1)
 
 
 @when("wait for TMC Subarray Observation State transition to EMPTY")

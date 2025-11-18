@@ -116,7 +116,7 @@ def test_assign_release_defective_csp_sdp(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
-        ObsState.FAULT,
+        ObsState.EMPTY,
     )
 
     assert_that(event_tracer).described_as(
@@ -214,7 +214,7 @@ def test_assign_release_timeout_sdp(
         f"({central_node_low.central_node.dev_name()}) "
         "is expected have longRunningCommandResult"
         "(ResultCode.FAILED,exception)",
-    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+    ).within_timeout(52).has_desired_result_code_message_in_lrcr_event(
         central_node_low.central_node,
         [exception_message],
         unique_id[0],
@@ -271,11 +271,6 @@ def test_release_exception_propagation(
     )
     csp_sim, _, _ = get_device_simulators(simulator_factory)
     event_tracer.subscribe_event(csp_sim, "obsState")
-
-    _, assign_unique_id = central_node_low.perform_action(
-        "AssignResources", assign_input_json
-    )
-
     csp_sim.SetDefective(json.dumps(INTERMEDIATE_STATE_DEFECT))
 
     assert wait_and_validate_device_attribute_value(
@@ -283,6 +278,9 @@ def test_release_exception_propagation(
         "defective",
         json.dumps(INTERMEDIATE_STATE_DEFECT),
         is_json=True,
+    )
+    _, assign_unique_id = central_node_low.perform_action(
+        "AssignResources", assign_input_json
     )
     log_events({central_node_low.subarray_node: ["obsState"]})
 
@@ -419,6 +417,6 @@ def test_assign_release_timeout_csp(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node,
         "obsState",
-        ObsState.FAULT,
+        ObsState.EMPTY,
     )
     csp_subarray_sim.SetDefective(json.dumps(RESET_DEFECT))

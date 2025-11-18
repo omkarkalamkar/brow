@@ -68,10 +68,7 @@ The contents of the delay model are:
    :ref:`Observation Execution APIs <obs_apis>` section for the specific 
    details of the APIs.
 
-PSS beams delay model
-----------------------
-
-This feature is not yet implemented.
+.. note:: The 'field' key section with "c1 & c2" are required under timing beams -> beams for PST beams delay generation.
 
 Delay model Format
 ====================

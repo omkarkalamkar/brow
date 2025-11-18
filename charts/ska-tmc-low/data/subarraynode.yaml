@@ -9,10 +9,14 @@ entrypoints:
 {{- $sdp_scan_interface := .Values.deviceServers.subarraynode.SdpScanInterfaceURL }}
 {{- $mccs_scan_interface := .Values.deviceServers.subarraynode.MccsScanInterfaceURL}}
 {{- $mccs_configure_interface := .Values.deviceServers.subarraynode.MccsConfigureInterfaceURL }}
+{{- $MccsReleaseInterfaceURL := .Values.deviceServers.subarraynode.MccsReleaseInterfaceURL }}
 {{- $jones_uri := .Values.deviceServers.subarraynode.JonesURI}}
 {{- $AbortCommandTimeOut := .Values.deviceServers.subarraynode.AbortCommandTimeOut }}
 {{- $LivelinessCheckPeriod := .Values.deviceServers.subarraynode.LivelinessCheckPeriod }}
 {{- $EventSubscriptionCheckPeriod := .Values.deviceServers.subarraynode.EventSubscriptionCheckPeriod }}
+{{- $TelmodelSource := .Values.deviceServers.subarraynode.TelmodelSource }}
+{{- $TelmodelPath := .Values.deviceServers.subarraynode.TelmodelPath }}
+{{- $AutoRecoveryEnabled := .Values.deviceServers.subarraynode.IsAutoRecoveryEnabled }}
 
 server:
   name: "subarray_node_low"
@@ -23,6 +27,8 @@ server:
   {{ $sdp_sa_fqdn_prefix:= .Values.devices_fqdn.sdp_subarray_prefix}}
   {{ $mccs_sa_ln_fqdn_prefix:= .Values.devices_fqdn.mccs_subarray_ln_prefix}}
   {{ $mccs_sa_fqdn_prefix:= .Values.devices_fqdn.mccs_subarray_prefix}}
+  {{ $mccs_mln_fqdn := .Values.devices_fqdn.mccs_master_ln}}
+  {{ $mccs_controller_fqdn := .Values.devices_fqdn.mccs_master}}
   {{ $CommandTimeOutDefault := .Values.deviceServers.subarraynode.CommandTimeOutDefault }}
   {{ $domain := .Values.domain}}
   {{ $family := .Values.deviceServers.subarraynode.family }}
@@ -42,6 +48,9 @@ server:
           - name: "MccsSubarrayLNFQDN"
             values:
               - "{{ $mccs_sa_ln_fqdn_prefix}}{{ printf "%02s" . }}"
+          - name: "MccsMasterLNFQDN"
+            values:
+              - "{{ $mccs_mln_fqdn }}"
           - name: "CspSubarrayFQDN"
             values:
             - "{{ $csp_sa_fqdn_prefix}}/{{ printf "%02s" . }}"
@@ -51,6 +60,9 @@ server:
           - name: "MccsSubarrayFQDN"
             values:
               - "{{ $mccs_sa_fqdn_prefix}}/{{ printf "%02s" . }}"
+          - name: "MCCSControllerFQDN"  
+            values:
+              - "{( $mccs_controller_fqdn }}"
           - name: "SkaLevel"
             values:
               - "2"
@@ -78,6 +90,9 @@ server:
           - name: "MccsScanInterfaceURL"
             values:
               - "{{ $mccs_scan_interface }}"
+          - name: "MccsReleaseInterfaceURL"
+            values:
+              - "{{ $MccsReleaseInterfaceURL }}"
           - name: "JonesURI"
             values:
               - "{{ $jones_uri }}"
@@ -90,6 +105,19 @@ server:
           - name: "AbortCommandTimeOut"
             values:
               - "{{ $AbortCommandTimeOut }}"
+          - name: "MCCSControllerFQDN"
+            values:
+              - "low-mccs/control/control"
+          - name: "TelmodelSource"
+            values:
+              - "{{ $TelmodelSource }}"
+          - name: "TelmodelPath"
+            values:
+              - "{{ $TelmodelPath }}"
+          - name: "IsAutoRecoveryEnabled"
+            values:
+              - "{{ $AutoRecoveryEnabled }}"
+
 {{- end}}
 depends_on:
   - device: sys/database/2

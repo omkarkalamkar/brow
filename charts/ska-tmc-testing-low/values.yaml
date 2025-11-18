@@ -63,6 +63,8 @@ tmc-low:
         sdp: true
         mccs: true
         csp: true
+    mock-csp-subarray:
+      enabled: true
 
 # SKUID
 ska-ser-skuid:
@@ -81,7 +83,7 @@ ska-tango-taranta:
     resources:
       requests:
         cpu: 100m 
-        memory: 100Mi 
+        memory: 100Mi
       limits:
         cpu: 200m 
         memory: 200Mi 
@@ -90,3 +92,5 @@ ska-tango-tangogql:
   enabled: false
   ska-tango-base:
     enabled: false
+
+

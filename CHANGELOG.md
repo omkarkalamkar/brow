@@ -11,16 +11,79 @@ Updated
 --------
 * TMC Low full release 2.3.2
 
-[2.3.2-rc.2]
+[2.7.0-rc.1]
+************
+Added
+-----
+* TMC Low now supports to antenna layout update at runtime.
+
+[2.6.1-rc.1]
 ************
 Fixed
 ------
+* Fixed SKB-1074
+
+Added
+-----
+* Added new RTD page to document Array Layout support.
+
+[2.6.0-rc.1]
+************
+Added
+-----
+
+* Enable non sidereal object tracking for TMC low
+* Updated SubarrayNode to v0.47.1
+* Updated CspleafNode to v0.33.2
+
+[2.5.0-rc.1]
+************
+Added
+-----
+* Introduced ResourceMonitor device in the ska-tmc-low.
+* Added device configuration and FQDN under chart templates.
+* TMC Low now supports reporting subarray allocations for stations through the stationsData attribute of the Resource Monitor.
+* Updated documentation to include ResourceMonitor configuration details and usage.
+* Utilised the latest ResourceMonitor release version v0.3.0 for integration and verification.
+
+
+[2.4.0-rc.1]
+************
+Added
+-----
+* Functionality of auto recovery of AssignResources and Configure command from inconsistent stage
+* Added MccsReleaseInterfaceURL in values.yaml
+* SubarrayNode v0.45.2 integrated to support auto recovery functionality
+
+[2.3.4]
+*************
+Updated
+-------
+* Integrated latest SubarrayNode v0.44.1
+* Update TMC to support ska-low-tmc-configure/5.0 and ska-low-csp-configure/5.0
+* Updated MCCS leaf node to v0.10.3
+
+Fixed
+------
+* Fixed SKB-1041
+* Fixed SKB-908
+
+[2.3.3]
+*************
+Fixed
+-----
+* SKB-1056: Updated CSP subarray leaf node v0.32.2 to fix the bug.
+
+[2.3.2-rc.2]
+************
+Fixed
+-----
 Updated Central node tag v0.24.1 to resolve SKB-860.
 
 [2.3.2-rc.1]
 ************
 Fixed
-------
+-----
 * Updated Central node tag v0.24.0 to resolve SKB-908 and SKB-1051.
 
 [2.3.1-rc.1]
@@ -36,7 +99,7 @@ Updated
 ------------
 * Extending the support of multiple station up to 8 station beams.
 * Utilised the latest dev tag from CSP (0.32.0) and latest tag of central node (0.22.0).
-* RTD improvements to reflect support for 8 station beams. 
+* RTD improvements to reflect support for 8 station beams.
 
 [2.3.0-dev.1]
 *************
