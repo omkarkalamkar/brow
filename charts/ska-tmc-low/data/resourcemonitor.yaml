@@ -23,7 +23,9 @@ server:
           properties:
             - name: "LowSubarrayNodeFQDN"
               values:
-                  - "{{ $.Values.deviceServers.resourcemonitor.LowSubarrayNodeFQDN }}"
+              {{- range $.Values.deviceServers.resourcemonitor.LowSubarrayNodeFQDN }}
+              - "{{ . }}"
+              {{- end}}
             - name: "MCCSControllerFQDN"
               values:
                   - "{{ $.Values.deviceServers.resourcemonitor.MCCSControllerFQDN }}"
