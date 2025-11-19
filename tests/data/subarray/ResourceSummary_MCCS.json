@@ -35,7 +35,10 @@
         "count": 4,
         "usage": {
           "low-mccs/beam/ci-1-01": "low-mccs/subarray/01",
-          "low-mccs/beam/ci-1-02": "low-mccs/subarray/01"
+          "low-mccs/beam/ci-2-02": "low-mccs/subarray/01",
+          "low-mccs/beam/ci-3-01": "low-mccs/subarray/02",
+          "low-mccs/beam/ci-4-01": "low-mccs/subarray/02",
+          "low-mccs/beam/ci-5-02": "low-mccs/subarray/02"
         }
       }
     },
