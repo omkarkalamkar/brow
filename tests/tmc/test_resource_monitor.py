@@ -12,7 +12,11 @@ import time
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, scenario, then, when
+from ska_control_model import ObsState
+from ska_ser_logging import configure_logging
+from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DeviceProxy
+
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.helpers import (
     generate_and_get_assign_resource_json,
@@ -20,8 +24,8 @@ from tests.resources.test_harness.helpers import (
 from tests.resources.test_harness.simulator_factory import SimulatorFactory
 from tests.resources.test_harness.utils.common_utils import (
     JsonFactory,
+    get_centralnode_input_json,
     get_subarray_input_json,
-    get_centralnode_input_json
 )
 from tests.resources.test_harness.utils.enums import SimulatorDeviceType
 from tests.resources.test_support.common_utils.tmc_helpers import (
@@ -29,16 +33,13 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 from tests.resources.test_support.constant_low import TIMEOUT
 
-from ska_control_model import ObsState
-from ska_ser_logging import configure_logging
-from ska_tango_testing.integration import TangoEventTracer, log_events
-
 configure_logging(logging.DEBUG)
 LOGGER = logging.getLogger(__name__)
 
 RESOURCE_MONITOR_FQDN = "low-tmc/resource-monitor/01"
 
 
+# pylint: disable=too-many-locals
 @pytest.mark.lowrm
 @pytest.mark.SKA_low
 @scenario(
@@ -141,12 +142,12 @@ def trigger_sn_resource_change(
     trigger_sn_resource_change.mccs_sim2 = mccs_sim2
 
 
-
 @then(
     "the ResourceMonitoring stationsData attribute should reflect the change"
 )
-def check_resource_monitor_update(event_tracer: TangoEventTracer,
-                                  command_input_factory: JsonFactory, ):
+def check_resource_monitor_update(
+    command_input_factory: JsonFactory,
+):
     """
     Assert that the ResourceMonitor device's stationsData attribute has
     been updated to reflect the new assigned resources from the SubarrayNode.
@@ -161,6 +162,11 @@ def check_resource_monitor_update(event_tracer: TangoEventTracer,
     assigned_resources2 = json.loads(
         trigger_sn_resource_change.assigned_resources2
     )
+    LOGGER.info(
+        "Assigned resources SA1 %s, SA2 %s",
+        assigned_resources,
+        assigned_resources2,
+    )
     mccs_controller_sim = trigger_sn_resource_change.mccs_controller
     mccs_sim = trigger_sn_resource_change.mccs_sim
     mccs_sim2 = trigger_sn_resource_change.mccs_sim2
@@ -170,11 +176,13 @@ def check_resource_monitor_update(event_tracer: TangoEventTracer,
     LOGGER.info("SB attr data %s", sb_attr_val)
     LOGGER.info("stn attr data %s", stn_attr_val)
 
-    expected_stations_data = {"station_1": {"subarray_allocation": 1},
-                              "station_2": {"subarray_allocation": 1},
-                              "station_3": {"subarray_allocation": 2},
-                              "station_4": {"subarray_allocation": 2},
-                              "station_5": {"subarray_allocation": 2}}
+    expected_stations_data = {
+        "station_1": {"subarray_allocation": 1},
+        "station_2": {"subarray_allocation": 1},
+        "station_3": {"subarray_allocation": 2},
+        "station_4": {"subarray_allocation": 2},
+        "station_5": {"subarray_allocation": 2},
+    }
     # assert_that(event_tracer).within_timeout(
     #     TIMEOUT
     # ).has_change_event_occurred(
@@ -185,7 +193,8 @@ def check_resource_monitor_update(event_tracer: TangoEventTracer,
         "station_1": [{"station_beam": "01", "subarray_allocation": 1}],
         "station_2": [{"station_beam": "02", "subarray_allocation": 1}],
         "station_4": [{"station_beam": "01", "subarray_allocation": 2}],
-        "station_5": [{"station_beam": "02", "subarray_allocation": 2}]}
+        "station_5": [{"station_beam": "02", "subarray_allocation": 2}],
+    }
 
     # assert_that(event_tracer).within_timeout(
     #     TIMEOUT
@@ -199,12 +208,11 @@ def check_resource_monitor_update(event_tracer: TangoEventTracer,
     )
     LOGGER.info("RR %s", release_resource_json)
 
-    central_node_low.perform_action(
-        "ReleaseResources", release_resource_json
-    )
+    central_node_low.perform_action("ReleaseResources", release_resource_json)
     release_mccs = get_subarray_input_json("ResourceSummary_MCCS_release")
     release_assign_resources = get_centralnode_input_json(
-        "assign_resources_low_empty")
+        "assign_resources_low_empty"
+    )
     mccs_controller_sim.SetDirectResourceSummary(release_mccs)
     mccs_sim.SetDirectassignedResources(release_assign_resources)
     mccs_sim2.SetDirectassignedResources(release_assign_resources)
@@ -214,3 +222,11 @@ def check_resource_monitor_update(event_tracer: TangoEventTracer,
     stn_attr_val = resource_monitor.read_attribute("stations").value
     LOGGER.info("SB attr data after rel %s", sb_attr_val)
     LOGGER.info("stn attr data  after rel %s", stn_attr_val)
+    LOGGER.info(
+        "Expected data %s %s",
+        expected_stations_data,
+        expected_station_beams_data,
+    )
+
+
+# pylint: enable=too-many-locals
