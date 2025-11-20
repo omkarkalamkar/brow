@@ -121,7 +121,7 @@ resource_monitor:
   image:
     registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-resource-monitor
     image: ska-tmc-resource-monitor
-    tag: 0.5.0-dev.c3792da02
+    tag: 0.5.0-dev.c67837bc4
     pullPolicy: IfNotPresent
 
 skatmcsimulators:
@@ -250,7 +250,7 @@ deviceServers:
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     family: "resource-monitor"
-    LowSubarrayNodeFQDN: ["low-tmc/subarray/01", "low-tmc/subarray/02"]
+    LowSubarrayNodeFQDNs: ["low-tmc/subarray/01", "low-tmc/subarray/02"]
     MCCSControllerFQDN: "low-mccs/control/control"
 
   mocks:
