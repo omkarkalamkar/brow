@@ -40,7 +40,6 @@ RESOURCE_MONITOR_FQDN = "low-tmc/resource-monitor/01"
 
 
 # pylint: disable=too-many-locals
-@pytest.mark.lowrm
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/resource_monitor.feature",
