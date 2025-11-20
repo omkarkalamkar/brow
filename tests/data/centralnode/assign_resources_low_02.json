@@ -6,7 +6,7 @@
     "interface": "https://schema.skao.int/ska-low-mccs-controller-allocate/3.0",
     "subarray_beams": [
       {
-        "subarray_beam_id": 1,
+        "subarray_beam_id": 2,
         "apertures": [
           {
             "station_id": 3,
