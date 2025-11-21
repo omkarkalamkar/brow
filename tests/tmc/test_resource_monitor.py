@@ -34,7 +34,6 @@ LOGGER = logging.getLogger(__name__)
 RESOURCE_MONITOR_FQDN = "low-tmc/resource-monitor/01"
 
 
-@pytest.mark.lowint
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/resource_monitor.feature",
