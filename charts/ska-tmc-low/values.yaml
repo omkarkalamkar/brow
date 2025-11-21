@@ -121,7 +121,7 @@ resource_monitor:
   image:
     registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-resource-monitor
     image: ska-tmc-resource-monitor
-    tag: 0.5.0-dev.c67837bc4
+    tag: 0.5.0-dev.c08644711
     pullPolicy: IfNotPresent
 
 skatmcsimulators:

@@ -168,9 +168,9 @@ class TestAssignCommandNotAllowedPropagation:
         )
         exception_message = (
             "Exception occurred on the following devices: "
-            + f"{low_sdp_subarray_leaf_node}: ska_tmc_common.exceptions"
-            + ".CommandNotAllowed: Command is not allowed"
+            + f"{low_sdp_subarray_leaf_node}"
         )
+        exception_msg2 = "CommandNotAllowed: Command is not allowed"
         assert_that(event_tracer).described_as(
             "FAILED ASSUMPTION ATER ASSIGN RESOURCES: "
             "Central Node device"
@@ -181,7 +181,7 @@ class TestAssignCommandNotAllowedPropagation:
             TIMEOUT
         ).has_desired_result_code_message_in_lrcr_event(
             central_node_low.central_node,
-            [exception_message],
+            [exception_message, exception_msg2],
             unique_id[0],
             ResultCode.FAILED,
         )
@@ -261,8 +261,6 @@ class TestAssignCommandNotAllowedPropagation:
             + f" is failed on MCCS Controller device {mccs_controller}"
         )
 
-        exception_message2 = "ska_tmc_common.exceptions.CommandNotAllowed"
-
         assert_that(event_tracer).described_as(
             "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
             "Central Node device"
@@ -273,7 +271,7 @@ class TestAssignCommandNotAllowedPropagation:
             TIMEOUT
         ).has_desired_result_code_message_in_lrcr_event(
             central_node_low.central_node,
-            [exception_message, exception_message2],
+            [exception_message],
             unique_id[0],
             ResultCode.FAILED,
         )

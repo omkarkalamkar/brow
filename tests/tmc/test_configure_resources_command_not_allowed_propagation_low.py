@@ -220,9 +220,8 @@ class TestConfigureCommandNotAllowedPropagation:
         exception_message = (
             f"Exception occurred on the following devices:"
             f" {low_sdp_subarray_leaf_node}:"
-            " ska_tmc_common.exceptions.CommandNotAllowed:"
-            " Command is not allowed"
         )
+        exception_msg2 = "CommandNotAllowed: Command is not allowed"
 
         log_events(
             {subarray_node_low.subarray_node: ["longRunningCommandResult"]}
@@ -237,7 +236,7 @@ class TestConfigureCommandNotAllowedPropagation:
             TIMEOUT
         ).has_desired_result_code_message_in_lrcr_event(
             subarray_node_low.subarray_node,
-            [exception_message],
+            [exception_message, exception_msg2],
             pytest.unique_id[0],
             ResultCode.FAILED,
         )
