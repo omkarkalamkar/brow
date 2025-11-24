@@ -168,8 +168,7 @@ class TestAssignCommandNotAllowedPropagation:
         )
         exception_message = (
             "Exception occurred on the following devices: "
-            + f"{low_sdp_subarray_leaf_node}: ska_tmc_simulators.dependencies"
-            ".exceptions.CommandNotAllowed: Command is not allowed"
+            + f"{low_sdp_subarray_leaf_node}:"
         )
         exception_msg2 = "CommandNotAllowed: Command is not allowed"
         assert_that(event_tracer).described_as(
