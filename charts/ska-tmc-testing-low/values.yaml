@@ -56,15 +56,7 @@ tmc-low:
   labels:
     app: ska-tmc-low-integration
   enabled: true
-  deviceServers:
-    mocks:
-      enabled: true
-      is_simulated:
-        sdp: true
-        mccs: true
-        csp: true
-    mock-csp-subarray:
-      enabled: true
+  
 
 # SKUID
 ska-ser-skuid:
@@ -94,3 +86,9 @@ ska-tango-tangogql:
     enabled: false
 
 
+ska-tmc-simulators:
+  enabled: true
+  telescope: SKA-low
+  deviceServers:
+    mocks:
+      enabled: true
