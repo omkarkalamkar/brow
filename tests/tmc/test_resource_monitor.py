@@ -102,7 +102,7 @@ def trigger_sn_resource_change(
         "assign_resources_low", command_input_factory
     )
     assign_input_json2 = prepare_json_args_for_centralnode_commands(
-        "assign_resources_low_02", command_input_factory
+        "assign_resources_low_v4_1_02", command_input_factory
     )
 
     # Generate correct JSON for assigned resources
