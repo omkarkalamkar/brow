@@ -9,6 +9,9 @@ entrypoints:
 {{- $EventSubscriptionCheckPeriod := .Values.deviceServers.resourcemonitor.EventSubscriptionCheckPeriod }}
 {{- $Domain := .Values.domain }}
 {{- $Family := .Values.deviceServers.resourcemonitor.family }}
+{{- $count := .Values.global.subarray_count}}
+{{- $subarray_family:= .Values.deviceServers.subarraynode.family}}
+{{- $mccs_controller := .Values.devices_fqdn.mccs_master}}
 command: "python3 /app/src/ska_tmc_resource_monitor/resource_monitor_low.py"
 server:
   name: "resource_monitor_low"
@@ -19,7 +22,17 @@ server:
       classes:
       - name: "LowResourceMonitor"
         devices:
-        - name: "{{ $.Values.domain }}/{{ $.Values.deviceServers.resourcemonitor.family }}/{{ . }}"
+        - name: "{{ $Domain }}/{{ $Family }}/{{ . }}"
+          properties:
+            - name: "LowSubarrayNodeFQDNs"
+              values:
+              {{- range  ( regexSplit " " (($count | int) | seq ) -1 ) }}
+                - "{{ $Domain }}/{{ $subarray_family }}/{{ printf "%02s" . }}"
+              {{- end}}
+            - name: "MCCSControllerFQDN"
+              values:
+                - "{{$mccs_controller}}"
+
   {{- end}}
 depends_on:
   - device: sys/database/2

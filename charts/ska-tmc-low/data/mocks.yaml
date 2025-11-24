@@ -3,12 +3,12 @@ function: testing
 domain: mocks
 instances: ["01","03","04","05","06"]
 entrypoints:
-  - name: "ska_tmc_common.test_helpers.helper_subarray_device.HelperSubArrayDevice"
-  - name: "ska_tmc_common.test_helpers.helper_base_device.HelperBaseDevice"
-  - name: "ska_tmc_common.test_helpers.helper_csp_master_device.HelperCspMasterDevice"
-  - name: "ska_tmc_common.test_helpers.helper_sdp_subarray.HelperSdpSubarray"
-  - name: "ska_tmc_common.test_helpers.helper_mccs_controller_device.HelperMCCSController"
-  - name: "ska_tmc_common.test_helpers.helper_mccs_subarray_device.HelperMccsSubarrayDevice"
+  - name: "ska_tmc_simulators.helper_subarray_device.HelperSubArrayDevice"
+  - name: "ska_tmc_simulators.helper_base_device.HelperBaseDevice"
+  - name: "ska_tmc_simulators.helper_csp_master_device.HelperCspMasterDevice"
+  - name: "ska_tmc_simulators.helper_sdp_subarray.HelperSdpSubarray"
+  - name: "ska_tmc_simulators.helper_mccs_controller_device.HelperMCCSController"
+  - name: "ska_tmc_simulators.helper_mccs_subarray_device.HelperMccsSubarrayDevice"
 server:
   name: "mocks"
   instances:
@@ -56,7 +56,7 @@ server:
 depends_on:
   - device: sys/database/2
 image:
-  registry: "{{.Values.sdpleafnodes.image.registry}}"
-  image: "{{.Values.sdpleafnodes.image.image}}"
-  tag: "{{.Values.sdpleafnodes.image.tag}}"
-  pullPolicy: "{{.Values.sdpleafnodes.image.pullPolicy}}"
+  registry: "{{.Values.skatmcsimulators.image.registry}}"
+  image: "{{.Values.skatmcsimulators.image.image}}"
+  tag: "{{.Values.skatmcsimulators.image.tag}}"
+  pullPolicy: "{{.Values.skatmcsimulators.image.pullPolicy}}"
