@@ -5,6 +5,15 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[2.8.0-rc.1]
+************
+Updated
+--------
+* TMC Low utilises Resource Monitor 0.5.0.
+* TMC Low Resource Monitor supports reporting of resources stations and station beams using stations and stationBeams attributes of Resource Monitor.
+* TMC Low utilises ska_tmc_simulators 1.5.1 and replaces ska_tmc_common for helper devices.
+
+
 [2.7.0-rc.1]
 ************
 Added

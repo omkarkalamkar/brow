@@ -1,21 +1,25 @@
-release=2.7.0-rc.1
-tag=2.7.0-rc.1
+release=2.8.0-rc.1
+tag=2.8.0-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.7.0-rc.1**
+**1. ska-tmc-low-integration 2.8.0-rc.1**
 
-    **1.1 ska-tmc-low 2.6.1-rc.1 - 2.7.0-rc.1 :**
-        * TMC Low now supports to antenna layout update at runtime.
+    **1.1 ska-tmc-low 2.7.0-rc.1 - 2.8.0-rc.1 :**
+        * TMC Low utilises Resource Monitor 0.5.0.
+        * TMC Low Resource Monitor supports reporting of resources stations and station beams using stations and stationBeams attributes of Resource Monitor.
+        * TMC Low utilises ska_tmc_simulators 1.5.1 and replaces ska_tmc_common for helper devices.
 
 
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.7.0-rc.1**
+**1. ska-tmc-low-integration 2.8.0-rc.1**
 
-    **1.1 ska-tmc-low  2.6.1-rc.1 - 2.7.0-rc.1:**
-        *  TMC Low now supports to antenna layout update at runtime.
+    **1.1 ska-tmc-low  2.7.0-rc.1 - 2.8.0-rc.1:**
+        * TMC Low utilises Resource Monitor 0.5.0.
+        * TMC Low Resource Monitor supports reporting of resources stations and station beams using stations and stationBeams attributes of Resource Monitor.
+        * TMC Low utilises ska_tmc_simulators 1.5.1 and replaces ska_tmc_common for helper devices.
 
 
