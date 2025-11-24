@@ -220,7 +220,7 @@ class TestConfigureCommandNotAllowedPropagation:
         exception_message = (
             f"Exception occurred on the following devices:"
             f" {low_sdp_subarray_leaf_node}:"
-            " ska_tmc_common.exceptions.CommandNotAllowed:"
+            " ska_tmc_simulators.dependencies.exceptions.CommandNotAllowed:"
             " Command is not allowed"
         )
 

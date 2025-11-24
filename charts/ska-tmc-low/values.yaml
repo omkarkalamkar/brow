@@ -251,17 +251,7 @@ deviceServers:
     EventSubscriptionCheckPeriod: 0.5
     family: "resource-monitor"
 
-  mocks:
-    enabled: false
-    file: "data/mocks.yaml"
-    is_simulated:
-      sdp: false
-      csp: false
-      mccs: false
 
-  mock-csp-subarray:
-    enabled: false
-    file: "data/mockcspsubarray.yaml"
 
 
 nodeSelector: {}

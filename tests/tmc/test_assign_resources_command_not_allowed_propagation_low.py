@@ -168,8 +168,8 @@ class TestAssignCommandNotAllowedPropagation:
         )
         exception_message = (
             "Exception occurred on the following devices: "
-            + f"{low_sdp_subarray_leaf_node}: ska_tmc_common.exceptions"
-            + ".CommandNotAllowed: Command is not allowed"
+            + f"{low_sdp_subarray_leaf_node}: ska_tmc_simulators.dependencies"
+            ".exceptions.CommandNotAllowed: Command is not allowed"
         )
         assert_that(event_tracer).described_as(
             "FAILED ASSUMPTION ATER ASSIGN RESOURCES: "
@@ -261,7 +261,9 @@ class TestAssignCommandNotAllowedPropagation:
             + f" is failed on MCCS Controller device {mccs_controller}"
         )
 
-        exception_message2 = "ska_tmc_common.exceptions.CommandNotAllowed"
+        exception_message2 = (
+            "ska_tmc_simulators.dependencies.exceptions.CommandNotAllowed"
+        )
 
         assert_that(event_tracer).described_as(
             "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
