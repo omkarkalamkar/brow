@@ -17,6 +17,11 @@ Updated
 * TMC Low Resource Monitor supports reporting of resources stations and station beams using stations and stationBeams attributes of Resource Monitor.
 * TMC Low utilises ska_tmc_simulators 1.5.1 and replaces ska_tmc_common for helper devices.
 
+[2.3.2]
+************
+Updated
+--------
+* TMC Low full release 2.3.2
 
 [2.7.0-rc.1]
 ************
