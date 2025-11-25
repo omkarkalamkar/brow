@@ -482,12 +482,26 @@ def device_attribute_changed(
     return True
 
 
+def sort_dict_using_keys(data_to_sort: dict, reverse=False) -> dict:
+    """
+    Helper function to sort a dict using keys of dict.
+    Args:
+        data_to_sort: Dict data to sort
+        reverse: Flag to reverse the sort order
+
+    Returns: Sorted dict
+
+    """
+    return dict(sorted(data_to_sort.items(), reverse=reverse))
+
+
 def wait_and_validate_device_attribute_value(
     device: DeviceProxy,
     attribute_name: str,
     expected_value: str,
     is_json: bool = False,
     timeout: int = 300,
+    sort_keys=False,
 ):
     """This method wait and validate if attribute value is equal to provided
     expected value
@@ -503,7 +517,14 @@ def wait_and_validate_device_attribute_value(
                 attribute_name,
                 attribute_value,
             )
-            if is_json and json.loads(attribute_value) == json.loads(
+            if (
+                is_json
+                and sort_keys
+                and sort_dict_using_keys(json.loads(attribute_value))
+                == sort_dict_using_keys(json.loads(expected_value))
+            ):
+                return True
+            elif is_json and json.loads(attribute_value) == json.loads(
                 expected_value
             ):
                 return True

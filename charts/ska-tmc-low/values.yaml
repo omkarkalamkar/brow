@@ -121,14 +121,14 @@ resource_monitor:
   image:
     registry: artefact.skao.int
     image: ska-tmc-resource-monitor
-    tag: 0.3.0
+    tag: 0.5.0
     pullPolicy: IfNotPresent
 
 skatmcsimulators:
   image:
     registry: artefact.skao.int
     image: ska-tmc-simulators
-    tag: 1.2.1
+    tag: 1.5.1
     pullPolicy: IfNotPresent
 
 resources:
@@ -251,17 +251,7 @@ deviceServers:
     EventSubscriptionCheckPeriod: 0.5
     family: "resource-monitor"
 
-  mocks:
-    enabled: false
-    file: "data/mocks.yaml"
-    is_simulated:
-      sdp: false
-      csp: false
-      mccs: false
 
-  mock-csp-subarray:
-    enabled: false
-    file: "data/mockcspsubarray.yaml"
 
 
 nodeSelector: {}
