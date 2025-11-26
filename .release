@@ -1,25 +1,23 @@
-release=2.8.0-rc.1
-tag=2.8.0-rc.1
+release=2.8.0-rc.2
+tag=2.8.0-rc.2
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.8.0-rc.1**
+**1. ska-tmc-low-integration 2.8.0-rc.2**
 
-    **1.1 ska-tmc-low 2.7.0-rc.1 - 2.8.0-rc.1 :**
-        * TMC Low utilises Resource Monitor 0.5.0.
-        * TMC Low Resource Monitor supports reporting of resources stations and station beams using stations and stationBeams attributes of Resource Monitor.
-        * TMC Low utilises ska_tmc_simulators 1.5.1 and replaces ska_tmc_common for helper devices.
+    **1.1 ska-tmc-low 2.8.0-rc.1 - 2.8.0-rc.2:**
+        * Remove keys from input json not required by real CSP, causing command failures.
+        * TMC utilises Simulators as testing service
 
 
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.8.0-rc.1**
+**1. ska-tmc-low-integration 2.8.0-rc.2**
 
-    **1.1 ska-tmc-low  2.7.0-rc.1 - 2.8.0-rc.1:**
-        * TMC Low utilises Resource Monitor 0.5.0.
-        * TMC Low Resource Monitor supports reporting of resources stations and station beams using stations and stationBeams attributes of Resource Monitor.
-        * TMC Low utilises ska_tmc_simulators 1.5.1 and replaces ska_tmc_common for helper devices.
+    **1.1 ska-tmc-low 2.8.0-rc.1 - 2.8.0-rc.2:**
+        * Remove keys from input json not required by real CSP, causing command failures.
+        * TMC utilises Simulators as testing service
 
 
