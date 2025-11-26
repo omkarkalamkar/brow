@@ -9,7 +9,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 *************
 Fixed
 -----
-* Remove keys from input(argin) not required by real CSP, causing command failures.
+* Remove keys from input json not required by real CSP, causing command failures.
 
 Added
 -----
