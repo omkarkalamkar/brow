@@ -1,5 +1,6 @@
 Attribute Name,Data Type,Is archived?,Archiver config
-stationsData,DevString,Yes,Change Event
+stations,DevString,Yes,Change Event
+stationBeams,DevString,Yes,Change Event
 State,DevState (Enum),Yes,Change Event
 Status,DevString,No,
 adminMode,AdminMode (DevEnum),No,

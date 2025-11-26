@@ -7,6 +7,12 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 [Unreleased]
 *************
+Fixed
+-----
+* Remove keys from input json not required by real CSP, causing command failures.
+
+Added
+-----
 * TMC utilises Simulators as testing service
 
 [2.8.0-rc.1]
