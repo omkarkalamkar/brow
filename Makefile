@@ -18,7 +18,7 @@ FILE ?= tests## A specific test file to pass to pytest
 ADD_ARGS ?= ## Additional args to pass to pytest
 FILE_NAME?= alarm_rules.txt
 EXIT_AT_FAIL = true ## Flag for determining exit at failure. Set 'true' to exit at first failure.
-COUNT ?= 1
+COUNT ?= 20
 
 ifeq ($(EXIT_AT_FAIL),true)
 ADD_ARGS += -x
