@@ -142,7 +142,7 @@ def subarray_node_invoke_abort(subarray_node_low: SubarrayNodeWrapperLow):
     _, pytest.unique_id_abort = subarray_node_low.execute_transition("Abort")
 
 
-@then("the subarray Node is transitioned to observation state ABORTED")
+@then("subarray Node is transitioned to observation state ABORTED")
 def tmc_status(
     subarray_node_low: SubarrayNodeWrapperLow, event_tracer: TangoEventTracer
 ):
