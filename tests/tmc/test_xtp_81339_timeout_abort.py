@@ -22,7 +22,7 @@ from tests.resources.test_harness.constant import TIMEOUT_DEFECT
 TIMEOUT = 60
 
 
-@pytest.mark.SKA_low
+@pytest.mark.SKA_low1
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
     "Timeout Reported by TMC Low Abort Command for Defective Subarray",
