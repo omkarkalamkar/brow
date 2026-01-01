@@ -167,7 +167,7 @@ deviceServers:
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     CommandTimeOutDefault: 70
-    AbortCommandTimeOut: 40
+    AbortCommandTimeOut: 60
     family: "subarray"
     IsAutoRecoveryEnabled: "true"
     TelmodelSource: "car://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
