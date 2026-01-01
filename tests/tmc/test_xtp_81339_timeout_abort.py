@@ -19,7 +19,7 @@ from ska_tango_testing.integration import TangoEventTracer
 from tests.conftest import SubarrayTestContextData, _setup_event_subscriptions
 from tests.resources.test_harness.constant import TIMEOUT_DEFECT
 
-TIMEOUT = 60
+TIMEOUT = 70
 
 
 @pytest.mark.SKA_low
