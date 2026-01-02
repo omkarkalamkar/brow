@@ -22,7 +22,7 @@ from tests.resources.test_harness.constant import TIMEOUT_DEFECT
 TIMEOUT = 70
 
 
-@pytest.mark.SKA_low1
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
     "Timeout Reported by TMC Low Abort Command for Defective Subarray",
@@ -230,19 +230,7 @@ def error_reporting(
         ).has_change_event_occurred(
             tmc.sdp_subarray_leaf_node, "sdpSubarrayObsState", ObsState.ABORTED
         )
-        # Get SDP Subarray to ABORTED ObsState
         sdp.sdp_subarray.ResetDelayInfo()
-        # sdp.sdp_subarray.Abort()
-        # assert_that(event_tracer).within_timeout(60).
-        # has_change_event_occurred(
-        #     sdp.sdp_subarray, "obsState", ObsState.ABORTED
-        # )
-        # assert_that(event_tracer).within_timeout(
-        #     TIMEOUT
-        # ).has_change_event_occurred(
-        #     tmc.sdp_subarray_leaf_node, "sdpSubarrayObsState",
-        # ObsState.ABORTED
-        # )
     elif defective_subsystem == "MCCS":
         mccs.mccs_subarray.SetDefective(json.dumps({"enabled": False}))
         mccs.mccs_subarray.Abort()
