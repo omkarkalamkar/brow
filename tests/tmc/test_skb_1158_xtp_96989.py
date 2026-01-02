@@ -16,9 +16,6 @@ from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
-from tests.resources.test_harness.subarray_node_low import (
-    SubarrayNodeWrapperLow,
-)
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
@@ -54,6 +51,9 @@ def given_a_tmc(
         central_node_low.central_node, "longRunningCommandResult"
     )
     event_tracer.subscribe_event(central_node_low.subarray_node, "obsState")
+    event_tracer.subscribe_event(
+        central_node_low.subarray_node, "longRunningCommandResult"
+    )
     log_events(
         {
             central_node_low.central_node: [
@@ -133,18 +133,21 @@ def subarray_node_obs_state_resourcing(
 
 
 @when("I invoke abort on subarray node")
-def subarray_node_invoke_abort(subarray_node_low: SubarrayNodeWrapperLow):
+def subarray_node_invoke_abort(central_node_low: CentralNodeWrapperLow):
     """This method invokes abort on subarray node
 
     Args:
         central_node (CentralNodeWrapperLow): Object of Central node wrapper
     """
-    _, pytest.unique_id_abort = subarray_node_low.execute_transition("Abort")
+    (
+        _,
+        pytest.unique_id_abort,
+    ) = central_node_low.subarray_node.execute_transition("Abort")
 
 
 @then("subarray Node is transitioned to observation state ABORTED")
 def tmc_status(
-    subarray_node_low: SubarrayNodeWrapperLow, event_tracer: TangoEventTracer
+    central_node_low: CentralNodeWrapperLow, event_tracer: TangoEventTracer
 ):
     """
     Verifies that the Subarray transition to ObsState.ABORTED.
@@ -152,21 +155,21 @@ def tmc_status(
     assert_that(event_tracer).described_as(
         '"the Subarray transitions to ABORTED"'
         "Subarray Node device"
-        f"({subarray_node_low.subarray_node.dev_name()}) "
+        f"({central_node_low.subarray_node.dev_name()}) "
         "is expected to be in EMPTY obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        subarray_node_low.subarray_node,
+        central_node_low.subarray_node,
         "obsState",
         ObsState.ABORTED,
     )
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ABORT COMMAND: "
         "Central Node device"
-        f"({subarray_node_low.subarray_node.dev_name()}) "
+        f"({central_node_low.subarray_node.dev_name()}) "
         "is expected have longRunningCommand as"
         '(unique_id,(ResultCode.OK,"Abort command completed"))',
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        subarray_node_low.subarray_node,
+        central_node_low.subarray_node,
         "longRunningCommandResult",
         (
             pytest.unique_id_abort[0],
