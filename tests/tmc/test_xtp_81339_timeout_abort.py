@@ -22,7 +22,7 @@ from tests.resources.test_harness.constant import TIMEOUT_DEFECT
 TIMEOUT = 70
 
 
-@pytest.mark.SKA_low
+@pytest.mark.SKA_low1
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
     "Timeout Reported by TMC Low Abort Command for Defective Subarray",
@@ -34,9 +34,21 @@ def test_tmc_command_timeout():
 
 
 exception_messages = {
-    "CSP": ('[3, "Timeout has occurred, command failed"]'),
-    "SDP": ('[3, "Timeout has occurred, command failed"]'),
-    "MCCS": ('[3, "Timeout has occurred, command failed"]'),
+    "CSP": (
+        '[3, "Exception occurred on the following devices: '
+        + "low-tmc/subarray-leaf-node-csp/01: Timeout has occurred, "
+        + 'command failed"]'
+    ),
+    "SDP": (
+        '[3, "Exception occurred on the following devices: '
+        + "low-tmc/subarray-leaf-node-sdp/01: Timeout has occurred, "
+        + 'command failed"]'
+    ),
+    "MCCS": (
+        '[3, "Exception occurred on the following devices: '
+        + "low-tmc/subarray-leaf-node-mccs/01: Timeout has occurred, "
+        + 'command failed"]',
+    ),
 }
 
 
