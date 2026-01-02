@@ -8,6 +8,8 @@ Scenario Outline: Error Propagation Reported by TMC Low Abort Command for Defect
 
     Examples:
             | defective_subsystem  |
+            | CSP                  |
+            | SDP                  |
             | MCCS                 |
 
 @XTP-81339 @XTP-28348
@@ -20,8 +22,6 @@ Scenario Outline: Timeout Reported by TMC Low Abort Command for Defective Subarr
 
     Examples:
             | defective_subsystem  |
-            | CSP                  |
-            | SDP                  |
             | MCCS                 |
 
 @XTP-81594 @XTP-28348 @XTP-73592
