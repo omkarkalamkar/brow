@@ -47,7 +47,7 @@ exception_messages = {
     "MCCS": (
         '[3, "Exception occurred on the following devices: '
         + "low-tmc/subarray-leaf-node-mccs/01: Timeout has occurred, "
-        + 'command failed"]',
+        + 'command failed"]'
     ),
 }
 
