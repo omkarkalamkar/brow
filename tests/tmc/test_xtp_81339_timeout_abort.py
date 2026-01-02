@@ -218,9 +218,11 @@ def error_reporting(
             tmc.csp_subarray_leaf_node, "cspSubarrayObsState", ObsState.ABORTED
         )
     elif defective_subsystem == "SDP":
-        sdp.sdp_subarray.ResetDelayInfo()
-        sdp.sdp_subarray.Abort()
-        assert_that(event_tracer).within_timeout(60).has_change_event_occurred(
+        # Assert the SDP Subarray ObsState ABORTED event of the previously
+        # timed out ABORT command
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
             sdp.sdp_subarray, "obsState", ObsState.ABORTED
         )
         assert_that(event_tracer).within_timeout(
@@ -228,6 +230,19 @@ def error_reporting(
         ).has_change_event_occurred(
             tmc.sdp_subarray_leaf_node, "sdpSubarrayObsState", ObsState.ABORTED
         )
+        # Get SDP Subarray to ABORTED ObsState
+        sdp.sdp_subarray.ResetDelayInfo()
+        # sdp.sdp_subarray.Abort()
+        # assert_that(event_tracer).within_timeout(60).
+        # has_change_event_occurred(
+        #     sdp.sdp_subarray, "obsState", ObsState.ABORTED
+        # )
+        # assert_that(event_tracer).within_timeout(
+        #     TIMEOUT
+        # ).has_change_event_occurred(
+        #     tmc.sdp_subarray_leaf_node, "sdpSubarrayObsState",
+        # ObsState.ABORTED
+        # )
     elif defective_subsystem == "MCCS":
         mccs.mccs_subarray.SetDefective(json.dumps({"enabled": False}))
         mccs.mccs_subarray.Abort()
