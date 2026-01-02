@@ -23,7 +23,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 from tests.resources.test_support.constant_low import TIMEOUT
 
 
-@pytest.mark.SKA_low1
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/SKB_1158.feature",
     "Verify SKB-1158",
