@@ -22,6 +22,8 @@ Scenario Outline: Timeout Reported by TMC Low Abort Command for Defective Subarr
 
     Examples:
             | defective_subsystem  |
+            | CSP                  |
+            | SDP                  |
             | MCCS                 |
 
 @XTP-81594 @XTP-28348 @XTP-73592
