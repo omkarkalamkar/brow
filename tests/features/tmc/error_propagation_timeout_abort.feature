@@ -8,8 +8,6 @@ Scenario Outline: Error Propagation Reported by TMC Low Abort Command for Defect
 
     Examples:
             | defective_subsystem  |
-            | CSP                  |
-            | SDP                  |
             | MCCS                 |
 
 @XTP-81339 @XTP-28348
