@@ -142,7 +142,7 @@ def subarray_node_invoke_abort(central_node_low: CentralNodeWrapperLow):
     (
         _,
         pytest.unique_id_abort,
-    ) = central_node_low.subarray_node.execute_transition("Abort")
+    ) = central_node_low.subarray_node.Abort()
 
 
 @then("subarray Node is transitioned to observation state ABORTED")
