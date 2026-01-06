@@ -19,7 +19,7 @@ from ska_tango_testing.integration import TangoEventTracer
 from tests.conftest import SubarrayTestContextData, _setup_event_subscriptions
 from tests.resources.test_harness.constant import TIMEOUT_DEFECT
 
-TIMEOUT = 60
+TIMEOUT = 70
 
 
 @pytest.mark.SKA_low
@@ -34,9 +34,21 @@ def test_tmc_command_timeout():
 
 
 exception_messages = {
-    "CSP": ('[3, "Timeout has occurred, command failed"]'),
-    "SDP": ('[3, "Timeout has occurred, command failed"]'),
-    "MCCS": ('[3, "Timeout has occurred, command failed"]'),
+    "CSP": (
+        '[3, "Exception occurred on the following devices: '
+        + "low-tmc/subarray-leaf-node-csp/01: Timeout has occurred, "
+        + 'command failed"]'
+    ),
+    "SDP": (
+        '[3, "Exception occurred on the following devices: '
+        + "low-tmc/subarray-leaf-node-sdp/01: Timeout has occurred, "
+        + 'command failed"]'
+    ),
+    "MCCS": (
+        '[3, "Exception occurred on the following devices: '
+        + "low-tmc/subarray-leaf-node-mccs/01: Timeout has occurred, "
+        + 'command failed"]'
+    ),
 }
 
 
@@ -206,9 +218,11 @@ def error_reporting(
             tmc.csp_subarray_leaf_node, "cspSubarrayObsState", ObsState.ABORTED
         )
     elif defective_subsystem == "SDP":
-        sdp.sdp_subarray.ResetDelayInfo()
-        sdp.sdp_subarray.Abort()
-        assert_that(event_tracer).within_timeout(60).has_change_event_occurred(
+        # Assert the SDP Subarray ObsState ABORTED event of the previously
+        # timed out ABORT command
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
             sdp.sdp_subarray, "obsState", ObsState.ABORTED
         )
         assert_that(event_tracer).within_timeout(
@@ -216,6 +230,7 @@ def error_reporting(
         ).has_change_event_occurred(
             tmc.sdp_subarray_leaf_node, "sdpSubarrayObsState", ObsState.ABORTED
         )
+        sdp.sdp_subarray.ResetDelayInfo()
     elif defective_subsystem == "MCCS":
         mccs.mccs_subarray.SetDefective(json.dumps({"enabled": False}))
         mccs.mccs_subarray.Abort()
