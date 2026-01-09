@@ -82,7 +82,7 @@ def set_subsystem_defects(
         )
 
 
-FIELD_CONFIGS = {
+FIELD_CONFIGS = FIELD_CONFIGS = {
     "Centaurus A": {
         "target_name": "Centaurus A",
         "reference_frame": "icrs",
@@ -98,15 +98,21 @@ FIELD_CONFIGS = {
         "reference_frame": "galactic",
         "attrs": {"c1": 111.734745, "c2": -02.129570},
     },
-    "Sun": {"target_name": "Sun", "reference_frame": "special"},
+    "Sun": {"target_name": "Sun", "reference_frame": "special", "attrs": {}},
+    "Venus": {
+        "target_name": "Venus",
+        "reference_frame": "special",
+        "attrs": {},
+    },
+    "Mars": {"target_name": "Mars", "reference_frame": "special", "attrs": {}},
     "ISS (ZARYA)": {
         "target_name": "ISS (ZARYA)",
         "reference_frame": "tle",
         "attrs": {
             "line1": "1 25544U 98067A   25180.54321875  "
             ".00001234  00000-0  12345-4 0  9999",
-            "line2": "2 25544  51.6456 "
-            "123.4567 0001234 123.4567 236.5432 15.12345678 12345",
+            "line2": "2 25544  51.6456 123.4567 0001234 "
+            "123.4567 236.5432 15.12345678 12345",
         },
     },
 }
