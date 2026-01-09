@@ -1,5 +1,5 @@
 {
-    "interface": "https://schema.skao.int/ska-low-tmc-configure/5.0",
+    "interface": "https://schema.skao.int/ska-low-tmc-configure/5.1",
     "transaction_id": "txn-....-00001",
     "mccs": {
     "subarray_beams": [
@@ -26,9 +26,9 @@
             "weighting_key_ref": "aperture2"
           }
         ],
-        "sky_coordinates": {
-            "reference_frame": "special",
-            "target_name": "Sun"
+        "field": {
+          "target_name": "Sun",
+          "reference_frame": "special"
         }
       }
     ]
