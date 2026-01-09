@@ -6,11 +6,11 @@ Scenario Outline: Configure using ADR-63 field key with different reference fram
     And the MCCS Subarray commandCallInfo contains the correct field configuration for target <target_name>
 
     Examples:
-      | reference_frame | target_name       | description                          |
-      | icrs            | Centaurus A       | Sidereal source (RA/Dec)             |
-      | altaz           | Zenith Drift      | Topocentric drift scan               |
-      | galactic        | Galactic Centre   | Galactic coordinates                 |
-      | special         | Sun               | Solar system body (non-sidereal)     |
-      | special         | Venus             | Solar system body (non-sidereal)     |
-      | special         | Mars              | Solar system body (non-sidereal)     |
-      | tle             | ISS (ZARYA)       | Satellite tracking via TLE           |
+      | reference_frame | target_name       |
+      | icrs            | Centaurus A       |
+      | altaz           | Zenith Drift      |
+      | galactic        | Galactic Centre   |
+      | special         | Sun               |
+      | special         | Venus             |
+      | special         | Mars              |
+      | tle             | ISS (ZARYA)       |
