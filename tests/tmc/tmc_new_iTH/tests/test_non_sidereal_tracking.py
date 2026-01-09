@@ -28,7 +28,7 @@ from tests.tmc.tmc_new_iTH.utils import (
 @pytest.mark.test1
 @scenario(
     "../tmc/tmc_new_iTH/features/non_sidereal_tracking.feature",
-    'Configure using ADR-63 "field" key with different '
+    "Configure using ADR-63 field key with different "
     "reference frames in TMC Low",
 )
 def test_non_sidereal_tracking():
@@ -58,7 +58,7 @@ def verify_tmc_subarray_observation_state_idle(
 
 @when(
     parsers.parse(
-        'I Configure the subarray using the MCCS "field" '
+        "I Configure the subarray using the MCCS field "
         "key with reference_frame {reference_frame} "
         "and target {target_name}"
     )
@@ -149,7 +149,7 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
 @then(
     parsers.parse(
         "the MCCS Subarray commandCallInfo contains the correct "
-        '"field" configuration '
+        "field configuration "
         "for target {target_name}"
     )
 )
