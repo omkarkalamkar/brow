@@ -82,7 +82,7 @@ def set_subsystem_defects(
         )
 
 
-FIELD_CONFIGS = FIELD_CONFIGS = {
+FIELD_CONFIGS = {
     "Centaurus A": {
         "target_name": "Centaurus A",
         "reference_frame": "icrs",
@@ -102,9 +102,8 @@ FIELD_CONFIGS = FIELD_CONFIGS = {
     "Venus": {
         "target_name": "Venus",
         "reference_frame": "special",
-        "attrs": {},
     },
-    "Mars": {"target_name": "Mars", "reference_frame": "special", "attrs": {}},
+    "Mars": {"target_name": "Mars", "reference_frame": "special"},
     "ISS (ZARYA)": {
         "target_name": "ISS (ZARYA)",
         "reference_frame": "tle",
