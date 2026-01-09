@@ -159,8 +159,8 @@ deviceServers:
     enabled: true
     file: "data/subarraynode.yaml"
     CspAssignResourcesInterfaceURL: "https://schema.skao.int/ska-low-csp-assignresources/3.0"
-    CspScanInterfaceURL: "https://schema.skao.int/ska-low-csp-scan/2.0"
-    SdpScanInterfaceURL: "https://schema.skao.int/ska-sdp-scan/0.4"
+    CspScanInterfaceURL: "https://schema.skao.int/ska-low-csp-scan/3.2"
+    SdpScanInterfaceURL: "https://schema.skao.int/ska-sdp-scan/1.1"
     MccsConfigureInterfaceURL: "https://schema.skao.int/ska-low-mccs-configure/1.0"
     MccsScanInterfaceURL: "https://schema.skao.int/ska-low-mccs-scan/3.0"
     JonesURI: "tango://jones.skao.int/low/stn-beam/1"
