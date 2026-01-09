@@ -25,11 +25,11 @@ from tests.tmc.tmc_new_iTH.utils import (
 )
 
 
-@pytest.mark.SKA_low
+@pytest.mark.test1
 @scenario(
     "../tmc/tmc_new_iTH/features/non_sidereal_tracking.feature",
-    'Configure using ADR-63 "field" key with different reference '
-    "frames in TMC Low",
+    'Configure using ADR-63 "field" key with different '
+    "reference frames in TMC Low",
 )
 def test_non_sidereal_tracking():
     """BDD test scenario for verifying ADR-63 field key support in TMC Low."""
