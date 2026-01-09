@@ -25,7 +25,7 @@ from tests.tmc.tmc_new_iTH.utils import (
 )
 
 
-@pytest.mark.test1
+@pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/non_sidereal_tracking.feature",
     "Configure using ADR-63 field key with different "
