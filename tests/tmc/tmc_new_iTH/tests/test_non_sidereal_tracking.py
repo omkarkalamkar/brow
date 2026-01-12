@@ -12,6 +12,7 @@ from ska_integration_test_harness.facades.tmc_facade import TMCFacade
 from ska_integration_test_harness.inputs.test_harness_inputs import (
     TestHarnessInputs,
 )
+from ska_tango_base.commands import ResultCode
 from ska_tango_testing.integration import TangoEventTracer
 
 from tests.resources.test_harness.utils.my_file_json_input import (
@@ -82,23 +83,27 @@ def invoke_configure_command(
     # Parse its data into a dict
     json_input_data = json.loads(json_input.as_str())
 
-    # Update the target_name
     if (
         "mccs" in json_input_data
         and "subarray_beams" in json_input_data["mccs"]
     ):
         for beam in json_input_data["mccs"]["subarray_beams"]:
             if "field" in beam and isinstance(beam["field"], dict):
-                # Get the full field configuration from shared utils
                 field_config = FIELD_CONFIGS[target_name]
                 beam["field"] = field_config
 
-    # Create a modified input that uses updated data
     updated_json_input = json.dumps(json_input_data)
+
     event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
 
-    tmc.subarray_node.Configure(
-        updated_json_input,
+    _, pytest.unique_id = tmc.subarray_node.Configure(updated_json_input)
+
+    assert_that(event_tracer).described_as(
+        "TMC Subarray Node ObsState should move to CONFIGURING"
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "obsState",
+        ObsState.CONFIGURING,
     )
 
 
@@ -113,19 +118,20 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
     """Verifies the observation states of SDP,CSP and MCCS
     after command Configure.
     """
+    expected_lrcr = (
+        pytest.unique_id[0],
+        json.dumps((int(ResultCode.OK), "Command Completed")),
+    )
+
     assert_that(event_tracer).described_as(
         "TMC Subarray Node longRunningCommandResult should indicate "
         "successful completion of Configure command"
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node,
         "longRunningCommandResult",
-        lambda values: any(
-            isinstance(v, (tuple, list))
-            and len(v) == 2
-            and v[1] == '[0, "Command Completed"]'
-            for v in values
-        ),
+        expected_lrcr,
     )
+
     assert_that(event_tracer).described_as(
         f"Both TMC Subarray Node device ({tmc.subarray_node})"
         f", CSP Subarray device ({csp.csp_subarray}) "
