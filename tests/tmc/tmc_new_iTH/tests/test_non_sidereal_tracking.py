@@ -25,7 +25,7 @@ from tests.tmc.tmc_new_iTH.utils import (
 )
 
 
-@pytest.mark.SKA_test1
+@pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/non_sidereal_tracking_adr63.feature",
     "Configure using ADR-63 field key with different "
@@ -120,11 +120,11 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
         tmc.subarray_node,
         "longRunningCommandResult",
         lambda values: any(
-            isinstance(v, (tuple, list))
-            and len(v) == 2
-            and v[1] == '[0, "Command Completed"]'
+            isinstance(v, (tuple, list)) and
+            len(v) == 2 and
+            v[1] == '[0, "Command Completed"]'
             for v in values
-        ),
+        )
     )
     assert_that(event_tracer).described_as(
         f"Both TMC Subarray Node device ({tmc.subarray_node})"
@@ -149,7 +149,6 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
         "obsState",
         ObsState.READY,
     )
-
 
 @then(
     parsers.parse(
