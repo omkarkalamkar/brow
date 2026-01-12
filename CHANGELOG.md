@@ -9,7 +9,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 *************
 Fixed
 -----
-* Improved Abort Retry mechanism to resolve SKB-1158
+* Improved Abort Retry mechanism to resolve SKB-1158.
 
 [2.8.0-rc.2]
 *************
