@@ -84,7 +84,7 @@ def invoke_configure_command(
     )
 
     # Load the base JSON from file
-    json_input = MyFileJSONInput("subarray", "configure_low")
+    json_input = MyFileJSONInput("subarray", "non_sidereal_tracking_adr63")
 
     # Parse its data into a dict
     json_input_data = json.loads(json_input.as_str())

@@ -1,431 +1,439 @@
 {
-    "interface": "https://schema.skao.int/ska-low-tmc-configure/5.1",
-    "transaction_id": "txn-....-00001",
-    "mccs": {
-    "subarray_beams": [
-      {
-        "subarray_beam_id": 1,
-        "update_rate": 0.0,
-        "logical_bands": [
-          {
-            "start_channel": 80,
-            "number_of_channels": 16
-          },
-          {
-            "start_channel": 384,
-            "number_of_channels": 16
-          }
-        ],
-        "apertures": [
-          {
-            "aperture_id": "AP001.01",
-            "weighting_key_ref": "aperture2"
-          },
-          {
-            "aperture_id": "AP002.01",
-            "weighting_key_ref": "aperture2"
-          }
-        ],
-        "field": {
-          "target_name": "Sun",
-          "reference_frame": "special"
-        }
-      },
-      {
-        "subarray_beam_id": 2,
-        "update_rate": 0.0,
-        "logical_bands": [
-          {
-            "start_channel": 96,
-            "number_of_channels": 16
-          },
-          {
-            "start_channel": 400,
-            "number_of_channels": 16
-          }
-        ],
-        "apertures": [
-          {
-            "aperture_id": "AP003.01",
-            "weighting_key_ref": "aperture2"
-          },
-          {
-            "aperture_id": "AP004.01",
-            "weighting_key_ref": "aperture2"
-          }
-        ],
-        "field": {
-          "target_name": "Sun",
-          "reference_frame": "special"
-        }
-      },
-      {
-        "subarray_beam_id": 3,
-        "update_rate": 0.0,
-        "logical_bands": [
-          {
-            "start_channel": 112,
-            "number_of_channels": 16
-          },
-          {
-            "start_channel": 416,
-            "number_of_channels": 16
-          }
-        ],
-        "apertures": [
-          {
-            "aperture_id": "AP005.01",
-            "weighting_key_ref": "aperture2"
-          },
-          {
-            "aperture_id": "AP006.01",
-            "weighting_key_ref": "aperture2"
-          }
-        ],
-        "field": {
-          "target_name": "Sun",
-          "reference_frame": "special"
-        }
-      },
-      {
-        "subarray_beam_id": 4,
-        "update_rate": 0.0,
-        "logical_bands": [
-          {
-            "start_channel": 128,
-            "number_of_channels": 16
-          },
-          {
-            "start_channel": 432,
-            "number_of_channels": 16
-          }
-        ],
-        "apertures": [
-          {
-            "aperture_id": "AP007.01",
-            "weighting_key_ref": "aperture2"
-          },
-          {
-            "aperture_id": "AP008.01",
-            "weighting_key_ref": "aperture2"
-          }
-        ],
-        "field": {
-          "target_name": "Sun",
-          "reference_frame": "special"
-        }
-      },
-      {
-        "subarray_beam_id": 5,
-        "update_rate": 0.0,
-        "logical_bands": [
-          {
-            "start_channel": 80,
-            "number_of_channels": 16
-          },
-          {
-            "start_channel": 384,
-            "number_of_channels": 16
-          }
-        ],
-        "apertures": [
-          {
-            "aperture_id": "AP009.01",
-            "weighting_key_ref": "aperture2"
-          },
-          {
-            "aperture_id": "AP010.01",
-            "weighting_key_ref": "aperture2"
-          }
-        ],
-        "field": {
-          "target_name": "Sun",
-          "reference_frame": "special"
-        }
-      },
-      {
-        "subarray_beam_id": 6,
-        "update_rate": 0.0,
-        "logical_bands": [
-          {
-            "start_channel": 96,
-            "number_of_channels": 16
-          },
-          {
-            "start_channel": 400,
-            "number_of_channels": 16
-          }
-        ],
-        "apertures": [
-          {
-            "aperture_id": "AP011.01",
-            "weighting_key_ref": "aperture2"
-          },
-          {
-            "aperture_id": "AP012.01",
-            "weighting_key_ref": "aperture2"
-          }
-        ],
-        "field": {
-          "target_name": "Sun",
-          "reference_frame": "special"
-        }
-      },
-      {
-        "subarray_beam_id": 7,
-        "update_rate": 0.0,
-        "logical_bands": [
-          {
-            "start_channel": 112,
-            "number_of_channels": 16
-          },
-          {
-            "start_channel": 416,
-            "number_of_channels": 16
-          }
-        ],
-        "apertures": [
-          {
-            "aperture_id": "AP013.01",
-            "weighting_key_ref": "aperture2"
-          },
-          {
-            "aperture_id": "AP014.01",
-            "weighting_key_ref": "aperture2"
-          }
-        ],
-        "field": {
-          "target_name": "Sun",
-          "reference_frame": "special"
-        }
-      },
-      {
-        "subarray_beam_id": 8,
-        "update_rate": 0.0,
-        "logical_bands": [
-          {
-            "start_channel": 128,
-            "number_of_channels": 16
-          },
-          {
-            "start_channel": 432,
-            "number_of_channels": 16
-          }
-        ],
-        "apertures": [
-          {
-            "aperture_id": "AP015.01",
-            "weighting_key_ref": "aperture2"
-          },
-          {
-            "aperture_id": "AP016.01",
-            "weighting_key_ref": "aperture2"
-          }
-        ],
-        "field": {
-          "target_name": "Sun",
-          "reference_frame": "special"
-        }
-      }
-    ]
-  },
-
-    "sdp": {
-        "interface": "https://schema.skao.int/ska-sdp-configure/0.4",
-        "scan_type": "target:a"
-    },
-    "csp": {
-        "interface": "https://schema.skao.int/ska-low-csp-configure/5.0",
-        "common": {
-            "config_id": "sbi-mvp01-20200325-00001-science_A",
-            "eb_id": "eb-test-20220916-00000"
-        },
-        "lowcbf": {
-            "stations": {
-                "stns": [
-                    [1, 1],
-                    [2, 1],
-                    [3, 1],
-                    [4, 1],
-                    [5, 1],
-                    [6, 1]
-                ],
-                "stn_beams": [{
-                    "beam_id": 1,
-                    "freq_ids": [400]
-                },
-                {
-                    "beam_id": 2,
-                    "freq_ids": [400]
-                },
-                {
-                    "beam_id": 3,
-                    "freq_ids": [400]
-                },
-                {
-                    "beam_id": 4,
-                    "freq_ids": [400]
-                }
-              ]
-            },
-            "vis": {
-                "fsp": {
-                    "firmware": "vis",
-                    "fsp_ids": [1]
-                },
-                "stn_beams": [{
-                    "stn_beam_id": 1,
-                    "integration_ms": 849
-                }]
-            },
-            "timing_beams": {
-                "fsp": {
-                    "firmware": "pst",
-                    "fsp_ids": [2]
-                },
-                "beams": [{
-                    "pst_beam_id": 1,
-                    "field": {
-                        "target_name": "PSR J0024-7204R",
-                        "reference_frame": "icrs",
-                        "attrs": {
-                            "c1": 6.023625,
-                            "c2": -72.08128333,
-                            "pm_c1": 4.8,
-                            "pm_c2": -3.3
-                        }
-                    },
-                    "stn_beam_id": 1,
-                    "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
-                }, {
-                    "pst_beam_id": 2,
-                    "field": {
-                        "target_name": "PSR J0024-7204R",
-                        "reference_frame": "icrs",
-                        "attrs": {
-                            "c1": 6.023625,
-                            "c2": -72.08128333,
-                            "pm_c1": 4.8,
-                            "pm_c2": -3.3
-                        }
-                    },
-                    "stn_beam_id": 2,
-                    "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
-                }]
-            }
-        },
-        "pst": {
-            "beams": [{
-                "beam_id": 1,
-                "scan": {
-                    "centre_frequency": 200000000.0,
-                    "total_bandwidth": 1562500.0,
-                    "pst_processing_mode": "VOLTAGE_RECORDER",
-                    "observer_id": "jdoe",
-                    "project_id": "project1",
-                    "target": {
-                        "target_name": "J1921+2153",
-                        "reference_frame": "icrs",
-                        "attrs": {
-                            "c1": 6.023625,
-                            "c2": -72.08128333,
-                            "epoch": 2000.0
-                        }
-                    },
-                    "receiver_id": "receiver3",
-                    "max_scan_length": 20000.0,
-                    "subint_duration": 30.0,
-                    "receptors": ["receptor1", "receptor2"],
-                    "receptor_weights": [0.4, 0.6],
-                    "rfi_frequency_masks": []
-                    
-                }
-            }, 
-            {
-                "beam_id": 2,
-                "scan": {
-                    "centre_frequency": 200000000.0,
-                    "total_bandwidth": 1562500.0,
-                    "pst_processing_mode": "VOLTAGE_RECORDER",
-                    "observer_id": "jdoe",
-                    "project_id": "project1",
-                    "target": {
-                        "target_name": "J1921+2153",
-                        "reference_frame": "icrs",
-                        "attrs": {
-                            "c1": 6.023625,
-                            "c2": -72.08128333,
-                            "epoch": 2000.0
-                        }
-                    },
-                    "receiver_id": "receiver3",
-                    "max_scan_length": 20000.0,
-                    "subint_duration": 30.0,
-                    "receptors": ["receptor1", "receptor2"],
-                    "receptor_weights": [0.4, 0.6],
-                    "rfi_frequency_masks": []
-                    
-                }
-            },
+  "interface": "https://schema.skao.int/ska-low-tmc-configure/5.0",
+  "transaction_id": "txn-....-00001",
+  "mccs": {
+  "subarray_beams": [
+    {
+      "subarray_beam_id": 1,
+      "update_rate": 0.0,
+      "logical_bands": [
         {
-                "beam_id": 3,
-                "scan": {
-                    "centre_frequency": 200000000.0,
-                    "total_bandwidth": 1562500.0,
-                    "pst_processing_mode": "VOLTAGE_RECORDER",
-                    "observer_id": "jdoe",
-                    "project_id": "project1",
-                    "target": {
-                        "target_name": "J1921+2153",
-                        "reference_frame": "icrs",
-                        "attrs": {
-                            "c1": 6.023625,
-                            "c2": -72.08128333,
-                            "epoch": 2000.0
-                        }
-                    },
-                    "receiver_id": "receiver3",
-                    "max_scan_length": 20000.0,
-                    "subint_duration": 30.0,
-                    "receptors": ["receptor1", "receptor2"],
-                    "receptor_weights": [0.4, 0.6]
-                    
-                    
-                }
-            },
-
-            {
-                "beam_id": 4,
-                "scan": {
-                    "delay_centre": [-254.433249, 5083.694774, -21062.439952],
-                    "centre_frequency": 200000000.0,
-                    "total_bandwidth": 1562500.0,
-                    "pst_processing_mode": "VOLTAGE_RECORDER",
-                    "observer_id": "jdoe",
-                    "project_id": "project1",
-                    "target": {
-                        "target_name": "J1921+2153",
-                        "reference_frame": "icrs",
-                        "attrs": {
-                            "c1": 6.023625,
-                            "c2": -72.08128333,
-                            "epoch": 2000.0
-                        }
-                    },
-                    "receiver_id": "receiver3",
-                    "max_scan_length": 20000.0,
-                    "subint_duration": 30.0,
-                    "receptors": ["receptor1", "receptor2"],
-                    "receptor_weights": [0.4, 0.6]
-                    
-                    
-                }
-            }
-        
-        ]
+          "start_channel": 80,
+          "number_of_channels": 16
+        },
+        {
+          "start_channel": 384,
+          "number_of_channels": 16
         }
+      ],
+      "apertures": [
+        {
+          "aperture_id": "AP001.01",
+          "weighting_key_ref": "aperture2"
+        },
+        {
+          "aperture_id": "AP002.01",
+          "weighting_key_ref": "aperture2"
+        }
+      ],
+      "sky_coordinates": {
+        "reference_frame": "ICRS",
+        "c1": 180.0,
+        "c2": 45.0
+      }
     },
-    "tmc": {
-        "scan_duration": 10.0
+    {
+      "subarray_beam_id": 2,
+      "update_rate": 0.0,
+      "logical_bands": [
+        {
+          "start_channel": 96,
+          "number_of_channels": 16
+        },
+        {
+          "start_channel": 400,
+          "number_of_channels": 16
+        }
+      ],
+      "apertures": [
+        {
+          "aperture_id": "AP003.01",
+          "weighting_key_ref": "aperture2"
+        },
+        {
+          "aperture_id": "AP004.01",
+          "weighting_key_ref": "aperture2"
+        }
+      ],
+      "sky_coordinates": {
+        "reference_frame": "ICRS",
+        "c1": 181.0,
+        "c2": 46.0
+      }
+    },
+    {
+      "subarray_beam_id": 3,
+      "update_rate": 0.0,
+      "logical_bands": [
+        {
+          "start_channel": 112,
+          "number_of_channels": 16
+        },
+        {
+          "start_channel": 416,
+          "number_of_channels": 16
+        }
+      ],
+      "apertures": [
+        {
+          "aperture_id": "AP005.01",
+          "weighting_key_ref": "aperture2"
+        },
+        {
+          "aperture_id": "AP006.01",
+          "weighting_key_ref": "aperture2"
+        }
+      ],
+      "sky_coordinates": {
+        "reference_frame": "ICRS",
+        "c1": 182.0,
+        "c2": 47.0
+      }
+    },
+    {
+      "subarray_beam_id": 4,
+      "update_rate": 0.0,
+      "logical_bands": [
+        {
+          "start_channel": 128,
+          "number_of_channels": 16
+        },
+        {
+          "start_channel": 432,
+          "number_of_channels": 16
+        }
+      ],
+      "apertures": [
+        {
+          "aperture_id": "AP007.01",
+          "weighting_key_ref": "aperture2"
+        },
+        {
+          "aperture_id": "AP008.01",
+          "weighting_key_ref": "aperture2"
+        }
+      ],
+      "sky_coordinates": {
+        "reference_frame": "ICRS",
+        "c1": 183.0,
+        "c2": 48.0
+      }
+    },
+    {
+      "subarray_beam_id": 5,
+      "update_rate": 0.0,
+      "logical_bands": [
+        {
+          "start_channel": 80,
+          "number_of_channels": 16
+        },
+        {
+          "start_channel": 384,
+          "number_of_channels": 16
+        }
+      ],
+      "apertures": [
+        {
+          "aperture_id": "AP009.01",
+          "weighting_key_ref": "aperture2"
+        },
+        {
+          "aperture_id": "AP010.01",
+          "weighting_key_ref": "aperture2"
+        }
+      ],
+      "sky_coordinates": {
+        "reference_frame": "ICRS",
+        "c1": 180.0,
+        "c2": 45.0
+      }
+    },
+    {
+      "subarray_beam_id": 6,
+      "update_rate": 0.0,
+      "logical_bands": [
+        {
+          "start_channel": 96,
+          "number_of_channels": 16
+        },
+        {
+          "start_channel": 400,
+          "number_of_channels": 16
+        }
+      ],
+      "apertures": [
+        {
+          "aperture_id": "AP011.01",
+          "weighting_key_ref": "aperture2"
+        },
+        {
+          "aperture_id": "AP012.01",
+          "weighting_key_ref": "aperture2"
+        }
+      ],
+      "sky_coordinates": {
+        "reference_frame": "ICRS",
+        "c1": 181.0,
+        "c2": 46.0
+      }
+    },
+    {
+      "subarray_beam_id": 7,
+      "update_rate": 0.0,
+      "logical_bands": [
+        {
+          "start_channel": 112,
+          "number_of_channels": 16
+        },
+        {
+          "start_channel": 416,
+          "number_of_channels": 16
+        }
+      ],
+      "apertures": [
+        {
+          "aperture_id": "AP013.01",
+          "weighting_key_ref": "aperture2"
+        },
+        {
+          "aperture_id": "AP014.01",
+          "weighting_key_ref": "aperture2"
+        }
+      ],
+      "sky_coordinates": {
+        "reference_frame": "ICRS",
+        "c1": 182.0,
+        "c2": 47.0
+      }
+    },
+    {
+      "subarray_beam_id": 8,
+      "update_rate": 0.0,
+      "logical_bands": [
+        {
+          "start_channel": 128,
+          "number_of_channels": 16
+        },
+        {
+          "start_channel": 432,
+          "number_of_channels": 16
+        }
+      ],
+      "apertures": [
+        {
+          "aperture_id": "AP015.01",
+          "weighting_key_ref": "aperture2"
+        },
+        {
+          "aperture_id": "AP016.01",
+          "weighting_key_ref": "aperture2"
+        }
+      ],
+      "sky_coordinates": {
+        "reference_frame": "ICRS",
+        "c1": 183.0,
+        "c2": 48.0
+      }
     }
+  ]
+},
+
+  "sdp": {
+      "interface": "https://schema.skao.int/ska-sdp-configure/0.4",
+      "scan_type": "target:a"
+  },
+  "csp": {
+      "interface": "https://schema.skao.int/ska-low-csp-configure/5.0",
+      "common": {
+          "config_id": "sbi-mvp01-20200325-00001-science_A",
+          "eb_id": "eb-test-20220916-00000"
+      },
+      "lowcbf": {
+          "stations": {
+              "stns": [
+                  [1, 1],
+                  [2, 1],
+                  [3, 1],
+                  [4, 1],
+                  [5, 1],
+                  [6, 1]
+              ],
+              "stn_beams": [{
+                  "beam_id": 1,
+                  "freq_ids": [400]
+              },
+              {
+                  "beam_id": 2,
+                  "freq_ids": [400]
+              },
+              {
+                  "beam_id": 3,
+                  "freq_ids": [400]
+              },
+              {
+                  "beam_id": 4,
+                  "freq_ids": [400]
+              }
+            ]
+          },
+          "vis": {
+              "fsp": {
+                  "firmware": "vis",
+                  "fsp_ids": [1]
+              },
+              "stn_beams": [{
+                  "stn_beam_id": 1,
+                  "integration_ms": 849
+              }]
+          },
+          "timing_beams": {
+              "fsp": {
+                  "firmware": "pst",
+                  "fsp_ids": [2]
+              },
+              "beams": [{
+                  "pst_beam_id": 1,
+                  "field": {
+                      "target_name": "PSR J0024-7204R",
+                      "reference_frame": "icrs",
+                      "attrs": {
+                          "c1": 6.023625,
+                          "c2": -72.08128333,
+                          "pm_c1": 4.8,
+                          "pm_c2": -3.3
+                      }
+                  },
+                  "stn_beam_id": 1,
+                  "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
+              }, {
+                  "pst_beam_id": 2,
+                  "field": {
+                      "target_name": "PSR J0024-7204R",
+                      "reference_frame": "icrs",
+                      "attrs": {
+                          "c1": 6.023625,
+                          "c2": -72.08128333,
+                          "pm_c1": 4.8,
+                          "pm_c2": -3.3
+                      }
+                  },
+                  "stn_beam_id": 2,
+                  "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
+              }]
+          }
+      },
+      "pst": {
+          "beams": [{
+              "beam_id": 1,
+              "scan": {
+                  "centre_frequency": 200000000.0,
+                  "total_bandwidth": 1562500.0,
+                  "pst_processing_mode": "VOLTAGE_RECORDER",
+                  "observer_id": "jdoe",
+                  "project_id": "project1",
+                  "target": {
+                      "target_name": "J1921+2153",
+                      "reference_frame": "icrs",
+                      "attrs": {
+                          "c1": 6.023625,
+                          "c2": -72.08128333,
+                          "epoch": 2000.0
+                      }
+                  },
+                  "receiver_id": "receiver3",
+                  "max_scan_length": 20000.0,
+                  "subint_duration": 30.0,
+                  "receptors": ["receptor1", "receptor2"],
+                  "receptor_weights": [0.4, 0.6],
+                  "rfi_frequency_masks": []
+                  
+              }
+          }, 
+          {
+              "beam_id": 2,
+              "scan": {
+                  "centre_frequency": 200000000.0,
+                  "total_bandwidth": 1562500.0,
+                  "pst_processing_mode": "VOLTAGE_RECORDER",
+                  "observer_id": "jdoe",
+                  "project_id": "project1",
+                  "target": {
+                      "target_name": "J1921+2153",
+                      "reference_frame": "icrs",
+                      "attrs": {
+                          "c1": 6.023625,
+                          "c2": -72.08128333,
+                          "epoch": 2000.0
+                      }
+                  },
+                  "receiver_id": "receiver3",
+                  "max_scan_length": 20000.0,
+                  "subint_duration": 30.0,
+                  "receptors": ["receptor1", "receptor2"],
+                  "receptor_weights": [0.4, 0.6],
+                  "rfi_frequency_masks": []
+                  
+              }
+          },
+      {
+              "beam_id": 3,
+              "scan": {
+                  "centre_frequency": 200000000.0,
+                  "total_bandwidth": 1562500.0,
+                  "pst_processing_mode": "VOLTAGE_RECORDER",
+                  "observer_id": "jdoe",
+                  "project_id": "project1",
+                  "target": {
+                      "target_name": "J1921+2153",
+                      "reference_frame": "icrs",
+                      "attrs": {
+                          "c1": 6.023625,
+                          "c2": -72.08128333,
+                          "epoch": 2000.0
+                      }
+                  },
+                  "receiver_id": "receiver3",
+                  "max_scan_length": 20000.0,
+                  "subint_duration": 30.0,
+                  "receptors": ["receptor1", "receptor2"],
+                  "receptor_weights": [0.4, 0.6]
+                  
+                  
+              }
+          },
+
+          {
+              "beam_id": 4,
+              "scan": {
+                  "delay_centre": [-254.433249, 5083.694774, -21062.439952],
+                  "centre_frequency": 200000000.0,
+                  "total_bandwidth": 1562500.0,
+                  "pst_processing_mode": "VOLTAGE_RECORDER",
+                  "observer_id": "jdoe",
+                  "project_id": "project1",
+                  "target": {
+                      "target_name": "J1921+2153",
+                      "reference_frame": "icrs",
+                      "attrs": {
+                          "c1": 6.023625,
+                          "c2": -72.08128333,
+                          "epoch": 2000.0
+                      }
+                  },
+                  "receiver_id": "receiver3",
+                  "max_scan_length": 20000.0,
+                  "subint_duration": 30.0,
+                  "receptors": ["receptor1", "receptor2"],
+                  "receptor_weights": [0.4, 0.6]
+                  
+                  
+              }
+          }
+      
+      ]
+      }
+  },
+  "tmc": {
+      "scan_duration": 10.0
+  }
 }
