@@ -95,18 +95,10 @@ def invoke_configure_command(
 
     # Create a modified input that uses updated data
     updated_json_input = json.dumps(json_input_data)
+    event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
 
     tmc.subarray_node.Configure(
         updated_json_input,
-    )
-    assert_that(event_tracer).described_as(
-        "TMC Subarray Leaf Node"
-        "ObsState attribute value should move "
-        " to CONFIGURING."
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        tmc.subarray_node,
-        "obsState",
-        ObsState.CONFIGURING,
     )
 
 
@@ -121,6 +113,17 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
     """Verifies the observation states of SDP,CSP and MCCS
     after command Configure.
     """
+    assert_that(event_tracer).described_as(
+        "TMC Subarray Node longRunningCommandResult should indicate "
+        "successful completion of Configure command"
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "longRunningCommandResult",
+        lambda values: any(
+            '[0, "Command Completed"]' in str(v) for v in values
+        ),
+    )
+
     assert_that(event_tracer).described_as(
         f"Both TMC Subarray Node device ({tmc.subarray_node})"
         f", CSP Subarray device ({csp.csp_subarray}) "

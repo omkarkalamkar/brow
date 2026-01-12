@@ -98,7 +98,7 @@ FIELD_CONFIGS = {
         "reference_frame": "galactic",
         "attrs": {"c1": 111.734745, "c2": -02.129570},
     },
-    "Sun": {"target_name": "Sun", "reference_frame": "special", "attrs": {}},
+    "Sun": {"target_name": "Sun", "reference_frame": "special"},
     "Venus": {
         "target_name": "Venus",
         "reference_frame": "special",
