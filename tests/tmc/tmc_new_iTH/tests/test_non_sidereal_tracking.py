@@ -1,5 +1,6 @@
 import json
 import logging
+import time
 
 import pytest
 from assertpy import assert_that
@@ -14,7 +15,12 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
 )
 from ska_tango_base.commands import ResultCode
 from ska_tango_testing.integration import TangoEventTracer
+from ska_telmodel.schema import validate as telmodel_validate
 
+from tests.resources.test_harness.constant import (
+    INITIAL_LOW_DELAY_JSON,
+    LOW_DELAYMODEL_VERSION,
+)
 from tests.resources.test_harness.utils.my_file_json_input import (
     MyFileJSONInput,
 )
@@ -26,7 +32,7 @@ from tests.tmc.tmc_new_iTH.utils import (
 )
 
 
-@pytest.mark.SKA_low
+@pytest.mark.test1
 @scenario(
     "../tmc/tmc_new_iTH/features/non_sidereal_tracking_adr63.feature",
     "Configure using ADR-63 field key with different "
@@ -155,6 +161,45 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
         "obsState",
         ObsState.READY,
     )
+
+
+@then("CSPSLN generates updated delay model for station beams")
+def verify_cspsln_delay_model_updated(
+    tmc: TMCFacade,
+):
+    """
+    Verifies that CSPSLN has generated / updated delay models on at least
+    some station beam attributes after successful Configure with ADR-63 target.
+    """
+    wait_time = time.time() + 5
+    attributes = [
+        f"delayModelStationBeam{str(i).zfill(2)}" for i in range(1, 9)
+    ]
+    generated_delay_model_json = INITIAL_LOW_DELAY_JSON
+    for attribute in attributes:
+        while time.time() < wait_time:
+            generated_delay_model = tmc.csp_subarray_leaf_node.read_attribute(
+                attribute
+            ).value
+            generated_delay_model_json = json.loads(generated_delay_model)
+            logging.info(
+                "Generated %s (poll): %s",
+                attribute,
+                generated_delay_model_json,
+            )
+            if generated_delay_model_json != INITIAL_LOW_DELAY_JSON:
+                break
+            time.sleep(1)
+
+        assert (
+            generated_delay_model_json != INITIAL_LOW_DELAY_JSON
+        ), f"{attribute} has not been updated from initial values"
+
+        telmodel_validate(
+            version=LOW_DELAYMODEL_VERSION,
+            config=generated_delay_model_json,
+            strictness=2,
+        )
 
 
 @then(

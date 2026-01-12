@@ -5,6 +5,12 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+Development
+***********
+Updated
+-------
+* Updated TMC Low configure to comply with ADR-63 
+
 [2.8.1-rc.1]
 *************
 Fixed

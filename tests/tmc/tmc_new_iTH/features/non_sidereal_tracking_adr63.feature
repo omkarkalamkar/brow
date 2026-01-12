@@ -3,6 +3,7 @@ Scenario Outline: Configure using ADR-63 field key with different reference fram
     Given a Subarray with resources assigned
     When I Configure the subarray using the MCCS field key with reference_frame <reference_frame> and target <target_name>
     Then the Subarray is configured successfully
+    And CSPSLN generates updated delay model for station beams
     And the MCCS Subarray commandCallInfo contains the correct field configuration for target <target_name>
 
     Examples:
