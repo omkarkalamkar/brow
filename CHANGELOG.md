@@ -9,7 +9,7 @@ Development
 ***********
 Updated
 -------
-* Updated TMC Low configure to comply with ADR-63 
+* TMC Low Configure schema updated to include the "field" key for ADR-63 compliance.
 
 [2.8.1-rc.1]
 *************
