@@ -1,5 +1,5 @@
 {
-    "interface": "https://schema.skao.int/ska-low-tmc-configure/5.0",
+    "interface": "https://schema.skao.int/ska-low-tmc-configure/5.1",
     "transaction_id": "txn-....-00001",
     "mccs": {
     "subarray_beams": [
@@ -26,10 +26,9 @@
             "weighting_key_ref": "aperture2"
           }
         ],
-        "sky_coordinates": {
-          "reference_frame": "ICRS",
-          "c1": 180.0,
-          "c2": 45.0
+        "field": {
+          "target_name": "Sun",
+          "reference_frame": "special"
         }
       },
       {
@@ -55,10 +54,9 @@
             "weighting_key_ref": "aperture2"
           }
         ],
-        "sky_coordinates": {
-          "reference_frame": "ICRS",
-          "c1": 181.0,
-          "c2": 46.0
+        "field": {
+          "target_name": "Sun",
+          "reference_frame": "special"
         }
       },
       {
@@ -84,10 +82,9 @@
             "weighting_key_ref": "aperture2"
           }
         ],
-        "sky_coordinates": {
-          "reference_frame": "ICRS",
-          "c1": 182.0,
-          "c2": 47.0
+        "field": {
+          "target_name": "Sun",
+          "reference_frame": "special"
         }
       },
       {
@@ -113,10 +110,9 @@
             "weighting_key_ref": "aperture2"
           }
         ],
-        "sky_coordinates": {
-          "reference_frame": "ICRS",
-          "c1": 183.0,
-          "c2": 48.0
+        "field": {
+          "target_name": "Sun",
+          "reference_frame": "special"
         }
       },
       {
@@ -142,10 +138,9 @@
             "weighting_key_ref": "aperture2"
           }
         ],
-        "sky_coordinates": {
-          "reference_frame": "ICRS",
-          "c1": 180.0,
-          "c2": 45.0
+        "field": {
+          "target_name": "Sun",
+          "reference_frame": "special"
         }
       },
       {
@@ -171,10 +166,9 @@
             "weighting_key_ref": "aperture2"
           }
         ],
-        "sky_coordinates": {
-          "reference_frame": "ICRS",
-          "c1": 181.0,
-          "c2": 46.0
+        "field": {
+          "target_name": "Sun",
+          "reference_frame": "special"
         }
       },
       {
@@ -200,10 +194,9 @@
             "weighting_key_ref": "aperture2"
           }
         ],
-        "sky_coordinates": {
-          "reference_frame": "ICRS",
-          "c1": 182.0,
-          "c2": 47.0
+        "field": {
+          "target_name": "Sun",
+          "reference_frame": "special"
         }
       },
       {
@@ -229,10 +222,9 @@
             "weighting_key_ref": "aperture2"
           }
         ],
-        "sky_coordinates": {
-          "reference_frame": "ICRS",
-          "c1": 183.0,
-          "c2": 48.0
+        "field": {
+          "target_name": "Sun",
+          "reference_frame": "special"
         }
       }
     ]
