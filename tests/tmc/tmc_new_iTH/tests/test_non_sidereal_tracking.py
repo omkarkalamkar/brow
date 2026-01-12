@@ -120,11 +120,11 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
         tmc.subarray_node,
         "longRunningCommandResult",
         lambda values: any(
-            isinstance(v, (tuple, list)) and
-            len(v) == 2 and
-            v[1] == '[0, "Command Completed"]'
+            isinstance(v, (tuple, list))
+            and len(v) == 2
+            and v[1] == '[0, "Command Completed"]'
             for v in values
-        )
+        ),
     )
     assert_that(event_tracer).described_as(
         f"Both TMC Subarray Node device ({tmc.subarray_node})"
@@ -149,6 +149,7 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
         "obsState",
         ObsState.READY,
     )
+
 
 @then(
     parsers.parse(
