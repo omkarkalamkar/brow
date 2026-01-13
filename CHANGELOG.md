@@ -5,11 +5,17 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+Development
+***********
+Updated
+-------
+* TMC Low Configure schema updated to include the "field" key for ADR-63 compliance.
+
 [2.8.1-rc.1]
 *************
 Fixed
 -----
-* Improved Abort Retry mechanism to resolve SKB-1158
+* Improved Abort Retry mechanism to resolve SKB-1158.
 
 [2.8.0-rc.2]
 *************

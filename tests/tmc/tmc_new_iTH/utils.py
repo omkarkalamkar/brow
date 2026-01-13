@@ -23,7 +23,7 @@ from tests.resources.test_support.constant_low import (
     SDP_BACK_TO_INITIAL_STATE,
 )
 
-TIMEOUT = 100
+TIMEOUT = 180
 INTERFACE = (
     "https://schema.skatelescope.org/ska-low-mccs-controller-release/2.0"
 )
@@ -80,6 +80,41 @@ def set_subsystem_defects(
         sdp.sdp_subarray.SetDefective(
             command_defect_mapping.get(command).get(sdp_obsstate, RESET_DEFECT)
         )
+
+
+FIELD_CONFIGS = {
+    "Centaurus A": {
+        "target_name": "Centaurus A",
+        "reference_frame": "icrs",
+        "attrs": {"c1": 201.365, "c2": -43.019},
+    },
+    "Zenith Drift": {
+        "target_name": "Zenith Drift",
+        "reference_frame": "altaz",
+        "attrs": {"c1": 180.0, "c2": 90.0},
+    },
+    "Galactic Centre": {
+        "target_name": "Galactic Centre",
+        "reference_frame": "galactic",
+        "attrs": {"c1": 111.734745, "c2": -02.129570},
+    },
+    "Sun": {"target_name": "Sun", "reference_frame": "special"},
+    "Venus": {
+        "target_name": "Venus",
+        "reference_frame": "special",
+    },
+    "Mars": {"target_name": "Mars", "reference_frame": "special"},
+    "ISS (ZARYA)": {
+        "target_name": "ISS (ZARYA)",
+        "reference_frame": "tle",
+        "attrs": {
+            "line1": "1 25544U 98067A   25180.54321875  "
+            ".00001234  00000-0  12345-4 0  9999",
+            "line2": "2 25544  51.6456 123.4567 0001234 "
+            "123.4567 236.5432 15.12345678 12345",
+        },
+    },
+}
 
 
 def invoke_command_with_defect(

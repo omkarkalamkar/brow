@@ -1,5 +1,6 @@
 import json
 import logging
+import time
 
 import pytest
 from assertpy import assert_that
@@ -12,22 +13,33 @@ from ska_integration_test_harness.facades.tmc_facade import TMCFacade
 from ska_integration_test_harness.inputs.test_harness_inputs import (
     TestHarnessInputs,
 )
+from ska_tango_base.commands import ResultCode
 from ska_tango_testing.integration import TangoEventTracer
+from ska_telmodel.schema import validate as telmodel_validate
 
+from tests.resources.test_harness.constant import (
+    INITIAL_LOW_DELAY_JSON,
+    LOW_DELAYMODEL_VERSION,
+)
 from tests.resources.test_harness.utils.my_file_json_input import (
     MyFileJSONInput,
 )
 from tests.tmc.tmc_new_iTH.conftest import TestContextData
-from tests.tmc.tmc_new_iTH.utils import TIMEOUT, setup_event_subscriptions
+from tests.tmc.tmc_new_iTH.utils import (
+    FIELD_CONFIGS,
+    TIMEOUT,
+    setup_event_subscriptions,
+)
 
 
 @pytest.mark.SKA_low
 @scenario(
-    "../tmc/tmc_new_iTH/features/non_sidereal_tracking.feature",
-    "Non sidereal tracking in TMC Low",
+    "../tmc/tmc_new_iTH/features/non_sidereal_tracking_adr63.feature",
+    "Configure using ADR-63 field key with different "
+    "reference frames in TMC Low",
 )
 def test_non_sidereal_tracking():
-    """BDD test scenario for verifying non sidereal tracking."""
+    """BDD test scenario for verifying ADR-63 field key support in TMC Low."""
 
 
 @given("a Subarray with resources assigned")
@@ -53,50 +65,47 @@ def verify_tmc_subarray_observation_state_idle(
 
 @when(
     parsers.parse(
-        "I Configure it for tracking a non-sidereal object "
-        "from {non_sidereal_objects}"
+        "I Configure the subarray using the MCCS field "
+        "key with reference_frame {reference_frame} "
+        "and target {target_name}"
     )
 )
 def invoke_configure_command(
     tmc: TMCFacade,
-    non_sidereal_objects: str,
+    reference_frame: str,
+    target_name: str,
     event_tracer: TangoEventTracer,
 ):
-    """Invokes configure command on the TMC Subarray."""
+    """Invokes configure command on the TMC Subarray using ADR-63 field key."""
     logging.info(
         f"Invoking Configure command on TMC Subarray "
-        f"for non-sidereal object: {non_sidereal_objects}"
+        f"with MCCS field reference_frame={reference_frame}, "
+        f"target={target_name}"
     )
 
     # Load the base JSON from file
-    json_input = MyFileJSONInput("subarray", "non_sidereal_tracking")
+    json_input = MyFileJSONInput("subarray", "non_sidereal_tracking_adr63")
 
     # Parse its data into a dict
     json_input_data = json.loads(json_input.as_str())
 
-    # Update the target_name
     if (
         "mccs" in json_input_data
         and "subarray_beams" in json_input_data["mccs"]
     ):
         for beam in json_input_data["mccs"]["subarray_beams"]:
-            if "sky_coordinates" in beam and isinstance(
-                beam["sky_coordinates"], dict
-            ):
-                beam["sky_coordinates"]["target_name"] = non_sidereal_objects
-            else:
-                beam["sky_coordinates"] = {"target_name": non_sidereal_objects}
+            if "field" in beam and isinstance(beam["field"], dict):
+                field_config = FIELD_CONFIGS[target_name]
+                beam["field"] = field_config
 
-    # Create a modified input that uses updated data
     updated_json_input = json.dumps(json_input_data)
 
-    tmc.subarray_node.Configure(
-        updated_json_input,
-    )
+    event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
+
+    _, pytest.unique_id = tmc.subarray_node.Configure(updated_json_input)
+
     assert_that(event_tracer).described_as(
-        "TMC Subarray Leaf Node"
-        "ObsState attribute value should move "
-        " to CONFIGURING."
+        "TMC Subarray Node ObsState should move to CONFIGURING"
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node,
         "obsState",
@@ -115,6 +124,20 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
     """Verifies the observation states of SDP,CSP and MCCS
     after command Configure.
     """
+    expected_lrcr = (
+        pytest.unique_id[0],
+        json.dumps((int(ResultCode.OK), "Command Completed")),
+    )
+
+    assert_that(event_tracer).described_as(
+        "TMC Subarray Node longRunningCommandResult should indicate "
+        "successful completion of Configure command"
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "longRunningCommandResult",
+        expected_lrcr,
+    )
+
     assert_that(event_tracer).described_as(
         f"Both TMC Subarray Node device ({tmc.subarray_node})"
         f", CSP Subarray device ({csp.csp_subarray}) "
@@ -140,21 +163,60 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
     )
 
 
+@then("CSPSLN generates updated delay model for station beams")
+def verify_cspsln_delay_model_updated(
+    tmc: TMCFacade,
+):
+    """
+    Verifies that CSPSLN has generated / updated delay models on at least
+    some station beam attributes after successful Configure with ADR-63 target.
+    """
+    wait_time = time.time() + 5
+    attributes = [
+        f"delayModelStationBeam{str(i).zfill(2)}" for i in range(1, 9)
+    ]
+    generated_delay_model_json = INITIAL_LOW_DELAY_JSON
+    for attribute in attributes:
+        while time.time() < wait_time:
+            generated_delay_model = tmc.csp_subarray_leaf_node.read_attribute(
+                attribute
+            ).value
+            generated_delay_model_json = json.loads(generated_delay_model)
+            logging.info(
+                "Generated %s (poll): %s",
+                attribute,
+                generated_delay_model_json,
+            )
+            if generated_delay_model_json != INITIAL_LOW_DELAY_JSON:
+                break
+            time.sleep(1)
+
+        assert (
+            generated_delay_model_json != INITIAL_LOW_DELAY_JSON
+        ), f"{attribute} has not been updated from initial values"
+
+        telmodel_validate(
+            version=LOW_DELAYMODEL_VERSION,
+            config=generated_delay_model_json,
+            strictness=2,
+        )
+
+
 @then(
     parsers.parse(
-        "the MCCS Subarray commandCallInfo json has "
-        "record of {non_sidereal_objects}"
+        "the MCCS Subarray commandCallInfo contains the correct "
+        "field configuration "
+        "for target {target_name}"
     )
 )
 def verify_mccs_command_call_info(
     tmc: TMCFacade,
     mccs: MCCSFacade,
-    non_sidereal_objects: str,
+    target_name: str,
     event_tracer: TangoEventTracer,
 ):
-    """Verifies that the MCCS commandCallInfo json has record of
-    non-sidereal objects.
-    """
+    """Verifies that the MCCS commandCallInfo contains
+    the exact expected field configuration."""
     event_tracer.subscribe_event(mccs.mccs_subarray, "CommandCallInfo")
     logging.info(
         f"MCCS Command Call Info: {mccs.mccs_subarray.commandCallInfo}"
@@ -184,10 +246,11 @@ def verify_mccs_command_call_info(
         "subarray_beams" in command_data
     ), "Missing 'subarray_beams' in commandCallInfo JSON."
 
-    for beam in command_data["subarray_beams"]:
-        sky_coords = beam.get("sky_coordinates", {})
-        assert sky_coords.get("reference_frame") == "special"
-        assert (
-            sky_coords.get("target_name").lower()
-            == non_sidereal_objects.lower()
-        )
+    received_field = command_data["subarray_beams"][0]["field"]
+    expected_field = FIELD_CONFIGS[target_name]
+
+    assert received_field == expected_field, (
+        f"Incorrect field configuration in MCCS commandCallInfo.\n"
+        f"Expected: {expected_field}\n"
+        f"Received: {received_field}"
+    )
