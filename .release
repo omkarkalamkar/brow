@@ -1,11 +1,11 @@
-release=2.8.1-rc.1
-tag=2.8.1-rc.1
+release=2.9.0-rc.1
+tag=2.9.0-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.8.1-rc.1**
+**1. ska-tmc-low-integration 2.9.0-rc.1**
 
-    **1.1 ska-tmc-low 2.8.0-rc.2 - 2.8.1-rc.1:**
+    **1.1 ska-tmc-low 2.8.1-rc.1 - 2.9.0-rc.1:**
         * Improved Abort Retry mechanism to resolve SKB-1158
 
 
@@ -13,9 +13,9 @@ tag_description=
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.8.1-rc.1**
+**1. ska-tmc-low-integration 2.9.0-rc.1**
 
-    **1.1 ska-tmc-low 2.8.0-rc.2 - 2.8.1-rc.1:**
+    **1.1 ska-tmc-low 2.8.1-rc.1 - 2.9.0-rc.1:**
         * Improved Abort Retry mechanism to resolve SKB-1158
 
 
