@@ -164,8 +164,8 @@ Subarray Node
 ^^^^^^^^^^^^^^
 
     #. **CspAssignResourcesInterfaceURL** : Interface version for CSP assign resources command. Currently defaults to "https://schema.skao.int/ska-low-csp-assignresources/3.0"
-    #. **CspScanInterfaceURL** : Interface version for CSP scan command. Currently defaults to "https://schema.skao.int/ska-low-csp-scan/2.0"
-    #. **SdpScanInterfaceURL** : Interface version for SDP scan command. Currently defaults to "https://schema.skao.int/ska-sdp-scan/0.4"
+    #. **CspScanInterfaceURL** : Interface version for CSP scan command. Currently defaults to "https://schema.skao.int/ska-low-csp-scan/3.2"
+    #. **SdpScanInterfaceURL** : Interface version for SDP scan command. Currently defaults to "https://schema.skao.int/ska-sdp-scan/1.1"
     #. **MccsConfigureInterfaceURL** : Interface version for MCCS configure command. Currently defaults to "https://schema.skao.int/ska-low-mccs-configure/1.0"
     #. **MccsReleaseInterfaceURL** : Interface version for MCCS release command. Currently defaults to "https://schema.skatelescope.org/ska-low-mccs-controller-release/2.0"
     #. **MccsScanInterfaceURL** : Interface version for MCCS scan command. Currently defaults to "https://schema.skao.int/ska-low-mccs-scan/3.0"
