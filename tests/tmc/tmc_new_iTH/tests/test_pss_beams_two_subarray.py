@@ -17,6 +17,8 @@ from tests.resources.test_harness.constant import (
     INITIAL_LOW_DELAY_JSON,
     LOW_DELAYMODEL_VERSION,
     TIMEOUT,
+    tmc_low_subarraynode1,
+    tmc_low_subarraynode2,
 )
 from tests.resources.test_harness.utils.my_file_json_input import (
     MyFileJSONInput,
@@ -177,7 +179,7 @@ def delay_calculation_on_cspsln_starts(
     json_input_data = json.loads(json_input.as_str())
 
     # Configuring subarray 1
-    tmc.set_subarray_id(1)
+    tmc.set_subarray_id(tmc_low_subarraynode1)
     search_beams_key = PSS_BEAMS_CONFIG["beams"]
     pss_beam_key = PSS_BEAMS_CONFIG["beam"]
     json_input_data["csp"]["search_beams"]["beams"] = search_beams_key[:15]
@@ -198,7 +200,7 @@ def delay_calculation_on_cspsln_starts(
     )
 
     # Configuring subarray 2
-    tmc.set_subarray_id(2)
+    tmc.set_subarray_id(tmc_low_subarraynode2)
 
     json_input_data = json.loads(json_input.as_str())
     json_input_data["csp"]["search_beams"]["beams"] = search_beams_key[16:]
