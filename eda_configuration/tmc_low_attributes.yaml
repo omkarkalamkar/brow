@@ -64,6 +64,66 @@ configuration:
         code_push_event: true
       delayModelPSTBeam2:
         code_push_event: true
+      delayModelPSSBeam1:
+        code_push_event: true
+      delayModelPSSBeam2:
+        code_push_event: true
+      delayModelPSSBeam3:
+        code_push_event: true
+      delayModelPSSBeam4:
+        code_push_event: true
+      delayModelPSSBeam5:
+        code_push_event: true
+      delayModelPSSBeam6:
+        code_push_event: true
+      delayModelPSSBeam7:
+        code_push_event: true
+      delayModelPSSBeam8:
+        code_push_event: true
+      delayModelPSSBeam9:
+        code_push_event: true
+      delayModelPSSBeam10:
+        code_push_event: true
+      delayModelPSSBeam11:
+        code_push_event: true
+      delayModelPSSBeam12:
+        code_push_event: true
+      delayModelPSSBeam13:
+        code_push_event: true
+      delayModelPSSBeam14:
+        code_push_event: true
+      delayModelPSSBeam15:
+        code_push_event: true
+      delayModelPSSBeam16:
+        code_push_event: true
+      delayModelPSSBeam17:
+        code_push_event: true
+      delayModelPSSBeam18:
+        code_push_event: true
+      delayModelPSSBeam19:
+        code_push_event: true
+      delayModelPSSBeam20:
+        code_push_event: true
+      delayModelPSSBeam21:
+        code_push_event: true
+      delayModelPSSBeam22:
+        code_push_event: true
+      delayModelPSSBeam23:
+        code_push_event: true
+      delayModelPSSBeam24:
+        code_push_event: true
+      delayModelPSSBeam25:
+        code_push_event: true
+      delayModelPSSBeam26:
+        code_push_event: true
+      delayModelPSSBeam27:
+        code_push_event: true
+      delayModelPSSBeam28:
+        code_push_event: true
+      delayModelPSSBeam29:
+        code_push_event: true
+      delayModelPSSBeam30:
+        code_push_event: true
       cspSubarrayObsState:
         code_push_event: true
 

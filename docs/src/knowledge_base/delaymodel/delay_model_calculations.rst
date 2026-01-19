@@ -70,6 +70,29 @@ The contents of the delay model are:
 
 .. note:: The 'field' key section with "c1 & c2" are required under timing beams -> beams for PST beams delay generation.
 
+PSS beams delay model
+----------------------
+
+This delay model is calculated for each of the PSS beam assigned to a subarray.
+The contents of the delay model are:
+
+* Subarray id
+* Configuration id
+* Timestamp from which the delay model is valid
+* Validity period of the delays in seconds.
+* Cadence of delay model generation in seconds
+* For each station and/or substation
+
+  * Station id
+  * Coefficients of 5th order x ploynomial
+  * Offset of y ploynomial (in nanoseconds. Currently hard coded to 0.0)
+
+.. note:: Currently TMC supports 30 PSS beams per subarray. Please refer 
+   :ref:`Observation Execution APIs <obs_apis>` section for the specific 
+   details of the APIs.
+
+.. note:: In order to publish **PSS Delay polynomial** the **"beam"** key is required with "ra" and "dec" keys in all the PSS beams data
+
 Delay model Format
 ====================
 
