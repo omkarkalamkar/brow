@@ -99,7 +99,9 @@ def invoke_assign_resources(
         range(pss_beams_start, pss_beams_end + 1)
     )
 
-    tmc.assign_resources(json.dumps(json_input_data), wait_termination=True)
+    _, pytest.unique_id = tmc.central_node.AssignResources(
+        json.dumps(json_input_data)
+    )
     assert_that(event_tracer).described_as(
         f"Both TMC Subarray Node device ({tmc.subarray_node})"
         f", CSP Subarray device ({csp.csp_subarray}) "
@@ -132,7 +134,9 @@ def invoke_assign_resources(
     json_input_data["csp"]["pss"]["pss_beam_ids"] = list(
         range(pss_beams_start, pss_beams_end + 1)
     )
-    tmc.assign_resources(json.dumps(json_input_data), wait_termination=True)
+    _, pytest.unique_id = tmc.central_node.AssignResources(
+        json.dumps(json_input_data)
+    )
     assert_that(event_tracer).described_as(
         f"Both TMC Subarray Node device ({tmc.subarray_node})"
         f", CSP Subarray device ({csp.csp_subarray}) "
