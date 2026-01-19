@@ -90,10 +90,13 @@
           "weighting_key_ref": "aperture2"
         }
       ],
-      "sky_coordinates": {
-        "reference_frame": "ICRS",
-        "c1": 182.0,
-        "c2": 47.0
+      "field": {
+        "target_name": "Polaris Australis",
+        "reference_frame": "icrs",
+        "attrs": {
+          "c1": 181.0,
+          "c2": 46.0
+        }
       }
     },
     {
