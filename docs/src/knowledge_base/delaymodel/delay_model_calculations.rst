@@ -120,3 +120,9 @@ Following example shows a PST beam delay model:
    :language: json
    :linenos:
 
+Following example shows a PSS beam delay model:
+
+.. literalinclude:: examples/pss_delay_model.json
+   :language: json
+   :linenos:
+
