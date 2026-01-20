@@ -12,7 +12,7 @@ Updated
 * TMC Scan command supports optional field start_time to comply with ADR-111.
 
 [2.9.0-rc.1]
-***********
+************
 Updated
 -------
 * TMC Low Configure schema updated to include the "field" key for ADR-63 compliance.
