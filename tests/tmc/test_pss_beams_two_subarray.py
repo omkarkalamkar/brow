@@ -473,7 +473,7 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
         "ObsState attribute values should be READY."
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         subarray_node_low.csp_subarray_leaf_node,
-        "obsState",
+        "cspSubarrayObsState",
         ObsState.READY,
     ).has_change_event_occurred(
         subarray_node_low.mccs_subarray_leaf_node,
@@ -481,7 +481,7 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
         ObsState.READY,
     ).has_change_event_occurred(
         subarray_node_low.sdp_subarray_leaf_node,
-        "obsState",
+        "sdpSubarrayObsState",
         ObsState.READY,
     )
 
@@ -509,7 +509,7 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
         "ObsState attribute values should be READY."
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         subarray_node_low.csp_subarray_leaf_node,
-        "obsState",
+        "cspSubarrayObsState",
         ObsState.READY,
     ).has_change_event_occurred(
         subarray_node_low.mccs_subarray_leaf_node,
@@ -517,7 +517,7 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
         ObsState.READY,
     ).has_change_event_occurred(
         subarray_node_low.sdp_subarray_leaf_node,
-        "obsState",
+        "sdpSubarrayObsState",
         ObsState.READY,
     )
 
