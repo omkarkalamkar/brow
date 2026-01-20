@@ -393,7 +393,9 @@ def invoke_configure_command(
 
     search_beams_key = PSS_BEAMS_CONFIG["beams"]
     pss_beam_key = PSS_BEAMS_CONFIG["beam"]
-    configure_data["csp"]["search_beams"]["beams"] = search_beams_key[:15]
+    configure_data["csp"]["lowcbf"]["search_beams"][
+        "beams"
+    ] = search_beams_key[:15]
     configure_data["csp"]["pss"]["beam"] = pss_beam_key[:15]
 
     event_tracer.subscribe_event(
