@@ -528,11 +528,43 @@ def verify_cspsln_delay_model_updated(
 ):
     """
     Verifies that CSPSLN has generated / updated delay models
-    on some configured pss beam attributes after successful Configure.
+    on all configured pss beam attributes after successful Configure.
     """
     wait_time = time.time() + 5
+    # check for pss beams configured to subarray 1
     central_node_low.set_subarray_id(1)
     attributes = [f"delayModelPSSBeam{str(i)}" for i in range(1, 16)]
+    generated_delay_model_json = INITIAL_LOW_DELAY_JSON
+    for attribute in attributes:
+        while time.time() < wait_time:
+            generated_delay_model = (
+                central_node_low.csp_subarray_leaf_node.read_attribute(
+                    attribute
+                ).value
+            )
+            generated_delay_model_json = json.loads(generated_delay_model)
+            logging.info(
+                "Generated %s Delay Model json: %s",
+                attribute,
+                generated_delay_model_json,
+            )
+            if generated_delay_model_json != INITIAL_LOW_DELAY_JSON:
+                break
+            time.sleep(1)
+
+        assert (
+            generated_delay_model_json != INITIAL_LOW_DELAY_JSON
+        ), f"{attribute} has not been updated from initial values"
+
+        telmodel_validate(
+            version=LOW_DELAYMODEL_VERSION,
+            config=generated_delay_model_json,
+            strictness=2,
+        )
+
+    # check for pss beams configured to subarray 2
+    central_node_low.set_subarray_id(2)
+    attributes = [f"delayModelPSSBeam{str(i)}" for i in range(16, 31)]
     generated_delay_model_json = INITIAL_LOW_DELAY_JSON
     for attribute in attributes:
         while time.time() < wait_time:
