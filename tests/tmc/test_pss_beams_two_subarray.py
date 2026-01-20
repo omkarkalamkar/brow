@@ -434,7 +434,7 @@ def invoke_configure_command(
     assert_that(event_tracer).described_as(
         "TMC Subarray Node 2 ObsState should move to CONFIGURING"
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        subarray_node_low,
+        subarray_node_low.subarray_node,
         "obsState",
         ObsState.CONFIGURING,
     )
