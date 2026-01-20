@@ -418,7 +418,7 @@ def invoke_configure_command(
     # Configuring subarray 2
     subarray_node_low.set_subarray_id(2)
 
-    configure_data["csp"]["search_beams"]["beams"] = search_beams_key[16:]
+    configure_data["csp"]["lowcbf"]["search_beams"]["beams"] = search_beams_key[16:]
     configure_data["csp"]["pss"]["beam"] = pss_beam_key[16:]
 
     event_tracer.subscribe_event(
