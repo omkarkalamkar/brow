@@ -30,7 +30,7 @@ from tests.tmc.tmc_new_iTH.utils import (
 
 @pytest.mark.SKA_low
 @scenario(
-    "../tmc/tmc_new_iTH/features/pss_beams_two_subarray.feature",
+    "../tmc/tmc_new_iTH/features/pss_beams_one_subarray.feature",
     "Execute observation where a subarray is allocated "
     "30 PSS beams in TMC Low",
 )
