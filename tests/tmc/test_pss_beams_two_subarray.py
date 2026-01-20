@@ -524,20 +524,20 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
 
 @then("CSPSLN generates updated delay model for pss beams")
 def verify_cspsln_delay_model_updated(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    central_node_low: CentralNodeWrapperLow,
 ):
     """
     Verifies that CSPSLN has generated / updated delay models
     on some configured pss beam attributes after successful Configure.
     """
     wait_time = time.time() + 5
-    subarray_node_low.set_subarray_id(1)
+    central_node_low.set_subarray_id(1)
     attributes = [f"delayModelPSSBeam{str(i)}" for i in range(1, 16)]
     generated_delay_model_json = INITIAL_LOW_DELAY_JSON
     for attribute in attributes:
         while time.time() < wait_time:
             generated_delay_model = (
-                subarray_node_low.csp_subarray_leaf_node.read_attribute(
+                central_node_low.csp_subarray_leaf_node.read_attribute(
                     attribute
                 ).value
             )
