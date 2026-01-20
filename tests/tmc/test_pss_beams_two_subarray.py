@@ -420,8 +420,8 @@ def invoke_configure_command(
 
     configure_data["csp"]["lowcbf"]["search_beams"][
         "beams"
-    ] = search_beams_key[16:]
-    configure_data["csp"]["pss"]["beam"] = pss_beam_key[16:]
+    ] = search_beams_key[15:]
+    configure_data["csp"]["pss"]["beam"] = pss_beam_key[15:]
 
     event_tracer.subscribe_event(
         subarray_node_low.subarray_node, "longRunningCommandResult"
@@ -531,7 +531,8 @@ def verify_cspsln_delay_model_updated(
     on some configured pss beam attributes after successful Configure.
     """
     wait_time = time.time() + 5
-    attributes = [f"delayModelPSSBeam{str(i)}" for i in range(1, 31)]
+    subarray_node_low.set_subarray_id(1)
+    attributes = [f"delayModelPSSBeam{str(i)}" for i in range(1, 16)]
     generated_delay_model_json = INITIAL_LOW_DELAY_JSON
     for attribute in attributes:
         while time.time() < wait_time:
