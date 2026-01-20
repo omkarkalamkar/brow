@@ -402,7 +402,7 @@ def invoke_configure_command(
         subarray_node_low.subarray_node, "longRunningCommandResult"
     )
 
-    pytest.configure_id = subarray_node_low.store_configuration_data(
+    _, pytest.configure_id = subarray_node_low.store_configuration_data(
         json.dumps(configure_data)
     )
 
@@ -427,7 +427,7 @@ def invoke_configure_command(
         subarray_node_low.subarray_node, "longRunningCommandResult"
     )
 
-    pytest.configure_id2 = subarray_node_low.store_configuration_data(
+    _, pytest.configure_id2 = subarray_node_low.store_configuration_data(
         json.dumps(configure_data)
     )
 
