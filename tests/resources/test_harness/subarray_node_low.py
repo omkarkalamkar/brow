@@ -280,10 +280,8 @@ class SubarrayNodeWrapperLow:
     def set_subarray_id(self, requested_subarray_id: str) -> None:
         """This method creates subarray devices for the requested subarray
         id"""
-        self.subarray_node = DeviceProxy(
-            f"low-tmc/subarray/{requested_subarray_id}"
-        )
         subarray_id = str(requested_subarray_id).zfill(2)
+        self.subarray_node = DeviceProxy(f"low-tmc/subarray/{subarray_id}")
         self.subarray_devices = {
             "csp_subarray": DeviceProxy(f"low-csp/subarray/{subarray_id}"),
             "sdp_subarray": DeviceProxy(f"low-sdp/subarray/{subarray_id}"),

@@ -4,7 +4,7 @@ import time
 
 import pytest
 from assertpy import assert_that
-from pytest_bdd import given, parsers, scenario, then, when
+from pytest_bdd import given, scenario, then, when
 from ska_control_model import ObsState, ResultCode
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
 from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
@@ -31,14 +31,14 @@ from tests.tmc.tmc_new_iTH.utils import (
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/pss_beams_two_subarray.feature",
-    "Execute two observations simultaneously where two subarrays are "
-    "allocated PSS beams without sharing in TMC Low",
+    "Execute observation where a subarray is allocated "
+    "30 PSS beams in TMC Low",
 )
-def test_pss_beams_two_subarray():
-    """BDD test scenario for verifying pss beams with two subarrays."""
+def test_pss_beams_one_subarray():
+    """BDD test scenario for verifying pss beams with one subarrays."""
 
 
-@given("subarray 1 and 2 are in the EMPTY ObsState")
+@given("subarray in EMPTY ObsState")
 def verify_tmc_subarray_observation_state_empty(
     event_tracer: TangoEventTracer,
     tmc: TMCFacade,
@@ -74,30 +74,20 @@ def verify_tmc_subarray_observation_state_empty(
     )
 
 
-@when(
-    parsers.parse(
-        "I Assign subarray 1 with pss beams {pss_beams_subarray1} and "
-        "subarray 2 with pss beams {pss_beams_subarray2}"
-    )
-)
+@when("I Assign subarray with 30 pss beams")
 def invoke_assign_resources(
     event_tracer: TangoEventTracer,
     tmc: TMCFacade,
     csp: CSPFacade,
     sdp: SDPFacade,
     mccs: MCCSFacade,
-    pss_beams_subarray1: str,
-    pss_beams_subarray2: str,
 ):
     """Assigns and verifies subarrays in IDLE ObsState."""
     json_input = MyFileJSONInput("centralnode", "assign_resources_low")
     json_input_data = json.loads(json_input.as_str())
-    pss_beams_start, pss_beams_end = list(
-        map(int, pss_beams_subarray1.split("-"))
-    )
-    json_input_data["csp"]["pss"]["pss_beam_ids"] = list(
-        range(pss_beams_start, pss_beams_end + 1)
-    )
+    json_input_data["csp"]["pss"]["pss_beam_ids"] = PSS_BEAMS_CONFIG[
+        "pss_beam_ids"
+    ]
 
     _, pytest.unique_id = tmc.central_node.AssignResources(
         json.dumps(json_input_data)
@@ -126,44 +116,8 @@ def invoke_assign_resources(
         ObsState.IDLE,
     )
 
-    json_input_data = json.loads(json_input.as_str())
-    json_input_data["subarray_id"] = 2
-    pss_beams_start, pss_beams_end = list(
-        map(int, pss_beams_subarray2.split("-"))
-    )
-    json_input_data["csp"]["pss"]["pss_beam_ids"] = list(
-        range(pss_beams_start, pss_beams_end + 1)
-    )
-    tmc.set_subarray_id("02")
-    _, pytest.unique_id = tmc.central_node.AssignResources(
-        json.dumps(json_input_data)
-    )
-    assert_that(event_tracer).described_as(
-        f"Both TMC Subarray Node device ({tmc.subarray_node})"
-        f", CSP Subarray device ({csp.csp_subarray}) "
-        f", MCCS Subarray device ({mccs.mccs_subarray}) "
-        f"and SDP Subarray device ({sdp.sdp_subarray}) "
-        "ObsState attribute values should be IDLE."
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        tmc.subarray_node,
-        "obsState",
-        ObsState.IDLE,
-    ).has_change_event_occurred(
-        csp.csp_subarray,
-        "obsState",
-        ObsState.IDLE,
-    ).has_change_event_occurred(
-        sdp.sdp_subarray,
-        "obsState",
-        ObsState.IDLE,
-    ).has_change_event_occurred(
-        mccs.mccs_subarray,
-        "obsState",
-        ObsState.IDLE,
-    )
 
-
-@then("invoking Configure command on both subarrays TMC moves to CONFIGURING")
+@then("invoking Configure command on subarray TMC moves to CONFIGURING")
 def delay_calculation_on_cspsln_starts(
     tmc: TMCFacade,
     event_tracer: TangoEventTracer,
@@ -177,37 +131,14 @@ def delay_calculation_on_cspsln_starts(
     # Parse its data into a dict
     json_input_data = json.loads(json_input.as_str())
 
-    # Configuring subarray 1
-    tmc.set_subarray_id("01")
     search_beams_key = PSS_BEAMS_CONFIG["beams"]
     pss_beam_key = PSS_BEAMS_CONFIG["beam"]
-    json_input_data["csp"]["search_beams"]["beams"] = search_beams_key[:15]
-    json_input_data["csp"]["pss"]["beam"] = pss_beam_key[:15]
+    json_input_data["csp"]["search_beams"]["beams"] = search_beams_key
+    json_input_data["csp"]["pss"]["beam"] = pss_beam_key
 
     event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
 
-    _, pytest.unique_id1 = tmc.subarray_node.Configure(
-        json.dumps(json_input_data)
-    )
-
-    assert_that(event_tracer).described_as(
-        "TMC Subarray Node ObsState should move to CONFIGURING"
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        tmc.subarray_node,
-        "obsState",
-        ObsState.CONFIGURING,
-    )
-
-    # Configuring subarray 2
-    tmc.set_subarray_id("02")
-
-    json_input_data = json.loads(json_input.as_str())
-    json_input_data["csp"]["search_beams"]["beams"] = search_beams_key[16:]
-    json_input_data["csp"]["pss"]["beam"] = pss_beam_key[16:]
-
-    event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
-
-    _, pytest.unique_id2 = tmc.subarray_node.Configure(
+    _, pytest.unique_id = tmc.subarray_node.Configure(
         json.dumps(json_input_data)
     )
 
@@ -232,7 +163,7 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
     after command Configure.
     """
     expected_lrcr = (
-        pytest.unique_id2[0],
+        pytest.unique_id[0],
         json.dumps((int(ResultCode.OK), "Command Completed")),
     )
 
@@ -278,7 +209,7 @@ def verify_cspsln_delay_model_updated(
     on some configured pss beam attributes after successful Configure.
     """
     wait_time = time.time() + 5
-    attributes = [f"delayModelPSSBeam{str(i).zfill(2)}" for i in range(1, 30)]
+    attributes = [f"delayModelPSSBeam{str(i)}" for i in range(1, 31)]
     generated_delay_model_json = INITIAL_LOW_DELAY_JSON
     for attribute in attributes:
         while time.time() < wait_time:
