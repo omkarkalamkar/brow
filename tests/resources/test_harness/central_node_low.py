@@ -30,7 +30,9 @@ from tests.resources.test_harness.constant import (
     tmc_low_subarraynode1,
 )
 from tests.resources.test_harness.event_recorder import EventRecorder
-from tests.resources.test_harness.helpers import wait_for_partial_or_complete_abort
+from tests.resources.test_harness.helpers import (
+    wait_for_partial_or_complete_abort,
+)
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_harness.utils.sync_decorators import (
     sync_abort,
@@ -230,7 +232,7 @@ class CentralNodeWrapperLow(object):
         LOGGER.info("Subarray Node ObsState: %s", self.subarray_node.obsstate)
         if subarray.obsState not in [ObsState.EMPTY, ObsState.IDLE]:
             LOGGER.info("Calling Abort on SubarrayNode")
-            self.subarray_node.execute_transition("Abort")
+            subarray.execute_transition("Abort")
             wait_for_partial_or_complete_abort()
             LOGGER.info("Calling Restart on SubarrayNode")
             _, unique_id = self.subarray_restart()
