@@ -603,3 +603,4 @@ def verify_cspsln_delay_model_updated(
 
     subarray_node_low.tear_down()
     subarray_node_low.set_subarray_id(1)
+    subarray_node_low.tear_down()
