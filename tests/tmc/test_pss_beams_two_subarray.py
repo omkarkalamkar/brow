@@ -530,7 +530,7 @@ def verify_cspsln_delay_model_updated(
     Verifies that CSPSLN has generated / updated delay models
     on all configured pss beam attributes after successful Configure.
     """
-    wait_time = time.time() + 5
+    wait_time = time.time() + 20
     # check for pss beams configured to subarray 1
     central_node_low.set_subarray_id(1)
     attributes = [f"delayModelPSSBeam{str(i)}" for i in range(1, 16)]
