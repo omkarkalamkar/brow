@@ -524,7 +524,7 @@ def verify_sdp_csp_mccs_in_ready_observation_state(
 
 @then("CSPSLN generates updated delay model for pss beams")
 def verify_cspsln_delay_model_updated(
-    central_node_low: CentralNodeWrapperLow,
+    subarray_node_low: SubarrayNodeWrapperLow,
 ):
     """
     Verifies that CSPSLN has generated / updated delay models
@@ -532,13 +532,13 @@ def verify_cspsln_delay_model_updated(
     """
     wait_time = time.time() + 20
     # check for pss beams configured to subarray 1
-    central_node_low.set_subarray_id(1)
+    subarray_node_low.set_subarray_id(1)
     attributes = [f"delayModelPSSBeam{str(i)}" for i in range(1, 16)]
     generated_delay_model_json = INITIAL_LOW_DELAY_JSON
     for attribute in attributes:
         while time.time() < wait_time:
             generated_delay_model = (
-                central_node_low.csp_subarray_leaf_node.read_attribute(
+                subarray_node_low.csp_subarray_leaf_node.read_attribute(
                     attribute
                 ).value
             )
@@ -563,16 +563,24 @@ def verify_cspsln_delay_model_updated(
         )
 
     # check for pss beams configured to subarray 2
-    central_node_low.set_subarray_id(2)
+    subarray_node_low.set_subarray_id(2)
     attributes = [f"delayModelPSSBeam{str(i)}" for i in range(16, 31)]
     generated_delay_model_json = INITIAL_LOW_DELAY_JSON
     for attribute in attributes:
         while time.time() < wait_time:
             generated_delay_model = (
-                central_node_low.csp_subarray_leaf_node.read_attribute(
+                subarray_node_low.csp_subarray_leaf_node.read_attribute(
                     attribute
                 ).value
             )
+            if not generated_delay_model:
+                logging.info(
+                    "Attribute %s returned empty value, for %s",
+                    attribute,
+                    subarray_node_low.csp_subarray_leaf_node.dev_name(),
+                )
+                time.sleep(1)
+                continue
             generated_delay_model_json = json.loads(generated_delay_model)
             logging.info(
                 "Generated %s Delay Model json: %s",
