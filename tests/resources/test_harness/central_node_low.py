@@ -30,9 +30,6 @@ from tests.resources.test_harness.constant import (
     tmc_low_subarraynode1,
 )
 from tests.resources.test_harness.event_recorder import EventRecorder
-from tests.resources.test_harness.helpers import (
-    wait_for_partial_or_complete_abort,
-)
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_harness.utils.sync_decorators import (
     sync_abort,
@@ -230,14 +227,7 @@ class CentralNodeWrapperLow(object):
     def tear_down_subarray(self, subarray: DeviceProxy):
         """Tear down subarray"""
         LOGGER.info("Subarray Node ObsState: %s", self.subarray_node.obsstate)
-        if subarray.obsState not in [
-            ObsState.EMPTY,
-            ObsState.IDLE,
-            ObsState.FAULT,
-        ]:
-            LOGGER.info("Calling Abort on SubarrayNode")
-            subarray.execute_transition("Abort")
-            wait_for_partial_or_complete_abort()
+        if subarray.obsState not in [ObsState.EMPTY, ObsState.IDLE]:
             LOGGER.info("Calling Restart on SubarrayNode")
             _, unique_id = self.subarray_restart()
             assert_that(self.event_tracer).described_as(
@@ -271,23 +261,6 @@ class CentralNodeWrapperLow(object):
                 '(unique_id,(ResultCode.OK,"Command Completed"))',
             ).within_timeout(TIMEOUT).has_change_event_occurred(
                 self.central_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
-        elif subarray.obsState == ObsState.FAULT:
-            LOGGER.info("Calling Restart on SubarrayNode")
-            _, unique_id = self.subarray_restart()
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER RESTART COMMAND: "
-                "SubarrayNode device"
-                f"({self.subarray_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.subarray_node,
                 "longRunningCommandResult",
                 (
                     unique_id[0],
