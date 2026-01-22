@@ -600,8 +600,3 @@ def verify_cspsln_delay_model_updated(
             config=generated_delay_model_json,
             strictness=2,
         )
-
-    subarray_node_low.set_subarray_id(1)
-    subarray_node_low.tear_down()
-    subarray_node_low.set_subarray_id(2)
-    subarray_node_low.tear_down()
