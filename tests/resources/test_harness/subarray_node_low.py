@@ -416,7 +416,7 @@ class SubarrayNodeWrapperLow:
             # Invoke Abort and Restart
             LOGGER.info("Invoking Abort on Subarray %s", subarray_id)
             self.execute_transition("Abort")
-            wait_for_partial_or_complete_abort(subarray_id)
+            wait_for_partial_or_complete_abort(subarray_id=subarray_id)
             self.restart_subarray()
         elif self.subarray_node.obsState in [ObsState.ABORTED, ObsState.FAULT]:
             # Invoke Restart
