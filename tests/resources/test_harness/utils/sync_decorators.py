@@ -120,7 +120,8 @@ def sync_restart(device_dict, timeout=500):
     # define as a decorator
     def decorator_sync_restart(func):
         @functools.wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(self, *args, **kwargs):
+            device_dict = self.device_dict
             the_waiter = Waiter(**device_dict)
             the_waiter.set_wait_for_going_to_empty()
             result = func(*args, **kwargs)

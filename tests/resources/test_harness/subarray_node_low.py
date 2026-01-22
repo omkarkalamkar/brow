@@ -25,6 +25,7 @@ from tests.resources.test_harness.constant import (
 from tests.resources.test_harness.event_recorder import EventRecorder
 from tests.resources.test_harness.helpers import (
     check_subarray_obs_state,
+    get_device_dict,
     update_eb_pb_ids,
     wait_for_partial_or_complete_abort,
 )
@@ -108,6 +109,7 @@ class SubarrayNodeWrapperLow:
         self.READY_OBS_STATE = READY
         self.ABORTED_OBS_STATE = ABORTED
         self.event_recorder = EventRecorder()
+        self.device_dict = get_device_dict(int(self.get_subarray_id()))
 
     @property
     def state(self) -> DevState:
