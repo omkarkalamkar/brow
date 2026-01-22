@@ -398,8 +398,8 @@ class SubarrayNodeWrapperLow:
 
     def tear_down(self):
         """Tear down after each test run"""
-
-        LOGGER.info("Calling Tear down for subarray")
+        subarray_id = int(self.get_subarray_id())
+        LOGGER.info("Calling Tear down for subarray %s", subarray_id)
         LOGGER.info(
             "Current Subarray Node ObsState is: %s",
             self.subarray_node.obsState,
@@ -414,13 +414,13 @@ class SubarrayNodeWrapperLow:
             ObsState.READY,
         ]:
             # Invoke Abort and Restart
-            LOGGER.info("Invoking Abort on Subarray")
+            LOGGER.info("Invoking Abort on Subarray %s", subarray_id)
             self.execute_transition("Abort")
-            wait_for_partial_or_complete_abort()
+            wait_for_partial_or_complete_abort(subarray_id)
             self.restart_subarray()
         elif self.subarray_node.obsState in [ObsState.ABORTED, ObsState.FAULT]:
             # Invoke Restart
-            LOGGER.info("Invoking Restart on Subarray")
+            LOGGER.info("Invoking Restart on Subarray %s", subarray_id)
             self.restart_subarray()
         elif self.subarray_node.obsState == ObsState.IDLE:
             # Invoke Release
@@ -468,3 +468,9 @@ class SubarrayNodeWrapperLow:
             LOGGER.exception("Exception occurred while setting scan id: %s", e)
             raise
         return json.dumps(input_json)
+
+    def get_subarray_id(self) -> str:
+        """Returns current subarray id from the subarray_node device proxy."""
+
+        subarray_node = self.subarray_node.dev_name()
+        return f"{subarray_node[-2:]}"
