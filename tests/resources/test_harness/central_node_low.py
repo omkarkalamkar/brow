@@ -138,6 +138,9 @@ class CentralNodeWrapperLow(object):
                 "mccs_subarray_leaf_node": self.mccs_subarray_leaf_node,
             }
         )
+        self.device_dict = get_device_dict(
+            int(self.get_subarray_id(self.subarray_node))
+        )
 
     def get_subarray_devices_by_id(self, subarray_id):
         subarray_id = "{:02d}".format(int(subarray_id))
