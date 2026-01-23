@@ -271,8 +271,8 @@ class CentralNodeWrapperLow(object):
                     json.dumps((int(ResultCode.OK), "Command Completed")),
                 ),
             )
-        elif subarray.obsState == ObsState.FAULT:
-            LOGGER.info("Calling Restart on SubarrayNode")
+        elif subarray.obsState in [ObsState.FAULT, ObsState.ABORTED]:
+            LOGGER.info("Calling Restart on SubarrayNode %s", subarray_id)
             _, unique_id = self.subarray_restart()
             assert_that(self.event_tracer).described_as(
                 "FAILED ASSUMPTION AFTER RESTART COMMAND: "
