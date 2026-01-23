@@ -294,6 +294,7 @@ class SubarrayNodeWrapperLow:
         self.sdp_subarray_leaf_node = DeviceProxy(
             f"low-tmc/subarray-leaf-node-sdp/{subarray_id}"
         )
+        self.device_dict = get_device_dict(requested_subarray_id)
 
     def move_to_on(self):
         """Move the Subarray to On State"""
