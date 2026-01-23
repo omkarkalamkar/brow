@@ -9,7 +9,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 ************
 Updated
 -------
-* TMC Scan command supports optional field start_time to comply with ADR-111.
+* TMC Scan command supports optional field start_time to comply with ADR-111
 
 [2.9.0-rc.1]
 ************
