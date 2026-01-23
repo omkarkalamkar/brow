@@ -124,7 +124,7 @@ def sync_restart(device_dict, timeout=500):
             device_dict = self.device_dict
             the_waiter = Waiter(**device_dict)
             the_waiter.set_wait_for_going_to_empty()
-            result = func(*args, **kwargs)
+            result = func(self, *args, **kwargs)
             the_waiter.wait(timeout)
             return result
 
