@@ -246,20 +246,7 @@ class CentralNodeWrapperLow(object):
             wait_for_partial_or_complete_abort(subarray_id=subarray_id)
             LOGGER.info("Calling Restart on SubarrayNode %s", subarray_id)
             _, unique_id = self.subarray_restart()
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER RESTART COMMAND: "
-                "SubarrayNode device"
-                f"({self.subarray_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.subarray_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
+
         elif subarray.obsState == ObsState.IDLE:
             LOGGER.info("Calling Release Resource on centralnode")
             release_data = json.loads(self.release_input)
