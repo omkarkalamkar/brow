@@ -133,7 +133,9 @@ def delay_calculation_on_cspsln_starts(
 
     search_beams_key = PSS_BEAMS_CONFIG["beams"]
     pss_beam_key = PSS_BEAMS_CONFIG["beam"]
-    json_input_data["csp"]["search_beams"]["beams"] = search_beams_key
+    json_input_data["csp"]["lowcbf"]["search_beams"][
+        "beams"
+    ] = search_beams_key
     json_input_data["csp"]["pss"]["beam"] = pss_beam_key
 
     event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
