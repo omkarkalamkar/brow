@@ -23,10 +23,12 @@ from tango import DeviceProxy
 from tests.resources.test_harness.constant import (
     INTERMEDIATE_CONFIGURING_OBS_STATE_DEFECT,
     INTERMEDIATE_STATE_DEFECT,
+    low_csp_master,
     low_csp_subarray1,
     low_csp_subarray2,
     low_csp_subarray_leaf_node,
     low_csp_subarray_leaf_node2,
+    low_sdp_master,
     low_sdp_subarray1,
     low_sdp_subarray2,
     low_sdp_subarray_leaf_node,
@@ -68,6 +70,9 @@ def get_device_dict(subarray_id: int = 1) -> dict:
     """
     if subarray_id == 1:
         return {
+            "csp_master": low_csp_master,
+            "sdp_master": low_sdp_master,
+            "mccs_master": mccs_controller,
             "sdp_subarray": low_sdp_subarray1,
             "csp_subarray": low_csp_subarray1,
             "mccs_subarray": mccs_subarray1,
@@ -78,6 +83,9 @@ def get_device_dict(subarray_id: int = 1) -> dict:
         }
     elif subarray_id == 2:
         return {
+            "csp_master": low_csp_master,
+            "sdp_master": low_sdp_master,
+            "mccs_master": mccs_controller,
             "sdp_subarray": low_sdp_subarray2,
             "csp_subarray": low_csp_subarray2,
             "mccs_subarray": mccs_subarray2,
