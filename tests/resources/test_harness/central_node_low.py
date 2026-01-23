@@ -240,6 +240,7 @@ class CentralNodeWrapperLow(object):
             ObsState.EMPTY,
             ObsState.IDLE,
             ObsState.FAULT,
+            ObsState.ABORTED,
         ]:
             LOGGER.info("Invoking Abort on Subarray %s", subarray_id)
             self.subarray_abort()
