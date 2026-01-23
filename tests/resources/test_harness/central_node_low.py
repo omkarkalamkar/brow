@@ -31,6 +31,7 @@ from tests.resources.test_harness.constant import (
 )
 from tests.resources.test_harness.event_recorder import EventRecorder
 from tests.resources.test_harness.helpers import (
+    get_device_dict,
     wait_for_partial_or_complete_abort,
 )
 from tests.resources.test_harness.utils.common_utils import JsonFactory
@@ -88,6 +89,9 @@ class CentralNodeWrapperLow(object):
         )
         self.event_tracer = TangoEventTracer()
         self.event_recorder = EventRecorder()
+        self.device_dict = get_device_dict(
+            int(self.get_subarray_id(self.subarray_node))
+        )
         self.event_recorder.subscribe_event(
             self.central_node, "longRunningCommandResult"
         )
