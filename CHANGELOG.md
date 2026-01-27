@@ -7,7 +7,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 [2.8.0]
 *************
-This full version comprises of changes from 2.4.0-c.1 till 2.8.2-rc.2.
+This full version comprises of changes from 2.4.0-c.1 till 2.8.0-rc.2.
 
 Added
 ------
