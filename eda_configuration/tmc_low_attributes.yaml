@@ -106,3 +106,14 @@ configuration:
         code_push_event: true
       obsState:
         code_push_event: true
+
+  - class: LowResourceMonitor
+    attributes:
+      state:
+        code_push_event: true
+      healthState:
+        code_push_event: true
+      stations:
+        code_push_event: true
+      stationBeams:
+        code_push_event: true

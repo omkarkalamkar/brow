@@ -5,6 +5,38 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[2.8.0]
+*************
+This full version comprises of changes from 2.4.0-c.1 till 2.8.2-rc.2.
+
+Added
+------
+* Introduced ResourceMonitor device in the ska-tmc-low.
+    * Resource Monitor tag v0.5.0
+	* Reports subarray allocations for stations through the stationsData attribute of the Resource Monitor.
+	* reporting of resources stations and station beams using stations and stationBeams attributes of Resource Monitor.
+* Added device configuration and FQDN under chart templates.
+* Functionality of auto recovery of AssignResources and Configure command from inconsistent stage
+* Added MccsReleaseInterfaceURL in values.yaml
+* Full implementation of ADR-63
+* Support for changing the telescope antenna layout at runtime.
+
+Updated
+--------
+* Testing specific: Simulators gets deployed as separate testing service
+	* Simulators tag v0.5.0
+* Archiver attribute configuration includes attributes of Resource Monitor.
+* Documentation includes ResourceMonitor configuration details and usage.
+
+Removed
+--------
+* TMC simulators are no longer bundled with any of the TMC deliverable code.
+
+Fixed
+------
+* Fixed SKB-1074
+* Remove keys from input json not required by real CSP, causing command failures.
+
 [2.8.0-rc.2]
 *************
 Fixed
