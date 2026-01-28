@@ -228,9 +228,10 @@ deviceServers:
     PSTDelayCadence: 300.0
     PSTDelayValidityPeriod: 600.0
     PSTDelayModelTimeInAdvance: 600
-    PSSDelayCadence: 300.0
-    PSSDelayValidityPeriod: 600.0
-    PSSDelayModelTimeInAdvance: 600
+    pss:
+      pss_delay_cadence: 300.0
+      pss_delay_validity_period: 600.0
+      pss_delay_model_time_in_advance: 600
     CommandTimeOutDefault: 50
     AdapterTimeOut: 2.0
     LivelinessCheckPeriod: 0.5
