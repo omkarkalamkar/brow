@@ -192,6 +192,11 @@ def verify_delay_generated_for_used_stn_beams(
     """
     wait_time = time.time() + 5
     # check for pss beams configured to subarray
+    station_id_mapping = {
+        "delayModelPSSBeam1": 1,
+        "delayModelPSSBeam2": 1,
+        "delayModelPSSBeam3": 2,
+    }
     attributes = [f"delayModelPSSBeam{str(i)}" for i in range(1, 4)]
     generated_delay_model_json = INITIAL_LOW_DELAY_JSON
     for attribute in attributes:
@@ -214,81 +219,10 @@ def verify_delay_generated_for_used_stn_beams(
         assert (
             generated_delay_model_json != INITIAL_LOW_DELAY_JSON
         ), f"{attribute} has not been updated from initial values"
-
-        telmodel_validate(
-            version=LOW_DELAYMODEL_VERSION,
-            config=generated_delay_model_json,
-            strictness=2,
-        )
-
-
-@then(
-    "CSP Subarray Leaf Node does not generate"
-    " delay values for unused station beams"
-)
-def verify_delay_not_generated_for_unused_stn_beams(
-    subarray_node_low: SubarrayNodeWrapperLow,
-):
-    """
-    Verifies that CSPSLN does NOT generate delay models for station beams
-    which are not used by any PSS beams in the configuration.
-    """
-    wait_time = time.time() + 5
-    # check for pss beams configured to subarray
-    attributes = [f"delayModelPSSBeam{str(i)}" for i in range(1, 3)]
-    generated_delay_model_json = INITIAL_LOW_DELAY_JSON
-    for attribute in attributes:
-        while time.time() < wait_time:
-            generated_delay_model = (
-                subarray_node_low.csp_subarray_leaf_node.read_attribute(
-                    attribute
-                ).value
-            )
-            generated_delay_model_json = json.loads(generated_delay_model)
-            logging.info(
-                "Generated %s Delay Model json: %s",
-                attribute,
-                generated_delay_model_json,
-            )
-            if generated_delay_model_json != INITIAL_LOW_DELAY_JSON:
-                break
-            time.sleep(1)
-
+        assert len(generated_delay_model_json[["station_beam_delays"]]) == 1
         assert (
             generated_delay_model_json["station_beam_delays"][0]["station_id"]
-            == 1
-        ), f"{attribute} has not been updated with correct station_id"
-
-        telmodel_validate(
-            version=LOW_DELAYMODEL_VERSION,
-            config=generated_delay_model_json,
-            strictness=2,
-        )
-
-    wait_time = time.time() + 5
-    # check for pss beams configured to subarray
-    attributes = "delayModelPSSBeam3"
-    generated_delay_model_json = INITIAL_LOW_DELAY_JSON
-    for attribute in attributes:
-        while time.time() < wait_time:
-            generated_delay_model = (
-                subarray_node_low.csp_subarray_leaf_node.read_attribute(
-                    attribute
-                ).value
-            )
-            generated_delay_model_json = json.loads(generated_delay_model)
-            logging.info(
-                "Generated %s Delay Model json: %s",
-                attribute,
-                generated_delay_model_json,
-            )
-            if generated_delay_model_json != INITIAL_LOW_DELAY_JSON:
-                break
-            time.sleep(1)
-
-        assert (
-            generated_delay_model_json["station_beam_delays"][0]["station_id"]
-            == 2
+            == station_id_mapping[attribute]
         ), f"{attribute} has not been updated with correct station_id"
 
         telmodel_validate(
