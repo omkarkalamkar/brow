@@ -224,7 +224,7 @@ deviceServers:
     TelmodelPath: instrument/ska1_low/layout/low-layout.json
     DelayCadence: 300.0
     DelayValidityPeriod: 600.0
-    DelayModelTimeInAdvance: 600
+    DelayModelTimeInAdvance: 0
     PSTDelayCadence: 300.0
     PSTDelayValidityPeriod: 600.0
     PSTDelayModelTimeInAdvance: 600

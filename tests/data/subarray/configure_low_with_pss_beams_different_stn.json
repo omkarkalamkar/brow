@@ -93,9 +93,6 @@
           "stn_beams": [{
             "stn_beam_id": 1,
             "integration_ms": 849
-          }, {
-            "stn_beam_id": 2,
-            "integration_ms": 849
           }]
         },
         "timing_beams": {
