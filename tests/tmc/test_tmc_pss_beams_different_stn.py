@@ -219,7 +219,7 @@ def verify_delay_generated_for_used_stn_beams(
         assert (
             generated_delay_model_json != INITIAL_LOW_DELAY_JSON
         ), f"{attribute} has not been updated from initial values"
-        assert len(generated_delay_model_json[["station_beam_delays"]]) == 1
+        assert len(generated_delay_model_json["station_beam_delays"]) == 1
         assert (
             generated_delay_model_json["station_beam_delays"][0]["station_id"]
             == station_id_mapping[attribute]
