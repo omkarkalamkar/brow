@@ -187,11 +187,9 @@ def verify_second_assignment_failed(  # pylint: disable=redefined-outer-name
     assert_that(event_tracer).described_as(
         f"Central Node device ({central_node_low.central_node.dev_name()}) "
         f"is expected to fail with message: '{expected_message}'"
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
+    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
         central_node_low.central_node,
-        "longRunningCommandResult",
-        (
-            pytest.unique_id2[0],
-            json.dumps((int(ResultCode.FAILED), expected_message)),
-        ),
+        [expected_message],
+        pytest.unique_id2[0],
+        ResultCode.REJECTED,
     )

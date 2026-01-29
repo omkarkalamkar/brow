@@ -70,9 +70,9 @@ itango:
 
 centralnode:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-centralnode/ska-tmc-centralnode
+    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-centralnode
     image: ska-tmc-centralnode
-    tag: 0.29.0-dev.c4e4720f8
+    tag: 0.29.0-dev.cfe12e863
     pullPolicy: IfNotPresent
 
 subarraynode:
@@ -229,9 +229,9 @@ deviceServers:
     PSTDelayValidityPeriod: 600.0
     PSTDelayModelTimeInAdvance: 600
     pss:
-      pss_delay_cadence: 300.0
-      pss_delay_validity_period: 600.0
-      pss_delay_model_time_in_advance: 600
+      delay_cadence: 300.0
+      delay_validity_period: 600.0
+      delay_model_time_in_advance: 600
     CommandTimeOutDefault: 50
     AdapterTimeOut: 2.0
     LivelinessCheckPeriod: 0.5
