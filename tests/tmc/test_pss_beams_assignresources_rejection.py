@@ -143,7 +143,7 @@ def central_node_assign_resources_shared_beams(
     central_node_low.set_subarray_id(2)
     assign_data = json.loads(assign_input_json)
     assign_data["subarray_id"] = 2
-    _, pytest.unique_id2 = central_node_low.perform_action(
+    pytest.result2, pytest.unique_id2 = central_node_low.perform_action(
         "AssignResources", json.dumps(assign_data)
     )
 
@@ -171,25 +171,15 @@ def verify_first_assignment_ok(
 
 @then("the second assignment fails with PSS beam conflict error")
 def verify_second_assignment_failed(  # pylint: disable=redefined-outer-name
-    central_node_low: CentralNodeWrapperLow,
-    event_tracer: TangoEventTracer,
     pss_beams_from_json: list[int],
 ):
     """
-    Verifies second assignment fails due to PSS beam conflict.
+    Verifies second assignment rejects due to PSS beam conflict.
     Uses beams extracted automatically from the JSON fixture.
     """
     expected_message = (
         f"PSS beams: {pss_beams_from_json} already assigned to "
         "another subarray"
     )
-
-    assert_that(event_tracer).described_as(
-        f"Central Node device ({central_node_low.central_node.dev_name()}) "
-        f"is expected to fail with message: '{expected_message}'"
-    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
-        central_node_low.central_node,
-        [expected_message],
-        pytest.unique_id2[0],
-        ResultCode.REJECTED,
-    )
+    assert pytest.unique_id2[0] == expected_message
+    assert pytest.result2[0] == ResultCode.REJECTED
