@@ -46,7 +46,7 @@ server:
                 - "tango::logger"
               - name: "LoggingLevelDefault"
                 values:
-                - "{{coalesce $.values.deviceservers.cspsubarrayleafnode.LoggingLevel $.values.global.TMCLoggingLevel }}"
+                - "{{coalesce $.values.deviceServers.cspsubarrayleafnode.LoggingLevel $.values.global.TMCLoggingLevel }}"
               - name: "DelayModelTimeInAdvance"
                 values:
                 - "{{ $DelayModelTimeInAdvance }}"

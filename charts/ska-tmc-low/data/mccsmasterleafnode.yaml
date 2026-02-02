@@ -27,7 +27,7 @@ server:
           - "tango::logger"
         - name: "LoggingLevelDefault"
           values:
-          - "{{coalesce $.values.deviceservers.mccsmasterleafnode.LoggingLevel $.values.global.TMCLoggingLevel }}"
+          - "{{coalesce $.values.deviceServers.mccsmasterleafnode.LoggingLevel $.values.global.TMCLoggingLevel }}"
         - name: "LivelinessCheckPeriod"
           values:
           - "{{.Values.deviceServers.mccsmasterleafnode.LivelinessCheckPeriod}}"

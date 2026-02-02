@@ -40,7 +40,7 @@ server:
                 - "tango::logger"
             - name: "LoggingLevelDefault"
               values:
-                - "{{coalesce $.values.deviceservers.resourcemonitor.LoggingLevel $.values.global.TMCLoggingLevel }}"
+                - "{{coalesce $.values.deviceServers.resourcemonitor.LoggingLevel $.values.global.TMCLoggingLevel }}"
 
   {{- end}}
 depends_on:
