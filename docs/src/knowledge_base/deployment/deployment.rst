@@ -76,7 +76,7 @@ a default timeout value during the deployment phase. This ensures that an initia
 timeout value is preconfigured when the component starts for the first time.
 
 Usage
------
+~~~~~
 
 * **CommandTimeout attribute**
   - Can be updated at runtime without redeployment.
@@ -102,6 +102,14 @@ seconds.
     subsystems. The higher level nodes need to factor in the command timeout
     set on lower level components.
 
+Logging
+-------
+
+The basic setting for logging allows setting logging level of all TMC devices 
+via ``TMCLoggingLevel`` parameter in **global** section. By default, the 
+logging level is set to 4 (``INFO`` level). To set the logging level of one or  
+more specific component, refer to advanced cutomization options.
+
 Advanced Customization options
 ===============================
 
@@ -111,8 +119,8 @@ done carefully.
 
 
 #. **file** : User can provide custom device server configuration file to
-nodes. Defaults are:
-`configuration files <https://gitlab.com/ska-telescope/ska-tmc/ska-tmc-low-integration/-/blob/main/charts/ska-tmc-low/data/>`_.
+    nodes. Defaults are:
+    `configuration files <https://gitlab.com/ska-telescope/ska-tmc/ska-tmc-low-integration/-/blob/main/charts/ska-tmc-low/data/>`_.
 
 #. **enabled** : User can opt to disable any node by setting this value to False.Default is True for all nodes.
 
@@ -140,6 +148,10 @@ nodes. Defaults are:
     #. **resource_monitor_prefix** : This value is present under global. It can be used to change the FQDN prefix of the Resource Monitor device.
 
 #. **subarray_devices** : List of subarray-devices
+
+#. **LoggingLevel** : To set the logging level of specific type of TMC component, set this key under 
+    **deviceServers -> <component name>** in `values.yaml`. This is optional parameter. If specified, it takes precedence over the value 
+    specified in ``TMCLoggingLevel`` in global section.
 
 Component specific configuration
 ---------------------------------
