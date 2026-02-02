@@ -70,7 +70,7 @@ server:
             - "tango::logger"
         - name: "LoggingLevelDefault"
           values:
-            - "{{coalesce $.Values.deviceServers.centralnode.LoggingLevel $.values.global.TMCLoggingLevel }}"
+            - "{{coalesce $.Values.deviceServers.centralnode.LoggingLevel $.Values.global.TMCLoggingLevel }}"
         - name: "CommandTimeOutDefault"
           values:
             - "{{.Values.deviceServers.centralnode.CommandTimeOutDefault}}"
