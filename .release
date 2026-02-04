@@ -1,21 +1,18 @@
-release=2.9.0-rc.1
-tag=2.9.0-rc.1
+release=2.9.0
+tag=2.9.0
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.9.0-rc.1**
+**1. ska-tmc-low-integration 2.9.0**
 
-    **1.1 ska-tmc-low 2.8.1-rc.1 - 2.9.0-rc.1:**
-        * Improved Abort Retry mechanism to resolve SKB-1158
-
+    **1.1 ska-tmc-low 2.8.1 - 2.9.0:**
+        * TMC Low Configure schema updated to include the "field" key for ADR-63 compliance
 
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.9.0-rc.1**
+**1. ska-tmc-low-integration 2.9.0**
 
-    **1.1 ska-tmc-low 2.8.1-rc.1 - 2.9.0-rc.1:**
-        * Improved Abort Retry mechanism to resolve SKB-1158
-
-
+    **1.1 ska-tmc-low 2.8.1 - 2.9.0:**
+        * TMC Low Configure schema updated to include the "field" key for ADR-63 compliance

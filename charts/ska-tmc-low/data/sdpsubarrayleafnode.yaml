@@ -33,7 +33,7 @@ server:
                 - "tango::logger"
               - name: "LoggingLevelDefault"
                 values:
-                - "5"
+                - "{{coalesce $.Values.deviceServers.sdpsubarrayleafnode.LoggingLevel $.Values.global.TMCLoggingLevel }}"
               - name: "CommandTimeOutDefault"
                 values:
                 - "{{ $CommandTimeOutDefault }}"
