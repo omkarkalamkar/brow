@@ -76,7 +76,7 @@ a default timeout value during the deployment phase. This ensures that an initia
 timeout value is preconfigured when the component starts for the first time.
 
 Usage
-~~~~~
+^^^^^^
 
 * **CommandTimeout attribute**
   - Can be updated at runtime without redeployment.
@@ -149,9 +149,10 @@ done carefully.
 
 #. **subarray_devices** : List of subarray-devices
 
-#. **LoggingLevel** : To set the logging level of specific type of TMC component, set this key under 
-    **deviceServers -> <component name>** in `values.yaml`. This is optional parameter. If specified, it takes precedence over the value 
-    specified in ``TMCLoggingLevel`` in global section.
+#. **LoggingLevel** : To set the logging level of specific type of TMC component, \
+   set this key under **deviceServers -> <component name>** in `values.yaml`. \
+   This is optional parameter. If specified, it takes precedence over the value 
+   specified in ``TMCLoggingLevel`` in global section.
 
 Component specific configuration
 ---------------------------------
