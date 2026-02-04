@@ -9,7 +9,17 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 ************
 Updated
 -------
-* TMC Scan command supports optional field start_time to comply with ADR-111
+* TMC Scan command supports optional field start_time to comply with ADR-111.
+* TMC Low supports upto 30 PSS beams
+* Updated CentralNode to v0.29.1
+* Updated CspleafNodes to v0.38.1
+* Updated ska-tango-taranta to v2.18.2
+* Updated TMC Low Configure schema to v6.0
+* Updated RTD to reflect the changes for PSS
+
+Fixed
+-----
+* Fixed teardown issues in case of second subarray
 
 [2.9.0-rc.1]
 ************
