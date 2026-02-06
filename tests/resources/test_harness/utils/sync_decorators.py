@@ -59,7 +59,7 @@ def sync_set_to_standby(func):
     return wrapper
 
 
-def sync_release_resources(device_dict, timeout=200):
+def sync_release_resources(device_dict, timeout=300):
     def decorator_sync_release_resources(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
