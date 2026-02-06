@@ -1,4 +1,4 @@
-@XTP_STN_BEAM_DELAY
+@XTP-101098 @XTP-98925 @XTP-28348 @TEAM_HIMALAYA
 Scenario: TMC generates delay values for different station beams
     Given the telescope is in the ON state
     And subarray is in obsState IDLE
