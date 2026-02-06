@@ -15,7 +15,7 @@ Updated
 * Updated CspleafNodes to v0.38.1
 * Updated ska-tango-taranta to v2.18.2
 * Updated TMC Low Configure schema to v6.0
-* Updated RTD to reflect the changes for PSS
+* Updated RTD to reflect the changes for PSS.
 
 Fixed
 -----
