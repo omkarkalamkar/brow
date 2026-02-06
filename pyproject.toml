@@ -20,7 +20,7 @@ url = 'https://pypi.org/simple'
 [tool.poetry.dependencies]
 python = "^3.10"
 ska-control-model = "1.0.0"
-ska-tango-base = "1.4.0"
+ska-tango-base = "1.0.0"
 pytango = "9.5.0"
 numpy = "^1.23.0"
 ska-tango-testing = "0.7.2"
