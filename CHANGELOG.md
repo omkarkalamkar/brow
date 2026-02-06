@@ -7,7 +7,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 [2.9.0]
 ***********
-This is the full release of 2.9.0-rc.1. TMC Low is now compliant with ADR-63 and supports non-sidereal tracking.
+* This is the full release of 2.9.0-rc.1. TMC Low is now compliant with ADR-63 and supports non-sidereal tracking.
 
 [2.9.0-rc.1]
 ***********
