@@ -124,6 +124,14 @@ resource_monitor:
     image: ska-tmc-resource-monitor
     tag: 0.5.0
     pullPolicy: IfNotPresent
+  
+skatmcsimulators:
+  image:
+    registry: artefact.skao.int
+    image: ska-tmc-simulators
+    tag: 1.9.5
+    pullPolicy: IfNotPresent
+
 
 resources:
   limits:
