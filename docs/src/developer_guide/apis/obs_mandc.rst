@@ -74,3 +74,23 @@ Following are the details of the attributes exposed for PST beams:
 |                             | station beam reference, weights, and sky field |
 |                             | attributes.                                    |
 +-----------------------------+------------------------------------------------+
+
+Following are the details of the attributes exposed for PSS beams:
+
++-----------------------------+------------------------------------------------+
+| **Attribute**               | **Description**                                |
++=============================+================================================+
+| delayModelPSSBeam1          | Delay model data for PSS Beam 1. Maps to       |
+|                             | `csp.lowcbf.search_beams.beams[0]`. Includes   |
+|                             | station beam reference, weights                |
++-----------------------------+------------------------------------------------+
+| delayModelPSSBeam2          | Delay model data for PSS Beam 2. Maps to       |
+|                             | `csp.lowcbf.search_beams.beams[1]`. Includes   |
+|                             | station beam reference, weights                |
++-----------------------------+------------------------------------------------+
+| delayModelPSSBeamN          | Similarly, Delay model data for PSS Beam N.    |
+|                             | Maps to `csp.lowcbf.search_beams.beams[N-1]`.  |
+|                             | Includes station beam reference, weights.      |
+|                             | **Here N can range from 1 to 30 (TMC supports  |
+|                             | upto 30 pss beams currently)**                 |
++-----------------------------+------------------------------------------------+

@@ -12,6 +12,9 @@ entrypoints:
 {{- $PSTDelayModelTimeInAdvance := .Values.deviceServers.cspsubarrayleafnode.PSTDelayModelTimeInAdvance }}
 {{- $PSTDelayCadence := .Values.deviceServers.cspsubarrayleafnode.PSTDelayCadence }}
 {{- $PSTDelayValidityPeriod := .Values.deviceServers.cspsubarrayleafnode.PSTDelayValidityPeriod }}
+{{- $PSSDelayModelTimeInAdvance := .Values.deviceServers.cspsubarrayleafnode.pss.delay_model_time_in_advance }}
+{{- $PSSDelayCadence := .Values.deviceServers.cspsubarrayleafnode.pss.delay_cadence }}
+{{- $PSSDelayValidityPeriod := .Values.deviceServers.cspsubarrayleafnode.pss.delay_validity_period }}
 {{- $CommandTimeOutDefault := .Values.deviceServers.cspsubarrayleafnode.CommandTimeOutDefault }}
 {{- $AdapterTimeOut := .Values.deviceServers.cspsubarrayleafnode.AdapterTimeOut }}
 {{- $LivelinessCheckPeriod := .Values.deviceServers.cspsubarrayleafnode.LivelinessCheckPeriod }}
@@ -65,6 +68,15 @@ server:
               - name: "PSTDelayValidityPeriod"
                 values:
                 - "{{ $PSTDelayValidityPeriod }}"
+              - name: "PSSDelayModelTimeInAdvance"
+                values:
+                - "{{ $PSSDelayModelTimeInAdvance }}"
+              - name: "PSSDelayCadence"
+                values:
+                - "{{ $PSSDelayCadence }}"
+              - name: "PSSDelayValidityPeriod"
+                values:
+                - "{{ $PSSDelayValidityPeriod }}"
               - name: "CommandTimeOutDefault"
                 values:
                 - "{{ $CommandTimeOutDefault }}"
