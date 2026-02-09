@@ -72,7 +72,7 @@ centralnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-centralnode
-    tag: 0.25.1
+    tag: 0.29.1
     pullPolicy: IfNotPresent
 
 subarraynode:
@@ -93,14 +93,14 @@ cspmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.38.0
+    tag: 0.38.1
     pullPolicy: IfNotPresent
 
 cspsubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.38.0
+    tag: 0.38.1
     pullPolicy: IfNotPresent
 
 mccsmasterleafnode:
@@ -224,10 +224,14 @@ deviceServers:
     TelmodelPath: instrument/ska1_low/layout/low-layout.json
     DelayCadence: 300.0
     DelayValidityPeriod: 600.0
-    DelayModelTimeInAdvance: 600
+    DelayModelTimeInAdvance: 0
     PSTDelayCadence: 300.0
     PSTDelayValidityPeriod: 600.0
-    PSTDelayModelTimeInAdvance: 600
+    PSTDelayModelTimeInAdvance: 0
+    pss:
+      delay_cadence: 300.0
+      delay_validity_period: 600.0
+      delay_model_time_in_advance: 0
     CommandTimeOutDefault: 50
     AdapterTimeOut: 2.0
     LivelinessCheckPeriod: 0.5

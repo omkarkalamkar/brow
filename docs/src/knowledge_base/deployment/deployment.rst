@@ -215,6 +215,9 @@ CSP Subarray Leaf Node
     #. **PSTDelayCadence** :  This refers to the time difference (in seconds) between each publication of delay values for the PST beam. Currently defaults to 300 seconds.
     #. **PSTDelayValidityPeriod** : This represents the duration (in seconds) for which delay values remain valid after being published. Currently defaults to 600 seconds.
     #. **PSTDelayModelTimeInAdvance** : This indicates the time in seconds by which delay values need to be available in advance. Currently defaults to 600 seconds.
+    #. **PSSDelayCadence** :  This refers to the time difference (in seconds) between each publication of delay values for the PSS beam. Currently defaults to 300 seconds.
+    #. **PSSDelayValidityPeriod** : This represents the duration (in seconds) for which delay values remain valid after being published. Currently defaults to 600 seconds.
+    #. **PSSDelayModelTimeInAdvance** : This indicates the time in seconds by which delay values need to be available in advance. Currently defaults to 600 seconds.
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
     #. **EventSubscriptionCheckPeriod** :  This refers to the Period (in seconds) for the event subscriber to check the device subscriptions in a loop. Currently defaults to 0.5 seconds.
     #. **CommandTimeOutDefault** :  This refers to the timeout (in seconds) for the command execution. Currently defaults to 50 seconds.

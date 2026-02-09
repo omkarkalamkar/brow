@@ -19,11 +19,7 @@
       "apertures": [
         {
           "aperture_id": "AP001.01",
-          "weighting_key_ref": "aperture2"
-        },
-        {
-          "aperture_id": "AP002.01",
-          "weighting_key_ref": "aperture2"
+          "weighting_key_ref": "aperture1"
         }
       ],
       "field": {
@@ -50,11 +46,7 @@
       ],
       "apertures": [
         {
-          "aperture_id": "AP003.01",
-          "weighting_key_ref": "aperture2"
-        },
-        {
-          "aperture_id": "AP004.01",
+          "aperture_id": "AP002.01",
           "weighting_key_ref": "aperture2"
         }
       ],
@@ -64,198 +56,6 @@
         "attrs": {
           "c1": 181.0,
           "c2": 46.0
-        }
-      }
-    },
-    {
-      "subarray_beam_id": 3,
-      "update_rate": 0.0,
-      "logical_bands": [
-        {
-          "start_channel": 112,
-          "number_of_channels": 16
-        },
-        {
-          "start_channel": 416,
-          "number_of_channels": 16
-        }
-      ],
-      "apertures": [
-        {
-          "aperture_id": "AP005.01",
-          "weighting_key_ref": "aperture2"
-        },
-        {
-          "aperture_id": "AP006.01",
-          "weighting_key_ref": "aperture2"
-        }
-      ],
-      "field": {
-        "target_name": "Polaris Australis",
-        "reference_frame": "icrs",
-        "attrs": {
-          "c1": 181.0,
-          "c2": 46.0
-        }
-      }
-    },
-    {
-      "subarray_beam_id": 4,
-      "update_rate": 0.0,
-      "logical_bands": [
-        {
-          "start_channel": 128,
-          "number_of_channels": 16
-        },
-        {
-          "start_channel": 432,
-          "number_of_channels": 16
-        }
-      ],
-      "apertures": [
-        {
-          "aperture_id": "AP007.01",
-          "weighting_key_ref": "aperture2"
-        },
-        {
-          "aperture_id": "AP008.01",
-          "weighting_key_ref": "aperture2"
-        }
-      ],
-      "field": {
-        "target_name": "Polaris Australis",
-        "reference_frame": "icrs",
-        "attrs": {
-          "c1": 183.0,
-          "c2": 48.0
-        }
-      }
-    },
-    {
-      "subarray_beam_id": 5,
-      "update_rate": 0.0,
-      "logical_bands": [
-        {
-          "start_channel": 80,
-          "number_of_channels": 16
-        },
-        {
-          "start_channel": 384,
-          "number_of_channels": 16
-        }
-      ],
-      "apertures": [
-        {
-          "aperture_id": "AP009.01",
-          "weighting_key_ref": "aperture2"
-        },
-        {
-          "aperture_id": "AP010.01",
-          "weighting_key_ref": "aperture2"
-        }
-      ],
-      "field": {
-        "target_name": "Polaris Australis",
-        "reference_frame": "icrs",
-        "attrs": {
-          "c1": 180.0,
-          "c2": 45.0
-        }
-      }
-    },
-    {
-      "subarray_beam_id": 6,
-      "update_rate": 0.0,
-      "logical_bands": [
-        {
-          "start_channel": 96,
-          "number_of_channels": 16
-        },
-        {
-          "start_channel": 400,
-          "number_of_channels": 16
-        }
-      ],
-      "apertures": [
-        {
-          "aperture_id": "AP011.01",
-          "weighting_key_ref": "aperture2"
-        },
-        {
-          "aperture_id": "AP012.01",
-          "weighting_key_ref": "aperture2"
-        }
-      ],
-      "field": {
-        "target_name": "Polaris Australis",
-        "reference_frame": "icrs",
-        "attrs": {
-          "c1": 181.0,
-          "c2": 46.0
-        }
-      }
-    },
-    {
-      "subarray_beam_id": 7,
-      "update_rate": 0.0,
-      "logical_bands": [
-        {
-          "start_channel": 112,
-          "number_of_channels": 16
-        },
-        {
-          "start_channel": 416,
-          "number_of_channels": 16
-        }
-      ],
-      "apertures": [
-        {
-          "aperture_id": "AP013.01",
-          "weighting_key_ref": "aperture2"
-        },
-        {
-          "aperture_id": "AP014.01",
-          "weighting_key_ref": "aperture2"
-        }
-      ],
-      "field": {
-        "target_name": "Polaris Australis",
-        "reference_frame": "icrs",
-        "attrs": {
-          "c1": 182.0,
-          "c2": 47.0
-        }
-      }
-    },
-    {
-      "subarray_beam_id": 8,
-      "update_rate": 0.0,
-      "logical_bands": [
-        {
-          "start_channel": 128,
-          "number_of_channels": 16
-        },
-        {
-          "start_channel": 432,
-          "number_of_channels": 16
-        }
-      ],
-      "apertures": [
-        {
-          "aperture_id": "AP015.01",
-          "weighting_key_ref": "aperture2"
-        },
-        {
-          "aperture_id": "AP016.01",
-          "weighting_key_ref": "aperture2"
-        }
-      ],
-      "field": {
-        "target_name": "Polaris Australis",
-        "reference_frame": "icrs",
-        "attrs": {
-          "c1": 183.0,
-          "c2": 48.0
         }
       }
     }
@@ -275,14 +75,13 @@
         "stations": {
           "stns": [
             [1, 1],
-            [2, 1],
-            [3, 1],
-            [4, 1],
-            [5, 1],
-            [6, 1]
+            [2, 1]
           ],
           "stn_beams": [{
             "beam_id": 1,
+            "freq_ids": [400]
+          }, {
+            "beam_id": 2,
             "freq_ids": [400]
           }]
         },
@@ -333,6 +132,14 @@
           "beams": [{
             "pss_beam_id": 1,
             "stn_beam_id": 1,
+            "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
+          }, {
+            "pss_beam_id": 2,
+            "stn_beam_id": 1,
+            "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
+          }, {
+            "pss_beam_id": 3,
+            "stn_beam_id": 2,
             "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
           }]
         }
@@ -391,6 +198,18 @@
       "pss": {
         "beam": [{
           "beam_id": 1,
+          "reference_frame": "ICRS",
+          "ra": 82.75,
+          "dec": 21.0,
+          "centre_frequency": 1400.0
+        }, {
+          "beam_id": 2,
+          "reference_frame": "ICRS",
+          "ra": 82.75,
+          "dec": 21.0,
+          "centre_frequency": 1400.0
+        }, {
+          "beam_id": 3,
           "reference_frame": "ICRS",
           "ra": 82.75,
           "dec": 21.0,

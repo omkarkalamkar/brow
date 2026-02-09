@@ -30,6 +30,10 @@ from tests.resources.test_harness.constant import (
     tmc_low_subarraynode1,
 )
 from tests.resources.test_harness.event_recorder import EventRecorder
+from tests.resources.test_harness.helpers import (
+    get_device_dict,
+    wait_for_partial_or_complete_abort,
+)
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_harness.utils.sync_decorators import (
     sync_abort,
@@ -85,6 +89,9 @@ class CentralNodeWrapperLow(object):
         )
         self.event_tracer = TangoEventTracer()
         self.event_recorder = EventRecorder()
+        self.device_dict = get_device_dict(
+            int(self.get_subarray_id(self.subarray_node))
+        )
         self.event_recorder.subscribe_event(
             self.central_node, "longRunningCommandResult"
         )
@@ -131,6 +138,7 @@ class CentralNodeWrapperLow(object):
                 "mccs_subarray_leaf_node": self.mccs_subarray_leaf_node,
             }
         )
+        self.device_dict = get_device_dict(int(subarray_id))
 
     def get_subarray_devices_by_id(self, subarray_id):
         subarray_id = "{:02d}".format(int(subarray_id))
@@ -226,24 +234,20 @@ class CentralNodeWrapperLow(object):
 
     def tear_down_subarray(self, subarray: DeviceProxy):
         """Tear down subarray"""
+        subarray_id = int(self.get_subarray_id(subarray))
         LOGGER.info("Subarray Node ObsState: %s", self.subarray_node.obsstate)
-        if subarray.obsState not in [ObsState.EMPTY, ObsState.IDLE]:
-            LOGGER.info("Calling Restart on SubarrayNode")
+        if subarray.obsState not in [
+            ObsState.EMPTY,
+            ObsState.IDLE,
+            ObsState.FAULT,
+            ObsState.ABORTED,
+        ]:
+            LOGGER.info("Invoking Abort on Subarray %s", subarray_id)
+            self.subarray_abort()
+            wait_for_partial_or_complete_abort(subarray_id=subarray_id)
+            LOGGER.info("Calling Restart on SubarrayNode %s", subarray_id)
             _, unique_id = self.subarray_restart()
-            assert_that(self.event_tracer).described_as(
-                "FAILED ASSUMPTION AFTER RESTART COMMAND: "
-                "SubarrayNode device"
-                f"({self.subarray_node.dev_name()}) "
-                "is expected have longRunningCommand as"
-                '(unique_id,(ResultCode.OK,"Command Completed"))',
-            ).within_timeout(TIMEOUT).has_change_event_occurred(
-                self.subarray_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
+
         elif subarray.obsState == ObsState.IDLE:
             LOGGER.info("Calling Release Resource on centralnode")
             release_data = json.loads(self.release_input)
@@ -261,6 +265,23 @@ class CentralNodeWrapperLow(object):
                 '(unique_id,(ResultCode.OK,"Command Completed"))',
             ).within_timeout(TIMEOUT).has_change_event_occurred(
                 self.central_node,
+                "longRunningCommandResult",
+                (
+                    unique_id[0],
+                    json.dumps((int(ResultCode.OK), "Command Completed")),
+                ),
+            )
+        elif subarray.obsState in [ObsState.FAULT, ObsState.ABORTED]:
+            LOGGER.info("Calling Restart on SubarrayNode %s", subarray_id)
+            _, unique_id = self.subarray_restart()
+            assert_that(self.event_tracer).described_as(
+                "FAILED ASSUMPTION AFTER RESTART COMMAND: "
+                "SubarrayNode device"
+                f"({self.subarray_node.dev_name()}) "
+                "is expected have longRunningCommand as"
+                '(unique_id,(ResultCode.OK,"Command Completed"))',
+            ).within_timeout(TIMEOUT).has_change_event_occurred(
+                self.subarray_node,
                 "longRunningCommandResult",
                 (
                     unique_id[0],
@@ -500,3 +521,9 @@ class CentralNodeWrapperLow(object):
             mccs_master_device.adminMode = 0
         if mccs_subarray_device.adminMode != 0:
             mccs_subarray_device.adminMode = 0
+
+    def get_subarray_id(self, subarray: DeviceProxy) -> str:
+        """Returns current subarray id from the subarray_node device proxy."""
+
+        subarray_node = subarray.dev_name()
+        return f"{subarray_node[-2:]}"
