@@ -12,17 +12,17 @@ maintainers:
     email: devesh.ska@gmail.com
 dependencies:
   - name: ska-tango-util
-    version: 1.0.5
+    version: 0.4.24
     repository: https://artefact.skao.int/repository/helm-internal
   - name: ska-tango-base
-    version: 1.0.5
+    version: 0.4.24
     repository: https://artefact.skao.int/repository/helm-internal
   - name: ska-tmc-low
     version: 2.9.0-rc.1
     repository: file://../ska-tmc-low
     alias: tmc-low
   - name: ska-tango-taranta
-    version: 2.14.1
+    version: 2.18.2
     repository: https://artefact.skao.int/repository/helm-internal
     condition: ska-taranta.enabled
   - name: ska-tango-tangogql

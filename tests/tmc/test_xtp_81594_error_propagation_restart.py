@@ -20,6 +20,9 @@ from tests.resources.test_harness.constant import (
     ERROR_PROPAGATION_DEFECT,
     FAILED_RESULT_DEFECT,
 )
+from tests.resources.test_harness.helpers import (
+    wait_for_partial_or_complete_abort,
+)
 
 TIMEOUT = 60
 
@@ -73,6 +76,7 @@ def subarray_in_aborted_state(
         default_commands_inputs,
         wait_termination=True,
     )
+    wait_for_partial_or_complete_abort()
 
 
 @when(

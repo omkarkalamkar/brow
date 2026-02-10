@@ -107,6 +107,9 @@ def verify_subarrys_in_idle(
     central_node_low.set_subarray_id(2)
     assign_data = json.loads(assign_input_json)
     assign_data["subarray_id"] = 2
+    # pss_beam_ids can not be shared between subarrays for TMC low
+    if "pss" in assign_data["csp"]:
+        assign_data["csp"]["pss"]["pss_beam_ids"] = [4, 5, 6]
     central_node_low.perform_action("AssignResources", json.dumps(assign_data))
     assert_that(event_tracer).described_as(
         "TMC subarray device"

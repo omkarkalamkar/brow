@@ -23,16 +23,25 @@ from tango import DeviceProxy
 from tests.resources.test_harness.constant import (
     INTERMEDIATE_CONFIGURING_OBS_STATE_DEFECT,
     INTERMEDIATE_STATE_DEFECT,
+    low_csp_master,
     low_csp_subarray1,
+    low_csp_subarray2,
     low_csp_subarray_leaf_node,
+    low_csp_subarray_leaf_node2,
+    low_sdp_master,
     low_sdp_subarray1,
+    low_sdp_subarray2,
     low_sdp_subarray_leaf_node,
+    low_sdp_subarray_leaf_node2,
     mccs_controller,
     mccs_pasdbus_prefix,
     mccs_prefix,
     mccs_subarray1,
+    mccs_subarray2,
     mccs_subarray_leaf_node,
+    mccs_subarray_leaf_node2,
     tmc_low_subarraynode1,
+    tmc_low_subarraynode2,
 )
 from tests.resources.test_harness.event_recorder import EventRecorder
 from tests.resources.test_harness.utils.common_utils import JsonFactory
@@ -46,15 +55,53 @@ TIMEOUT = 20
 EB_PB_ID_LENGTH = 16
 
 
-device_dict = {
-    "sdp_subarray": low_sdp_subarray1,
-    "csp_subarray": low_csp_subarray1,
-    "mccs_subarray": mccs_subarray1,
-    "tmc_subarraynode": tmc_low_subarraynode1,
-    "csp_subarray_leaf_node": low_csp_subarray_leaf_node,
-    "sdp_subarray_leaf_node": low_sdp_subarray_leaf_node,
-    "mccs_subarray_leaf_node": mccs_subarray_leaf_node,
-}
+def get_device_dict(subarray_id: int = 1) -> dict:
+    """
+    Get device attribute map based on subarray ID.
+
+    Args:
+        subarray_id (int): Subarray identifier (1 or 2). Defaults to 1.
+
+    Returns:
+        dict: Device attribute map with subarray-specific device names.
+
+    Raises:
+        ValueError: If subarray_id is not 1 or 2.
+    """
+    if subarray_id == 1:
+        return {
+            "csp_master": low_csp_master,
+            "sdp_master": low_sdp_master,
+            "mccs_master": mccs_controller,
+            "sdp_subarray": low_sdp_subarray1,
+            "csp_subarray": low_csp_subarray1,
+            "mccs_subarray": mccs_subarray1,
+            "tmc_subarraynode": tmc_low_subarraynode1,
+            "csp_subarray_leaf_node": low_csp_subarray_leaf_node,
+            "sdp_subarray_leaf_node": low_sdp_subarray_leaf_node,
+            "mccs_subarray_leaf_node": mccs_subarray_leaf_node,
+        }
+    elif subarray_id == 2:
+        return {
+            "csp_master": low_csp_master,
+            "sdp_master": low_sdp_master,
+            "mccs_master": mccs_controller,
+            "sdp_subarray": low_sdp_subarray2,
+            "csp_subarray": low_csp_subarray2,
+            "mccs_subarray": mccs_subarray2,
+            "tmc_subarraynode": tmc_low_subarraynode2,
+            "csp_subarray_leaf_node": low_csp_subarray_leaf_node2,
+            "sdp_subarray_leaf_node": low_sdp_subarray_leaf_node2,
+            "mccs_subarray_leaf_node": mccs_subarray_leaf_node2,
+        }
+    else:
+        raise ValueError(
+            f"Invalid subarray_id: {subarray_id}. Must be 1 or 2."
+        )
+
+
+# Default device dict for backward compatibility
+device_dict = get_device_dict(1)
 
 
 def check_subarray_instance(device, subarray_id):
@@ -131,7 +178,9 @@ def check_subarray_obsstate(
         )
 
 
-def check_subarray_obs_state(obs_state: str = None, timeout: int = 50) -> bool:
+def check_subarray_obs_state(
+    obs_state: str = None, timeout: int = 50, subarray_id: int = 1
+) -> bool:
     """
     Logs and checks if all subarray nodes have transitioned to the given
     obsState.
@@ -140,38 +189,46 @@ def check_subarray_obs_state(obs_state: str = None, timeout: int = 50) -> bool:
         obs_state (str): The target obsState to check for all subarray nodes.
         timeout (int): Timeout for waiting for the state transition
         (in seconds).
+        subarray_id (int): Subarray identifier (1 or 2). Defaults to 1.
 
     Returns:
         bool: True if all subarray nodes have transitioned to the given
         obsState, False otherwise.
     """
+    device_map = get_device_dict(subarray_id)
+
+    tmc_subarraynode = device_map["tmc_subarraynode"]
+    sdp_subarray = device_map["sdp_subarray"]
+    csp_subarray = device_map["csp_subarray"]
+    mccs_subarray = device_map["mccs_subarray"]
+
     LOGGER.info(
-        f"{tmc_low_subarraynode1}.obsState : "
-        + str(Resource(tmc_low_subarraynode1).get("obsState"))
+        f"{tmc_subarraynode}.obsState : "
+        + str(Resource(tmc_subarraynode).get("obsState"))
     )
     LOGGER.info(
-        f"{low_sdp_subarray1}.obsState : "
-        + str(Resource(low_sdp_subarray1).get("obsState"))
+        f"{sdp_subarray}.obsState : "
+        + str(Resource(sdp_subarray).get("obsState"))
     )
     LOGGER.info(
-        f"{low_csp_subarray1}.obsState : "
-        + str(Resource(low_csp_subarray1).get("obsState"))
+        f"{csp_subarray}.obsState : "
+        + str(Resource(csp_subarray).get("obsState"))
     )
     LOGGER.info(
-        f"{mccs_subarray1}.obsState : "
-        + str(Resource(mccs_subarray1).get("obsState"))
+        f"{mccs_subarray}.obsState : "
+        + str(Resource(mccs_subarray).get("obsState"))
     )
 
-    the_waiter = Waiter(**device_dict)
+    the_waiter = Waiter(**device_map)
     the_waiter.set_wait_for_obs_state(obs_state=obs_state)
     the_waiter.wait(timeout / 0.1)
 
     return all(
         [
-            Resource(low_sdp_subarray1).get("obsState") == obs_state,
-            Resource(mccs_subarray1).get("obsState") == obs_state,
-            Resource(tmc_low_subarraynode1).get("obsState") == obs_state,
-            Resource(low_csp_subarray1).get("obsState") == obs_state,
+            Resource(sdp_subarray).get("obsState") == obs_state,
+            Resource(mccs_subarray).get("obsState") == obs_state,
+            Resource(tmc_subarraynode).get("obsState") == obs_state,
+            Resource(csp_subarray).get("obsState") == obs_state,
         ]
     )
 
@@ -307,6 +364,7 @@ def set_subarray_to_given_obs_state(
     obs_state: str,
     event_recorder,
     command_input_factory,
+    subarray_id: int = 1,
 ):
     """
     Sets the Subarray node to the specified obsState and verifies state
@@ -318,17 +376,22 @@ def set_subarray_to_given_obs_state(
         event_recorder: Utility to record and subscribe to events.
         command_input_factory: Factory to generate input commands for the
         transitions.
+        subarray_id (int): Subarray identifier (1 or 2). Defaults to 1.
 
     Returns:
         None
     """
+    device_map = get_device_dict(subarray_id)
+    csp_subarray_device = device_map["csp_subarray"]
+    sdp_subarray_device = device_map["sdp_subarray"]
+
     match obs_state:
         case "RESOURCING":
-            csp_subarray = DeviceProxy(low_csp_subarray1)
+            csp_subarray = DeviceProxy(csp_subarray_device)
             csp_subarray.SetDefective(json.dumps(INTERMEDIATE_STATE_DEFECT))
             subarray_node.force_change_of_obs_state(obs_state)
 
-            sdp_subarray = DeviceProxy(low_sdp_subarray1)
+            sdp_subarray = DeviceProxy(sdp_subarray_device)
             event_recorder.subscribe_event(sdp_subarray, "obsState")
             assert event_recorder.has_change_event_occurred(
                 sdp_subarray,
@@ -339,7 +402,7 @@ def set_subarray_to_given_obs_state(
 
         case "CONFIGURING":
             subarray_node.force_change_of_obs_state("IDLE")
-            csp_subarray = DeviceProxy(low_csp_subarray1)
+            csp_subarray = DeviceProxy(csp_subarray_device)
             csp_subarray.SetDefective(
                 json.dumps(INTERMEDIATE_CONFIGURING_OBS_STATE_DEFECT)
             )
@@ -348,7 +411,7 @@ def set_subarray_to_given_obs_state(
             )
             subarray_node.execute_transition("Configure", configure_input)
 
-            sdp_subarray = DeviceProxy(low_sdp_subarray1)
+            sdp_subarray = DeviceProxy(sdp_subarray_device)
             event_recorder.subscribe_event(sdp_subarray, "obsState")
             assert event_recorder.has_change_event_occurred(
                 sdp_subarray,
@@ -952,17 +1015,26 @@ def modify_json_with_duplicate_ids(
     return json.dumps(assign_json_duplicate_eb_pb_id, indent=2)
 
 
-def wait_for_partial_or_complete_abort(timeout: int = 110) -> None:
+def wait_for_partial_or_complete_abort(
+    timeout: int = 110, subarray_id: int = 1
+) -> None:
     """Wait for completion of Partial/Full abort on SubarrayNode by waiting for
     one of 3 states on all the devices - ABORTED, EMPTY, or FAULT until
     occurrence of timeout.
 
     :param timeout: Timeout value to wait for.
+    :param subarray_id: Subarray identifier (1 or 2). Defaults to 1.
     """
+    device_map = get_device_dict(subarray_id)
+    tmc_subarraynode = device_map["tmc_subarraynode"]
+    csp_subarray_leaf_node = device_map["csp_subarray_leaf_node"]
+    sdp_subarray_leaf_node = device_map["sdp_subarray_leaf_node"]
+    mccs_subarray_leaf_node = device_map["mccs_subarray_leaf_node"]
+
     DEVICE_ATTRIBUTE_MAP = {
-        DeviceProxy(tmc_low_subarraynode1): "obsState",
-        DeviceProxy(low_csp_subarray_leaf_node): "cspSubarrayObsState",
-        DeviceProxy(low_sdp_subarray_leaf_node): "sdpSubarrayObsState",
+        DeviceProxy(tmc_subarraynode): "obsState",
+        DeviceProxy(csp_subarray_leaf_node): "cspSubarrayObsState",
+        DeviceProxy(sdp_subarray_leaf_node): "sdpSubarrayObsState",
         DeviceProxy(mccs_subarray_leaf_node): "obsState",
     }
     event_recorder = EventRecorder()
@@ -973,10 +1045,7 @@ def wait_for_partial_or_complete_abort(timeout: int = 110) -> None:
 
     # Asserting Events
     for dev_proxy, attribute_name in DEVICE_ATTRIBUTE_MAP.items():
-        if (
-            dev_proxy.dev_name()
-            == DeviceProxy(tmc_low_subarraynode1).dev_name()
-        ):
+        if dev_proxy.dev_name() == DeviceProxy(tmc_subarraynode).dev_name():
             assert event_recorder.has_change_event_occurred_for_given_values(
                 dev_proxy,
                 attribute_name,

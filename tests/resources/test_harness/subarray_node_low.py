@@ -25,6 +25,7 @@ from tests.resources.test_harness.constant import (
 from tests.resources.test_harness.event_recorder import EventRecorder
 from tests.resources.test_harness.helpers import (
     check_subarray_obs_state,
+    get_device_dict,
     update_eb_pb_ids,
     wait_for_partial_or_complete_abort,
 )
@@ -108,6 +109,7 @@ class SubarrayNodeWrapperLow:
         self.READY_OBS_STATE = READY
         self.ABORTED_OBS_STATE = ABORTED
         self.event_recorder = EventRecorder()
+        self.device_dict = get_device_dict(int(self.get_subarray_id()))
 
     @property
     def state(self) -> DevState:
@@ -280,10 +282,8 @@ class SubarrayNodeWrapperLow:
     def set_subarray_id(self, requested_subarray_id: str) -> None:
         """This method creates subarray devices for the requested subarray
         id"""
-        self.subarray_node = DeviceProxy(
-            f"low-tmc/subarray/{requested_subarray_id}"
-        )
         subarray_id = str(requested_subarray_id).zfill(2)
+        self.subarray_node = DeviceProxy(f"low-tmc/subarray/{subarray_id}")
         self.subarray_devices = {
             "csp_subarray": DeviceProxy(f"low-csp/subarray/{subarray_id}"),
             "sdp_subarray": DeviceProxy(f"low-sdp/subarray/{subarray_id}"),
@@ -294,6 +294,7 @@ class SubarrayNodeWrapperLow:
         self.sdp_subarray_leaf_node = DeviceProxy(
             f"low-tmc/subarray-leaf-node-sdp/{subarray_id}"
         )
+        self.device_dict = get_device_dict(int(requested_subarray_id))
 
     def move_to_on(self):
         """Move the Subarray to On State"""
@@ -400,8 +401,8 @@ class SubarrayNodeWrapperLow:
 
     def tear_down(self):
         """Tear down after each test run"""
-
-        LOGGER.info("Calling Tear down for subarray")
+        subarray_id = int(self.get_subarray_id())
+        LOGGER.info("Calling Tear down for subarray %s", subarray_id)
         LOGGER.info(
             "Current Subarray Node ObsState is: %s",
             self.subarray_node.obsState,
@@ -416,13 +417,13 @@ class SubarrayNodeWrapperLow:
             ObsState.READY,
         ]:
             # Invoke Abort and Restart
-            LOGGER.info("Invoking Abort on Subarray")
+            LOGGER.info("Invoking Abort on Subarray %s", subarray_id)
             self.execute_transition("Abort")
-            wait_for_partial_or_complete_abort()
+            wait_for_partial_or_complete_abort(subarray_id=subarray_id)
             self.restart_subarray()
         elif self.subarray_node.obsState in [ObsState.ABORTED, ObsState.FAULT]:
             # Invoke Restart
-            LOGGER.info("Invoking Restart on Subarray")
+            LOGGER.info("Invoking Restart on Subarray %s", subarray_id)
             self.restart_subarray()
         elif self.subarray_node.obsState == ObsState.IDLE:
             # Invoke Release
@@ -470,3 +471,9 @@ class SubarrayNodeWrapperLow:
             LOGGER.exception("Exception occurred while setting scan id: %s", e)
             raise
         return json.dumps(input_json)
+
+    def get_subarray_id(self) -> str:
+        """Returns current subarray id from the subarray_node device proxy."""
+
+        subarray_node = self.subarray_node.dev_name()
+        return f"{subarray_node[-2:]}"

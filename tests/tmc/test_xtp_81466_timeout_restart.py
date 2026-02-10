@@ -18,6 +18,9 @@ from ska_tango_testing.integration import TangoEventTracer
 
 from tests.conftest import SubarrayTestContextData, _setup_event_subscriptions
 from tests.resources.test_harness.constant import TIMEOUT_DEFECT
+from tests.resources.test_harness.helpers import (
+    wait_for_partial_or_complete_abort,
+)
 
 TIMEOUT = 60
 
@@ -70,6 +73,7 @@ def subarray_in_aborted_state(
         default_commands_inputs,
         wait_termination=True,
     )
+    wait_for_partial_or_complete_abort()
 
 
 @when(

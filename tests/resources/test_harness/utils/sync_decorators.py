@@ -59,7 +59,7 @@ def sync_set_to_standby(func):
     return wrapper
 
 
-def sync_release_resources(device_dict, timeout=200):
+def sync_release_resources(device_dict, timeout=300):
     def decorator_sync_release_resources(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
@@ -104,10 +104,11 @@ def sync_abort(device_dict, timeout=1000):
     # define as a decorator
     def decorator_sync_abort(func):
         @functools.wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(self, *args, **kwargs):
+            device_dict = self.device_dict
             the_waiter = Waiter(**device_dict)
             the_waiter.set_wait_for_aborted()
-            result = func(*args, **kwargs)
+            result = func(self, *args, **kwargs)
             the_waiter.wait(timeout)
             return result
 
@@ -120,10 +121,11 @@ def sync_restart(device_dict, timeout=500):
     # define as a decorator
     def decorator_sync_restart(func):
         @functools.wraps(func)
-        def wrapper(*args, **kwargs):
+        def wrapper(self, *args, **kwargs):
+            device_dict = self.device_dict
             the_waiter = Waiter(**device_dict)
             the_waiter.set_wait_for_going_to_empty()
-            result = func(*args, **kwargs)
+            result = func(self, *args, **kwargs)
             the_waiter.wait(timeout)
             return result
 
