@@ -208,7 +208,7 @@ def invalid_command_rejection(invalid_json):
         # assert "Invalid 'interface' value: None"
         # in pytest.command_result[1][0]
         assert (
-            "JSON Error: Missing 'interface'"
+            "JSON Error: Missing 'interface' "
             "key in the Configure json" in pytest.command_result[1][0]
         )
 
