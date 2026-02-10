@@ -178,6 +178,8 @@ Subarray Node
     #. **IsAutoRecoveryEnabled** :  This refers to the feature flag i.e used temporarily till all the nodes are tested with auto recovery functionality. Currently defaults to "false".
     #. **TelmodelSource** :  This refers to the TelmodelSource of SubarrayNode TANGO device. Currently defaults to "car://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata".
     #. **TelmodelPath** :  This refers to the TelmodelPath of SubarrayNode TANGO device. Currently defaults to "instrument/ska1_low/layout/low-layout.json".
+    #. **ScanStartTimeOffset** :  This refers to the offset (in nanoseconds) that can be added when TMC determines scan time. Currently defaults to 10 nanoseconds.
+    #. **StartTimeEnabled** :  This refers to the property provided to enable/disable start_time in Scan JSON. Currently defaults to false.
 
 SDP Subarray Leaf Node
 ^^^^^^^^^^^^^^^^^^^^^^^^
