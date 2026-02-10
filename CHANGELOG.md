@@ -5,8 +5,8 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
-[Unreleased]
-************
+[2.10.0-rc.1]
+*************
 Updated
 -------
 * TMC Scan command supports optional field start_time to comply with ADR-111.

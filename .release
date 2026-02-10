@@ -1,21 +1,45 @@
-release=2.9.0-rc.1
-tag=2.9.0-rc.1
+release=2.10.0-rc.1
+tag=2.10.0-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.9.0-rc.1**
+**1. ska-tmc-low-integration 2.10.0-rc.1**
 
-    **1.1 ska-tmc-low 2.8.1-rc.1 - 2.9.0-rc.1:**
-        * Improved Abort Retry mechanism to resolve SKB-1158
+    **1.1 ska-tmc-low 2.9.0-rc.1 - 2.10.0-rc.1:**
+        Updated
+        -------
+        * TMC Scan command supports optional field start_time to comply with ADR-111.
+        * TMC Low supports upto 30 PSS beams
+        * Updated CentralNode to v0.29.1
+        * Updated CspleafNodes to v0.38.1
+        * Updated ska-tango-taranta to v2.18.2
+        * Updated TMC Low Configure schema to v6.0
+        * Updated RTD to reflect the changes for PSS.
+
+        Fixed
+        -----
+        * Fixed teardown issues in case of second subarray
 
 
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.9.0-rc.1**
+**1. ska-tmc-low-integration 2.10.0-rc.1**
 
-    **1.1 ska-tmc-low 2.8.1-rc.1 - 2.9.0-rc.1:**
-        * Improved Abort Retry mechanism to resolve SKB-1158
+    **1.1 ska-tmc-low 2.9.0-rc.1 - 2.10.0-rc.1:**
+        Updated
+        -------
+        * TMC Scan command supports optional field start_time to comply with ADR-111.
+        * TMC Low supports upto 30 PSS beams
+        * Updated CentralNode to v0.29.1
+        * Updated CspleafNodes to v0.38.1
+        * Updated ska-tango-taranta to v2.18.2
+        * Updated TMC Low Configure schema to v6.0
+        * Updated RTD to reflect the changes for PSS.
+
+        Fixed
+        -----
+        * Fixed teardown issues in case of second subarray
 
 
