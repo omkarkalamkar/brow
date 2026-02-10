@@ -78,8 +78,8 @@ Feature: SP-5340
 		| EndScan         | READY        | FAULT            | FAULT         |
 		| EndScan         | FAULT        | FAULT            | READY         |
 		| EndScan         | FAULT        | READY            | FAULT         |
-		| End             | FAULT        | IDLE             | IDLE          |
 		| End             | IDLE         | FAULT            | IDLE          |
+		| End             | FAULT        | IDLE             | IDLE          |
 		| End             | IDLE         | IDLE             | FAULT         |
 		| End             | IDLE         | FAULT            | FAULT         |
 		| End             | FAULT        | FAULT            | IDLE          |
