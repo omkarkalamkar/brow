@@ -77,30 +77,30 @@ centralnode:
 
 subarraynode:
   image:
-    registry: artefact.skao.int
+    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-subarraynode
     image: ska-tmc-subarraynode
-    tag: 0.49.0
+    tag: 0.51.2-dev.ccc5d3d74
     pullPolicy: IfNotPresent
 
 sdpleafnodes:
   image:
-    registry: artefact.skao.int
+    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-sdpleafnodes
     image: ska-tmc-sdpleafnodes
-    tag: 0.25.0
+    tag: 0.27.0-dev.c750341f3
     pullPolicy: IfNotPresent
 
 cspmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.38.1
+    tag: 0.40.0
     pullPolicy: IfNotPresent
 
 cspsubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.38.1
+    tag: 0.40.0
     pullPolicy: IfNotPresent
 
 mccsmasterleafnode:
@@ -173,7 +173,6 @@ deviceServers:
     TelmodelSource: "car://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     TelmodelPath: "instrument/ska1_low/layout/low-layout.json"
     MccsReleaseInterfaceURL: "https://schema.skatelescope.org/ska-low-mccs-controller-release/2.0"
-
 
   sdpsubarrayleafnode:
     enabled: true
@@ -249,14 +248,11 @@ deviceServers:
 
   resourcemonitor:
     enabled: true
-    instances: [ "01" ]
+    instances: ["01"]
     file: "data/resourcemonitor.yaml"
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     family: "resource-monitor"
-
-
-
 
 nodeSelector: {}
 
