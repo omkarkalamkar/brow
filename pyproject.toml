@@ -21,15 +21,15 @@ url = 'https://pypi.org/simple'
 python = "^3.10"
 ska-control-model = "1.0.0"
 ska-tango-base = "1.4.0"
-pytango = "9.5.0"
+pytango = ">=9.4.2 <11.0.0"
 numpy = "^1.23.0"
-ska-tango-testing = "0.7.2"
+ska-tango-testing = "0.8.0"
 ska-ser-logging = "^0.4.3"
 httpx = "^0.19.0"
 msgpack = "1.0.7"
 msgpack_numpy = "0.4.8"
 ska-telmodel = "1.29.0"
-ska-integration-test-harness = "0.3.0"
+ska-integration-test-harness = "0.4.4"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.8.0"
