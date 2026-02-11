@@ -5,12 +5,15 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[Unreleased]
+*************
+* Upgraded TMC Leaf Nodes tags with Base class updates (MCCS v0.12.2, SDP v0.26.0, CSP v0.36.0)
+* Updated ska-tmc-simulator to v1.9.5.
+
 [2.10.0-rc.1]
 *************
 Updated
 -------
-* Upgraded TMC Leaf Nodes tags with Base class updates (MCCS v0.12.2, SDP v0.26.0, CSP v0.36.0)
-* Updated ska-tmc-simulator to v1.9.5.
 * TMC Scan command supports optional field start_time to comply with ADR-111.
 * TMC Low supports upto 30 PSS beams
 * Updated CentralNode to v0.29.1
