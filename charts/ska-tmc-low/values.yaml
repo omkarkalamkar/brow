@@ -176,7 +176,6 @@ deviceServers:
     ScanStartTimeOffset: 10
     StartTimeEnabled: false
 
-
   sdpsubarrayleafnode:
     enabled: true
     file: "data/sdpsubarrayleafnode.yaml"
@@ -256,8 +255,6 @@ deviceServers:
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     family: "resource-monitor"
-
-
 
 
 nodeSelector: {}
