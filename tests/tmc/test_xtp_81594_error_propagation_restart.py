@@ -27,7 +27,7 @@ from tests.resources.test_harness.helpers import (
 TIMEOUT = 60
 
 
-@pytest.mark.SKA_low
+@pytest.mark.SKA_test1
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
     "Error Propagation Reported by TMC Low Restart Command for "
@@ -143,18 +143,26 @@ def error_reporting(
         (pytest.unique_id[0], expected_msg),
     )
 
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(
+        tmc.subarray_node, "obsState", int(ObsState.FAULT)
+    )
+
     if defective_subsystem == "CSP":
         csp.csp_subarray.SetDefective(json.dumps({"enabled": False}))
         csp.csp_subarray.Restart()
         assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
-            csp.csp_subarray, "obsState", ObsState.EMPTY
+            csp.csp_subarray, "obsState", int(ObsState.EMPTY)
         )
         assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
-            tmc.csp_subarray_leaf_node, "cspSubarrayObsState", ObsState.EMPTY
+            tmc.csp_subarray_leaf_node,
+            "cspSubarrayObsState",
+            int(ObsState.EMPTY),
         )
     elif defective_subsystem == "SDP":
         sdp.sdp_subarray.SetDefective(json.dumps({"enabled": False}))
@@ -162,12 +170,14 @@ def error_reporting(
         assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
-            sdp.sdp_subarray, "obsState", ObsState.EMPTY
+            sdp.sdp_subarray, "obsState", int(ObsState.EMPTY)
         )
         assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
-            tmc.sdp_subarray_leaf_node, "sdpSubarrayObsState", ObsState.EMPTY
+            tmc.sdp_subarray_leaf_node,
+            "sdpSubarrayObsState",
+            int(ObsState.EMPTY),
         )
     elif defective_subsystem == "MCCS":
         mccs.mccs_controller.SetDefective(json.dumps({"enabled": False}))
@@ -175,15 +185,12 @@ def error_reporting(
         assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
-            mccs.mccs_subarray, "obsState", ObsState.EMPTY
+            mccs.mccs_subarray, "obsState", int(ObsState.EMPTY)
         )
         assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
-            tmc.mccs_subarray_leaf_node, "obsState", ObsState.EMPTY
+            tmc.mccs_subarray_leaf_node, "obsState", int(ObsState.EMPTY)
         )
-    assert_that(event_tracer).within_timeout(
-        TIMEOUT
-    ).has_change_event_occurred(tmc.subarray_node, "obsState", ObsState.EMPTY)
 
     event_tracer.clear_events()
