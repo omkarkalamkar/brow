@@ -17,6 +17,8 @@ entrypoints:
 {{- $TelmodelSource := .Values.deviceServers.subarraynode.TelmodelSource }}
 {{- $TelmodelPath := .Values.deviceServers.subarraynode.TelmodelPath }}
 {{- $AutoRecoveryEnabled := .Values.deviceServers.subarraynode.IsAutoRecoveryEnabled }}
+{{- $ScanStartTimeOffset := .Values.deviceServers.subarraynode.ScanStartTimeOffset }}
+{{- $StartTimeEnabled := .Values.deviceServers.subarraynode.StartTimeEnabled }}
 
 server:
   name: "subarray_node_low"
@@ -117,6 +119,12 @@ server:
           - name: "IsAutoRecoveryEnabled"
             values:
               - "{{ $AutoRecoveryEnabled }}"
+          - name: "ScanStartTimeOffset"
+            values:
+              - "{{ $ScanStartTimeOffset }}"
+          - name: "StartTimeEnabled"
+            values:
+              - "{{ $StartTimeEnabled }}"
 
 {{- end}}
 depends_on:
