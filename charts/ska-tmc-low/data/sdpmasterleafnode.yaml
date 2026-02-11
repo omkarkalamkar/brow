@@ -27,7 +27,7 @@ server:
             - "tango::logger"
         - name: "LoggingLevelDefault"
           values:
-            - "{{coalesce $.Values.deviceServers.sdpmasterleafnode.LoggingLevel $.Values.global.TMCLoggingLevel }}"
+            - "5"
         - name: "AdapterTimeOut"
           values:
             - "{{.Values.deviceServers.sdpmasterleafnode.AdapterTimeOut}}"

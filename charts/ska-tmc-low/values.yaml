@@ -22,7 +22,6 @@ global:
   #  .Values.global.subarray_count
   # subarray_count, this will be expanded (1 to N inclusive)
   subarray_count: 1
-  TMCLoggingLevel: "4"
 
 domain: "low-tmc"
 ##  Order of instances resolution ##
@@ -155,7 +154,6 @@ deviceServers:
     IsAutoRecoveryEnabled: "true"
     DefaultArrayLayoutSourceURIs: "gitlab://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     DefaultArrayLayoutPath: "instrument/ska1_low/layout/low-layout.json"
-    LoggingLevel: "4"
 
   subarraynode:
     enabled: true
@@ -177,7 +175,6 @@ deviceServers:
     MccsReleaseInterfaceURL: "https://schema.skatelescope.org/ska-low-mccs-controller-release/2.0"
     ScanStartTimeOffset: 10
     StartTimeEnabled: false
-    LoggingLevel: "4"
 
   sdpsubarrayleafnode:
     enabled: true
@@ -188,7 +185,6 @@ deviceServers:
     EventSubscriptionCheckPeriod: 0.5
     SDPSubarrayAdminModeEnabled: true
     family: "subarray-leaf-node-sdp"
-    LoggingLevel: "4"
 
   sdpmasterleafnode:
     enabled: true
@@ -200,7 +196,6 @@ deviceServers:
     SDPMasterAdminModeEnabled: true
     family: "leaf-node-sdp"
     member: "0"
-    LoggingLevel: "4"
 
   cspmasterleafnode:
     enabled: true
@@ -211,7 +206,6 @@ deviceServers:
     EventSubscriptionCheckPeriod: 0.5
     family: "leaf-node-csp"
     member: "0"
-    LoggingLevel: "4"
 
   mccsmasterleafnode:
     enabled: true
@@ -223,7 +217,6 @@ deviceServers:
     AdapterTimeOut: 2.0
     family: "leaf-node-mccs"
     member: "0"
-    LoggingLevel: "4"
 
   cspsubarrayleafnode:
     enabled: true
@@ -245,7 +238,6 @@ deviceServers:
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     family: "subarray-leaf-node-csp"
-    LoggingLevel: "4"
 
   mccssubarrayleafnode:
     enabled: true
@@ -255,7 +247,6 @@ deviceServers:
     CommandTimeOutDefault: 50
     AdapterTimeOut: 2.0
     family: "subarray-leaf-node-mccs"
-    LoggingLevel: "4"
 
   resourcemonitor:
     enabled: true
@@ -264,7 +255,6 @@ deviceServers:
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     family: "resource-monitor"
-    LoggingLevel: "4"
 
 
 nodeSelector: {}
