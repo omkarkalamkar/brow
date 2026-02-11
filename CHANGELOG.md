@@ -21,7 +21,7 @@ Updated
 
 Fixed
 -----
-* Fixed teardown issues in case of second subarray
+* Fixed teardown issues in case of second subarray.
 
 [2.9.0-rc.1]
 ************
