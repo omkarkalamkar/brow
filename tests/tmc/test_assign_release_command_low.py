@@ -120,7 +120,7 @@ def test_assign_release_defective_csp_sdp(
     )
 
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION ATER ASSIGN RESOURCES: "
+        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
         "Central Node device"
         f"({central_node_low.central_node.dev_name()}) "
         "is expected have longRunningCommandResult"
@@ -325,7 +325,7 @@ def test_release_exception_propagation(
     exception_message = "Timeout has occurred, command failed"
 
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION ATER ASSIGN RESOURCES: "
+        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
         "Central Node device"
         f"({central_node_low.central_node.dev_name()}) "
         "is expected have longRunningCommandResult"
@@ -394,7 +394,7 @@ def test_assign_release_timeout_csp(
         }
     )
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION ATER ASSIGN RESOURCES: "
+        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
         "Central Node device"
         f"({central_node_low.central_node.dev_name()}) "
         "is expected have longRunningCommandResult"

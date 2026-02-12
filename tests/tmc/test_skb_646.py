@@ -256,7 +256,7 @@ def tmc_subarray_is_in_resourcing(
         "Command is not allowed",
     ]
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION ATER ASSIGN RESOURCES: "
+        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
         "Central Node device"
         f"({subarray_node_low.subarray_node.dev_name()}) "
         "is expected have longRunningCommandResult"
