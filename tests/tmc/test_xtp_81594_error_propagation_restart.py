@@ -27,7 +27,7 @@ from tests.resources.test_harness.helpers import (
 TIMEOUT = 60
 
 
-@pytest.mark.SKA_test1
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
     "Error Propagation Reported by TMC Low Restart Command for "
