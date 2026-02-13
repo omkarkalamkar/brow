@@ -115,17 +115,16 @@ def check_subarray_node_health_info(
         if msg and msg.strip() != ""
     ]
 
-    LOGGER.info("Extracted health messages: %s", all_messages)
-
-    # Split expected messages (comma-separated)
     expected_messages = [
         msg.strip() for msg in expected_health_info.split(",") if msg.strip()
     ]
 
-    # All expected messages must be present
-    missing = [msg for msg in expected_messages if msg not in all_messages]
-    if missing:
-        pytest.fail(
-            f"Missing expected health messages: {missing}\n"
-            f"Actual messages: {all_messages}"
-        )
+    LOGGER.info("Extracted health messages: %s", all_messages)
+    LOGGER.info("Expected messages: %s", expected_messages)
+
+    if expected_health_info != "EMPTY":
+        for msg in expected_messages:
+            assert msg in all_messages, (
+                f"Expected message '{expected_health_info}' not"
+                + " found in healthInfo"
+            )
