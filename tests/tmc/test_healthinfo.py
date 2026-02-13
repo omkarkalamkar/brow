@@ -107,7 +107,7 @@ def check_subarray_node_health_info(
         json.dumps(health_info_dict, indent=4),
     )
 
-    # Collect all non-empty messages across all leaf nodes
+    # Flatten all non-empty messages
     all_messages = [
         msg.strip()
         for leaf_node_msgs in health_info_dict.values()
@@ -117,8 +117,21 @@ def check_subarray_node_health_info(
 
     LOGGER.info("Extracted health messages: %s", all_messages)
 
-    # Now do your assertions
-    if expected_health_info != "EMPTY":
+    if expected_health_info == "EMPTY":
         assert (
-            expected_health_info in all_messages
-        ), f"Expected message '{expected_health_info}' not found in healthInfo"
+            len(all_messages) == 0
+        ), f"healthInfo should be empty but contains: {all_messages}"
+        return
+
+    # Split expected messages (comma-separated)
+    expected_messages = [
+        msg.strip() for msg in expected_health_info.split(",") if msg.strip()
+    ]
+
+    # All expected messages must be present
+    missing = [msg for msg in expected_messages if msg not in all_messages]
+    if missing:
+        pytest.fail(
+            f"Missing expected health messages: {missing}\n"
+            f"Actual messages: {all_messages}"
+        )
