@@ -11,9 +11,9 @@ Feature: Subarray Node Health info
 
 		Examples:
 		  | csp_health | sdp_health | mccs_health | expected_health |expected_health_info|
-		  | OK         | OK         | OK          | OK              |something           |
-		  | OK         | FAILED     | OK          | FAILED          |something           |
-		  | FAILED     | OK         | OK          | FAILED          |something           |
+		  | OK         | OK         | OK          | OK              |EMPTY           |
+		  | OK         | FAILED     | OK          | FAILED          |SDP Subarray Health State: FAILED           |
+		  | FAILED     | OK         | OK          | FAILED          |CSP Subarray Health State: FAILED           |
 		  | OK         | OK         | FAILED      | FAILED          |something           |
 		  | UNKNOWN    | OK         | OK          | UNKNOWN         |something           |
 		  | OK         | UNKNOWN    | OK          | UNKNOWN         |something           |
