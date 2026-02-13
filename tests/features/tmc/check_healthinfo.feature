@@ -23,6 +23,6 @@ Feature: Subarray Node Health info
           #| OK         | OK         | DEGRADED    | DEGRADED        | MCCS Subarray Health State: DEGRADED                                                 |
           | DEGRADED   | FAILED     | OK          | FAILED          | CSP Subarray Health State: DEGRADED, SDP Subarray Health State: FAILED               |
           | UNKNOWN    | DEGRADED   | OK          | DEGRADED        | CSP Subarray Health State: UNKNOWN, SDP Subarray Health State: DEGRADED              |
-          | DEGRADED   | UNKNOWN    | OK          | UNKNOWN         | CSP Subarray Health State: DEGRADED, SDP Subarray Health State: UNKNOWN              |
+          | DEGRADED   | UNKNOWN    | OK          | DEGRADED         | CSP Subarray Health State: DEGRADED, SDP Subarray Health State: UNKNOWN              |
           #| OK         | UNKNOWN    | DEGRADED    | DEGRADED        | SDP Subarray Health State: UNKNOWN, MCCS Subarray Health State: DEGRADED             |
           | FAILED     | UNKNOWN    | OK          | FAILED          | CSP Subarray Health State: FAILED, SDP Subarray Health State: UNKNOWN                |
