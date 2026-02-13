@@ -6,7 +6,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 [Unreleased]
-************
+*************
+* Upgraded TMC Leaf Nodes tags with Base class updates (MCCS v0.12.2, SDP v0.26.0, CSP v0.36.0)
+* Updated ska-tmc-simulator to v1.9.5.
+
+[2.10.0-rc.1]
+*************
 Updated
 -------
 * TMC Scan command supports optional field start_time to comply with ADR-111.
@@ -19,13 +24,57 @@ Updated
 
 Fixed
 -----
-* Fixed teardown issues in case of second subarray
+* Fixed teardown issues in case of second subarray.
+
+[2.9.0]
+***********
+* This is the full release of 2.9.0-rc.1. TMC Low is now compliant with ADR-63 and supports non-sidereal tracking.
 
 [2.9.0-rc.1]
 ************
 Updated
 -------
 * TMC Low Configure schema updated to include the "field" key for ADR-63 compliance.
+
+[2.8.1]
+*************
+This is full version of 2.8.1-rc.1 which fixes SKB-1158.
+
+Fixed
+-----
+* Improved Abort Retry mechanism to resolve SKB-1158
+
+[2.8.0]
+*************
+This full version comprises of changes from 2.4.0-c.1 till 2.8.0-rc.2.
+
+Added
+------
+* Introduced ResourceMonitor device in the ska-tmc-low.
+    * Resource Monitor tag v0.5.0
+	* Reports subarray allocations for stations through the stationsData attribute of the Resource Monitor.
+	* reporting of resources stations and station beams using stations and stationBeams attributes of Resource Monitor.
+* Added device configuration and FQDN under chart templates.
+* Functionality of auto recovery of AssignResources and Configure command from inconsistent stage
+* Added MccsReleaseInterfaceURL in values.yaml
+* Full implementation of ADR-63
+* Support for changing the telescope antenna layout at runtime.
+
+Updated
+--------
+* Testing specific: Simulators gets deployed as separate testing service
+	* Simulators tag v0.5.0
+* Archiver attribute configuration includes attributes of Resource Monitor.
+* Documentation includes ResourceMonitor configuration details and usage.
+
+Removed
+--------
+* TMC simulators are no longer bundled with any of the TMC deliverable code.
+
+Fixed
+------
+* Fixed SKB-1074
+* Remove keys from input json not required by real CSP, causing command failures.
 
 [2.8.1-rc.1]
 *************

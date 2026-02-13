@@ -143,6 +143,10 @@ def error_reporting(
         (pytest.unique_id[0], expected_msg),
     )
 
+    assert_that(event_tracer).within_timeout(
+        TIMEOUT
+    ).has_change_event_occurred(tmc.subarray_node, "obsState", ObsState.FAULT)
+
     if defective_subsystem == "CSP":
         csp.csp_subarray.SetDefective(json.dumps({"enabled": False}))
         csp.csp_subarray.Restart()
@@ -154,7 +158,9 @@ def error_reporting(
         assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
-            tmc.csp_subarray_leaf_node, "cspSubarrayObsState", ObsState.EMPTY
+            tmc.csp_subarray_leaf_node,
+            "cspSubarrayObsState",
+            ObsState.EMPTY,
         )
     elif defective_subsystem == "SDP":
         sdp.sdp_subarray.SetDefective(json.dumps({"enabled": False}))
@@ -167,7 +173,9 @@ def error_reporting(
         assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
-            tmc.sdp_subarray_leaf_node, "sdpSubarrayObsState", ObsState.EMPTY
+            tmc.sdp_subarray_leaf_node,
+            "sdpSubarrayObsState",
+            ObsState.EMPTY,
         )
     elif defective_subsystem == "MCCS":
         mccs.mccs_controller.SetDefective(json.dumps({"enabled": False}))
@@ -182,8 +190,5 @@ def error_reporting(
         ).has_change_event_occurred(
             tmc.mccs_subarray_leaf_node, "obsState", ObsState.EMPTY
         )
-    assert_that(event_tracer).within_timeout(
-        TIMEOUT
-    ).has_change_event_occurred(tmc.subarray_node, "obsState", ObsState.EMPTY)
 
     event_tracer.clear_events()

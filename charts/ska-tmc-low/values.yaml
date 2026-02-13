@@ -128,7 +128,7 @@ skatmcsimulators:
   image:
     registry: artefact.skao.int
     image: ska-tmc-simulators
-    tag: 1.5.1
+    tag: 1.9.5
     pullPolicy: IfNotPresent
 
 resources:
@@ -173,6 +173,8 @@ deviceServers:
     TelmodelSource: "car://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     TelmodelPath: "instrument/ska1_low/layout/low-layout.json"
     MccsReleaseInterfaceURL: "https://schema.skatelescope.org/ska-low-mccs-controller-release/2.0"
+    ScanStartTimeOffset: 10
+    StartTimeEnabled: false
 
   sdpsubarrayleafnode:
     enabled: true

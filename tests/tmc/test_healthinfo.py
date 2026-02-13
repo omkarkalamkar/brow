@@ -117,7 +117,6 @@ def check_subarray_node_health_info(
 
     LOGGER.info("Extracted health messages: %s", all_messages)
 
-
     # Split expected messages (comma-separated)
     expected_messages = [
         msg.strip() for msg in expected_health_info.split(",") if msg.strip()
