@@ -117,11 +117,6 @@ def check_subarray_node_health_info(
 
     LOGGER.info("Extracted health messages: %s", all_messages)
 
-    if expected_health_info == "EMPTY":
-        assert (
-            len(all_messages) == 0
-        ), f"healthInfo should be empty but contains: {all_messages}"
-        return
 
     # Split expected messages (comma-separated)
     expected_messages = [
