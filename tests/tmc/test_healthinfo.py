@@ -7,7 +7,7 @@ from pytest_bdd import parsers, scenario, then
 @pytest.mark.healthinfo
 @pytest.mark.SKA_low
 @scenario(
-    "../features/tmc/test_healthinfo.feature",
+    "../features/tmc/check_healthinfo.feature",
     "Subarray health reflects correct healthinfo"
     " of CSP, SDP, and MCCS subarrays",
 )
