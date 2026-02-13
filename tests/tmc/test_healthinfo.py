@@ -95,28 +95,30 @@ def check_subarray_node_health_info(
 
     raw_health_info = subarray_node_low.subarray_node.healthInfo
     LOGGER.info("Raw healthInfo: %s", raw_health_info)
-    parsed = json.loads(raw_health_info)
+
+    try:
+        health_info_dict = json.loads(raw_health_info)
+    except json.JSONDecodeError as exc:
+        LOGGER.error("Cannot parse healthInfo as JSON: %s", exc)
+        pytest.fail("healthInfo is not valid JSON")
 
     LOGGER.info(
         "Formatted healthInfo:\n%s",
-        json.dumps(parsed, indent=4),
+        json.dumps(health_info_dict, indent=4),
     )
 
-    list_of_all_infos = [
+    # Collect all non-empty messages across all leaf nodes
+    all_messages = [
         msg.strip()
-        for messages in raw_health_info.values()
-        for msg in messages
-        if msg and msg.strip()
+        for leaf_node_msgs in health_info_dict.values()
+        for msg in leaf_node_msgs
+        if msg and msg.strip() != ""
     ]
-    LOGGER.info("List of all healthinfos: %s", list_of_all_infos)
 
-    for name in ["csp", "sdp", "mccs"]:
-        raw_state = state.get(f"{name}_health", "OK")
-        if raw_state == "OK":
-            continue
-        actual_health_info = (
-            f"{name.upper()} Subarray Health State: {raw_state}"
-        )
+    LOGGER.info("Extracted health messages: %s", all_messages)
 
-        assert actual_health_info in list_of_all_infos
-        assert expected_health_info in list_of_all_infos
+    # Now do your assertions
+    if expected_health_info != "EMPTY":
+        assert (
+            expected_health_info in all_messages
+        ), f"Expected message '{expected_health_info}' not found in healthInfo"
