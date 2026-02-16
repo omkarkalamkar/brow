@@ -8,3 +8,4 @@ Operations Guide
    :maxdepth: 1
 
    array_layout
+   health_info
