@@ -13,12 +13,10 @@ from tests.resources.test_harness.helpers import LOGGER, get_device_simulators
 state = {}
 
 
-@pytest.mark.healthinfo
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_healthinfo.feature",
-    "Subarray health reflects correct healthinfo"
-    " of CSP, SDP, and MCCS subarrays",
+    "Subarray reflects correct healthinfo of CSP, SDP, and MCCS subarrays",
 )
 def test_subarray_health_combined_states():
     """Test subarray node healthinfo based on CSP, SDP, MCCS healthstate"""

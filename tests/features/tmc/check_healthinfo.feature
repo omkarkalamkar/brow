@@ -1,7 +1,7 @@
 Feature: Subarray Node Health info
-    @XTP- @XTP-
 
-    Scenario Outline: Subarray health reflects correct healthinfo of CSP, SDP, and MCCS subarrays
+    @XTP-102560 @XTP-28348
+    Scenario Outline: Subarray reflects correct healthinfo of CSP, SDP, and MCCS subarrays
         Given CSP health is <csp_health>
 		And SDP health is <sdp_health>
 		And MCCS health is <mccs_health>
@@ -23,6 +23,6 @@ Feature: Subarray Node Health info
           | OK         | OK         | DEGRADED    | DEGRADED        | MCCS Subarray Health State: DEGRADED                                                 |
           | DEGRADED   | FAILED     | OK          | FAILED          | CSP Subarray Health State: DEGRADED, SDP Subarray Health State: FAILED               |
           | UNKNOWN    | DEGRADED   | OK          | DEGRADED        | CSP Subarray Health State: UNKNOWN, SDP Subarray Health State: DEGRADED              |
-          | DEGRADED   | UNKNOWN    | OK          | DEGRADED         | CSP Subarray Health State: DEGRADED, SDP Subarray Health State: UNKNOWN             |
+          | DEGRADED   | UNKNOWN    | OK          | DEGRADED        | CSP Subarray Health State: DEGRADED, SDP Subarray Health State: UNKNOWN              |
           | OK         | UNKNOWN    | DEGRADED    | DEGRADED        | SDP Subarray Health State: UNKNOWN, MCCS Subarray Health State: DEGRADED             |
           | FAILED     | UNKNOWN    | OK          | FAILED          | CSP Subarray Health State: FAILED, SDP Subarray Health State: UNKNOWN                |
