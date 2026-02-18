@@ -5,6 +5,10 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[2.10.0]
+*********
+* This is the full release of 2.10.0-rc.1. TMC Low now supports PSS Scans with upto 30 PSS beams.
+
 [2.10.0-rc.1]
 *************
 Updated
