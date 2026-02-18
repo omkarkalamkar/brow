@@ -24,7 +24,6 @@ SUBSYSTEM_DEVICES = {
 }
 
 
-@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_cmd_not_allowed_adminmode.feature",

@@ -80,18 +80,17 @@ def given_a_tmc(
         }
     )
     central_node_low.move_to_on()
-    # assert_that(event_tracer).described_as(
-    #     'FAILED ASSUMPTION IN "GIVEN" STEP: '
-    #     "'the telescope is is ON state'"
-    #     "Central Node device"
-    #     f"({central_node_low.central_node.dev_name()}) "
-    #     "is expected to be in TelescopeState ON",
-    # ).within_timeout(TIMEOUT).has_change_event_occurred(
-    #     central_node_low.central_node,
-    #     "telescopeState",
-    #     DevState.ON,
-    # )
-    assert central_node_low.central_node.telescopeState == DevState.ON
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN" STEP: '
+        "'the telescope is is ON state'"
+        "Central Node device"
+        f"({central_node_low.central_node.dev_name()}) "
+        "is expected to be in TelescopeState ON",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.central_node,
+        "telescopeState",
+        DevState.ON,
+    )
     assert_that(event_tracer).described_as(
         "FAILED UNEXPECTED INITIAL OBSSTATE: "
         "Subarray Node device"
