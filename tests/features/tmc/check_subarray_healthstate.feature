@@ -7,7 +7,7 @@ Feature: Subarray Node Health State
 		And MCCS health is <mccs_health>
 		When health states are applied
 		Then the Subarray Node health state should be <expected_health>
-		
+
 		Examples:
 		  | csp_health | sdp_health | mccs_health | expected_health |
 		  | OK         | OK         | OK          | OK              |

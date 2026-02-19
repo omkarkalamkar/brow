@@ -10,6 +10,10 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 * Upgraded TMC Leaf Nodes tags with Base class updates (MCCS v0.12.2, SDP v0.26.0, CSP v0.36.0)
 * Updated ska-tmc-simulator to v1.9.5.
 
+[2.10.0]
+*********
+* This is the full release of 2.10.0-rc.1. TMC Low now supports PSS Scans with upto 30 PSS beams.
+
 [2.10.0-rc.1]
 *************
 Updated
