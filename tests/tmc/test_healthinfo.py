@@ -1,4 +1,4 @@
-"""Test Subarray Node Health State"""
+"""Test Subarray Node Healthinfo"""
 
 import json
 import time
@@ -15,7 +15,7 @@ state = {}
 
 @pytest.mark.SKA_low
 @scenario(
-    "../features/tmc/check_healthinfo.feature",
+    "../features/tmc/xtp_102560_check_healthinfo.feature",
     "Subarray reflects correct healthinfo of CSP, SDP, and MCCS subarrays",
 )
 def test_subarray_health_combined_states():

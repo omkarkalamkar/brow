@@ -1,187 +1,66 @@
-HealthInfo Reporting Mechanism
-==============================
+HealthInfo Reporting
+====================
 
-Overview
---------
+Purpose
+-------
 
-The **HealthInfo** attribute provides structured diagnostic information
-explaining the current **HealthState** of a component.
+**HealthInfo** provides structured, human-readable diagnostic information that explains **why** a component is in its current **HealthState** (OK, DEGRADED, FAILED, or UNKNOWN).
 
-The purpose of this attribute is to provide additional context and diagnostic
-information about the cause of failure beyond the existing HealthState.
+While **HealthState** gives you the high-level status, **HealthInfo** tells you the specific reason(s) — especially useful when troubleshooting failures or degraded behaviour.
 
-While ``HealthState`` indicates the overall status
-(OK, DEGRADED, FAILED, UNKNOWN), ``HealthInfo`` provides the
-reason and context behind that state.
+Key characteristics:
 
-HealthInfo is:
-
-- Reported when a component enters **DEGRADED / FAILED / UNKNOWN**
-- Archived as an *on change* event
-- Kept in sync with ``HealthState`` updates
-- Structured in **JSON format** for consistent and machine-readable reporting
-
-This ensures operators have clear visibility into subsystem failures
-and TMC-detected exceptions.
-
-Design Choices
---------------
-
-Separate Attributes
-~~~~~~~~~~~~~~~~~~~
-
-Two attributes are maintained:
-
-- ``HealthState`` → Represents the component's current operational state
-- ``HealthInfo`` → Provides structured diagnostic details explaining the HealthState
-
-This separation ensures:
-
-- Clean state propagation logic
-- Detailed reporting without overloading the state attribute
-- Better monitoring and debugging capability
+- Only populated (non-empty) when HealthState is **DEGRADED**, **FAILED**, or **UNKNOWN**
+- Empty (``[]``) when everything is **OK**
+- Updated in sync with **HealthState** changes
+- Published as an *on-change* event
 
 
-Data Structure
-~~~~~~~~~~~~~~
+Reporting Format
+----------------
 
-HealthInfo uses **JSON format** for structured reporting.
+**HealthInfo** is a JSON object (dictionary) where:
 
-Example when failures are detected:
+- **Keys** = Tango device names (leaf nodes)
+- **Values** = List of failure/diagnostic messages (strings) indicating the problem
+
+Example — when problems exist:
 
 .. code-block:: json
 
     {
         "low-tmc/subarray-leaf-node-csp/01": [
-            "CSP Subarray Health State: FAILED"
+            "CSP Subarray Health State: FAILED",
+            "Delay Model Exception."
         ],
         "low-tmc/subarray-leaf-node-sdp/01": [
-            "Liveliness check failed for SDP",
+            "Liveliness check failed for SDP"
+        ],
+        "low-tmc/subarray-leaf-node-mccs/01": [
+            "MCCS Subarray Health State: UNKNOWN"
         ]
     }
 
-When no issues are present:
+Example — when no issues:
 
 .. code-block:: json
 
     []
 
-This structure ensures:
 
-- Clear mapping between component and failure message
-- Extensibility for future diagnostic additions
-- Machine-readable format for automated monitoring
+What You Will See as an Operator
+--------------------------------
 
+- **Subarray level** — HealthInfo shows aggregated problems from leaf nodes (CSP, SDP, MCCS) and any TMC-internal issues detected (e.g. liveliness check failure).
+- **Leaf node level** — More detailed reasons (available by reading HealthInfo directly from the relevant leaf node device).
+- Clear mapping of **which** device/subsystem is affected and **why**.
 
-HealthInfo Reporting Sources
-----------------------------
+Use HealthInfo to:
 
-TMC-Detected Failures
-~~~~~~~~~~~~~~~~~~~~~
+- Quickly identify which subsystem(s) caused a FAILED or DEGRADED HealthState
+- Understand whether the issue is external (subsystem) or internal (TMC-detected)
+- Guide deeper investigation (e.g. go to the failing subsystem's own HealthInfo or logs)
 
-TMC reports the reason for failure when:
+For diagrams and more detailed system context, see:
 
-- Internal validation fails
-- Subsystem state transitions are invalid
-
-The HealthInfo contains the explicit failure reason.
-
-
-Subsystem Failures
-~~~~~~~~~~~~~~~~~~
-
-When a subsystem reports FAILED / DEGRADED / UNKNOWN:
-
-- The TMC Leaf Node subscribes to the subsystem's ``HealthState``
-- The Leaf Node propagates this information upward
-- The Subarray Node updates its HealthInfo accordingly
-
-The Subarray HealthInfo reports:
-
-- Subsystem name
-- High-level failure reason
-
-Detailed HealthInfo remains available at the subsystem level.
-
-
-HealthInfo Flow
----------------
-
-Leaf Nodes
-~~~~~~~~~~
-
-Each TMC Leaf Node subscribes to the ``HealthState`` of its subsystem.
-
-The Leaf Node:
-
-- Monitors subsystem health
-- Updates its own ``HealthState``
-- Updates ``HealthInfo`` when necessary
-- Propagates health information to the Subarray Node
-
-TMC Internal Exceptions
-~~~~~~~~~~~~~~~~~~~~~~~
-
-Internal exceptions affect both HealthState and HealthInfo.
-
-Examples:
-
-- Delay model exceptions
-- Failed availability checks
-
-When such exceptions occur:
-
-- ``HealthState`` → FAILED or DEGRADED
-- ``HealthInfo`` → Contains exception reason
-- Information is propagated to the Subarray Node
-
-
-Subarray Node Aggregation
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The Subarray Node derives its ``HealthState`` by aggregating:
-
-- Subsystem HealthState
-- TMC Leaf Node HealthState
-- Internal TMC exceptions
-
-Aggregation logic examples:
-
-- Any subsystem FAILED → Subarray = FAILED
-
-The Subarray updates its HealthInfo to explain:
-
-- Which subsystem failed
-- Whether failure is internal or external
-- Any reduced operational capability
-
-
-Synchronization and Event Handling
------------------------------------
-
-- HealthInfo is updated whenever HealthState changes.
-- HealthInfo is archived as an *on change* event.
-- HealthInfo remains synchronized with HealthState at all times.
-
-This guarantees consistency between operational state and diagnostic information.
-
-
-Operator Visibility
--------------------
-
-HealthInfo provides operators with:
-
-- Clear identification of failing subsystems
-- Visibility into TMC-detected internal exceptions
-- Structured diagnostics for troubleshooting
-
-Detailed subsystem-specific HealthInfo remains available at the subsystem level.
-
-
-Reference
----------
-
-For detailed flow diagrams and system-level visualization, refer to:
-
-HealthInfo Reporting Mechanism Diagram
-https://confluence.skatelescope.org/display/SWSI/HealthInfo+Reporting+Mechanism
+`HealthInfo Reporting Mechanism Diagram <https://confluence.skatelescope.org/display/SWSI/HealthInfo+Reporting+Mechanism>`_
