@@ -94,5 +94,5 @@ ska-tmc-simulators:
       enabled: true
   ska_tmc_simulators:
     image:
-      registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-simulators
-      tag: 1.9.6-dev.cb3326824
+      registry: https://artefact.skao.int/repository/helm-internal
+      tag: 1.9.7
