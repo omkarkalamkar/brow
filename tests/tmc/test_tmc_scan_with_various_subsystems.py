@@ -30,7 +30,6 @@ configure_logging(logging.DEBUG)
 LOGGER = logging.getLogger(__name__)
 
 
-@pytest.mark.sah1848
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/tmc_scan_with_various_subsystems.feature",
