@@ -94,5 +94,5 @@ ska-tmc-simulators:
       enabled: true
   ska_tmc_simulators:
     image:
-      registry: https://artefact.skao.int/repository/helm-internal
+      registry: artefact.skao.int
       tag: 1.9.7
