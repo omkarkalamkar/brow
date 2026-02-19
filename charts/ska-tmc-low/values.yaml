@@ -86,35 +86,35 @@ sdpleafnodes:
   image:
     registry: artefact.skao.int
     image: ska-tmc-sdpleafnodes
-    tag: 0.26.0
+    tag: 0.27.0
     pullPolicy: IfNotPresent
 
 cspmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.38.1
+    tag: 0.40.0
     pullPolicy: IfNotPresent
 
 cspsubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.38.1
+    tag: 0.40.0
     pullPolicy: IfNotPresent
 
 mccsmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.12.2
+    tag: 0.13.0
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.12.2
+    tag: 0.13.0
     pullPolicy: IfNotPresent
 
 resource_monitor:
@@ -250,12 +250,11 @@ deviceServers:
 
   resourcemonitor:
     enabled: true
-    instances: [ "01" ]
+    instances: ["01"]
     file: "data/resourcemonitor.yaml"
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     family: "resource-monitor"
-
 
 nodeSelector: {}
 

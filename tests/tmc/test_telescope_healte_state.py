@@ -1,4 +1,6 @@
 """Test Telescope Health State"""
+import time
+
 import pytest
 from pytest_bdd import given, parsers, scenario, then, when
 from ska_tango_base.control_model import HealthState
@@ -96,6 +98,7 @@ def set_all_ok_health(simulator_factory):
     csp_s, sdp_s, mccs_s = get_device_simulators(simulator_factory)
     for device in [csp_m, sdp_m, mccs_m, csp_s, sdp_s, mccs_s]:
         device.SetDirectHealthState(HealthState.OK)
+        time.sleep(0.2)
     state.update(
         {
             "csp": csp_m,
@@ -113,6 +116,7 @@ def apply_health_states():
         device = state[name]
         raw_state = state.get(f"{name}_state", "OK")
         device.SetDirectHealthState(HealthState[raw_state])
+        time.sleep(0.2)
 
 
 @then(parsers.parse("the telescopeHealthState should be {expected_state}"))
