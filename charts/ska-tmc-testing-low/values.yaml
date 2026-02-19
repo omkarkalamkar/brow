@@ -92,7 +92,3 @@ ska-tmc-simulators:
   deviceServers:
     mocks:
       enabled: true
-  ska_tmc_simulators:
-    image:
-      registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-simulators
-      tag: 1.9.6-dev.cb3326824
