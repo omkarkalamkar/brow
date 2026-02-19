@@ -5,3 +5,11 @@ Scenario: Successful Configuration of Low Telescope Subarray in TMC
 	When I configure it for a scan
 	Then the subarray must be in the READY obsState
 
+@XTP-103071
+Scenario: Successful Configuration of Low Telescope Subarray in TMC with kafka addresses
+	Given a TMC
+	Given a subarray in the IDLE obsState
+	Given SDP Subarray reports receive addresses attribute with kafka addresses
+	When I configure it for a scan
+	Then the subarray must be in the READY obsState
+

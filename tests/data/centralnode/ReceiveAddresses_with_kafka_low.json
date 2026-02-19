@@ -1,0 +1,303 @@
+{
+  "target:a": {
+    "vis0": {
+      "function": "visibilities",
+      "host": [
+        [
+          0,
+          "192.168.0.1"
+        ],
+        [
+          400,
+          "192.168.0.2"
+        ],
+        [
+          744,
+          "192.168.0.3"
+        ],
+        [
+          1144,
+          "192.168.0.4"
+        ]
+      ],
+      "port": [
+        [
+          0,
+          9000,
+          1
+        ],
+        [
+          400,
+          9000,
+          1
+        ],
+        [
+          744,
+          9000,
+          1
+        ],
+        [
+          1144,
+          9000,
+          1
+        ]
+      ],
+      "mac": [
+        [
+          0,
+          "06-00-00-00-00-00"
+        ],
+        [
+          744,
+          "06-00-00-00-00-01"
+        ]
+      ],
+      "delay_cal": "low-sdp/telstate/rcal0/delay",
+      "pointing_cal": "tango://low-sdp/queueconnector/01/pointing_offsets"
+    },
+    "pss1": {
+      "function": "pulsar search",
+      "search_beam_id": 1,
+      "host": [
+        [
+          0,
+          "192.168.60.0"
+        ]
+      ],
+      "port": [
+        [
+          0,
+          8000
+        ]
+      ],
+      "jones_cal": [
+        [
+          0,
+          "kafka/localhost:8080/test_pss1_topic0"
+        ],
+        [
+          400,
+          "kafka/localhost:8080/testtopic1"
+        ],
+        [
+          744,
+          "kafka/localhost:8080/testtopic2"
+        ],
+        [
+          1144,
+          "kafka/localhost:8080/testtopic2"
+        ]
+      ]
+    },
+    "pss2": {
+      "function": "pulsar search",
+      "search_beam_id": 2,
+      "host": [
+        [
+          0,
+          "192.168.60.1"
+        ]
+      ],
+      "port": [
+        [
+          0,
+          8000
+        ]
+      ],
+      "jones_cal": [
+        [
+          0,
+          "kafka/localhost:8080/test_pss2_topic0"
+        ],
+        [
+          400,
+          "kafka/localhost:8080/testtopic1"
+        ],
+        [
+          744,
+          "kafka/localhost:8080/testtopic2"
+        ],
+        [
+          1144,
+          "kafka/localhost:8080/testtopic2"
+        ]
+      ]
+    },
+    "pst1": {
+      "function": "pulsar timing",
+      "timing_beam_id": 1,
+      "host": [
+        [
+          0,
+          "192.168.60.2"
+        ]
+      ],
+      "port": [
+        [
+          0,
+          8001
+        ]
+      ],
+      "jones_cal": [
+        [
+          0,
+          "kafka/localhost:8080/test_pst1_topic0"
+        ],
+        [
+          400,
+          "kafka/localhost:8080/testtopic1"
+        ],
+        [
+          744,
+          "kafka/localhost:8080/testtopic2"
+        ],
+        [
+          1144,
+          "kafka/localhost:8080/testtopic2"
+        ]
+      ]
+    },
+    "pst2": {
+      "function": "pulsar timing",
+      "timing_beam_id": 2,
+      "host": [
+        [
+          0,
+          "192.168.60.3"
+        ]
+      ],
+      "port": [
+        [
+          0,
+          8002
+        ]
+      ],
+      "jones_cal": [
+        [
+          0,
+          "kafka/localhost:8080/test_pst2_topic0"
+        ],
+        [
+          400,
+          "kafka/localhost:8080/testtopic1"
+        ],
+        [
+          744,
+          "kafka/localhost:8080/testtopic2"
+        ],
+        [
+          1144,
+          "kafka/localhost:8080/testtopic2"
+        ]
+      ]
+    }
+  },
+  "calibration:b": {
+    "vis0": {
+      "function": "visibilities",
+      "host": [
+        [
+          0,
+          "192.168.1.1"
+        ]
+      ],
+      "port": [
+        [
+          0,
+          9000,
+          1
+        ]
+      ],
+      "delay_cal": "low-sdp/telstate/rcal0/delay",
+      "pointing_cal": "tango://low-sdp/queueconnector/01/pointing_offsets"
+    },
+    "pss1": {
+      "function": "pulsar search",
+      "search_beam_id": 1,
+      "host": [
+        [
+          0,
+          "192.168.60.0"
+        ]
+      ],
+      "port": [
+        [
+          0,
+          8003
+        ]
+      ],
+      "jones_cal": [
+        [
+          0,
+          "kafka/localhost:8080/testtopic0"
+        ]
+      ]
+    },
+    "pss2": {
+      "function": "pulsar search",
+      "search_beam_id": 2,
+      "host": [
+        [
+          0,
+          "192.168.60.1"
+        ]
+      ],
+      "port": [
+        [
+          0,
+          8002
+        ]
+      ],
+      "jones_cal": [
+        [
+          0,
+          "kafka/localhost:8080/testtopic0"
+        ]
+      ]
+    },
+    "pst1": {
+      "function": "pulsar timing",
+      "timing_beam_id": 0,
+      "host": [
+        [
+          0,
+          "192.168.60.2"
+        ]
+      ],
+      "port": [
+        [
+          0,
+          8001
+        ]
+      ],
+      "jones_cal": [
+        [
+          0,
+          "kafka/localhost:8080/testtopic0"
+        ]
+      ]
+    },
+    "pst2": {
+      "function": "pulsar timing",
+      "timing_beam_id": 1,
+      "host": [
+        [
+          0,
+          "192.168.60.3"
+        ]
+      ],
+      "port": [
+        [
+          0,
+          8000
+        ]
+      ],
+      "jones_cal": [
+        [
+          0,
+          "kafka/localhost:8080/testtopic0"
+        ]
+      ]
+    }
+  }
+}
