@@ -190,16 +190,6 @@ def subarray_node_obs_state_resourcing(
     )
     assert_that(event_tracer).described_as(
         "FAILED UNEXPECTED OBSSTATE: "
-        "CSP subarray leaf device"
-        f"({central_node_low.csp_subarray_leaf_node.dev_name()}) "
-        "is expected to be in RESOURCING obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.csp_subarray_leaf_node,
-        "cspSubarrayObsState",
-        ObsState.RESOURCING,
-    )
-    assert_that(event_tracer).described_as(
-        "FAILED UNEXPECTED OBSSTATE: "
         "CSP subarray device"
         f"({csp_sim.dev_name()}) "
         "is expected to be in RESOURCING obstate",
@@ -210,12 +200,12 @@ def subarray_node_obs_state_resourcing(
     )
     assert_that(event_tracer).described_as(
         "FAILED UNEXPECTED OBSSTATE: "
-        "MCCS subarray leaf device"
-        f"({central_node_low.mccs_subarray_leaf_node.dev_name()}) "
+        "CSP subarray leaf device"
+        f"({central_node_low.csp_subarray_leaf_node.dev_name()}) "
         "is expected to be in RESOURCING obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        central_node_low.mccs_subarray_leaf_node,
-        "obsState",
+        central_node_low.csp_subarray_leaf_node,
+        "cspSubarrayObsState",
         ObsState.RESOURCING,
     )
     assert_that(event_tracer).described_as(
@@ -225,6 +215,16 @@ def subarray_node_obs_state_resourcing(
         "is expected to be in RESOURCING obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         mccs_sim,
+        "obsState",
+        ObsState.RESOURCING,
+    )
+    assert_that(event_tracer).described_as(
+        "FAILED UNEXPECTED OBSSTATE: "
+        "MCCS subarray leaf device"
+        f"({central_node_low.mccs_subarray_leaf_node.dev_name()}) "
+        "is expected to be in RESOURCING obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.mccs_subarray_leaf_node,
         "obsState",
         ObsState.RESOURCING,
     )

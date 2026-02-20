@@ -92,3 +92,7 @@ ska-tmc-simulators:
   deviceServers:
     mocks:
       enabled: true
+  ska_tmc_simulators:
+    image:
+      registry: artefact.skao.int
+      tag: 1.9.7

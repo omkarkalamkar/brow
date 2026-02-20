@@ -5,6 +5,11 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[Unreleased]
+************
+* TMC supports kafka topic addresses forwarding.
+* TMC Central Node and Subarray Node tags updated with base class upgrade (CentralNode v1.0.0, SubarrayNode v1.1.0)
+
 [2.11.0-rc.1]
 *************
 * Upgraded TMC Leaf Nodes tags with Base class updates (MCCS v0.12.2, SDP v0.26.0, CSP v0.36.0)

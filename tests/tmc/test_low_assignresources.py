@@ -118,3 +118,15 @@ def subsystems_subarray_idle(
     sdp_proxy = DeviceProxy(low_sdp_subarray1)
     if sdp_proxy.adminMode != AdminMode.ONLINE:
         sdp_proxy.adminMode = AdminMode.ONLINE
+
+    release_input = MyFileJSONInput("centralnode", "release_resources_low")
+    event_tracer.clear_events()
+
+    tmc.release_resources(release_input, wait_termination=False)
+    assert_that(event_tracer).described_as(
+        f"TMC Subarray Node device ({tmc.subarray_node})"
+        "ObsState attribute values should move "
+        f"from IDLE to EMPTY."
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node, "obsState", ObsState.EMPTY
+    )
