@@ -5,10 +5,11 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
-[Unreleased]
+[2.11.0-rc.1]
 *************
 * Upgraded TMC Leaf Nodes tags with Base class updates (MCCS v0.12.2, SDP v0.26.0, CSP v0.36.0)
 * Updated ska-tmc-simulator to v1.9.5.
+* healthinfo attribute has been introduced on TMC Leaf Nodes (MCCS v0.13.0, SDP v0.27.0, CSP v0.40.0)
 
 [2.10.0]
 *********
