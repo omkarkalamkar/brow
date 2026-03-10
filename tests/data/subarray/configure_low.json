@@ -540,6 +540,6 @@
       }
   },
   "tmc": {
-    "scan_duration": 10.0
+    "scan_duration": 600.0
   }
 }
