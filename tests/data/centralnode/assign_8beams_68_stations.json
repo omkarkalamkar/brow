@@ -2369,8 +2369,8 @@
               "count": 4,
               "start": 0,
               "stride": 2,
-              "freq_min": 350000000,
-              "freq_max": 368000000,
+              "freq_min": 350000000.0,
+              "freq_max": 368000000.0,
               "link_map": [
                 [
                   0,
