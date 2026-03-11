@@ -5,7 +5,7 @@
     "subarray_beams": [
       {
         "subarray_beam_id": 1,
-        "update_rate": 0,
+        "update_rate": 0.0,
         "logical_bands": [
           {
             "start_channel": 80,
@@ -292,13 +292,13 @@
         ],
         "sky_coordinates": {
           "reference_frame": "ICRS",
-          "c1": 180,
-          "c2": 45
+          "c1": 180.0,
+          "c2": 45.0
         }
       },
       {
         "subarray_beam_id": 2,
-        "update_rate": 0,
+        "update_rate": 0.0,
         "logical_bands": [
           {
             "start_channel": 96,
@@ -585,13 +585,13 @@
         ],
         "sky_coordinates": {
           "reference_frame": "ICRS",
-          "c1": 185,
-          "c2": 47
+          "c1": 185.0,
+          "c2": 47.0
         }
       },
       {
         "subarray_beam_id": 3,
-        "update_rate": 0,
+        "update_rate": 0.0,
         "logical_bands": [
           {
             "start_channel": 112,
@@ -878,13 +878,13 @@
         ],
         "sky_coordinates": {
           "reference_frame": "ICRS",
-          "c1": 190,
-          "c2": 49
+          "c1": 190.0,
+          "c2": 49.0
         }
       },
       {
         "subarray_beam_id": 4,
-        "update_rate": 0,
+        "update_rate": 0.0,
         "logical_bands": [
           {
             "start_channel": 128,
@@ -1171,13 +1171,13 @@
         ],
         "sky_coordinates": {
           "reference_frame": "ICRS",
-          "c1": 195,
-          "c2": 51
+          "c1": 195.0,
+          "c2": 51.0
         }
       },
       {
         "subarray_beam_id": 5,
-        "update_rate": 0,
+        "update_rate": 0.0,
         "logical_bands": [
           {
             "start_channel": 128,
@@ -1464,13 +1464,13 @@
         ],
         "sky_coordinates": {
           "reference_frame": "ICRS",
-          "c1": 195,
-          "c2": 51
+          "c1": 195.0,
+          "c2": 51.0
         }
       },
       {
         "subarray_beam_id": 6,
-        "update_rate": 0,
+        "update_rate": 0.0,
         "logical_bands": [
           {
             "start_channel": 128,
@@ -1757,13 +1757,13 @@
         ],
         "sky_coordinates": {
           "reference_frame": "ICRS",
-          "c1": 195,
-          "c2": 51
+          "c1": 195.0,
+          "c2": 51.0
         }
       },
       {
         "subarray_beam_id": 7,
-        "update_rate": 0,
+        "update_rate": 0.0,
         "logical_bands": [
           {
             "start_channel": 128,
@@ -2050,13 +2050,13 @@
         ],
         "sky_coordinates": {
           "reference_frame": "ICRS",
-          "c1": 195,
-          "c2": 51
+          "c1": 195.0,
+          "c2": 51.0
         }
       },
       {
         "subarray_beam_id": 8,
-        "update_rate": 0,
+        "update_rate": 0.0,
         "logical_bands": [
           {
             "start_channel": 128,
@@ -2343,8 +2343,8 @@
         ],
         "sky_coordinates": {
           "reference_frame": "ICRS",
-          "c1": 195,
-          "c2": 51
+          "c1": 195.0,
+          "c2": 51.0
         }
       }
     ]
@@ -2751,11 +2751,11 @@
             "stn_beam_id": 1,
             "stn_weights": [
               0.9,
-              1,
-              1,
-              1,
+              1.0,
+              1.0,
+              1.0,
               0.9,
-              1
+              1.0
             ]
           },
           {
@@ -2773,11 +2773,11 @@
             "stn_beam_id": 2,
             "stn_weights": [
               0.9,
-              1,
-              1,
-              1,
+              1.0,
+              1.0,
+              1.0,
               0.9,
-              1
+              1.0
             ]
           }
         ]
@@ -2795,8 +2795,8 @@
             "wt_nsamp": 32,
             "udp_nchan": 24,
             "num_frequency_channels": 432,
-            "centre_frequency": 200000000,
-            "total_bandwidth": 1562500,
+            "centre_frequency": 200000000.0,
+            "total_bandwidth": 1562500.0,
             "observation_mode": "VOLTAGE_RECORDER",
             "observer_id": "jdoe",
             "project_id": "project1",
@@ -2812,18 +2812,18 @@
             "feed_handedness": 1,
             "feed_angle": 1.234,
             "feed_tracking_mode": "FA",
-            "feed_position_angle": 10,
+            "feed_position_angle": 10.0,
             "oversampling_ratio": [
               8,
               7
             ],
             "coordinates": {
-              "equinox": 2000,
+              "equinox": 2000.0,
               "ra": "19:21:44.815",
               "dec": "21:53:02.400"
             },
-            "max_scan_length": 20000,
-            "subint_duration": 30,
+            "max_scan_length": 20000.0,
+            "subint_duration": 30.0,
             "receptors": [
               "receptor1",
               "receptor2"
@@ -2837,7 +2837,7 @@
               {
                 "num_filter_taps": 1,
                 "filter_coefficients": [
-                  1
+                  1.0
                 ],
                 "num_frequency_channels": 1024,
                 "oversampling_ratio": [
@@ -2863,6 +2863,6 @@
     }
   },
   "tmc": {
-    "scan_duration": 10
+    "scan_duration": 10.0
   }
 }
