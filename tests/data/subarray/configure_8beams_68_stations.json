@@ -2739,7 +2739,7 @@
           {
             "pst_beam_id": 1,
             "field": {
-              "target_id": "PSR J0024-7204R",
+              "target_name": "PSR J0024-7204R",
               "reference_frame": "icrs",
               "attrs": {
                 "c1": 6.023625,
@@ -2761,7 +2761,7 @@
           {
             "pst_beam_id": 2,
             "field": {
-              "target_id": "PSR J0024-7204R",
+              "target_name": "PSR J0024-7204R",
               "reference_frame": "icrs",
               "attrs": {
                 "c1": 6.023625,
