@@ -2324,7 +2324,7 @@
     "execution_block": {
       "eb_id": "eb-test-20220916-00000",
       "context": {},
-      "max_length": 3600,
+      "max_length": 3600.0,
       "beams": [
         {
           "beam_id": "vis0",
