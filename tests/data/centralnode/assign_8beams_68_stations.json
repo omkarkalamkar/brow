@@ -2423,8 +2423,8 @@
             "target_name": "Zenith",
             "reference_frame": "altaz",
             "attrs": {
-              "c1": 180,
-              "c2": 90
+              "c1": 180.0,
+              "c2": 90.0
             }
           },
           "pointing_fqdn": "low-tmc/telstate/0/pointing"
