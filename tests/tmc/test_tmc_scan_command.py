@@ -96,7 +96,7 @@ def given_subarray_in_ready(
     )
     log_events({subarray_node_low.subarray_node: ["longRunningCommandResult"]})
     assign_input_json = prepare_json_args_for_centralnode_commands(
-        "assign_resources_low", command_input_factory
+        "assign_8beams_68_stations", command_input_factory
     )
     _, unique_id = central_node_low.store_resources(assign_input_json)
     assert_that(event_tracer).described_as(
@@ -124,7 +124,7 @@ def given_subarray_in_ready(
     )
 
     configure_input_json = prepare_json_args_for_commands(
-        "configure_low", command_input_factory
+        "configure_8beams_68_stations", command_input_factory
     )
     _, unique_id = subarray_node_low.store_configuration_data(
         configure_input_json
