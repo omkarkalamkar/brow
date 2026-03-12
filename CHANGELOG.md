@@ -16,20 +16,20 @@ Added
 * HealthState attribute support has also been introduced on TMC Leaf Nodes.
 
 Updated
-------
+--------
 * **SubarrayNode**: Now uses ska-telmodel v1.33.0 and ska-tmc-cdm v14.8.0.
 * TMC Central Node and Subarray Node: Tags updated due to base class upgrade (no functional changes). 
   * CentralNode → v1.0.0 
   * SubarrayNode → v1.1.0
 * **TMC Component Upgrades**
   * The HealthInfo capability is introduced in the following subsystem versions:
-    * TMC Subarray Node → v0.51.2 
-    * MCCS Subarray Leaf Node → v0.13.0 
-    * SDP Subarray Leaf Node → v0.27.0 
-    * CSP Subarray Leaf Node → v0.40.0
+  * TMC Subarray Node → v0.51.2 
+  * MCCS Subarray Leaf Node → v0.13.0 
+  * SDP Subarray Leaf Node → v0.27.0 
+  * CSP Subarray Leaf Node → v0.40.0
 
 [2.12.0-rc.1]
-************
+**************
 * TMC supports kafka topic addresses forwarding.
 * TMC Central Node and Subarray Node tags updated with base class upgrade (CentralNode v1.0.0, SubarrayNode v1.1.0)
 
