@@ -28,11 +28,6 @@ Updated
     * SDP Subarray Leaf Node → v0.27.0 
     * CSP Subarray Leaf Node → v0.40.0
 
-Breaking Changes
-------
-* None
-  * This release does not introduce any breaking changes
-
 [2.12.0-rc.1]
 ************
 * TMC supports kafka topic addresses forwarding.
