@@ -2848,7 +2848,7 @@
               {
                 "num_filter_taps": 1,
                 "filter_coefficients": [
-                  1
+                  1.0
                 ],
                 "num_frequency_channels": 256,
                 "oversampling_ratio": [
