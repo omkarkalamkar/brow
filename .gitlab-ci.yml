@@ -160,9 +160,9 @@ k8s-tmc-scaling:
   extends:
     - k8s-test
   tags:
-    - ska-staging-tmc
+    - ska-k8s
   variables:
-    SUBARRAY_COUNT: 4
+    SUBARRAY_COUNT: 2
     COUNT: 1
     KUBE_NAMESPACE: "staging-ska-tmc-low"
     CI_KEEP_NAMESPACE: true
