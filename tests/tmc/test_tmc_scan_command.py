@@ -18,7 +18,10 @@ from tests.resources.test_harness.constant import TIMEOUT
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
-from tests.resources.test_harness.utils.common_utils import JsonFactory
+from tests.resources.test_harness.utils.common_utils import (
+    JsonFactory,
+    get_centralnode_input_json,
+)
 from tests.resources.test_support.common_utils.result_code import ResultCode
 from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
@@ -122,6 +125,15 @@ def given_subarray_in_ready(
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
+
+    # Set sdp_subarray_proxy and assign rreceive address
+
+    receive_address = get_centralnode_input_json(
+        "ReceiveAddresses_with_68_stations"
+    )
+    central_node_low.subarray_devices[
+        "sdp_subarray"
+    ].SetDirectreceiveAddresses(receive_address)
 
     configure_input_json = prepare_json_args_for_commands(
         "configure_8beams_68_stations", command_input_factory

@@ -156,7 +156,7 @@ stop-k8s-test-tmc-low-restart:
 
 k8s-tmc-scaling:
   stage: scaling
-  #when: manual
+  when: manual
   extends:
     - k8s-test
   tags:

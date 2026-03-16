@@ -2364,7 +2364,15 @@
         "stns": [
           [
             1,
-            1
+            100
+          ],
+          [
+            1,
+            101
+          ],
+          [
+            1,
+            102
           ],
           [
             2,
@@ -2697,7 +2705,36 @@
           {
             "stn_beam_id": 1,
             "integration_ms": 849
+          },
+           {
+            "stn_beam_id": 2,
+            "integration_ms": 849
+          },
+          {
+            "stn_beam_id": 3,
+            "integration_ms": 849
+          },
+          {
+            "stn_beam_id": 4,
+            "integration_ms": 849
+          },
+          {
+            "stn_beam_id": 5,
+            "integration_ms": 849
+          },
+          {
+            "stn_beam_id": 6,
+            "integration_ms": 849
+          },
+          {
+            "stn_beam_id": 7,
+            "integration_ms": 849
+          },
+          {
+            "stn_beam_id": 8,
+            "integration_ms": 849
           }
+          
           
         ]
       },
