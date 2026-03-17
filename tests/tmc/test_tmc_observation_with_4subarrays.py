@@ -284,16 +284,31 @@ def invoke_configure_command(
     configure_json_subarray1 = json.loads(configure_json)
     LOGGER.info(
         "appertures[1]: %s",
-        configure_json_subarray1["mccs"]["subarray_beams"][0]["apertures"][1],
+        configure_json_subarray1["mccs"]["subarray_beams"],
     )
-    del configure_json_subarray1["mccs"]["subarray_beams"][0]["apertures"][1]
-    del configure_json_subarray1["mccs"]["subarray_beams"][1]
-    del configure_json_subarray1["mccs"]["subarray_beams"][2]
-    del configure_json_subarray1["mccs"]["subarray_beams"][3]
-    del configure_json_subarray1["mccs"]["subarray_beams"][4]
-    del configure_json_subarray1["mccs"]["subarray_beams"][5]
-    del configure_json_subarray1["mccs"]["subarray_beams"][6]
-    del configure_json_subarray1["mccs"]["subarray_beams"][7]
+    configure_json_subarray1["mccs"]["subarray_beams"] = [
+        {
+            "subarray_beam_id": 1,
+            "update_rate": 0.0,
+            "logical_bands": [
+                {"start_channel": 80, "number_of_channels": 16},
+                {"start_channel": 384, "number_of_channels": 16},
+            ],
+            "apertures": [
+                {"aperture_id": "AP001.01", "weighting_key_ref": "aperture2"}
+            ],
+            "field": {
+                "target_name": "Polaris Australis",
+                "reference_frame": "icrs",
+                "attrs": {"c1": 180.0, "c2": 45.0},
+            },
+        }
+    ]
+
+    LOGGER.info(
+        "appertures[1]: %s",
+        configure_json_subarray1["mccs"]["subarray_beams"],
+    )
     del configure_json_subarray1["csp"]["lowcbf"]["timing_beams"]
     del configure_json_subarray1["csp"]["lowcbf"]["search_beams"]
     del configure_json_subarray1["csp"]["pst"]
@@ -323,19 +338,31 @@ def invoke_configure_command(
     configure_json_subarray2 = json.loads(configure_json)
     LOGGER.info(
         "appertures[0]: %s",
-        configure_json_subarray2["mccs"]["subarray_beams"][1]["apertures"][0],
+        configure_json_subarray2["mccs"]["subarray_beams"],
     )
-    configure_json_subarray2["mccs"]["subarray_beams"][1]["apertures"] = {
-        "aperture_id": "AP002.01",
-        "weighting_key_ref": "aperture2",
-    }
-    del configure_json_subarray2["mccs"]["subarray_beams"][0]
-    del configure_json_subarray2["mccs"]["subarray_beams"][2]
-    del configure_json_subarray2["mccs"]["subarray_beams"][3]
-    del configure_json_subarray2["mccs"]["subarray_beams"][4]
-    del configure_json_subarray2["mccs"]["subarray_beams"][5]
-    del configure_json_subarray2["mccs"]["subarray_beams"][6]
-    del configure_json_subarray2["mccs"]["subarray_beams"][7]
+    configure_json_subarray2["mccs"]["subarray_beams"] = [
+        {
+            "subarray_beam_id": 2,
+            "update_rate": 0.0,
+            "logical_bands": [
+                {"start_channel": 96, "number_of_channels": 16},
+                {"start_channel": 400, "number_of_channels": 16},
+            ],
+            "apertures": [
+                {"aperture_id": "AP002.01", "weighting_key_ref": "aperture2"}
+            ],
+            "field": {
+                "target_name": "Polaris Australis",
+                "reference_frame": "icrs",
+                "attrs": {"c1": 181.0, "c2": 46.0},
+            },
+        }
+    ]
+    LOGGER.info(
+        "appertures[0]: %s",
+        configure_json_subarray2["mccs"]["subarray_beams"],
+    )
+
     del configure_json_subarray2["csp"]["lowcbf"]["timing_beams"]
     del configure_json_subarray2["csp"]["lowcbf"]["search_beams"]
     del configure_json_subarray2["csp"]["pst"]
