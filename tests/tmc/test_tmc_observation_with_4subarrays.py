@@ -8,7 +8,7 @@ import logging
 
 import pytest
 from assertpy import assert_that
-from pytest_bdd import given, parsers, scenario, then, when
+from pytest_bdd import given, scenario, then, when
 from ska_control_model import ObsState
 from ska_ser_logging import configure_logging
 from ska_tango_testing.integration import TangoEventTracer, log_events
@@ -154,12 +154,9 @@ def verify_subarrays_in_empty(
 
 
 @given(
-    parsers.parse(
-        "I Assign subarray 1 with station beam {station_beam_subarray1}, "
-        "subarray 2 with station beam  {station_beam_subarray2}, subarray 3 "
-        "with pst beam {pst_beam_subarray3} and subarray 4 with pst beam "
-        "{pst_beam_subarray4}"
-    )
+    "I Assign subarray 1 with station beam 1, "
+    "subarray 2 with station beam 2, subarray 3 "
+    "with pst beam 1 and subarray 4 with pst beam 2"
 )
 def invoke_assign_resources(
     central_node_low: CentralNodeWrapperLow,
