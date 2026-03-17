@@ -179,9 +179,13 @@ def invoke_assign_resources(
     assign_input_json_subarray1 = json.loads(assign_input_json)
     LOGGER.info(
         "apertures data: %s",
-        assign_input_json_subarray1["mccs"]["subarray_beams"]["apertures"][1],
+        assign_input_json_subarray1["mccs"]["subarray_beams"][0]["apertures"][
+            1
+        ],
     )
-    del assign_input_json_subarray1["mccs"]["subarray_beams"]["apertures"][1]
+    del assign_input_json_subarray1["mccs"]["subarray_beams"][0]["apertures"][
+        1
+    ]
 
     del assign_input_json_subarray1["csp"]["pss"]["pss_beam_ids"]
     del assign_input_json_subarray1["csp"]["pst"]["pst_beam_ids"]
@@ -199,9 +203,13 @@ def invoke_assign_resources(
 
     LOGGER.info(
         "apertures data: %s",
-        assign_input_json_subarray2["mccs"]["subarray_beams"]["apertures"][0],
+        assign_input_json_subarray2["mccs"]["subarray_beams"][0]["apertures"][
+            0
+        ],
     )
-    del assign_input_json_subarray2["mccs"]["subarray_beams"]["apertures"][0]
+    del assign_input_json_subarray2["mccs"]["subarray_beams"][0]["apertures"][
+        0
+    ]
 
     del assign_input_json_subarray2["csp"]["pss"]["pss_beam_ids"]
     del assign_input_json_subarray2["csp"]["pst"]["pst_beam_ids"]
