@@ -162,17 +162,17 @@ def invoke_assign_resources(
     central_node_low: CentralNodeWrapperLow,
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
-    station_beam_subarray1: str,
-    station_beam_subarray2: str,
-    pst_beam_subarray3: str,
-    pst_beam_subarray4: str,
+    # station_beam_subarray1: str,
+    # station_beam_subarray2: str,
+    # pst_beam_subarray3: str,
+    # pst_beam_subarray4: str,
 ):
     """Assigns and verifies subarrays in IDLE ObsState."""
 
-    LOGGER.info("station_beam_subarray1: %s", station_beam_subarray1)
-    LOGGER.info("station_beam_subarray2: %s", station_beam_subarray2)
-    LOGGER.info("pst_beam_subarray3: %s", pst_beam_subarray3)
-    LOGGER.info("pst_beam_subarray4: %s", pst_beam_subarray4)
+    # LOGGER.info("station_beam_subarray1: %s", station_beam_subarray1)
+    # LOGGER.info("station_beam_subarray2: %s", station_beam_subarray2)
+    # LOGGER.info("pst_beam_subarray3: %s", pst_beam_subarray3)
+    # LOGGER.info("pst_beam_subarray4: %s", pst_beam_subarray4)
     assign_input_json = prepare_json_args_for_centralnode_commands(
         "assign_resources_low", command_input_factory
     )
