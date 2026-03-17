@@ -603,7 +603,7 @@ def send_release_resources_command(
 
     release_input_json_subarray2["subarray_id"] = 2
     _, unique_id2 = central_node_low.perform_action(
-        "ReleaseResources", release_input_json_subarray2
+        "ReleaseResources", json.dumps(release_input_json_subarray2)
     )
 
     assert_that(event_tracer).described_as(
