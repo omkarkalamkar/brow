@@ -187,8 +187,8 @@ def invoke_assign_resources(
         1
     ]
 
-    del assign_input_json_subarray1["csp"]["pss"]["pss_beam_ids"]
-    del assign_input_json_subarray1["csp"]["pst"]["pst_beam_ids"]
+    assign_input_json_subarray1["csp"]["pss"]["pss_beam_ids"] = []
+    assign_input_json_subarray1["csp"]["pst"]["pst_beam_ids"] = []
     LOGGER.info("assign_input_json_subarray1: %s", assign_input_json_subarray1)
     central_node_low.set_subarray_id(1)
     _, unique_id = central_node_low.perform_action(
