@@ -2791,7 +2791,23 @@
             ]
           }
         ]
-      }
+      },
+      "search_beams": {
+          "firmware": "pss",
+          "beams": [{
+            "pss_beam_id": 1,
+            "stn_beam_id": 1,
+            "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
+          }, {
+            "pss_beam_id": 2,
+            "stn_beam_id": 1,
+            "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
+          }, {
+            "pss_beam_id": 3,
+            "stn_beam_id": 1,
+            "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
+          }]
+        }
     },
     "pst": {
       "beams": [
@@ -2870,7 +2886,27 @@
           }
         }
       ]
-    }
+    },
+    "pss": {
+        "beam": [{
+          "beam_id": 1,
+          "reference_frame": "ICRS",
+          "ra": 82.75,
+          "dec": 21.0,
+          "centre_frequency": 1400.0
+        }, {
+          "beam_id": 2,
+          "reference_frame": "ICRS",
+          "ra": 82.75,
+          "dec": 21.0,
+          "centre_frequency": 1400.0
+        }, {
+          "beam_id": 3,
+          "reference_frame": "ICRS",
+          "ra": 82.75,
+          "dec": 21.0,
+          "centre_frequency": 1400.0
+        }]
   },
   "tmc": {
     "scan_duration": 1800.0
