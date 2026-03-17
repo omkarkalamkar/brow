@@ -314,7 +314,7 @@ def invoke_configure_command(
     del configure_json_subarray1["csp"]["pst"]
     del configure_json_subarray1["csp"]["pss"]
     configure_json_subarray1["csp"]["lowcbf"]["stations"]["stns"] = [[1, 1]]
-    configure_json_subarray1["tmc"]["scan_duration"] = 2
+    configure_json_subarray1["tmc"]["scan_duration"] = 2.0
 
     LOGGER.info("SA1 Configure %s", configure_json_subarray1)
     # Configuring subarray 1
@@ -368,7 +368,7 @@ def invoke_configure_command(
     del configure_json_subarray2["csp"]["lowcbf"]["search_beams"]
     del configure_json_subarray2["csp"]["pst"]
     del configure_json_subarray2["csp"]["pss"]
-    configure_json_subarray2["tmc"]["scan_duration"] = 2
+    configure_json_subarray2["tmc"]["scan_duration"] = 2.0
     configure_json_subarray2["csp"]["lowcbf"]["stations"]["stns"] = [[2, 1]]
     LOGGER.info("SA2 Configure %s", configure_json_subarray2)
 
