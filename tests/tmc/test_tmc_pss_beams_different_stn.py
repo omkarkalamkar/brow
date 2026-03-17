@@ -246,3 +246,4 @@ def verify_delay_generated_for_used_stn_beams(
             config=generated_delay_model_json,
             strictness=2,
         )
+    assert False
