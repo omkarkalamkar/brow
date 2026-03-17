@@ -201,10 +201,16 @@ def verify_delay_generated_for_used_stn_beams(
     generated_delay_model_json = INITIAL_LOW_DELAY_JSON
     for attribute in attributes:
         while time.time() < wait_time:
+            time.sleep(1)
             generated_delay_model = (
                 subarray_node_low.csp_subarray_leaf_node.read_attribute(
                     attribute
                 ).value
+            )
+            logging.info(
+                "Generated %s Delay Model json: %s",
+                attribute,
+                generated_delay_model,
             )
             generated_delay_model_json = json.loads(generated_delay_model)
             logging.info(
