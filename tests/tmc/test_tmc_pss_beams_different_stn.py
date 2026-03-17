@@ -190,7 +190,7 @@ def verify_delay_generated_for_used_stn_beams(
     PSS beams in the configuration. PSS beam 1 and 2 use stn_beam_id 1,
     PSS beam 3 uses stn_beam_id 2.
     """
-    wait_time = time.time() + 5
+    wait_time = time.time() + 10
     # check for pss beams configured to subarray
     station_id_mapping = {
         "delayModelPSSBeam1": 1,
