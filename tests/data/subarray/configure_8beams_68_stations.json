@@ -2907,7 +2907,7 @@
           "dec": 21.0,
           "centre_frequency": 1400.0
         }]
-  },
+  }},
   "tmc": {
     "scan_duration": 1800.0
   }

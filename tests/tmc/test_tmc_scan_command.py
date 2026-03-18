@@ -4,7 +4,6 @@ Scan Command of a Low Telescope Subarray in the Telescope Monitoring and
 Control (TMC) system.
 """
 import json
-import time
 
 import pytest
 from assertpy import assert_that
@@ -27,6 +26,8 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
     prepare_json_args_for_commands,
 )
+
+# import time
 
 
 @pytest.mark.SKA_low12
@@ -206,6 +207,3 @@ def check_scan_completion(
         "obsState",
         ObsState.READY,
     )
-
-    time.sleep(2000)
-    assert False
