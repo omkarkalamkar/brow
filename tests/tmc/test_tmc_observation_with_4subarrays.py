@@ -437,7 +437,7 @@ def verify_subarray_in_ready_observation_state(
     after command Configure.
     """
     # Check if all the Subarrays are in obsState READY and LRCR OK
-    for subarray_id, unique_id in pytest.configure_unique_ids:
+    for subarray_id, unique_id in pytest.configure_unique_ids.items():
         subarray_node_low.set_subarray_id(subarray_id)
         expected_lrcr = (
             unique_id[0],
