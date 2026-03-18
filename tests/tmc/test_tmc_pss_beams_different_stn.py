@@ -36,7 +36,7 @@ from tests.resources.test_harness.utils.common_utils import JsonFactory
 logger = logging.getLogger(__name__)
 
 
-@pytest.mark.SKA_low13
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/tmc_pss_beams_different_stn.feature",
     "TMC generates delay values for different station beams",

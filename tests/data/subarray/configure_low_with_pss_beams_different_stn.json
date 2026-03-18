@@ -115,7 +115,8 @@
             },
             "stn_beam_id": 1,
             "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
-          }, {
+          },
+           {
             "pst_beam_id": 2,
             "field": {
               "target_name": "PSR J0024-7204R",
