@@ -562,10 +562,10 @@ def send_release_resources_command(
     release_unique_ids = []
     for subarray_id in [1, 2, 3, 4]:
         central_node_low.set_subarray_id(subarray_id)
-        release_input_json_subarray2 = json.loads(release_resource_json)
-        release_input_json_subarray2["subarray_id"] = subarray_id
+        release_input_json_subarray = json.loads(release_resource_json)
+        release_input_json_subarray["subarray_id"] = subarray_id
         _, unique_id = central_node_low.perform_action(
-            "ReleaseResources", json.dumps(release_resource_json)
+            "ReleaseResources", json.dumps(release_input_json_subarray)
         )
         release_unique_ids.append(unique_id)
     LOGGER.info("ReleaseResources unique IDs: %s", release_unique_ids)
