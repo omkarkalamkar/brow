@@ -30,7 +30,6 @@ configure_logging(logging.DEBUG)
 LOGGER = logging.getLogger(__name__)
 
 
-@pytest.mark.sah1883
 @pytest.mark.SKA_tmc_low_four_subarrays
 @scenario(
     "../features/tmc/tmc_observation_with_four_subarray.feature",
@@ -133,6 +132,7 @@ def invoke_assign_resources(
         "assign_resources_low", command_input_factory
     )
     assign_unique_ids = []
+
     # Assign Station beam 1 to Subarray 1
     assign_input_json_subarray1 = json.loads(assign_input_json)
     assign_input_json_subarray1["mccs"]["subarray_beams"] = [
@@ -144,12 +144,13 @@ def invoke_assign_resources(
     ]
     assign_input_json_subarray1["csp"]["pss"]["pss_beam_ids"] = []
     assign_input_json_subarray1["csp"]["pst"]["pst_beam_ids"] = []
-    LOGGER.info("assign_input_json_subarray1: %s", assign_input_json_subarray1)
+
     central_node_low.set_subarray_id(1)
     _, unique_id = central_node_low.perform_action(
         "AssignResources", json.dumps(assign_input_json_subarray1)
     )
     assign_unique_ids.append(unique_id)
+
     # Assign Station beam 2 to Subarray 2
     central_node_low.set_subarray_id(2)
     assign_input_json_subarray2 = json.loads(assign_input_json)
@@ -163,11 +164,12 @@ def invoke_assign_resources(
     ]
     assign_input_json_subarray2["csp"]["pss"]["pss_beam_ids"] = []
     assign_input_json_subarray2["csp"]["pst"]["pst_beam_ids"] = []
-    LOGGER.info("assign_input_json_subarray2: %s", assign_input_json_subarray2)
+
     _, unique_id2 = central_node_low.perform_action(
         "AssignResources", json.dumps(assign_input_json_subarray2)
     )
     assign_unique_ids.append(unique_id2)
+
     # Assign PST beam 1 to Subarray 3
     assign_input_json_subarray3 = json.loads(assign_input_json)
     assign_input_json_subarray3["subarray_id"] = 3
@@ -179,12 +181,13 @@ def invoke_assign_resources(
         }
     ]
     assign_input_json_subarray3["csp"]["pss"]["pss_beam_ids"] = []
-    LOGGER.info("assign_input_json_subarray3: %s", assign_input_json_subarray3)
+
     central_node_low.set_subarray_id(3)
     _, unique_id3 = central_node_low.perform_action(
         "AssignResources", json.dumps(assign_input_json_subarray3)
     )
     assign_unique_ids.append(unique_id3)
+
     # Assign PST beam 2 to Subarray 4
     assign_input_json_subarray4 = json.loads(assign_input_json)
     assign_input_json_subarray4["subarray_id"] = 4
@@ -197,13 +200,12 @@ def invoke_assign_resources(
     ]
     assign_input_json_subarray4["csp"]["pss"]["pss_beam_ids"] = []
     assign_input_json_subarray4["csp"]["pst"]["pst_beam_ids"] = [2]
-    LOGGER.info("assign_input_json_subarray4: %s", assign_input_json_subarray4)
+
     central_node_low.set_subarray_id(4)
     _, unique_id4 = central_node_low.perform_action(
         "AssignResources", json.dumps(assign_input_json_subarray4)
     )
     assign_unique_ids.append(unique_id4)
-    LOGGER.info("AssignResources Unique IDs: %s", assign_unique_ids)
 
     # Check if all the AssignResources commands are completed on CentralNode
     for unique_id in assign_unique_ids:
@@ -247,6 +249,7 @@ def invoke_configure_command(
         "configure_low", command_input_factory
     )
     pytest.configure_unique_ids = {}
+
     # Execute Configure command on Subarray 1
     configure_json_subarray1 = json.loads(configure_json)
     configure_json_subarray1["mccs"]["subarray_beams"] = [
@@ -272,12 +275,13 @@ def invoke_configure_command(
     del configure_json_subarray1["csp"]["pst"]
     del configure_json_subarray1["csp"]["pss"]
     configure_json_subarray1["csp"]["lowcbf"]["stations"]["stns"] = [[1, 1]]
-    LOGGER.info("Subarray 1 Configure JSON: %s", configure_json_subarray1)
+
     subarray_node_low.set_subarray_id(1)
     _, configure_id = subarray_node_low.store_configuration_data(
         json.dumps(configure_json_subarray1)
     )
     pytest.configure_unique_ids[1] = configure_id
+
     # Execute Configure command on Subarray 2
     configure_json_subarray2 = json.loads(configure_json)
     configure_json_subarray2["mccs"]["subarray_beams"] = [
@@ -306,12 +310,13 @@ def invoke_configure_command(
     configure_json_subarray2["csp"]["lowcbf"]["stations"]["stn_beams"] = [
         {"beam_id": 2, "freq_ids": [400]}
     ]
-    LOGGER.info("Subarray 2 Configure JSON: %s", configure_json_subarray2)
+
     subarray_node_low.set_subarray_id(2)
     _, configure_id2 = subarray_node_low.store_configuration_data(
         json.dumps(configure_json_subarray2)
     )
     pytest.configure_unique_ids[2] = configure_id2
+
     # Execute Configure command on Subarray 3
     configure_json_subarray3 = json.loads(configure_json)
     configure_json_subarray3["mccs"]["subarray_beams"] = [
@@ -356,12 +361,13 @@ def invoke_configure_command(
     configure_json_subarray3["csp"]["lowcbf"]["stations"]["stn_beams"] = [
         {"beam_id": 3, "freq_ids": [400]}
     ]
-    LOGGER.info("Subarray 3 Configure JSON: %s", configure_json_subarray3)
+
     subarray_node_low.set_subarray_id(3)
     _, configure_id3 = subarray_node_low.store_configuration_data(
         json.dumps(configure_json_subarray3)
     )
     pytest.configure_unique_ids[3] = configure_id3
+
     # Execute Configure command on Subarray 4
     configure_json_subarray4 = json.loads(configure_json)
     configure_json_subarray4["mccs"]["subarray_beams"] = [
@@ -406,13 +412,13 @@ def invoke_configure_command(
     configure_json_subarray4["csp"]["lowcbf"]["stations"]["stn_beams"] = [
         {"beam_id": 4, "freq_ids": [400]}
     ]
-    LOGGER.info("Subarray 4 Configure JSON: %s", configure_json_subarray4)
+
     subarray_node_low.set_subarray_id(4)
     _, configure_id4 = subarray_node_low.store_configuration_data(
         json.dumps(configure_json_subarray4)
     )
     pytest.configure_unique_ids[4] = configure_id4
-    LOGGER.info("Configure unique IDs: %s", pytest.configure_unique_ids)
+
     # Check if all the Subarrays are in obsState CONFIGURING
     for subarray_id in [1, 2, 3, 4]:
         subarray_node_low.set_subarray_id(subarray_id)
@@ -560,6 +566,7 @@ def send_release_resources_command(
         "release_resources_low", command_input_factory
     )
     release_unique_ids = []
+
     for subarray_id in [1, 2, 3, 4]:
         central_node_low.set_subarray_id(subarray_id)
         release_input_json_subarray = json.loads(release_resource_json)
@@ -568,7 +575,7 @@ def send_release_resources_command(
             "ReleaseResources", json.dumps(release_input_json_subarray)
         )
         release_unique_ids.append(unique_id)
-    LOGGER.info("ReleaseResources unique IDs: %s", release_unique_ids)
+
     # Check if all the ReleaseResources commands on CentralNode are completed
     for unique_id in release_unique_ids:
         assert_that(event_tracer).described_as(
