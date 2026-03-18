@@ -80,6 +80,7 @@ def given_a_telescope_is_in_on(
             }
         )
     # Execute TelescopeOn command
+    central_node_low.set_subarray_id(1)
     central_node_low.move_to_on()
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
