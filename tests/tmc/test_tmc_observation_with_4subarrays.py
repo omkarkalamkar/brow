@@ -350,7 +350,7 @@ def invoke_configure_command(
         }
     ]
     del configure_json_subarray3["csp"]["lowcbf"]["search_beams"]
-    del configure_json_subarray3["csp"]["pst"][1]
+    del configure_json_subarray3["csp"]["pst"]["beams"][1]
     del configure_json_subarray3["csp"]["pss"]
     configure_json_subarray3["csp"]["lowcbf"]["stations"]["stns"] = [[3, 1]]
     configure_json_subarray3["csp"]["lowcbf"]["stations"]["stn_beams"] = [
@@ -400,7 +400,7 @@ def invoke_configure_command(
         }
     ]
     del configure_json_subarray4["csp"]["lowcbf"]["search_beams"]
-    del configure_json_subarray4["csp"]["pst"][0]
+    del configure_json_subarray4["csp"]["pst"]["beams"][0]
     del configure_json_subarray4["csp"]["pss"]
     configure_json_subarray4["csp"]["lowcbf"]["stations"]["stns"] = [[4, 1]]
     configure_json_subarray4["csp"]["lowcbf"]["stations"]["stn_beams"] = [
