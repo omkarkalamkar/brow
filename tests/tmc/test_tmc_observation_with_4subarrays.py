@@ -79,8 +79,11 @@ def given_a_telescope_is_in_on(
                 central_node_low.subarray_node: ["obsState"],
             }
         )
+        # Set all the mock subsystem subarrays in State ON
+        central_node_low.set_values_with_all_mocks(DevState.ON)
+
+    event_tracer.clear_events()
     # Execute TelescopeOn command
-    central_node_low.set_subarray_id(1)
     central_node_low.move_to_on()
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
