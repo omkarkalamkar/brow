@@ -290,11 +290,14 @@
             "weighting_key_ref": "aperture68"
           }
         ],
-        "sky_coordinates": {
-          "reference_frame": "ICRS",
+        "field": {
+        "target_name": "Polaris Australis",
+        "reference_frame": "icrs",
+        "attrs": {
           "c1": 180.0,
           "c2": 45.0
         }
+      }
       },
       {
         "subarray_beam_id": 2,
@@ -583,11 +586,14 @@
             "weighting_key_ref": "aperture68"
           }
         ],
-        "sky_coordinates": {
-          "reference_frame": "ICRS",
-          "c1": 185.0,
-          "c2": 47.0
+        "field": {
+        "target_name": "Polaris Australis",
+        "reference_frame": "icrs",
+        "attrs": {
+          "c1": 181.0,
+          "c2": 46.0
         }
+      }
       },
       {
         "subarray_beam_id": 3,
@@ -876,11 +882,14 @@
             "weighting_key_ref": "aperture68"
           }
         ],
-        "sky_coordinates": {
-          "reference_frame": "ICRS",
+        "field": {
+        "target_name": "Polaris Australis",
+        "reference_frame": "icrs",
+        "attrs": {
           "c1": 190.0,
           "c2": 49.0
         }
+      }
       },
       {
         "subarray_beam_id": 4,
@@ -1169,11 +1178,14 @@
             "weighting_key_ref": "aperture68"
           }
         ],
-        "sky_coordinates": {
-          "reference_frame": "ICRS",
+        "field": {
+        "target_name": "Polaris Australis",
+        "reference_frame": "icrs",
+        "attrs": {
           "c1": 195.0,
           "c2": 51.0
         }
+      }
       },
       {
         "subarray_beam_id": 5,
@@ -1462,11 +1474,14 @@
             "weighting_key_ref": "aperture68"
           }
         ],
-        "sky_coordinates": {
-          "reference_frame": "ICRS",
-          "c1": 195.0,
-          "c2": 51.0
+        "field": {
+        "target_name": "Polaris Australis",
+        "reference_frame": "icrs",
+        "attrs": {
+          "c1": 184.0,
+          "c2": 47.0
         }
+      }
       },
       {
         "subarray_beam_id": 6,
@@ -1755,11 +1770,14 @@
             "weighting_key_ref": "aperture68"
           }
         ],
-        "sky_coordinates": {
-          "reference_frame": "ICRS",
-          "c1": 195.0,
-          "c2": 51.0
+        "field": {
+        "target_name": "Polaris Australis",
+        "reference_frame": "icrs",
+        "attrs": {
+          "c1": 181.0,
+          "c2": 46.0
         }
+      }
       },
       {
         "subarray_beam_id": 7,
@@ -2048,11 +2066,14 @@
             "weighting_key_ref": "aperture68"
           }
         ],
-        "sky_coordinates": {
-          "reference_frame": "ICRS",
-          "c1": 195.0,
-          "c2": 51.0
+        "field": {
+        "target_name": "Polaris Australis",
+        "reference_frame": "icrs",
+        "attrs": {
+          "c1": 181.0,
+          "c2": 46.0
         }
+      }
       },
       {
         "subarray_beam_id": 8,
@@ -2341,11 +2362,14 @@
             "weighting_key_ref": "aperture68"
           }
         ],
-        "sky_coordinates": {
-          "reference_frame": "ICRS",
-          "c1": 195.0,
-          "c2": 51.0
+        "field": {
+        "target_name": "Polaris Australis",
+        "reference_frame": "icrs",
+        "attrs": {
+          "c1": 181.0,
+          "c2": 46.0
         }
+      }
       }
     ]
   },
