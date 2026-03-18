@@ -4,43 +4,49 @@ Scan Command of a Low Telescope Subarray in the Telescope Monitoring and
 Control (TMC) system.
 """
 import json
+import logging
+import time
 
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, scenario, then, when
 from ska_control_model import ObsState
 from ska_tango_testing.integration import TangoEventTracer, log_events
+from ska_telmodel.schema import validate as telmodel_validate
 from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
-from tests.resources.test_harness.constant import TIMEOUT
+from tests.resources.test_harness.constant import (
+    INITIAL_LOW_DELAY_JSON,
+    LOW_DELAYMODEL_VERSION,
+    TIMEOUT,
+)
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
-from tests.resources.test_harness.utils.common_utils import (
-    JsonFactory,
-    get_centralnode_input_json,
-)
+from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_support.common_utils.result_code import ResultCode
 from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
     prepare_json_args_for_commands,
 )
 
+logger = logging.getLogger(__name__)
+
 # import time
 
 
-@pytest.mark.SKA_low
+@pytest.mark.SKA_low12
 @scenario(
-    "../features/tmc/check_scan_command.feature",
-    "Successful Execution of Scan Command on Low Telescope Subarray in TMC",
+    "../features/tmc/check_tmc_max_subarry.feature",
+    "Execute Scan Lifecycle with max resources",
 )
 def test_tmc_scan_command():
     """BDD test scenario for verifying successful execution of
     the Low Scan command in a TMC."""
 
 
-@given("a TMC")
+@given("a Low telescope in ON state")
 def given_tmc(
     central_node_low: CentralNodeWrapperLow, event_tracer: TangoEventTracer
 ):
@@ -129,12 +135,12 @@ def given_subarray_in_ready(
 
     # Set sdp_subarray_proxy and assign rreceive address
 
-    receive_address = get_centralnode_input_json(
-        "ReceiveAddresses_with_68_stations"
-    )
-    central_node_low.subarray_devices[
-        "sdp_subarray"
-    ].SetDirectreceiveAddresses(receive_address)
+    # receive_address = get_centralnode_input_json(
+    #     "ReceiveAddresses_with_68_stations"
+    # )
+    # central_node_low.subarray_devices[
+    #     "sdp_subarray"
+    # ].SetDirectreceiveAddresses(receive_address)
 
     configure_input_json = prepare_json_args_for_commands(
         "configure_8beams_68_stations", command_input_factory
@@ -167,6 +173,72 @@ def given_subarray_in_ready(
     )
 
 
+@given(
+    "the delay for the 8 station beams, PSS beams, and PST beams are updated"
+)
+def delay_models_ready(
+    subarray_node_low: SubarrayNodeWrapperLow,
+):
+    """delay model attributes check"""
+
+    wait_time = time.time() + 10
+    # check for pss beams configured to subarray
+    station_id_mapping = {
+        "delayModelPSSBeam1": 1,
+        "delayModelPSSBeam2": 1,
+        "delayModelPSSBeam3": 2,
+    }
+    attributes = [f"delayModelPSSBeam{str(i)}" for i in range(1, 4)]
+    generated_delay_model_json = INITIAL_LOW_DELAY_JSON
+    for attribute in attributes:
+        while time.time() < wait_time:
+
+            generated_delay_model = (
+                subarray_node_low.csp_subarray_leaf_node.read_attribute(
+                    attribute
+                ).value
+            )
+            if (
+                generated_delay_model is None
+                or str(generated_delay_model).strip() == ""
+            ):
+                logging.info(
+                    "Generated %s Delay Model json: %s , will try again",
+                    attribute,
+                    generated_delay_model,
+                )
+                continue
+            logging.info(
+                "Generated %s Delay Model json: %s",
+                attribute,
+                generated_delay_model,
+            )
+            generated_delay_model_json = json.loads(generated_delay_model)
+            logging.info(
+                "Generated %s Delay Model json: %s",
+                attribute,
+                generated_delay_model_json,
+            )
+            if generated_delay_model_json != INITIAL_LOW_DELAY_JSON:
+                break
+            time.sleep(1)
+
+        assert (
+            generated_delay_model_json != INITIAL_LOW_DELAY_JSON
+        ), f"{attribute} has not been updated from initial values"
+        assert len(generated_delay_model_json["station_beam_delays"]) == 1
+        assert (
+            generated_delay_model_json["station_beam_delays"][0]["station_id"]
+            == station_id_mapping[attribute]
+        ), f"{attribute} has not been updated with correct station_id"
+
+        telmodel_validate(
+            version=LOW_DELAYMODEL_VERSION,
+            config=generated_delay_model_json,
+            strictness=2,
+        )
+
+
 @when("I command it to scan for a given period")
 def send_scan(
     command_input_factory: JsonFactory,
@@ -179,7 +251,9 @@ def send_scan(
     subarray_node_low.execute_transition("Scan", scan_input_json)
 
 
-@then("the subarray must be in the SCANNING obsState until finished")
+@then(
+    "after the scan duration they transition back to READY observation state"
+)
 def check_scan_completion(
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
