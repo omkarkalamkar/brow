@@ -31,7 +31,7 @@ LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.sah1883
-@pytest.mark.SKA_low
+@pytest.mark.SKA_tmc_low_four_subarrays
 @scenario(
     "../features/tmc/tmc_observation_with_four_subarray.feature",
     "Execute observations simultaneously on four subarrays",
