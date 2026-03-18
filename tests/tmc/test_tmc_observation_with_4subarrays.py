@@ -68,6 +68,8 @@ def given_a_telescope_is_in_on(
             ],
         }
     )
+    event_tracer.clear_events()
+
     # Subscribe to obsState of all the four subarrays
     for subarray_id in [1, 2, 3, 4]:
         central_node_low.set_subarray_id(subarray_id)
@@ -82,7 +84,6 @@ def given_a_telescope_is_in_on(
         # Set all the mock subsystem subarrays in State ON
         central_node_low.set_values_with_all_mocks(DevState.ON)
 
-    event_tracer.clear_events()
     # Execute TelescopeOn command
     central_node_low.move_to_on()
     assert_that(event_tracer).described_as(
