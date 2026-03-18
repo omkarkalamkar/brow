@@ -1,5 +1,5 @@
 {
-  "interface": "https://schema.skao.int/ska-low-tmc-configure/4.2",
+  "interface": "https://schema.skao.int/ska-low-tmc-configure/6.0",
   "transaction_id": "txn-....-00001",
   "mccs": {
     "subarray_beams": [
@@ -2350,7 +2350,7 @@
     ]
   },
   "sdp": {
-    "interface": "https://schema.skao.int/ska-sdp-configure/0.4",
+    "interface": "https://schema.skao.int/ska-sdp-configure/1.1",
     "scan_type": "target:a"
   },
   "csp": {
