@@ -20,16 +20,7 @@
         {
           "aperture_id": "AP001.01",
           "weighting_key_ref": "aperture1"
-        },
-        {
-          "aperture_id": "AP002.01",
-          "weighting_key_ref": "aperture1"
-        },
-        {
-          "aperture_id": "AP003.01",
-          "weighting_key_ref": "aperture1"
         }
-
       ],
       "field": {
         "target_name": "Polaris Australis",
@@ -55,16 +46,8 @@
       ],
       "apertures": [
         {
-          "aperture_id": "AP004.01",
+          "aperture_id": "AP002.01",
           "weighting_key_ref": "aperture2"
-        },
-        {
-          "aperture_id": "AP005.01",
-          "weighting_key_ref": "aperture1"
-        },
-        {
-          "aperture_id": "AP006.01",
-          "weighting_key_ref": "aperture1"
         }
       ],
       "field": {
@@ -91,12 +74,16 @@
       "lowcbf": {
         "stations": {
           "stns": [
-            [1, 1],
-            [2, 1]
+            [345, -1],
+            [346, -2],
+            [347, 1],
+            [348, 1]
+
+
           ],
           "stn_beams": [{
             "beam_id": 1,
-            "freq_ids": [400]
+            "freq_ids": [65]
           }, {
             "beam_id": 2,
             "freq_ids": [400]
