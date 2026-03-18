@@ -2354,7 +2354,7 @@
     "scan_type": "target:a"
   },
   "csp": {
-    "interface": "https://schema.skao.int/ska-low-csp-configure/3.2",
+    "interface": "https://schema.skao.int/ska-low-csp-configure/7.3",
     "common": {
       "config_id": "sbi-mvp01-20200325-00001-science_A",
       "eb_id": "eb-test-20220916-00000"
@@ -2882,6 +2882,6 @@
         }]
   }},
   "tmc": {
-    "scan_duration": 1800.0
+    "scan_duration": 18.0
   }
 }
