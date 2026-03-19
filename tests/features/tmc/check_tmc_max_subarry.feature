@@ -6,6 +6,7 @@ Scenario: Successful Execution of Scan Command on Low Telescope Subarray in TMC
     Then the subarray must be in the SCANNING obsState until finished
 
 
+@XTP-80580 @XTP-105118
 Scenario: Execute Scan Lifecycle with max resources
     
     Given a Low telescope in ON state

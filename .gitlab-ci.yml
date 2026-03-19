@@ -104,7 +104,8 @@ k8s-test:
     - make k8s-install-chart
     - make k8s-wait
   script:
-    - make k8s-test MARK=SKA_low
+    - make k8s-test
+    - make k8s-test MARK=test_end
    
     - |
       if [[ "$CI_KEEP_NAMESPACE" != "true" ]]; then
@@ -133,7 +134,7 @@ k8s-test-tmc-low-restart:
     - make k8s-install-chart
     - make k8s-wait
   script:
-    - make k8s-test MARK=SKA_low
+    - make k8s-test 
     - |
       if [[ "$CI_KEEP_NAMESPACE" != "true" ]]; then
         make k8s-uninstall-chart || true
@@ -160,9 +161,9 @@ k8s-tmc-scaling:
   extends:
     - k8s-test
   tags:
-    - ska-k8s
+    - ska-staging-tmc
   variables:
-    SUBARRAY_COUNT: 2
+    SUBARRAY_COUNT: 4
     COUNT: 1
     KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low'
     CI_KEEP_NAMESPACE: true

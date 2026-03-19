@@ -17,17 +17,12 @@ from tests.resources.test_harness.constant import TIMEOUT
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
-from tests.resources.test_harness.utils.common_utils import (
-    JsonFactory,
-    get_centralnode_input_json,
-)
+from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_support.common_utils.result_code import ResultCode
 from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
     prepare_json_args_for_commands,
 )
-
-# import time
 
 
 @pytest.mark.SKA_low
@@ -100,7 +95,7 @@ def given_subarray_in_ready(
     )
     log_events({subarray_node_low.subarray_node: ["longRunningCommandResult"]})
     assign_input_json = prepare_json_args_for_centralnode_commands(
-        "assign_8beams_68_stations", command_input_factory
+        "assign_resources_low", command_input_factory
     )
     _, unique_id = central_node_low.store_resources(assign_input_json)
     assert_that(event_tracer).described_as(
@@ -127,17 +122,8 @@ def given_subarray_in_ready(
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
 
-    # Set sdp_subarray_proxy and assign rreceive address
-
-    receive_address = get_centralnode_input_json(
-        "ReceiveAddresses_with_68_stations"
-    )
-    central_node_low.subarray_devices[
-        "sdp_subarray"
-    ].SetDirectreceiveAddresses(receive_address)
-
     configure_input_json = prepare_json_args_for_commands(
-        "configure_8beams_68_stations", command_input_factory
+        "configure_low", command_input_factory
     )
     _, unique_id = subarray_node_low.store_configuration_data(
         configure_input_json

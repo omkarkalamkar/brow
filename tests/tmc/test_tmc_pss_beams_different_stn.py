@@ -211,19 +211,11 @@ def verify_delay_generated_for_used_stn_beams(
                 generated_delay_model is None
                 or str(generated_delay_model).strip() == ""
             ):
-                logging.info(
-                    "Generated %s Delay Model json: %s , will try again",
-                    attribute,
-                    generated_delay_model,
-                )
+
                 continue
-            logging.info(
-                "Generated %s Delay Model json: %s",
-                attribute,
-                generated_delay_model,
-            )
+
             generated_delay_model_json = json.loads(generated_delay_model)
-            logging.info(
+            logging.debug(
                 "Generated %s Delay Model json: %s",
                 attribute,
                 generated_delay_model_json,
@@ -246,4 +238,3 @@ def verify_delay_generated_for_used_stn_beams(
             config=generated_delay_model_json,
             strictness=2,
         )
-    assert False

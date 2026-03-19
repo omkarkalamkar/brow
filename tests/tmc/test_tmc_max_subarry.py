@@ -1,7 +1,8 @@
 """
 This module defines a Pytest BDD test scenario for the successful execution of
 Scan Command of a Low Telescope Subarray in the Telescope Monitoring and
-Control (TMC) system.
+Control (TMC) system.Here Subarry will be using 68 stations,
+2 PST and 3 PSS beams
 """
 import json
 import logging
@@ -35,8 +36,6 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 
 logger = logging.getLogger(__name__)
-
-# import time
 
 
 @pytest.mark.SKA_low
@@ -185,12 +184,7 @@ def delay_models_ready(
     """delay model attributes check"""
 
     wait_time = time.time() + 10
-    # check for pss beams configured to subarray
-    # station_id_mapping = {
-    #     "delayModelPSSBeam1": 1,
-    #     "delayModelPSSBeam2": 1,
-    #     "delayModelPSSBeam3": 2,
-    # }
+
     pssattributes = [f"delayModelPSSBeam{str(i)}" for i in range(1, 4)]
     pstattributes = [f"delayModelPSTBeam{str(i)}" for i in range(1, 3)]
 
@@ -212,19 +206,11 @@ def delay_models_ready(
                 generated_delay_model is None
                 or str(generated_delay_model).strip() == ""
             ):
-                logging.info(
-                    "Generated %s Delay Model json: %s , will try again",
-                    attribute,
-                    generated_delay_model,
-                )
+
                 continue
-            logging.info(
-                "Generated %s Delay Model json: %s",
-                attribute,
-                generated_delay_model,
-            )
+
             generated_delay_model_json = json.loads(generated_delay_model)
-            logging.info(
+            logging.debug(
                 "Generated %s Delay Model json: %s",
                 attribute,
                 generated_delay_model_json,
@@ -237,7 +223,7 @@ def delay_models_ready(
             generated_delay_model_json != INITIAL_LOW_DELAY_JSON
         ), f"{attribute} has not been updated from initial values"
         assert len(generated_delay_model_json["station_beam_delays"]) == 68
-        # Check station ids are sequential and ordered: 1,2,3,...,68
+
         for expected_station_id, delay in enumerate(
             generated_delay_model_json["station_beam_delays"], start=1
         ):
@@ -246,12 +232,6 @@ def delay_models_ready(
                 f"{expected_station_id - 1}: expected {expected_station_id}, "
                 f"got {delay.get('station_id')}"
             )
-
-        # Keep the original attribute-specific sanity check.
-        # assert (
-        #  generated_delay_model_json["station_beam_delays"][0]["station_id"]
-        #     == station_id_mapping[attribute]
-        # ), f"{attribute} has not been updated with correct station_id"
 
         telmodel_validate(
             version=LOW_DELAYMODEL_VERSION,
