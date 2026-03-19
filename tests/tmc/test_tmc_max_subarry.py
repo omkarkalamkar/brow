@@ -190,7 +190,12 @@ def delay_models_ready(
     # }
     pssattributes = [f"delayModelPSSBeam{str(i)}" for i in range(1, 4)]
     pstattributes = [f"delayModelPSTBeam{str(i)}" for i in range(1, 3)]
-    attributes = pssattributes + pstattributes
+
+    stationbeamattributes = [
+        f"delaymodelstationbeam0{str(i)}" for i in range(1, 9)
+    ]
+
+    attributes = pssattributes + pstattributes + stationbeamattributes
     generated_delay_model_json = INITIAL_LOW_DELAY_JSON
     for attribute in attributes:
         while time.time() < wait_time:
