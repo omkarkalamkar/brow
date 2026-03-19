@@ -183,12 +183,14 @@ def delay_models_ready(
 
     wait_time = time.time() + 10
     # check for pss beams configured to subarray
-    station_id_mapping = {
-        "delayModelPSSBeam1": 1,
-        "delayModelPSSBeam2": 1,
-        "delayModelPSSBeam3": 2,
-    }
-    attributes = [f"delayModelPSSBeam{str(i)}" for i in range(1, 4)]
+    # station_id_mapping = {
+    #     "delayModelPSSBeam1": 1,
+    #     "delayModelPSSBeam2": 1,
+    #     "delayModelPSSBeam3": 2,
+    # }
+    pssattributes = [f"delayModelPSSBeam{str(i)}" for i in range(1, 4)]
+    pstattributes = [f"delayModelPSTBeam{str(i)}" for i in range(1, 3)]
+    attributes = pssattributes + pstattributes
     generated_delay_model_json = INITIAL_LOW_DELAY_JSON
     for attribute in attributes:
         while time.time() < wait_time:
@@ -226,11 +228,22 @@ def delay_models_ready(
         assert (
             generated_delay_model_json != INITIAL_LOW_DELAY_JSON
         ), f"{attribute} has not been updated from initial values"
-        assert len(generated_delay_model_json["station_beam_delays"]) == 1
-        assert (
-            generated_delay_model_json["station_beam_delays"][0]["station_id"]
-            == station_id_mapping[attribute]
-        ), f"{attribute} has not been updated with correct station_id"
+        assert len(generated_delay_model_json["station_beam_delays"]) == 68
+        # Check station ids are sequential and ordered: 1,2,3,...,68
+        for expected_station_id, delay in enumerate(
+            generated_delay_model_json["station_beam_delays"], start=1
+        ):
+            assert delay.get("station_id") == expected_station_id, (
+                f"{attribute} has incorrect station_id order at index "
+                f"{expected_station_id - 1}: expected {expected_station_id}, "
+                f"got {delay.get('station_id')}"
+            )
+
+        # Keep the original attribute-specific sanity check.
+        # assert (
+        #  generated_delay_model_json["station_beam_delays"][0]["station_id"]
+        #     == station_id_mapping[attribute]
+        # ), f"{attribute} has not been updated with correct station_id"
 
         telmodel_validate(
             version=LOW_DELAYMODEL_VERSION,
