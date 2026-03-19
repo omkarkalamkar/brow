@@ -32,6 +32,15 @@ server:
             - name: "MCCSControllerFQDN"
               values:
                 - "{{$mccs_controller}}"
+            - name: "SkaLevel"
+              values:
+                - "3"
+            - name: "LoggingTargetsDefault"
+              values:
+                - "tango::logger"
+            - name: "LoggingLevelDefault"
+              values:
+                - "{{coalesce $.Values.deviceServers.resourcemonitor.LoggingLevel $.Values.global.TMCLoggingLevel }}"
 
   {{- end}}
 depends_on:
