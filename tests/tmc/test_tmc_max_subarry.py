@@ -39,7 +39,7 @@ logger = logging.getLogger(__name__)
 # import time
 
 
-@pytest.mark.SKA_low12
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_tmc_max_subarry.feature",
     "Execute Scan Lifecycle with max resources",
