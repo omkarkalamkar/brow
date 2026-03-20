@@ -433,7 +433,6 @@ class CentralNodeWrapperLow(object):
             self.subarray_devices.get("sdp_subarray"),
             self.subarray_devices.get("mccs_subarray"),
         ]
-        LOGGER.info("device_to_on_list: %s", device_to_on_list)
         for device in device_to_on_list:
             device.SetDirectState(subarray_state)
 
