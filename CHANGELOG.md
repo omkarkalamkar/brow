@@ -5,10 +5,12 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+Unreleased
+----------
 
+* Verified that the TMC Subarry can work with 68 stations, 3 PSS beams and 2 PST beams
+and checked that the Delay Models are getting generated for all the resources.
 
-*Added Test Case to  Test Subarry with 68 stations , 3 PSS beams and 2 PST beams
-and Check Delay Models are getting updated for all
 
 [2.12.0]
 ************
