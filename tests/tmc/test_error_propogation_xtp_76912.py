@@ -25,7 +25,7 @@ from tests.resources.test_harness.utils.my_file_json_input import (
 TIMEOUT = 80
 
 
-@pytest.mark.SKA_low
+@pytest.mark.SKA_tmc_low_negative_tests
 @scenario(
     "../features/tmc/check_error_propagation_ith.feature",
     "Error Propagation Reported by TMC Low AssignResources Command for "

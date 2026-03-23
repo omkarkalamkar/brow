@@ -38,7 +38,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 @pytest.mark.xfail(
     reason="Failure due to obs state and lrcr event not in order."
 )
-@pytest.mark.SKA_low
+@pytest.mark.SKA_tmc_low_negative_tests
 @scenario(
     "../features/tmc/check_error_propagation_mccs.feature",
     "Error Propagation Reported by TMC Low Configure Command for"

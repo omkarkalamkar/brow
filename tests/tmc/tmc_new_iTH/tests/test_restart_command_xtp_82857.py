@@ -55,7 +55,7 @@ def _setup_event_subscriptions(
     )
 
 
-@pytest.mark.SKA_tmc_low_restart
+@pytest.mark.SKA_tmc_low_negative_tests
 @scenario(
     "../tmc/tmc_new_iTH/features/xtp_82857.feature",
     "Test Restart Command flow when TMC Subarray observation state is FAULT"
