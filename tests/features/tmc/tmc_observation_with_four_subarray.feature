@@ -1,4 +1,4 @@
-@XTP-98746 @XTP-98925 @XTP-28348 @TEAM_SAHYADRI
+@XTP-105375 @XTP-28348 @TEAM_SAHYADRI
 Scenario Outline: Execute observations simultaneously on four subarrays
     Given the telescope is in the ON state
     And all the subarrays are in the EMPTY ObsState

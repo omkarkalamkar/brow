@@ -87,7 +87,7 @@ def given_a_telescope_is_in_on(
     central_node_low.move_to_on()
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
-        "'the telescope is is ON state'"
+        "'the telescope is ON state'"
         "Central Node device"
         f"({central_node_low.central_node.dev_name()}) "
         "is expected to be in TelescopeState ON",

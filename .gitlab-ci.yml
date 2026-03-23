@@ -184,6 +184,8 @@ k8s-test-tmc-low-four-subarrays:
   environment:
     name: test/$CI_COMMIT_REF_SLUG
     on_stop: stop-k8s-test-tmc-low-four-subarrays
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
 
 stop-k8s-test-tmc-low-four-subarrays:
   extends:
