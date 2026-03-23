@@ -5,6 +5,9 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[Unreleased]
+************
+* Created a separate job to deploy 4 Subarrays and execute an observation on 4 subarrays parallely. This job runs only in a scheduled master pipeline daily.
 
 [2.12.0]
 ************
