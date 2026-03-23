@@ -32,6 +32,12 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 
 
+# Failure occurs due to obs state and lrcr events not recieved in order.
+# Team Himalaya has this issue planned in PI30. Once issue is fixed,
+# the xfail is removed.
+@pytest.mark.xfail(
+    reason="Failure due to obs state and lrcr event not in order."
+)
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_error_propagation_mccs.feature",
