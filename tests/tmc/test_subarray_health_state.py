@@ -11,7 +11,7 @@ from tests.resources.test_harness.helpers import get_device_simulators
 state = {}
 
 
-@pytest.xfail(reason="Refactor test to use event tracer")
+@pytest.mark.xfail(reason="Refactor test to use event tracer")
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_subarray_healthstate.feature",
