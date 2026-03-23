@@ -563,6 +563,7 @@ def verify_cspsln_delay_model_updated(
         )
 
     # check for pss beams configured to subarray 2
+    wait_time = time.time() + 20
     subarray_node_low.set_subarray_id(2)
     attributes = [f"delayModelPSSBeam{str(i)}" for i in range(16, 31)]
     generated_delay_model_json = INITIAL_LOW_DELAY_JSON
