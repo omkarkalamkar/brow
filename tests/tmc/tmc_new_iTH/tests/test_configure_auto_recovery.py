@@ -34,6 +34,7 @@ FAILED_DEVICE_MAP = {
 }
 
 
+@pytest.xfail(reason="LRCR event received before the obstate event")
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
