@@ -9,7 +9,7 @@ Unreleased
 ----------
 
 * Verified that the TMC Subarry can work with 68 stations, 3 PSS beams and 2 PST beams
-and checked that the Delay Models are getting generated for all the resources.
+and checked that the Delay Models are getting generated for all the resources .
 
 
 [2.12.0]
