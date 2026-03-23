@@ -9,7 +9,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 ************
 Added
 ------
-* Added support for forwarding the Kafka address through SDP using the receive addresses configuration.
+* Added support for forwarding the Kafka address through SDP using the receive addresses configuration
 * **Improved Health Monitoring**: Introduced a new HealthInfo reporting capability on TMC nodes to provide better visibility into system health and status changes. 
 * **Health Change Insights**: When the health state of the TMC Subarray Node changes, the reason for the change is now available through the HealthInfo information. 
 * **Subsystem HealthInfo Aggregation**: The Subarray node now collects and aggregates health information from multiple subsystems, providing a clearer and more consolidated view of overall system health. 
