@@ -23,8 +23,9 @@ def test_subarray_health_combined_states():
 
 
 @given(parsers.parse("CSP health is {csp_health}"))
-def set_csp_health(simulator_factory, csp_health):
+def set_csp_health(simulator_factory, csp_health, event_recorder):
     """Set the CSP healthstate"""
+    event_recorder.clear_events()
     csp, _, _ = get_device_simulators(simulator_factory)
     state["csp"] = csp
     state["csp_health"] = csp_health
