@@ -1,6 +1,6 @@
 """
 This module defines a Pytest BDD test scenario for the successful execution of
-Scan Command of a Low Telescope Subarray in the Telescope Monitoring and
+observation for a Low Telescope Subarray in the Telescope Monitoring and
 Control (TMC) system.Here Subarry will be using 68 stations,
 2 PST and 3 PSS beams
 """
@@ -40,7 +40,7 @@ logger = logging.getLogger(__name__)
 
 @pytest.mark.SKA_low
 @scenario(
-    "../features/tmc/check_tmc_max_subarray.feature",
+    "../features/tmc/check_tmc_max_subarray_XTP-105118.feature",
     "Execute Scan Lifecycle with max resources",
 )
 def test_tmc_scan_command():
