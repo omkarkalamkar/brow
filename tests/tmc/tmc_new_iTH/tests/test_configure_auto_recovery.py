@@ -34,7 +34,10 @@ FAILED_DEVICE_MAP = {
 }
 
 
-@pytest.xfail(reason="LRCR event received before the obstate event")
+# Failure occurs due to obs state and lrcr events not recieved in order.
+# Team Himalaya has this issue planned in PI30. Once issue is fixed,
+# the xfail is removed.
+@pytest.xfail(reason="Failure due to obs state and lrcr event not in order.")
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
