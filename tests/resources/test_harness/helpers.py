@@ -26,22 +26,36 @@ from tests.resources.test_harness.constant import (
     low_csp_master,
     low_csp_subarray1,
     low_csp_subarray2,
+    low_csp_subarray3,
+    low_csp_subarray4,
     low_csp_subarray_leaf_node,
     low_csp_subarray_leaf_node2,
+    low_csp_subarray_leaf_node3,
+    low_csp_subarray_leaf_node4,
     low_sdp_master,
     low_sdp_subarray1,
     low_sdp_subarray2,
+    low_sdp_subarray3,
+    low_sdp_subarray4,
     low_sdp_subarray_leaf_node,
     low_sdp_subarray_leaf_node2,
+    low_sdp_subarray_leaf_node3,
+    low_sdp_subarray_leaf_node4,
     mccs_controller,
     mccs_pasdbus_prefix,
     mccs_prefix,
     mccs_subarray1,
     mccs_subarray2,
+    mccs_subarray3,
+    mccs_subarray4,
     mccs_subarray_leaf_node,
     mccs_subarray_leaf_node2,
+    mccs_subarray_leaf_node3,
+    mccs_subarray_leaf_node4,
     tmc_low_subarraynode1,
     tmc_low_subarraynode2,
+    tmc_low_subarraynode3,
+    tmc_low_subarraynode4,
 )
 from tests.resources.test_harness.event_recorder import EventRecorder
 from tests.resources.test_harness.utils.common_utils import JsonFactory
@@ -94,9 +108,35 @@ def get_device_dict(subarray_id: int = 1) -> dict:
             "sdp_subarray_leaf_node": low_sdp_subarray_leaf_node2,
             "mccs_subarray_leaf_node": mccs_subarray_leaf_node2,
         }
+    elif subarray_id == 3:
+        return {
+            "csp_master": low_csp_master,
+            "sdp_master": low_sdp_master,
+            "mccs_master": mccs_controller,
+            "sdp_subarray": low_sdp_subarray3,
+            "csp_subarray": low_csp_subarray3,
+            "mccs_subarray": mccs_subarray3,
+            "tmc_subarraynode": tmc_low_subarraynode3,
+            "csp_subarray_leaf_node": low_csp_subarray_leaf_node3,
+            "sdp_subarray_leaf_node": low_sdp_subarray_leaf_node3,
+            "mccs_subarray_leaf_node": mccs_subarray_leaf_node3,
+        }
+    elif subarray_id == 4:
+        return {
+            "csp_master": low_csp_master,
+            "sdp_master": low_sdp_master,
+            "mccs_master": mccs_controller,
+            "sdp_subarray": low_sdp_subarray4,
+            "csp_subarray": low_csp_subarray4,
+            "mccs_subarray": mccs_subarray4,
+            "tmc_subarraynode": tmc_low_subarraynode4,
+            "csp_subarray_leaf_node": low_csp_subarray_leaf_node4,
+            "sdp_subarray_leaf_node": low_sdp_subarray_leaf_node4,
+            "mccs_subarray_leaf_node": mccs_subarray_leaf_node4,
+        }
     else:
         raise ValueError(
-            f"Invalid subarray_id: {subarray_id}. Must be 1 or 2."
+            f"Invalid subarray_id: {subarray_id}. Must be 1, 2, 3 or 4."
         )
 
 

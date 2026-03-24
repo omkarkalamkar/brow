@@ -150,6 +150,9 @@ done carefully.
 
 #. **subarray_devices** : List of subarray-devices
 
+#. **LoggingLevel** : To set the logging level of specific type of TMC component, set this key under deviceServers -> <component name> in values.yaml. This is optional parameter. If specified, it takes precedence over the value
+specified in TMCLoggingLevel in global section.
+
 
 Component specific configuration
 ---------------------------------
