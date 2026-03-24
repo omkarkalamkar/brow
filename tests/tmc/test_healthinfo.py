@@ -14,7 +14,6 @@ from tests.resources.test_harness.helpers import LOGGER, get_device_simulators
 state = {}
 
 
-@pytest.mark.xfail(reason="Refactor test to use event tracer")
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/xtp_102560_check_healthinfo.feature",

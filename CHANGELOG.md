@@ -5,8 +5,25 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
-[Unreleased]
-************
+
+
+[2.13.0-rc.1]
+**************
+Added
+------
+* logging level is set to 4 (``INFO`` level). To set the logging level of one or more specific component, refer to advanced cutomization options.
+
+Updated
+--------
+* Utilized SubarrayNode v1.2.1
+
+Utilised following leaf node tags with log improvements,
+
+ska-tmc-centralnode  - 1.1.0
+ska-tmc-sdpleafnode  - 0.29.0
+ska-tmc-cspleafnode  - 0.43.0
+ska-tmc-mccsleafnode - 0.15.0
+
 Added
 ------
 * Created a separate job to deploy 4 Subarrays and execute an observation on 4 subarrays parallely. This job runs only in a scheduled master pipeline daily.
@@ -26,9 +43,8 @@ Fixed
 * Added a FAULT rule so FAILED results correctly propagate to a FAULT
   ObsState when applicable.
 
-Updated
---------
-* Utilized SubarrayNode v1.2.1
+* logging level is set to 4 (``INFO`` level). To set the logging level of one or more specific component, refer to advanced cutomization options.
+
 
 
 
