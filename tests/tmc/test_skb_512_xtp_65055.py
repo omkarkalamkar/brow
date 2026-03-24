@@ -242,7 +242,6 @@ def invoke_endscan_with_a_device_going_to_fault(
 
     # Resetting defect for teardown.
     csp_sim.SetDefective(json.dumps(RESET_DEFECT))
-    event_tracer.clear_events()
 
 
 @then("the command is executed successfully on other sub-systems")
