@@ -22,6 +22,7 @@ global:
   #  .Values.global.subarray_count
   # subarray_count, this will be expanded (1 to N inclusive)
   subarray_count: 1
+  TMCLoggingLevel: "4"
 
 domain: "low-tmc"
 ##  Order of instances resolution ##
@@ -72,7 +73,7 @@ centralnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-centralnode
-    tag: 1.0.0
+    tag: 1.1.0
     pullPolicy: IfNotPresent
 
 subarraynode:
@@ -86,35 +87,35 @@ sdpleafnodes:
   image:
     registry: artefact.skao.int
     image: ska-tmc-sdpleafnodes
-    tag: 0.27.0
+    tag: 0.29.0
     pullPolicy: IfNotPresent
 
 cspmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.40.0
+    tag: 0.43.0
     pullPolicy: IfNotPresent
 
 cspsubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.40.0
+    tag: 0.43.0
     pullPolicy: IfNotPresent
 
 mccsmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.13.0
+    tag:  0.15.0
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.13.0
+    tag:  0.15.0
     pullPolicy: IfNotPresent
 
 resource_monitor:
@@ -154,6 +155,7 @@ deviceServers:
     IsAutoRecoveryEnabled: "true"
     DefaultArrayLayoutSourceURIs: "gitlab://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     DefaultArrayLayoutPath: "instrument/ska1_low/layout/low-layout.json"
+    LoggingLevel: "4"
 
   subarraynode:
     enabled: true
@@ -175,6 +177,7 @@ deviceServers:
     MccsReleaseInterfaceURL: "https://schema.skatelescope.org/ska-low-mccs-controller-release/2.0"
     ScanStartTimeOffset: 10
     StartTimeEnabled: false
+    LoggingLevel: "4"
 
   sdpsubarrayleafnode:
     enabled: true
@@ -185,6 +188,7 @@ deviceServers:
     EventSubscriptionCheckPeriod: 0.5
     SDPSubarrayAdminModeEnabled: true
     family: "subarray-leaf-node-sdp"
+    LoggingLevel: "4"
 
   sdpmasterleafnode:
     enabled: true
@@ -196,6 +200,7 @@ deviceServers:
     SDPMasterAdminModeEnabled: true
     family: "leaf-node-sdp"
     member: "0"
+    LoggingLevel: "4"
 
   cspmasterleafnode:
     enabled: true
@@ -206,6 +211,7 @@ deviceServers:
     EventSubscriptionCheckPeriod: 0.5
     family: "leaf-node-csp"
     member: "0"
+    LoggingLevel: "4"
 
   mccsmasterleafnode:
     enabled: true
@@ -217,6 +223,7 @@ deviceServers:
     AdapterTimeOut: 2.0
     family: "leaf-node-mccs"
     member: "0"
+    LoggingLevel: "4"
 
   cspsubarrayleafnode:
     enabled: true
@@ -238,6 +245,7 @@ deviceServers:
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     family: "subarray-leaf-node-csp"
+    LoggingLevel: "4"
 
   mccssubarrayleafnode:
     enabled: true
@@ -247,6 +255,7 @@ deviceServers:
     CommandTimeOutDefault: 50
     AdapterTimeOut: 2.0
     family: "subarray-leaf-node-mccs"
+    LoggingLevel: "4"
 
   resourcemonitor:
     enabled: true
@@ -255,6 +264,7 @@ deviceServers:
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     family: "resource-monitor"
+    LoggingLevel: "4"
 
 nodeSelector: {}
 
