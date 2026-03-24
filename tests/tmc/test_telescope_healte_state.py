@@ -2,6 +2,7 @@
 import time
 
 import pytest
+from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
 from ska_tango_base.control_model import HealthState
 from tango import DevState
@@ -51,14 +52,14 @@ def test_telescope_health_state_unknown():
 
 
 @given("the telescope is ON")
-def telescope_on(central_node_low, event_recorder):
+def telescope_on(central_node_low, event_tracer):
     """Turn On the telescope"""
-    event_recorder.clear_events()
+    event_tracer.clear_events()
     central_node_low.move_to_on()
-    event_recorder.subscribe_event(
+    event_tracer.subscribe_event(
         central_node_low.central_node, "telescopeState"
     )
-    assert event_recorder.has_change_event_occurred(
+    assert_that(event_tracer).has_change_event_occurred(
         central_node_low.central_node, "telescopeState", DevState.ON
     )
 
@@ -122,13 +123,13 @@ def apply_health_states():
 
 @then(parsers.parse("the telescopeHealthState should be {expected_state}"))
 def check_telescope_health_state(
-    event_recorder, central_node_low, expected_state
+    event_tracer, central_node_low, expected_state
 ):
     """Verify the telescope healthstate"""
-    event_recorder.subscribe_event(
+    event_tracer.subscribe_event(
         central_node_low.central_node, "telescopeHealthState"
     )
-    assert event_recorder.has_change_event_occurred(
+    assert_that(event_tracer).has_change_event_occurred(
         central_node_low.central_node,
         "telescopeHealthState",
         HealthState[expected_state],
@@ -136,11 +137,11 @@ def check_telescope_health_state(
 
 
 @then("the subarray healthState should be OK")
-def check_subarray_health(event_recorder, subarray_node_low):
+def check_subarray_health(event_tracer, subarray_node_low):
     """Verify the subarray healthstate"""
-    event_recorder.subscribe_event(
+    event_tracer.subscribe_event(
         subarray_node_low.subarray_node, "healthState"
     )
-    assert event_recorder.has_change_event_occurred(
+    assert_that(event_tracer).has_change_event_occurred(
         subarray_node_low.subarray_node, "healthState", HealthState.OK
     )

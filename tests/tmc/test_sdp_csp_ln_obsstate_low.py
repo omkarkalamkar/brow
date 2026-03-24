@@ -85,7 +85,6 @@ def test_csp_sdp_ln_obstate_low(json_factory):
             DEVICE_STATE_STANDBY_INFO, "State"
         )
 
-        LOGGER.info("Tests complete.")
     # pylint: disable=broad-exception-caught
     except Exception as e:
         LOGGER.exception("The exception is: %s", e)

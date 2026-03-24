@@ -24,15 +24,24 @@ Fixed
 * Added a FAULT rule so FAILED results correctly propagate to a FAULT
   ObsState when applicable.
 
+* logging level is set to 4 (``INFO`` level). To set the logging level of one or more specific component, refer to advanced cutomization options.
+
 Updated
 --------
 * Utilized SubarrayNode v1.2.1
+
+Utilised following leaf node tags with log improvements,
+
+ska-tmc-centralnode  - 1.1.0
+ska-tmc-sdpleafnode  - 0.29.0
+ska-tmc-cspleafnode  - 0.43.0
+ska-tmc-mccsleafnode - 0.15.0
 
 [2.12.0]
 ************
 Added
 ------
-* Added support for forwarding the Kafka address through SDP using the receive addresses configuration.
+* Added support for forwarding the Kafka address through SDP using the receive addresses configuration
 * **Improved Health Monitoring**: Introduced a new HealthInfo reporting capability on TMC nodes to provide better visibility into system health and status changes. 
 * **Health Change Insights**: When the health state of the TMC Subarray Node changes, the reason for the change is now available through the HealthInfo information. 
 * **Subsystem HealthInfo Aggregation**: The Subarray node now collects and aggregates health information from multiple subsystems, providing a clearer and more consolidated view of overall system health. 

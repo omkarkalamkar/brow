@@ -75,6 +75,14 @@ The ``CommandTimeOutDefault`` property is also introduced, which can be used to 
 a default timeout value during the deployment phase. This ensures that an initial
 timeout value is preconfigured when the component starts for the first time.
 
+Logging
+-------
+
+The basic setting for logging allows setting logging level of all TMC devices 
+via ``TMCLoggingLevel`` parameter in **global** section. By default, the 
+logging level is set to 4 (``INFO`` level). To set the logging level of one or  
+more specific component, refer to advanced cutomization options.
+
 Usage
 ^^^^^^
 
@@ -141,6 +149,9 @@ done carefully.
     #. **resource_monitor_prefix** : This value is present under global. It can be used to change the FQDN prefix of the Resource Monitor device.
 
 #. **subarray_devices** : List of subarray-devices
+
+#. **LoggingLevel** : To set the logging level of specific type of TMC component, set this key under deviceServers -> <component name> in values.yaml. This is optional parameter. If specified, it takes precedence over the value
+specified in TMCLoggingLevel in global section.
 
 
 Component specific configuration
