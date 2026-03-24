@@ -1,7 +1,7 @@
 Feature: SP-5340
 
 	#This test covers scenarios where user invokes Restart command as TMC Subarray Node is in FAULT observation state to recover system.
-	@XTP-82856 @XTP-82736 @SKA_tmc_low_restart
+	@XTP-82856 @XTP-82736 @SKA_tmc_low_negative_tests
 	Scenario Outline: Test Restart Command when TMC subarray transitions to FAULT observation state
 	Given CSP,SDP and MCCS in observation states <csp_obsstate>,<sdp_obsstate> and <mccs_obsstate> after <command>
 	And TMC Subarray in observation state FAULT
