@@ -56,6 +56,32 @@ tmc-low:
   labels:
     app: ska-tmc-low-integration
   enabled: true
+
+  deviceServers:
+    centralnode:
+      LoggingLevel: "5"
+
+    subarraynode:
+      LoggingLevel: "5"
+
+    sdpsubarrayleafnode:
+      LoggingLevel: "5"
+
+    sdpmasterleafnode:
+      LoggingLevel: "5"
+
+    cspmasterleafnode:
+      LoggingLevel: "5"
+
+    cspsubarrayleafnode:
+      LoggingLevel: "5"
+
+    mccssubarrayleafnode:
+      LoggingLevel: "5"
+
+    mccsmasterleafnode:
+      LoggingLevel: "5"
+
   
 
 # SKUID
@@ -92,6 +118,7 @@ ska-tmc-simulators:
   deviceServers:
     mocks:
       enabled: true
+      LoggingLevel: "5"
   ska_tmc_simulators:
     image:
       registry: artefact.skao.int

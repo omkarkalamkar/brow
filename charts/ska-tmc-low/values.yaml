@@ -22,7 +22,7 @@ global:
   #  .Values.global.subarray_count
   # subarray_count, this will be expanded (1 to N inclusive)
   subarray_count: 1
-  TMCLoggingLevel: "5"
+  TMCLoggingLevel: "4"
 
 domain: "low-tmc"
 ##  Order of instances resolution ##
