@@ -1,11 +1,11 @@
-release=2.12.0
-tag=2.12.0
+release=2.13.0-rc.1
+tag=2.13.0-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.12.0**
+**1. ska-tmc-low-integration 2.13.0-rc.1**
 
-    **1.1 ska-tmc-low 2.12.0-rc.1 - 2.12.0:**
+    **1.1 ska-tmc-low 2.12.0 - 2.13.0-rc.1:**
         Updated
         -------
         * TMC supports kafka topic addresses forwarding.
@@ -15,9 +15,9 @@ tag_description=
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.12.0**
+**1. ska-tmc-low-integration 2.13.0-rc.1**
 
-    **1.1 ska-tmc-low 2.12.0-rc.1 - 2.12.0:**
+    **1.1 ska-tmc-low 2.12.0 - 2.13.0-rc.1:**
         Updated
         -------
         * TMC supports kafka topic addresses forwarding.
