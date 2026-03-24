@@ -37,6 +37,23 @@ ska-tmc-sdpleafnode  - 0.29.0
 ska-tmc-cspleafnode  - 0.43.0
 ska-tmc-mccsleafnode - 0.15.0
 
+[2.13.0-rc.1]
+**************
+Added
+------
+* logging level is set to 4 (``INFO`` level). To set the logging level of one or more specific component, refer to advanced cutomization options.
+
+Updated
+--------
+* Utilized SubarrayNode v1.2.1
+
+Utilised following leaf node tags with log improvements,
+
+ska-tmc-centralnode  - 1.1.0
+ska-tmc-sdpleafnode  - 0.29.0
+ska-tmc-cspleafnode  - 0.43.0
+ska-tmc-mccsleafnode - 0.15.0
+
 [2.12.0]
 ************
 Added
