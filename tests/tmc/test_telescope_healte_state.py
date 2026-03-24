@@ -17,18 +17,18 @@ state = {}
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_telescope_healthstate.feature",
-    "CentralNode reports FAILED telescopeHealthState",
+    "CentralNode reports OK telescopeHealthState",
 )
-def test_telescope_health_state_failed():
+def test_telescope_health_state_ok():
     """Test telescope healthstate"""
 
 
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_telescope_healthstate.feature",
-    "CentralNode reports OK telescopeHealthState",
+    "CentralNode reports FAILED telescopeHealthState",
 )
-def test_telescope_health_state_ok():
+def test_telescope_health_state_failed():
     """Test telescope healthstate"""
 
 
@@ -53,6 +53,7 @@ def test_telescope_health_state_unknown():
 @given("the telescope is ON")
 def telescope_on(central_node_low, event_recorder):
     """Turn On the telescope"""
+    event_recorder.clear_events()
     central_node_low.move_to_on()
     event_recorder.subscribe_event(
         central_node_low.central_node, "telescopeState"

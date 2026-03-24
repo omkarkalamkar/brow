@@ -5,11 +5,33 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
-Unreleased
-----------
-
+[Unreleased]
+************
+Added
+------
+* Created a separate job to deploy 4 Subarrays and execute an observation on 4 subarrays parallely. This job runs only in a scheduled master pipeline daily.
 * Verified that the TMC Subarry can work with 68 stations, 3 PSS beams and 2 PST beams
 and checked that the Delay Models are getting generated for all the resources .
+
+Fixed
+-----
+* Fixed an issue where SubarrayNode could remain stuck in CONFIGURING
+  when a Configure command failed and command_in_progress was cleared
+  before aggregation was triggered.
+
+* Fixed incorrect ObsState aggregation in scenarios where a subsystem
+  command returned FAILED but no subsequent event triggered aggregation,
+  preventing transition out of CONFIGURING (e.g. to FAULT).
+
+* Added a FAULT rule so FAILED results correctly propagate to a FAULT
+  ObsState when applicable.
+
+Updated
+--------
+* Utilized SubarrayNode v1.2.1
+
+
+
 
 
 [2.12.0]

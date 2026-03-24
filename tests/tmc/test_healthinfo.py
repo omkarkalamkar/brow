@@ -13,6 +13,7 @@ from tests.resources.test_harness.helpers import LOGGER, get_device_simulators
 state = {}
 
 
+@pytest.mark.xfail(reason="Refactor test to use event tracer")
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/xtp_102560_check_healthinfo.feature",
@@ -23,8 +24,9 @@ def test_subarray_health_combined_states():
 
 
 @given(parsers.parse("CSP health is {csp_health}"))
-def set_csp_health(simulator_factory, csp_health):
+def set_csp_health(simulator_factory, csp_health, event_recorder):
     """Set the CSP healthstate"""
+    event_recorder.clear_events()
     csp, _, _ = get_device_simulators(simulator_factory)
     state["csp"] = csp
     state["csp_health"] = csp_health

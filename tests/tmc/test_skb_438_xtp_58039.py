@@ -39,7 +39,9 @@ def test_verify_skb_438():
 
 @given("a TMC")
 def given_a_tmc(
-    central_node_low: CentralNodeWrapperLow, event_tracer: TangoEventTracer
+    central_node_low: CentralNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    simulator_factory: SimulatorFactory,
 ):
     """
     This method invokes On command from central node and verifies
@@ -56,6 +58,40 @@ def given_a_tmc(
         central_node_low.central_node, "longRunningCommandResult"
     )
     event_tracer.subscribe_event(central_node_low.subarray_node, "obsState")
+
+    sdp_sim = simulator_factory.get_or_create_simulator_device(
+        SimulatorDeviceType.LOW_SDP_DEVICE
+    )
+    csp_sim = simulator_factory.get_or_create_simulator_device(
+        SimulatorDeviceType.LOW_CSP_DEVICE
+    )
+    mccs_sim = simulator_factory.get_or_create_simulator_device(
+        SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
+    )
+    event_tracer.subscribe_event(csp_sim, "obsState")
+    event_tracer.subscribe_event(sdp_sim, "obsState")
+    event_tracer.subscribe_event(mccs_sim, "obsState")
+    event_tracer.subscribe_event(
+        central_node_low.csp_subarray_leaf_node, "cspSubarrayObsState"
+    )
+    event_tracer.subscribe_event(
+        central_node_low.sdp_subarray_leaf_node, "sdpSubarrayObsState"
+    )
+    event_tracer.subscribe_event(
+        central_node_low.mccs_subarray_leaf_node, "obsState"
+    )
+    csp_sim.setDelayInfo(json.dumps({"AssignResources": 50}))
+    log_events(
+        {
+            csp_sim: ["obsState"],
+            sdp_sim: ["obsState"],
+            mccs_sim: ["obsState"],
+            central_node_low.csp_subarray_leaf_node: ["cspSubarrayObsState"],
+            central_node_low.sdp_subarray_leaf_node: ["sdpSubarrayObsState"],
+            central_node_low.mccs_subarray_leaf_node: ["obsState"],
+        }
+    )
+
     log_events(
         {
             central_node_low.central_node: [
@@ -135,29 +171,7 @@ def subarray_node_obs_state_resourcing(
     mccs_sim = simulator_factory.get_or_create_simulator_device(
         SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
     )
-    event_tracer.subscribe_event(csp_sim, "obsState")
-    event_tracer.subscribe_event(sdp_sim, "obsState")
-    event_tracer.subscribe_event(mccs_sim, "obsState")
-    event_tracer.subscribe_event(
-        central_node_low.csp_subarray_leaf_node, "cspSubarrayObsState"
-    )
-    event_tracer.subscribe_event(
-        central_node_low.sdp_subarray_leaf_node, "sdpSubarrayObsState"
-    )
-    event_tracer.subscribe_event(
-        central_node_low.mccs_subarray_leaf_node, "obsState"
-    )
-    csp_sim.setDelayInfo(json.dumps({"AssignResources": 50}))
-    log_events(
-        {
-            csp_sim: ["obsState"],
-            sdp_sim: ["obsState"],
-            mccs_sim: ["obsState"],
-            central_node_low.csp_subarray_leaf_node: ["cspSubarrayObsState"],
-            central_node_low.sdp_subarray_leaf_node: ["sdpSubarrayObsState"],
-            central_node_low.mccs_subarray_leaf_node: ["obsState"],
-        }
-    )
+
     assert_that(event_tracer).described_as(
         "FAILED UNEXPECTED OBSSTATE: "
         "Subarray Node device"
