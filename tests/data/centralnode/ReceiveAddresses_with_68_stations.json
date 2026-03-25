@@ -1,0 +1,190 @@
+{
+  "science_A": {
+    "vis1": {
+      "function": "visibilities",
+      "visibility_beam_id": 1,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9000, 1]]
+    },
+    "vis2": {
+      "function": "visibilities",
+      "visibility_beam_id": 2,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9001, 1]]
+    },
+    "vis3": {
+      "function": "visibilities",
+      "visibility_beam_id": 3,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9002, 1]]
+    },
+    "vis4": {
+      "function": "visibilities",
+      "visibility_beam_id": 4,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9003, 1]]
+    },
+    "vis5": {
+      "function": "visibilities",
+      "visibility_beam_id": 5,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9004, 1]]
+    },
+    "vis6": {
+      "function": "visibilities",
+      "visibility_beam_id": 6,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9005, 1]]
+    },
+    "vis7": {
+      "function": "visibilities",
+      "visibility_beam_id": 7,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9006, 1]]
+    },
+    "vis8": {
+      "function": "visibilities",
+      "visibility_beam_id": 8,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9007, 1]]
+    },
+    "pst1": {
+      "function": "pulsar timing",
+      "timing_beam_id": 1,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9100, 1]]
+    },
+    "pst2": {
+      "function": "pulsar timing",
+      "timing_beam_id": 2,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9101, 1]]
+    }
+  },
+
+  "target:a": {
+    "vis1": {
+      "function": "visibilities",
+      "visibility_beam_id": 1,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9200, 1]]
+    },
+    "vis2": {
+      "function": "visibilities",
+      "visibility_beam_id": 2,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9201, 1]]
+    },
+    "vis3": {
+      "function": "visibilities",
+      "visibility_beam_id": 3,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9202, 1]]
+    },
+    "vis4": {
+      "function": "visibilities",
+      "visibility_beam_id": 4,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9203, 1]]
+    },
+    "vis5": {
+      "function": "visibilities",
+      "visibility_beam_id": 5,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9204, 1]]
+    },
+    "vis6": {
+      "function": "visibilities",
+      "visibility_beam_id": 6,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9205, 1]]
+    },
+    "vis7": {
+      "function": "visibilities",
+      "visibility_beam_id": 7,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9206, 1]]
+    },
+    "vis8": {
+      "function": "visibilities",
+      "visibility_beam_id": 8,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9207, 1]]
+    },
+    "pst1": {
+      "function": "pulsar timing",
+      "timing_beam_id": 1,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9300, 1]]
+    },
+    "pst2": {
+      "function": "pulsar timing",
+      "timing_beam_id": 2,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9301, 1]]
+    }
+  },
+
+  "calibration:b": {
+    "vis1": {
+      "function": "visibilities",
+      "visibility_beam_id": 1,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9400, 1]]
+    },
+    "vis2": {
+      "function": "visibilities",
+      "visibility_beam_id": 2,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9401, 1]]
+    },
+    "vis3": {
+      "function": "visibilities",
+      "visibility_beam_id": 3,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9402, 1]]
+    },
+    "vis4": {
+      "function": "visibilities",
+      "visibility_beam_id": 4,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9403, 1]]
+    },
+    "vis5": {
+      "function": "visibilities",
+      "visibility_beam_id": 5,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9404, 1]]
+    },
+    "vis6": {
+      "function": "visibilities",
+      "visibility_beam_id": 6,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9405, 1]]
+    },
+    "vis7": {
+      "function": "visibilities",
+      "visibility_beam_id": 7,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9406, 1]]
+    },
+    "vis8": {
+      "function": "visibilities",
+      "visibility_beam_id": 8,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9407, 1]]
+    },
+    "pst1": {
+      "function": "pulsar timing",
+      "timing_beam_id": 1,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9500, 1]]
+    },
+    "pst2": {
+      "function": "pulsar timing",
+      "timing_beam_id": 2,
+      "host": [[0, "192.168.0.1"]],
+      "port": [[0, 9501, 1]]
+    }
+  }
+}

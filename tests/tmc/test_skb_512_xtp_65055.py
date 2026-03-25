@@ -216,6 +216,13 @@ def invoke_endscan_with_a_device_going_to_fault(
     event_tracer.subscribe_event(
         subarray_node_low.csp_subarray_leaf_node, "cspSubarrayObsState"
     )
+    # Subscribing to events
+    event_tracer.subscribe_event(
+        subarray_node_low.sdp_subarray_leaf_node, "sdpSubarrayObsState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.mccs_subarray_leaf_node, "obsState"
+    )
 
     csp_sim, _, _ = get_device_simulators(simulator_factory)
     csp_sim.SetDefective(json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT))
@@ -235,7 +242,6 @@ def invoke_endscan_with_a_device_going_to_fault(
 
     # Resetting defect for teardown.
     csp_sim.SetDefective(json.dumps(RESET_DEFECT))
-    event_tracer.clear_events()
 
 
 @then("the command is executed successfully on other sub-systems")
@@ -252,13 +258,6 @@ def check_obs_state_ready_for_leaf_nodes(
         subarray_node_low (SubarrayNodeWrapperLow): Object of subarray
         node wrapper
     """
-    # Subscribing to events
-    event_tracer.subscribe_event(
-        subarray_node_low.sdp_subarray_leaf_node, "sdpSubarrayObsState"
-    )
-    event_tracer.subscribe_event(
-        subarray_node_low.mccs_subarray_leaf_node, "obsState"
-    )
 
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '

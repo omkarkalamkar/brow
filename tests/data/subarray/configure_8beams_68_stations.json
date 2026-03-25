@@ -1,0 +1,3027 @@
+{
+  "interface": "https://schema.skao.int/ska-low-tmc-configure/6.0",
+  "transaction_id": "txn-....-00001",
+  "mccs": {
+    "subarray_beams": [
+      {
+        "subarray_beam_id": 1,
+        "update_rate": 0.0,
+        "logical_bands": [
+          {
+            "start_channel": 80,
+            "number_of_channels": 16
+          },
+          {
+            "start_channel": 384,
+            "number_of_channels": 16
+          }
+        ],
+        "apertures": [
+          {
+            "aperture_id": "AP001.01",
+            "weighting_key_ref": "aperture1"
+          },
+          {
+            "aperture_id": "AP002.01",
+            "weighting_key_ref": "aperture2"
+          },
+          {
+            "aperture_id": "AP003.01",
+            "weighting_key_ref": "aperture3"
+          },
+          {
+            "aperture_id": "AP004.01",
+            "weighting_key_ref": "aperture4"
+          },
+          {
+            "aperture_id": "AP005.01",
+            "weighting_key_ref": "aperture5"
+          },
+          {
+            "aperture_id": "AP006.01",
+            "weighting_key_ref": "aperture6"
+          },
+          {
+            "aperture_id": "AP007.01",
+            "weighting_key_ref": "aperture7"
+          },
+          {
+            "aperture_id": "AP008.01",
+            "weighting_key_ref": "aperture8"
+          },
+          {
+            "aperture_id": "AP009.01",
+            "weighting_key_ref": "aperture9"
+          },
+          {
+            "aperture_id": "AP010.01",
+            "weighting_key_ref": "aperture10"
+          },
+          {
+            "aperture_id": "AP011.01",
+            "weighting_key_ref": "aperture11"
+          },
+          {
+            "aperture_id": "AP012.01",
+            "weighting_key_ref": "aperture12"
+          },
+          {
+            "aperture_id": "AP013.01",
+            "weighting_key_ref": "aperture13"
+          },
+          {
+            "aperture_id": "AP014.01",
+            "weighting_key_ref": "aperture14"
+          },
+          {
+            "aperture_id": "AP015.01",
+            "weighting_key_ref": "aperture15"
+          },
+          {
+            "aperture_id": "AP016.01",
+            "weighting_key_ref": "aperture16"
+          },
+          {
+            "aperture_id": "AP017.01",
+            "weighting_key_ref": "aperture17"
+          },
+          {
+            "aperture_id": "AP018.01",
+            "weighting_key_ref": "aperture18"
+          },
+          {
+            "aperture_id": "AP019.01",
+            "weighting_key_ref": "aperture19"
+          },
+          {
+            "aperture_id": "AP020.01",
+            "weighting_key_ref": "aperture20"
+          },
+          {
+            "aperture_id": "AP021.01",
+            "weighting_key_ref": "aperture21"
+          },
+          {
+            "aperture_id": "AP022.01",
+            "weighting_key_ref": "aperture22"
+          },
+          {
+            "aperture_id": "AP023.01",
+            "weighting_key_ref": "aperture23"
+          },
+          {
+            "aperture_id": "AP024.01",
+            "weighting_key_ref": "aperture24"
+          },
+          {
+            "aperture_id": "AP025.01",
+            "weighting_key_ref": "aperture25"
+          },
+          {
+            "aperture_id": "AP026.01",
+            "weighting_key_ref": "aperture26"
+          },
+          {
+            "aperture_id": "AP027.01",
+            "weighting_key_ref": "aperture27"
+          },
+          {
+            "aperture_id": "AP028.01",
+            "weighting_key_ref": "aperture28"
+          },
+          {
+            "aperture_id": "AP029.01",
+            "weighting_key_ref": "aperture29"
+          },
+          {
+            "aperture_id": "AP030.01",
+            "weighting_key_ref": "aperture30"
+          },
+          {
+            "aperture_id": "AP031.01",
+            "weighting_key_ref": "aperture31"
+          },
+          {
+            "aperture_id": "AP032.01",
+            "weighting_key_ref": "aperture32"
+          },
+          {
+            "aperture_id": "AP033.01",
+            "weighting_key_ref": "aperture33"
+          },
+          {
+            "aperture_id": "AP034.01",
+            "weighting_key_ref": "aperture34"
+          },
+          {
+            "aperture_id": "AP035.01",
+            "weighting_key_ref": "aperture35"
+          },
+          {
+            "aperture_id": "AP036.01",
+            "weighting_key_ref": "aperture36"
+          },
+          {
+            "aperture_id": "AP037.01",
+            "weighting_key_ref": "aperture37"
+          },
+          {
+            "aperture_id": "AP038.01",
+            "weighting_key_ref": "aperture38"
+          },
+          {
+            "aperture_id": "AP039.01",
+            "weighting_key_ref": "aperture39"
+          },
+          {
+            "aperture_id": "AP040.01",
+            "weighting_key_ref": "aperture40"
+          },
+          {
+            "aperture_id": "AP041.01",
+            "weighting_key_ref": "aperture41"
+          },
+          {
+            "aperture_id": "AP042.01",
+            "weighting_key_ref": "aperture42"
+          },
+          {
+            "aperture_id": "AP043.01",
+            "weighting_key_ref": "aperture43"
+          },
+          {
+            "aperture_id": "AP044.01",
+            "weighting_key_ref": "aperture44"
+          },
+          {
+            "aperture_id": "AP045.01",
+            "weighting_key_ref": "aperture45"
+          },
+          {
+            "aperture_id": "AP046.01",
+            "weighting_key_ref": "aperture46"
+          },
+          {
+            "aperture_id": "AP047.01",
+            "weighting_key_ref": "aperture47"
+          },
+          {
+            "aperture_id": "AP048.01",
+            "weighting_key_ref": "aperture48"
+          },
+          {
+            "aperture_id": "AP049.01",
+            "weighting_key_ref": "aperture49"
+          },
+          {
+            "aperture_id": "AP050.01",
+            "weighting_key_ref": "aperture50"
+          },
+          {
+            "aperture_id": "AP051.01",
+            "weighting_key_ref": "aperture51"
+          },
+          {
+            "aperture_id": "AP052.01",
+            "weighting_key_ref": "aperture52"
+          },
+          {
+            "aperture_id": "AP053.01",
+            "weighting_key_ref": "aperture53"
+          },
+          {
+            "aperture_id": "AP054.01",
+            "weighting_key_ref": "aperture54"
+          },
+          {
+            "aperture_id": "AP055.01",
+            "weighting_key_ref": "aperture55"
+          },
+          {
+            "aperture_id": "AP056.01",
+            "weighting_key_ref": "aperture56"
+          },
+          {
+            "aperture_id": "AP057.01",
+            "weighting_key_ref": "aperture57"
+          },
+          {
+            "aperture_id": "AP058.01",
+            "weighting_key_ref": "aperture58"
+          },
+          {
+            "aperture_id": "AP059.01",
+            "weighting_key_ref": "aperture59"
+          },
+          {
+            "aperture_id": "AP060.01",
+            "weighting_key_ref": "aperture60"
+          },
+          {
+            "aperture_id": "AP061.01",
+            "weighting_key_ref": "aperture61"
+          },
+          {
+            "aperture_id": "AP062.01",
+            "weighting_key_ref": "aperture62"
+          },
+          {
+            "aperture_id": "AP063.01",
+            "weighting_key_ref": "aperture63"
+          },
+          {
+            "aperture_id": "AP064.01",
+            "weighting_key_ref": "aperture64"
+          },
+          {
+            "aperture_id": "AP065.01",
+            "weighting_key_ref": "aperture65"
+          },
+          {
+            "aperture_id": "AP066.01",
+            "weighting_key_ref": "aperture66"
+          },
+          {
+            "aperture_id": "AP067.01",
+            "weighting_key_ref": "aperture67"
+          },
+          {
+            "aperture_id": "AP068.01",
+            "weighting_key_ref": "aperture68"
+          }
+        ],
+        "field": {
+        "target_name": "Polaris Australis",
+        "reference_frame": "icrs",
+        "attrs": {
+          "c1": 180.0,
+          "c2": 45.0
+        }
+      }
+      },
+      {
+        "subarray_beam_id": 2,
+        "update_rate": 0.0,
+        "logical_bands": [
+          {
+            "start_channel": 96,
+            "number_of_channels": 16
+          },
+          {
+            "start_channel": 400,
+            "number_of_channels": 16
+          }
+        ],
+        "apertures": [
+          {
+            "aperture_id": "AP001.01",
+            "weighting_key_ref": "aperture1"
+          },
+          {
+            "aperture_id": "AP002.01",
+            "weighting_key_ref": "aperture2"
+          },
+          {
+            "aperture_id": "AP003.01",
+            "weighting_key_ref": "aperture3"
+          },
+          {
+            "aperture_id": "AP004.01",
+            "weighting_key_ref": "aperture4"
+          },
+          {
+            "aperture_id": "AP005.01",
+            "weighting_key_ref": "aperture5"
+          },
+          {
+            "aperture_id": "AP006.01",
+            "weighting_key_ref": "aperture6"
+          },
+          {
+            "aperture_id": "AP007.01",
+            "weighting_key_ref": "aperture7"
+          },
+          {
+            "aperture_id": "AP008.01",
+            "weighting_key_ref": "aperture8"
+          },
+          {
+            "aperture_id": "AP009.01",
+            "weighting_key_ref": "aperture9"
+          },
+          {
+            "aperture_id": "AP010.01",
+            "weighting_key_ref": "aperture10"
+          },
+          {
+            "aperture_id": "AP011.01",
+            "weighting_key_ref": "aperture11"
+          },
+          {
+            "aperture_id": "AP012.01",
+            "weighting_key_ref": "aperture12"
+          },
+          {
+            "aperture_id": "AP013.01",
+            "weighting_key_ref": "aperture13"
+          },
+          {
+            "aperture_id": "AP014.01",
+            "weighting_key_ref": "aperture14"
+          },
+          {
+            "aperture_id": "AP015.01",
+            "weighting_key_ref": "aperture15"
+          },
+          {
+            "aperture_id": "AP016.01",
+            "weighting_key_ref": "aperture16"
+          },
+          {
+            "aperture_id": "AP017.01",
+            "weighting_key_ref": "aperture17"
+          },
+          {
+            "aperture_id": "AP018.01",
+            "weighting_key_ref": "aperture18"
+          },
+          {
+            "aperture_id": "AP019.01",
+            "weighting_key_ref": "aperture19"
+          },
+          {
+            "aperture_id": "AP020.01",
+            "weighting_key_ref": "aperture20"
+          },
+          {
+            "aperture_id": "AP021.01",
+            "weighting_key_ref": "aperture21"
+          },
+          {
+            "aperture_id": "AP022.01",
+            "weighting_key_ref": "aperture22"
+          },
+          {
+            "aperture_id": "AP023.01",
+            "weighting_key_ref": "aperture23"
+          },
+          {
+            "aperture_id": "AP024.01",
+            "weighting_key_ref": "aperture24"
+          },
+          {
+            "aperture_id": "AP025.01",
+            "weighting_key_ref": "aperture25"
+          },
+          {
+            "aperture_id": "AP026.01",
+            "weighting_key_ref": "aperture26"
+          },
+          {
+            "aperture_id": "AP027.01",
+            "weighting_key_ref": "aperture27"
+          },
+          {
+            "aperture_id": "AP028.01",
+            "weighting_key_ref": "aperture28"
+          },
+          {
+            "aperture_id": "AP029.01",
+            "weighting_key_ref": "aperture29"
+          },
+          {
+            "aperture_id": "AP030.01",
+            "weighting_key_ref": "aperture30"
+          },
+          {
+            "aperture_id": "AP031.01",
+            "weighting_key_ref": "aperture31"
+          },
+          {
+            "aperture_id": "AP032.01",
+            "weighting_key_ref": "aperture32"
+          },
+          {
+            "aperture_id": "AP033.01",
+            "weighting_key_ref": "aperture33"
+          },
+          {
+            "aperture_id": "AP034.01",
+            "weighting_key_ref": "aperture34"
+          },
+          {
+            "aperture_id": "AP035.01",
+            "weighting_key_ref": "aperture35"
+          },
+          {
+            "aperture_id": "AP036.01",
+            "weighting_key_ref": "aperture36"
+          },
+          {
+            "aperture_id": "AP037.01",
+            "weighting_key_ref": "aperture37"
+          },
+          {
+            "aperture_id": "AP038.01",
+            "weighting_key_ref": "aperture38"
+          },
+          {
+            "aperture_id": "AP039.01",
+            "weighting_key_ref": "aperture39"
+          },
+          {
+            "aperture_id": "AP040.01",
+            "weighting_key_ref": "aperture40"
+          },
+          {
+            "aperture_id": "AP041.01",
+            "weighting_key_ref": "aperture41"
+          },
+          {
+            "aperture_id": "AP042.01",
+            "weighting_key_ref": "aperture42"
+          },
+          {
+            "aperture_id": "AP043.01",
+            "weighting_key_ref": "aperture43"
+          },
+          {
+            "aperture_id": "AP044.01",
+            "weighting_key_ref": "aperture44"
+          },
+          {
+            "aperture_id": "AP045.01",
+            "weighting_key_ref": "aperture45"
+          },
+          {
+            "aperture_id": "AP046.01",
+            "weighting_key_ref": "aperture46"
+          },
+          {
+            "aperture_id": "AP047.01",
+            "weighting_key_ref": "aperture47"
+          },
+          {
+            "aperture_id": "AP048.01",
+            "weighting_key_ref": "aperture48"
+          },
+          {
+            "aperture_id": "AP049.01",
+            "weighting_key_ref": "aperture49"
+          },
+          {
+            "aperture_id": "AP050.01",
+            "weighting_key_ref": "aperture50"
+          },
+          {
+            "aperture_id": "AP051.01",
+            "weighting_key_ref": "aperture51"
+          },
+          {
+            "aperture_id": "AP052.01",
+            "weighting_key_ref": "aperture52"
+          },
+          {
+            "aperture_id": "AP053.01",
+            "weighting_key_ref": "aperture53"
+          },
+          {
+            "aperture_id": "AP054.01",
+            "weighting_key_ref": "aperture54"
+          },
+          {
+            "aperture_id": "AP055.01",
+            "weighting_key_ref": "aperture55"
+          },
+          {
+            "aperture_id": "AP056.01",
+            "weighting_key_ref": "aperture56"
+          },
+          {
+            "aperture_id": "AP057.01",
+            "weighting_key_ref": "aperture57"
+          },
+          {
+            "aperture_id": "AP058.01",
+            "weighting_key_ref": "aperture58"
+          },
+          {
+            "aperture_id": "AP059.01",
+            "weighting_key_ref": "aperture59"
+          },
+          {
+            "aperture_id": "AP060.01",
+            "weighting_key_ref": "aperture60"
+          },
+          {
+            "aperture_id": "AP061.01",
+            "weighting_key_ref": "aperture61"
+          },
+          {
+            "aperture_id": "AP062.01",
+            "weighting_key_ref": "aperture62"
+          },
+          {
+            "aperture_id": "AP063.01",
+            "weighting_key_ref": "aperture63"
+          },
+          {
+            "aperture_id": "AP064.01",
+            "weighting_key_ref": "aperture64"
+          },
+          {
+            "aperture_id": "AP065.01",
+            "weighting_key_ref": "aperture65"
+          },
+          {
+            "aperture_id": "AP066.01",
+            "weighting_key_ref": "aperture66"
+          },
+          {
+            "aperture_id": "AP067.01",
+            "weighting_key_ref": "aperture67"
+          },
+          {
+            "aperture_id": "AP068.01",
+            "weighting_key_ref": "aperture68"
+          }
+        ],
+        "field": {
+        "target_name": "Polaris Australis",
+        "reference_frame": "icrs",
+        "attrs": {
+          "c1": 181.0,
+          "c2": 46.0
+        }
+      }
+      },
+      {
+        "subarray_beam_id": 3,
+        "update_rate": 0.0,
+        "logical_bands": [
+          {
+            "start_channel": 112,
+            "number_of_channels": 16
+          },
+          {
+            "start_channel": 416,
+            "number_of_channels": 16
+          }
+        ],
+        "apertures": [
+          {
+            "aperture_id": "AP001.01",
+            "weighting_key_ref": "aperture1"
+          },
+          {
+            "aperture_id": "AP002.01",
+            "weighting_key_ref": "aperture2"
+          },
+          {
+            "aperture_id": "AP003.01",
+            "weighting_key_ref": "aperture3"
+          },
+          {
+            "aperture_id": "AP004.01",
+            "weighting_key_ref": "aperture4"
+          },
+          {
+            "aperture_id": "AP005.01",
+            "weighting_key_ref": "aperture5"
+          },
+          {
+            "aperture_id": "AP006.01",
+            "weighting_key_ref": "aperture6"
+          },
+          {
+            "aperture_id": "AP007.01",
+            "weighting_key_ref": "aperture7"
+          },
+          {
+            "aperture_id": "AP008.01",
+            "weighting_key_ref": "aperture8"
+          },
+          {
+            "aperture_id": "AP009.01",
+            "weighting_key_ref": "aperture9"
+          },
+          {
+            "aperture_id": "AP010.01",
+            "weighting_key_ref": "aperture10"
+          },
+          {
+            "aperture_id": "AP011.01",
+            "weighting_key_ref": "aperture11"
+          },
+          {
+            "aperture_id": "AP012.01",
+            "weighting_key_ref": "aperture12"
+          },
+          {
+            "aperture_id": "AP013.01",
+            "weighting_key_ref": "aperture13"
+          },
+          {
+            "aperture_id": "AP014.01",
+            "weighting_key_ref": "aperture14"
+          },
+          {
+            "aperture_id": "AP015.01",
+            "weighting_key_ref": "aperture15"
+          },
+          {
+            "aperture_id": "AP016.01",
+            "weighting_key_ref": "aperture16"
+          },
+          {
+            "aperture_id": "AP017.01",
+            "weighting_key_ref": "aperture17"
+          },
+          {
+            "aperture_id": "AP018.01",
+            "weighting_key_ref": "aperture18"
+          },
+          {
+            "aperture_id": "AP019.01",
+            "weighting_key_ref": "aperture19"
+          },
+          {
+            "aperture_id": "AP020.01",
+            "weighting_key_ref": "aperture20"
+          },
+          {
+            "aperture_id": "AP021.01",
+            "weighting_key_ref": "aperture21"
+          },
+          {
+            "aperture_id": "AP022.01",
+            "weighting_key_ref": "aperture22"
+          },
+          {
+            "aperture_id": "AP023.01",
+            "weighting_key_ref": "aperture23"
+          },
+          {
+            "aperture_id": "AP024.01",
+            "weighting_key_ref": "aperture24"
+          },
+          {
+            "aperture_id": "AP025.01",
+            "weighting_key_ref": "aperture25"
+          },
+          {
+            "aperture_id": "AP026.01",
+            "weighting_key_ref": "aperture26"
+          },
+          {
+            "aperture_id": "AP027.01",
+            "weighting_key_ref": "aperture27"
+          },
+          {
+            "aperture_id": "AP028.01",
+            "weighting_key_ref": "aperture28"
+          },
+          {
+            "aperture_id": "AP029.01",
+            "weighting_key_ref": "aperture29"
+          },
+          {
+            "aperture_id": "AP030.01",
+            "weighting_key_ref": "aperture30"
+          },
+          {
+            "aperture_id": "AP031.01",
+            "weighting_key_ref": "aperture31"
+          },
+          {
+            "aperture_id": "AP032.01",
+            "weighting_key_ref": "aperture32"
+          },
+          {
+            "aperture_id": "AP033.01",
+            "weighting_key_ref": "aperture33"
+          },
+          {
+            "aperture_id": "AP034.01",
+            "weighting_key_ref": "aperture34"
+          },
+          {
+            "aperture_id": "AP035.01",
+            "weighting_key_ref": "aperture35"
+          },
+          {
+            "aperture_id": "AP036.01",
+            "weighting_key_ref": "aperture36"
+          },
+          {
+            "aperture_id": "AP037.01",
+            "weighting_key_ref": "aperture37"
+          },
+          {
+            "aperture_id": "AP038.01",
+            "weighting_key_ref": "aperture38"
+          },
+          {
+            "aperture_id": "AP039.01",
+            "weighting_key_ref": "aperture39"
+          },
+          {
+            "aperture_id": "AP040.01",
+            "weighting_key_ref": "aperture40"
+          },
+          {
+            "aperture_id": "AP041.01",
+            "weighting_key_ref": "aperture41"
+          },
+          {
+            "aperture_id": "AP042.01",
+            "weighting_key_ref": "aperture42"
+          },
+          {
+            "aperture_id": "AP043.01",
+            "weighting_key_ref": "aperture43"
+          },
+          {
+            "aperture_id": "AP044.01",
+            "weighting_key_ref": "aperture44"
+          },
+           {
+            "aperture_id": "AP045.01",
+            "weighting_key_ref": "aperture45"
+          },
+          {
+            "aperture_id": "AP046.01",
+            "weighting_key_ref": "aperture46"
+          },
+          {
+            "aperture_id": "AP047.01",
+            "weighting_key_ref": "aperture47"
+          },
+          {
+            "aperture_id": "AP048.01",
+            "weighting_key_ref": "aperture48"
+          },
+          {
+            "aperture_id": "AP049.01",
+            "weighting_key_ref": "aperture49"
+          },
+          {
+            "aperture_id": "AP050.01",
+            "weighting_key_ref": "aperture50"
+          },
+          {
+            "aperture_id": "AP051.01",
+            "weighting_key_ref": "aperture51"
+          },
+          {
+            "aperture_id": "AP052.01",
+            "weighting_key_ref": "aperture52"
+          },
+          {
+            "aperture_id": "AP053.01",
+            "weighting_key_ref": "aperture53"
+          },
+          {
+            "aperture_id": "AP054.01",
+            "weighting_key_ref": "aperture54"
+          },
+          {
+            "aperture_id": "AP055.01",
+            "weighting_key_ref": "aperture55"
+          },
+          {
+            "aperture_id": "AP056.01",
+            "weighting_key_ref": "aperture56"
+          },
+          {
+            "aperture_id": "AP057.01",
+            "weighting_key_ref": "aperture57"
+          },
+          {
+            "aperture_id": "AP058.01",
+            "weighting_key_ref": "aperture58"
+          },
+          {
+            "aperture_id": "AP059.01",
+            "weighting_key_ref": "aperture59"
+          },
+          {
+            "aperture_id": "AP060.01",
+            "weighting_key_ref": "aperture60"
+          },
+          {
+            "aperture_id": "AP061.01",
+            "weighting_key_ref": "aperture61"
+          },
+          {
+            "aperture_id": "AP062.01",
+            "weighting_key_ref": "aperture62"
+          },
+          {
+            "aperture_id": "AP063.01",
+            "weighting_key_ref": "aperture63"
+          },
+          {
+            "aperture_id": "AP064.01",
+            "weighting_key_ref": "aperture64"
+          },
+          {
+            "aperture_id": "AP065.01",
+            "weighting_key_ref": "aperture65"
+          },
+          {
+            "aperture_id": "AP066.01",
+            "weighting_key_ref": "aperture66"
+          },
+          {
+            "aperture_id": "AP067.01",
+            "weighting_key_ref": "aperture67"
+          },
+          {
+            "aperture_id": "AP068.01",
+            "weighting_key_ref": "aperture68"
+          }
+        ],
+        "field": {
+        "target_name": "Polaris Australis",
+        "reference_frame": "icrs",
+        "attrs": {
+          "c1": 190.0,
+          "c2": 49.0
+        }
+      }
+      },
+      {
+        "subarray_beam_id": 4,
+        "update_rate": 0.0,
+        "logical_bands": [
+          {
+            "start_channel": 128,
+            "number_of_channels": 16
+          },
+          {
+            "start_channel": 432,
+            "number_of_channels": 16
+          }
+        ],
+        "apertures": [
+          {
+            "aperture_id": "AP001.01",
+            "weighting_key_ref": "aperture1"
+          },
+          {
+            "aperture_id": "AP002.01",
+            "weighting_key_ref": "aperture2"
+          },
+          {
+            "aperture_id": "AP003.01",
+            "weighting_key_ref": "aperture3"
+          },
+          {
+            "aperture_id": "AP004.01",
+            "weighting_key_ref": "aperture4"
+          },
+          {
+            "aperture_id": "AP005.01",
+            "weighting_key_ref": "aperture5"
+          },
+          {
+            "aperture_id": "AP006.01",
+            "weighting_key_ref": "aperture6"
+          },
+          {
+            "aperture_id": "AP007.01",
+            "weighting_key_ref": "aperture7"
+          },
+          {
+            "aperture_id": "AP008.01",
+            "weighting_key_ref": "aperture8"
+          },
+          {
+            "aperture_id": "AP009.01",
+            "weighting_key_ref": "aperture9"
+          },
+          {
+            "aperture_id": "AP010.01",
+            "weighting_key_ref": "aperture10"
+          },
+          {
+            "aperture_id": "AP011.01",
+            "weighting_key_ref": "aperture11"
+          },
+          {
+            "aperture_id": "AP012.01",
+            "weighting_key_ref": "aperture12"
+          },
+          {
+            "aperture_id": "AP013.01",
+            "weighting_key_ref": "aperture13"
+          },
+          {
+            "aperture_id": "AP014.01",
+            "weighting_key_ref": "aperture14"
+          },
+          {
+            "aperture_id": "AP015.01",
+            "weighting_key_ref": "aperture15"
+          },
+          {
+            "aperture_id": "AP016.01",
+            "weighting_key_ref": "aperture16"
+          },
+          {
+            "aperture_id": "AP017.01",
+            "weighting_key_ref": "aperture17"
+          },
+          {
+            "aperture_id": "AP018.01",
+            "weighting_key_ref": "aperture18"
+          },
+          {
+            "aperture_id": "AP019.01",
+            "weighting_key_ref": "aperture19"
+          },
+          {
+            "aperture_id": "AP020.01",
+            "weighting_key_ref": "aperture20"
+          },
+          {
+            "aperture_id": "AP021.01",
+            "weighting_key_ref": "aperture21"
+          },
+          {
+            "aperture_id": "AP022.01",
+            "weighting_key_ref": "aperture22"
+          },
+          {
+            "aperture_id": "AP023.01",
+            "weighting_key_ref": "aperture23"
+          },
+          {
+            "aperture_id": "AP024.01",
+            "weighting_key_ref": "aperture24"
+          },
+          {
+            "aperture_id": "AP025.01",
+            "weighting_key_ref": "aperture25"
+          },
+          {
+            "aperture_id": "AP026.01",
+            "weighting_key_ref": "aperture26"
+          },
+          {
+            "aperture_id": "AP027.01",
+            "weighting_key_ref": "aperture27"
+          },
+          {
+            "aperture_id": "AP028.01",
+            "weighting_key_ref": "aperture28"
+          },
+          {
+            "aperture_id": "AP029.01",
+            "weighting_key_ref": "aperture29"
+          },
+          {
+            "aperture_id": "AP030.01",
+            "weighting_key_ref": "aperture30"
+          },
+          {
+            "aperture_id": "AP031.01",
+            "weighting_key_ref": "aperture31"
+          },
+          {
+            "aperture_id": "AP032.01",
+            "weighting_key_ref": "aperture32"
+          },
+          {
+            "aperture_id": "AP033.01",
+            "weighting_key_ref": "aperture33"
+          },
+          {
+            "aperture_id": "AP034.01",
+            "weighting_key_ref": "aperture34"
+          },
+          {
+            "aperture_id": "AP035.01",
+            "weighting_key_ref": "aperture35"
+          },
+          {
+            "aperture_id": "AP036.01",
+            "weighting_key_ref": "aperture36"
+          },
+          {
+            "aperture_id": "AP037.01",
+            "weighting_key_ref": "aperture37"
+          },
+          {
+            "aperture_id": "AP038.01",
+            "weighting_key_ref": "aperture38"
+          },
+          {
+            "aperture_id": "AP039.01",
+            "weighting_key_ref": "aperture39"
+          },
+          {
+            "aperture_id": "AP040.01",
+            "weighting_key_ref": "aperture40"
+          },
+          {
+            "aperture_id": "AP041.01",
+            "weighting_key_ref": "aperture41"
+          },
+          {
+            "aperture_id": "AP042.01",
+            "weighting_key_ref": "aperture42"
+          },
+          {
+            "aperture_id": "AP043.01",
+            "weighting_key_ref": "aperture43"
+          },
+          {
+            "aperture_id": "AP044.01",
+            "weighting_key_ref": "aperture44"
+          },
+          {
+            "aperture_id": "AP045.01",
+            "weighting_key_ref": "aperture45"
+          },
+          {
+            "aperture_id": "AP046.01",
+            "weighting_key_ref": "aperture46"
+          },
+          {
+            "aperture_id": "AP047.01",
+            "weighting_key_ref": "aperture47"
+          },
+          {
+            "aperture_id": "AP048.01",
+            "weighting_key_ref": "aperture48"
+          },
+          {
+            "aperture_id": "AP049.01",
+            "weighting_key_ref": "aperture49"
+          },
+          {
+            "aperture_id": "AP050.01",
+            "weighting_key_ref": "aperture50"
+          },
+          {
+            "aperture_id": "AP051.01",
+            "weighting_key_ref": "aperture51"
+          },
+          {
+            "aperture_id": "AP052.01",
+            "weighting_key_ref": "aperture52"
+          },
+          {
+            "aperture_id": "AP053.01",
+            "weighting_key_ref": "aperture53"
+          },
+          {
+            "aperture_id": "AP054.01",
+            "weighting_key_ref": "aperture54"
+          },
+          {
+            "aperture_id": "AP055.01",
+            "weighting_key_ref": "aperture55"
+          },
+          {
+            "aperture_id": "AP056.01",
+            "weighting_key_ref": "aperture56"
+          },
+          {
+            "aperture_id": "AP057.01",
+            "weighting_key_ref": "aperture57"
+          },
+          {
+            "aperture_id": "AP058.01",
+            "weighting_key_ref": "aperture58"
+          },
+          {
+            "aperture_id": "AP059.01",
+            "weighting_key_ref": "aperture59"
+          },
+          {
+            "aperture_id": "AP060.01",
+            "weighting_key_ref": "aperture60"
+          },
+          {
+            "aperture_id": "AP061.01",
+            "weighting_key_ref": "aperture61"
+          },
+          {
+            "aperture_id": "AP062.01",
+            "weighting_key_ref": "aperture62"
+          },
+          {
+            "aperture_id": "AP063.01",
+            "weighting_key_ref": "aperture63"
+          },
+          {
+            "aperture_id": "AP064.01",
+            "weighting_key_ref": "aperture64"
+          },
+          {
+            "aperture_id": "AP065.01",
+            "weighting_key_ref": "aperture65"
+          },
+          {
+            "aperture_id": "AP066.01",
+            "weighting_key_ref": "aperture66"
+          },
+          {
+            "aperture_id": "AP067.01",
+            "weighting_key_ref": "aperture67"
+          },
+          {
+            "aperture_id": "AP068.01",
+            "weighting_key_ref": "aperture68"
+          }
+        ],
+        "field": {
+        "target_name": "Polaris Australis",
+        "reference_frame": "icrs",
+        "attrs": {
+          "c1": 195.0,
+          "c2": 51.0
+        }
+      }
+      },
+      {
+        "subarray_beam_id": 5,
+        "update_rate": 0.0,
+        "logical_bands": [
+          {
+            "start_channel": 128,
+            "number_of_channels": 16
+          },
+          {
+            "start_channel": 432,
+            "number_of_channels": 16
+          }
+        ],
+        "apertures": [
+          {
+            "aperture_id": "AP001.01",
+            "weighting_key_ref": "aperture1"
+          },
+          {
+            "aperture_id": "AP002.01",
+            "weighting_key_ref": "aperture2"
+          },
+          {
+            "aperture_id": "AP003.01",
+            "weighting_key_ref": "aperture3"
+          },
+          {
+            "aperture_id": "AP004.01",
+            "weighting_key_ref": "aperture4"
+          },
+          {
+            "aperture_id": "AP005.01",
+            "weighting_key_ref": "aperture5"
+          },
+          {
+            "aperture_id": "AP006.01",
+            "weighting_key_ref": "aperture6"
+          },
+          {
+            "aperture_id": "AP007.01",
+            "weighting_key_ref": "aperture7"
+          },
+          {
+            "aperture_id": "AP008.01",
+            "weighting_key_ref": "aperture8"
+          },
+          {
+            "aperture_id": "AP009.01",
+            "weighting_key_ref": "aperture9"
+          },
+          {
+            "aperture_id": "AP010.01",
+            "weighting_key_ref": "aperture10"
+          },
+          {
+            "aperture_id": "AP011.01",
+            "weighting_key_ref": "aperture11"
+          },
+          {
+            "aperture_id": "AP012.01",
+            "weighting_key_ref": "aperture12"
+          },
+          {
+            "aperture_id": "AP013.01",
+            "weighting_key_ref": "aperture13"
+          },
+          {
+            "aperture_id": "AP014.01",
+            "weighting_key_ref": "aperture14"
+          },
+          {
+            "aperture_id": "AP015.01",
+            "weighting_key_ref": "aperture15"
+          },
+          {
+            "aperture_id": "AP016.01",
+            "weighting_key_ref": "aperture16"
+          },
+          {
+            "aperture_id": "AP017.01",
+            "weighting_key_ref": "aperture17"
+          },
+          {
+            "aperture_id": "AP018.01",
+            "weighting_key_ref": "aperture18"
+          },
+          {
+            "aperture_id": "AP019.01",
+            "weighting_key_ref": "aperture19"
+          },
+          {
+            "aperture_id": "AP020.01",
+            "weighting_key_ref": "aperture20"
+          },
+          {
+            "aperture_id": "AP021.01",
+            "weighting_key_ref": "aperture21"
+          },
+          {
+            "aperture_id": "AP022.01",
+            "weighting_key_ref": "aperture22"
+          },
+          {
+            "aperture_id": "AP023.01",
+            "weighting_key_ref": "aperture23"
+          },
+          {
+            "aperture_id": "AP024.01",
+            "weighting_key_ref": "aperture24"
+          },
+          {
+            "aperture_id": "AP025.01",
+            "weighting_key_ref": "aperture25"
+          },
+          {
+            "aperture_id": "AP026.01",
+            "weighting_key_ref": "aperture26"
+          },
+          {
+            "aperture_id": "AP027.01",
+            "weighting_key_ref": "aperture27"
+          },
+          {
+            "aperture_id": "AP028.01",
+            "weighting_key_ref": "aperture28"
+          },
+          {
+            "aperture_id": "AP029.01",
+            "weighting_key_ref": "aperture29"
+          },
+          {
+            "aperture_id": "AP030.01",
+            "weighting_key_ref": "aperture30"
+          },
+          {
+            "aperture_id": "AP031.01",
+            "weighting_key_ref": "aperture31"
+          },
+          {
+            "aperture_id": "AP032.01",
+            "weighting_key_ref": "aperture32"
+          },
+          {
+            "aperture_id": "AP033.01",
+            "weighting_key_ref": "aperture33"
+          },
+          {
+            "aperture_id": "AP034.01",
+            "weighting_key_ref": "aperture34"
+          },
+          {
+            "aperture_id": "AP035.01",
+            "weighting_key_ref": "aperture35"
+          },
+          {
+            "aperture_id": "AP036.01",
+            "weighting_key_ref": "aperture36"
+          },
+          {
+            "aperture_id": "AP037.01",
+            "weighting_key_ref": "aperture37"
+          },
+          {
+            "aperture_id": "AP038.01",
+            "weighting_key_ref": "aperture38"
+          },
+          {
+            "aperture_id": "AP039.01",
+            "weighting_key_ref": "aperture39"
+          },
+          {
+            "aperture_id": "AP040.01",
+            "weighting_key_ref": "aperture40"
+          },
+          {
+            "aperture_id": "AP041.01",
+            "weighting_key_ref": "aperture41"
+          },
+          {
+            "aperture_id": "AP042.01",
+            "weighting_key_ref": "aperture42"
+          },
+          {
+            "aperture_id": "AP043.01",
+            "weighting_key_ref": "aperture43"
+          },
+          {
+            "aperture_id": "AP044.01",
+            "weighting_key_ref": "aperture44"
+          },
+          {
+            "aperture_id": "AP045.01",
+            "weighting_key_ref": "aperture45"
+          },
+          {
+            "aperture_id": "AP046.01",
+            "weighting_key_ref": "aperture46"
+          },
+          {
+            "aperture_id": "AP047.01",
+            "weighting_key_ref": "aperture47"
+          },
+          {
+            "aperture_id": "AP048.01",
+            "weighting_key_ref": "aperture48"
+          },
+          {
+            "aperture_id": "AP049.01",
+            "weighting_key_ref": "aperture49"
+          },
+          {
+            "aperture_id": "AP050.01",
+            "weighting_key_ref": "aperture50"
+          },
+          {
+            "aperture_id": "AP051.01",
+            "weighting_key_ref": "aperture51"
+          },
+          {
+            "aperture_id": "AP052.01",
+            "weighting_key_ref": "aperture52"
+          },
+          {
+            "aperture_id": "AP053.01",
+            "weighting_key_ref": "aperture53"
+          },
+          {
+            "aperture_id": "AP054.01",
+            "weighting_key_ref": "aperture54"
+          },
+          {
+            "aperture_id": "AP055.01",
+            "weighting_key_ref": "aperture55"
+          },
+          {
+            "aperture_id": "AP056.01",
+            "weighting_key_ref": "aperture56"
+          },
+          {
+            "aperture_id": "AP057.01",
+            "weighting_key_ref": "aperture57"
+          },
+          {
+            "aperture_id": "AP058.01",
+            "weighting_key_ref": "aperture58"
+          },
+          {
+            "aperture_id": "AP059.01",
+            "weighting_key_ref": "aperture59"
+          },
+          {
+            "aperture_id": "AP060.01",
+            "weighting_key_ref": "aperture60"
+          },
+          {
+            "aperture_id": "AP061.01",
+            "weighting_key_ref": "aperture61"
+          },
+          {
+            "aperture_id": "AP062.01",
+            "weighting_key_ref": "aperture62"
+          },
+          {
+            "aperture_id": "AP063.01",
+            "weighting_key_ref": "aperture63"
+          },
+          {
+            "aperture_id": "AP064.01",
+            "weighting_key_ref": "aperture64"
+          },
+          {
+            "aperture_id": "AP065.01",
+            "weighting_key_ref": "aperture65"
+          },
+          {
+            "aperture_id": "AP066.01",
+            "weighting_key_ref": "aperture66"
+          },
+          {
+            "aperture_id": "AP067.01",
+            "weighting_key_ref": "aperture67"
+          },
+          {
+            "aperture_id": "AP068.01",
+            "weighting_key_ref": "aperture68"
+          }
+        ],
+        "field": {
+        "target_name": "Polaris Australis",
+        "reference_frame": "icrs",
+        "attrs": {
+          "c1": 184.0,
+          "c2": 47.0
+        }
+      }
+      },
+      {
+        "subarray_beam_id": 6,
+        "update_rate": 0.0,
+        "logical_bands": [
+          {
+            "start_channel": 128,
+            "number_of_channels": 16
+          },
+          {
+            "start_channel": 432,
+            "number_of_channels": 16
+          }
+        ],
+        "apertures": [
+          {
+            "aperture_id": "AP001.01",
+            "weighting_key_ref": "aperture1"
+          },
+          {
+            "aperture_id": "AP002.01",
+            "weighting_key_ref": "aperture2"
+          },
+          {
+            "aperture_id": "AP003.01",
+            "weighting_key_ref": "aperture3"
+          },
+          {
+            "aperture_id": "AP004.01",
+            "weighting_key_ref": "aperture4"
+          },
+          {
+            "aperture_id": "AP005.01",
+            "weighting_key_ref": "aperture5"
+          },
+          {
+            "aperture_id": "AP006.01",
+            "weighting_key_ref": "aperture6"
+          },
+          {
+            "aperture_id": "AP007.01",
+            "weighting_key_ref": "aperture7"
+          },
+          {
+            "aperture_id": "AP008.01",
+            "weighting_key_ref": "aperture8"
+          },
+          {
+            "aperture_id": "AP009.01",
+            "weighting_key_ref": "aperture9"
+          },
+          {
+            "aperture_id": "AP010.01",
+            "weighting_key_ref": "aperture10"
+          },
+          {
+            "aperture_id": "AP011.01",
+            "weighting_key_ref": "aperture11"
+          },
+          {
+            "aperture_id": "AP012.01",
+            "weighting_key_ref": "aperture12"
+          },
+          {
+            "aperture_id": "AP013.01",
+            "weighting_key_ref": "aperture13"
+          },
+          {
+            "aperture_id": "AP014.01",
+            "weighting_key_ref": "aperture14"
+          },
+          {
+            "aperture_id": "AP015.01",
+            "weighting_key_ref": "aperture15"
+          },
+          {
+            "aperture_id": "AP016.01",
+            "weighting_key_ref": "aperture16"
+          },
+          {
+            "aperture_id": "AP017.01",
+            "weighting_key_ref": "aperture17"
+          },
+          {
+            "aperture_id": "AP018.01",
+            "weighting_key_ref": "aperture18"
+          },
+          {
+            "aperture_id": "AP019.01",
+            "weighting_key_ref": "aperture19"
+          },
+          {
+            "aperture_id": "AP020.01",
+            "weighting_key_ref": "aperture20"
+          },
+          {
+            "aperture_id": "AP021.01",
+            "weighting_key_ref": "aperture21"
+          },
+          {
+            "aperture_id": "AP022.01",
+            "weighting_key_ref": "aperture22"
+          },
+          {
+            "aperture_id": "AP023.01",
+            "weighting_key_ref": "aperture23"
+          },
+          {
+            "aperture_id": "AP024.01",
+            "weighting_key_ref": "aperture24"
+          },
+          {
+            "aperture_id": "AP025.01",
+            "weighting_key_ref": "aperture25"
+          },
+          {
+            "aperture_id": "AP026.01",
+            "weighting_key_ref": "aperture26"
+          },
+          {
+            "aperture_id": "AP027.01",
+            "weighting_key_ref": "aperture27"
+          },
+          {
+            "aperture_id": "AP028.01",
+            "weighting_key_ref": "aperture28"
+          },
+          {
+            "aperture_id": "AP029.01",
+            "weighting_key_ref": "aperture29"
+          },
+          {
+            "aperture_id": "AP030.01",
+            "weighting_key_ref": "aperture30"
+          },
+          {
+            "aperture_id": "AP031.01",
+            "weighting_key_ref": "aperture31"
+          },
+          {
+            "aperture_id": "AP032.01",
+            "weighting_key_ref": "aperture32"
+          },
+          {
+            "aperture_id": "AP033.01",
+            "weighting_key_ref": "aperture33"
+          },
+          {
+            "aperture_id": "AP034.01",
+            "weighting_key_ref": "aperture34"
+          },
+          {
+            "aperture_id": "AP035.01",
+            "weighting_key_ref": "aperture35"
+          },
+          {
+            "aperture_id": "AP036.01",
+            "weighting_key_ref": "aperture36"
+          },
+          {
+            "aperture_id": "AP037.01",
+            "weighting_key_ref": "aperture37"
+          },
+          {
+            "aperture_id": "AP038.01",
+            "weighting_key_ref": "aperture38"
+          },
+          {
+            "aperture_id": "AP039.01",
+            "weighting_key_ref": "aperture39"
+          },
+          {
+            "aperture_id": "AP040.01",
+            "weighting_key_ref": "aperture40"
+          },
+          {
+            "aperture_id": "AP041.01",
+            "weighting_key_ref": "aperture41"
+          },
+          {
+            "aperture_id": "AP042.01",
+            "weighting_key_ref": "aperture42"
+          },
+          {
+            "aperture_id": "AP043.01",
+            "weighting_key_ref": "aperture43"
+          },
+          {
+            "aperture_id": "AP044.01",
+            "weighting_key_ref": "aperture44"
+          },
+          {
+            "aperture_id": "AP045.01",
+            "weighting_key_ref": "aperture45"
+          },
+          {
+            "aperture_id": "AP046.01",
+            "weighting_key_ref": "aperture46"
+          },
+          {
+            "aperture_id": "AP047.01",
+            "weighting_key_ref": "aperture47"
+          },
+          {
+            "aperture_id": "AP048.01",
+            "weighting_key_ref": "aperture48"
+          },
+          {
+            "aperture_id": "AP049.01",
+            "weighting_key_ref": "aperture49"
+          },
+          {
+            "aperture_id": "AP050.01",
+            "weighting_key_ref": "aperture50"
+          },
+          {
+            "aperture_id": "AP051.01",
+            "weighting_key_ref": "aperture51"
+          },
+          {
+            "aperture_id": "AP052.01",
+            "weighting_key_ref": "aperture52"
+          },
+          {
+            "aperture_id": "AP053.01",
+            "weighting_key_ref": "aperture53"
+          },
+          {
+            "aperture_id": "AP054.01",
+            "weighting_key_ref": "aperture54"
+          },
+          {
+            "aperture_id": "AP055.01",
+            "weighting_key_ref": "aperture55"
+          },
+          {
+            "aperture_id": "AP056.01",
+            "weighting_key_ref": "aperture56"
+          },
+          {
+            "aperture_id": "AP057.01",
+            "weighting_key_ref": "aperture57"
+          },
+          {
+            "aperture_id": "AP058.01",
+            "weighting_key_ref": "aperture58"
+          },
+          {
+            "aperture_id": "AP059.01",
+            "weighting_key_ref": "aperture59"
+          },
+          {
+            "aperture_id": "AP060.01",
+            "weighting_key_ref": "aperture60"
+          },
+          {
+            "aperture_id": "AP061.01",
+            "weighting_key_ref": "aperture61"
+          },
+          {
+            "aperture_id": "AP062.01",
+            "weighting_key_ref": "aperture62"
+          },
+          {
+            "aperture_id": "AP063.01",
+            "weighting_key_ref": "aperture63"
+          },
+          {
+            "aperture_id": "AP064.01",
+            "weighting_key_ref": "aperture64"
+          },
+          {
+            "aperture_id": "AP065.01",
+            "weighting_key_ref": "aperture65"
+          },
+          {
+            "aperture_id": "AP066.01",
+            "weighting_key_ref": "aperture66"
+          },
+          {
+            "aperture_id": "AP067.01",
+            "weighting_key_ref": "aperture67"
+          },
+          {
+            "aperture_id": "AP068.01",
+            "weighting_key_ref": "aperture68"
+          }
+        ],
+        "field": {
+        "target_name": "Polaris Australis",
+        "reference_frame": "icrs",
+        "attrs": {
+          "c1": 181.0,
+          "c2": 46.0
+        }
+      }
+      },
+      {
+        "subarray_beam_id": 7,
+        "update_rate": 0.0,
+        "logical_bands": [
+          {
+            "start_channel": 128,
+            "number_of_channels": 16
+          },
+          {
+            "start_channel": 432,
+            "number_of_channels": 16
+          }
+        ],
+        "apertures": [
+          {
+            "aperture_id": "AP001.01",
+            "weighting_key_ref": "aperture1"
+          },
+          {
+            "aperture_id": "AP002.01",
+            "weighting_key_ref": "aperture2"
+          },
+          {
+            "aperture_id": "AP003.01",
+            "weighting_key_ref": "aperture3"
+          },
+          {
+            "aperture_id": "AP004.01",
+            "weighting_key_ref": "aperture4"
+          },
+          {
+            "aperture_id": "AP005.01",
+            "weighting_key_ref": "aperture5"
+          },
+          {
+            "aperture_id": "AP006.01",
+            "weighting_key_ref": "aperture6"
+          },
+          {
+            "aperture_id": "AP007.01",
+            "weighting_key_ref": "aperture7"
+          },
+          {
+            "aperture_id": "AP008.01",
+            "weighting_key_ref": "aperture8"
+          },
+          {
+            "aperture_id": "AP009.01",
+            "weighting_key_ref": "aperture9"
+          },
+          {
+            "aperture_id": "AP010.01",
+            "weighting_key_ref": "aperture10"
+          },
+          {
+            "aperture_id": "AP011.01",
+            "weighting_key_ref": "aperture11"
+          },
+          {
+            "aperture_id": "AP012.01",
+            "weighting_key_ref": "aperture12"
+          },
+          {
+            "aperture_id": "AP013.01",
+            "weighting_key_ref": "aperture13"
+          },
+          {
+            "aperture_id": "AP014.01",
+            "weighting_key_ref": "aperture14"
+          },
+          {
+            "aperture_id": "AP015.01",
+            "weighting_key_ref": "aperture15"
+          },
+          {
+            "aperture_id": "AP016.01",
+            "weighting_key_ref": "aperture16"
+          },
+          {
+            "aperture_id": "AP017.01",
+            "weighting_key_ref": "aperture17"
+          },
+          {
+            "aperture_id": "AP018.01",
+            "weighting_key_ref": "aperture18"
+          },
+          {
+            "aperture_id": "AP019.01",
+            "weighting_key_ref": "aperture19"
+          },
+          {
+            "aperture_id": "AP020.01",
+            "weighting_key_ref": "aperture20"
+          },
+          {
+            "aperture_id": "AP021.01",
+            "weighting_key_ref": "aperture21"
+          },
+          {
+            "aperture_id": "AP022.01",
+            "weighting_key_ref": "aperture22"
+          },
+          {
+            "aperture_id": "AP023.01",
+            "weighting_key_ref": "aperture23"
+          },
+          {
+            "aperture_id": "AP024.01",
+            "weighting_key_ref": "aperture24"
+          },
+          {
+            "aperture_id": "AP025.01",
+            "weighting_key_ref": "aperture25"
+          },
+          {
+            "aperture_id": "AP026.01",
+            "weighting_key_ref": "aperture26"
+          },
+          {
+            "aperture_id": "AP027.01",
+            "weighting_key_ref": "aperture27"
+          },
+          {
+            "aperture_id": "AP028.01",
+            "weighting_key_ref": "aperture28"
+          },
+          {
+            "aperture_id": "AP029.01",
+            "weighting_key_ref": "aperture29"
+          },
+          {
+            "aperture_id": "AP030.01",
+            "weighting_key_ref": "aperture30"
+          },
+          {
+            "aperture_id": "AP031.01",
+            "weighting_key_ref": "aperture31"
+          },
+          {
+            "aperture_id": "AP032.01",
+            "weighting_key_ref": "aperture32"
+          },
+          {
+            "aperture_id": "AP033.01",
+            "weighting_key_ref": "aperture33"
+          },
+          {
+            "aperture_id": "AP034.01",
+            "weighting_key_ref": "aperture34"
+          },
+          {
+            "aperture_id": "AP035.01",
+            "weighting_key_ref": "aperture35"
+          },
+          {
+            "aperture_id": "AP036.01",
+            "weighting_key_ref": "aperture36"
+          },
+          {
+            "aperture_id": "AP037.01",
+            "weighting_key_ref": "aperture37"
+          },
+          {
+            "aperture_id": "AP038.01",
+            "weighting_key_ref": "aperture38"
+          },
+          {
+            "aperture_id": "AP039.01",
+            "weighting_key_ref": "aperture39"
+          },
+          {
+            "aperture_id": "AP040.01",
+            "weighting_key_ref": "aperture40"
+          },
+          {
+            "aperture_id": "AP041.01",
+            "weighting_key_ref": "aperture41"
+          },
+          {
+            "aperture_id": "AP042.01",
+            "weighting_key_ref": "aperture42"
+          },
+          {
+            "aperture_id": "AP043.01",
+            "weighting_key_ref": "aperture43"
+          },
+          {
+            "aperture_id": "AP044.01",
+            "weighting_key_ref": "aperture44"
+          },
+          {
+            "aperture_id": "AP045.01",
+            "weighting_key_ref": "aperture45"
+          },
+          {
+            "aperture_id": "AP046.01",
+            "weighting_key_ref": "aperture46"
+          },
+          {
+            "aperture_id": "AP047.01",
+            "weighting_key_ref": "aperture47"
+          },
+          {
+            "aperture_id": "AP048.01",
+            "weighting_key_ref": "aperture48"
+          },
+          {
+            "aperture_id": "AP049.01",
+            "weighting_key_ref": "aperture49"
+          },
+          {
+            "aperture_id": "AP050.01",
+            "weighting_key_ref": "aperture50"
+          },
+          {
+            "aperture_id": "AP051.01",
+            "weighting_key_ref": "aperture51"
+          },
+          {
+            "aperture_id": "AP052.01",
+            "weighting_key_ref": "aperture52"
+          },
+          {
+            "aperture_id": "AP053.01",
+            "weighting_key_ref": "aperture53"
+          },
+          {
+            "aperture_id": "AP054.01",
+            "weighting_key_ref": "aperture54"
+          },
+          {
+            "aperture_id": "AP055.01",
+            "weighting_key_ref": "aperture55"
+          },
+          {
+            "aperture_id": "AP056.01",
+            "weighting_key_ref": "aperture56"
+          },
+          {
+            "aperture_id": "AP057.01",
+            "weighting_key_ref": "aperture57"
+          },
+          {
+            "aperture_id": "AP058.01",
+            "weighting_key_ref": "aperture58"
+          },
+          {
+            "aperture_id": "AP059.01",
+            "weighting_key_ref": "aperture59"
+          },
+          {
+            "aperture_id": "AP060.01",
+            "weighting_key_ref": "aperture60"
+          },
+          {
+            "aperture_id": "AP061.01",
+            "weighting_key_ref": "aperture61"
+          },
+          {
+            "aperture_id": "AP062.01",
+            "weighting_key_ref": "aperture62"
+          },
+          {
+            "aperture_id": "AP063.01",
+            "weighting_key_ref": "aperture63"
+          },
+          {
+            "aperture_id": "AP064.01",
+            "weighting_key_ref": "aperture64"
+          },
+          {
+            "aperture_id": "AP065.01",
+            "weighting_key_ref": "aperture65"
+          },
+          {
+            "aperture_id": "AP066.01",
+            "weighting_key_ref": "aperture66"
+          },
+          {
+            "aperture_id": "AP067.01",
+            "weighting_key_ref": "aperture67"
+          },
+          {
+            "aperture_id": "AP068.01",
+            "weighting_key_ref": "aperture68"
+          }
+        ],
+        "field": {
+        "target_name": "Polaris Australis",
+        "reference_frame": "icrs",
+        "attrs": {
+          "c1": 181.0,
+          "c2": 46.0
+        }
+      }
+      },
+      {
+        "subarray_beam_id": 8,
+        "update_rate": 0.0,
+        "logical_bands": [
+          {
+            "start_channel": 128,
+            "number_of_channels": 16
+          },
+          {
+            "start_channel": 432,
+            "number_of_channels": 16
+          }
+        ],
+        "apertures": [
+          {
+            "aperture_id": "AP001.01",
+            "weighting_key_ref": "aperture1"
+          },
+          {
+            "aperture_id": "AP002.01",
+            "weighting_key_ref": "aperture2"
+          },
+          {
+            "aperture_id": "AP003.01",
+            "weighting_key_ref": "aperture3"
+          },
+          {
+            "aperture_id": "AP004.01",
+            "weighting_key_ref": "aperture4"
+          },
+          {
+            "aperture_id": "AP005.01",
+            "weighting_key_ref": "aperture5"
+          },
+          {
+            "aperture_id": "AP006.01",
+            "weighting_key_ref": "aperture6"
+          },
+          {
+            "aperture_id": "AP007.01",
+            "weighting_key_ref": "aperture7"
+          },
+          {
+            "aperture_id": "AP008.01",
+            "weighting_key_ref": "aperture8"
+          },
+          {
+            "aperture_id": "AP009.01",
+            "weighting_key_ref": "aperture9"
+          },
+          {
+            "aperture_id": "AP010.01",
+            "weighting_key_ref": "aperture10"
+          },
+          {
+            "aperture_id": "AP011.01",
+            "weighting_key_ref": "aperture11"
+          },
+          {
+            "aperture_id": "AP012.01",
+            "weighting_key_ref": "aperture12"
+          },
+          {
+            "aperture_id": "AP013.01",
+            "weighting_key_ref": "aperture13"
+          },
+          {
+            "aperture_id": "AP014.01",
+            "weighting_key_ref": "aperture14"
+          },
+          {
+            "aperture_id": "AP015.01",
+            "weighting_key_ref": "aperture15"
+          },
+          {
+            "aperture_id": "AP016.01",
+            "weighting_key_ref": "aperture16"
+          },
+          {
+            "aperture_id": "AP017.01",
+            "weighting_key_ref": "aperture17"
+          },
+          {
+            "aperture_id": "AP018.01",
+            "weighting_key_ref": "aperture18"
+          },
+          {
+            "aperture_id": "AP019.01",
+            "weighting_key_ref": "aperture19"
+          },
+          {
+            "aperture_id": "AP020.01",
+            "weighting_key_ref": "aperture20"
+          },
+          {
+            "aperture_id": "AP021.01",
+            "weighting_key_ref": "aperture21"
+          },
+          {
+            "aperture_id": "AP022.01",
+            "weighting_key_ref": "aperture22"
+          },
+          {
+            "aperture_id": "AP023.01",
+            "weighting_key_ref": "aperture23"
+          },
+          {
+            "aperture_id": "AP024.01",
+            "weighting_key_ref": "aperture24"
+          },
+          {
+            "aperture_id": "AP025.01",
+            "weighting_key_ref": "aperture25"
+          },
+          {
+            "aperture_id": "AP026.01",
+            "weighting_key_ref": "aperture26"
+          },
+          {
+            "aperture_id": "AP027.01",
+            "weighting_key_ref": "aperture27"
+          },
+          {
+            "aperture_id": "AP028.01",
+            "weighting_key_ref": "aperture28"
+          },
+          {
+            "aperture_id": "AP029.01",
+            "weighting_key_ref": "aperture29"
+          },
+          {
+            "aperture_id": "AP030.01",
+            "weighting_key_ref": "aperture30"
+          },
+          {
+            "aperture_id": "AP031.01",
+            "weighting_key_ref": "aperture31"
+          },
+          {
+            "aperture_id": "AP032.01",
+            "weighting_key_ref": "aperture32"
+          },
+          {
+            "aperture_id": "AP033.01",
+            "weighting_key_ref": "aperture33"
+          },
+          {
+            "aperture_id": "AP034.01",
+            "weighting_key_ref": "aperture34"
+          },
+          {
+            "aperture_id": "AP035.01",
+            "weighting_key_ref": "aperture35"
+          },
+          {
+            "aperture_id": "AP036.01",
+            "weighting_key_ref": "aperture36"
+          },
+          {
+            "aperture_id": "AP037.01",
+            "weighting_key_ref": "aperture37"
+          },
+          {
+            "aperture_id": "AP038.01",
+            "weighting_key_ref": "aperture38"
+          },
+          {
+            "aperture_id": "AP039.01",
+            "weighting_key_ref": "aperture39"
+          },
+          {
+            "aperture_id": "AP040.01",
+            "weighting_key_ref": "aperture40"
+          },
+          {
+            "aperture_id": "AP041.01",
+            "weighting_key_ref": "aperture41"
+          },
+          {
+            "aperture_id": "AP042.01",
+            "weighting_key_ref": "aperture42"
+          },
+          {
+            "aperture_id": "AP043.01",
+            "weighting_key_ref": "aperture43"
+          },
+          {
+            "aperture_id": "AP044.01",
+            "weighting_key_ref": "aperture44"
+          },
+          {
+            "aperture_id": "AP045.01",
+            "weighting_key_ref": "aperture45"
+          },
+          {
+            "aperture_id": "AP046.01",
+            "weighting_key_ref": "aperture46"
+          },
+          {
+            "aperture_id": "AP047.01",
+            "weighting_key_ref": "aperture47"
+          },
+          {
+            "aperture_id": "AP048.01",
+            "weighting_key_ref": "aperture48"
+          },
+          {
+            "aperture_id": "AP049.01",
+            "weighting_key_ref": "aperture49"
+          },
+          {
+            "aperture_id": "AP050.01",
+            "weighting_key_ref": "aperture50"
+          },
+          {
+            "aperture_id": "AP051.01",
+            "weighting_key_ref": "aperture51"
+          },
+          {
+            "aperture_id": "AP052.01",
+            "weighting_key_ref": "aperture52"
+          },
+          {
+            "aperture_id": "AP053.01",
+            "weighting_key_ref": "aperture53"
+          },
+          {
+            "aperture_id": "AP054.01",
+            "weighting_key_ref": "aperture54"
+          },
+          {
+            "aperture_id": "AP055.01",
+            "weighting_key_ref": "aperture55"
+          },
+          {
+            "aperture_id": "AP056.01",
+            "weighting_key_ref": "aperture56"
+          },
+          {
+            "aperture_id": "AP057.01",
+            "weighting_key_ref": "aperture57"
+          },
+          {
+            "aperture_id": "AP058.01",
+            "weighting_key_ref": "aperture58"
+          },
+          {
+            "aperture_id": "AP059.01",
+            "weighting_key_ref": "aperture59"
+          },
+          {
+            "aperture_id": "AP060.01",
+            "weighting_key_ref": "aperture60"
+          },
+          {
+            "aperture_id": "AP061.01",
+            "weighting_key_ref": "aperture61"
+          },
+          {
+            "aperture_id": "AP062.01",
+            "weighting_key_ref": "aperture62"
+          },
+          {
+            "aperture_id": "AP063.01",
+            "weighting_key_ref": "aperture63"
+          },
+          {
+            "aperture_id": "AP064.01",
+            "weighting_key_ref": "aperture64"
+          },
+          {
+            "aperture_id": "AP065.01",
+            "weighting_key_ref": "aperture65"
+          },
+          {
+            "aperture_id": "AP066.01",
+            "weighting_key_ref": "aperture66"
+          },
+          {
+            "aperture_id": "AP067.01",
+            "weighting_key_ref": "aperture67"
+          },
+          {
+            "aperture_id": "AP068.01",
+            "weighting_key_ref": "aperture68"
+          }
+        ],
+        "field": {
+        "target_name": "Polaris Australis",
+        "reference_frame": "icrs",
+        "attrs": {
+          "c1": 181.0,
+          "c2": 46.0
+        }
+      }
+      }
+    ]
+  },
+  "sdp": {
+    "interface": "https://schema.skao.int/ska-sdp-configure/1.1",
+    "scan_type": "target:a"
+  },
+  "csp": {
+    "interface": "https://schema.skao.int/ska-low-csp-configure/7.3",
+    "common": {
+      "config_id": "sbi-mvp01-20200325-00001-science_A",
+      "eb_id": "eb-test-20220916-00000"
+    },
+    "lowcbf": {
+      "stations": {
+        "stns": [
+          [
+            1,
+            100
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            6,
+            1
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            8,
+            1
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            10,
+            1
+          ],
+          [
+            11,
+            1
+          ],
+          [
+            12,
+            1
+          ],
+          [
+            13,
+            1
+          ],
+          [
+            14,
+            1
+          ],
+          [
+            15,
+            1
+          ],
+          [
+            16,
+            1
+          ],
+          [
+            17,
+            1
+          ],
+          [
+            18,
+            1
+          ],
+          [
+            19,
+            1
+          ],
+          [
+            20,
+            1
+          ],
+          [
+            21,
+            1
+          ],
+          [
+            22,
+            1
+          ],
+          [
+            23,
+            1
+          ],
+          [
+            24,
+            1
+          ],
+          [
+            25,
+            1
+          ],
+          [
+            26,
+            1
+          ],
+          [
+            27,
+            1
+          ],
+          [
+            28,
+            1
+          ],
+          [
+            29,
+            1
+          ],
+          [
+            30,
+            1
+          ],
+          [
+            31,
+            1
+          ],
+          [
+            32,
+            1
+          ],
+          [
+            33,
+            1
+          ],
+          [
+            34,
+            1
+          ],
+          [
+            35,
+            1
+          ],
+          [
+            36,
+            1
+          ],
+          [
+            37,
+            1
+          ],
+          [
+            38,
+            1
+          ],
+          [
+            39,
+            1
+          ],
+          [
+            40,
+            1
+          ],
+          [
+            41,
+            1
+          ],
+          [
+            42,
+            1
+          ],
+          [
+            43,
+            1
+          ],
+          [
+            44,
+            1
+          ],
+          [
+            45,
+            1
+          ],
+          [
+            46,
+            1
+          ],
+          [
+            47,
+            1
+          ],
+          [
+            48,
+            1
+          ],
+          [
+            49,
+            1
+          ],
+          [
+            50,
+            1
+          ],
+          [
+            51,
+            1
+          ],
+          [
+            52,
+            1
+          ],
+          [
+            53,
+            1
+          ],
+          [
+            54,
+            1
+          ],
+          [
+            55,
+            1
+          ],
+          [
+            56,
+            1
+          ],
+          [
+            57,
+            1
+          ],
+          [
+            58,
+            1
+          ],
+          [
+            59,
+            1
+          ],
+          [
+            60,
+            1
+          ],
+          [
+            61,
+            1
+          ],
+          [
+            62,
+            1
+          ],
+          [
+            63,
+            1
+          ],
+          [
+            64,
+            1
+          ],
+          [
+            65,
+            1
+          ],
+          [
+            66,
+            1
+          ],
+          [
+            67,
+            1
+          ],
+          [
+            68,
+            1
+          ]
+        ],
+        "stn_beams": [
+          {
+            "beam_id": 1,
+            "freq_ids": [
+              400
+            ]
+          },
+          {
+            "beam_id": 2,
+            "freq_ids": [
+              400
+            ]
+          },
+          {
+            "beam_id": 3,
+            "freq_ids": [
+              400
+            ]
+          },
+          {
+            "beam_id": 4,
+            "freq_ids": [
+              400
+            ]
+          },
+          {
+            "beam_id": 5,
+            "freq_ids": [
+              400
+            ]
+          },
+          {
+            "beam_id": 6,
+            "freq_ids": [
+              400
+            ]
+          },
+          {
+            "beam_id": 7,
+            "freq_ids": [
+              400
+            ]
+          },
+          {
+            "beam_id": 8,
+            "freq_ids": [
+              400
+            ]
+          }
+        ]
+      },
+      "vis": {
+        "fsp": {
+          "firmware": "vis",
+          "fsp_ids": [
+            1
+          ]
+        },
+        "stn_beams": [
+          {
+            "stn_beam_id": 1,
+            "integration_ms": 849
+          },
+          {
+            "stn_beam_id": 2,
+            "integration_ms": 849
+          },
+          {
+            "stn_beam_id": 3,
+            "integration_ms": 849
+          },
+          {
+            "stn_beam_id": 4,
+            "integration_ms": 849
+          },
+          {
+            "stn_beam_id": 5,
+            "integration_ms": 849
+          },
+          {
+            "stn_beam_id": 6,
+            "integration_ms": 849
+          },
+          {
+            "stn_beam_id": 7,
+            "integration_ms": 849
+          },
+          {
+            "stn_beam_id": 8,
+            "integration_ms": 849
+          }
+           
+          
+          
+        ]
+      },
+      "timing_beams": {
+          "firmware": "pst",
+          "beams": [{
+            "pst_beam_id": 1,
+            "field": {
+              "target_name": "PSR J0024-7204R",
+              "reference_frame": "icrs",
+              "attrs": {
+                "c1": 6.023625,
+                "c2": -72.08128333,
+                "pm_c1": 4.8,
+                "pm_c2": -3.3
+              }
+            },
+            "stn_beam_id": 1,
+            "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
+          },
+           {
+            "pst_beam_id": 2,
+            "field": {
+              "target_name": "PSR J0024-7204R",
+              "reference_frame": "icrs",
+              "attrs": {
+                "c1": 6.023625,
+                "c2": -72.08128333,
+                "pm_c1": 4.8,
+                "pm_c2": -3.3
+              }
+            },
+            "stn_beam_id": 2,
+            "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
+          }]
+        },
+      "search_beams": {
+          "firmware": "pss",
+          "beams": [{
+            "pss_beam_id": 1,
+            "stn_beam_id": 1,
+            "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
+          }, {
+            "pss_beam_id": 2,
+            "stn_beam_id": 1,
+            "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
+          }, {
+            "pss_beam_id": 3,
+            "stn_beam_id": 1,
+            "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
+          }]
+        }
+    },
+    "pst": {
+       "beams": [{
+          "beam_id": 1,
+          "scan": {
+            "centre_frequency": 200000000.0,
+            "total_bandwidth": 1562500.0,
+            "pst_processing_mode": "VOLTAGE_RECORDER",
+            "observer_id": "jdoe",
+            "project_id": "project1",
+            "target": {
+              "target_name": "J1921+2153",
+              "reference_frame": "icrs",
+              "attrs": {
+                "c1": 6.023625,
+                "c2": -72.08128333,
+                "epoch": 2000.0
+              }
+            },
+            "receiver_id": "receiver3",
+            "max_scan_length": 20000.0,
+            "subint_duration": 30.0,
+            "receptors": ["receptor1", "receptor2"],
+            "receptor_weights": [0.4, 0.6],
+            "rfi_frequency_masks": []
+          }
+        }, {
+          "beam_id": 2,
+          "scan": {
+            "centre_frequency": 200000000.0,
+            "total_bandwidth": 1562500.0,
+            "pst_processing_mode": "VOLTAGE_RECORDER",
+            "observer_id": "jdoe",
+            "project_id": "project1",
+            "target": {
+              "target_name": "J1921+2153",
+              "reference_frame": "icrs",
+              "attrs": {
+                "c1": 6.023625,
+                "c2": -72.08128333,
+                "epoch": 2000.0
+              }
+            },
+            "receiver_id": "receiver3",
+            "max_scan_length": 20000.0,
+            "subint_duration": 30.0,
+            "receptors": ["receptor1", "receptor2"],
+            "receptor_weights": [0.4, 0.6],
+            "rfi_frequency_masks": []
+          }
+        }]
+    },
+   "pss": {
+        "beam": [{
+          "beam_id": 1,
+          "reference_frame": "ICRS",
+          "ra": 82.75,
+          "dec": 21.0,
+          "centre_frequency": 1400.0
+        }, {
+          "beam_id": 2,
+          "reference_frame": "ICRS",
+          "ra": 82.75,
+          "dec": 21.0,
+          "centre_frequency": 1400.0
+        }, {
+          "beam_id": 3,
+          "reference_frame": "ICRS",
+          "ra": 82.75,
+          "dec": 21.0,
+          "centre_frequency": 1400.0
+        }],
+        "config_id": 1,
+        "cheetah": [{
+          "cheetah_id": 1,
+          "beams": [{
+            "beam": {
+              "active": true,
+              "sinks": {
+                "channels": {
+                  "sps_events": {
+                    "active": true,
+                    "sink": [{
+                      "sink_id": "spccl_files"
+                    }, {
+                      "sink_id": "candidate_files"
+                    }]
+                  }
+                },
+                "sink_configs": {
+                  "spccl_files": {
+                    "extension": ".spccl",
+                    "dir": "/tmp/beam1",
+                    "sink_id": "spccl_files"
+                  },
+                  "spccl_sigproc_files": {
+                    "spectra_per_file": 0,
+                    "dir": "/tmp/beam1",
+                    "extension": ".fil",
+                    "candidate_window": {
+                      "ms_before": 500.0,
+                      "ms_after": 1000.0
+                    },
+                    "sink_id": "candidate_files"
+                  }
+                }
+              },
+              "source": {
+                "sigproc": {
+                  "file": "filterbank1.fil",
+                  "chunk_samples": 1024,
+                  "default-nbits": 8,
+                  "active": true
+                },
+                "udp_low": {
+                  "number_of_threads": 2,
+                  "spectra_per_chunk": 2048,
+                  "number_of_channels": 7776,
+                  "max_buffers": 1,
+                  "active": false
+                },
+                "udp_low_lite": {
+                  "number_of_threads": 10,
+                  "spectra_per_chunk": 32768,
+                  "number_of_channels": 432,
+                  "max_buffers": 3,
+                  "active": false
+                }
+              },
+              "beam_id": 1
+            }
+          }],
+          "psbc": {
+            "dump_time": 540
+          },
+          "acceleration": {
+            "fdas": {
+              "pool_id": "default",
+              "priority": 0,
+              "active": false,
+              "labyrinth": {
+                "active": true,
+                "threshold": 10.0
+              }
+            }
+          },
+          "sift": {
+            "pool_id": "default",
+            "priority": 2,
+            "strong_sift": {
+              "active": true,
+              "num_candidate_harmonics": 8,
+              "match_factor": 0.001,
+              "dm_match_range": 2
+            }
+          }
+        }],
+        "ddtr": {
+          "cpu": {
+            "active": false
+          },
+          "fpga": {
+            "active": false
+          },
+          "gpu_bruteforce": {
+            "active": false,
+            "copy_dmtrials_to_host": true
+          },
+          "klotski": {
+            "active": true
+          },
+          "klotski_bruteforce": {
+            "active": false
+          },
+          "dedispersion": [{
+            "start": 0.0,
+            "end": 100.0,
+            "step": 0.1
+          }, {
+            "start": 100.0,
+            "end": 300.0,
+            "step": 0.2
+          }, {
+            "start": 300.0,
+            "end": 700.0,
+            "step": 0.4
+          }, {
+            "start": 700.0,
+            "end": 1500.0,
+            "step": 0.8
+          }, {
+            "start": 1500.0,
+            "end": 3100.0,
+            "step": 1.6
+          }],
+          "dedispersion_samples": 131072
+        },
+        "sps": {
+          "cpu": {
+            "active": false,
+            "samples_per_iteration": 1,
+            "number_of_widths": 1
+          },
+          "threshold": 8.0,
+          "klotski": {
+            "active": false,
+            "pulse_widths": "1,2,4,8,16,32,64,128"
+          },
+          "klotski_bruteforce": {
+            "active": false,
+            "pulse_widths": "1,2,4,8,16,32,64,128"
+          }
+        }
+      }
+
+
+},
+  "tmc": {
+    "scan_duration": 18.0
+  }
+}

@@ -133,7 +133,7 @@ k8s-test-tmc-low-negative-tests:
     - make k8s-install-chart
     - make k8s-wait
   script:
-    - make k8s-test
+    - make k8s-test 
     - |
       if [[ "$CI_KEEP_NAMESPACE" != "true" ]]; then
         make k8s-uninstall-chart || true
@@ -203,7 +203,7 @@ k8s-tmc-scaling:
   variables:
     SUBARRAY_COUNT: 4
     COUNT: 1
-    KUBE_NAMESPACE: "staging-ska-tmc-low"
+    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low'
     CI_KEEP_NAMESPACE: true
     K8S_TIMEOUT: "1800s"
     TARANTA_ENABLED: "true"
@@ -219,9 +219,9 @@ stop-k8s-tmc-scaling:
   extends:
     - stop-k8s-test
   tags:
-    - ska-staging-tmc
+    - ska-k8s
   variables:
-    KUBE_NAMESPACE: "staging-ska-tmc-low"
+    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low'
   environment:
     name: ska-tmc-staging-env
     action: stop

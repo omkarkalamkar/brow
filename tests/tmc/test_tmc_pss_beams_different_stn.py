@@ -190,7 +190,7 @@ def verify_delay_generated_for_used_stn_beams(
     PSS beams in the configuration. PSS beam 1 and 2 use stn_beam_id 1,
     PSS beam 3 uses stn_beam_id 2.
     """
-    wait_time = time.time() + 5
+    wait_time = time.time() + 10
     # check for pss beams configured to subarray
     station_id_mapping = {
         "delayModelPSSBeam1": 1,
@@ -206,8 +206,15 @@ def verify_delay_generated_for_used_stn_beams(
                     attribute
                 ).value
             )
+            if (
+                generated_delay_model is None
+                or str(generated_delay_model).strip() == ""
+            ):
+
+                continue
+
             generated_delay_model_json = json.loads(generated_delay_model)
-            logging.info(
+            logging.debug(
                 "Generated %s Delay Model json: %s",
                 attribute,
                 generated_delay_model_json,

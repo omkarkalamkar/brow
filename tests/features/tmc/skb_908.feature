@@ -15,3 +15,4 @@ Scenario: Verify SKB-908 for release resources flow
     When I release resources from both the subarrays simultaneously
     Then the TMC central node long running command results for both subarrys are OK
     And the TMC, CSP, SDP, and MCCS subarray 1 and 2 transition to the EMPTY obsState
+

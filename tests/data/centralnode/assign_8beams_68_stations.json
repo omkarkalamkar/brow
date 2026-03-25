@@ -1,0 +1,2491 @@
+{
+  "interface": "https://schema.skao.int/ska-low-tmc-assignresources/4.1",
+  "transaction_id": "txn-....-00001",
+  "subarray_id": 1,
+  "mccs": {
+    "interface": "https://schema.skao.int/ska-low-mccs-controller-allocate/3.0",
+    "subarray_beams": [
+      {
+        "subarray_beam_id": 1,
+        "apertures": [
+          {
+            "aperture_id": "AP001.01",
+            "station_id": 1
+          },
+          {
+            "aperture_id": "AP002.01",
+            "station_id": 2
+          },
+          {
+            "aperture_id": "AP003.01",
+            "station_id": 3
+          },
+          {
+            "aperture_id": "AP004.01",
+            "station_id": 4
+          },
+          {
+            "aperture_id": "AP005.01",
+            "station_id": 5
+          },
+          {
+            "aperture_id": "AP006.01",
+            "station_id": 6
+          },
+          {
+            "aperture_id": "AP007.01",
+            "station_id": 7
+          },
+          {
+            "aperture_id": "AP008.01",
+            "station_id": 8
+          },
+          {
+            "aperture_id": "AP009.01",
+            "station_id": 9
+          },
+          {
+            "aperture_id": "AP010.01",
+            "station_id": 10
+          },
+          {
+            "aperture_id": "AP011.01",
+            "station_id": 11
+          },
+          {
+            "aperture_id": "AP012.01",
+            "station_id": 12
+          },
+          {
+            "aperture_id": "AP013.01",
+            "station_id": 13
+          },
+          {
+            "aperture_id": "AP014.01",
+            "station_id": 14
+          },
+          {
+            "aperture_id": "AP015.01",
+            "station_id": 15
+          },
+          {
+            "aperture_id": "AP016.01",
+            "station_id": 16
+          },
+          {
+            "aperture_id": "AP017.01",
+            "station_id": 17
+          },
+          {
+            "aperture_id": "AP018.01",
+            "station_id": 18
+          },
+          {
+            "aperture_id": "AP019.01",
+            "station_id": 19
+          },
+          {
+            "aperture_id": "AP020.01",
+            "station_id": 20
+          },
+          {
+            "aperture_id": "AP021.01",
+            "station_id": 21
+          },
+          {
+            "aperture_id": "AP022.01",
+            "station_id": 22
+          },
+          {
+            "aperture_id": "AP023.01",
+            "station_id": 23
+          },
+          {
+            "aperture_id": "AP024.01",
+            "station_id": 24
+          },
+          {
+            "aperture_id": "AP025.01",
+            "station_id": 25
+          },
+          {
+            "aperture_id": "AP026.01",
+            "station_id": 26
+          },
+          {
+            "aperture_id": "AP027.01",
+            "station_id": 27
+          },
+          {
+            "aperture_id": "AP028.01",
+            "station_id": 28
+          },
+          {
+            "aperture_id": "AP029.01",
+            "station_id": 29
+          },
+          {
+            "aperture_id": "AP030.01",
+            "station_id": 30
+          },
+          {
+            "aperture_id": "AP031.01",
+            "station_id": 31
+          },
+          {
+            "aperture_id": "AP032.01",
+            "station_id": 32
+          },
+          {
+            "aperture_id": "AP033.01",
+            "station_id": 33
+          },
+          {
+            "aperture_id": "AP034.01",
+            "station_id": 34
+          },
+          {
+            "aperture_id": "AP035.01",
+            "station_id": 35
+          },
+          {
+            "aperture_id": "AP036.01",
+            "station_id": 36
+          },
+          {
+            "aperture_id": "AP037.01",
+            "station_id": 37
+          },
+          {
+            "aperture_id": "AP038.01",
+            "station_id": 38
+          },
+          {
+            "aperture_id": "AP039.01",
+            "station_id": 39
+          },
+          {
+            "aperture_id": "AP040.01",
+            "station_id": 40
+          },
+          {
+            "aperture_id": "AP041.01",
+            "station_id": 41
+          },
+          {
+            "aperture_id": "AP042.01",
+            "station_id": 42
+          },
+          {
+            "aperture_id": "AP043.01",
+            "station_id": 43
+          },
+          {
+            "aperture_id": "AP044.01",
+            "station_id": 44
+          },
+          {
+            "aperture_id": "AP045.01",
+            "station_id": 45
+          },
+          {
+            "aperture_id": "AP046.01",
+            "station_id": 46
+          },
+          {
+            "aperture_id": "AP047.01",
+            "station_id": 47
+          },
+          {
+            "aperture_id": "AP048.01",
+            "station_id": 48
+          },
+          {
+            "aperture_id": "AP049.01",
+            "station_id": 49
+          },
+          {
+            "aperture_id": "AP050.01",
+            "station_id": 50
+          },
+          {
+            "aperture_id": "AP051.01",
+            "station_id": 51
+          },
+          {
+            "aperture_id": "AP052.01",
+            "station_id": 52
+          },
+          {
+            "aperture_id": "AP053.01",
+            "station_id": 53
+          },
+          {
+            "aperture_id": "AP054.01",
+            "station_id": 54
+          },
+          {
+            "aperture_id": "AP055.01",
+            "station_id": 55
+          },
+          {
+            "aperture_id": "AP056.01",
+            "station_id": 56
+          },
+          {
+            "aperture_id": "AP057.01",
+            "station_id": 57
+          },
+          {
+            "aperture_id": "AP058.01",
+            "station_id": 58
+          },
+          {
+            "aperture_id": "AP059.01",
+            "station_id": 59
+          },
+          {
+            "aperture_id": "AP060.01",
+            "station_id": 60
+          },
+          {
+            "aperture_id": "AP061.01",
+            "station_id": 61
+          },
+          {
+            "aperture_id": "AP062.01",
+            "station_id": 62
+          },
+          {
+            "aperture_id": "AP063.01",
+            "station_id": 63
+          },
+          {
+            "aperture_id": "AP064.01",
+            "station_id": 64
+          },
+          {
+            "aperture_id": "AP065.01",
+            "station_id": 65
+          },
+          {
+            "aperture_id": "AP066.01",
+            "station_id": 66
+          },
+          {
+            "aperture_id": "AP067.01",
+            "station_id": 67
+          },
+          {
+            "aperture_id": "AP068.01",
+            "station_id": 68
+          }
+        ],
+        "number_of_channels": 16
+      },
+      {
+        "subarray_beam_id": 2,
+        "apertures": [
+          {
+            "aperture_id": "AP001.01",
+            "station_id": 1
+          },
+          {
+            "aperture_id": "AP002.01",
+            "station_id": 2
+          },
+          {
+            "aperture_id": "AP003.01",
+            "station_id": 3
+          },
+          {
+            "aperture_id": "AP004.01",
+            "station_id": 4
+          },
+          {
+            "aperture_id": "AP005.01",
+            "station_id": 5
+          },
+          {
+            "aperture_id": "AP006.01",
+            "station_id": 6
+          },
+          {
+            "aperture_id": "AP007.01",
+            "station_id": 7
+          },
+          {
+            "aperture_id": "AP008.01",
+            "station_id": 8
+          },
+          {
+            "aperture_id": "AP009.01",
+            "station_id": 9
+          },
+          {
+            "aperture_id": "AP010.01",
+            "station_id": 10
+          },
+          {
+            "aperture_id": "AP011.01",
+            "station_id": 11
+          },
+          {
+            "aperture_id": "AP012.01",
+            "station_id": 12
+          },
+          {
+            "aperture_id": "AP013.01",
+            "station_id": 13
+          },
+          {
+            "aperture_id": "AP014.01",
+            "station_id": 14
+          },
+          {
+            "aperture_id": "AP015.01",
+            "station_id": 15
+          },
+          {
+            "aperture_id": "AP016.01",
+            "station_id": 16
+          },
+          {
+            "aperture_id": "AP017.01",
+            "station_id": 17
+          },
+          {
+            "aperture_id": "AP018.01",
+            "station_id": 18
+          },
+          {
+            "aperture_id": "AP019.01",
+            "station_id": 19
+          },
+          {
+            "aperture_id": "AP020.01",
+            "station_id": 20
+          },
+          {
+            "aperture_id": "AP021.01",
+            "station_id": 21
+          },
+          {
+            "aperture_id": "AP022.01",
+            "station_id": 22
+          },
+          {
+            "aperture_id": "AP023.01",
+            "station_id": 23
+          },
+          {
+            "aperture_id": "AP024.01",
+            "station_id": 24
+          },
+          {
+            "aperture_id": "AP025.01",
+            "station_id": 25
+          },
+          {
+            "aperture_id": "AP026.01",
+            "station_id": 26
+          },
+          {
+            "aperture_id": "AP027.01",
+            "station_id": 27
+          },
+          {
+            "aperture_id": "AP028.01",
+            "station_id": 28
+          },
+          {
+            "aperture_id": "AP029.01",
+            "station_id": 29
+          },
+          {
+            "aperture_id": "AP030.01",
+            "station_id": 30
+          },
+          {
+            "aperture_id": "AP031.01",
+            "station_id": 31
+          },
+          {
+            "aperture_id": "AP032.01",
+            "station_id": 32
+          },
+          {
+            "aperture_id": "AP033.01",
+            "station_id": 33
+          },
+          {
+            "aperture_id": "AP034.01",
+            "station_id": 34
+          },
+          {
+            "aperture_id": "AP035.01",
+            "station_id": 35
+          },
+          {
+            "aperture_id": "AP036.01",
+            "station_id": 36
+          },
+          {
+            "aperture_id": "AP037.01",
+            "station_id": 37
+          },
+          {
+            "aperture_id": "AP038.01",
+            "station_id": 38
+          },
+          {
+            "aperture_id": "AP039.01",
+            "station_id": 39
+          },
+          {
+            "aperture_id": "AP040.01",
+            "station_id": 40
+          },
+          {
+            "aperture_id": "AP041.01",
+            "station_id": 41
+          },
+          {
+            "aperture_id": "AP042.01",
+            "station_id": 42
+          },
+          {
+            "aperture_id": "AP043.01",
+            "station_id": 43
+          },
+          {
+            "aperture_id": "AP044.01",
+            "station_id": 44
+          },
+          {
+            "aperture_id": "AP045.01",
+            "station_id": 45
+          },
+          {
+            "aperture_id": "AP046.01",
+            "station_id": 46
+          },
+          {
+            "aperture_id": "AP047.01",
+            "station_id": 47
+          },
+          {
+            "aperture_id": "AP048.01",
+            "station_id": 48
+          },
+          {
+            "aperture_id": "AP049.01",
+            "station_id": 49
+          },
+          {
+            "aperture_id": "AP050.01",
+            "station_id": 50
+          },
+          {
+            "aperture_id": "AP051.01",
+            "station_id": 51
+          },
+          {
+            "aperture_id": "AP052.01",
+            "station_id": 52
+          },
+          {
+            "aperture_id": "AP053.01",
+            "station_id": 53
+          },
+          {
+            "aperture_id": "AP054.01",
+            "station_id": 54
+          },
+          {
+            "aperture_id": "AP055.01",
+            "station_id": 55
+          },
+          {
+            "aperture_id": "AP056.01",
+            "station_id": 56
+          },
+          {
+            "aperture_id": "AP057.01",
+            "station_id": 57
+          },
+          {
+            "aperture_id": "AP058.01",
+            "station_id": 58
+          },
+          {
+            "aperture_id": "AP059.01",
+            "station_id": 59
+          },
+          {
+            "aperture_id": "AP060.01",
+            "station_id": 60
+          },
+          {
+            "aperture_id": "AP061.01",
+            "station_id": 61
+          },
+          {
+            "aperture_id": "AP062.01",
+            "station_id": 62
+          },
+          {
+            "aperture_id": "AP063.01",
+            "station_id": 63
+          },
+          {
+            "aperture_id": "AP064.01",
+            "station_id": 64
+          },
+          {
+            "aperture_id": "AP065.01",
+            "station_id": 65
+          },
+          {
+            "aperture_id": "AP066.01",
+            "station_id": 66
+          },
+          {
+            "aperture_id": "AP067.01",
+            "station_id": 67
+          },
+          {
+            "aperture_id": "AP068.01",
+            "station_id": 68
+          }
+        ],
+        "number_of_channels": 32
+      },
+      {
+        "subarray_beam_id": 3,
+        "apertures": [
+          {
+            "aperture_id": "AP001.01",
+            "station_id": 1
+          },
+          {
+            "aperture_id": "AP002.01",
+            "station_id": 2
+          },
+          {
+            "aperture_id": "AP003.01",
+            "station_id": 3
+          },
+          {
+            "aperture_id": "AP004.01",
+            "station_id": 4
+          },
+          {
+            "aperture_id": "AP005.01",
+            "station_id": 5
+          },
+          {
+            "aperture_id": "AP006.01",
+            "station_id": 6
+          },
+          {
+            "aperture_id": "AP007.01",
+            "station_id": 7
+          },
+          {
+            "aperture_id": "AP008.01",
+            "station_id": 8
+          },
+          {
+            "aperture_id": "AP009.01",
+            "station_id": 9
+          },
+          {
+            "aperture_id": "AP010.01",
+            "station_id": 10
+          },
+          {
+            "aperture_id": "AP011.01",
+            "station_id": 11
+          },
+          {
+            "aperture_id": "AP012.01",
+            "station_id": 12
+          },
+          {
+            "aperture_id": "AP013.01",
+            "station_id": 13
+          },
+          {
+            "aperture_id": "AP014.01",
+            "station_id": 14
+          },
+          {
+            "aperture_id": "AP015.01",
+            "station_id": 15
+          },
+          {
+            "aperture_id": "AP016.01",
+            "station_id": 16
+          },
+          {
+            "aperture_id": "AP017.01",
+            "station_id": 17
+          },
+          {
+            "aperture_id": "AP018.01",
+            "station_id": 18
+          },
+          {
+            "aperture_id": "AP019.01",
+            "station_id": 19
+          },
+          {
+            "aperture_id": "AP020.01",
+            "station_id": 20
+          },
+          {
+            "aperture_id": "AP021.01",
+            "station_id": 21
+          },
+          {
+            "aperture_id": "AP022.01",
+            "station_id": 22
+          },
+          {
+            "aperture_id": "AP023.01",
+            "station_id": 23
+          },
+          {
+            "aperture_id": "AP024.01",
+            "station_id": 24
+          },
+          {
+            "aperture_id": "AP025.01",
+            "station_id": 25
+          },
+          {
+            "aperture_id": "AP026.01",
+            "station_id": 26
+          },
+          {
+            "aperture_id": "AP027.01",
+            "station_id": 27
+          },
+          {
+            "aperture_id": "AP028.01",
+            "station_id": 28
+          },
+          {
+            "aperture_id": "AP029.01",
+            "station_id": 29
+          },
+          {
+            "aperture_id": "AP030.01",
+            "station_id": 30
+          },
+          {
+            "aperture_id": "AP031.01",
+            "station_id": 31
+          },
+          {
+            "aperture_id": "AP032.01",
+            "station_id": 32
+          },
+          {
+            "aperture_id": "AP033.01",
+            "station_id": 33
+          },
+          {
+            "aperture_id": "AP034.01",
+            "station_id": 34
+          },
+          {
+            "aperture_id": "AP035.01",
+            "station_id": 35
+          },
+          {
+            "aperture_id": "AP036.01",
+            "station_id": 36
+          },
+          {
+            "aperture_id": "AP037.01",
+            "station_id": 37
+          },
+          {
+            "aperture_id": "AP038.01",
+            "station_id": 38
+          },
+          {
+            "aperture_id": "AP039.01",
+            "station_id": 39
+          },
+          {
+            "aperture_id": "AP040.01",
+            "station_id": 40
+          },
+          {
+            "aperture_id": "AP041.01",
+            "station_id": 41
+          },
+          {
+            "aperture_id": "AP042.01",
+            "station_id": 42
+          },
+          {
+            "aperture_id": "AP043.01",
+            "station_id": 43
+          },
+          {
+            "aperture_id": "AP044.01",
+            "station_id": 44
+          },
+          {
+            "aperture_id": "AP045.01",
+            "station_id": 45
+          },
+          {
+            "aperture_id": "AP046.01",
+            "station_id": 46
+          },
+          {
+            "aperture_id": "AP047.01",
+            "station_id": 47
+          },
+          {
+            "aperture_id": "AP048.01",
+            "station_id": 48
+          },
+          {
+            "aperture_id": "AP049.01",
+            "station_id": 49
+          },
+          {
+            "aperture_id": "AP050.01",
+            "station_id": 50
+          },
+          {
+            "aperture_id": "AP051.01",
+            "station_id": 51
+          },
+          {
+            "aperture_id": "AP052.01",
+            "station_id": 52
+          },
+          {
+            "aperture_id": "AP053.01",
+            "station_id": 53
+          },
+          {
+            "aperture_id": "AP054.01",
+            "station_id": 54
+          },
+          {
+            "aperture_id": "AP055.01",
+            "station_id": 55
+          },
+          {
+            "aperture_id": "AP056.01",
+            "station_id": 56
+          },
+          {
+            "aperture_id": "AP057.01",
+            "station_id": 57
+          },
+          {
+            "aperture_id": "AP058.01",
+            "station_id": 58
+          },
+          {
+            "aperture_id": "AP059.01",
+            "station_id": 59
+          },
+          {
+            "aperture_id": "AP060.01",
+            "station_id": 60
+          },
+          {
+            "aperture_id": "AP061.01",
+            "station_id": 61
+          },
+          {
+            "aperture_id": "AP062.01",
+            "station_id": 62
+          },
+          {
+            "aperture_id": "AP063.01",
+            "station_id": 63
+          },
+          {
+            "aperture_id": "AP064.01",
+            "station_id": 64
+          },
+          {
+            "aperture_id": "AP065.01",
+            "station_id": 65
+          },
+          {
+            "aperture_id": "AP066.01",
+            "station_id": 66
+          },
+          {
+            "aperture_id": "AP067.01",
+            "station_id": 67
+          },
+          {
+            "aperture_id": "AP068.01",
+            "station_id": 68
+          }
+        ],
+        "number_of_channels": 16
+      },
+      {
+        "subarray_beam_id": 4,
+        "apertures": [
+          {
+            "aperture_id": "AP001.01",
+            "station_id": 1
+          },
+          {
+            "aperture_id": "AP002.01",
+            "station_id": 2
+          },
+          {
+            "aperture_id": "AP003.01",
+            "station_id": 3
+          },
+          {
+            "aperture_id": "AP004.01",
+            "station_id": 4
+          },
+          {
+            "aperture_id": "AP005.01",
+            "station_id": 5
+          },
+          {
+            "aperture_id": "AP006.01",
+            "station_id": 6
+          },
+          {
+            "aperture_id": "AP007.01",
+            "station_id": 7
+          },
+          {
+            "aperture_id": "AP008.01",
+            "station_id": 8
+          },
+          {
+            "aperture_id": "AP009.01",
+            "station_id": 9
+          },
+          {
+            "aperture_id": "AP010.01",
+            "station_id": 10
+          },
+          {
+            "aperture_id": "AP011.01",
+            "station_id": 11
+          },
+          {
+            "aperture_id": "AP012.01",
+            "station_id": 12
+          },
+          {
+            "aperture_id": "AP013.01",
+            "station_id": 13
+          },
+          {
+            "aperture_id": "AP014.01",
+            "station_id": 14
+          },
+          {
+            "aperture_id": "AP015.01",
+            "station_id": 15
+          },
+          {
+            "aperture_id": "AP016.01",
+            "station_id": 16
+          },
+          {
+            "aperture_id": "AP017.01",
+            "station_id": 17
+          },
+          {
+            "aperture_id": "AP018.01",
+            "station_id": 18
+          },
+          {
+            "aperture_id": "AP019.01",
+            "station_id": 19
+          },
+          {
+            "aperture_id": "AP020.01",
+            "station_id": 20
+          },
+          {
+            "aperture_id": "AP021.01",
+            "station_id": 21
+          },
+          {
+            "aperture_id": "AP022.01",
+            "station_id": 22
+          },
+          {
+            "aperture_id": "AP023.01",
+            "station_id": 23
+          },
+          {
+            "aperture_id": "AP024.01",
+            "station_id": 24
+          },
+          {
+            "aperture_id": "AP025.01",
+            "station_id": 25
+          },
+          {
+            "aperture_id": "AP026.01",
+            "station_id": 26
+          },
+          {
+            "aperture_id": "AP027.01",
+            "station_id": 27
+          },
+          {
+            "aperture_id": "AP028.01",
+            "station_id": 28
+          },
+          {
+            "aperture_id": "AP029.01",
+            "station_id": 29
+          },
+          {
+            "aperture_id": "AP030.01",
+            "station_id": 30
+          },
+          {
+            "aperture_id": "AP031.01",
+            "station_id": 31
+          },
+          {
+            "aperture_id": "AP032.01",
+            "station_id": 32
+          },
+          {
+            "aperture_id": "AP033.01",
+            "station_id": 33
+          },
+          {
+            "aperture_id": "AP034.01",
+            "station_id": 34
+          },
+          {
+            "aperture_id": "AP035.01",
+            "station_id": 35
+          },
+          {
+            "aperture_id": "AP036.01",
+            "station_id": 36
+          },
+          {
+            "aperture_id": "AP037.01",
+            "station_id": 37
+          },
+          {
+            "aperture_id": "AP038.01",
+            "station_id": 38
+          },
+          {
+            "aperture_id": "AP039.01",
+            "station_id": 39
+          },
+          {
+            "aperture_id": "AP040.01",
+            "station_id": 40
+          },
+          {
+            "aperture_id": "AP041.01",
+            "station_id": 41
+          },
+          {
+            "aperture_id": "AP042.01",
+            "station_id": 42
+          },
+          {
+            "aperture_id": "AP043.01",
+            "station_id": 43
+          },
+          {
+            "aperture_id": "AP044.01",
+            "station_id": 44
+          },
+          {
+            "aperture_id": "AP045.01",
+            "station_id": 45
+          },
+          {
+            "aperture_id": "AP046.01",
+            "station_id": 46
+          },
+          {
+            "aperture_id": "AP047.01",
+            "station_id": 47
+          },
+          {
+            "aperture_id": "AP048.01",
+            "station_id": 48
+          },
+          {
+            "aperture_id": "AP049.01",
+            "station_id": 49
+          },
+          {
+            "aperture_id": "AP050.01",
+            "station_id": 50
+          },
+          {
+            "aperture_id": "AP051.01",
+            "station_id": 51
+          },
+          {
+            "aperture_id": "AP052.01",
+            "station_id": 52
+          },
+          {
+            "aperture_id": "AP053.01",
+            "station_id": 53
+          },
+          {
+            "aperture_id": "AP054.01",
+            "station_id": 54
+          },
+          {
+            "aperture_id": "AP055.01",
+            "station_id": 55
+          },
+          {
+            "aperture_id": "AP056.01",
+            "station_id": 56
+          },
+          {
+            "aperture_id": "AP057.01",
+            "station_id": 57
+          },
+          {
+            "aperture_id": "AP058.01",
+            "station_id": 58
+          },
+          {
+            "aperture_id": "AP059.01",
+            "station_id": 59
+          },
+          {
+            "aperture_id": "AP060.01",
+            "station_id": 60
+          },
+          {
+            "aperture_id": "AP061.01",
+            "station_id": 61
+          },
+          {
+            "aperture_id": "AP062.01",
+            "station_id": 62
+          },
+          {
+            "aperture_id": "AP063.01",
+            "station_id": 63
+          },
+          {
+            "aperture_id": "AP064.01",
+            "station_id": 64
+          },
+          {
+            "aperture_id": "AP065.01",
+            "station_id": 65
+          },
+          {
+            "aperture_id": "AP066.01",
+            "station_id": 66
+          },
+          {
+            "aperture_id": "AP067.01",
+            "station_id": 67
+          },
+          {
+            "aperture_id": "AP068.01",
+            "station_id": 68
+          }
+        ],
+        "number_of_channels": 16
+      },
+      {
+        "subarray_beam_id": 5,
+        "apertures": [
+          {
+            "aperture_id": "AP001.01",
+            "station_id": 1
+          },
+          {
+            "aperture_id": "AP002.01",
+            "station_id": 2
+          },
+          {
+            "aperture_id": "AP003.01",
+            "station_id": 3
+          },
+          {
+            "aperture_id": "AP004.01",
+            "station_id": 4
+          },
+          {
+            "aperture_id": "AP005.01",
+            "station_id": 5
+          },
+          {
+            "aperture_id": "AP006.01",
+            "station_id": 6
+          },
+          {
+            "aperture_id": "AP007.01",
+            "station_id": 7
+          },
+          {
+            "aperture_id": "AP008.01",
+            "station_id": 8
+          },
+          {
+            "aperture_id": "AP009.01",
+            "station_id": 9
+          },
+          {
+            "aperture_id": "AP010.01",
+            "station_id": 10
+          },
+          {
+            "aperture_id": "AP011.01",
+            "station_id": 11
+          },
+          {
+            "aperture_id": "AP012.01",
+            "station_id": 12
+          },
+          {
+            "aperture_id": "AP013.01",
+            "station_id": 13
+          },
+          {
+            "aperture_id": "AP014.01",
+            "station_id": 14
+          },
+          {
+            "aperture_id": "AP015.01",
+            "station_id": 15
+          },
+          {
+            "aperture_id": "AP016.01",
+            "station_id": 16
+          },
+          {
+            "aperture_id": "AP017.01",
+            "station_id": 17
+          },
+          {
+            "aperture_id": "AP018.01",
+            "station_id": 18
+          },
+          {
+            "aperture_id": "AP019.01",
+            "station_id": 19
+          },
+          {
+            "aperture_id": "AP020.01",
+            "station_id": 20
+          },
+          {
+            "aperture_id": "AP021.01",
+            "station_id": 21
+          },
+          {
+            "aperture_id": "AP022.01",
+            "station_id": 22
+          },
+          {
+            "aperture_id": "AP023.01",
+            "station_id": 23
+          },
+          {
+            "aperture_id": "AP024.01",
+            "station_id": 24
+          },
+          {
+            "aperture_id": "AP025.01",
+            "station_id": 25
+          },
+          {
+            "aperture_id": "AP026.01",
+            "station_id": 26
+          },
+          {
+            "aperture_id": "AP027.01",
+            "station_id": 27
+          },
+          {
+            "aperture_id": "AP028.01",
+            "station_id": 28
+          },
+          {
+            "aperture_id": "AP029.01",
+            "station_id": 29
+          },
+          {
+            "aperture_id": "AP030.01",
+            "station_id": 30
+          },
+          {
+            "aperture_id": "AP031.01",
+            "station_id": 31
+          },
+          {
+            "aperture_id": "AP032.01",
+            "station_id": 32
+          },
+          {
+            "aperture_id": "AP033.01",
+            "station_id": 33
+          },
+          {
+            "aperture_id": "AP034.01",
+            "station_id": 34
+          },
+          {
+            "aperture_id": "AP035.01",
+            "station_id": 35
+          },
+          {
+            "aperture_id": "AP036.01",
+            "station_id": 36
+          },
+          {
+            "aperture_id": "AP037.01",
+            "station_id": 37
+          },
+          {
+            "aperture_id": "AP038.01",
+            "station_id": 38
+          },
+          {
+            "aperture_id": "AP039.01",
+            "station_id": 39
+          },
+          {
+            "aperture_id": "AP040.01",
+            "station_id": 40
+          },
+          {
+            "aperture_id": "AP041.01",
+            "station_id": 41
+          },
+          {
+            "aperture_id": "AP042.01",
+            "station_id": 42
+          },
+          {
+            "aperture_id": "AP043.01",
+            "station_id": 43
+          },
+          {
+            "aperture_id": "AP044.01",
+            "station_id": 44
+          },
+          {
+            "aperture_id": "AP045.01",
+            "station_id": 45
+          },
+          {
+            "aperture_id": "AP046.01",
+            "station_id": 46
+          },
+          {
+            "aperture_id": "AP047.01",
+            "station_id": 47
+          },
+          {
+            "aperture_id": "AP048.01",
+            "station_id": 48
+          },
+          {
+            "aperture_id": "AP049.01",
+            "station_id": 49
+          },
+          {
+            "aperture_id": "AP050.01",
+            "station_id": 50
+          },
+          {
+            "aperture_id": "AP051.01",
+            "station_id": 51
+          },
+          {
+            "aperture_id": "AP052.01",
+            "station_id": 52
+          },
+          {
+            "aperture_id": "AP053.01",
+            "station_id": 53
+          },
+          {
+            "aperture_id": "AP054.01",
+            "station_id": 54
+          },
+          {
+            "aperture_id": "AP055.01",
+            "station_id": 55
+          },
+          {
+            "aperture_id": "AP056.01",
+            "station_id": 56
+          },
+          {
+            "aperture_id": "AP057.01",
+            "station_id": 57
+          },
+          {
+            "aperture_id": "AP058.01",
+            "station_id": 58
+          },
+          {
+            "aperture_id": "AP059.01",
+            "station_id": 59
+          },
+          {
+            "aperture_id": "AP060.01",
+            "station_id": 60
+          },
+          {
+            "aperture_id": "AP061.01",
+            "station_id": 61
+          },
+          {
+            "aperture_id": "AP062.01",
+            "station_id": 62
+          },
+          {
+            "aperture_id": "AP063.01",
+            "station_id": 63
+          },
+          {
+            "aperture_id": "AP064.01",
+            "station_id": 64
+          },
+          {
+            "aperture_id": "AP065.01",
+            "station_id": 65
+          },
+          {
+            "aperture_id": "AP066.01",
+            "station_id": 66
+          },
+          {
+            "aperture_id": "AP067.01",
+            "station_id": 67
+          },
+          {
+            "aperture_id": "AP068.01",
+            "station_id": 68
+          }
+        ],
+        "number_of_channels": 16
+      },
+      {
+        "subarray_beam_id": 6,
+        "apertures": [
+          {
+            "aperture_id": "AP001.01",
+            "station_id": 1
+          },
+          {
+            "aperture_id": "AP002.01",
+            "station_id": 2
+          },
+          {
+            "aperture_id": "AP003.01",
+            "station_id": 3
+          },
+          {
+            "aperture_id": "AP004.01",
+            "station_id": 4
+          },
+          {
+            "aperture_id": "AP005.01",
+            "station_id": 5
+          },
+          {
+            "aperture_id": "AP006.01",
+            "station_id": 6
+          },
+          {
+            "aperture_id": "AP007.01",
+            "station_id": 7
+          },
+          {
+            "aperture_id": "AP008.01",
+            "station_id": 8
+          },
+          {
+            "aperture_id": "AP009.01",
+            "station_id": 9
+          },
+          {
+            "aperture_id": "AP010.01",
+            "station_id": 10
+          },
+          {
+            "aperture_id": "AP011.01",
+            "station_id": 11
+          },
+          {
+            "aperture_id": "AP012.01",
+            "station_id": 12
+          },
+          {
+            "aperture_id": "AP013.01",
+            "station_id": 13
+          },
+          {
+            "aperture_id": "AP014.01",
+            "station_id": 14
+          },
+          {
+            "aperture_id": "AP015.01",
+            "station_id": 15
+          },
+          {
+            "aperture_id": "AP016.01",
+            "station_id": 16
+          },
+          {
+            "aperture_id": "AP017.01",
+            "station_id": 17
+          },
+          {
+            "aperture_id": "AP018.01",
+            "station_id": 18
+          },
+          {
+            "aperture_id": "AP019.01",
+            "station_id": 19
+          },
+          {
+            "aperture_id": "AP020.01",
+            "station_id": 20
+          },
+          {
+            "aperture_id": "AP021.01",
+            "station_id": 21
+          },
+          {
+            "aperture_id": "AP022.01",
+            "station_id": 22
+          },
+          {
+            "aperture_id": "AP023.01",
+            "station_id": 23
+          },
+          {
+            "aperture_id": "AP024.01",
+            "station_id": 24
+          },
+          {
+            "aperture_id": "AP025.01",
+            "station_id": 25
+          },
+          {
+            "aperture_id": "AP026.01",
+            "station_id": 26
+          },
+          {
+            "aperture_id": "AP027.01",
+            "station_id": 27
+          },
+          {
+            "aperture_id": "AP028.01",
+            "station_id": 28
+          },
+          {
+            "aperture_id": "AP029.01",
+            "station_id": 29
+          },
+          {
+            "aperture_id": "AP030.01",
+            "station_id": 30
+          },
+          {
+            "aperture_id": "AP031.01",
+            "station_id": 31
+          },
+          {
+            "aperture_id": "AP032.01",
+            "station_id": 32
+          },
+          {
+            "aperture_id": "AP033.01",
+            "station_id": 33
+          },
+          {
+            "aperture_id": "AP034.01",
+            "station_id": 34
+          },
+          {
+            "aperture_id": "AP035.01",
+            "station_id": 35
+          },
+          {
+            "aperture_id": "AP036.01",
+            "station_id": 36
+          },
+          {
+            "aperture_id": "AP037.01",
+            "station_id": 37
+          },
+          {
+            "aperture_id": "AP038.01",
+            "station_id": 38
+          },
+          {
+            "aperture_id": "AP039.01",
+            "station_id": 39
+          },
+          {
+            "aperture_id": "AP040.01",
+            "station_id": 40
+          },
+          {
+            "aperture_id": "AP041.01",
+            "station_id": 41
+          },
+          {
+            "aperture_id": "AP042.01",
+            "station_id": 42
+          },
+          {
+            "aperture_id": "AP043.01",
+            "station_id": 43
+          },
+          {
+            "aperture_id": "AP044.01",
+            "station_id": 44
+          },
+          {
+            "aperture_id": "AP045.01",
+            "station_id": 45
+          },
+          {
+            "aperture_id": "AP046.01",
+            "station_id": 46
+          },
+          {
+            "aperture_id": "AP047.01",
+            "station_id": 47
+          },
+          {
+            "aperture_id": "AP048.01",
+            "station_id": 48
+          },
+          {
+            "aperture_id": "AP049.01",
+            "station_id": 49
+          },
+          {
+            "aperture_id": "AP050.01",
+            "station_id": 50
+          },
+          {
+            "aperture_id": "AP051.01",
+            "station_id": 51
+          },
+          {
+            "aperture_id": "AP052.01",
+            "station_id": 52
+          },
+          {
+            "aperture_id": "AP053.01",
+            "station_id": 53
+          },
+          {
+            "aperture_id": "AP054.01",
+            "station_id": 54
+          },
+          {
+            "aperture_id": "AP055.01",
+            "station_id": 55
+          },
+          {
+            "aperture_id": "AP056.01",
+            "station_id": 56
+          },
+          {
+            "aperture_id": "AP057.01",
+            "station_id": 57
+          },
+          {
+            "aperture_id": "AP058.01",
+            "station_id": 58
+          },
+          {
+            "aperture_id": "AP059.01",
+            "station_id": 59
+          },
+          {
+            "aperture_id": "AP060.01",
+            "station_id": 60
+          },
+          {
+            "aperture_id": "AP061.01",
+            "station_id": 61
+          },
+          {
+            "aperture_id": "AP062.01",
+            "station_id": 62
+          },
+          {
+            "aperture_id": "AP063.01",
+            "station_id": 63
+          },
+          {
+            "aperture_id": "AP064.01",
+            "station_id": 64
+          },
+          {
+            "aperture_id": "AP065.01",
+            "station_id": 65
+          },
+          {
+            "aperture_id": "AP066.01",
+            "station_id": 66
+          },
+          {
+            "aperture_id": "AP067.01",
+            "station_id": 67
+          },
+          {
+            "aperture_id": "AP068.01",
+            "station_id": 68
+          }
+        ],
+        "number_of_channels": 16
+      },
+      {
+        "subarray_beam_id": 7,
+        "apertures": [
+          {
+            "aperture_id": "AP001.01",
+            "station_id": 1
+          },
+          {
+            "aperture_id": "AP002.01",
+            "station_id": 2
+          },
+          {
+            "aperture_id": "AP003.01",
+            "station_id": 3
+          },
+          {
+            "aperture_id": "AP004.01",
+            "station_id": 4
+          },
+          {
+            "aperture_id": "AP005.01",
+            "station_id": 5
+          },
+          {
+            "aperture_id": "AP006.01",
+            "station_id": 6
+          },
+          {
+            "aperture_id": "AP007.01",
+            "station_id": 7
+          },
+          {
+            "aperture_id": "AP008.01",
+            "station_id": 8
+          },
+          {
+            "aperture_id": "AP009.01",
+            "station_id": 9
+          },
+          {
+            "aperture_id": "AP010.01",
+            "station_id": 10
+          },
+          {
+            "aperture_id": "AP011.01",
+            "station_id": 11
+          },
+          {
+            "aperture_id": "AP012.01",
+            "station_id": 12
+          },
+          {
+            "aperture_id": "AP013.01",
+            "station_id": 13
+          },
+          {
+            "aperture_id": "AP014.01",
+            "station_id": 14
+          },
+          {
+            "aperture_id": "AP015.01",
+            "station_id": 15
+          },
+          {
+            "aperture_id": "AP016.01",
+            "station_id": 16
+          },
+          {
+            "aperture_id": "AP017.01",
+            "station_id": 17
+          },
+          {
+            "aperture_id": "AP018.01",
+            "station_id": 18
+          },
+          {
+            "aperture_id": "AP019.01",
+            "station_id": 19
+          },
+          {
+            "aperture_id": "AP020.01",
+            "station_id": 20
+          },
+          {
+            "aperture_id": "AP021.01",
+            "station_id": 21
+          },
+          {
+            "aperture_id": "AP022.01",
+            "station_id": 22
+          },
+          {
+            "aperture_id": "AP023.01",
+            "station_id": 23
+          },
+          {
+            "aperture_id": "AP024.01",
+            "station_id": 24
+          },
+          {
+            "aperture_id": "AP025.01",
+            "station_id": 25
+          },
+          {
+            "aperture_id": "AP026.01",
+            "station_id": 26
+          },
+          {
+            "aperture_id": "AP027.01",
+            "station_id": 27
+          },
+          {
+            "aperture_id": "AP028.01",
+            "station_id": 28
+          },
+          {
+            "aperture_id": "AP029.01",
+            "station_id": 29
+          },
+          {
+            "aperture_id": "AP030.01",
+            "station_id": 30
+          },
+          {
+            "aperture_id": "AP031.01",
+            "station_id": 31
+          },
+          {
+            "aperture_id": "AP032.01",
+            "station_id": 32
+          },
+          {
+            "aperture_id": "AP033.01",
+            "station_id": 33
+          },
+          {
+            "aperture_id": "AP034.01",
+            "station_id": 34
+          },
+          {
+            "aperture_id": "AP035.01",
+            "station_id": 35
+          },
+          {
+            "aperture_id": "AP036.01",
+            "station_id": 36
+          },
+          {
+            "aperture_id": "AP037.01",
+            "station_id": 37
+          },
+          {
+            "aperture_id": "AP038.01",
+            "station_id": 38
+          },
+          {
+            "aperture_id": "AP039.01",
+            "station_id": 39
+          },
+          {
+            "aperture_id": "AP040.01",
+            "station_id": 40
+          },
+          {
+            "aperture_id": "AP041.01",
+            "station_id": 41
+          },
+          {
+            "aperture_id": "AP042.01",
+            "station_id": 42
+          },
+          {
+            "aperture_id": "AP043.01",
+            "station_id": 43
+          },
+          {
+            "aperture_id": "AP044.01",
+            "station_id": 44
+          },
+          {
+            "aperture_id": "AP045.01",
+            "station_id": 45
+          },
+          {
+            "aperture_id": "AP046.01",
+            "station_id": 46
+          },
+          {
+            "aperture_id": "AP047.01",
+            "station_id": 47
+          },
+          {
+            "aperture_id": "AP048.01",
+            "station_id": 48
+          },
+          {
+            "aperture_id": "AP049.01",
+            "station_id": 49
+          },
+          {
+            "aperture_id": "AP050.01",
+            "station_id": 50
+          },
+          {
+            "aperture_id": "AP051.01",
+            "station_id": 51
+          },
+          {
+            "aperture_id": "AP052.01",
+            "station_id": 52
+          },
+          {
+            "aperture_id": "AP053.01",
+            "station_id": 53
+          },
+          {
+            "aperture_id": "AP054.01",
+            "station_id": 54
+          },
+          {
+            "aperture_id": "AP055.01",
+            "station_id": 55
+          },
+          {
+            "aperture_id": "AP056.01",
+            "station_id": 56
+          },
+          {
+            "aperture_id": "AP057.01",
+            "station_id": 57
+          },
+          {
+            "aperture_id": "AP058.01",
+            "station_id": 58
+          },
+          {
+            "aperture_id": "AP059.01",
+            "station_id": 59
+          },
+          {
+            "aperture_id": "AP060.01",
+            "station_id": 60
+          },
+          {
+            "aperture_id": "AP061.01",
+            "station_id": 61
+          },
+          {
+            "aperture_id": "AP062.01",
+            "station_id": 62
+          },
+          {
+            "aperture_id": "AP063.01",
+            "station_id": 63
+          },
+          {
+            "aperture_id": "AP064.01",
+            "station_id": 64
+          },
+          {
+            "aperture_id": "AP065.01",
+            "station_id": 65
+          },
+          {
+            "aperture_id": "AP066.01",
+            "station_id": 66
+          },
+          {
+            "aperture_id": "AP067.01",
+            "station_id": 67
+          },
+          {
+            "aperture_id": "AP068.01",
+            "station_id": 68
+          }
+        ],
+        "number_of_channels": 16
+      },
+       {
+        "subarray_beam_id": 8,
+        "apertures": [
+          {
+            "aperture_id": "AP001.01",
+            "station_id": 1
+          },
+          {
+            "aperture_id": "AP002.01",
+            "station_id": 2
+          },
+          {
+            "aperture_id": "AP003.01",
+            "station_id": 3
+          },
+          {
+            "aperture_id": "AP004.01",
+            "station_id": 4
+          },
+          {
+            "aperture_id": "AP005.01",
+            "station_id": 5
+          },
+          {
+            "aperture_id": "AP006.01",
+            "station_id": 6
+          },
+          {
+            "aperture_id": "AP007.01",
+            "station_id": 7
+          },
+          {
+            "aperture_id": "AP008.01",
+            "station_id": 8
+          },
+          {
+            "aperture_id": "AP009.01",
+            "station_id": 9
+          },
+          {
+            "aperture_id": "AP010.01",
+            "station_id": 10
+          },
+          {
+            "aperture_id": "AP011.01",
+            "station_id": 11
+          },
+          {
+            "aperture_id": "AP012.01",
+            "station_id": 12
+          },
+          {
+            "aperture_id": "AP013.01",
+            "station_id": 13
+          },
+          {
+            "aperture_id": "AP014.01",
+            "station_id": 14
+          },
+          {
+            "aperture_id": "AP015.01",
+            "station_id": 15
+          },
+          {
+            "aperture_id": "AP016.01",
+            "station_id": 16
+          },
+          {
+            "aperture_id": "AP017.01",
+            "station_id": 17
+          },
+          {
+            "aperture_id": "AP018.01",
+            "station_id": 18
+          },
+          {
+            "aperture_id": "AP019.01",
+            "station_id": 19
+          },
+          {
+            "aperture_id": "AP020.01",
+            "station_id": 20
+          },
+          {
+            "aperture_id": "AP021.01",
+            "station_id": 21
+          },
+          {
+            "aperture_id": "AP022.01",
+            "station_id": 22
+          },
+          {
+            "aperture_id": "AP023.01",
+            "station_id": 23
+          },
+          {
+            "aperture_id": "AP024.01",
+            "station_id": 24
+          },
+          {
+            "aperture_id": "AP025.01",
+            "station_id": 25
+          },
+          {
+            "aperture_id": "AP026.01",
+            "station_id": 26
+          },
+          {
+            "aperture_id": "AP027.01",
+            "station_id": 27
+          },
+          {
+            "aperture_id": "AP028.01",
+            "station_id": 28
+          },
+          {
+            "aperture_id": "AP029.01",
+            "station_id": 29
+          },
+          {
+            "aperture_id": "AP030.01",
+            "station_id": 30
+          },
+          {
+            "aperture_id": "AP031.01",
+            "station_id": 31
+          },
+          {
+            "aperture_id": "AP032.01",
+            "station_id": 32
+          },
+          {
+            "aperture_id": "AP033.01",
+            "station_id": 33
+          },
+          {
+            "aperture_id": "AP034.01",
+            "station_id": 34
+          },
+          {
+            "aperture_id": "AP035.01",
+            "station_id": 35
+          },
+          {
+            "aperture_id": "AP036.01",
+            "station_id": 36
+          },
+          {
+            "aperture_id": "AP037.01",
+            "station_id": 37
+          },
+          {
+            "aperture_id": "AP038.01",
+            "station_id": 38
+          },
+          {
+            "aperture_id": "AP039.01",
+            "station_id": 39
+          },
+          {
+            "aperture_id": "AP040.01",
+            "station_id": 40
+          },
+          {
+            "aperture_id": "AP041.01",
+            "station_id": 41
+          },
+          {
+            "aperture_id": "AP042.01",
+            "station_id": 42
+          },
+          {
+            "aperture_id": "AP043.01",
+            "station_id": 43
+          },
+          {
+            "aperture_id": "AP044.01",
+            "station_id": 44
+          },
+          {
+            "aperture_id": "AP045.01",
+            "station_id": 45
+          },
+          {
+            "aperture_id": "AP046.01",
+            "station_id": 46
+          },
+          {
+            "aperture_id": "AP047.01",
+            "station_id": 47
+          },
+          {
+            "aperture_id": "AP048.01",
+            "station_id": 48
+          },
+          {
+            "aperture_id": "AP049.01",
+            "station_id": 49
+          },
+          {
+            "aperture_id": "AP050.01",
+            "station_id": 50
+          },
+          {
+            "aperture_id": "AP051.01",
+            "station_id": 51
+          },
+          {
+            "aperture_id": "AP052.01",
+            "station_id": 52
+          },
+          {
+            "aperture_id": "AP053.01",
+            "station_id": 53
+          },
+          {
+            "aperture_id": "AP054.01",
+            "station_id": 54
+          },
+          {
+            "aperture_id": "AP055.01",
+            "station_id": 55
+          },
+          {
+            "aperture_id": "AP056.01",
+            "station_id": 56
+          },
+          {
+            "aperture_id": "AP057.01",
+            "station_id": 57
+          },
+          {
+            "aperture_id": "AP058.01",
+            "station_id": 58
+          },
+          {
+            "aperture_id": "AP059.01",
+            "station_id": 59
+          },
+          {
+            "aperture_id": "AP060.01",
+            "station_id": 60
+          },
+          {
+            "aperture_id": "AP061.01",
+            "station_id": 61
+          },
+          {
+            "aperture_id": "AP062.01",
+            "station_id": 62
+          },
+          {
+            "aperture_id": "AP063.01",
+            "station_id": 63
+          },
+          {
+            "aperture_id": "AP064.01",
+            "station_id": 64
+          },
+          {
+            "aperture_id": "AP065.01",
+            "station_id": 65
+          },
+          {
+            "aperture_id": "AP066.01",
+            "station_id": 66
+          },
+          {
+            "aperture_id": "AP067.01",
+            "station_id": 67
+          },
+          {
+            "aperture_id": "AP068.01",
+            "station_id": 68
+          }
+        ],
+        "number_of_channels": 16
+      }
+    ]
+  },
+  "csp": {
+    "pss": {
+      "pss_beam_ids": [
+        1,
+        2,
+        3
+      ]
+    },
+    "pst": {
+      "pst_beam_ids": [
+        1,
+        2
+      ]
+    }
+  },
+  "sdp": {
+    "interface": "https://schema.skao.int/ska-sdp-assignres/1.0",
+    "resources": {
+      "receptors": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "C7",
+        "C8",
+        "C9",
+        "C10",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15",
+        "C16",
+        "C17",
+        "C18",
+        "C19",
+        "C20",
+        "C21",
+        "C22",
+        "C23",
+        "C24",
+        "C25",
+        "C26",
+        "C27",
+        "C28",
+        "C29",
+        "C30",
+        "C31",
+        "C32",
+        "C33",
+        "C34",
+        "C35",
+        "C36",
+        "C37",
+        "C38",
+        "C39",
+        "C40",
+        "C41",
+        "C42",
+        "C43",
+        "C44",
+        "C45",
+        "C46",
+        "C47",
+        "C48",
+        "C49",
+        "C50",
+        "C51",
+        "C52",
+        "C53",
+        "C54",
+        "C55",
+        "C56",
+        "C57",
+        "C58",
+        "C59",
+        "C60",
+        "C61",
+        "C62",
+        "C63",
+        "C64",
+        "C65",
+        "C66",
+        "C67",
+        "C68"
+      ],
+      "receive_nodes": 1
+    },
+    "execution_block": {
+      "eb_id": "eb-test-20220916-00000",
+      "context": {},
+      "max_length": 3600.0,
+      "beams": [
+        {
+          "beam_id": "vis0",
+          "function": "visibilities"
+        }
+      ],
+      "scan_types": [
+        {
+          "scan_type_id": ".default",
+          "beams": {
+            "vis0": {
+              "channels_id": "vis_channels",
+              "polarisations_id": "all"
+            }
+          }
+        },
+        {
+          "scan_type_id": "target:a",
+          "derive_from": ".default",
+          "beams": {
+            "vis0": {
+              "field_id": "field_a"
+            }
+          }
+        },
+        {
+          "scan_type_id": "calibration:b",
+          "derive_from": ".default",
+          "beams": {
+            "vis0": {
+              "field_id": "field_b"
+            }
+          }
+        }
+      ],
+      "channels": [
+        {
+          "channels_id": "vis_channels",
+          "spectral_windows": [
+            {
+              "spectral_window_id": "fsp_1_channels",
+              "count": 4,
+              "start": 0,
+              "stride": 2,
+              "freq_min": 350000000.0,
+              "freq_max": 368000000.0,
+              "link_map": [
+                [
+                  0,
+                  0
+                ],
+                [
+                  200,
+                  1
+                ],
+                [
+                  744,
+                  2
+                ],
+                [
+                  944,
+                  3
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "polarisations": [
+        {
+          "polarisations_id": "all",
+          "corr_type": [
+            "XX",
+            "XY",
+            "YX",
+            "YY"
+          ]
+        }
+      ],
+      "fields": [
+        {
+          "field_id": "field_a",
+          "phase_dir": {
+            "target_name": "target_a",
+            "reference_frame": "icrs",
+            "attrs": {
+              "c1": 201.365,
+              "c2": -43.0191667
+            }
+          },
+          "pointing_fqdn": "low-tmc/telstate/0/pointing"
+        },
+        {
+          "field_id": "field_b",
+          "phase_dir": {
+            "target_name": "Zenith",
+            "reference_frame": "altaz",
+            "attrs": {
+              "c1": 180.0,
+              "c2": 90.0
+            }
+          },
+          "pointing_fqdn": "low-tmc/telstate/0/pointing"
+        },
+        {
+          "field_id": "field_c",
+          "phase_dir": {
+            "target_name": "Cass-A",
+            "reference_frame": "galactic",
+            "attrs": {
+              "c1": 111.734745,
+              "c2": -2.12957
+            }
+          },
+          "pointing_fqdn": "low-tmc/telstate/0/pointing"
+        },
+        {
+          "field_id": "field_d",
+          "phase_dir": {
+            "target_name": "Sun",
+            "reference_frame": "special"
+          },
+          "pointing_fqdn": "low-tmc/telstate/0/pointing"
+        },
+        {
+          "field_id": "field_e",
+          "phase_dir": {
+            "target_name": "ISS (ZARYA)",
+            "reference_frame": "tle",
+            "attrs": {
+              "line1": "1 25544U 98067A   08264.51782528 -.00002182  00000-0 -11606-4 0  2927",
+              "line2": "2 25544  51.6416 247.4627 0006703 130.5360 325.0288 15.72125391563537"
+            }
+          },
+          "pointing_fqdn": "low-tmc/telstate/0/pointing"
+        }
+      ]
+    },
+    "processing_blocks": [
+      {
+        "pb_id": "pb-t0001-20241015-00003",
+        "parameters": {
+          "dry_run": true,
+          "pod_settings": [
+            {
+              "networkMapping": {
+                "ip": "1.2.3.4/0"
+              }
+            }
+          ]
+        },
+        "sbi_ids": [
+          "sbi-mvp01-20200325-00014",
+          "sbi-t0001-20241015-00015"
+        ],
+        "script": {
+          "kind": "realtime",
+          "name": "vis-receive",
+          "version": "5.4.0"
+        }
+      }
+    ]
+  }
+}

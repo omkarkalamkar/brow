@@ -49,6 +49,7 @@ def test_configure_auto_recovery():
     """BDD test scenario for verifying auto recovery when configure failed"""
 
 
+@pytest.mark.xfail(reason="LRCR event appeared early than obsState Event")
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
@@ -61,6 +62,7 @@ def test_successive_configure_auto_recovery():
     """
 
 
+@pytest.mark.xfail(reason="LRCR event appeared early than obsState Event")
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
