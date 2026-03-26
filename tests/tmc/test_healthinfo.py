@@ -49,13 +49,26 @@ def set_mccs_health(simulator_factory, mccs_health):
 
 
 @when("health states are applied")
-def apply_subarray_health_states():
+def apply_subarray_health_states(event_tracer, subarray_node_low):
     """Apply the subarray healthstate"""
+    # Subscribe before applying changes to avoid missing events.
+    event_tracer.subscribe_event(
+        subarray_node_low.subarray_node, "healthState"
+    )
+
     for name in ["csp", "sdp", "mccs"]:
         device = state[name]
         raw_state = state.get(f"{name}_health", "OK")
-        device.SetDirectHealthState(HealthState[raw_state])
-        time.sleep(0.2)
+        expected = HealthState[raw_state]
+
+        device.SetDirectHealthState(expected)
+
+        time.sleep(0.1)
+
+        reported = device.healthState
+        assert_that(reported).is_equal_to(expected)
+
+    time.sleep(0.2)
 
 
 @then(

@@ -3,6 +3,7 @@
 import time
 
 import pytest
+from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
 from ska_tango_base.control_model import HealthState
 
@@ -11,7 +12,6 @@ from tests.resources.test_harness.helpers import get_device_simulators
 state = {}
 
 
-@pytest.mark.xfail(reason="Refactor test to use event tracer")
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_subarray_healthstate.feature",
@@ -23,8 +23,10 @@ def test_subarray_health_combined_states():
 
 
 @given(parsers.parse("CSP health is {csp_health}"))
-def set_csp_health(simulator_factory, csp_health):
+def set_csp_health(simulator_factory, csp_health, event_tracer):
     """Set the CSP healthstate"""
+    # Start with a clean event trace for each scenario.
+    event_tracer.clear_events()
     csp, _, _ = get_device_simulators(simulator_factory)
     state["csp"] = csp
     state["csp_health"] = csp_health
@@ -47,27 +49,39 @@ def set_mccs_health(simulator_factory, mccs_health):
 
 
 @when("health states are applied")
-def apply_subarray_health_states():
+def apply_subarray_health_states(event_tracer, subarray_node_low):
     """Apply the subarray healthstate"""
+    # Subscribe before applying changes to avoid missing events.
+    event_tracer.subscribe_event(
+        subarray_node_low.subarray_node, "healthState"
+    )
+
     for name in ["csp", "sdp", "mccs"]:
         device = state[name]
         raw_state = state.get(f"{name}_health", "OK")
-        device.SetDirectHealthState(HealthState[raw_state])
-        time.sleep(0.2)
+        expected = HealthState[raw_state]
+
+        device.SetDirectHealthState(expected)
+
+        time.sleep(0.1)
+
+        reported = device.healthState
+        assert_that(reported).is_equal_to(expected)
+
+    time.sleep(0.2)
 
 
 @then(
     parsers.parse("the Subarray Node health state should be {expected_health}")
 )
 def check_subarray_node_health(
-    event_recorder, subarray_node_low, expected_health
+    event_tracer, subarray_node_low, expected_health
 ):
     """Check the subarray healthstate"""
-    event_recorder.subscribe_event(
-        subarray_node_low.subarray_node, "healthState"
-    )
-    assert event_recorder.has_change_event_occurred(
+    expected = HealthState[expected_health]
+
+    assert_that(event_tracer).has_change_event_occurred(
         subarray_node_low.subarray_node,
         "healthState",
-        HealthState[expected_health],
+        expected,
     )
