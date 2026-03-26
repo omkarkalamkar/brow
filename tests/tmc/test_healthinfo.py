@@ -78,13 +78,12 @@ def check_subarray_node_health(
     event_tracer, subarray_node_low, expected_health
 ):
     """Check the subarray healthstate"""
-    event_tracer.subscribe_event(
-        subarray_node_low.subarray_node, "healthState"
-    )
+    expected = HealthState[expected_health]
+
     assert_that(event_tracer).has_change_event_occurred(
         subarray_node_low.subarray_node,
         "healthState",
-        HealthState[expected_health],
+        expected,
     )
 
 
