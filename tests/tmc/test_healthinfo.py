@@ -67,6 +67,12 @@ def apply_subarray_health_states(event_tracer, subarray_node_low):
 
         reported = device.healthState
         assert_that(reported).is_equal_to(expected)
+        LOGGER.info(
+            "%s health set to %s and verified as %s",
+            name.upper(),
+            expected,
+            reported,
+        )
 
     time.sleep(0.2)
 
@@ -80,7 +86,9 @@ def check_subarray_node_health(
     """Check the subarray healthstate"""
     expected = HealthState[expected_health]
 
-    assert_that(event_tracer).has_change_event_occurred(
+    assert_that(event_tracer).described_as(
+        "Expected a healthState change event for Subarray Node"
+    ).within_timeout(5).has_change_event_occurred(
         subarray_node_low.subarray_node,
         "healthState",
         expected,

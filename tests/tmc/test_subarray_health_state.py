@@ -80,7 +80,9 @@ def check_subarray_node_health(
     """Check the subarray healthstate"""
     expected = HealthState[expected_health]
 
-    assert_that(event_tracer).has_change_event_occurred(
+    assert_that(event_tracer).described_as(
+        "Expected a healthState change event for Subarray Node"
+    ).within_timeout(5).has_change_event_occurred(
         subarray_node_low.subarray_node,
         "healthState",
         expected,
