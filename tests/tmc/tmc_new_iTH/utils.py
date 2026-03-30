@@ -16,7 +16,6 @@ from tests.resources.test_harness.constant import (
     RESET_DEFECT,
 )
 from tests.resources.test_support.constant_low import (
-    FAULT_DEFECT,
     INTERMEDIATE_CONFIGURING_OBS_STATE_DEFECT,
     INTERMEDIATE_FAULT_OBS_STATE_DEFECT,
     INTERMEDIATE_STATE_DEFECT,
@@ -47,7 +46,6 @@ command_defect_mapping = {
     },
     "Scan": {
         "READY": READY_STATE_DEFECT,
-        "SCANNING": FAULT_DEFECT,
         "FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT),
     },
     "ReleaseResources": {
@@ -79,11 +77,9 @@ def set_subsystem_defects(
     if sdp_obsstate == "EMPTY" and command == "AssignResources":
         sdp.sdp_subarray.SetDefective(json.dumps(SDP_BACK_TO_INITIAL_STATE))
     else:
-        # Get defect for SDP, with fallback to FAULT for intermediate states
-        sdp_defect = command_defect_mapping.get(command, {}).get(
-            sdp_obsstate, RESET_DEFECT
+        sdp.sdp_subarray.SetDefective(
+            command_defect_mapping.get(command).get(sdp_obsstate, RESET_DEFECT)
         )
-        sdp.sdp_subarray.SetDefective(sdp_defect)
 
 
 FIELD_CONFIGS = {

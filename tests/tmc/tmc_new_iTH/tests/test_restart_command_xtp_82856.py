@@ -224,7 +224,7 @@ def verify_tmc_subarray_observation_state_fault(
 def invoke_restart_command(tmc: TMCFacade):
     """Invokes restart command on the TMC Subarray."""
     # Add explicit wait before invoking to ensure consistent timing
-    time.sleep(0.5)
+    time.sleep(0.1)
     tmc.restart()
 
 
