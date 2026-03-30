@@ -11,7 +11,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 **************
 Added
 ------
-* logging level is set to 4 (``INFO`` level). To set the logging level of one or more specific component, refer to advanced cutomization options.
+* logging level is set to 4 (``INFO`` level). To set the logging level of one or more specific component, refer to advanced cutomization options
 
 Updated
 --------
