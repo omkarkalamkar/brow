@@ -5,8 +5,8 @@ legacy_compatibility: true
 
 global:
   retry:
-  - "--sleep=1"
-  - "--tries=100"
+    - "--sleep=1"
+    - "--tries=100"
   sub-system:
     ska-tango-util:
       enabled: false
@@ -29,7 +29,7 @@ global:
       tag: 9.3.10
       pullPolicy: IfNotPresent
   cluster_domain: cluster.local
-    
+
   ska-tango-examples:
     enabled: false
   replicas: 1
@@ -62,7 +62,7 @@ tmc-low:
       LoggingLevel: "5"
 
     subarraynode:
-      LoggingLevel: "5"
+      LoggingLevel: "4"
 
     sdpsubarrayleafnode:
       LoggingLevel: "5"
@@ -82,8 +82,6 @@ tmc-low:
     mccsmasterleafnode:
       LoggingLevel: "5"
 
-  
-
 # SKUID
 ska-ser-skuid:
   labels:
@@ -100,17 +98,16 @@ ska-tango-taranta:
     replicas: 1
     resources:
       requests:
-        cpu: 100m 
+        cpu: 100m
         memory: 100Mi
       limits:
-        cpu: 200m 
-        memory: 200Mi 
+        cpu: 200m
+        memory: 200Mi
 
 ska-tango-tangogql:
   enabled: false
   ska-tango-base:
     enabled: false
-
 
 ska-tmc-simulators:
   enabled: true
