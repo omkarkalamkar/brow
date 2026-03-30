@@ -16,6 +16,7 @@ from tests.resources.test_harness.constant import (
     RESET_DEFECT,
 )
 from tests.resources.test_support.constant_low import (
+    FAULT_DEFECT,
     INTERMEDIATE_CONFIGURING_OBS_STATE_DEFECT,
     INTERMEDIATE_FAULT_OBS_STATE_DEFECT,
     INTERMEDIATE_STATE_DEFECT,
@@ -46,6 +47,7 @@ command_defect_mapping = {
     },
     "Scan": {
         "READY": READY_STATE_DEFECT,
+        "SCANNING": FAULT_DEFECT,
         "FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT),
     },
     "ReleaseResources": {
@@ -77,9 +79,11 @@ def set_subsystem_defects(
     if sdp_obsstate == "EMPTY" and command == "AssignResources":
         sdp.sdp_subarray.SetDefective(json.dumps(SDP_BACK_TO_INITIAL_STATE))
     else:
-        sdp.sdp_subarray.SetDefective(
-            command_defect_mapping.get(command).get(sdp_obsstate, RESET_DEFECT)
+        # Get defect for SDP, with fallback to FAULT for intermediate states
+        sdp_defect = command_defect_mapping.get(command, {}).get(
+            sdp_obsstate, RESET_DEFECT
         )
+        sdp.sdp_subarray.SetDefective(sdp_defect)
 
 
 FIELD_CONFIGS = {
@@ -527,6 +531,22 @@ def invoke_command_with_defect(
     mccs_obsstate: str,
     command: str,
 ):
+    """Invoke a command after setting up subsystem defects.
+
+    This function attempts to force subsystems to a target state before
+    invoking the command. If the state forcing times out, it logs a warning
+    but continues, as the test may still proceed with the failed defect setup.
+
+    :param tmc: TMC facade
+    :param default_commands_inputs: Default command inputs
+    :param csp: CSP facade
+    :param sdp: SDP facade
+    :param mccs: MCCS facade
+    :param csp_obsstate: Target CSP obsstate
+    :param sdp_obsstate: Target SDP obsstate
+    :param mccs_obsstate: Target MCCS obsstate
+    :param command: Command to invoke
+    """
     match command:
         case "AssignResources":
             set_subsystem_defects(
