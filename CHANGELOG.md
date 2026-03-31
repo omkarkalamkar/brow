@@ -5,6 +5,11 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[2.14.0-rc.1]
+*************
+* Update rules to consider lrcr result along with Obsstate=Aborted
+
+
 [2.13.0]
 ********
 * This is the full release of 2.13.0-rc.1.This release introduces improvements in logging configuration, enhanced multi-subarray execution capabilities, updated component versions, and fixes to Subarray state handling and ObsState aggregation.
