@@ -25,8 +25,6 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 
 
-@pytest.mark.ints
-@pytest.mark.xfail(reason="Testing mode")
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/skb_1210.feature",
@@ -191,17 +189,6 @@ def check_scan_completion(
             json.dumps((int(ResultCode.OK), "Abort command completed")),
         ),
     )
-    # assert_that(event_tracer).described_as(
-    #     'FAILED ASSUMPTION IN "THEN STEP: '
-    #     f'"the Subarray transitions to ABORTED obsState"'
-    #     "Subarray Node device"
-    #     f"({subarray_node_low.subarray_node.dev_name()}) "
-    #     f"is expected to be in ABORTING obstate",
-    # ).within_timeout(TIMEOUT).has_change_event_occurred(
-    #     subarray_node_low.subarray_node,
-    #     "obsState",
-    #     ObsState.ABORTING,
-    # )
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "THEN STEP: '
         f'"the Subarray transitions to ABORTED obsState"'
