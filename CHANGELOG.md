@@ -15,7 +15,7 @@ Added
 
 Updated
 --------
-* Utilized SubarrayNode v1.2.1
+* Utilized SubarrayNode v1.2.1.
 
 Utilised following leaf node tags with log improvements,
 
