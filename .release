@@ -1,21 +1,21 @@
-release=2.14.0-rc.1
-tag=2.14.0-rc.1
+release=2.13.0
+tag=2.13.0
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.14.0-rc.1**
+**1. ska-tmc-low-integration 2.13.0**
 
-    **1.1 ska-tmc-low 2.13.0 - 2.14.0-rc.1:**
+    **1.1 ska-tmc-low 2.13.0-rc.1 - 2.13.0:**
         Updated
         -------
-        * Update in obstate rules
+        * This release introduces improvements in logging configuration, enhanced multi-subarray execution capabilities, updated component versions, and fixes to Subarray state handling and ObsState aggregation.
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.14.0-rc.1**
+**1. ska-tmc-low-integration 2.13.0**
 
-    **1.1 ska-tmc-low 2.13.0 - 2.14.0-rc.1:**
+    **1.1 ska-tmc-low 2.13.0-rc.1 - 2.13.0:**
         Updated
         -------
         * This release introduces improvements in logging configuration, enhanced multi-subarray execution capabilities, updated component versions, and fixes to Subarray state handling and ObsState aggregation.
