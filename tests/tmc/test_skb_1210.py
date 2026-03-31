@@ -176,7 +176,7 @@ def check_scan_completion(
     obsState."""
 
     _, unique_id = subarray_node_low.execute_transition("Abort")
-    
+
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ABORT COMMAND: "
         "Central Node device"
