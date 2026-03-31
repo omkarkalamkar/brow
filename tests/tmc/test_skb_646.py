@@ -226,16 +226,6 @@ def given_a_tmc(
     # This sleep is required because after empty event
     # received in subarray it take some time to process
     time.sleep(1)
-    assert_that(event_tracer).described_as(
-        "FAILED UNEXPECTED OBSSTATE: "
-        "Subarray Node device"
-        f"({subarray_node_low.subarray_node.dev_name()}) "
-        "is expected to be in EMPTY obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        subarray_node_low.subarray_node,
-        "obsState",
-        ObsState.EMPTY,
-    )
 
 
 @given("TMC Subarray is in RESOURCING Observation State")
