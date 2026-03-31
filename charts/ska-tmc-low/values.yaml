@@ -78,9 +78,9 @@ centralnode:
 
 subarraynode:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-subarraynode
+    registry: artefact.skao.int
     image: ska-tmc-subarraynode
-    tag: 1.4.0-dev.cbb5faee7
+    tag: 1.4.0
     pullPolicy: IfNotPresent
 
 sdpleafnodes:
@@ -178,7 +178,8 @@ deviceServers:
     ScanStartTimeOffset: 10
     StartTimeEnabled: false
     LoggingLevel: "4"
-
+    PreRecoveryCheckTimeDuration: 1.0
+  
   sdpsubarrayleafnode:
     enabled: true
     file: "data/sdpsubarrayleafnode.yaml"
