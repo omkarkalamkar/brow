@@ -1,3 +1,5 @@
+import time
+
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
@@ -221,6 +223,8 @@ def verify_tmc_subarray_observation_state_fault(
 @when("I invoke restart command on the TMC Subarray")
 def invoke_restart_command(tmc: TMCFacade):
     """Invokes restart command on the TMC Subarray."""
+    # Add explicit wait before invoking to ensure consistent timing
+    time.sleep(0.1)
     tmc.restart()
 
 
