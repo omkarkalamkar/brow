@@ -1,5 +1,4 @@
 """Test Telescope Health State"""
-import time
 
 import pytest
 from assertpy import assert_that
@@ -137,7 +136,11 @@ def apply_health_states(
         device = state[name]
         raw_state = state.get(f"{name}_state", "OK")
         device.SetDirectHealthState(HealthState[raw_state])
-        time.sleep(0.2)
+        assert_that(event_tracer).described_as(
+            f"Expected a healthState change event for {name.upper()}"
+        ).within_timeout(5).has_change_event_occurred(
+            device, "healthState", HealthState[raw_state]
+        )
 
 
 @then(parsers.parse("the telescopeHealthState should be {expected_state}"))
