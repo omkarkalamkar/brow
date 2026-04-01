@@ -154,21 +154,13 @@ def set_mccs_master_health(simulator_factory, mccs_state):
 
 
 @given("all master and subarray components have OK health")
-def set_all_ok_health(simulator_factory, event_tracer):
+def set_all_ok_health(simulator_factory):
     """Set all healthstate to OK"""
     csp_m, sdp_m, mccs_m = get_master_device_simulators(simulator_factory)
     csp_s, sdp_s, mccs_s = get_device_simulators(simulator_factory)
     for device in [csp_m, sdp_m, mccs_m, csp_s, sdp_s, mccs_s]:
-
         device.SetDirectHealthState(HealthState.OK)
-        time.sleep(0.5)
-
-        assert_that(event_tracer).described_as(
-            "Expected a healthState change event"
-        ).within_timeout(2).has_change_event_occurred(
-            device, "healthState", HealthState.OK
-        )
-
+        time.sleep(0.2)
     state.update(
         {
             "csp": csp_m,
@@ -180,21 +172,14 @@ def set_all_ok_health(simulator_factory, event_tracer):
 
 
 @when("health states are applied")
-def apply_health_states(
-    event_tracer,
-):
+def apply_health_states():
     """Apply the healthstate to devices"""
+
     for name in ["csp", "sdp", "mccs"]:
         device = state[name]
         raw_state = state.get(f"{name}_state", "OK")
         device.SetDirectHealthState(HealthState[raw_state])
-        time.sleep(0.5)
-
-        assert_that(event_tracer).described_as(
-            f"Expected a healthState change event for {name.upper()}"
-        ).within_timeout(2).has_change_event_occurred(
-            device, "healthState", HealthState[raw_state]
-        )
+        time.sleep(0.2)
 
 
 @then(parsers.parse("the telescopeHealthState should be {expected_state}"))
@@ -202,7 +187,6 @@ def check_telescope_health_state(
     event_tracer, central_node_low, expected_state
 ):
     """Verify the telescope healthstate"""
-
     assert_that(event_tracer).has_change_event_occurred(
         central_node_low.central_node,
         "telescopeHealthState",

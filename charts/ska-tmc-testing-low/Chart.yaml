@@ -12,10 +12,10 @@ maintainers:
     email: devesh.ska@gmail.com
 dependencies:
   - name: ska-tango-util
-    version: 1.0.6
+    version: 1.0.7
     repository: https://artefact.skao.int/repository/helm-internal
   - name: ska-tango-base
-    version: 1.0.6
+    version: 1.0.7
     repository: https://artefact.skao.int/repository/helm-internal
   - name: ska-tmc-low
     version: 2.13.0
