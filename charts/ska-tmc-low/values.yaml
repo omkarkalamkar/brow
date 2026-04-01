@@ -106,16 +106,16 @@ cspsubarrayleafnode:
 
 mccsmasterleafnode:
   image:
-    registry: artefact.skao.int
+    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
     image: ska-tmc-mccsleafnodes
-    tag:  0.15.1
+    tag:  0.15.1-dev.cbb55d5b7
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
-    registry: artefact.skao.int
+    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
     image: ska-tmc-mccsleafnodes
-    tag:  0.15.1
+    tag:  0.15.1-dev.cbb55d5b7
     pullPolicy: IfNotPresent
 
 resource_monitor:
@@ -179,7 +179,7 @@ deviceServers:
     StartTimeEnabled: false
     LoggingLevel: "4"
     PreRecoveryCheckTimeDuration: 1.0
-  
+
   sdpsubarrayleafnode:
     enabled: true
     file: "data/sdpsubarrayleafnode.yaml"
