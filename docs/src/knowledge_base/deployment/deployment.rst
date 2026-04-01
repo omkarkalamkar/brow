@@ -197,8 +197,8 @@ Subarray Node
     #. **TelmodelPath** :  This refers to the TelmodelPath of SubarrayNode TANGO device. Currently defaults to "instrument/ska1_low/layout/low-layout.json".
     #. **ScanStartTimeOffset** :  This refers to the offset (in nanoseconds) that can be added when TMC determines scan time. Currently defaults to 10 nanoseconds.
     #. **StartTimeEnabled** :  This refers to the property provided to enable/disable start_time in Scan JSON. Currently defaults to false.
-    #. **PreRecoveryCheckTimeDuration** : This property refers to time duration subarray node needs to wait before checking the auto recovery condition. Within the time duration if the subsystems transition into final/previous observation state then the auto recovery can be proceeded as per conditions. Default value is 1 second.
-    
+    #. **PreRecoveryCheckTimeDuration** : This property refers to time duration subarray node needs to wait before evaluating the auto recovery condition. Within the time duration if the subsystems transition into final/previous observation state then the auto recovery can be proceeded as per conditions. Default value is 1 second.
+
         .. note::
             The `PreRecoveryCheckTimeDuration` property is introduced to handle a specific edge case in the automatic recovery of the subarray. It is recommended to NOT modify the default value without prior understanding of the behaviour of the Subarray Node auto recovery mechanics. Please refer auto recovery documentaPreRecoveryCheckTimeDurationtion for more details :ref:`Recovering TMC Low`.
 
