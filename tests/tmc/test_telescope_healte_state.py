@@ -187,11 +187,13 @@ def apply_health_states(
         device = state[name]
         raw_state = state.get(f"{name}_state", "OK")
         device.SetDirectHealthState(HealthState[raw_state])
+        time.sleep(0.2)
 
+    for name, device_name in devices.items():
         assert_that(event_tracer).described_as(
             f"Expected a healthState change event for {name.upper()}"
-        ).within_timeout(2).has_change_event_occurred(
-            devices[name], "healthState", HealthState[raw_state]
+        ).within_timeout(1).has_change_event_occurred(
+            device_name, "healthState", HealthState[raw_state]
         )
 
 
