@@ -423,7 +423,7 @@ def _wait_for_subarrays_obsstate(
             fut.result()
 
 
-@pytest.mark.SKA_tmc_low_four_subarrays
+@pytest.mark.SKA_tmc_low_16_subarrays
 @scenario(
     "../features/tmc/tmc_observation.feature",
     "Execute observation using <SNCount> subarrays with plan map <PlanMap>",
