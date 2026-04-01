@@ -156,6 +156,7 @@ done carefully.
    This is an optional parameter. If specified, it takes precedence over the
    value set in ``TMCLoggingLevel`` under the global section.
 
+.. _deployment-section:
 
 Component specific configuration
 ---------------------------------
@@ -196,8 +197,9 @@ Subarray Node
     #. **TelmodelPath** :  This refers to the TelmodelPath of SubarrayNode TANGO device. Currently defaults to "instrument/ska1_low/layout/low-layout.json".
     #. **ScanStartTimeOffset** :  This refers to the offset (in nanoseconds) that can be added when TMC determines scan time. Currently defaults to 10 nanoseconds.
     #. **StartTimeEnabled** :  This refers to the property provided to enable/disable start_time in Scan JSON. Currently defaults to false.
+    #. **PreRecoveryCheckTimeDuration** :  This property refers to time duration subarray node needs to wait before checking the auto recovery condition. Within the time duration if the subsystems transition into final/previous observation state then the auto recovery can be proceeded as per conditions. This property is not supposed to manipulated unless aware of the impact(Mostly developer centric). Default value is 1 second.
 
-SDP Subarray Leaf Node
+SDP Subarray Leaf Node   
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.

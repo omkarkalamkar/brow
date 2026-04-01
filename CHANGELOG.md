@@ -8,7 +8,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 [main]
 ******
 Updated
-------
+-------
 * Subarray node v1.4.0: Introduced new property `PreRecoveryCheckTimeDuration`,which ensures that the devices with successful command result reach final observation state and devices with failed command result reach the previous observation state. This would help in auto recovery the subarray to appropriate observation state in case of failure. If the device is stuck in transitioning observation state till time duration the subarray node won't be recovered.
 
 [2.13.0]
@@ -36,7 +36,7 @@ Added
 ------
 * Created a separate job to deploy 4 Subarrays and execute an observation on 4 subarrays parallely. This job runs only in a scheduled master pipeline daily.
 * Verified that the TMC Subarry can work with 68 stations, 3 PSS beams and 2 PST beams
-and checked that the Delay Models are getting generated for all the resources .
+  and checked that the Delay Models are getting generated for all the resources .
 
 Fixed
 -----

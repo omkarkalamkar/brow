@@ -173,3 +173,12 @@ If the ``Restart()`` command fails to transition the TMC Low to the ``EMPTY`` ob
 
 - **Re-invoke Restart() on the TMC Low Subarray Node:**  
   After all subsystems are in a recoverable state, issue the ``Restart()`` command on the TMC Low Subarray Node to transition the system back to the ``EMPTY`` obsState.
+
+TMC Low recovery edge cases
+---------------------------
+
+- For Auto Recovery to work it requires the subsystem to be in either final state after success or previous observation state after failure. 
+- If the subsystems take long time after command failure/success to transition to respective observation states then it will lead to failure of auto recovery.
+- There is an new property introduced ,refer subarray node `PreRecoveryCheckTimeDuration` property in deployment section for more details :ref:`deployment-section`.
+- This would provide some delay so that subsystems can transition into respective observation states after command completion and then auto recovery check can be performed.
+- If this delay is insufficient the subarray node will not able to auto recovery in case of failures.
