@@ -1,7 +1,6 @@
 """Test Subarray Node Healthinfo"""
 
 import json
-import time
 
 import pytest
 from assertpy import assert_that
@@ -63,18 +62,9 @@ def apply_subarray_health_states(event_tracer, subarray_node_low):
 
         device.SetDirectHealthState(expected)
 
-        time.sleep(0.1)
-
-        reported = device.healthState
-        assert_that(reported).is_equal_to(expected)
-        LOGGER.info(
-            "%s health set to %s and verified as %s",
-            name.upper(),
-            expected,
-            reported,
-        )
-
-    time.sleep(0.2)
+        assert_that(lambda d=device: d.healthState).described_as(
+            f"{name.upper()} health should be set to {expected}"
+        ).within_timeout(2).is_equal_to(expected)
 
 
 @then(

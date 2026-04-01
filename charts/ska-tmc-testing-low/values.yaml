@@ -62,7 +62,7 @@ tmc-low:
       LoggingLevel: "5"
 
     subarraynode:
-      LoggingLevel: "4"
+      LoggingLevel: "5"
 
     sdpsubarrayleafnode:
       LoggingLevel: "5"

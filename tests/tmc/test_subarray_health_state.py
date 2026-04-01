@@ -1,7 +1,5 @@
 """Test Subarray Node Health State"""
 
-import time
-
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
@@ -63,12 +61,9 @@ def apply_subarray_health_states(event_tracer, subarray_node_low):
 
         device.SetDirectHealthState(expected)
 
-        time.sleep(0.1)
-
-        reported = device.healthState
-        assert_that(reported).is_equal_to(expected)
-
-    time.sleep(0.2)
+        assert_that(lambda d=device: d.healthState).described_as(
+            f"{name.upper()} health should be set to {expected}"
+        ).within_timeout(2).is_equal_to(expected)
 
 
 @then(
