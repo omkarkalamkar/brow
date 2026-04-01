@@ -177,8 +177,11 @@ If the ``Restart()`` command fails to transition the TMC Low to the ``EMPTY`` ob
 TMC Low recovery edge cases
 ---------------------------
 
-- For Auto Recovery to work it requires the subsystem to be in either final state after success or previous observation state after failure. 
-- If the subsystems take long time after command failure/success to transition to respective observation states then it will lead to failure of auto recovery.
-- There is an new property introduced ,refer subarray node `PreRecoveryCheckTimeDuration` property in deployment section for more details :ref:`deployment-section`.
-- This would provide some delay so that subsystems can transition into respective observation states after command completion and then auto recovery check can be performed.
-- If this delay is insufficient the subarray node will not able to auto recovery in case of failures.
+  #. **Edge Case 1: Auto recovery incase of command failed and observation state transition event is delayed**
+      For Auto Recovery to work it requires the subsystem to be in either final state after success or previous observation state after failure. If the subsystems take long time after command failure/success to transition to respective observation states then it will lead to failure of auto recovery.
+
+      There is an new property introduced ,refer subarray node `PreRecoveryCheckTimeDuration` property in deployment section for more details :ref:`deployment-section`.
+
+      This would provide some delay so that subsystems can transition into respective observation states after command completion and then auto recovery check can be performed.
+
+      If this delay is insufficient the subarray node will not able to auto recovery in case of failures.
