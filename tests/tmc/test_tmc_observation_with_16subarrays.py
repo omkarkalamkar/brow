@@ -1,0 +1,976 @@
+"""
+This module defines a Pytest BDD test scenario for the successful execution of
+Scan Command of a Low Telescope Subarray in the Telescope Monitoring and
+Control (TMC) system.
+"""
+import json
+import logging
+import re
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from pathlib import Path
+
+import pytest
+from assertpy import assert_that
+from pytest_bdd import given, parsers, scenario, then, when
+from ska_control_model import ObsState
+from ska_ser_logging import configure_logging
+from ska_tango_testing.integration import TangoEventTracer, log_events
+from tango import DevState
+
+from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
+from tests.resources.test_harness.constant import TIMEOUT
+from tests.resources.test_harness.subarray_node_low import (
+    SubarrayNodeWrapperLow,
+)
+from tests.resources.test_harness.utils.common_utils import JsonFactory
+from tests.resources.test_support.common_utils.result_code import ResultCode
+from tests.resources.test_support.common_utils.tmc_helpers import (
+    prepare_json_args_for_centralnode_commands,
+    prepare_json_args_for_commands,
+)
+from tests.tmc.tmc_new_iTH.utils import _build_assign_json
+
+configure_logging(logging.DEBUG)
+LOGGER = logging.getLogger(__name__)
+
+
+_PLANS_FEATURE_PATH = (
+    Path(__file__).resolve().parent
+    / "../features/tmc/tmc_observation_plans.feature"
+)
+
+
+def _load_plan_json(plan_name: str) -> dict:
+    """Load a named plan from `tmc_observation_plans.feature` docstring."""
+    text = _PLANS_FEATURE_PATH.resolve().read_text(encoding="utf-8")
+    # Find:  Scenario: PlanX  then a triple-quoted JSON block.
+    pattern = (
+        rf"^\s*Scenario:\s*{re.escape(plan_name)}\s*$\s*"
+        r'^\s*"""\s*$\s*(.*?)\s*^\s*"""\s*$'
+    )
+    m = re.search(pattern, text, flags=re.MULTILINE | re.DOTALL)
+    if not m:
+        raise ValueError(
+            f"Plan '{plan_name}' not found in {_PLANS_FEATURE_PATH}"
+        )
+    return json.loads(m.group(1))
+
+
+def _parse_plan_map(plan_map_str: str) -> dict[int, str]:
+    plan_map = json.loads(plan_map_str)
+    return {int(k): v for k, v in plan_map.items()}
+
+
+def _list_subarray_ids(sn_count_str: str) -> list[int]:
+    sn_count = int(sn_count_str)
+    return list(range(1, sn_count + 1))
+
+
+def _reset_configure_payload(cfg: dict) -> None:
+    """Remove from configure before applying a plan."""
+    if "mccs" in cfg:
+        cfg["mccs"].pop("subarray_beams", None)
+
+    if "pss" in cfg.get("csp", {}):
+        cfg["csp"].pop("pss", None)
+        cfg["csp"]["lowcbf"].pop("search_beams", None)
+    if "pst" in cfg.get("csp", {}):
+        cfg["csp"].pop("pst", None)
+        cfg["csp"]["lowcbf"].pop("timing_beams", None)
+
+
+def _apply_lowcbf_stations(cfg: dict, station_beams: list[dict]) -> None:
+    unique_stations: set[int] = {
+        int(st) for sb in station_beams for st in sb.get("stations", [])
+    }
+    if unique_stations:
+        cfg["csp"]["lowcbf"]["stations"]["stns"] = [
+            [st_id, 1] for st_id in sorted(unique_stations)
+        ]
+
+
+def _build_mccs_subarray_beams(
+    per_sn: dict, subarray_id: int, station_beams: list[dict]
+) -> list[dict]:
+    mccs_beams: list[dict] = []
+    for sb in station_beams:
+        sb_id = int(sb.get("id", subarray_id))
+
+        stations_from_pss = [
+            st
+            for b in per_sn.get("pss_beams", [])
+            if int(b.get("id")) == sb_id
+            for st in b.get("stations", [])
+        ]
+        stations_from_pst = [
+            st
+            for b in per_sn.get("pst_beams", [])
+            if int(b.get("id")) == sb_id
+            for st in b.get("stations", [])
+        ]
+
+        station_ids = stations_from_pss or stations_from_pst
+        apertures = [
+            {
+                "aperture_id": f"AP{int(st):03}.01",
+                "weighting_key_ref": "aperture2",
+            }
+            for st in sorted({int(s) for s in station_ids})
+        ]
+
+        mccs_beams.append(
+            {
+                "subarray_beam_id": sb_id,
+                "update_rate": 0.0,
+                "logical_bands": [
+                    {"start_channel": 80, "number_of_channels": 16},
+                    {"start_channel": 384, "number_of_channels": 16},
+                ],
+                "apertures": apertures,
+                "field": {
+                    "target_name": "Polaris Australis",
+                    "reference_frame": "icrs",
+                    "attrs": {"c1": 180.0, "c2": 45.0},
+                },
+            }
+        )
+    return mccs_beams
+
+
+def _apply_lowcbf_timing_beams(cfg: dict, pst_beams: list[dict]) -> None:
+    if not pst_beams:
+        return
+    timing_beams = cfg["csp"]["lowcbf"].setdefault("timing_beams", {})
+    timing_beams["firmware"] = "pst"
+    timing_beams["beams"] = [
+        {
+            "pst_beam_id": int(pst_beam["id"]),
+            "field": {
+                "target_name": "PSR J0024-7204R",
+                "reference_frame": "icrs",
+                "attrs": {
+                    "c1": 6.023625,
+                    "c2": -72.08128333,
+                    "pm_c1": 4.8,
+                    "pm_c2": -3.3,
+                },
+            },
+            "stn_beam_id": int(pst_beam.get("stn_beam_id", pst_beam["id"])),
+            "stn_weights": pst_beam.get(
+                "stn_weights", [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
+            ),
+        }
+        for pst_beam in pst_beams
+    ]
+
+
+def _apply_lowcbf_search_beams(cfg: dict, pss_beams: list[dict]) -> None:
+    if not pss_beams:
+        return
+    search_beams = cfg["csp"]["lowcbf"].setdefault("search_beams", {})
+    search_beams["firmware"] = "pss"
+    search_beams["beams"] = [
+        {
+            "pss_beam_id": int(pss_beam["id"]),
+            "stn_beam_id": int(pss_beam.get("stn_beam_id", pss_beam["id"])),
+            "stn_weights": pss_beam.get(
+                "stn_weights", [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
+            ),
+        }
+        for pss_beam in pss_beams
+    ]
+
+
+def _apply_csp_pst(cfg: dict, pst_beams: list[dict]) -> None:
+    if not pst_beams:
+        return
+    pst_section = cfg.setdefault("csp", {}).setdefault("pst", {})
+    pst_section["beams"] = [
+        {
+            "beam_id": int(pst_beam["id"]),
+            "scan": {
+                "centre_frequency": 200000000.0,
+                "total_bandwidth": 1562500.0,
+                "pst_processing_mode": "VOLTAGE_RECORDER",
+                "observer_id": "jdoe",
+                "project_id": "project1",
+                "target": {
+                    "target_name": "J1921+2153",
+                    "reference_frame": "icrs",
+                    "attrs": {
+                        "c1": 6.023625,
+                        "c2": -72.08128333,
+                        "epoch": 2000.0,
+                    },
+                },
+                "receiver_id": "receiver3",
+                "max_scan_length": 20000.0,
+                "subint_duration": 30.0,
+                "receptors": ["receptor1", "receptor2"],
+                "receptor_weights": [0.4, 0.6],
+                "rfi_frequency_masks": [],
+            },
+        }
+        for pst_beam in pst_beams
+    ]
+
+
+def _apply_csp_pss(cfg: dict, pss_beams: list[dict]) -> None:
+    """Populate the CSP PSS section (csp.pss) per pss_beam id."""
+    if not pss_beams:
+        return
+
+    pss = cfg.setdefault("csp", {}).setdefault("pss", {})
+    pss["beam"] = [
+        {
+            "beam_id": int(pss_beam["id"]),
+            "reference_frame": "ICRS",
+            "ra": 82.75,
+            "dec": 21.0,
+            "centre_frequency": 1400.0,
+        }
+        for pss_beam in pss_beams
+    ]
+    pss["config_id"] = 1
+    pss["cheetah"] = [
+        {
+            "cheetah_id": 1,
+            "beams": [
+                {
+                    "beam": {
+                        "active": True,
+                        "sinks": {
+                            "channels": {
+                                "sps_events": {
+                                    "active": True,
+                                    "sink": [
+                                        {"sink_id": "spccl_files"},
+                                        {"sink_id": "candidate_files"},
+                                    ],
+                                }
+                            },
+                            "sink_configs": {
+                                "spccl_files": {
+                                    "extension": ".spccl",
+                                    "dir": "/tmp/beam1",
+                                    "sink_id": "spccl_files",
+                                },
+                                "spccl_sigproc_files": {
+                                    "spectra_per_file": 0,
+                                    "dir": "/tmp/beam1",
+                                    "extension": ".fil",
+                                    "candidate_window": {
+                                        "ms_before": 500.0,
+                                        "ms_after": 1000.0,
+                                    },
+                                    "sink_id": "candidate_files",
+                                },
+                            },
+                        },
+                        "source": {
+                            "sigproc": {
+                                "file": "filterbank1.fil",
+                                "chunk_samples": 1024,
+                                "default-nbits": 8,
+                                "active": True,
+                            },
+                            "udp_low": {
+                                "number_of_threads": 2,
+                                "spectra_per_chunk": 2048,
+                                "number_of_channels": 7776,
+                                "max_buffers": 1,
+                                "active": False,
+                            },
+                            "udp_low_lite": {
+                                "number_of_threads": 10,
+                                "spectra_per_chunk": 32768,
+                                "number_of_channels": 432,
+                                "max_buffers": 3,
+                                "active": False,
+                            },
+                        },
+                        "beam_id": int(pss_beams[0]["id"]),
+                    }
+                }
+            ],
+            "psbc": {"dump_time": 540},
+            "acceleration": {
+                "fdas": {
+                    "pool_id": "default",
+                    "priority": 0,
+                    "active": False,
+                    "labyrinth": {"active": True, "threshold": 10.0},
+                }
+            },
+            "sift": {
+                "pool_id": "default",
+                "priority": 2,
+                "strong_sift": {
+                    "active": True,
+                    "num_candidate_harmonics": 8,
+                    "match_factor": 0.001,
+                    "dm_match_range": 2,
+                },
+            },
+        }
+    ]
+    pss["ddtr"] = {
+        "cpu": {"active": False},
+        "fpga": {"active": False},
+        "gpu_bruteforce": {"active": False, "copy_dmtrials_to_host": True},
+        "klotski": {"active": True},
+        "klotski_bruteforce": {"active": False},
+        "dedispersion": [
+            {"start": 0.0, "end": 100.0, "step": 0.1},
+            {"start": 100.0, "end": 300.0, "step": 0.2},
+            {"start": 300.0, "end": 700.0, "step": 0.4},
+            {"start": 700.0, "end": 1500.0, "step": 0.8},
+            {"start": 1500.0, "end": 3100.0, "step": 1.6},
+        ],
+        "dedispersion_samples": 131072,
+    }
+    pss["sps"] = {
+        "cpu": {
+            "active": False,
+            "samples_per_iteration": 1,
+            "number_of_widths": 1,
+        },
+        "threshold": 8.0,
+        "klotski": {
+            "active": False,
+            "pulse_widths": "1,2,4,8,16,32,64,128",
+        },
+        "klotski_bruteforce": {
+            "active": False,
+            "pulse_widths": "1,2,4,8,16,32,64,128",
+        },
+    }
+
+
+def _ensure_logs_dir() -> Path:
+    logs_dir = Path("build") / "logs"
+    logs_dir.mkdir(parents=True, exist_ok=True)
+    return logs_dir
+
+
+def _write_json(path: Path, payload: dict) -> None:
+    path.write_text(
+        json.dumps(payload, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+
+
+def _build_assign_json_files(
+    plan_map: dict[int, str],
+    base_assign: dict,
+    logs_dir: Path,
+) -> None:
+    for subarray_id, plan_name in plan_map.items():
+        plan = _load_plan_json(plan_name)
+        per_sn = plan.get(str(subarray_id), plan)
+        LOGGER.info("per_sn %s", per_sn)
+
+        assign_json = _build_assign_json(
+            base_assign, subarray_id, per_sn, plan_name
+        )
+
+        out_path = logs_dir / f"assign_subarray{subarray_id}.json"
+        _write_json(out_path, assign_json)
+        LOGGER.info("Saved Assign JSON to %s", out_path.resolve())
+
+
+def _assign_resources_for_subarrays(
+    central_node_low: CentralNodeWrapperLow,
+    subarray_ids: list[int],
+    logs_dir: Path,
+) -> list:
+    def _assign_resources(sa_id: int):
+        central_node_low.set_subarray_id(sa_id)
+        assign_path = logs_dir / f"assign_subarray{sa_id}.json"
+        return central_node_low.perform_action("AssignResources", assign_path)
+
+    unique_ids = []
+    with ThreadPoolExecutor(max_workers=len(subarray_ids)) as pool:
+        futures = {
+            pool.submit(_assign_resources, sa_id): sa_id
+            for sa_id in subarray_ids
+        }
+        for fut in as_completed(futures):
+            _, unique_id = fut.result()
+            unique_ids.append(unique_id)
+    return unique_ids
+
+
+def _wait_for_subarrays_obsstate(
+    central_node_low: CentralNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    subarray_ids: list[int],
+    expected_state: ObsState,
+) -> None:
+    def _wait(sa_id: int) -> None:
+        central_node_low.set_subarray_id(sa_id)
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            central_node_low.subarray_node,
+            "obsState",
+            expected_state,
+        )
+
+    with ThreadPoolExecutor(max_workers=len(subarray_ids)) as pool:
+        futures = [pool.submit(_wait, sa_id) for sa_id in subarray_ids]
+        for fut in as_completed(futures):
+            fut.result()
+
+
+@pytest.mark.SKA_tmc_low_four_subarrays
+@scenario(
+    "../features/tmc/tmc_observation.feature",
+    "Execute observation using <SNCount> subarrays with plan map <PlanMap>",
+)
+def test_tmc_observation_with_four_subarrays():
+    """BDD test scenario for verifying successful observation on
+    four subarrays consecutively."""
+
+
+@given("the telescope is in the ON state")
+def given_a_telescope_is_in_on(
+    central_node_low: CentralNodeWrapperLow, event_tracer: TangoEventTracer
+):
+    """
+    This method invokes On command from central node and verifies
+    the state of telescope after the invocation.
+    Args:
+        central_node (CentralNodeWrapperLow): Object of Central node wrapper
+        event_tracer(TangoEventTracer): object of TangoEventTracer used for
+        managing the device events
+    """
+
+    LOGGER.info("Starting with test")
+
+    # Subcribe to CentralNode telescopeState and LRCR attributes
+    event_tracer.subscribe_event(
+        central_node_low.central_node, "telescopeState"
+    )
+    event_tracer.subscribe_event(
+        central_node_low.central_node, "longRunningCommandResult"
+    )
+    log_events(
+        {
+            central_node_low.central_node: [
+                "telescopeState",
+                "longRunningCommandResult",
+            ],
+        }
+    )
+    event_tracer.clear_events()
+
+    # Subscribe to obsState of all the four subarrays
+    for subarray_id in [1, 2, 3, 4]:
+
+        central_node_low.set_subarray_id(subarray_id)
+        event_tracer.subscribe_event(
+            central_node_low.subarray_node, "obsState"
+        )
+        log_events(
+            {
+                central_node_low.subarray_node: ["obsState"],
+            }
+        )
+        # Set all the mock subsystem subarrays in State ON
+        central_node_low.set_values_with_all_mocks(DevState.ON)
+
+    # Execute TelescopeOn command
+    central_node_low.move_to_on()
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN" STEP: '
+        "'the telescope is ON state'"
+        "Central Node device"
+        f"({central_node_low.central_node.dev_name()}) "
+        "is expected to be in TelescopeState ON",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.central_node,
+        "telescopeState",
+        DevState.ON,
+    )
+
+
+@given(parsers.parse("I assign resources using plan map {PlanMap}"))
+def assign_using_plan_map(
+    central_node_low: CentralNodeWrapperLow,
+    command_input_factory: JsonFactory,
+    event_tracer: TangoEventTracer,
+    PlanMap: str,
+):
+    """Assign resources per subarray using plan names from PlanMap."""
+    plan_map = _parse_plan_map(PlanMap)
+    base_assign = json.loads(
+        prepare_json_args_for_centralnode_commands(
+            "assign_resources_low", command_input_factory
+        )
+    )
+    LOGGER.info("base_assign- %s", base_assign)
+
+    logs_dir = _ensure_logs_dir()
+    _build_assign_json_files(plan_map, base_assign, logs_dir)
+
+    assign_unique_ids = _assign_resources_for_subarrays(
+        central_node_low, pytest.subarray_ids, logs_dir
+    )
+
+    for unique_id in assign_unique_ids:
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            central_node_low.central_node,
+            "longRunningCommandResult",
+            (
+                unique_id[0],
+                json.dumps((int(ResultCode.OK), "Command Completed")),
+            ),
+        )
+
+    _wait_for_subarrays_obsstate(
+        central_node_low, event_tracer, pytest.subarray_ids, ObsState.IDLE
+    )
+
+    # plan_map = _parse_plan_map(PlanMap)
+    # base_assign = json.loads(
+    #     prepare_json_args_for_centralnode_commands(
+    #         "assign_resources_low", command_input_factory
+    #     )
+    # )
+    # LOGGER.info("base_assign- %s", base_assign)
+    # assign_unique_ids = []
+
+    # logs_dir = Path("build") / "logs"
+    # logs_dir.mkdir(parents=True, exist_ok=True)
+
+    # for subarray_id, plan_name in plan_map.items():
+    #     plan = _load_plan_json(plan_name)
+    #     per_sn = plan.get(str(subarray_id), plan)
+    #     LOGGER.info("per_sn %s", per_sn)
+
+    #     assign_json = _build_assign_json(
+    #         base_assign, subarray_id, per_sn, plan_name
+    #     )
+
+    #     out_path = logs_dir / f"assign_subarray{subarray_id}.json"
+    #     out_path.write_text(
+    #         json.dumps(assign_json, indent=2, sort_keys=True) + "\n",
+    #         encoding="utf-8",
+    #     )
+    #     LOGGER.info("Saved Assign JSON to %s", out_path.resolve())
+
+    # # Invoke AssignResources for all subarrays in parallel
+
+    # def _assign_resources(sa_id: int):
+    #     central_node_low.set_subarray_id(sa_id)
+    #     assign_path = Path("build") / "logs" / f"assign_subarray{sa_id}.json"
+    # return central_node_low.perform_action("AssignResources", assign_path)
+
+    # with ThreadPoolExecutor(max_workers=len(pytest.subarray_ids)) as pool:
+    #     futures = {
+    #         pool.submit(_assign_resources, sa_id): sa_id
+    #         for sa_id in pytest.subarray_ids
+    #     }
+    #     for fut in as_completed(futures):
+    #         _, unique_id = fut.result()
+    #         assign_unique_ids.append(unique_id)
+
+    # for unique_id in assign_unique_ids:
+    #     assert_that(event_tracer).within_timeout(
+    #         TIMEOUT
+    #     ).has_change_event_occurred(
+    #         central_node_low.central_node,
+    #         "longRunningCommandResult",
+    #         (
+    #             unique_id[0],
+    #             json.dumps((int(ResultCode.OK), "Command Completed")),
+    #         ),
+    #     )
+
+    # def _wait_for_idle(sa_id: int) -> None:
+    #     central_node_low.set_subarray_id(sa_id)
+    #     assert_that(event_tracer).within_timeout(
+    #         TIMEOUT
+    #     ).has_change_event_occurred(
+    #         central_node_low.subarray_node,
+    #         "obsState",
+    #         ObsState.IDLE,
+    #     )
+
+    # with ThreadPoolExecutor(max_workers=len(pytest.subarray_ids)) as pool:
+    #     futures = [
+    #   pool.submit(_wait_for_idle, sa_id) for sa_id in pytest.subarray_ids
+    #     ]
+    #     for fut in as_completed(futures):
+    #         fut.result()
+
+
+@given(parsers.parse("I configure subarrays using plan map {PlanMap}"))
+def configure_using_plan_map(
+    # subarray_node_low: SubarrayNodeWrapperLow,
+    command_input_factory: JsonFactory,
+    # event_tracer: TangoEventTracer,
+    PlanMap: str,
+):
+
+    """
+    Sends configure
+    """
+    plan_map = _parse_plan_map(PlanMap)
+    base_configure = json.loads(
+        prepare_json_args_for_commands("configure_low", command_input_factory)
+    )
+    pytest.configure_unique_ids = {}
+
+    for subarray_id, plan_name in plan_map.items():
+        plan = _load_plan_json(plan_name)
+        per_sn = plan.get(str(subarray_id), plan)
+
+        cfg = json.loads(json.dumps(base_configure))
+        _reset_configure_payload(cfg)
+
+        station_beams = per_sn.get("station_beams", [])
+        _apply_lowcbf_stations(cfg, station_beams)
+
+        if station_beams:
+            cfg.setdefault("mccs", {})[
+                "subarray_beams"
+            ] = _build_mccs_subarray_beams(per_sn, subarray_id, station_beams)
+
+        pst_beams = per_sn.get("pst_beams", [])
+        pss_beams = per_sn.get("pss_beams", [])
+        _apply_lowcbf_timing_beams(cfg, pst_beams)
+        _apply_lowcbf_search_beams(cfg, pss_beams)
+        _apply_csp_pst(cfg, pst_beams)
+        _apply_csp_pss(cfg, pss_beams)
+
+        LOGGER.info("Final Configure Json %s", json.dumps(cfg))
+
+        # Save Configure JSON for this plan to a file in the CWD
+        # out_path = Path(f"{plan_name}_configure.json")
+        # out_path.write_text(
+        #     json.dumps(cfg, indent=2, sort_keys=True) + "\n",
+        #     encoding="utf-8",
+        # )
+
+        logs_dir = Path("build") / "logs"
+        logs_dir.mkdir(parents=True, exist_ok=True)
+
+        out_path = logs_dir / f"configure_subarray{subarray_id}.json"
+        out_path.write_text(
+            json.dumps(cfg, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+
+        LOGGER.info("Saved Configure JSON to %s", out_path.resolve())
+
+    assert False
+    # subarray_node_low.set_subarray_id(subarray_id)
+    # _, uid = subarray_node_low.store_configuration_data(json.dumps(cfg))
+    # pytest.configure_unique_ids[subarray_id] = uid
+
+    # assert_that(event_tracer).within_timeout(TIMEOUT).
+    # has_change_event_occurred(
+    #     subarray_node_low.subarray_node,
+    #     "obsState",
+    #     ObsState.CONFIGURING,
+    # )
+    # assert_that(event_tracer).described_as(
+    #     "TMC Subarray Node ObsState should move to CONFIGURING"
+    # ).within_timeout(TIMEOUT).has_change_event_occurred(
+    #     subarray_node_low.subarray_node,
+    #     "obsState",
+    #     ObsState.CONFIGURING,
+    # )
+
+
+@given("the Subarrays are configured successfully")
+def verify_subarray_in_ready_observation_state(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Verifies the observation states of SDP,CSP and MCCS
+    after command Configure.
+    """
+    # Check if all the Subarrays are in obsState READY and LRCR OK
+    for subarray_id, unique_id in pytest.configure_unique_ids.items():
+        subarray_node_low.set_subarray_id(subarray_id)
+        expected_lrcr = (
+            unique_id[0],
+            json.dumps((int(ResultCode.OK), "Command Completed")),
+        )
+        assert_that(event_tracer).described_as(
+            "TMC Subarray Node ObsState should move to READY"
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            subarray_node_low.subarray_node,
+            "obsState",
+            ObsState.READY,
+        )
+        assert_that(event_tracer).described_as(
+            "TMC Subarray Node longRunningCommandResult should indicate "
+            "successful completion of Configure command"
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            subarray_node_low.subarray_node,
+            "longRunningCommandResult",
+            expected_lrcr,
+        )
+    event_tracer.clear_events()
+
+
+@when("I start scan on all the subarrays")
+def send_scan(
+    command_input_factory: JsonFactory,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Send a Scan command to the subarray."""
+    scan_input_json = prepare_json_args_for_commands(
+        "scan_low", command_input_factory
+    )
+    # Execute Scan command on all the Subarrays
+    for subarray_id in [1, 2, 3, 4]:
+        subarray_node_low.set_subarray_id(subarray_id)
+        subarray_node_low.execute_transition("Scan", scan_input_json)
+
+        assert_that(event_tracer).described_as(
+            "TMC Subarray Node ObsState should move to SCANNING"
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            subarray_node_low.subarray_node,
+            "obsState",
+            ObsState.SCANNING,
+        )
+
+
+@when("I scan on all configured subarrays")
+def scan_on_configured_subarrays(
+    command_input_factory: JsonFactory,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """
+    Send Scan command
+    """
+    scan_input_json = prepare_json_args_for_commands(
+        "scan_low", command_input_factory
+    )
+    for subarray_id in sorted(pytest.configure_unique_ids.keys()):
+        subarray_node_low.set_subarray_id(subarray_id)
+        subarray_node_low.execute_transition("Scan", scan_input_json)
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            subarray_node_low.subarray_node,
+            "obsState",
+            ObsState.SCANNING,
+        )
+
+
+@then("the subarrays transition to READY on scan completion")
+def check_scan_completion(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Verify that the subarray is in the READY obsState."""
+
+    # Check if Scan is completed on all the subarrays
+    for subarray_id in [1, 2, 3, 4]:
+        subarray_node_low.set_subarray_id(subarray_id)
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "THEN" STEP: '
+            "'the subarray must be in the SCANNING obsState until finished'"
+            "Subarray Node device"
+            f"({subarray_node_low.subarray_node.dev_name()}) "
+            "is expected to be in READY obstate",
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            subarray_node_low.subarray_node,
+            "obsState",
+            ObsState.READY,
+        )
+
+
+@then("the involved subarrays transition to SCANNING and back to READY")
+def check_scanning_and_ready(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+
+    """
+    scan nd ready
+    """
+    for subarray_id in sorted(pytest.configure_unique_ids.keys()):
+        subarray_node_low.set_subarray_id(subarray_id)
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            subarray_node_low.subarray_node, "obsState", ObsState.SCANNING
+        )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            subarray_node_low.subarray_node, "obsState", ObsState.READY
+        )
+
+
+@then("I end the observations on all involved subarrays")
+def end_all_involved(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """
+    end all involved
+    """
+    for subarray_id in sorted(pytest.configure_unique_ids.keys()):
+        subarray_node_low.set_subarray_id(subarray_id)
+        subarray_node_low.end_observation()
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            subarray_node_low.subarray_node, "obsState", ObsState.IDLE
+        )
+
+
+@then("I release resources from all involved subarrays")
+def release_all_involved(
+    central_node_low: CentralNodeWrapperLow,
+    command_input_factory: JsonFactory,
+    event_tracer: TangoEventTracer,
+):
+
+    """
+    Release all
+    """
+    release_input = json.loads(
+        prepare_json_args_for_centralnode_commands(
+            "release_resources_low", command_input_factory
+        )
+    )
+    for subarray_id in sorted(pytest.configure_unique_ids.keys()):
+        central_node_low.set_subarray_id(subarray_id)
+        rel = json.loads(json.dumps(release_input))
+        rel["subarray_id"] = subarray_id
+        _, uid = central_node_low.perform_action(
+            "ReleaseResources", json.dumps(rel)
+        )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            central_node_low.central_node,
+            "longRunningCommandResult",
+            (uid[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
+        )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            central_node_low.subarray_node,
+            "obsState",
+            ObsState.EMPTY,
+        )
+
+
+@then("I end the observations on all the Subarrays")
+def send_end_command(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Send a End command to the subarrays."""
+
+    # Execute End command on all the Subarrays
+    for subarray_id in [1, 2, 3, 4]:
+        subarray_node_low.set_subarray_id(subarray_id)
+        _, unique_id = subarray_node_low.end_observation()
+
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "WHEN" STEP: '
+            '"I end the observation"'
+            "Subarray Node device"
+            f"({subarray_node_low.subarray_node.dev_name()}) "
+            "is expected to be in IDLE obstate",
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            subarray_node_low.subarray_node,
+            "obsState",
+            ObsState.IDLE,
+        )
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "WHEN" STEP: '
+            '"I end the observation"'
+            "Subarray Node device"
+            f"({subarray_node_low.subarray_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            subarray_node_low.subarray_node,
+            "longRunningCommandResult",
+            (
+                unique_id[0],
+                json.dumps((int(ResultCode.OK), "Command Completed")),
+            ),
+        )
+
+
+@then("I release resources from all the subarrays")
+def send_release_resources_command(
+    command_input_factory: JsonFactory,
+    event_tracer: TangoEventTracer,
+    central_node_low: CentralNodeWrapperLow,
+):
+    """Send a ReleaseResources command to the subarrays."""
+
+    release_resource_json = prepare_json_args_for_centralnode_commands(
+        "release_resources_low", command_input_factory
+    )
+    release_unique_ids = []
+
+    for subarray_id in [1, 2, 3, 4]:
+        central_node_low.set_subarray_id(subarray_id)
+        release_input_json_subarray = json.loads(release_resource_json)
+        release_input_json_subarray["subarray_id"] = subarray_id
+        _, unique_id = central_node_low.perform_action(
+            "ReleaseResources", json.dumps(release_input_json_subarray)
+        )
+        release_unique_ids.append(unique_id)
+
+    # Check if all the ReleaseResources commands on CentralNode are completed
+    for unique_id in release_unique_ids:
+        assert_that(event_tracer).described_as(
+            "Central Node device"
+            f"({central_node_low.central_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            central_node_low.central_node,
+            "longRunningCommandResult",
+            (
+                unique_id[0],
+                json.dumps((int(ResultCode.OK), "Command Completed")),
+            ),
+        )
+
+    # Check if all the subarrays are in EMPTY ObsState
+    for subarray_id in [1, 2, 3, 4]:
+        central_node_low.set_subarray_id(subarray_id)
+        assert_that(event_tracer).described_as(
+            "Subarray Node device"
+            f"({central_node_low.subarray_node.dev_name()}) "
+            "is expected to be in EMPTY obstate",
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            central_node_low.subarray_node,
+            "obsState",
+            ObsState.EMPTY,
+        )
+
+    # Execute TelescopeOff command
+    central_node_low.move_to_off()
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN STEP: '
+        '"a TMC'
+        "Central Node device"
+        f"({central_node_low.central_node.dev_name()}) "
+        "is expected to be in TelescopeState ON",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.central_node,
+        "telescopeState",
+        DevState.OFF,
+    )
