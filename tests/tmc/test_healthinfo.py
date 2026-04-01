@@ -58,9 +58,7 @@ def set_mccs_health(simulator_factory, mccs_health):
 
 
 @when("health states are applied")
-def apply_subarray_health_states(
-    event_tracer, subarray_node_low: SubarrayNodeWrapperLow
-):
+def apply_subarray_health_states(event_tracer):
     """Apply the subarray healthstate"""
 
     for name in ["csp", "sdp", "mccs"]:
