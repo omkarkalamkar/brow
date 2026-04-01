@@ -170,6 +170,7 @@ def send_scan(
     mccs_scan_json[
         "interface"
     ] = "https://schema.skao.int/ska-low-mccs-scan/3.0"
+    mccs_scan_json["scan_id"] = 0
     del mccs_scan_json["transaction_id"]
 
     # Early Scan on MCCS Subarray Leaf Node
