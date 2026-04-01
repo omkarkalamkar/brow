@@ -1,6 +1,8 @@
 """Test Telescope Health State"""
 
 
+import time
+
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
@@ -159,6 +161,7 @@ def set_all_ok_health(simulator_factory, event_tracer):
     for device in [csp_m, sdp_m, mccs_m, csp_s, sdp_s, mccs_s]:
 
         device.SetDirectHealthState(HealthState.OK)
+        time.sleep(0.5)
 
         assert_that(event_tracer).described_as(
             "Expected a healthState change event"
@@ -185,6 +188,7 @@ def apply_health_states(
         device = state[name]
         raw_state = state.get(f"{name}_state", "OK")
         device.SetDirectHealthState(HealthState[raw_state])
+        time.sleep(0.5)
 
         assert_that(event_tracer).described_as(
             f"Expected a healthState change event for {name.upper()}"
