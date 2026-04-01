@@ -7,9 +7,13 @@ from pytest_bdd import given, parsers, scenario, then, when
 from ska_tango_base.control_model import HealthState
 from tango import DevState
 
+from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.helpers import (
     get_device_simulators,
     get_master_device_simulators,
+)
+from tests.resources.test_harness.subarray_node_low import (
+    SubarrayNodeWrapperLow,
 )
 
 state = {}
@@ -94,13 +98,18 @@ def set_mccs_master_health(simulator_factory, mccs_state):
 
 
 @given("all master and subarray components have OK health")
-def set_all_ok_health(simulator_factory):
+def set_all_ok_health(simulator_factory, event_tracer):
     """Set all healthstate to OK"""
     csp_m, sdp_m, mccs_m = get_master_device_simulators(simulator_factory)
     csp_s, sdp_s, mccs_s = get_device_simulators(simulator_factory)
     for device in [csp_m, sdp_m, mccs_m, csp_s, sdp_s, mccs_s]:
+        event_tracer.subscribe_event(device, "healthState")
         device.SetDirectHealthState(HealthState.OK)
-        time.sleep(0.2)
+        assert_that(event_tracer).described_as(
+            f"Expected a healthState change event for {device.get_name()}"
+        ).within_timeout(5).has_change_event_occurred(
+            device, "healthState", HealthState.OK
+        )
     state.update(
         {
             "csp": csp_m,
@@ -112,8 +121,18 @@ def set_all_ok_health(simulator_factory):
 
 
 @when("health states are applied")
-def apply_health_states():
+def apply_health_states(
+    event_tracer,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    central_node_low: CentralNodeWrapperLow,
+):
     """Apply the healthstate to devices"""
+    event_tracer.subscribe_event(
+        central_node_low.central_node, "telescopeHealthState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.subarray_node, "healthState"
+    )
     for name in ["csp", "sdp", "mccs"]:
         device = state[name]
         raw_state = state.get(f"{name}_state", "OK")
@@ -126,9 +145,7 @@ def check_telescope_health_state(
     event_tracer, central_node_low, expected_state
 ):
     """Verify the telescope healthstate"""
-    event_tracer.subscribe_event(
-        central_node_low.central_node, "telescopeHealthState"
-    )
+
     assert_that(event_tracer).has_change_event_occurred(
         central_node_low.central_node,
         "telescopeHealthState",
@@ -139,9 +156,7 @@ def check_telescope_health_state(
 @then("the subarray healthState should be OK")
 def check_subarray_health(event_tracer, subarray_node_low):
     """Verify the subarray healthstate"""
-    event_tracer.subscribe_event(
-        subarray_node_low.subarray_node, "healthState"
-    )
+
     assert_that(event_tracer).has_change_event_occurred(
         subarray_node_low.subarray_node, "healthState", HealthState.OK
     )
