@@ -164,6 +164,30 @@ def _apply_lowcbf_timing_beams(cfg: dict, pst_beams: list[dict]) -> None:
     ]
 
 
+@given(parsers.parse("{SNCount:d} subarrays are in the EMPTY ObsState"))
+def verify_n_subarrays_in_empty(
+    central_node_low: CentralNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    SNCount: int,
+):
+    """Verify that SNCount subarrays (1..SNCount) are in EMPTY ObsState.
+
+    Stores the computed subarray ids in `pytest.subarray_ids` for later steps.
+    """
+    pytest.sn_count = int(SNCount)
+    pytest.subarray_ids = _list_subarray_ids(str(pytest.sn_count))
+
+    for subarray_id in pytest.subarray_ids:
+        central_node_low.set_subarray_id(subarray_id)
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            central_node_low.subarray_node,
+            "obsState",
+            ObsState.EMPTY,
+        )
+
+
 def _apply_lowcbf_search_beams(cfg: dict, pss_beams: list[dict]) -> None:
     if not pss_beams:
         return
