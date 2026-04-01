@@ -159,10 +159,8 @@ def set_all_ok_health(simulator_factory):
     csp_m, sdp_m, mccs_m = get_master_device_simulators(simulator_factory)
     csp_s, sdp_s, mccs_s = get_device_simulators(simulator_factory)
     for device in [csp_m, sdp_m, mccs_m, csp_s, sdp_s, mccs_s]:
-
         device.SetDirectHealthState(HealthState.OK)
         time.sleep(0.2)
-
     state.update(
         {
             "csp": csp_m,
@@ -202,7 +200,6 @@ def check_telescope_health_state(
     event_tracer, central_node_low, expected_state
 ):
     """Verify the telescope healthstate"""
-
     assert_that(event_tracer).has_change_event_occurred(
         central_node_low.central_node,
         "telescopeHealthState",
