@@ -175,9 +175,16 @@ def set_all_ok_health(simulator_factory):
 
 @when("health states are applied")
 def apply_health_states(
+    central_node_low,
     event_tracer,
 ):
     """Apply the healthstate to devices"""
+    devices = {
+        "csp": central_node_low.csp_master_leaf_node,
+        "sdp": central_node_low.sdp_master_leaf_node,
+        "mccs": central_node_low.mccs_master_leaf_node,
+    }
+
     for name in ["csp", "sdp", "mccs"]:
         device = state[name]
         raw_state = state.get(f"{name}_state", "OK")
@@ -186,7 +193,7 @@ def apply_health_states(
         assert_that(event_tracer).described_as(
             f"Expected a healthState change event for {name.upper()}"
         ).within_timeout(2).has_change_event_occurred(
-            device, "healthState", HealthState[raw_state]
+            devices[name], "healthState", HealthState[raw_state]
         )
 
 
