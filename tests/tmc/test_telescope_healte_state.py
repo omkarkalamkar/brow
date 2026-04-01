@@ -1,5 +1,6 @@
 """Test Telescope Health State"""
 
+
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
@@ -105,7 +106,7 @@ def set_all_ok_health(simulator_factory, event_tracer):
         event_tracer.subscribe_event(device, "healthState")
         device.SetDirectHealthState(HealthState.OK)
         assert_that(event_tracer).described_as(
-            f"Expected a healthState change event for {device.get_name()}"
+            "Expected a healthState change event"
         ).within_timeout(5).has_change_event_occurred(
             device, "healthState", HealthState.OK
         )
