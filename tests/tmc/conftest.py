@@ -739,3 +739,47 @@ def invoke_endscan(tmc: TMCFacade, event_tracer: TangoEventTracer):
         "obsState",
         ObsState.READY,
     )
+
+
+def _setup_event_subscriptions_for_healthstate(
+    event_tracer: TangoEventTracer,
+    subarray_node_low: SubarrayNodeWrapperLow,
+):
+    """Subscribe TMC, CSP and SDP devices to track and log healthstate events.
+
+    :param subarray_node_low: the subarray node wrapper.
+    :param central_node_low: the central node wrapper.
+    :param event_tracer: the event tracer.
+    """
+    event_tracer.subscribe_event(
+        subarray_node_low.subarray_node, "healthState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.csp_subarray1, "healthState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.sdp_subarray1, "healthState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.mccs_subarray1, "healthState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.csp_subarray_leaf_node, "healthState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.sdp_subarray_leaf_node, "healthState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.mccs_subarray_leaf_node, "healthState"
+    )
+    log_events(
+        {
+            subarray_node_low.subarray_node: ["healthState"],
+            subarray_node_low.csp_subarray1: ["healthState"],
+            subarray_node_low.sdp_subarray1: ["healthState"],
+            subarray_node_low.mccs_subarray1: ["healthState"],
+            subarray_node_low.csp_subarray_leaf_node: ["healthState"],
+            subarray_node_low.sdp_subarray_leaf_node: ["healthState"],
+            subarray_node_low.mccs_subarray_leaf_node: ["healthState"],
+        },
+    )
