@@ -29,6 +29,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 from tests.resources.test_support.constant_low import TIMEOUT
 
 
+@pytest.mark.intl
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_mccs_abort.feature",
