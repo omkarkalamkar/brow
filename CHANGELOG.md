@@ -30,7 +30,7 @@ Added
 ------
 * Created a separate job to deploy 4 Subarrays and execute an observation on 4 subarrays parallely. This job runs only in a scheduled master pipeline daily.
 * Verified that the TMC Subarry can work with 68 stations, 3 PSS beams and 2 PST beams
-and checked that the Delay Models are getting generated for all the resources .
+  and checked that the Delay Models are getting generated for all the resources .
 
 Fixed
 -----

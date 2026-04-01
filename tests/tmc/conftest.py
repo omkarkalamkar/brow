@@ -747,9 +747,8 @@ def _setup_event_subscriptions_for_healthstate(
 ):
     """Subscribe TMC, CSP and SDP devices to track and log healthstate events.
 
-    :param subarray_node_low: the subarray node wrapper.
-    :param central_node_low: the central node wrapper.
     :param event_tracer: the event tracer.
+    :param subarray_node_low: the subarray node wrapper.
     """
     event_tracer.subscribe_event(
         subarray_node_low.subarray_node, "healthState"
