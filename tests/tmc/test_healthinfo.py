@@ -9,6 +9,9 @@ from ska_control_model import HealthState
 from ska_tango_testing.mock.placeholders import Anything
 
 from tests.resources.test_harness.helpers import LOGGER, get_device_simulators
+from tests.resources.test_harness.subarray_node_low import (
+    SubarrayNodeWrapperLow,
+)
 
 state = {}
 
@@ -48,11 +51,22 @@ def set_mccs_health(simulator_factory, mccs_health):
 
 
 @when("health states are applied")
-def apply_subarray_health_states(event_tracer, subarray_node_low):
+def apply_subarray_health_states(
+    event_tracer, subarray_node_low: SubarrayNodeWrapperLow
+):
     """Apply the subarray healthstate"""
     # Subscribe before applying changes to avoid missing events.
     event_tracer.subscribe_event(
         subarray_node_low.subarray_node, "healthState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.csp_subarray1, "healthState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.sdp_subarray1, "healthState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.mccs_subarray1, "healthState"
     )
 
     for name in ["csp", "sdp", "mccs"]:
@@ -62,9 +76,11 @@ def apply_subarray_health_states(event_tracer, subarray_node_low):
 
         device.SetDirectHealthState(expected)
 
-        assert_that(lambda d=device: d.healthState).described_as(
-            f"{name.upper()} health should be set to {expected}"
-        ).within_timeout(2).is_equal_to(expected)
+        assert_that(event_tracer).described_as(
+            f"Expected a healthState change event for {name.upper()}"
+        ).within_timeout(5).has_change_event_occurred(
+            device, "healthState", expected
+        )
 
 
 @then(
