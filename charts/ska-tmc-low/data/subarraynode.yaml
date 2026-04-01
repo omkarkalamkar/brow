@@ -19,6 +19,7 @@ entrypoints:
 {{- $AutoRecoveryEnabled := .Values.deviceServers.subarraynode.IsAutoRecoveryEnabled }}
 {{- $ScanStartTimeOffset := .Values.deviceServers.subarraynode.ScanStartTimeOffset }}
 {{- $StartTimeEnabled := .Values.deviceServers.subarraynode.StartTimeEnabled }}
+{{- $PreRecoveryCheckTimeDuration := .Values.deviceServers.subarraynode.PreRecoveryCheckTimeDuration }}
 
 server:
   name: "subarray_node_low"
@@ -125,6 +126,9 @@ server:
           - name: "StartTimeEnabled"
             values:
               - "{{ $StartTimeEnabled }}"
+          - name: "PreRecoveryCheckTimeDuration"
+            values:
+              - "{{ $PreRecoveryCheckTimeDuration }}"
 
 {{- end}}
 depends_on:
