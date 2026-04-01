@@ -11,6 +11,10 @@ Updated
 ------
 * Subarray node v1.4.0: Introduced new property `PreRecoveryCheckTimeDuration`,which ensures that the devices with successful command result reach final observation state and devices with failed command result reach the previous observation state. This would help in auto recovery the subarray to appropriate observation state in case of failure. If the device is stuck in transitioning observation state till time duration the subarray node won't be recovered.
 
+[2.13.0]
+********
+* This is the full release of 2.13.0-rc.1.This release introduces improvements in logging configuration, enhanced multi-subarray execution capabilities, updated component versions, and fixes to Subarray state handling and ObsState aggregation.
+
 [2.13.0-rc.1]
 **************
 Added
