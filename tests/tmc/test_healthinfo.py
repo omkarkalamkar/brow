@@ -80,7 +80,7 @@ def apply_subarray_health_states(event_tracer):
 )
 def check_subarray_node_health(
     event_tracer, subarray_node_low, expected_health
-):
+):w
     """Check the subarray healthstate"""
     expected = HealthState[expected_health]
 
