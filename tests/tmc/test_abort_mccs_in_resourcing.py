@@ -61,6 +61,16 @@ def given_a_tmc(
     event_tracer.subscribe_event(
         central_node_low.mccs_master_leaf_node, "longRunningCommandResult"
     )
+    event_tracer.subscribe_event(
+        central_node_low.csp_subarray_leaf_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(
+        central_node_low.sdp_subarray_leaf_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(
+        central_node_low.subarray_node, "longRunningCommandResult"
+    )
+
     event_tracer.subscribe_event(central_node_low.subarray_node, "obsState")
     event_tracer.subscribe_event(
         central_node_low.csp_subarray_leaf_node, "cspSubarrayobsState"
@@ -75,9 +85,18 @@ def given_a_tmc(
                 "telescopeState",
                 "longRunningCommandResult",
             ],
-            central_node_low.subarray_node: ["obsState"],
-            central_node_low.csp_subarray_leaf_node: ["cspSubarrayObsState"],
-            central_node_low.sdp_subarray_leaf_node: ["sdpSubarrayObsState"],
+            central_node_low.subarray_node: [
+                "obsState",
+                "longRunningCommandResult",
+            ],
+            central_node_low.csp_subarray_leaf_node: [
+                "cspSubarrayObsState",
+                "longRunningCommandResult",
+            ],
+            central_node_low.sdp_subarray_leaf_node: [
+                "sdpSubarrayObsState",
+                "longRunningCommandResult",
+            ],
         }
     )
     central_node_low.move_to_on()
@@ -221,6 +240,29 @@ def check_central_node_lrcr(
         event_tracer(TangoEventTracer): Object of TangoEventTracer used for
         managing the device events
     """
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
+        "CSP LN device"
+        f"({central_node_low.central_node.dev_name()}) "
+        "is expected have longRunningCommandResult"
+        "(ResultCode.ABORTED, command is aborted)",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.csp_subarray_leaf_node,
+        attribute_name="longRunningCommandResult",
+        attribute_value=(pytest.unique_id[0], "[0, 'Command Completed']"),
+    )
+
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
+        "SDP LN device"
+        f"({central_node_low.central_node.dev_name()}) "
+        "is expected have longRunningCommandResult"
+        "(ResultCode.ABORTED, command is aborted)",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.sdp_subarray_leaf_node,
+        attribute_name="longRunningCommandResult",
+        attribute_value=(pytest.unique_id[0], "[0, 'Command Completed']"),
+    )
 
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
@@ -269,4 +311,14 @@ def tmc_status(
         "obsState",
         ObsState.ABORTED,
     )
-    assert False
+
+    assert_that(event_tracer).described_as(
+        '"the Subarray transitions to ABORTED"'
+        "Subarray Node device"
+        f"({subarray_node_low.subarray_node.dev_name()}) "
+        "is expected to be in EMPTY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.subarray_node,
+        "obsState",
+        ObsState.IDLE,
+    )
