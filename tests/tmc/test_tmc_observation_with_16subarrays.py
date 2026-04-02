@@ -438,13 +438,20 @@ def _wait_for_subarrays_obsstate(
 ) -> None:
     def _wait(sa_id: int) -> None:
         central_node_low.set_subarray_id(sa_id)
-        assert_that(event_tracer).within_timeout(
-            TIMEOUT
-        ).has_change_event_occurred(
-            central_node_low.subarray_node,
-            "obsState",
-            expected_state,
-        )
+        try:
+            assert_that(event_tracer).within_timeout(
+                TIMEOUT
+            ).has_change_event_occurred(
+                central_node_low.subarray_node,
+                "obsState",
+                expected_state,
+            )
+        except AssertionError:
+            LOGGER.exception(
+                "ObsState=%s not observed within timeout  %s; ",
+                expected_state,
+                sa_id,
+            )
 
     with ThreadPoolExecutor(max_workers=len(subarray_ids)) as pool:
         futures = [pool.submit(_wait, sa_id) for sa_id in subarray_ids]
@@ -557,16 +564,22 @@ def assign_using_plan_map(
 
     for unique_id in assign_unique_ids:
         LOGGER.info("Checking for %s", unique_id)
-        assert_that(event_tracer).within_timeout(
-            TIMEOUT
-        ).has_change_event_occurred(
-            central_node_low.central_node,
-            "longRunningCommandResult",
-            (
-                unique_id[0],
-                json.dumps((int(ResultCode.OK), "Command Completed")),
-            ),
-        )
+        try:
+            assert_that(event_tracer).within_timeout(
+                TIMEOUT
+            ).has_change_event_occurred(
+                central_node_low.central_node,
+                "longRunningCommandResult",
+                (
+                    unique_id[0],
+                    json.dumps((int(ResultCode.OK), "Command Completed")),
+                ),
+            )
+        except AssertionError:
+            LOGGER.exception(
+                "LRCR OK not observed timeout for unique_id=%s; ",
+                unique_id,
+            )
 
     time.sleep(200)
     LOGGER.info("Will check for ObState now")
