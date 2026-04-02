@@ -125,12 +125,7 @@ resource_monitor:
     tag: 0.5.0
     pullPolicy: IfNotPresent
 
-skatmcsimulators:
-  image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/skatmcsimulators
-    image: ska-tmc-simulators
-    tag: 1.9.7-dev.c4ff88708
-    pullPolicy: IfNotPresent
+
 
 resources:
   limits:

@@ -490,7 +490,7 @@ def given_a_telescope_is_in_on(
     event_tracer.clear_events()
 
     # Subscribe to obsState of all the four subarrays
-    for subarray_id in [1, 2, 3, 4]:
+    for subarray_id in range(1, 17):
 
         central_node_low.set_subarray_id(subarray_id)
         event_tracer.subscribe_event(
