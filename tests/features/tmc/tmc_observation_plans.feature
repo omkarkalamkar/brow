@@ -25,8 +25,8 @@ Feature: Multi-subarray observation plans
           {"id": 8, "stations": [1, 2, 3,4,5,6]}
           
         ],
-        "pss_beams": [{"id": 1, "stations": [1, 2]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [1, 2]}
+        "pss_beams": [{"id": 1, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
         
         ]
       
