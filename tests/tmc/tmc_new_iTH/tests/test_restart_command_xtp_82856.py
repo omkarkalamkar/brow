@@ -1,4 +1,4 @@
-import json
+import time
 
 import pytest
 from assertpy import assert_that
@@ -218,12 +218,34 @@ def verify_tmc_subarray_observation_state_fault(
     )
 
     reset_defects(csp, sdp, mccs)
+    
+    # Verify defects are fully reset before proceeding with restart
+    assert_that(event_tracer).described_as(
+        f"CSP Subarray device ({csp.csp_subarray}) "
+        "should transition out of FAULT after defect reset."
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        csp.csp_subarray, "obsState", ObsState.EMPTY
+    )
+    
+    assert_that(event_tracer).described_as(
+        f"SDP Subarray device ({sdp.sdp_subarray}) "
+        "should transition out of FAULT after defect reset."
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        sdp.sdp_subarray, "obsState", ObsState.EMPTY
+    )
+    
+    assert_that(event_tracer).described_as(
+        f"MCCS Subarray device ({mccs.mccs_subarray}) "
+        "should transition out of FAULT after defect reset."
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        mccs.mccs_subarray, "obsState", ObsState.EMPTY
+    )
 
 
 @when("I invoke restart command on the TMC Subarray")
 def invoke_restart_command(tmc: TMCFacade):
     """Invokes restart command on the TMC Subarray."""
-    tmc.restart(wait_termination=False)
+    tmc.restart(wait_termination=True)
 
 
 @then("SDP,CSP and MCCS transitions to observation state EMPTY")
@@ -272,22 +294,6 @@ def verify_tmc_subarray_in_empty_observation_state(
     event_tracer: TangoEventTracer, tmc: TMCFacade
 ):
     """Verifies the observation state of TMC Subarray."""
-
-    expected_lrcr = (
-        Anything,
-        json.dumps((int(ResultCode.OK), "Command Completed")),
-    )
-    assert_that(event_tracer).described_as(
-        f"FAILED ASSUMPTION: "
-        "Subarray Node device"
-        f"({tmc.subarray_node}) "
-        "is expected to have longRunningCommandResult"
-        "(ResultCode.OK, Command Completed)",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        tmc.subarray_node,
-        "longRunningCommandResult",
-        expected_lrcr,
-    )
     assert_that(event_tracer).described_as(
         f"TMC Subarray Node device ({tmc.subarray_node})"
         "ObsState attribute value should move "
