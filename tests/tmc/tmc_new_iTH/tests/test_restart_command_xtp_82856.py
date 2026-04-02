@@ -1,3 +1,5 @@
+import json
+
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
@@ -270,6 +272,22 @@ def verify_tmc_subarray_in_empty_observation_state(
     event_tracer: TangoEventTracer, tmc: TMCFacade
 ):
     """Verifies the observation state of TMC Subarray."""
+
+    expected_lrcr = (
+        Anything,
+        json.dumps((int(ResultCode.OK), "Command Completed")),
+    )
+    assert_that(event_tracer).described_as(
+        f"FAILED ASSUMPTION: "
+        "Subarray Node device"
+        f"({tmc.subarray_node}) "
+        "is expected to have longRunningCommandResult"
+        "(ResultCode.OK, Command Completed)",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.subarray_node,
+        "longRunningCommandResult",
+        expected_lrcr,
+    )
     assert_that(event_tracer).described_as(
         f"TMC Subarray Node device ({tmc.subarray_node})"
         "ObsState attribute value should move "
