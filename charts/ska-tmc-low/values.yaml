@@ -129,7 +129,7 @@ skatmcsimulators:
   image:
     registry: registry.gitlab.com/ska-telescope/ska-tmc/skatmcsimulators
     image: ska-tmc-simulators
-    tag: 1.9.7-dev.cb2ed7031
+    tag: 1.9.7-dev.c4ff88708
     pullPolicy: IfNotPresent
 
 resources:
@@ -265,6 +265,8 @@ deviceServers:
     EventSubscriptionCheckPeriod: 0.5
     family: "resource-monitor"
     LoggingLevel: "4"
+
+
 
 nodeSelector: {}
 
