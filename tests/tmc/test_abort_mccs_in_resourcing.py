@@ -269,3 +269,4 @@ def tmc_status(
         "obsState",
         ObsState.ABORTED,
     )
+    assert False
