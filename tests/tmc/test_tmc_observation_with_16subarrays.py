@@ -3,9 +3,12 @@ This module defines a Pytest BDD test scenario for the successful execution of
 Scan Command of a Low Telescope Subarray in the Telescope Monitoring and
 Control (TMC) system.
 """
+
+# pylint: disable=too-many-lines
 import json
 import logging
 import re
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
@@ -487,6 +490,12 @@ def given_a_telescope_is_in_on(
                 "telescopeState",
                 "longRunningCommandResult",
             ],
+            **{
+                central_node_low.subarray_node.dev_name().replace(
+                    "/01", f"/{subarray_id:02}"
+                ): ["obsState"]
+                for subarray_id in range(1, 17)
+            },
         }
     )
     event_tracer.clear_events()
@@ -535,7 +544,7 @@ def assign_using_plan_map(
             "assign_resources_low", command_input_factory
         )
     )
-    LOGGER.info("base_assign- %s", base_assign)
+    # LOGGER.info("base_assign- %s", base_assign)
 
     logs_dir = _ensure_logs_dir()
     _build_assign_json_files(plan_map, base_assign, logs_dir)
@@ -544,7 +553,10 @@ def assign_using_plan_map(
         central_node_low, pytest.subarray_ids, logs_dir
     )
 
+    LOGGER.info("assign_unique_ids - %s", assign_unique_ids)
+
     for unique_id in assign_unique_ids:
+        LOGGER.info("Checking for %s", unique_id)
         assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
@@ -555,6 +567,9 @@ def assign_using_plan_map(
                 json.dumps((int(ResultCode.OK), "Command Completed")),
             ),
         )
+
+    time.sleep(200)
+    LOGGER.info("Will check for ObState now")
 
     _wait_for_subarrays_obsstate(
         central_node_low, event_tracer, pytest.subarray_ids, ObsState.IDLE

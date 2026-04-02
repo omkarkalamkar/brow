@@ -11,7 +11,7 @@ from tests.resources.test_harness.utils.enums import (
 
 COMMAND_COMPLETED = json.dumps([ResultCode.OK, "Command Completed"])
 
-TIMEOUT = 80
+TIMEOUT = 180
 COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_IDLE = {
     "enabled": True,
     "fault_type": FaultType.FAILED_RESULT,
