@@ -411,7 +411,9 @@ def _assign_resources_for_subarrays(
     def _assign_resources(sa_id: int):
         central_node_low.set_subarray_id(sa_id)
         assign_path = logs_dir / f"assign_subarray{sa_id}.json"
-        return central_node_low.perform_action("AssignResources", assign_path)
+        return central_node_low.perform_action(
+            "AssignResources", assign_path.read_text(encoding="utf-8")
+        )
 
     unique_ids = []
     with ThreadPoolExecutor(max_workers=len(subarray_ids)) as pool:
@@ -672,13 +674,6 @@ def configure_using_plan_map(
         _apply_csp_pss(cfg, pss_beams)
 
         LOGGER.info("Final Configure Json %s", json.dumps(cfg))
-
-        # Save Configure JSON for this plan to a file in the CWD
-        # out_path = Path(f"{plan_name}_configure.json")
-        # out_path.write_text(
-        #     json.dumps(cfg, indent=2, sort_keys=True) + "\n",
-        #     encoding="utf-8",
-        # )
 
         logs_dir = Path("build") / "logs"
         logs_dir.mkdir(parents=True, exist_ok=True)
