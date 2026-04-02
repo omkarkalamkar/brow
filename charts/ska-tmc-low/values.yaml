@@ -108,14 +108,14 @@ mccsmasterleafnode:
   image:
     registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
     image: ska-tmc-mccsleafnodes
-    tag: 0.15.2-dev.c085f895a
+    tag: 0.15.2-dev.c3262653d
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
     registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
     image: ska-tmc-mccsleafnodes
-    tag: 0.15.2-dev.c085f895a
+    tag: 0.15.2-dev.c3262653d
     pullPolicy: IfNotPresent
 
 resource_monitor:
