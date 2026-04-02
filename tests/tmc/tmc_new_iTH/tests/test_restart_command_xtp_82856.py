@@ -223,8 +223,7 @@ def verify_tmc_subarray_observation_state_fault(
 @when("I invoke restart command on the TMC Subarray")
 def invoke_restart_command(tmc: TMCFacade):
     """Invokes restart command on the TMC Subarray."""
-    time.sleep(0.1)
-    tmc.restart()
+    tmc.restart(wait_termination=False)
 
 
 @then("SDP,CSP and MCCS transitions to observation state EMPTY")
