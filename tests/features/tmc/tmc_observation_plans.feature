@@ -59,3 +59,385 @@ Feature: Multi-subarray observation plans
         "pst_beams": []
     }
     """
+
+
+      Scenario: PlanA1
+    """
+    {
+      
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]},
+          {"id": 5, "stations": [1, 2, 3,4,5,6]},
+          {"id": 6, "stations": [1, 2, 3,4,5,6]},
+          {"id": 7, "stations": [1, 2, 3,4,5,6]},
+          {"id": 8, "stations": [1, 2, 3,4,5,6]}
+          
+        ],
+        "pss_beams": [{"id": 2, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        
+        ]
+      
+    }
+    """
+
+
+      Scenario: PlanA2
+    """
+    {
+      
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]},
+          {"id": 5, "stations": [1, 2, 3,4,5,6]},
+          {"id": 6, "stations": [1, 2, 3,4,5,6]},
+          {"id": 7, "stations": [1, 2, 3,4,5,6]},
+          {"id": 8, "stations": [1, 2, 3,4,5,6]}
+          
+        ],
+        "pss_beams": [{"id": 3, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        
+        ]
+      
+    }
+    """
+
+
+      Scenario: PlanA3
+    """
+    {
+      
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]},
+          {"id": 5, "stations": [1, 2, 3,4,5,6]},
+          {"id": 6, "stations": [1, 2, 3,4,5,6]},
+          {"id": 7, "stations": [1, 2, 3,4,5,6]},
+          {"id": 8, "stations": [1, 2, 3,4,5,6]}
+          
+        ],
+        "pss_beams": [{"id": 4, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        
+        ]
+      
+    }
+    """
+
+      Scenario: PlanA4
+    """
+    {
+      
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]},
+          {"id": 5, "stations": [1, 2, 3,4,5,6]},
+          {"id": 6, "stations": [1, 2, 3,4,5,6]},
+          {"id": 7, "stations": [1, 2, 3,4,5,6]},
+          {"id": 8, "stations": [1, 2, 3,4,5,6]}
+          
+        ],
+        "pss_beams": [{"id": 5, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        
+        ]
+      
+    }
+    """
+
+      Scenario: PlanA5
+    """
+    {
+      
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]},
+          {"id": 5, "stations": [1, 2, 3,4,5,6]},
+          {"id": 6, "stations": [1, 2, 3,4,5,6]},
+          {"id": 7, "stations": [1, 2, 3,4,5,6]},
+          {"id": 8, "stations": [1, 2, 3,4,5,6]}
+          
+        ],
+        "pss_beams": [{"id": 6, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        
+        ]
+      
+    }
+    """
+
+
+      Scenario: PlanA6
+    """
+    {
+      
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]},
+          {"id": 5, "stations": [1, 2, 3,4,5,6]},
+          {"id": 6, "stations": [1, 2, 3,4,5,6]},
+          {"id": 7, "stations": [1, 2, 3,4,5,6]},
+          {"id": 8, "stations": [1, 2, 3,4,5,6]}
+          
+        ],
+        "pss_beams": [{"id": 7, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        
+        ]
+      
+    }
+    """
+
+
+      Scenario: PlanA7
+    """
+    {
+      
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]},
+          {"id": 5, "stations": [1, 2, 3,4,5,6]},
+          {"id": 6, "stations": [1, 2, 3,4,5,6]},
+          {"id": 7, "stations": [1, 2, 3,4,5,6]},
+          {"id": 8, "stations": [1, 2, 3,4,5,6]}
+          
+        ],
+        "pss_beams": [{"id": 8, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        
+        ]
+      
+    }
+    """
+
+
+      Scenario: PlanA8
+    """
+    {
+      
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]},
+          {"id": 5, "stations": [1, 2, 3,4,5,6]},
+          {"id": 6, "stations": [1, 2, 3,4,5,6]},
+          {"id": 7, "stations": [1, 2, 3,4,5,6]},
+          {"id": 8, "stations": [1, 2, 3,4,5,6]}
+          
+        ],
+        "pss_beams": [{"id": 9, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        
+        ]
+      
+    }
+    """
+
+
+      Scenario: PlanA9
+    """
+    {
+      
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]},
+          {"id": 5, "stations": [1, 2, 3,4,5,6]},
+          {"id": 6, "stations": [1, 2, 3,4,5,6]},
+          {"id": 7, "stations": [1, 2, 3,4,5,6]},
+          {"id": 8, "stations": [1, 2, 3,4,5,6]}
+          
+        ],
+        "pss_beams": [{"id": 10, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        
+        ]
+      
+    }
+    """
+
+
+      Scenario: PlanA10
+    """
+    {
+      
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]},
+          {"id": 5, "stations": [1, 2, 3,4,5,6]},
+          {"id": 6, "stations": [1, 2, 3,4,5,6]},
+          {"id": 7, "stations": [1, 2, 3,4,5,6]},
+          {"id": 8, "stations": [1, 2, 3,4,5,6]}
+          
+        ],
+        "pss_beams": [{"id": 11, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        
+        ]
+      
+    }
+    """
+
+
+      Scenario: PlanA11
+    """
+    {
+      
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]},
+          {"id": 5, "stations": [1, 2, 3,4,5,6]},
+          {"id": 6, "stations": [1, 2, 3,4,5,6]},
+          {"id": 7, "stations": [1, 2, 3,4,5,6]},
+          {"id": 8, "stations": [1, 2, 3,4,5,6]}
+          
+        ],
+        "pss_beams": [{"id": 12, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        
+        ]
+      
+    }
+    """
+
+
+      Scenario: PlanA12
+    """
+    {
+      
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]},
+          {"id": 5, "stations": [1, 2, 3,4,5,6]},
+          {"id": 6, "stations": [1, 2, 3,4,5,6]},
+          {"id": 7, "stations": [1, 2, 3,4,5,6]},
+          {"id": 8, "stations": [1, 2, 3,4,5,6]}
+          
+        ],
+        "pss_beams": [{"id": 13, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        
+        ]
+      
+    }
+    """
+
+
+      Scenario: PlanA13
+    """
+    {
+      
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]},
+          {"id": 5, "stations": [1, 2, 3,4,5,6]},
+          {"id": 6, "stations": [1, 2, 3,4,5,6]},
+          {"id": 7, "stations": [1, 2, 3,4,5,6]},
+          {"id": 8, "stations": [1, 2, 3,4,5,6]}
+          
+        ],
+        "pss_beams": [{"id": 14, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        
+        ]
+      
+    }
+    """
+
+
+      Scenario: PlanA14
+    """
+    {
+      
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]},
+          {"id": 5, "stations": [1, 2, 3,4,5,6]},
+          {"id": 6, "stations": [1, 2, 3,4,5,6]},
+          {"id": 7, "stations": [1, 2, 3,4,5,6]},
+          {"id": 8, "stations": [1, 2, 3,4,5,6]}
+          
+        ],
+        "pss_beams": [{"id": 15, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        
+        ]
+      
+    }
+    """
+
+
+      Scenario: PlanA15
+    """
+    {
+      
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]},
+          {"id": 5, "stations": [1, 2, 3,4,5,6]},
+          {"id": 6, "stations": [1, 2, 3,4,5,6]},
+          {"id": 7, "stations": [1, 2, 3,4,5,6]},
+          {"id": 8, "stations": [1, 2, 3,4,5,6]}
+          
+        ],
+        "pss_beams": [{"id": 16, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        
+        ]
+      
+    }
+    """
+
+
+      Scenario: PlanA16
+    """
+    {
+      
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]},
+          {"id": 5, "stations": [1, 2, 3,4,5,6]},
+          {"id": 6, "stations": [1, 2, 3,4,5,6]},
+          {"id": 7, "stations": [1, 2, 3,4,5,6]},
+          {"id": 8, "stations": [1, 2, 3,4,5,6]}
+          
+        ],
+        "pss_beams": [{"id": 17, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        
+        ]
+      
+    }
+    """
