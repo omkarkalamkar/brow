@@ -617,7 +617,6 @@ def given_a_telescope_is_in_on(
         {
             central_node_low.central_node: [
                 "telescopeState",
-                "longRunningCommandResult",
             ],
             **{
                 central_node_low.subarray_node.dev_name().replace(
@@ -636,9 +635,15 @@ def given_a_telescope_is_in_on(
         event_tracer.subscribe_event(
             central_node_low.subarray_node, "obsState"
         )
+        event_tracer.subscribe_event(
+            central_node_low.subarray_node, "longRunningCommandResult"
+        )
         log_events(
             {
-                central_node_low.subarray_node: ["obsState"],
+                central_node_low.subarray_node: [
+                    "obsState",
+                    "longRunningCommandResult",
+                ],
             }
         )
         # Set all the mock subsystem subarrays in State ON
@@ -889,7 +894,6 @@ def verify_subarray_in_ready_observation_state(
         timeout=TIMEOUT,
     )
     event_tracer.clear_events()
-    assert False
 
 
 @when("I start scan on all the subarrays")
