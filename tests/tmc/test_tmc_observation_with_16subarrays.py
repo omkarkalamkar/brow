@@ -118,7 +118,7 @@ def _configure_subarrays(
         subarray_node_low.set_subarray_id(sa_id)
         cfg_path = logs_dir / f"configure_subarray{sa_id}.json"
         cfg_str = cfg_path.read_text(encoding="utf-8")
-        return sa_id, subarray_node_low.store_configuration_data(cfg_str)
+        return sa_id, subarray_node_low.store_configuration_data_new(cfg_str)
 
     results: dict[int, tuple] = {}
 
