@@ -26,7 +26,7 @@ Feature: Multi-subarray observation plans
           
         ],
         "pss_beams": [{"id": 1, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
       
@@ -77,7 +77,7 @@ Feature: Multi-subarray observation plans
           
         ],
         "pss_beams": [{"id": 2, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
       
@@ -101,7 +101,7 @@ Feature: Multi-subarray observation plans
           
         ],
         "pss_beams": [{"id": 3, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
       
@@ -125,7 +125,7 @@ Feature: Multi-subarray observation plans
           
         ],
         "pss_beams": [{"id": 4, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
       
@@ -148,7 +148,7 @@ Feature: Multi-subarray observation plans
           
         ],
         "pss_beams": [{"id": 5, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
       
@@ -171,7 +171,7 @@ Feature: Multi-subarray observation plans
           
         ],
         "pss_beams": [{"id": 6, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
       
@@ -195,7 +195,7 @@ Feature: Multi-subarray observation plans
           
         ],
         "pss_beams": [{"id": 7, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
       
@@ -219,7 +219,7 @@ Feature: Multi-subarray observation plans
           
         ],
         "pss_beams": [{"id": 8, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
       
@@ -243,7 +243,7 @@ Feature: Multi-subarray observation plans
           
         ],
         "pss_beams": [{"id": 9, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
       
@@ -267,7 +267,7 @@ Feature: Multi-subarray observation plans
           
         ],
         "pss_beams": [{"id": 10, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
       
@@ -291,7 +291,7 @@ Feature: Multi-subarray observation plans
           
         ],
         "pss_beams": [{"id": 11, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
       
@@ -315,7 +315,7 @@ Feature: Multi-subarray observation plans
           
         ],
         "pss_beams": [{"id": 12, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
       
@@ -339,7 +339,7 @@ Feature: Multi-subarray observation plans
           
         ],
         "pss_beams": [{"id": 13, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
       
@@ -363,7 +363,7 @@ Feature: Multi-subarray observation plans
           
         ],
         "pss_beams": [{"id": 14, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
       
@@ -387,7 +387,7 @@ Feature: Multi-subarray observation plans
           
         ],
         "pss_beams": [{"id": 15, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
       
@@ -411,7 +411,7 @@ Feature: Multi-subarray observation plans
           
         ],
         "pss_beams": [{"id": 16, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
       
@@ -435,7 +435,7 @@ Feature: Multi-subarray observation plans
           
         ],
         "pss_beams": [{"id": 17, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [11, 21]}
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
       
