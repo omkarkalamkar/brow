@@ -15,6 +15,7 @@ Feature: Multi-subarray observation
         And <SNCount> subarrays are in the EMPTY ObsState
         And I assign resources using plan map <PlanMap>
         And I configure subarrays using plan map <PlanMap>
+        And the Subarrays are configured successfully
 
         Examples:
             | SNCount | PlanMap                                                                                                                                                                                                                                                     |
