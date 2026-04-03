@@ -293,18 +293,18 @@ class CentralNodeWrapperLow(object):
         """Handle Tear down of central Node"""
         LOGGER.info("Calling Tear down for Central node.")
         # reset HealthState.UNKNOWN for mock devices
-        self._reset_health_state_for_mock_devices()
-        self.reset_defects_for_devices()
-        self.set_subarray_id(1)
-        self.tear_down_subarray(self.subarray_node)
-        self.set_subarray_id(2)
-        self.tear_down_subarray(self.subarray_node)
-        self.move_to_off()
-        self._clear_command_call_and_transition_data(clear_transition=True)
-        self.event_recorder.clear_events()
-        self.event_tracer.clear_events()
-        # Adding a small sleep to allow the systems to clean up processes
-        sleep(0.15)
+        # self._reset_health_state_for_mock_devices()
+        # self.reset_defects_for_devices()
+        # self.set_subarray_id(1)
+        # self.tear_down_subarray(self.subarray_node)
+        # self.set_subarray_id(2)
+        # self.tear_down_subarray(self.subarray_node)
+        # self.move_to_off()
+        # self._clear_command_call_and_transition_data(clear_transition=True)
+        # self.event_recorder.clear_events()
+        # self.event_tracer.clear_events()
+        # # Adding a small sleep to allow the systems to clean up processes
+        # sleep(0.15)
 
     @sync_set_to_on(device_dict=device_dict_low)
     def move_to_on(self):
