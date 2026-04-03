@@ -9,7 +9,8 @@ import json
 import logging
 import re
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 import pytest
@@ -50,7 +51,7 @@ def _wait_for_configure_ready_and_lrcr_ok(
     timeout: int = TIMEOUT,
 ) -> None:
     """For each involved subarray:
-    wait READY and LRCR OK (resilient, parallel)."""
+    wait READY and LRCR OK (resilient, sequential)."""
 
     def _check_one(subarray_id: int, unique_id: tuple) -> None:
         subarray_node_low.set_subarray_id(subarray_id)
@@ -92,14 +93,11 @@ def _wait_for_configure_ready_and_lrcr_ok(
     if not items:
         return
 
-    # NOTE: Runs in parallel, but SubarrayNodeWrapperLow.set_subarray_id()
-    # likely mutates shared state, so this can race. If you see mixed-up
-    # device names or events, switch to sequential (max_workers=1) or
-    # create per-thread wrappers.
-    with ThreadPoolExecutor(max_workers=len(items)) as pool:
-        futures = [pool.submit(_check_one, sa_id, uid) for sa_id, uid in items]
-        for fut in as_completed(futures):
-            fut.result()
+    # IMPORTANT: SubarrayNodeWrapperLow.set_subarray_id() mutates shared state.
+    # Running this in parallel can race and end up waiting on the wrong
+    # subarray. Keep it sequential unless we create one wrapper per thread.
+    for sa_id, uid in items:
+        _check_one(sa_id, uid)
 
 
 def _configure_subarrays(
@@ -120,13 +118,14 @@ def _configure_subarrays(
         cfg_str = cfg_path.read_text(encoding="utf-8")
         return sa_id, subarray_node_low.store_configuration_data_new(cfg_str)
 
+    # IMPORTANT: SubarrayNodeWrapperLow.set_subarray_id() mutates shared state.
+    # Running this in parallel can race and end up executing Configure on the
+    # wrong subarray (often only the last one). Keep it sequential unless we
+    # create one wrapper instance per thread.
     results: dict[int, tuple] = {}
-
-    with ThreadPoolExecutor(max_workers=len(subarray_ids)) as pool:
-        futures = [pool.submit(_configure, sa_id) for sa_id in subarray_ids]
-        for fut in as_completed(futures):
-            sa_id, (_, unique_id) = fut.result()
-            results[sa_id] = unique_id
+    for sa_id in subarray_ids:
+        _, unique_id = _configure(sa_id)
+        results[sa_id] = unique_id
     return results
 
 
@@ -506,14 +505,9 @@ def _assign_resources_for_subarrays(
         )
 
     unique_ids = []
-    with ThreadPoolExecutor(max_workers=len(subarray_ids)) as pool:
-        futures = {
-            pool.submit(_assign_resources, sa_id): sa_id
-            for sa_id in subarray_ids
-        }
-        for fut in as_completed(futures):
-            _, unique_id = fut.result()
-            unique_ids.append(unique_id)
+    for sa_id in subarray_ids:
+        _, unique_id = _assign_resources(sa_id)
+        unique_ids.append(unique_id)
     return unique_ids
 
 
@@ -540,10 +534,11 @@ def _wait_for_subarrays_obsstate(
                 sa_id,
             )
 
-    with ThreadPoolExecutor(max_workers=len(subarray_ids)) as pool:
-        futures = [pool.submit(_wait, sa_id) for sa_id in subarray_ids]
-        for fut in as_completed(futures):
-            fut.result()
+    # IMPORTANT: CentralNodeWrapperLow.set_subarray_id() mutates shared state.
+    # Running this in parallel can race and end up waiting on the wrong
+    # subarray. Keep it sequential unless we create one wrapper per thread.
+    for sa_id in subarray_ids:
+        _wait(sa_id)
 
 
 def _wait_for_subarraynode_obsstate(
@@ -575,10 +570,11 @@ def _wait_for_subarraynode_obsstate(
                 sa_id,
             )
 
-    with ThreadPoolExecutor(max_workers=len(subarray_ids)) as pool:
-        futures = [pool.submit(_wait, sa_id) for sa_id in subarray_ids]
-        for fut in as_completed(futures):
-            fut.result()
+    # IMPORTANT: SubarrayNodeWrapperLow.set_subarray_id() mutates shared state.
+    # Running this in parallel can race and end up waiting on the wrong
+    # subarray. Keep it sequential unless we create one wrapper per thread.
+    for sa_id in subarray_ids:
+        _wait(sa_id)
 
 
 @pytest.mark.SKA_tmc_low_16_subarrays
