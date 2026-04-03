@@ -703,7 +703,7 @@ def assign_using_plan_map(
                 unique_id,
             )
 
-    time.sleep(200)
+    time.sleep(20)
     LOGGER.info("Will check for ObState now")
 
     _wait_for_subarrays_obsstate(
