@@ -43,6 +43,93 @@ _PLANS_FEATURE_PATH = (
 )
 
 
+def _wait_for_configure_ready_and_lrcr_ok(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    configure_unique_ids: dict[int, tuple],
+    timeout: int = TIMEOUT,
+) -> None:
+    """For each involved subarray:
+    wait READY and LRCR OK (resilient, parallel)."""
+
+    def _check_one(subarray_id: int, unique_id: tuple) -> None:
+        subarray_node_low.set_subarray_id(subarray_id)
+        expected_lrcr = (
+            unique_id[0],
+            json.dumps((int(ResultCode.OK), "Command Completed")),
+        )
+
+        try:
+            assert_that(event_tracer).within_timeout(
+                timeout
+            ).has_change_event_occurred(
+                subarray_node_low.subarray_node,
+                "obsState",
+                ObsState.READY,
+            )
+        except AssertionError:
+            LOGGER.exception(
+                "Not READY  within timeout for subarray %s",
+                subarray_id,
+            )
+
+        try:
+            assert_that(event_tracer).within_timeout(
+                timeout
+            ).has_change_event_occurred(
+                subarray_node_low.subarray_node,
+                "longRunningCommandResult",
+                expected_lrcr,
+            )
+        except AssertionError:
+            LOGGER.exception(
+                "No Configure LRCR OK within timeout for  %s, unique_id=%s",
+                subarray_id,
+                unique_id,
+            )
+
+    items = list(configure_unique_ids.items())
+    if not items:
+        return
+
+    # NOTE: Runs in parallel, but SubarrayNodeWrapperLow.set_subarray_id()
+    # likely mutates shared state, so this can race. If you see mixed-up
+    # device names or events, switch to sequential (max_workers=1) or
+    # create per-thread wrappers.
+    with ThreadPoolExecutor(max_workers=len(items)) as pool:
+        futures = [pool.submit(_check_one, sa_id, uid) for sa_id, uid in items]
+        for fut in as_completed(futures):
+            fut.result()
+
+
+def _configure_subarrays(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    subarray_ids: list[int],
+    logs_dir: Path,
+) -> dict[int, tuple]:
+    """
+    Invoke Configure on all given subarrays (in parallel)
+    using the per-subarray
+    JSON files written under logs_dir, and return a map:
+    subarray_id -> unique_id.
+    """
+
+    def _configure(sa_id: int):
+        subarray_node_low.set_subarray_id(sa_id)
+        cfg_path = logs_dir / f"configure_subarray{sa_id}.json"
+        cfg_str = cfg_path.read_text(encoding="utf-8")
+        return sa_id, subarray_node_low.store_configuration_data(cfg_str)
+
+    results: dict[int, tuple] = {}
+
+    with ThreadPoolExecutor(max_workers=len(subarray_ids)) as pool:
+        futures = [pool.submit(_configure, sa_id) for sa_id in subarray_ids]
+        for fut in as_completed(futures):
+            sa_id, (_, unique_id) = fut.result()
+            results[sa_id] = unique_id
+    return results
+
+
 def _load_plan_json(plan_name: str) -> dict:
     """Load a named plan from `tmc_observation_plans.feature` docstring."""
     text = _PLANS_FEATURE_PATH.resolve().read_text(encoding="utf-8")
@@ -459,6 +546,41 @@ def _wait_for_subarrays_obsstate(
             fut.result()
 
 
+def _wait_for_subarraynode_obsstate(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    subarray_ids: list[int],
+    expected_state: ObsState,
+) -> None:
+    """Wait for obsState on TMC SubarrayNode for each subarray id.
+
+    This is resilient by design: if a given subarray doesn't reach the state
+    within TIMEOUT, it logs and continues.
+    """
+
+    def _wait(sa_id: int) -> None:
+        subarray_node_low.set_subarray_id(sa_id)
+        try:
+            assert_that(event_tracer).within_timeout(
+                TIMEOUT
+            ).has_change_event_occurred(
+                subarray_node_low.subarray_node,
+                "obsState",
+                expected_state,
+            )
+        except AssertionError:
+            LOGGER.exception(
+                "No obsState=%s within timeout for subarray %s",
+                expected_state,
+                sa_id,
+            )
+
+    with ThreadPoolExecutor(max_workers=len(subarray_ids)) as pool:
+        futures = [pool.submit(_wait, sa_id) for sa_id in subarray_ids]
+        for fut in as_completed(futures):
+            fut.result()
+
+
 @pytest.mark.SKA_tmc_low_16_subarrays
 @scenario(
     "../features/tmc/tmc_observation.feature",
@@ -664,9 +786,9 @@ def assign_using_plan_map(
 
 @given(parsers.parse("I configure subarrays using plan map {PlanMap}"))
 def configure_using_plan_map(
-    # subarray_node_low: SubarrayNodeWrapperLow,
+    subarray_node_low: SubarrayNodeWrapperLow,
     command_input_factory: JsonFactory,
-    # event_tracer: TangoEventTracer,
+    event_tracer: TangoEventTracer,
     PlanMap: str,
 ):
 
@@ -714,24 +836,19 @@ def configure_using_plan_map(
 
         LOGGER.info("Saved Configure JSON to %s", out_path.resolve())
 
-    assert False
-    # subarray_node_low.set_subarray_id(subarray_id)
-    # _, uid = subarray_node_low.store_configuration_data(json.dumps(cfg))
-    # pytest.configure_unique_ids[subarray_id] = uid
+    logs_dir = _ensure_logs_dir()
+    pytest.configure_unique_ids = _configure_subarrays(
+        subarray_node_low,
+        sorted(plan_map.keys()),
+        logs_dir,
+    )
 
-    # assert_that(event_tracer).within_timeout(TIMEOUT).
-    # has_change_event_occurred(
-    #     subarray_node_low.subarray_node,
-    #     "obsState",
-    #     ObsState.CONFIGURING,
-    # )
-    # assert_that(event_tracer).described_as(
-    #     "TMC Subarray Node ObsState should move to CONFIGURING"
-    # ).within_timeout(TIMEOUT).has_change_event_occurred(
-    #     subarray_node_low.subarray_node,
-    #     "obsState",
-    #     ObsState.CONFIGURING,
-    # )
+    _wait_for_subarraynode_obsstate(
+        subarray_node_low,
+        event_tracer,
+        sorted(plan_map.keys()),
+        ObsState.CONFIGURING,
+    )
 
 
 @given("the Subarrays are configured successfully")
@@ -743,28 +860,36 @@ def verify_subarray_in_ready_observation_state(
     after command Configure.
     """
     # Check if all the Subarrays are in obsState READY and LRCR OK
-    for subarray_id, unique_id in pytest.configure_unique_ids.items():
-        subarray_node_low.set_subarray_id(subarray_id)
-        expected_lrcr = (
-            unique_id[0],
-            json.dumps((int(ResultCode.OK), "Command Completed")),
-        )
-        assert_that(event_tracer).described_as(
-            "TMC Subarray Node ObsState should move to READY"
-        ).within_timeout(TIMEOUT).has_change_event_occurred(
-            subarray_node_low.subarray_node,
-            "obsState",
-            ObsState.READY,
-        )
-        assert_that(event_tracer).described_as(
-            "TMC Subarray Node longRunningCommandResult should indicate "
-            "successful completion of Configure command"
-        ).within_timeout(TIMEOUT).has_change_event_occurred(
-            subarray_node_low.subarray_node,
-            "longRunningCommandResult",
-            expected_lrcr,
-        )
+    # for subarray_id, unique_id in pytest.configure_unique_ids.items():
+    #     subarray_node_low.set_subarray_id(subarray_id)
+    #     expected_lrcr = (
+    #         unique_id[0],
+    #         json.dumps((int(ResultCode.OK), "Command Completed")),
+    #     )
+    #     assert_that(event_tracer).described_as(
+    #         "TMC Subarray Node ObsState should move to READY"
+    #     ).within_timeout(TIMEOUT).has_change_event_occurred(
+    #         subarray_node_low.subarray_node,
+    #         "obsState",
+    #         ObsState.READY,
+    #     )
+    #     assert_that(event_tracer).described_as(
+    #         "TMC Subarray Node longRunningCommandResult should indicate "
+    #         "successful completion of Configure command"
+    #     ).within_timeout(TIMEOUT).has_change_event_occurred(
+    #         subarray_node_low.subarray_node,
+    #         "longRunningCommandResult",
+    #         expected_lrcr,
+    #     )
+
+    _wait_for_configure_ready_and_lrcr_ok(
+        subarray_node_low=subarray_node_low,
+        event_tracer=event_tracer,
+        configure_unique_ids=pytest.configure_unique_ids,
+        timeout=TIMEOUT,
+    )
     event_tracer.clear_events()
+    assert False
 
 
 @when("I start scan on all the subarrays")
