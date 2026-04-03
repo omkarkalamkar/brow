@@ -106,16 +106,16 @@ cspsubarrayleafnode:
 
 mccsmasterleafnode:
   image:
-    registry: artefact.skao.int
+    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
     image: ska-tmc-mccsleafnodes
-    tag:  0.15.0
+    tag: 0.15.2-dev.c339b5470
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
-    registry: artefact.skao.int
+    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
     image: ska-tmc-mccsleafnodes
-    tag:  0.15.0
+    tag: 0.15.2-dev.c339b5470
     pullPolicy: IfNotPresent
 
 resource_monitor:
@@ -124,8 +124,6 @@ resource_monitor:
     image: ska-tmc-resource-monitor
     tag: 0.5.0
     pullPolicy: IfNotPresent
-
-
 
 resources:
   limits:
@@ -260,8 +258,6 @@ deviceServers:
     EventSubscriptionCheckPeriod: 0.5
     family: "resource-monitor"
     LoggingLevel: "4"
-
-
 
 nodeSelector: {}
 
