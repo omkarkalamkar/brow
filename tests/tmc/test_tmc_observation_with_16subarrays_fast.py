@@ -724,7 +724,7 @@ def scan_on_configured_subarrays(
         "scan_low", command_input_factory
     )
 
-    for subarray_id in sorted(pytest.configure_unique_ids.keys()):
+    for subarray_id in getattr(pytest, "active_subarray_ids", []):
         subarray_node_low.set_subarray_id(subarray_id)
         subarray_node_low.execute_transition("Scan", scan_input_json)
         try:
@@ -748,7 +748,7 @@ def check_scanning_and_ready(
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
-    for subarray_id in sorted(pytest.configure_unique_ids.keys()):
+    for subarray_id in getattr(pytest, "active_subarray_ids", []):
         subarray_node_low.set_subarray_id(subarray_id)
 
         try:
@@ -787,7 +787,7 @@ def end_all_involved(
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
-    for subarray_id in sorted(pytest.configure_unique_ids.keys()):
+    for subarray_id in getattr(pytest, "active_subarray_ids", []):
         subarray_node_low.set_subarray_id(subarray_id)
         subarray_node_low.end_observation()
         try:
@@ -818,7 +818,7 @@ def release_all_involved(
         )
     )
 
-    for subarray_id in sorted(pytest.configure_unique_ids.keys()):
+    for subarray_id in getattr(pytest, "active_subarray_ids", []):
         central_node_low.set_subarray_id(subarray_id)
         rel = json.loads(json.dumps(release_input))
         rel["subarray_id"] = subarray_id
