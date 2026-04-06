@@ -80,7 +80,7 @@ def _active_subarray_ids_from_plan_map(
     # NOTE: Intentionally skip SA 1..6 to reduce runtime when those are known
     # no-ops / not deployed in the current environment.
     return sorted(
-        [sa_id for sa_id in plan_map.keys() if 7 <= int(sa_id) <= sn_count]
+        [sa_id for sa_id in plan_map.keys() if 1 <= int(sa_id) <= sn_count]
     )
 
 
