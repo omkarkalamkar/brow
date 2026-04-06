@@ -139,7 +139,10 @@ def _build_mccs_subarray_beams(
             for st in b.get("stations", [])
         ]
 
-        station_ids = stations_from_pss or stations_from_pst
+        # Combine stations from both sources (remove duplicates, keep ints)
+        station_ids = sorted(
+            {int(s) for s in (stations_from_pss + stations_from_pst)}
+        )
         apertures = [
             {
                 "aperture_id": f"AP{int(st):03}.01",
