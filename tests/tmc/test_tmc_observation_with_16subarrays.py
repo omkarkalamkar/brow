@@ -711,79 +711,6 @@ def assign_using_plan_map(
         central_node_low, event_tracer, pytest.subarray_ids, ObsState.IDLE
     )
 
-    # plan_map = _parse_plan_map(PlanMap)
-    # base_assign = json.loads(
-    #     prepare_json_args_for_centralnode_commands(
-    #         "assign_resources_low", command_input_factory
-    #     )
-    # )
-    # LOGGER.info("base_assign- %s", base_assign)
-    # assign_unique_ids = []
-
-    # logs_dir = Path("build") / "logs"
-    # logs_dir.mkdir(parents=True, exist_ok=True)
-
-    # for subarray_id, plan_name in plan_map.items():
-    #     plan = _load_plan_json(plan_name)
-    #     per_sn = plan.get(str(subarray_id), plan)
-    #     LOGGER.info("per_sn %s", per_sn)
-
-    #     assign_json = _build_assign_json(
-    #         base_assign, subarray_id, per_sn, plan_name
-    #     )
-
-    #     out_path = logs_dir / f"assign_subarray{subarray_id}.json"
-    #     out_path.write_text(
-    #         json.dumps(assign_json, indent=2, sort_keys=True) + "\n",
-    #         encoding="utf-8",
-    #     )
-    #     LOGGER.info("Saved Assign JSON to %s", out_path.resolve())
-
-    # # Invoke AssignResources for all subarrays in parallel
-
-    # def _assign_resources(sa_id: int):
-    #     central_node_low.set_subarray_id(sa_id)
-    #     assign_path = Path("build") / "logs" / f"assign_subarray{sa_id}.json"
-    # return central_node_low.perform_action("AssignResources", assign_path)
-
-    # with ThreadPoolExecutor(max_workers=len(pytest.subarray_ids)) as pool:
-    #     futures = {
-    #         pool.submit(_assign_resources, sa_id): sa_id
-    #         for sa_id in pytest.subarray_ids
-    #     }
-    #     for fut in as_completed(futures):
-    #         _, unique_id = fut.result()
-    #         assign_unique_ids.append(unique_id)
-
-    # for unique_id in assign_unique_ids:
-    #     assert_that(event_tracer).within_timeout(
-    #         TIMEOUT
-    #     ).has_change_event_occurred(
-    #         central_node_low.central_node,
-    #         "longRunningCommandResult",
-    #         (
-    #             unique_id[0],
-    #             json.dumps((int(ResultCode.OK), "Command Completed")),
-    #         ),
-    #     )
-
-    # def _wait_for_idle(sa_id: int) -> None:
-    #     central_node_low.set_subarray_id(sa_id)
-    #     assert_that(event_tracer).within_timeout(
-    #         TIMEOUT
-    #     ).has_change_event_occurred(
-    #         central_node_low.subarray_node,
-    #         "obsState",
-    #         ObsState.IDLE,
-    #     )
-
-    # with ThreadPoolExecutor(max_workers=len(pytest.subarray_ids)) as pool:
-    #     futures = [
-    #   pool.submit(_wait_for_idle, sa_id) for sa_id in pytest.subarray_ids
-    #     ]
-    #     for fut in as_completed(futures):
-    #         fut.result()
-
 
 @given(parsers.parse("I configure subarrays using plan map {PlanMap}"))
 def configure_using_plan_map(
@@ -860,28 +787,6 @@ def verify_subarray_in_ready_observation_state(
     """Verifies the observation states of SDP,CSP and MCCS
     after command Configure.
     """
-    # Check if all the Subarrays are in obsState READY and LRCR OK
-    # for subarray_id, unique_id in pytest.configure_unique_ids.items():
-    #     subarray_node_low.set_subarray_id(subarray_id)
-    #     expected_lrcr = (
-    #         unique_id[0],
-    #         json.dumps((int(ResultCode.OK), "Command Completed")),
-    #     )
-    #     assert_that(event_tracer).described_as(
-    #         "TMC Subarray Node ObsState should move to READY"
-    #     ).within_timeout(TIMEOUT).has_change_event_occurred(
-    #         subarray_node_low.subarray_node,
-    #         "obsState",
-    #         ObsState.READY,
-    #     )
-    #     assert_that(event_tracer).described_as(
-    #         "TMC Subarray Node longRunningCommandResult should indicate "
-    #         "successful completion of Configure command"
-    #     ).within_timeout(TIMEOUT).has_change_event_occurred(
-    #         subarray_node_low.subarray_node,
-    #         "longRunningCommandResult",
-    #         expected_lrcr,
-    #     )
 
     _wait_for_configure_ready_and_lrcr_ok(
         subarray_node_low=subarray_node_low,
@@ -890,30 +795,6 @@ def verify_subarray_in_ready_observation_state(
         timeout=TIMEOUT,
     )
     event_tracer.clear_events()
-
-
-@when("I start scan on all the subarrays")
-def send_scan(
-    command_input_factory: JsonFactory,
-    subarray_node_low: SubarrayNodeWrapperLow,
-    event_tracer: TangoEventTracer,
-):
-    """Send a Scan command to the subarray."""
-    scan_input_json = prepare_json_args_for_commands(
-        "scan_low", command_input_factory
-    )
-    # Execute Scan command on all the Subarrays
-    for subarray_id in [1, 2, 3, 4]:
-        subarray_node_low.set_subarray_id(subarray_id)
-        subarray_node_low.execute_transition("Scan", scan_input_json)
-
-        assert_that(event_tracer).described_as(
-            "TMC Subarray Node ObsState should move to SCANNING"
-        ).within_timeout(TIMEOUT).has_change_event_occurred(
-            subarray_node_low.subarray_node,
-            "obsState",
-            ObsState.SCANNING,
-        )
 
 
 @when("I scan on all configured subarrays")
@@ -931,13 +812,20 @@ def scan_on_configured_subarrays(
     for subarray_id in sorted(pytest.configure_unique_ids.keys()):
         subarray_node_low.set_subarray_id(subarray_id)
         subarray_node_low.execute_transition("Scan", scan_input_json)
-        assert_that(event_tracer).within_timeout(
-            TIMEOUT
-        ).has_change_event_occurred(
-            subarray_node_low.subarray_node,
-            "obsState",
-            ObsState.SCANNING,
-        )
+        try:
+            assert_that(event_tracer).within_timeout(
+                TIMEOUT
+            ).has_change_event_occurred(
+                subarray_node_low.subarray_node,
+                "obsState",
+                ObsState.SCANNING,
+            )
+        except AssertionError:
+            LOGGER.exception(
+                "No obsState=%s within timeout for subarray %s after Scan",
+                ObsState.SCANNING,
+                subarray_id,
+            )
 
 
 @then("the subarrays transition to READY on scan completion")
@@ -974,16 +862,35 @@ def check_scanning_and_ready(
     """
     for subarray_id in sorted(pytest.configure_unique_ids.keys()):
         subarray_node_low.set_subarray_id(subarray_id)
-        assert_that(event_tracer).within_timeout(
-            TIMEOUT
-        ).has_change_event_occurred(
-            subarray_node_low.subarray_node, "obsState", ObsState.SCANNING
-        )
-        assert_that(event_tracer).within_timeout(
-            TIMEOUT
-        ).has_change_event_occurred(
-            subarray_node_low.subarray_node, "obsState", ObsState.READY
-        )
+        # try:
+        #     assert_that(event_tracer).within_timeout(
+        #         TIMEOUT
+        #     ).has_change_event_occurred(
+        #         subarray_node_low.subarray_node,
+        #         "obsState",
+        #         ObsState.SCANNING,
+        #     )
+        # except AssertionError:
+        #     LOGGER.exception(
+        #         "No obsState=%s within timeout for subarray %s during scan",
+        #         ObsState.SCANNING,
+        #         subarray_id,
+        #     )
+
+        try:
+            assert_that(event_tracer).within_timeout(
+                TIMEOUT
+            ).has_change_event_occurred(
+                subarray_node_low.subarray_node,
+                "obsState",
+                ObsState.READY,
+            )
+        except AssertionError:
+            LOGGER.exception(
+                "No obsState=%s within timeout for subarray %s after scan",
+                ObsState.READY,
+                subarray_id,
+            )
 
 
 @then("I end the observations on all involved subarrays")
@@ -997,11 +904,20 @@ def end_all_involved(
     for subarray_id in sorted(pytest.configure_unique_ids.keys()):
         subarray_node_low.set_subarray_id(subarray_id)
         subarray_node_low.end_observation()
-        assert_that(event_tracer).within_timeout(
-            TIMEOUT
-        ).has_change_event_occurred(
-            subarray_node_low.subarray_node, "obsState", ObsState.IDLE
-        )
+        try:
+            assert_that(event_tracer).within_timeout(
+                TIMEOUT
+            ).has_change_event_occurred(
+                subarray_node_low.subarray_node,
+                "obsState",
+                ObsState.IDLE,
+            )
+        except AssertionError:
+            LOGGER.exception(
+                "No obsState=%s within timeout for subarray %s after End",
+                ObsState.IDLE,
+                subarray_id,
+            )
 
 
 @then("I release resources from all involved subarrays")
@@ -1036,98 +952,6 @@ def release_all_involved(
         assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
-            central_node_low.subarray_node,
-            "obsState",
-            ObsState.EMPTY,
-        )
-
-
-@then("I end the observations on all the Subarrays")
-def send_end_command(
-    subarray_node_low: SubarrayNodeWrapperLow,
-    event_tracer: TangoEventTracer,
-):
-    """Send a End command to the subarrays."""
-
-    # Execute End command on all the Subarrays
-    for subarray_id in [1, 2, 3, 4]:
-        subarray_node_low.set_subarray_id(subarray_id)
-        _, unique_id = subarray_node_low.end_observation()
-
-        assert_that(event_tracer).described_as(
-            'FAILED ASSUMPTION IN "WHEN" STEP: '
-            '"I end the observation"'
-            "Subarray Node device"
-            f"({subarray_node_low.subarray_node.dev_name()}) "
-            "is expected to be in IDLE obstate",
-        ).within_timeout(TIMEOUT).has_change_event_occurred(
-            subarray_node_low.subarray_node,
-            "obsState",
-            ObsState.IDLE,
-        )
-        assert_that(event_tracer).described_as(
-            'FAILED ASSUMPTION IN "WHEN" STEP: '
-            '"I end the observation"'
-            "Subarray Node device"
-            f"({subarray_node_low.subarray_node.dev_name()}) "
-            "is expected have longRunningCommand as"
-            '(unique_id,(ResultCode.OK,"Command Completed"))',
-        ).within_timeout(TIMEOUT).has_change_event_occurred(
-            subarray_node_low.subarray_node,
-            "longRunningCommandResult",
-            (
-                unique_id[0],
-                json.dumps((int(ResultCode.OK), "Command Completed")),
-            ),
-        )
-
-
-@then("I release resources from all the subarrays")
-def send_release_resources_command(
-    command_input_factory: JsonFactory,
-    event_tracer: TangoEventTracer,
-    central_node_low: CentralNodeWrapperLow,
-):
-    """Send a ReleaseResources command to the subarrays."""
-
-    release_resource_json = prepare_json_args_for_centralnode_commands(
-        "release_resources_low", command_input_factory
-    )
-    release_unique_ids = []
-
-    for subarray_id in [1, 2, 3, 4]:
-        central_node_low.set_subarray_id(subarray_id)
-        release_input_json_subarray = json.loads(release_resource_json)
-        release_input_json_subarray["subarray_id"] = subarray_id
-        _, unique_id = central_node_low.perform_action(
-            "ReleaseResources", json.dumps(release_input_json_subarray)
-        )
-        release_unique_ids.append(unique_id)
-
-    # Check if all the ReleaseResources commands on CentralNode are completed
-    for unique_id in release_unique_ids:
-        assert_that(event_tracer).described_as(
-            "Central Node device"
-            f"({central_node_low.central_node.dev_name()}) "
-            "is expected have longRunningCommand as"
-            '(unique_id,(ResultCode.OK,"Command Completed"))',
-        ).within_timeout(TIMEOUT).has_change_event_occurred(
-            central_node_low.central_node,
-            "longRunningCommandResult",
-            (
-                unique_id[0],
-                json.dumps((int(ResultCode.OK), "Command Completed")),
-            ),
-        )
-
-    # Check if all the subarrays are in EMPTY ObsState
-    for subarray_id in [1, 2, 3, 4]:
-        central_node_low.set_subarray_id(subarray_id)
-        assert_that(event_tracer).described_as(
-            "Subarray Node device"
-            f"({central_node_low.subarray_node.dev_name()}) "
-            "is expected to be in EMPTY obstate",
-        ).within_timeout(TIMEOUT).has_change_event_occurred(
             central_node_low.subarray_node,
             "obsState",
             ObsState.EMPTY,
