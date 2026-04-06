@@ -789,7 +789,7 @@ def end_all_involved(
 ):
     for subarray_id in getattr(pytest, "active_subarray_ids", []):
         subarray_node_low.set_subarray_id(subarray_id)
-        subarray_node_low.end_observation()
+        subarray_node_low.end_observation_new()
         try:
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
