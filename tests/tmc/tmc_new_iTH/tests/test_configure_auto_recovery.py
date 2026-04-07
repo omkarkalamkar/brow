@@ -34,12 +34,6 @@ FAILED_DEVICE_MAP = {
 }
 
 
-# Failure occurs due to obs state and lrcr events not recieved in order.
-# Team Himalaya has this issue planned in PI30. Once issue is fixed,
-# the xfail is removed.
-@pytest.mark.xfail(
-    reason="Failure due to obs state and lrcr event not in order."
-)
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
@@ -49,7 +43,6 @@ def test_configure_auto_recovery():
     """BDD test scenario for verifying auto recovery when configure failed"""
 
 
-@pytest.mark.xfail(reason="LRCR event appeared early than obsState Event")
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
@@ -62,7 +55,6 @@ def test_successive_configure_auto_recovery():
     """
 
 
-@pytest.mark.xfail(reason="LRCR event appeared early than obsState Event")
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",

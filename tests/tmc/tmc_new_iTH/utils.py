@@ -605,6 +605,22 @@ def invoke_command_with_defect(
     mccs_obsstate: str,
     command: str,
 ):
+    """Invoke a command after setting up subsystem defects.
+
+    This function attempts to force subsystems to a target state before
+    invoking the command. If the state forcing times out, it logs a warning
+    but continues, as the test may still proceed with the failed defect setup.
+
+    :param tmc: TMC facade
+    :param default_commands_inputs: Default command inputs
+    :param csp: CSP facade
+    :param sdp: SDP facade
+    :param mccs: MCCS facade
+    :param csp_obsstate: Target CSP obsstate
+    :param sdp_obsstate: Target SDP obsstate
+    :param mccs_obsstate: Target MCCS obsstate
+    :param command: Command to invoke
+    """
     match command:
         case "AssignResources":
             set_subsystem_defects(
