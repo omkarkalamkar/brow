@@ -11,6 +11,12 @@ Updated
 -------
 * Subarray node v1.4.0: Introduced new property `PreRecoveryCheckTimeDuration`,which ensures that the devices with successful command result reach final observation state and devices with failed command result reach the previous observation state. This would help in auto recovery the subarray to appropriate observation state in case of failure. If the device is stuck in transitioning observation state till time duration the subarray node won't be recovered.
 
+* MCCS Leaf node v0.15.2: Fixed the issue of liveliness error not getting cleared from healthinfo.
+
+Fixed
+-----
+* Improved flaky testcases on tmc-low-integration to be more robust by using event tracer, adding additional assertions etc.
+
 [2.13.0]
 ********
 * This is the full release of 2.13.0-rc.1.This release introduces improvements in logging configuration, enhanced multi-subarray execution capabilities, updated component versions, and fixes to Subarray state handling and ObsState aggregation.
@@ -63,22 +69,22 @@ Fixed
 Added
 ------
 * Added support for forwarding the Kafka address through SDP using the receive addresses configuration
-* **Improved Health Monitoring**: Introduced a new HealthInfo reporting capability on TMC nodes to provide better visibility into system health and status changes. 
-* **Health Change Insights**: When the health state of the TMC Subarray Node changes, the reason for the change is now available through the HealthInfo information. 
-* **Subsystem HealthInfo Aggregation**: The Subarray node now collects and aggregates health information from multiple subsystems, providing a clearer and more consolidated view of overall system health. 
+* **Improved Health Monitoring**: Introduced a new HealthInfo reporting capability on TMC nodes to provide better visibility into system health and status changes.
+* **Health Change Insights**: When the health state of the TMC Subarray Node changes, the reason for the change is now available through the HealthInfo information.
+* **Subsystem HealthInfo Aggregation**: The Subarray node now collects and aggregates health information from multiple subsystems, providing a clearer and more consolidated view of overall system health.
 * HealthState attribute support has also been introduced on TMC Leaf Nodes.
 
 Updated
 --------
 * **SubarrayNode**: Now uses ska-telmodel v1.33.0 and ska-tmc-cdm v14.8.0.
-* TMC Central Node and Subarray Node: Tags updated due to base class upgrade (no functional changes). 
-  * CentralNode → v1.0.0 
+* TMC Central Node and Subarray Node: Tags updated due to base class upgrade (no functional changes).
+  * CentralNode → v1.0.0
   * SubarrayNode → v1.1.0
 * **TMC Component Upgrades**
   * The HealthInfo capability is introduced in the following subsystem versions:
-  * TMC Subarray Node → v0.51.2 
-  * MCCS Subarray Leaf Node → v0.13.0 
-  * SDP Subarray Leaf Node → v0.27.0 
+  * TMC Subarray Node → v0.51.2
+  * MCCS Subarray Leaf Node → v0.13.0
+  * SDP Subarray Leaf Node → v0.27.0
   * CSP Subarray Leaf Node → v0.40.0
 
 [2.12.0-rc.1]
