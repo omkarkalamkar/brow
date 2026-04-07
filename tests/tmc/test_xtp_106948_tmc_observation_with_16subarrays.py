@@ -1,3 +1,4 @@
+# flake8: noqa: E501
 """test_tmc_observation_with_16subarrays_fast
 This module defines BDD test scenario for the successful execution of
 of end to end observstion for 16 subarrays
@@ -8,7 +9,6 @@ This keeps the same BDD feature
 import json
 import logging
 import re
-import time
 from pathlib import Path
 
 import pytest
@@ -17,15 +17,14 @@ from pytest_bdd import given, parsers, scenario, then, when
 from ska_control_model import ObsState
 from ska_ser_logging import configure_logging
 from ska_tango_testing.integration import TangoEventTracer, log_events
-from ska_telmodel.schema import validate as telmodel_validate
+
+# from ska_telmodel.schema import validate as telmodel_validate
 from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
-from tests.resources.test_harness.constant import (
-    INITIAL_LOW_DELAY_JSON,
-    LOW_DELAYMODEL_VERSION,
-    TIMEOUT,
-)
+
+# INITIAL_LOW_DELAY_JSON,; LOW_DELAYMODEL_VERSION,
+from tests.resources.test_harness.constant import TIMEOUT
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
@@ -508,16 +507,19 @@ def _wait_for_configure_ready_and_lrcr_ok(
             )
 
 
-def _delay_model_attributes_from_active_plan() -> list[str]:
+def _delay_model_attributes_from_active_plan(
+    subarray_node_low: SubarrayNodeWrapperLow, subarray_id
+) -> list[str]:
     """Return delay-model attribute names, derived from the active plan."""
     plan_map = _parse_plan_map(pytest.PlanMap)
-    first_sa_id = pytest.active_subarray_ids[0]
-    logging.info(
-        "pytest.active_subarray_ids[0] %s", pytest.active_subarray_ids[0]
-    )
-    plan_name = plan_map.get(first_sa_id)
+    # first_sa_id = pytest.active_subarray_ids[0]
+    # logging.info(
+    #     "pytest.active_subarray_ids[0] %s", pytest.active_subarray_ids[0]
+    # )
+    plan_name = plan_map.get(subarray_id)
     plan = _load_plan_json(plan_name)
-    per_sn = plan.get(str(first_sa_id), plan)
+    logging.info("subarray_id - %s , plan - %s", subarray_id, plan)
+    per_sn = plan.get(str(subarray_id), plan)
 
     station_ids = sorted(
         {
@@ -536,6 +538,7 @@ def _delay_model_attributes_from_active_plan() -> list[str]:
     pss_attrs = [f"delayModelPSSBeam{i}" for i in pss_ids]
     pst_attrs = [f"delayModelPSTBeam{i}" for i in pst_ids]
     stn_attrs = [f"delaymodelstationbeam0{i}" for i in station_ids]
+    subarray_node_low.set_subarray_id(subarray_id)
 
     return pss_attrs + pst_attrs + stn_attrs
 
@@ -750,59 +753,68 @@ def verify_subarray_in_ready_observation_state(
     )
     event_tracer.clear_events()
 
-    attributes = _delay_model_attributes_from_active_plan()
-    logging.info("attributes %s", attributes)
-    generated_delay_model_json = INITIAL_LOW_DELAY_JSON
-    for attribute in attributes:
-        wait_time = time.time() + 10
-        logging.info("chekcing for attribute %s", attribute)
-        while time.time() < wait_time:
+    for subarray_id in getattr(pytest, "active_subarray_ids", []):
+        subarray_node_low.set_subarray_id(subarray_id)
 
-            generated_delay_model = (
-                subarray_node_low.csp_subarray_leaf_node.read_attribute(
-                    attribute
-                ).value
-            )
-            if (
-                generated_delay_model is None
-                or str(generated_delay_model).strip() == ""
-            ):
-                logging.info(
-                    "Attribute %s returned empty value, for %s",
-                    attribute,
-                    subarray_node_low.csp_subarray_leaf_node.dev_name(),
-                )
-
-                continue
-
-            generated_delay_model_json = json.loads(generated_delay_model)
-            logging.info(
-                "Generated %s Delay Model json: %s",
-                attribute,
-                generated_delay_model_json,
-            )
-            if generated_delay_model_json != INITIAL_LOW_DELAY_JSON:
-                break
-            time.sleep(1)
-
-        assert (
-            generated_delay_model_json != INITIAL_LOW_DELAY_JSON
-        ), f"{attribute} has not been updated from initial values"
-
-        # for expected_station_id, delay in enumerate(
-        #     generated_delay_model_json["station_beam_delays"], start=1
-        # ):
-        #     assert delay.get("station_id") == expected_station_id, (
-        #         f"{attribute} has incorrect station_id order at index "
-        #       f"{expected_station_id - 1}: expected {expected_station_id}, "
-        #         f"got {delay.get('station_id')}"
-        #     )
-
-        telmodel_validate(
-            version=LOW_DELAYMODEL_VERSION,
-            config=generated_delay_model_json,
-            strictness=2,
+        attributes = _delay_model_attributes_from_active_plan(
+            subarray_node_low, subarray_id
         )
+        logging.info(
+            "attributes for subarray_id  %s are ---%s", subarray_id, attributes
+        )
+
+    assert False
+    # generated_delay_model_json = INITIAL_LOW_DELAY_JSON
+    # for attribute in attributes:
+    #     wait_time = time.time() + 10
+    #     logging.info("chekcing for attribute %s", attribute)
+    #     while time.time() < wait_time:
+
+    #         generated_delay_model = (
+    #             subarray_node_low.csp_subarray_leaf_node.read_attribute(
+    #                 attribute
+    #             ).value
+    #         )
+    #         if (
+    #             generated_delay_model is None
+    #             or str(generated_delay_model).strip() == ""
+    #         ):
+    #             logging.info(
+    #                 "Attribute %s returned empty value, for %s",
+    #                 attribute,
+    #                 subarray_node_low.csp_subarray_leaf_node.dev_name(),
+    #             )
+
+    #             continue
+
+    #         generated_delay_model_json = json.loads(generated_delay_model)
+    #         logging.info(
+    #             "Generated %s Delay Model json: %s",
+    #             attribute,
+    #             generated_delay_model_json,
+    #         )
+    #         if generated_delay_model_json != INITIAL_LOW_DELAY_JSON:
+    #             break
+    #         time.sleep(1)
+
+    #     assert (
+    #         generated_delay_model_json != INITIAL_LOW_DELAY_JSON
+    #     ), f"{attribute} has not been updated from initial values"
+
+    #     # for expected_station_id, delay in enumerate(
+    #     #     generated_delay_model_json["station_beam_delays"], start=1
+    #     # ):
+    #     #     assert delay.get("station_id") == expected_station_id, (
+    #     #         f"{attribute} has incorrect station_id order at index "
+    #     #   f"{expected_station_id - 1}: expected {expected_station_id}, "
+    #     #         f"got {delay.get('station_id')}"
+    #     #     )
+
+    #     telmodel_validate(
+    #         version=LOW_DELAYMODEL_VERSION,
+    #         config=generated_delay_model_json,
+    #         strictness=2,
+    #     )
 
 
 @when("I scan on all configured subarrays")
