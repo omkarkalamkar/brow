@@ -235,13 +235,13 @@ def check_central_node_lrcr(
     attribute's desired event.
 
     Args:
-        central_node (CentralNodeWrapperLow): Object of Central node wrapper
+        central_node_low (CentralNodeWrapperLow): Object of Central node wrapper
         event_tracer(TangoEventTracer): Object of TangoEventTracer used for
         managing the device events
     """
 
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
+        "FAILED ASSUMPTION AFTER ABORT COMMAND: "
         "Central Node device"
         f"({central_node_low.central_node.dev_name()}) "
         "is expected have longRunningCommandResult"
@@ -255,7 +255,7 @@ def check_central_node_lrcr(
         ),
     )
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
+        "FAILED ASSUMPTION AFTER ABORT COMMAND: "
         "CSP Node device"
         f"({central_node_low.csp_subarray_leaf_node.dev_name()}) "
         "is expected have longRunningCommandResult"
@@ -269,7 +269,7 @@ def check_central_node_lrcr(
         ),
     )
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
+        "FAILED ASSUMPTION AFTER ABORT COMMAND: "
         "SDP Node device"
         f"({central_node_low.sdp_subarray_leaf_node.dev_name()}) "
         "is expected have longRunningCommandResult"
@@ -283,7 +283,7 @@ def check_central_node_lrcr(
         ),
     )
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
+        "FAILED ASSUMPTION AFTER ABORT COMMAND: "
         "Central Node device"
         f"({central_node_low.central_node.dev_name()}) "
         "is expected have longRunningCommandResult"
