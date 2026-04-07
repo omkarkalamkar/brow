@@ -5,10 +5,10 @@ This keeps the same BDD feature
 (`tests/features/tmc/xtp-106948_tmc_observation.feature`).
 """
 
-
 import json
 import logging
 import re
+import time
 from pathlib import Path
 
 import pytest
@@ -17,10 +17,15 @@ from pytest_bdd import given, parsers, scenario, then, when
 from ska_control_model import ObsState
 from ska_ser_logging import configure_logging
 from ska_tango_testing.integration import TangoEventTracer, log_events
+from ska_telmodel.schema import validate as telmodel_validate
 from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
-from tests.resources.test_harness.constant import TIMEOUT
+from tests.resources.test_harness.constant import (
+    INITIAL_LOW_DELAY_JSON,
+    LOW_DELAYMODEL_VERSION,
+    TIMEOUT,
+)
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
@@ -503,6 +508,26 @@ def _wait_for_configure_ready_and_lrcr_ok(
             )
 
 
+def _delay_model_attributes_from_active_plan() -> list[str]:
+    """Return delay-model attribute names, derived from the active plan."""
+    plan_map = _parse_plan_map(pytest.PlanMap)
+    first_sa_id = pytest.active_subarray_ids[0]
+    plan_name = plan_map.get(first_sa_id)
+    plan = _load_plan_json(plan_name)
+    per_sn = plan.get(str(first_sa_id), plan)
+
+    station_count = len(per_sn.get("station_beams", []))
+    pss_count = len(per_sn.get("pss_beams", []))
+    pst_count = len(per_sn.get("pst_beams", []))
+
+    pss_attrs = [f"delayModelPSSBeam{i}" for i in range(1, pss_count + 1)]
+    pst_attrs = [f"delayModelPSTBeam{i}" for i in range(1, pst_count + 1)]
+    stn_attrs = [
+        f"delaymodelstationbeam0{i}" for i in range(1, station_count + 1)
+    ]
+    return pss_attrs + pst_attrs + stn_attrs
+
+
 @pytest.mark.SKA_tmc_low_multiple_subarrays
 @scenario(
     "../features/tmc/xtp-106948_tmc_observation.feature",
@@ -588,6 +613,7 @@ def assign_using_plan_map(
     PlanMap: str,
 ):
     """Assign resources for active subarrays from PlanMap."""
+    pytest.PlanMap = PlanMap
     plan_map = _parse_plan_map(PlanMap)
     pytest.active_subarray_ids = _active_subarray_ids_from_plan_map(
         plan_map, pytest.sn_count
@@ -711,6 +737,54 @@ def verify_subarray_in_ready_observation_state(
         configure_unique_ids=pytest.configure_unique_ids,
     )
     event_tracer.clear_events()
+
+    wait_time = time.time() + 10
+    attributes = _delay_model_attributes_from_active_plan()
+    generated_delay_model_json = INITIAL_LOW_DELAY_JSON
+    for attribute in attributes:
+        while time.time() < wait_time:
+
+            generated_delay_model = (
+                subarray_node_low.csp_subarray_leaf_node.read_attribute(
+                    attribute
+                ).value
+            )
+            if (
+                generated_delay_model is None
+                or str(generated_delay_model).strip() == ""
+            ):
+
+                continue
+
+            generated_delay_model_json = json.loads(generated_delay_model)
+            logging.debug(
+                "Generated %s Delay Model json: %s",
+                attribute,
+                generated_delay_model_json,
+            )
+            if generated_delay_model_json != INITIAL_LOW_DELAY_JSON:
+                break
+            time.sleep(1)
+
+        assert (
+            generated_delay_model_json != INITIAL_LOW_DELAY_JSON
+        ), f"{attribute} has not been updated from initial values"
+        assert len(generated_delay_model_json["station_beam_delays"]) == 68
+
+        # for expected_station_id, delay in enumerate(
+        #     generated_delay_model_json["station_beam_delays"], start=1
+        # ):
+        #     assert delay.get("station_id") == expected_station_id, (
+        #         f"{attribute} has incorrect station_id order at index "
+        #       f"{expected_station_id - 1}: expected {expected_station_id}, "
+        #         f"got {delay.get('station_id')}"
+        #     )
+
+        telmodel_validate(
+            version=LOW_DELAYMODEL_VERSION,
+            config=generated_delay_model_json,
+            strictness=2,
+        )
 
 
 @when("I scan on all configured subarrays")
