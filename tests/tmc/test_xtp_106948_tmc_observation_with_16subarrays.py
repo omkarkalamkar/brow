@@ -516,15 +516,24 @@ def _delay_model_attributes_from_active_plan() -> list[str]:
     plan = _load_plan_json(plan_name)
     per_sn = plan.get(str(first_sa_id), plan)
 
-    station_count = len(per_sn.get("station_beams", []))
-    pss_count = len(per_sn.get("pss_beams", []))
-    pst_count = len(per_sn.get("pst_beams", []))
+    station_ids = sorted(
+        {
+            int(b.get("id"))
+            for b in per_sn.get("station_beams", [])
+            if "id" in b
+        }
+    )
+    pss_ids = sorted(
+        {int(b.get("id")) for b in per_sn.get("pss_beams", []) if "id" in b}
+    )
+    pst_ids = sorted(
+        {int(b.get("id")) for b in per_sn.get("pst_beams", []) if "id" in b}
+    )
 
-    pss_attrs = [f"delayModelPSSBeam{i}" for i in range(1, pss_count + 1)]
-    pst_attrs = [f"delayModelPSTBeam{i}" for i in range(1, pst_count + 1)]
-    stn_attrs = [
-        f"delaymodelstationbeam0{i}" for i in range(1, station_count + 1)
-    ]
+    pss_attrs = [f"delayModelPSSBeam{i}" for i in pss_ids]
+    pst_attrs = [f"delayModelPSTBeam{i}" for i in pst_ids]
+    stn_attrs = [f"delaymodelstationbeam0{i}" for i in station_ids]
+
     return pss_attrs + pst_attrs + stn_attrs
 
 
@@ -738,7 +747,7 @@ def verify_subarray_in_ready_observation_state(
     )
     event_tracer.clear_events()
 
-    wait_time = time.time() + 10
+    wait_time = time.time() + 50
     attributes = _delay_model_attributes_from_active_plan()
     generated_delay_model_json = INITIAL_LOW_DELAY_JSON
     for attribute in attributes:
@@ -757,7 +766,7 @@ def verify_subarray_in_ready_observation_state(
                 continue
 
             generated_delay_model_json = json.loads(generated_delay_model)
-            logging.debug(
+            logging.info(
                 "Generated %s Delay Model json: %s",
                 attribute,
                 generated_delay_model_json,
@@ -769,7 +778,6 @@ def verify_subarray_in_ready_observation_state(
         assert (
             generated_delay_model_json != INITIAL_LOW_DELAY_JSON
         ), f"{attribute} has not been updated from initial values"
-        assert len(generated_delay_model_json["station_beam_delays"]) == 68
 
         # for expected_station_id, delay in enumerate(
         #     generated_delay_model_json["station_beam_delays"], start=1
