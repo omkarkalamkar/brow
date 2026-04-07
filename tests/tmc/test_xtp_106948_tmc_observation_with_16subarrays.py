@@ -1,4 +1,3 @@
-# flake8: noqa: E501
 """test_tmc_observation_with_16subarrays_fast
 This module defines BDD test scenario for the successful execution of
 of end to end observstion for 16 subarrays
@@ -9,6 +8,7 @@ This keeps the same BDD feature
 import json
 import logging
 import re
+import time
 from pathlib import Path
 
 import pytest
@@ -17,14 +17,15 @@ from pytest_bdd import given, parsers, scenario, then, when
 from ska_control_model import ObsState
 from ska_ser_logging import configure_logging
 from ska_tango_testing.integration import TangoEventTracer, log_events
-
-# from ska_telmodel.schema import validate as telmodel_validate
+from ska_telmodel.schema import validate as telmodel_validate
 from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
-
-# INITIAL_LOW_DELAY_JSON,; LOW_DELAYMODEL_VERSION,
-from tests.resources.test_harness.constant import TIMEOUT
+from tests.resources.test_harness.constant import (
+    INITIAL_LOW_DELAY_JSON,
+    LOW_DELAYMODEL_VERSION,
+    TIMEOUT,
+)
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
@@ -762,59 +763,48 @@ def verify_subarray_in_ready_observation_state(
         logging.info(
             "attributes for subarray_id  %s are ---%s", subarray_id, attributes
         )
+        generated_delay_model_json = INITIAL_LOW_DELAY_JSON
+        for attribute in attributes:
+            wait_time = time.time() + 10
+            logging.info("chekcing for attribute %s", attribute)
+            while time.time() < wait_time:
 
-    assert False
-    # generated_delay_model_json = INITIAL_LOW_DELAY_JSON
-    # for attribute in attributes:
-    #     wait_time = time.time() + 10
-    #     logging.info("chekcing for attribute %s", attribute)
-    #     while time.time() < wait_time:
+                generated_delay_model = (
+                    subarray_node_low.csp_subarray_leaf_node.read_attribute(
+                        attribute
+                    ).value
+                )
+                if (
+                    generated_delay_model is None
+                    or str(generated_delay_model).strip() == ""
+                ):
+                    logging.info(
+                        "Attribute %s returned empty value, for %s",
+                        attribute,
+                        subarray_node_low.csp_subarray_leaf_node.dev_name(),
+                    )
 
-    #         generated_delay_model = (
-    #             subarray_node_low.csp_subarray_leaf_node.read_attribute(
-    #                 attribute
-    #             ).value
-    #         )
-    #         if (
-    #             generated_delay_model is None
-    #             or str(generated_delay_model).strip() == ""
-    #         ):
-    #             logging.info(
-    #                 "Attribute %s returned empty value, for %s",
-    #                 attribute,
-    #                 subarray_node_low.csp_subarray_leaf_node.dev_name(),
-    #             )
+                    continue
 
-    #             continue
+                generated_delay_model_json = json.loads(generated_delay_model)
+                logging.info(
+                    "Generated %s Delay Model json: %s",
+                    attribute,
+                    generated_delay_model_json,
+                )
+                if generated_delay_model_json != INITIAL_LOW_DELAY_JSON:
+                    break
+                time.sleep(1)
 
-    #         generated_delay_model_json = json.loads(generated_delay_model)
-    #         logging.info(
-    #             "Generated %s Delay Model json: %s",
-    #             attribute,
-    #             generated_delay_model_json,
-    #         )
-    #         if generated_delay_model_json != INITIAL_LOW_DELAY_JSON:
-    #             break
-    #         time.sleep(1)
+            assert (
+                generated_delay_model_json != INITIAL_LOW_DELAY_JSON
+            ), f"{attribute} has not been updated from initial values"
 
-    #     assert (
-    #         generated_delay_model_json != INITIAL_LOW_DELAY_JSON
-    #     ), f"{attribute} has not been updated from initial values"
-
-    #     # for expected_station_id, delay in enumerate(
-    #     #     generated_delay_model_json["station_beam_delays"], start=1
-    #     # ):
-    #     #     assert delay.get("station_id") == expected_station_id, (
-    #     #         f"{attribute} has incorrect station_id order at index "
-    #     #   f"{expected_station_id - 1}: expected {expected_station_id}, "
-    #     #         f"got {delay.get('station_id')}"
-    #     #     )
-
-    #     telmodel_validate(
-    #         version=LOW_DELAYMODEL_VERSION,
-    #         config=generated_delay_model_json,
-    #         strictness=2,
-    #     )
+            telmodel_validate(
+                version=LOW_DELAYMODEL_VERSION,
+                config=generated_delay_model_json,
+                strictness=2,
+            )
 
 
 @when("I scan on all configured subarrays")
