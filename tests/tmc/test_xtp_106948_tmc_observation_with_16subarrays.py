@@ -747,10 +747,11 @@ def verify_subarray_in_ready_observation_state(
     )
     event_tracer.clear_events()
 
-    wait_time = time.time() + 50
     attributes = _delay_model_attributes_from_active_plan()
     generated_delay_model_json = INITIAL_LOW_DELAY_JSON
     for attribute in attributes:
+        wait_time = time.time() + 10
+        logging.info("chekcing for attribute %s", attribute)
         while time.time() < wait_time:
 
             generated_delay_model = (
@@ -762,6 +763,7 @@ def verify_subarray_in_ready_observation_state(
                 generated_delay_model is None
                 or str(generated_delay_model).strip() == ""
             ):
+                logging.info("Trying again")
 
                 continue
 
