@@ -235,7 +235,8 @@ def check_central_node_lrcr(
     attribute's desired event.
 
     Args:
-        central_node_low (CentralNodeWrapperLow): Object of Central node wrapper
+        central_node_low (CentralNodeWrapperLow): Object of Central node
+        wrapper
         event_tracer(TangoEventTracer): Object of TangoEventTracer used for
         managing the device events
     """
