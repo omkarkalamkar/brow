@@ -264,7 +264,7 @@ Feature: Multi-subarray observation plans
           {"id": 5, "stations": [1, 2, 3,4,5,6]},
           {"id": 6, "stations": [1, 2, 3,4,5,6]},
           {"id": 7, "stations": [1, 2, 3,4,5,6]},
-          {"id": 8, "stations": [1, 2, 3,4,5,6]}.
+          {"id": 8, "stations": [1, 2, 3,4,5,6]},
           {"id": 10, "stations": [1, 2, 3,4,5,6]}
           
         ],
