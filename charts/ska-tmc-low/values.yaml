@@ -80,7 +80,7 @@ subarraynode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-subarraynode
-    tag: 1.2.1
+    tag: 1.4.0
     pullPolicy: IfNotPresent
 
 sdpleafnodes:
@@ -108,14 +108,14 @@ mccsmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag:  0.15.0
+    tag: 0.15.2
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag:  0.15.0
+    tag: 0.15.2
     pullPolicy: IfNotPresent
 
 resource_monitor:
@@ -173,6 +173,7 @@ deviceServers:
     ScanStartTimeOffset: 10
     StartTimeEnabled: false
     LoggingLevel: "4"
+    PreRecoveryCheckTimeDuration: 1.0
 
   sdpsubarrayleafnode:
     enabled: true

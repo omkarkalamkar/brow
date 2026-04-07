@@ -104,7 +104,7 @@ k8s-test:
     - make k8s-install-chart
     - make k8s-wait
   script:
-    - make k8s-test MARK=SKA_tmc_low_four_subarrays
+    - make k8s-test 
     - make k8s-test MARK=test_end
     - |
       if [[ "$CI_KEEP_NAMESPACE" != "true" ]]; then
@@ -154,44 +154,48 @@ stop-k8s-test-tmc-low-negative-tests:
   variables:
     KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-negative-tests'
 
-# k8s-test-tmc-low-four-subarrays:
-#   extends:
-#     - k8s-test
-#   variables:
-#     KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-four-subarrays'
-#     SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-four-subarrays"
-#     SUBARRAY_COUNT: 4
-#     MARK: 'SKA_tmc_low_four_subarrays'
-#     COUNT: 1
-#   before_script:
-#     - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
-#     - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
-#     - 'make help | grep k8s-test'
-#     - make k8s-install-chart
-#     - make k8s-wait
-#   script:
-#     - make k8s-test
-#     - |
-#       if [[ "$CI_KEEP_NAMESPACE" != "true" ]]; then
-#         make k8s-uninstall-chart || true
-#         make k8s-delete-namespace || true
-#       fi;
-#     - '[ -f build/status ] || (echo "Something went wrong with the test (no build/status file); exit 1")'
-#     - exit $(cat build/status)
-#   after_script:
-#     - pip3 install -q -U ska-ser-xray
-#     - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
-#   environment:
-#     name: test/$CI_COMMIT_REF_SLUG
-#     on_stop: stop-k8s-test-tmc-low-four-subarrays
-#   rules:
-#     - if: '$CI_PIPELINE_SOURCE == "schedule"'
 
-# stop-k8s-test-tmc-low-four-subarrays:
-#   extends:
-#     - stop-k8s-test
-#   variables:
-#     KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-four-subarrays'
+k8s-test-tmc-low-four-subarrays:
+  extends:
+    - k8s-test
+  variables:
+    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-four-subarrays'
+    SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-four-subarrays"
+    SUBARRAY_COUNT: 4
+    MARK: 'SKA_tmc_low_four_subarrays'
+    COUNT: 1
+  before_script:
+    - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
+    - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
+    - 'make help | grep k8s-test'
+    - make k8s-install-chart
+    - make k8s-wait
+  script:
+    - make k8s-test
+    - |
+      if [[ "$CI_KEEP_NAMESPACE" != "true" ]]; then
+        make k8s-uninstall-chart || true
+        make k8s-delete-namespace || true
+      fi;
+    - '[ -f build/status ] || (echo "Something went wrong with the test (no build/status file); exit 1")'
+    - exit $(cat build/status)
+  after_script:
+    - pip3 install -q -U ska-ser-xray
+    - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
+  environment:
+    name: test/$CI_COMMIT_REF_SLUG
+    on_stop: stop-k8s-test-tmc-low-four-subarrays
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+
+stop-k8s-test-tmc-low-four-subarrays:
+  extends:
+    - stop-k8s-test
+  variables:
+    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-four-subarrays'
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+
 
 k8s-tmc-scaling:
   stage: scaling
@@ -209,7 +213,8 @@ k8s-tmc-scaling:
     TARANTA_ENABLED: "true"
   script:
     - make taranta-link
-    - make k8s-test MARK=SKA_tmc_low_16_subarrays
+    - make k8s-test MARK=SKA_tmc_low_multiple_subarrays
+
   environment:
     name: ska-tmc-staging-env
     auto_stop_in: never

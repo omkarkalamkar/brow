@@ -1,15 +1,22 @@
 """Test Telescope Health State"""
+
+
 import time
 
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
 from ska_tango_base.control_model import HealthState
+from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DevState
 
+from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.helpers import (
     get_device_simulators,
     get_master_device_simulators,
+)
+from tests.resources.test_harness.subarray_node_low import (
+    SubarrayNodeWrapperLow,
 )
 
 state = {}
@@ -51,8 +58,58 @@ def test_telescope_health_state_unknown():
     """Test telescope healthstate"""
 
 
+def _setup_event_subscriptions(
+    event_tracer: TangoEventTracer,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    central_node_low: CentralNodeWrapperLow,
+):
+    """Subscribe TMC, CSP and SDP devices to track and log healthstate events.
+
+    :param subarray_node_low: the subarray node wrapper.
+    :param central_node_low: the central node wrapper.
+    :param event_tracer: the event tracer.
+    """
+    event_tracer.subscribe_event(
+        subarray_node_low.subarray_node, "healthState"
+    )
+    event_tracer.subscribe_event(
+        central_node_low.central_node, "telescopeHealthState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.csp_subarray1, "healthState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.sdp_subarray1, "healthState"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.mccs_subarray1, "healthState"
+    )
+    event_tracer.subscribe_event(
+        central_node_low.csp_master_leaf_node, "healthState"
+    )
+    event_tracer.subscribe_event(
+        central_node_low.sdp_master_leaf_node, "healthState"
+    )
+    event_tracer.subscribe_event(
+        central_node_low.mccs_master_leaf_node, "healthState"
+    )
+
+    log_events(
+        {
+            subarray_node_low.subarray_node: ["healthState"],
+            central_node_low.central_node: ["telescopeHealthState"],
+            subarray_node_low.csp_subarray1: ["healthState"],
+            subarray_node_low.sdp_subarray1: ["healthState"],
+            subarray_node_low.mccs_subarray1: ["healthState"],
+            central_node_low.csp_master_leaf_node: ["healthState"],
+            central_node_low.sdp_master_leaf_node: ["healthState"],
+            central_node_low.mccs_master_leaf_node: ["healthState"],
+        },
+    )
+
+
 @given("the telescope is ON")
-def telescope_on(central_node_low, event_tracer):
+def telescope_on(central_node_low, subarray_node_low, event_tracer):
     """Turn On the telescope"""
     event_tracer.clear_events()
     central_node_low.move_to_on()
@@ -61,6 +118,9 @@ def telescope_on(central_node_low, event_tracer):
     )
     assert_that(event_tracer).has_change_event_occurred(
         central_node_low.central_node, "telescopeState", DevState.ON
+    )
+    _setup_event_subscriptions(
+        event_tracer, subarray_node_low, central_node_low
     )
 
 
@@ -114,6 +174,7 @@ def set_all_ok_health(simulator_factory):
 @when("health states are applied")
 def apply_health_states():
     """Apply the healthstate to devices"""
+
     for name in ["csp", "sdp", "mccs"]:
         device = state[name]
         raw_state = state.get(f"{name}_state", "OK")
@@ -126,9 +187,6 @@ def check_telescope_health_state(
     event_tracer, central_node_low, expected_state
 ):
     """Verify the telescope healthstate"""
-    event_tracer.subscribe_event(
-        central_node_low.central_node, "telescopeHealthState"
-    )
     assert_that(event_tracer).has_change_event_occurred(
         central_node_low.central_node,
         "telescopeHealthState",
@@ -139,9 +197,7 @@ def check_telescope_health_state(
 @then("the subarray healthState should be OK")
 def check_subarray_health(event_tracer, subarray_node_low):
     """Verify the subarray healthstate"""
-    event_tracer.subscribe_event(
-        subarray_node_low.subarray_node, "healthState"
-    )
+
     assert_that(event_tracer).has_change_event_occurred(
         subarray_node_low.subarray_node, "healthState", HealthState.OK
     )

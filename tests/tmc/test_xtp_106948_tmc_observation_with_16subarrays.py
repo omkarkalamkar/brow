@@ -503,7 +503,7 @@ def _wait_for_configure_ready_and_lrcr_ok(
             )
 
 
-@pytest.mark.SKA_tmc_low_16_subarrays
+@pytest.mark.SKA_tmc_low_multiple_subarrays
 @scenario(
     "../features/tmc/xtp-106948_tmc_observation.feature",
     "Execute observation using <SNCount> subarrays with plan map <PlanMap>",

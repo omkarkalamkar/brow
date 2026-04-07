@@ -1,7 +1,6 @@
 """Test Subarray Node Healthinfo"""
 
 import json
-import time
 
 import pytest
 from assertpy import assert_that
@@ -10,6 +9,10 @@ from ska_control_model import HealthState
 from ska_tango_testing.mock.placeholders import Anything
 
 from tests.resources.test_harness.helpers import LOGGER, get_device_simulators
+from tests.resources.test_harness.subarray_node_low import (
+    SubarrayNodeWrapperLow,
+)
+from tests.tmc.conftest import _setup_event_subscriptions_for_healthstate
 
 state = {}
 
@@ -24,9 +27,15 @@ def test_subarray_health_combined_states():
 
 
 @given(parsers.parse("CSP health is {csp_health}"))
-def set_csp_health(simulator_factory, csp_health, event_tracer):
+def set_csp_health(
+    simulator_factory,
+    csp_health,
+    event_tracer,
+    subarray_node_low: SubarrayNodeWrapperLow,
+):
     """Set the CSP healthstate"""
     event_tracer.clear_events()
+    _setup_event_subscriptions_for_healthstate(event_tracer, subarray_node_low)
     csp, _, _ = get_device_simulators(simulator_factory)
     state["csp"] = csp
     state["csp_health"] = csp_health
@@ -49,13 +58,21 @@ def set_mccs_health(simulator_factory, mccs_health):
 
 
 @when("health states are applied")
-def apply_subarray_health_states():
+def apply_subarray_health_states(event_tracer):
     """Apply the subarray healthstate"""
+
     for name in ["csp", "sdp", "mccs"]:
         device = state[name]
         raw_state = state.get(f"{name}_health", "OK")
-        device.SetDirectHealthState(HealthState[raw_state])
-        time.sleep(0.2)
+        expected = HealthState[raw_state]
+
+        device.SetDirectHealthState(expected)
+
+        assert_that(event_tracer).described_as(
+            f"Expected a healthState change event for {name.upper()}"
+        ).within_timeout(2).has_change_event_occurred(
+            device, "healthState", expected
+        )
 
 
 @then(
@@ -65,13 +82,14 @@ def check_subarray_node_health(
     event_tracer, subarray_node_low, expected_health
 ):
     """Check the subarray healthstate"""
-    event_tracer.subscribe_event(
-        subarray_node_low.subarray_node, "healthState"
-    )
-    assert_that(event_tracer).has_change_event_occurred(
+    expected = HealthState[expected_health]
+
+    assert_that(event_tracer).described_as(
+        "Expected a healthState change event for Subarray Node"
+    ).within_timeout(2).has_change_event_occurred(
         subarray_node_low.subarray_node,
         "healthState",
-        HealthState[expected_health],
+        expected,
     )
 
 

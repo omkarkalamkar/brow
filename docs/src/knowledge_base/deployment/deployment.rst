@@ -150,9 +150,13 @@ done carefully.
 
 #. **subarray_devices** : List of subarray-devices
 
-#. **LoggingLevel** : To set the logging level of specific type of TMC component, set this key under deviceServers -> <component name> in values.yaml. This is optional parameter. If specified, it takes precedence over the value
-specified in TMCLoggingLevel in global section.
+#. **LoggingLevel** : To set the logging level for a specific TMC component,
+   define this key under ``deviceServers -> <component_name>`` in ``values.yaml``.
 
+   This is an optional parameter. If specified, it takes precedence over the
+   value set in ``TMCLoggingLevel`` under the global section.
+
+.. _deployment-section:
 
 Component specific configuration
 ---------------------------------
@@ -193,8 +197,12 @@ Subarray Node
     #. **TelmodelPath** :  This refers to the TelmodelPath of SubarrayNode TANGO device. Currently defaults to "instrument/ska1_low/layout/low-layout.json".
     #. **ScanStartTimeOffset** :  This refers to the offset (in nanoseconds) that can be added when TMC determines scan time. Currently defaults to 10 nanoseconds.
     #. **StartTimeEnabled** :  This refers to the property provided to enable/disable start_time in Scan JSON. Currently defaults to false.
+    #. **PreRecoveryCheckTimeDuration** : This property refers to time duration subarray node needs to wait before evaluating the auto recovery condition. Within the time duration if the subsystems transition into final/previous observation state then the auto recovery can be proceeded as per conditions. Default value is 1 second.
 
-SDP Subarray Leaf Node
+        .. note::
+            The `PreRecoveryCheckTimeDuration` property is introduced to handle a specific edge case in the automatic recovery of the subarray. It is recommended to NOT modify the default value without prior understanding of the behaviour of the Subarray Node auto recovery mechanics. Please refer auto recovery documentaPreRecoveryCheckTimeDurationtion for more details :ref:`Recovering TMC Low`.
+
+SDP Subarray Leaf Node   
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
