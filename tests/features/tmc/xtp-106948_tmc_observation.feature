@@ -10,6 +10,7 @@ Feature: Multi-subarray observation
     #   (e.g. {"1":"PlanA","2":"PlanB"}). Each plan name maps to a plan
     #   definition stored in `tmc_observation_plans.feature`.
 
+    @XTP-106948 @XTP-28348 @TEAM_SAHYADRI
     Scenario Outline: Execute observation using <SNCount> subarrays with plan map <PlanMap>
         Given the telescope is in the ON state
         And <SNCount> subarrays are in the EMPTY ObsState

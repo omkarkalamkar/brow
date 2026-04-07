@@ -292,7 +292,6 @@ class CentralNodeWrapperLow(object):
     def tear_down(self):
         """Handle Tear down of central Node"""
         LOGGER.info("Calling Tear down for Central node.")
-
         # reset HealthState.UNKNOWN for mock devices
         self._reset_health_state_for_mock_devices()
         self.reset_defects_for_devices()

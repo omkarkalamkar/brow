@@ -23,9 +23,6 @@ from tests.resources.test_harness.constant import (
     tmc_low_subarraynode1,
 )
 from tests.resources.test_harness.event_recorder import EventRecorder
-
-# add here
-# check_subarray_obs_state,; wait_for_partial_or_complete_abort,
 from tests.resources.test_harness.helpers import (
     check_subarray_obs_state,
     get_device_dict,
@@ -53,9 +50,6 @@ from tests.resources.test_harness.utils.sync_decorators import (
     sync_restart,
 )
 from tests.resources.test_support.common_utils.common_helpers import Resource
-
-# from time import sleep
-
 
 TIMEOUT = 100
 
