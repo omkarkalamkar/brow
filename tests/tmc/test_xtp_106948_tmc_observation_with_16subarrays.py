@@ -512,6 +512,9 @@ def _delay_model_attributes_from_active_plan() -> list[str]:
     """Return delay-model attribute names, derived from the active plan."""
     plan_map = _parse_plan_map(pytest.PlanMap)
     first_sa_id = pytest.active_subarray_ids[0]
+    logging.info(
+        "pytest.active_subarray_ids[0] %s", pytest.active_subarray_ids[0]
+    )
     plan_name = plan_map.get(first_sa_id)
     plan = _load_plan_json(plan_name)
     per_sn = plan.get(str(first_sa_id), plan)
@@ -748,6 +751,7 @@ def verify_subarray_in_ready_observation_state(
     event_tracer.clear_events()
 
     attributes = _delay_model_attributes_from_active_plan()
+    logging.info("attributes %s", attributes)
     generated_delay_model_json = INITIAL_LOW_DELAY_JSON
     for attribute in attributes:
         wait_time = time.time() + 10
@@ -763,7 +767,11 @@ def verify_subarray_in_ready_observation_state(
                 generated_delay_model is None
                 or str(generated_delay_model).strip() == ""
             ):
-                logging.info("Trying again")
+                logging.info(
+                    "Attribute %s returned empty value, for %s",
+                    attribute,
+                    subarray_node_low.csp_subarray_leaf_node.dev_name(),
+                )
 
                 continue
 
