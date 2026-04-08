@@ -133,7 +133,7 @@ k8s-test-tmc-low-negative-tests:
     - make k8s-install-chart
     - make k8s-wait
   script:
-    - make k8s-test 
+    - make k8s-test
     - |
       if [[ "$CI_KEEP_NAMESPACE" != "true" ]]; then
         make k8s-uninstall-chart || true
@@ -192,7 +192,8 @@ stop-k8s-test-tmc-low-four-subarrays:
     - stop-k8s-test
   variables:
     KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-four-subarrays'
-
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
 k8s-tmc-scaling:
   stage: scaling
   when: manual
