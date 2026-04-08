@@ -198,7 +198,7 @@ def _apply_lowcbf_search_beams(cfg: dict, pss_beams: list[dict]) -> None:
     search_beams["beams"] = [
         {
             "pss_beam_id": int(pss_beam["id"]),
-            "stn_beam_id": int(pss_beam.get("stn_beam_id", pss_beam["id"])),
+            "stn_beam_id": int(pss_beam.get("stn_beam_id", 1)),
             "stn_weights": pss_beam.get(
                 "stn_weights", [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
             ),
