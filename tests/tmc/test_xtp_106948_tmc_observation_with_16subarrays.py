@@ -184,7 +184,7 @@ def _apply_lowcbf_timing_beams(cfg: dict, pst_beams: list[dict]) -> None:
                     "pm_c2": -3.3,
                 },
             },
-            "stn_beam_id": int(pst_beam.get("stn_beam_id", pst_beam["id"])),
+            "stn_beam_id": int(pst_beam.get("stn_beam_id", 1)),
             "stn_weights": pst_beam.get(
                 "stn_weights", [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
             ),
