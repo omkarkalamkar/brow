@@ -69,7 +69,7 @@ Feature: Multi-subarray observation plans
           
           
         ],
-        "pss_beams": [{"id": 2, "stations": [3, 4]}],
+        "pss_beams": [{"id": 25, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ]
@@ -180,6 +180,7 @@ Feature: Multi-subarray observation plans
     #This scenario checks if TMC is able to process 8 subarry beams,
     #1 PSS beam and 2 PST beams and PSS and PST beams do not share stations
     #Also staion beams do no share staions with PSS and PST beams
+    #Note - This is not working currently 
     
 
       Scenario: PlanA4
