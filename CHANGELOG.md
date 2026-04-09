@@ -9,7 +9,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 *************
 Updated
 -------
-* Central
+* Central node
 
 [2.14.0-rc.1]
 *************
