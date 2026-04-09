@@ -274,17 +274,17 @@ ska-tango-transducer:
         - name: "qualitymonitor01"
           deviceName: "low-tmc/subarray-quality-monitor/01"
           readPeriod: "1000"
-          subscribedAttributes: ["health|low-csp/subarray/01/healthState"]
+          subscribedAttributes: ["health_csp|low-csp/subarray/01/healthState", "health_sdp|low-sdp/subarray/01/healthState"]
           readAttributes: []
           aggregatedClassAttributes: []
-          derivedAttributes: []
+          derivedAttributes: ["readyToScan1|Boolean|health_csp == 0"]
         - name: "qualitymonitor02"
           deviceName: "low-tmc/subarray-quality-monitor/02"
           readPeriod: "1000"
-          subscribedAttributes: ["health|low-csp/subarray/02/healthState"]
+          subscribedAttributes: ["health_csp|low-csp/subarray/02/healthState", "health_sdp|low-sdp/subarray/02/healthState"]
           readAttributes: []
           aggregatedClassAttributes: []
-          derivedAttributes: []
+          derivedAttributes: [["readyToScan2|Boolean|health_sdp == 0"]]
 
 
 nodeSelector: {}
