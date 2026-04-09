@@ -38,7 +38,7 @@ Feature: Multi-subarray observation plans
   Scenario: PlanB
     """
     {
-        "station_beams": [{"id": 3, "stations": [14, 15, 16]}],
+        "station_beams": [{"id": 1, "stations": [14, 15, 16]}],
         "pss_beams": [{"id": 3, "stations": [4, 5, 6]}],
         "pst_beams": []
     }
@@ -47,7 +47,7 @@ Feature: Multi-subarray observation plans
   Scenario: PlanC
     """
     {
-       "station_beams": [{"id": 2, "stations": [17, 18]}],
+       "station_beams": [{"id": 1, "stations": [17, 18]}],
         "pss_beams": [],
         "pst_beams": [{"id": 2, "stations": [7, 8]}]
     }
