@@ -101,10 +101,8 @@ Feature: Multi-subarray observation plans
     }
     """
 
-    """
-
-    This scenario checks if TMC is able to process 8 subarry beams,
-    1 PSS beam and 2 PST beams
+    #This scenario checks if TMC is able to process 8 subarry beams,
+    #1 PSS beam and 2 PST beams
       Scenario: PlanA1
     """
     {
@@ -221,7 +219,7 @@ Feature: Multi-subarray observation plans
           {"id": 2, "stations": [1, 2, 3,4,5,6]},
           {"id": 3, "stations": [1, 2, 3,4,5,6]},
           {"id": 4, "stations": [1, 2, 3,4,5,6]},
-          {"id": 5, "stations": [1, 2, 3,4,5,6]},
+          {"id": 5, "stations": [1, 2, 3,4,5,6]}
           
           
         ],

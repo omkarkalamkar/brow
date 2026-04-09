@@ -185,24 +185,8 @@ class SubarrayNodeWrapperLow:
         LOGGER.info("Invoked Configure on SubarrayNode")
         return result, message
 
-    def store_configuration_data_new(self, input_json: str):
-        """Invoke configure command on subarray Node
-        Args:
-            input_string (str): config input json
-        Returns:
-            (result, message): result, message tuple
-        """
-        result, message = self.subarray_node.Configure(input_json)
-        LOGGER.info("Invoked Configure on SubarrayNode")
-        return result, message
-
     @sync_end(device_dict=device_dict_low)
     def end_observation(self):
-        result, message = self.subarray_node.End()
-        LOGGER.info("Invoked End on SubarrayNode")
-        return result, message
-
-    def end_observation_new(self):
         result, message = self.subarray_node.End()
         LOGGER.info("Invoked End on SubarrayNode")
         return result, message
