@@ -39,7 +39,7 @@ Feature: Multi-subarray observation plans
     """
     {
         "station_beams": [{"id": 1, "stations": [14, 15, 16]}],
-        "pss_beams": [{"id": 3, "stations": [4, 5, 6]}],
+        "pss_beams": [{"id": 3, "stations": [14, 15, 16]}],
         "pst_beams": []
     }
     """
@@ -278,7 +278,7 @@ Feature: Multi-subarray observation plans
           {"id": 8, "stations": [1, 2, 3,4,5,6]}
           
         ],
-        "pss_beams": [{"id": 7, "stations": [3, 4]} , {"id": 21, "stations": [3, 4]} , {"id": 22, "stations": [3, 4]}],
+        "pss_beams": [{"id": 20, "stations": [3, 4]} , {"id": 21, "stations": [3, 4]} , {"id": 22, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [3, 4]},{"id": 2, "stations": [3, 4]}
         
         ]
