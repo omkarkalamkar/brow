@@ -249,6 +249,7 @@ def _apply_csp_pss(cfg: dict, pss_beams: list[dict]) -> None:
         return
 
     pss = cfg.setdefault("csp", {}).setdefault("pss", {})
+
     pss["beam"] = [
         {
             "beam_id": int(pss_beam["id"]),
