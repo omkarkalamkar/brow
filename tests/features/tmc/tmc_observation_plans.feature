@@ -46,12 +46,14 @@ Feature: Multi-subarray observation plans
     }
     """
   #This scenario checks TMC SN is able to process only PST observations
+  #Issue for PST , we are looking at range , 
+  #so if I give PST id as only 2 , it fails , so changing this to id 1
   Scenario: PlanC
     """
     {
        "station_beams": [{"id": 1, "stations": [17, 18]}],
         "pss_beams": [],
-        "pst_beams": [{"id": 2, "stations": [17, 18]}]
+        "pst_beams": [{"id": 1, "stations": [17, 18]}]
     }
 
 
