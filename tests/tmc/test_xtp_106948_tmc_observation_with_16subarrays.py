@@ -119,16 +119,19 @@ def _build_mccs_subarray_beams(
     for sb in station_beams:
         sb_id = int(sb.get("id", subarray_id))
 
+        # Currently relation in data in PSS beam ID and
+        # Subarray beam ID is not clear , hence as of now below
+        # Check wiht Subarray Beam Id is disabled
         stations_from_pss = [
             st
             for b in per_sn.get("pss_beams", [])
-            if int(b.get("id")) == sb_id
+            # if int(b.get("id")) == sb_id
             for st in b.get("stations", [])
         ]
         stations_from_pst = [
             st
             for b in per_sn.get("pst_beams", [])
-            if int(b.get("id")) == sb_id
+            # if int(b.get("id")) == sb_id
             for st in b.get("stations", [])
         ]
 
