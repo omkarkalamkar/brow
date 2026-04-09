@@ -269,14 +269,15 @@ deviceServers:
 
 ska-tango-transducer:
   deviceServers:
-    devices:
-      - name: "qualitymonitor"
-        deviceName: "low-tmc/subarray-quality-monitor/01"
-        readPeriod: "1000"
-        subscribedAttributes: []
-        readAttributes: []
-        aggregatedClassAttributes: []
-        derivedAttributes: []
+    transducer:
+      devices:
+        - name: "qualitymonitor"
+          deviceName: "low-tmc/subarray-quality-monitor/01"
+          readPeriod: "1000"
+          subscribedAttributes: []
+          readAttributes: []
+          aggregatedClassAttributes: []
+          derivedAttributes: []
 
 
 nodeSelector: {}
