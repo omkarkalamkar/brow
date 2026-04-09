@@ -41,7 +41,7 @@ Feature: Multi-subarray observation plans
     {
         "station_beams": [{"id": 1, "stations": [14, 15, 16]}],
         "pss_beams": [{"id": 23, "stations": [14, 15, 16]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}]
+        "pst_beams": [{"id": 1, "stations": [14]},{"id": 2, "stations": [15, 16]}]
         
     }
     """
@@ -51,7 +51,7 @@ Feature: Multi-subarray observation plans
     {
        "station_beams": [{"id": 1, "stations": [17, 18]}],
         "pss_beams": [],
-        "pst_beams": [{"id": 2, "stations": [7, 8]}]
+        "pst_beams": [{"id": 2, "stations": [17, 18]}]
     }
 
 
@@ -200,8 +200,8 @@ Feature: Multi-subarray observation plans
           {"id": 8, "stations": [11, 12, 13,14,15,16]}
           
         ],
-        "pss_beams": [{"id": 5, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
+        "pss_beams": [{"id": 5, "stations": [13, 14]}],
+        "pst_beams": [{"id": 1, "stations": [11, 12]},{"id": 2, "stations": [15, 16]}
         
         ]
       
