@@ -35,12 +35,14 @@ Feature: Multi-subarray observation plans
     }
     """
   #This scenarion checks TMC SN is able to process only PSS observations
+  #This did not work wiht PSS alone , so adding PST as of now
   Scenario: PlanB
     """
     {
         "station_beams": [{"id": 1, "stations": [14, 15, 16]}],
         "pss_beams": [{"id": 23, "stations": [14, 15, 16]}],
-        "pst_beams": []
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}]
+        
     }
     """
   #This scenario checks TMC SN is able to process only PST observations
