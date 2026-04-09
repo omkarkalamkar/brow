@@ -112,10 +112,9 @@ def _build_assign_json(
         stations_from_pst = [
             int(st) for b in pst_beams for st in b.get("stations", [])
         ]
-        stations_from_sb = [int(st) for st in sb.get("stations", [])]
 
-        station_ids = (
-            stations_from_pss or stations_from_pst or stations_from_sb
+        station_ids = sorted(
+            {int(s) for s in (stations_from_pss + stations_from_pst)}
         )
 
         apertures = [

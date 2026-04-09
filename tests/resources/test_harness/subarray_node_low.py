@@ -1,8 +1,9 @@
 import json
 import logging
+from time import sleep
 
 from assertpy import assert_that
-from ska_control_model import AdminMode  # , ObsState
+from ska_control_model import AdminMode, ObsState
 from ska_ser_logging import configure_logging
 from ska_tango_base.control_model import HealthState
 from ska_tango_testing.integration import TangoEventTracer
@@ -22,12 +23,11 @@ from tests.resources.test_harness.constant import (
     tmc_low_subarraynode1,
 )
 from tests.resources.test_harness.event_recorder import EventRecorder
-
-# add here
-# check_subarray_obs_state,; wait_for_partial_or_complete_abort,
 from tests.resources.test_harness.helpers import (
+    check_subarray_obs_state,
     get_device_dict,
     update_eb_pb_ids,
+    wait_for_partial_or_complete_abort,
 )
 from tests.resources.test_harness.utils.common_utils import JsonFactory
 from tests.resources.test_harness.utils.constant import (
@@ -50,9 +50,6 @@ from tests.resources.test_harness.utils.sync_decorators import (
     sync_restart,
 )
 from tests.resources.test_support.common_utils.common_helpers import Resource
-
-# from time import sleep
-
 
 TIMEOUT = 100
 
@@ -178,17 +175,6 @@ class SubarrayNodeWrapperLow:
 
     @sync_configure(device_dict=device_dict_low)
     def store_configuration_data(self, input_json: str):
-        """Invoke configure command on subarray Node
-        Args:
-            input_string (str): config input json
-        Returns:
-            (result, message): result, message tuple
-        """
-        result, message = self.subarray_node.Configure(input_json)
-        LOGGER.info("Invoked Configure on SubarrayNode")
-        return result, message
-
-    def store_configuration_data_new(self, input_json: str):
         """Invoke configure command on subarray Node
         Args:
             input_string (str): config input json
@@ -421,38 +407,39 @@ class SubarrayNodeWrapperLow:
             "Current Subarray Node ObsState is: %s",
             self.subarray_node.obsState,
         )
-        # self._reset_simulator_devices()
-        # self._clear_command_call_and_transition_data(clear_transition=True)
 
-        # if self.subarray_node.obsState in [
-        #     ObsState.SCANNING,
-        #     ObsState.CONFIGURING,
-        #     ObsState.RESOURCING,
-        #     ObsState.READY,
-        # ]:
-        #     # Invoke Abort and Restart
-        #     LOGGER.info("Invoking Abort on Subarray %s", subarray_id)
-        #     self.execute_transition("Abort")
-        #     wait_for_partial_or_complete_abort(subarray_id=subarray_id)
-        #     self.restart_subarray()
-        # elif self.subarray_node.obsState  [ObsState.ABORTED, ObsState.FAULT]:
-        #     # Invoke Restart
-        #     LOGGER.info("Invoking Restart on Subarray %s", subarray_id)
-        #     self.restart_subarray()
-        # elif self.subarray_node.obsState == ObsState.IDLE:
-        #     # Invoke Release
-        #     LOGGER.info("Invoking Release Resources on Subarray")
-        #     self.release_resources(self.release_input)
+        self._reset_simulator_devices()
+        self._clear_command_call_and_transition_data(clear_transition=True)
 
-        # else:
-        #     if self.subarray_node.obsstate != ObsState.EMPTY:
-        #         self.force_change_of_obs_state("EMPTY")
+        if self.subarray_node.obsState in [
+            ObsState.SCANNING,
+            ObsState.CONFIGURING,
+            ObsState.RESOURCING,
+            ObsState.READY,
+        ]:
+            # Invoke Abort and Restart
+            LOGGER.info("Invoking Abort on Subarray %s", subarray_id)
+            self.execute_transition("Abort")
+            wait_for_partial_or_complete_abort(subarray_id=subarray_id)
+            self.restart_subarray()
+        elif self.subarray_node.obsState in [ObsState.ABORTED, ObsState.FAULT]:
+            # Invoke Restart
+            LOGGER.info("Invoking Restart on Subarray %s", subarray_id)
+            self.restart_subarray()
+        elif self.subarray_node.obsState == ObsState.IDLE:
+            # Invoke Release
+            LOGGER.info("Invoking Release Resources on Subarray")
+            self.release_resources(self.release_input)
 
-        # assert check_subarray_obs_state("EMPTY")
-        # # Move Subarray to OFF state
-        # self.move_to_off()
-        # # Adding a small sleep to allow the systems to clean up processes
-        # sleep(1)
+        else:
+            if self.subarray_node.obsstate != ObsState.EMPTY:
+                self.force_change_of_obs_state("EMPTY")
+
+        assert check_subarray_obs_state("EMPTY")
+        # Move Subarray to OFF state
+        self.move_to_off()
+        # Adding a small sleep to allow the systems to clean up processes
+        sleep(1)
 
     def set_scan_id(self, scan_id: int, input_str: str) -> str:
         """

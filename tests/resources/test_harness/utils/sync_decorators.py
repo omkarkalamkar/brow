@@ -63,7 +63,6 @@ def sync_release_resources(device_dict, timeout=300):
     def decorator_sync_release_resources(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-
             the_waiter = Waiter(**device_dict)
             the_waiter.set_wait_for_going_to_empty()
             result = func(*args, **kwargs)
@@ -80,7 +79,6 @@ def sync_assign_resources(device_dict):
     def decorator_sync_assign_resources(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-
             device = DeviceUtils(
                 obs_state_device_names=[
                     device_dict.get("csp_subarray"),
@@ -141,7 +139,6 @@ def sync_configure(device_dict):
     def decorator_sync_configure(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-
             invoked_from_ready = False
             the_waiter = Waiter(**device_dict)
             if Resource(device_dict.get("tmc_subarraynode")) == "READY":
@@ -164,7 +161,6 @@ def sync_end(device_dict):
     def decorator_sync_end(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-
             the_waiter = Waiter(**device_dict)
             the_waiter.set_wait_for_idle()
             result = func(*args, **kwargs)
@@ -181,7 +177,6 @@ def sync_endscan(device_dict):
     def decorator_sync_endscan(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-
             the_waiter = Waiter(**device_dict)
             the_waiter.set_wait_for_ready()
             result = func(*args, **kwargs)

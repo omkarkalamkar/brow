@@ -140,7 +140,7 @@ deviceServers:
     SkuidService: "ska-ser-skuid-test-svc.ska-tmc-centralnode.svc.techops.internal.skao.int:9870"
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
-    CommandTimeOutDefault: 70
+    CommandTimeOutDefault: 80
     AssignResourcesInterface: "https://schema.skao.int/ska-low-tmc-assignresources/4.0"
     ReleaseResourcesInterface: "https://schema.skao.int/ska-low-tmc-releaseresources/3.0"
     family: "central-node"
