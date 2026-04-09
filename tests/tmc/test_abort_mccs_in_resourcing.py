@@ -60,6 +60,16 @@ def given_a_tmc(
     event_tracer.subscribe_event(
         central_node_low.mccs_master_leaf_node, "longRunningCommandResult"
     )
+    event_tracer.subscribe_event(
+        central_node_low.csp_subarray_leaf_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(
+        central_node_low.sdp_subarray_leaf_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(
+        central_node_low.subarray_node, "longRunningCommandResult"
+    )
+
     event_tracer.subscribe_event(central_node_low.subarray_node, "obsState")
     event_tracer.subscribe_event(
         central_node_low.csp_subarray_leaf_node, "cspSubarrayobsState"
@@ -74,9 +84,18 @@ def given_a_tmc(
                 "telescopeState",
                 "longRunningCommandResult",
             ],
-            central_node_low.subarray_node: ["obsState"],
-            central_node_low.csp_subarray_leaf_node: ["cspSubarrayObsState"],
-            central_node_low.sdp_subarray_leaf_node: ["sdpSubarrayObsState"],
+            central_node_low.subarray_node: [
+                "obsState",
+                "longRunningCommandResult",
+            ],
+            central_node_low.csp_subarray_leaf_node: [
+                "cspSubarrayObsState",
+                "longRunningCommandResult",
+            ],
+            central_node_low.sdp_subarray_leaf_node: [
+                "sdpSubarrayObsState",
+                "longRunningCommandResult",
+            ],
         }
     )
     central_node_low.move_to_on()
@@ -216,13 +235,14 @@ def check_central_node_lrcr(
     attribute's desired event.
 
     Args:
-        central_node (CentralNodeWrapperLow): Object of Central node wrapper
+        central_node_low (CentralNodeWrapperLow): Object of Central node
+        wrapper
         event_tracer(TangoEventTracer): Object of TangoEventTracer used for
         managing the device events
     """
 
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
+        "FAILED ASSUMPTION AFTER ABORT COMMAND: "
         "Central Node device"
         f"({central_node_low.central_node.dev_name()}) "
         "is expected have longRunningCommandResult"
@@ -236,7 +256,35 @@ def check_central_node_lrcr(
         ),
     )
     assert_that(event_tracer).described_as(
-        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
+        "FAILED ASSUMPTION AFTER ABORT COMMAND: "
+        "CSP Node device"
+        f"({central_node_low.csp_subarray_leaf_node.dev_name()}) "
+        "is expected have longRunningCommandResult"
+        '[0, "Command Completed"]',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.csp_subarray_leaf_node,
+        attribute_name="longRunningCommandResult",
+        attribute_value=(
+            Anything,
+            '[0, "Command Completed"]',
+        ),
+    )
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER ABORT COMMAND: "
+        "SDP Node device"
+        f"({central_node_low.sdp_subarray_leaf_node.dev_name()}) "
+        "is expected have longRunningCommandResult"
+        '[0, "Command Completed"]',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.sdp_subarray_leaf_node,
+        attribute_name="longRunningCommandResult",
+        attribute_value=(
+            Anything,
+            '[0, "Command Completed"]',
+        ),
+    )
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER ABORT COMMAND: "
         "Central Node device"
         f"({central_node_low.central_node.dev_name()}) "
         "is expected have longRunningCommandResult"

@@ -133,7 +133,7 @@ k8s-test-tmc-low-negative-tests:
     - make k8s-install-chart
     - make k8s-wait
   script:
-    - make k8s-test 
+    - make k8s-test
     - |
       if [[ "$CI_KEEP_NAMESPACE" != "true" ]]; then
         make k8s-uninstall-chart || true
