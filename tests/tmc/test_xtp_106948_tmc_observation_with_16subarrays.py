@@ -715,7 +715,7 @@ def configure_using_plan_map(
         cfg = json.loads(json.dumps(base_configure))
         _reset_configure_payload(cfg)
 
-        scan_duration = per_sn.get("scan_duration", 10)
+        scan_duration = float(per_sn.get("scan_duration", 10.0))
         cfg["tmc"]["scan_duration"] = scan_duration
 
         station_beams = per_sn.get("station_beams", [])
