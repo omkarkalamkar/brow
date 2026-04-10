@@ -9,7 +9,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 *************
 Updated
 -------
-* Central node
+* Central node and simulators
 
 [2.14.0-rc.1]
 *************
