@@ -31,7 +31,7 @@ Feature: Multi-subarray observation plans
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
         ],
-        "scan_duration": 600.0
+        "scan_duration": 1800.0
       
     }
     """
@@ -43,7 +43,7 @@ Feature: Multi-subarray observation plans
         "station_beams": [{"id": 1, "stations": [14, 15, 16]}],
         "pss_beams": [{"id": 23, "stations": [14, 15, 16]}],
         "pst_beams": [{"id": 1, "stations": [14]},{"id": 2, "stations": [15, 16]}],
-        "scan_duration": 600.0
+        "scan_duration": 1800.0
         
     }
     """
@@ -55,7 +55,7 @@ Feature: Multi-subarray observation plans
     {
        "station_beams": [{"id": 1, "stations": [17, 18]}],
         "pss_beams": [],
-        "pst_beams": [{"id": 1, "stations": [17, 18]}], "scan_duration": 600.0
+        "pst_beams": [{"id": 1, "stations": [17, 18]}], "scan_duration": 1800.0
     }
 
 
@@ -78,7 +78,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 27, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
@@ -102,7 +102,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 25, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
@@ -127,7 +127,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 2, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
@@ -152,7 +152,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 3, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
@@ -179,7 +179,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 4, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
@@ -207,7 +207,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 5, "stations": [13, 14]}],
         "pst_beams": [{"id": 1, "stations": [11, 12]},{"id": 2, "stations": [15, 16]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
@@ -233,7 +233,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 6, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
@@ -259,7 +259,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 7, "stations": [3, 4]} , {"id": 21, "stations": [3, 4]} , {"id": 22, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
@@ -287,7 +287,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 20, "stations": [3, 4]} , {"id": 26, "stations": [3, 4]} , {"id": 24, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [3, 4]},{"id": 2, "stations": [3, 4]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
@@ -314,7 +314,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 9, "stations": [1]}],
         "pst_beams": [{"id": 1, "stations": [1]},{"id": 2, "stations": [1]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
@@ -337,7 +337,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 10, "stations": [4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
@@ -361,7 +361,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 11, "stations": [3, 1]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
@@ -387,7 +387,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 12, "stations": [4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
@@ -413,7 +413,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 13, "stations": [6]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
@@ -439,7 +439,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 14, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
@@ -465,7 +465,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 15, "stations": [3]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
@@ -491,7 +491,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 16, "stations": [1,3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
@@ -517,7 +517,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 17, "stations": [3, 4,5,6]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
-        ], "scan_duration": 600.0
+        ], "scan_duration": 1800.0
       
     }
     """
