@@ -48,7 +48,7 @@ CSP_MASTER ?= tango://$(TANGO_HOST_NAME).$(KUBE_NAMESPACE).svc.$(CLUSTER_DOMAIN)
 CSP_SUBARRAY_PREFIX ?= tango://$(TANGO_HOST_NAME).$(KUBE_NAMESPACE).svc.$(CLUSTER_DOMAIN):$(PORT)/low-csp/subarray
 CI_REGISTRY ?= gitlab.com
 K8S_TEST_IMAGE_TO_TEST=$(CAR_OCI_REGISTRY_HOST)/ska-build-python:0.3.1
-TARANTA_ENABLED ?= false
+TARANTA_ENABLED ?= true
 
 CI_PROJECT_DIR ?= .
 XRAY_TEST_RESULT_FILE = "build/cucumber.json"
@@ -56,7 +56,7 @@ XAUTHORITY ?= $(HOME)/.Xauthority
 THIS_HOST := $(shell ip a 2> /dev/null | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p' | head -n1)
 DISPLAY ?= $(THIS_HOST):0
 JIVE ?= false# Enable jive
-TARANTA ?= false
+TARANTA ?= true
 MINIKUBE ?= false ## Minikube or not
 FAKE_DEVICES ?= false ## Install fake devices or not
 SUBARRAY_COMMAND_TIMEOUT ?= 70
