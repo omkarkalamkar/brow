@@ -548,6 +548,17 @@ def _delay_model_attributes_from_active_plan(
     return pss_attrs + pst_attrs + stn_attrs
 
 
+def _max_scan_duration_from_plan_map(plan_map: dict[int, str]) -> float:
+    """Return the highest scan_duration across all plans in PlanMap."""
+    max_duration = 0.0
+    for _, plan_name in plan_map.items():
+        plan = _load_plan_json(plan_name)
+        duration = float(plan.get("scan_duration", 0.0))
+        if duration > max_duration:
+            max_duration = duration
+    return max_duration
+
+
 @pytest.mark.SKA_tmc_low_multiple_subarrays
 @scenario(
     "../features/tmc/xtp-106948_tmc_observation.feature",
@@ -868,9 +879,17 @@ def check_scanning_and_ready(
                 subarray_id,
             )
 
+    plan_map = _parse_plan_map(pytest.PlanMap)
+
+    max_scan_duration = _max_scan_duration_from_plan_map(plan_map)
+
+    for subarray_id in getattr(pytest, "active_subarray_ids", []):
+        subarray_node_low.set_subarray_id(subarray_id)
+        logging.info("Checking for SN - %s", subarray_id)
+
         try:
             assert_that(event_tracer).within_timeout(
-                TIMEOUT
+                max_scan_duration + 10
             ).has_change_event_occurred(
                 subarray_node_low.subarray_node,
                 "obsState",
