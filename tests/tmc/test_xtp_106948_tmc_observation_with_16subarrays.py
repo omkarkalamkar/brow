@@ -756,7 +756,7 @@ def configure_using_plan_map(
     )
 
 
-@given("the Subarrays are configured successfully")
+@given("the Subarrays are configured successfully with correct delaymodels")
 def verify_subarray_in_ready_observation_state(
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,

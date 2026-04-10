@@ -16,7 +16,7 @@ Feature: Multi-subarray observation
         And <SNCount> subarrays are in the EMPTY ObsState
         And I assign resources using plan map <PlanMap>
         And I configure subarrays using plan map <PlanMap>
-        And the Subarrays are configured successfully
+        And the Subarrays are configured successfully with correct delaymodels
         When I scan on all configured subarrays
         Then the involved subarrays transition to SCANNING and back to READY
         And I end the observations on all involved subarrays
