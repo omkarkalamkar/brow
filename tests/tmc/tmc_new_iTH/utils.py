@@ -1,5 +1,7 @@
 import json
+import re
 from copy import deepcopy
+from pathlib import Path
 
 from ska_control_model import ObsState
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
@@ -57,6 +59,42 @@ command_defect_mapping = {
     "EndScan": {"FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT)},
     "End": {"FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT)},
 }
+
+
+def load_plan_json(plans_feature_path: Path, plan_name: str) -> dict:
+    """Load a named plan JSON docstring from a plans feature file."""
+    text = plans_feature_path.resolve().read_text(encoding="utf-8")
+    pattern = (
+        rf"^\s*Scenario:\s*{re.escape(plan_name)}\s*$\s*"
+        r"^\s*\"\"\"\s*$\s*(.*?)\s*^\s*\"\"\"\s*$"
+    )
+    m = re.search(pattern, text, flags=re.MULTILINE | re.DOTALL)
+    if not m:
+        raise ValueError(
+            f"Plan '{plan_name}' not found in {plans_feature_path}"
+        )
+    return json.loads(m.group(1))
+
+
+def parse_plan_map(plan_map_str: str) -> dict[int, str]:
+    """Parse PlanMap JSON string into an int-keyed dict."""
+    plan_map = json.loads(plan_map_str)
+    return {int(k): v for k, v in plan_map.items()}
+
+
+def ensure_logs_dir(build_dir: Path | str = "build") -> Path:
+    """Create and return a ${build_dir}/logs directory."""
+    logs_dir = Path(build_dir) / "logs"
+    logs_dir.mkdir(parents=True, exist_ok=True)
+    return logs_dir
+
+
+def write_json(path: Path, payload: dict) -> None:
+    """Write a JSON payload to a file with stable formatting."""
+    path.write_text(
+        json.dumps(payload, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
 
 
 def _build_assign_json(
