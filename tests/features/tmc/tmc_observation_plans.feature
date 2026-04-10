@@ -30,7 +30,8 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 1, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
         
-        ]
+        ],
+        "scan_duration": 600.0
       
     }
     """

@@ -715,6 +715,9 @@ def configure_using_plan_map(
         cfg = json.loads(json.dumps(base_configure))
         _reset_configure_payload(cfg)
 
+        scan_duration = per_sn.get("scan_duration", 10)
+        cfg["tmc"]["scan_duration"] = scan_duration
+
         station_beams = per_sn.get("station_beams", [])
         _apply_lowcbf_stations(cfg, station_beams)
         if station_beams:
