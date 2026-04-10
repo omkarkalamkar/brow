@@ -284,7 +284,7 @@ ska-tango-transducer:
           subscribedAttributes: ["health_csp|low-csp/subarray/02/healthState", "health_sdp|low-sdp/subarray/02/healthState"]
           readAttributes: []
           aggregatedClassAttributes: []
-          derivedAttributes: [["readyToScan2|Boolean|health_sdp == 0"]]
+          derivedAttributes: ["readyToScan2|Boolean|health_sdp == 0"]
 
 
 nodeSelector: {}
