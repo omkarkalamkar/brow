@@ -836,6 +836,17 @@ def verify_subarray_in_ready_observation_state(
     #         )
 
 
+@given("I end the observations on all involved subarrays")
+def end_observations_on_all_subarrays(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """End observations on active subarrays (best-effort)."""
+    end_all_involved(
+        subarray_node_low=subarray_node_low, event_tracer=event_tracer
+    )
+
+
 @when("I reconfigure all subarrays.")
 def reconfigure_all_subarrays(
     subarray_node_low: SubarrayNodeWrapperLow,
