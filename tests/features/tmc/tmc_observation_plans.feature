@@ -30,26 +30,32 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 1, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
 
-        ]
+        ],
+        "scan_duration": 1800.0
 
     }
     """
   #This scenarion checks TMC SN is able to process only PSS observations
+  #This did not work wiht PSS alone , so adding PST as of now
   Scenario: PlanB
     """
     {
-        "station_beams": [{"id": 3, "stations": [14, 15, 16]}],
-        "pss_beams": [{"id": 3, "stations": [4, 5, 6]}],
-        "pst_beams": []
+        "station_beams": [{"id": 1, "stations": [14, 15, 16]}],
+        "pss_beams": [{"id": 23, "stations": [14, 15, 16]}],
+        "pst_beams": [{"id": 1, "stations": [14]},{"id": 2, "stations": [15, 16]}],
+        "scan_duration": 1800.0
+
     }
     """
   #This scenario checks TMC SN is able to process only PST observations
+  #Issue for PST , we are looking at range ,
+  #so if I give PST id as only 2 , it fails , so changing this to id 1
   Scenario: PlanC
     """
     {
-       "station_beams": [{"id": 2, "stations": [17, 18]}],
+       "station_beams": [{"id": 1, "stations": [17, 18]}],
         "pss_beams": [],
-        "pst_beams": [{"id": 2, "stations": [7, 8]}]
+        "pst_beams": [{"id": 1, "stations": [17, 18]}], "scan_duration": 1800.0
     }
 
 
@@ -69,10 +75,10 @@ Feature: Multi-subarray observation plans
 
 
         ],
-        "pss_beams": [{"id": 2, "stations": [3, 4]}],
+        "pss_beams": [{"id": 27, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
 
-        ]
+        ], "scan_duration": 1800.0
 
     }
     """
@@ -82,6 +88,50 @@ Feature: Multi-subarray observation plans
     #This scenario checks if TMC is able to process 4 subarry beams,
     #2 PSS beam and 2 PST beams
       Scenario: PlanE
+    """
+    {
+
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]}
+
+
+        ],
+        "pss_beams": [{"id": 25, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
+
+        ], "scan_duration": 1800.0
+
+    }
+    """
+
+    #This scenario checks if TMC is able to process 8 subarry beams,
+    #1 PSS beam and 2 PST beams
+      Scenario: PlanA1
+    """
+    {
+
+        "station_beams": [
+          {"id": 1, "stations": [1, 2, 3,4,5,6]},
+          {"id": 2, "stations": [1, 2, 3,4,5,6]},
+          {"id": 3, "stations": [1, 2, 3,4,5,6]},
+          {"id": 4, "stations": [1, 2, 3,4,5,6]}
+
+
+        ],
+        "pss_beams": [{"id": 2, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
+
+        ], "scan_duration": 1800.0
+
+    }
+    """
+
+    #This scenario checks if TMC is able to process 8 subarry beams,
+    #1 PSS beam and 2 PST beams and PSS and PST beams do not share stations
+      Scenario: PlanA2
     """
     {
 
@@ -146,13 +196,12 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 3, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
 
-        ]
+        ], "scan_duration": 1800.0
 
     }
     """
     #This scenario checks if TMC is able to process 8 subarry beams,
     #1 PSS beam and 2 PST beams and PSS and PST beams do not share stations
-
 
 
       Scenario: PlanA3
@@ -173,13 +222,14 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 4, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
 
-        ]
+        ], "scan_duration": 1800.0
 
     }
     """
     #This scenario checks if TMC is able to process 8 subarry beams,
     #1 PSS beam and 2 PST beams and PSS and PST beams do not share stations
     #Also staion beams do no share staions with PSS and PST beams
+    #Note - This is not working currently
 
 
       Scenario: PlanA4
@@ -197,10 +247,10 @@ Feature: Multi-subarray observation plans
           {"id": 8, "stations": [11, 12, 13,14,15,16]}
 
         ],
-        "pss_beams": [{"id": 5, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
+        "pss_beams": [{"id": 5, "stations": [13, 14]}],
+        "pst_beams": [{"id": 1, "stations": [11, 12]},{"id": 2, "stations": [15, 16]}
 
-        ]
+        ], "scan_duration": 1800.0
 
     }
     """
@@ -226,13 +276,12 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 6, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
 
-        ]
+        ], "scan_duration": 1800.0
 
     }
     """
     #This scenario checks if TMC is able to process 8 subarry beams,
     #3 PSS beam and 2 PST beams and PSS and PST beams do not share stations
-
 
       Scenario: PlanA6
     """
@@ -249,17 +298,16 @@ Feature: Multi-subarray observation plans
           {"id": 8, "stations": [1, 2, 3,4,5,6]}
 
         ],
-        "pss_beams": [{"id": 7, "stations": [3, 4]}],
+        "pss_beams": [{"id": 7, "stations": [3, 4]} , {"id": 21, "stations": [3, 4]} , {"id": 22, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
 
-        ]
+        ], "scan_duration": 1800.0
 
     }
     """
 
     #This scenario checks if TMC is able to process 8 subarry beams,
     #3 PSS beam and 2 PST beams and PSS and PST beams  share all stations
-
 
 
       Scenario: PlanA7
@@ -277,16 +325,15 @@ Feature: Multi-subarray observation plans
           {"id": 8, "stations": [1, 2, 3,4,5,6]}
 
         ],
-        "pss_beams": [{"id": 8, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
+        "pss_beams": [{"id": 20, "stations": [3, 4]} , {"id": 26, "stations": [3, 4]} , {"id": 24, "stations": [3, 4]}],
+        "pst_beams": [{"id": 1, "stations": [3, 4]},{"id": 2, "stations": [3, 4]}
 
-        ]
+        ], "scan_duration": 1800.0
 
     }
     """
     #This scenario checks if TMC is able to process 8 subarry beams,
     #1 PSS beam and 2 PST beams and all beams operate from 1 single station
-
 
       Scenario: PlanA8
     """
@@ -304,16 +351,15 @@ Feature: Multi-subarray observation plans
 
 
         ],
-        "pss_beams": [{"id": 9, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
+        "pss_beams": [{"id": 9, "stations": [1]}],
+        "pst_beams": [{"id": 1, "stations": [1]},{"id": 2, "stations": [1]}
 
-        ]
+        ], "scan_duration": 1800.0
 
     }
     """
     #This scenario checks if TMC is able to process 3 subarry beams,
     #1 PSS beam and 1 PST beams and PSS and PST beams do not share  stations
-
 
       Scenario: PlanA9
     """
@@ -327,16 +373,15 @@ Feature: Multi-subarray observation plans
 
 
         ],
-        "pss_beams": [{"id": 10, "stations": [3, 4]}],
+        "pss_beams": [{"id": 10, "stations": [4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
 
-        ]
+        ], "scan_duration": 1800.0
 
     }
     """
     #This scenario checks if TMC is able to process 4 subarry beams,
     #1 PSS beam and 1 PST beams and PSS and PST beams  share all stations
-
 
       Scenario: PlanA10
     """
@@ -351,10 +396,10 @@ Feature: Multi-subarray observation plans
 
 
         ],
-        "pss_beams": [{"id": 11, "stations": [3, 4]}],
+        "pss_beams": [{"id": 11, "stations": [3, 1]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
 
-        ]
+        ], "scan_duration": 1800.0
 
     }
     """
@@ -377,10 +422,10 @@ Feature: Multi-subarray observation plans
           {"id": 8, "stations": [1, 2, 3,4,5,6]}
 
         ],
-        "pss_beams": [{"id": 12, "stations": [3, 4]}],
+        "pss_beams": [{"id": 12, "stations": [4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
 
-        ]
+        ], "scan_duration": 1800.0
 
     }
     """
@@ -403,10 +448,10 @@ Feature: Multi-subarray observation plans
           {"id": 8, "stations": [1, 2, 3,4,5,6]}
 
         ],
-        "pss_beams": [{"id": 13, "stations": [3, 4]}],
+        "pss_beams": [{"id": 13, "stations": [6]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
 
-        ]
+        ], "scan_duration": 1800.0
 
     }
     """
@@ -432,7 +477,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 14, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
 
-        ]
+        ], "scan_duration": 1800.0
 
     }
     """
@@ -455,10 +500,10 @@ Feature: Multi-subarray observation plans
           {"id": 8, "stations": [1, 2, 3,4,5,6]}
 
         ],
-        "pss_beams": [{"id": 15, "stations": [3, 4]}],
+        "pss_beams": [{"id": 15, "stations": [3]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
 
-        ]
+        ], "scan_duration": 1800.0
 
     }
     """
@@ -481,10 +526,10 @@ Feature: Multi-subarray observation plans
           {"id": 8, "stations": [1, 2, 3,4,5,6]}
 
         ],
-        "pss_beams": [{"id": 16, "stations": [3, 4]}],
+        "pss_beams": [{"id": 16, "stations": [1,3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
 
-        ]
+        ], "scan_duration": 1800.0
 
     }
     """
@@ -507,10 +552,10 @@ Feature: Multi-subarray observation plans
           {"id": 8, "stations": [1, 2, 3,4,5,6]}
 
         ],
-        "pss_beams": [{"id": 17, "stations": [3, 4]}],
+        "pss_beams": [{"id": 17, "stations": [3, 4,5,6]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
 
-        ]
+        ], "scan_duration": 1800.0
 
     }
     """

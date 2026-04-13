@@ -7,7 +7,7 @@ This keeps the same BDD feature
 
 import json
 import logging
-import re
+import time
 from pathlib import Path
 
 import pytest
@@ -16,10 +16,15 @@ from pytest_bdd import given, parsers, scenario, then, when
 from ska_control_model import ObsState
 from ska_ser_logging import configure_logging
 from ska_tango_testing.integration import TangoEventTracer, log_events
+from ska_telmodel.schema import validate as telmodel_validate
 from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
-from tests.resources.test_harness.constant import TIMEOUT
+from tests.resources.test_harness.constant import (
+    INITIAL_LOW_DELAY_JSON,
+    LOW_DELAYMODEL_VERSION,
+    TIMEOUT,
+)
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
@@ -29,7 +34,13 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
     prepare_json_args_for_commands,
 )
-from tests.tmc.tmc_new_iTH.utils import _build_assign_json
+from tests.tmc.tmc_new_iTH.utils import (
+    _build_assign_json,
+    ensure_logs_dir,
+    load_plan_json,
+    parse_plan_map,
+    write_json,
+)
 
 configure_logging(logging.DEBUG)
 LOGGER = logging.getLogger(__name__)
@@ -38,26 +49,6 @@ _PLANS_FEATURE_PATH = (
     Path(__file__).resolve().parent
     / "../features/tmc/tmc_observation_plans.feature"
 )
-
-
-def _load_plan_json(plan_name: str) -> dict:
-    """Load a named plan from `tmc_observation_plans.feature` docstring."""
-    text = _PLANS_FEATURE_PATH.resolve().read_text(encoding="utf-8")
-    pattern = (
-        rf"^\s*Scenario:\s*{re.escape(plan_name)}\s*$\s*"
-        r"^\s*\"\"\"\s*$\s*(.*?)\s*^\s*\"\"\"\s*$"
-    )
-    m = re.search(pattern, text, flags=re.MULTILINE | re.DOTALL)
-    if not m:
-        raise ValueError(
-            f"Plan '{plan_name}' not found in {_PLANS_FEATURE_PATH}"
-        )
-    return json.loads(m.group(1))
-
-
-def _parse_plan_map(plan_map_str: str) -> dict[int, str]:
-    plan_map = json.loads(plan_map_str)
-    return {int(k): v for k, v in plan_map.items()}
 
 
 def _active_subarray_ids_from_plan_map(
@@ -72,19 +63,17 @@ def _active_subarray_ids_from_plan_map(
 
 
 def _ensure_logs_dir() -> Path:
-    logs_dir = Path("build") / "logs"
-    logs_dir.mkdir(parents=True, exist_ok=True)
-    return logs_dir
+    """Create and return the build logs directory path."""
+    return ensure_logs_dir("build")
 
 
 def _write_json(path: Path, payload: dict) -> None:
-    path.write_text(
-        json.dumps(payload, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
+    """Write a JSON payload to a file with stable formatting."""
+    write_json(path, payload)
 
 
 def _reset_configure_payload(cfg: dict) -> None:
+    """Reset configure JSON before applying a plan overlay."""
     if "mccs" in cfg:
         cfg["mccs"].pop("subarray_beams", None)
 
@@ -97,6 +86,7 @@ def _reset_configure_payload(cfg: dict) -> None:
 
 
 def _apply_lowcbf_stations(cfg: dict, station_beams: list[dict]) -> None:
+    """Populate lowcbf stations list from station_beams stations."""
     unique_stations: set[int] = {
         int(st) for sb in station_beams for st in sb.get("stations", [])
     }
@@ -109,20 +99,26 @@ def _apply_lowcbf_stations(cfg: dict, station_beams: list[dict]) -> None:
 def _build_mccs_subarray_beams(
     per_sn: dict, subarray_id: int, station_beams: list[dict]
 ) -> list[dict]:
+    """Build MCCS subarray_beams entries for Configure
+    Apertures are derived from PSS/PST beam stations.
+    """
     mccs_beams: list[dict] = []
     for sb in station_beams:
         sb_id = int(sb.get("id", subarray_id))
 
+        # Currently relation in data in PSS beam ID and
+        # Subarray beam ID is not clear , hence as of now below
+        # Check wiht Subarray Beam Id is disabled
         stations_from_pss = [
             st
             for b in per_sn.get("pss_beams", [])
-            if int(b.get("id")) == sb_id
+            # if int(b.get("id")) == sb_id
             for st in b.get("stations", [])
         ]
         stations_from_pst = [
             st
             for b in per_sn.get("pst_beams", [])
-            if int(b.get("id")) == sb_id
+            # if int(b.get("id")) == sb_id
             for st in b.get("stations", [])
         ]
 
@@ -158,6 +154,7 @@ def _build_mccs_subarray_beams(
 
 
 def _apply_lowcbf_timing_beams(cfg: dict, pst_beams: list[dict]) -> None:
+    """Populate lowcbf timing_beams from PST beams in the plan."""
     if not pst_beams:
         return
     timing_beams = cfg["csp"]["lowcbf"].setdefault("timing_beams", {})
@@ -175,7 +172,7 @@ def _apply_lowcbf_timing_beams(cfg: dict, pst_beams: list[dict]) -> None:
                     "pm_c2": -3.3,
                 },
             },
-            "stn_beam_id": int(pst_beam.get("stn_beam_id", pst_beam["id"])),
+            "stn_beam_id": int(pst_beam.get("stn_beam_id", 1)),
             "stn_weights": pst_beam.get(
                 "stn_weights", [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
             ),
@@ -185,6 +182,7 @@ def _apply_lowcbf_timing_beams(cfg: dict, pst_beams: list[dict]) -> None:
 
 
 def _apply_lowcbf_search_beams(cfg: dict, pss_beams: list[dict]) -> None:
+    """Populate lowcbf search_beams from PSS beams in the plan."""
     if not pss_beams:
         return
     search_beams = cfg["csp"]["lowcbf"].setdefault("search_beams", {})
@@ -202,6 +200,7 @@ def _apply_lowcbf_search_beams(cfg: dict, pss_beams: list[dict]) -> None:
 
 
 def _apply_csp_pst(cfg: dict, pst_beams: list[dict]) -> None:
+    """Populate CSP pst section from PST beams in the plan."""
     if not pst_beams:
         return
     pst_section = cfg.setdefault("csp", {}).setdefault("pst", {})
@@ -236,10 +235,12 @@ def _apply_csp_pst(cfg: dict, pst_beams: list[dict]) -> None:
 
 
 def _apply_csp_pss(cfg: dict, pss_beams: list[dict]) -> None:
+    """Populate CSP pss section from PSS beams in the plan."""
     if not pss_beams:
         return
 
     pss = cfg.setdefault("csp", {}).setdefault("pss", {})
+
     pss["beam"] = [
         {
             "beam_id": int(pss_beam["id"]),
@@ -367,8 +368,9 @@ def _apply_csp_pss(cfg: dict, pss_beams: list[dict]) -> None:
 def _build_assign_json_files(
     plan_map: dict[int, str], base_assign: dict, logs_dir: Path
 ) -> None:
+    """Write per-subarray AssignResources JSON files to logs_dir."""
     for subarray_id, plan_name in plan_map.items():
-        plan = _load_plan_json(plan_name)
+        plan = load_plan_json(_PLANS_FEATURE_PATH, plan_name)
         per_sn = plan.get(str(subarray_id), plan)
         assign_json = _build_assign_json(
             base_assign, subarray_id, per_sn, plan_name
@@ -383,6 +385,7 @@ def _assign_resources_for_subarrays(
     subarray_ids: list[int],
     logs_dir: Path,
 ) -> list:
+    """Send AssignResources for each subarray and return unique ids."""
     unique_ids = []
     for sa_id in subarray_ids:
         central_node_low.set_subarray_id(sa_id)
@@ -401,6 +404,7 @@ def _configure_subarrays(
     subarray_ids: list[int],
     logs_dir: Path,
 ) -> dict[int, tuple]:
+    """Send Configure for each subarray and return unique ids by id."""
     results: dict[int, tuple] = {}
     for sa_id in subarray_ids:
         subarray_node_low.set_subarray_id(sa_id)
@@ -421,6 +425,7 @@ def _wait_for_subarrays_obsstate(
     subarray_ids: list[int],
     expected_state: ObsState,
 ) -> None:
+    """Wait for obsState on CN subarray nodes (best-effort)."""
     for sa_id in subarray_ids:
         central_node_low.set_subarray_id(sa_id)
         try:
@@ -433,7 +438,7 @@ def _wait_for_subarrays_obsstate(
             )
         except AssertionError:
             LOGGER.exception(
-                "ObsState=%s not observed within timeout  for SN %s; ",
+                "ObsState=%s not observed within timeout for subarray %s",
                 expected_state,
                 sa_id,
             )
@@ -445,6 +450,7 @@ def _wait_for_subarraynode_obsstate(
     subarray_ids: list[int],
     expected_state: ObsState,
 ) -> None:
+    """Wait for obsState on TMC SubarrayNode devices (best-effort)."""
     for sa_id in subarray_ids:
         subarray_node_low.set_subarray_id(sa_id)
         try:
@@ -468,6 +474,7 @@ def _wait_for_configure_ready_and_lrcr_ok(
     event_tracer: TangoEventTracer,
     configure_unique_ids: dict[int, tuple],
 ) -> None:
+    """Wait for READY and LRCR OK per subarray after Configure."""
     for sa_id, unique_id in configure_unique_ids.items():
         subarray_node_low.set_subarray_id(sa_id)
         expected_lrcr = (
@@ -500,6 +507,53 @@ def _wait_for_configure_ready_and_lrcr_ok(
                 sa_id,
                 unique_id,
             )
+
+
+def _delay_model_attributes_from_active_plan(
+    subarray_node_low: SubarrayNodeWrapperLow, subarray_id
+) -> list[str]:
+    """Return delay-model attribute names, derived from the active plan."""
+    plan_map = parse_plan_map(pytest.PlanMap)
+    # first_sa_id = pytest.active_subarray_ids[0]
+    # logging.info(
+    #     "pytest.active_subarray_ids[0] %s", pytest.active_subarray_ids[0]
+    # )
+    plan_name = plan_map.get(subarray_id)
+    plan = load_plan_json(_PLANS_FEATURE_PATH, plan_name)
+    logging.info("subarray_id - %s , plan - %s", subarray_id, plan)
+    per_sn = plan.get(str(subarray_id), plan)
+
+    station_ids = sorted(
+        {
+            int(b.get("id"))
+            for b in per_sn.get("station_beams", [])
+            if "id" in b
+        }
+    )
+    pss_ids = sorted(
+        {int(b.get("id")) for b in per_sn.get("pss_beams", []) if "id" in b}
+    )
+    pst_ids = sorted(
+        {int(b.get("id")) for b in per_sn.get("pst_beams", []) if "id" in b}
+    )
+
+    pss_attrs = [f"delayModelPSSBeam{i}" for i in pss_ids]
+    pst_attrs = [f"delayModelPSTBeam{i}" for i in pst_ids]
+    stn_attrs = [f"delaymodelstationbeam0{i}" for i in station_ids]
+    subarray_node_low.set_subarray_id(subarray_id)
+
+    return pss_attrs + pst_attrs + stn_attrs
+
+
+def _max_scan_duration_from_plan_map(plan_map: dict[int, str]) -> float:
+    """Return the highest scan_duration across all plans in PlanMap."""
+    max_duration = 0.0
+    for _, plan_name in plan_map.items():
+        plan = load_plan_json(_PLANS_FEATURE_PATH, plan_name)
+        duration = float(plan.get("scan_duration", 0.0))
+        if duration > max_duration:
+            max_duration = duration
+    return max_duration
 
 
 @pytest.mark.SKA_tmc_low_multiple_subarrays
@@ -606,7 +660,7 @@ def assign_using_plan_map(
 ):
     """Assign resources for active subarrays from PlanMap."""
     pytest.PlanMap = PlanMap
-    plan_map = _parse_plan_map(PlanMap)
+    plan_map = parse_plan_map(PlanMap)
     pytest.active_subarray_ids = _active_subarray_ids_from_plan_map(
         plan_map, pytest.sn_count
     )
@@ -664,7 +718,7 @@ def configure_using_plan_map(
     PlanMap: str,
 ):
     """Configure active subarrays from PlanMap."""
-    plan_map = _parse_plan_map(PlanMap)
+    plan_map = parse_plan_map(PlanMap)
     active_subarray_ids = getattr(
         pytest,
         "active_subarray_ids",
@@ -681,11 +735,14 @@ def configure_using_plan_map(
         if subarray_id not in active_subarray_ids:
             continue
 
-        plan = _load_plan_json(plan_name)
+        plan = load_plan_json(_PLANS_FEATURE_PATH, plan_name)
         per_sn = plan.get(str(subarray_id), plan)
 
         cfg = json.loads(json.dumps(base_configure))
         _reset_configure_payload(cfg)
+
+        # scan_duration = float(per_sn.get("scan_duration", 10.0))
+        # cfg["tmc"]["scan_duration"] = scan_duration
 
         station_beams = per_sn.get("station_beams", [])
         _apply_lowcbf_stations(cfg, station_beams)
@@ -717,21 +774,70 @@ def configure_using_plan_map(
     )
 
 
-@given("the Subarrays are configured successfully")
+@given("the Subarrays are configured successfully with correct delaymodels")
 def verify_subarray_in_ready_observation_state(
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
-    """Verifies the observation states of SDP,CSP and MCCS
-    after command Configure.
-    """
-
+    """Wait for READY + LRCR OK after Configure (best-effort)."""
     _wait_for_configure_ready_and_lrcr_ok(
         subarray_node_low=subarray_node_low,
         event_tracer=event_tracer,
         configure_unique_ids=pytest.configure_unique_ids,
     )
     event_tracer.clear_events()
+
+    for subarray_id in getattr(pytest, "active_subarray_ids", []):
+        subarray_node_low.set_subarray_id(subarray_id)
+
+        attributes = _delay_model_attributes_from_active_plan(
+            subarray_node_low, subarray_id
+        )
+        logging.info(
+            "attributes for subarray_id  %s are ---%s", subarray_id, attributes
+        )
+        generated_delay_model_json = INITIAL_LOW_DELAY_JSON
+        for attribute in attributes:
+            wait_time = time.time() + 10
+            logging.info("chekcing for attribute %s", attribute)
+            while time.time() < wait_time:
+
+                generated_delay_model = (
+                    subarray_node_low.csp_subarray_leaf_node.read_attribute(
+                        attribute
+                    ).value
+                )
+                if (
+                    generated_delay_model is None
+                    or str(generated_delay_model).strip() == ""
+                ):
+                    logging.info(
+                        "Attribute %s returned empty value, for %s",
+                        attribute,
+                        subarray_node_low.csp_subarray_leaf_node.dev_name(),
+                    )
+
+                    continue
+
+                generated_delay_model_json = json.loads(generated_delay_model)
+                logging.info(
+                    "Generated %s Delay Model json: %s",
+                    attribute,
+                    generated_delay_model_json,
+                )
+                if generated_delay_model_json != INITIAL_LOW_DELAY_JSON:
+                    break
+                time.sleep(1)
+
+            assert (
+                generated_delay_model_json != INITIAL_LOW_DELAY_JSON
+            ), f"{attribute} has not been updated from initial values"
+
+            telmodel_validate(
+                version=LOW_DELAYMODEL_VERSION,
+                config=generated_delay_model_json,
+                strictness=2,
+            )
 
 
 @when("I reconfigure all subarrays.")
@@ -844,24 +950,33 @@ def check_scanning_and_ready(
     """Verify SCANNING then READY on active subarrays."""
     for subarray_id in getattr(pytest, "active_subarray_ids", []):
         subarray_node_low.set_subarray_id(subarray_id)
-        # try:
-        #     assert_that(event_tracer).within_timeout(
-        #         TIMEOUT
-        #     ).has_change_event_occurred(
-        #         subarray_node_low.subarray_node,
-        #         "obsState",
-        #         ObsState.SCANNING,
-        #     )
-        # except AssertionError:
-        #     LOGGER.exception(
-        #         "No obsState=%s within timeout for subarray %s during scan",
-        #         ObsState.SCANNING,
-        #         subarray_id,
-        #     )
 
         try:
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
+            ).has_change_event_occurred(
+                subarray_node_low.subarray_node,
+                "obsState",
+                ObsState.SCANNING,
+            )
+        except AssertionError:
+            LOGGER.exception(
+                "No obsState=%s within timeout for subarray %s during scan",
+                ObsState.SCANNING,
+                subarray_id,
+            )
+
+    plan_map = parse_plan_map(pytest.PlanMap)
+
+    max_scan_duration = _max_scan_duration_from_plan_map(plan_map)
+
+    for subarray_id in getattr(pytest, "active_subarray_ids", []):
+        subarray_node_low.set_subarray_id(subarray_id)
+        logging.info("Checking for SN - %s", subarray_id)
+
+        try:
+            assert_that(event_tracer).within_timeout(
+                max_scan_duration + 10
             ).has_change_event_occurred(
                 subarray_node_low.subarray_node,
                 "obsState",
@@ -883,7 +998,8 @@ def end_all_involved(
     """End observations on active subarrays (best-effort)."""
     for subarray_id in getattr(pytest, "active_subarray_ids", []):
         subarray_node_low.set_subarray_id(subarray_id)
-        subarray_node_low.end_observation()
+        # subarray_node_low.end_observation_new()
+        subarray_node_low.execute_transition("End")
         try:
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
@@ -917,11 +1033,44 @@ def release_all_involved(
         central_node_low.set_subarray_id(subarray_id)
         rel = json.loads(json.dumps(release_input))
         rel["subarray_id"] = subarray_id
-        _ = central_node_low.perform_action(
+        _, uid = central_node_low.perform_action(
             "ReleaseResources", json.dumps(rel)
         )
 
-    # Execute TelescopeOff command
+        try:
+            assert_that(event_tracer).within_timeout(
+                TIMEOUT
+            ).has_change_event_occurred(
+                central_node_low.central_node,
+                "longRunningCommandResult",
+                (
+                    uid[0],
+                    json.dumps((int(ResultCode.OK), "Command Completed")),
+                ),
+            )
+        except AssertionError:
+            LOGGER.exception(
+                "No LRCR OK for ReleaseResources subarray %s, uid=%s",
+                subarray_id,
+                uid,
+            )
+
+        try:
+            assert_that(event_tracer).within_timeout(
+                TIMEOUT
+            ).has_change_event_occurred(
+                central_node_low.subarray_node,
+                "obsState",
+                ObsState.EMPTY,
+            )
+        except AssertionError:
+            LOGGER.exception(
+                "No obsState=%s within timeout for subarray %s "
+                "after ReleaseResources",
+                ObsState.EMPTY,
+                subarray_id,
+            )
+
     central_node_low.move_to_off()
     assert_that(event_tracer).within_timeout(
         TIMEOUT
