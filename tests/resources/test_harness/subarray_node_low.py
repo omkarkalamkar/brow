@@ -191,6 +191,11 @@ class SubarrayNodeWrapperLow:
         LOGGER.info("Invoked End on SubarrayNode")
         return result, message
 
+    def end_observation_new(self):
+        result, message = self.subarray_node.End()
+        LOGGER.info("Invoked End on SubarrayNode")
+        return result, message
+
     @sync_abort(device_dict=device_dict_low)
     def abort_subarray(self):
         evt_tracer = TangoEventTracer()
@@ -407,7 +412,7 @@ class SubarrayNodeWrapperLow:
             "Current Subarray Node ObsState is: %s",
             self.subarray_node.obsState,
         )
-
+        sleep(900.15)
         self._reset_simulator_devices()
         self._clear_command_call_and_transition_data(clear_transition=True)
 
