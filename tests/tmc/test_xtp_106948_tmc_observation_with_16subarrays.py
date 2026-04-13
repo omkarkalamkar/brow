@@ -8,7 +8,6 @@ This keeps the same BDD feature
 import json
 import logging
 import re
-import time
 from pathlib import Path
 
 import pytest
@@ -17,15 +16,10 @@ from pytest_bdd import given, parsers, scenario, then, when
 from ska_control_model import ObsState
 from ska_ser_logging import configure_logging
 from ska_tango_testing.integration import TangoEventTracer, log_events
-from ska_telmodel.schema import validate as telmodel_validate
 from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
-from tests.resources.test_harness.constant import (
-    INITIAL_LOW_DELAY_JSON,
-    LOW_DELAYMODEL_VERSION,
-    TIMEOUT,
-)
+from tests.resources.test_harness.constant import TIMEOUT
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
@@ -508,13 +502,31 @@ def _wait_for_configure_ready_and_lrcr_ok(
             )
 
 
-@pytest.mark.SKA_tmc_low_16_subarrays_old
+@pytest.mark.SKA_tmc_low_multiple_subarrays
 @scenario(
     "../features/tmc/xtp-106948_tmc_observation.feature",
     "Execute observation using <SNCount> subarrays with plan map <PlanMap>",
 )
 def test_tmc_observation_with_16subarrays_fast():
     """BDD scenario entrypoint (Scenario Outline filled from feature file)."""
+
+
+@pytest.mark.SKA_tmc_low_multiple_subarrays
+@scenario(
+    "../features/tmc/xtp-106948_tmc_observation.feature",
+    "Execute long sequence configure on 16 Subarrays",
+)
+def test_tmc_long_sequence_configure():
+    """Test the long sequence of Configure with 16 subarrays."""
+
+
+@pytest.mark.SKA_tmc_low_multiple_subarrays
+@scenario(
+    "../features/tmc/xtp-106948_tmc_observation.feature",
+    "Execute long sequence Scan on 16 Subarrays",
+)
+def test_tmc_long_sequence_configure_scan():
+    """Test the long sequence of Scan with 16 subarrays."""
 
 
 @given(parsers.parse("{SNCount:d} subarrays are in the EMPTY ObsState"))
@@ -722,6 +734,21 @@ def verify_subarray_in_ready_observation_state(
     event_tracer.clear_events()
 
 
+@when("I reconfigure all subarrays.")
+def reconfigure_all_subarrays(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    command_input_factory: JsonFactory,
+    event_tracer: TangoEventTracer,
+):
+    """Reconfigure all active subarrays"""
+    configure_using_plan_map(
+        subarray_node_low=subarray_node_low,
+        command_input_factory=command_input_factory,
+        event_tracer=event_tracer,
+        PlanMap=getattr(pytest, "PlanMap", "{}"),
+    )
+
+
 @when("I scan on all configured subarrays")
 def scan_on_configured_subarrays(
     command_input_factory: JsonFactory,
@@ -747,6 +774,40 @@ def scan_on_configured_subarrays(
         except AssertionError:
             LOGGER.exception(
                 "No obsState=%s within timeout for subarray %s after Scan",
+                ObsState.SCANNING,
+                subarray_id,
+            )
+
+
+@when("I issue scan on all subarray with new scan_id")
+def scan_on_all_subarrays_with_new_scan_id(
+    command_input_factory: JsonFactory,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Start Scan with new scan_id on active subarrays (best-effort)."""
+    scan_input_json = prepare_json_args_for_commands(
+        "scan_low", command_input_factory
+    )
+    scan_input = json.loads(scan_input_json)
+    scan_input["scan_id"] = 2  # Change scan_id to trigger new scan
+    scan_input_json = json.dumps(scan_input)
+
+    for subarray_id in getattr(pytest, "active_subarray_ids", []):
+        subarray_node_low.set_subarray_id(subarray_id)
+        subarray_node_low.execute_transition("Scan", scan_input_json)
+        try:
+            assert_that(event_tracer).within_timeout(
+                TIMEOUT
+            ).has_change_event_occurred(
+                subarray_node_low.subarray_node,
+                "obsState",
+                ObsState.SCANNING,
+            )
+        except AssertionError:
+            LOGGER.exception(
+                "No obsState=%s within timeout for subarray %s after"
+                " Scan with new scan_id",
                 ObsState.SCANNING,
                 subarray_id,
             )
@@ -856,7 +917,7 @@ def release_all_involved(
         central_node_low.set_subarray_id(subarray_id)
         rel = json.loads(json.dumps(release_input))
         rel["subarray_id"] = subarray_id
-        _, uid = central_node_low.perform_action(
+        _ = central_node_low.perform_action(
             "ReleaseResources", json.dumps(rel)
         )
 
