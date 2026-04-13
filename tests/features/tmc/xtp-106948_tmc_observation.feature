@@ -42,7 +42,7 @@ Feature: Multi-subarray observation
 
         Examples:
             | SNCount | PlanMap                                                                                                                                                                                                                                                     |
-            | 16      | {"1":"PlanA1","2":"PlanA2","3":"PlanA3","4":"PlanA4","5":"PlanA5","6":"PlanA6","7":"PlanA7","8":"PlanA8","9":"PlanA9","10":"PlanA10","11":"PlanA11","12":"PlanA12","13":"PlanA13","14":"PlanA14","15":"PlanA15","16":"PlanA16"} |
+            | 16      | {"1":"PlanA1","2":"PlanA2","3":"PlanA3","4":"PlanB","5":"PlanA5","6":"PlanA6","7":"PlanA7","8":"PlanA8","9":"PlanA9","10":"PlanA10","11":"PlanA11","12":"PlanA12","13":"PlanA13","14":"PlanA14","15":"PlanA15","16":"PlanA16"} |
 
 
     Scenario Outline: Execute long sequence Scan on 16 Subarrays
@@ -60,4 +60,4 @@ Feature: Multi-subarray observation
 
         Examples:
             | SNCount | PlanMap                                                                                                                                                                                                                                                     |
-            | 16      | {"1":"PlanA1","2":"PlanA2","3":"PlanA3","4":"PlanA4","5":"PlanA5","6":"PlanA6","7":"PlanA7","8":"PlanA8","9":"PlanA9","10":"PlanA10","11":"PlanA11","12":"PlanA12","13":"PlanA13","14":"PlanA14","15":"PlanA15","16":"PlanA16"} |
+            | 16      | {"1":"PlanA1","2":"PlanA2","3":"PlanA3","4":"PlanB","5":"PlanA5","6":"PlanA6","7":"PlanA7","8":"PlanA8","9":"PlanA9","10":"PlanA10","11":"PlanA11","12":"PlanA12","13":"PlanA13","14":"PlanA14","15":"PlanA15","16":"PlanA16"} |
