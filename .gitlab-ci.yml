@@ -3,7 +3,6 @@ image: $SKA_K8S_TOOLS_DOCKER_BUILDER_IMAGE
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
-
 cache:
   paths:
     - build
@@ -22,33 +21,32 @@ stages:
   - lifecycle
 
 include:
-  - project: 'ska-telescope/templates-repository'
-    file: 'gitlab-ci/includes/python-lint.gitlab-ci.yml'
+  - project: "ska-telescope/templates-repository"
+    file: "gitlab-ci/includes/python-lint.gitlab-ci.yml"
 
-  - project: 'ska-telescope/templates-repository'
-    file: 'gitlab-ci/includes/release.gitlab-ci.yml'
+  - project: "ska-telescope/templates-repository"
+    file: "gitlab-ci/includes/release.gitlab-ci.yml"
 
-  - project: 'ska-telescope/templates-repository'
-    file: 'gitlab-ci/includes/helm-chart.gitlab-ci.yml'
+  - project: "ska-telescope/templates-repository"
+    file: "gitlab-ci/includes/helm-chart.gitlab-ci.yml"
 
-  - project: 'ska-telescope/templates-repository'
-    file: 'gitlab-ci/includes/docs-pages.gitlab-ci.yml'
+  - project: "ska-telescope/templates-repository"
+    file: "gitlab-ci/includes/docs-pages.gitlab-ci.yml"
 
-  - project: 'ska-telescope/templates-repository'
-    file: 'gitlab-ci/includes/docs.gitlab-ci.yml'
+  - project: "ska-telescope/templates-repository"
+    file: "gitlab-ci/includes/docs.gitlab-ci.yml"
 
-  - project: 'ska-telescope/templates-repository'
-    file: 'gitlab-ci/includes/k8s.gitlab-ci.yml'
+  - project: "ska-telescope/templates-repository"
+    file: "gitlab-ci/includes/k8s.gitlab-ci.yml"
 
-  - project: 'ska-telescope/templates-repository'
-    file: 'gitlab-ci/includes/deploy.integration.gitlab-ci.yml'
+  - project: "ska-telescope/templates-repository"
+    file: "gitlab-ci/includes/deploy.integration.gitlab-ci.yml"
 
   - project: "ska-telescope/templates-repository"
     file: "gitlab-ci/includes/deploy.staging.gitlab-ci.yml"
 
-  - project: 'ska-telescope/templates-repository'
-    file: 'gitlab-ci/includes/finaliser.gitlab-ci.yml'
-
+  - project: "ska-telescope/templates-repository"
+    file: "gitlab-ci/includes/finaliser.gitlab-ci.yml"
 
 on-demand-deploy:
   stage: on-demand
@@ -73,7 +71,6 @@ on-demand-deploy:
   when: manual
   allow_failure: true
 
-
 on-demand-destroy:
   stage: on-demand
   tags:
@@ -95,12 +92,12 @@ on-demand-destroy:
 
 k8s-test:
   variables:
-    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA'
+    KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA"
     SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA"
   before_script:
     - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
     - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
-    - 'make help | grep k8s-test'
+    - "make help | grep k8s-test"
     - make k8s-install-chart
     - make k8s-wait
   script:
@@ -121,15 +118,15 @@ k8s-test-tmc-low-negative-tests:
   extends:
     - k8s-test
   variables:
-    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-negative-tests'
+    KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-negative-tests"
     SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-negative-tests"
-    MARK: 'SKA_tmc_low_negative_tests'
+    MARK: "SKA_tmc_low_negative_tests"
     SUBARRAY_COMMAND_TIMEOUT: 10
     COUNT: 1
   before_script:
     - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
     - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
-    - 'make help | grep k8s-test'
+    - "make help | grep k8s-test"
     - make k8s-install-chart
     - make k8s-wait
   script:
@@ -152,8 +149,7 @@ stop-k8s-test-tmc-low-negative-tests:
   extends:
     - stop-k8s-test
   variables:
-    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-negative-tests'
-
+    KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-negative-tests"
 
 # k8s-test-tmc-low-four-subarrays:
 #   extends:
@@ -196,7 +192,6 @@ stop-k8s-test-tmc-low-negative-tests:
 #   rules:
 #     - if: '$CI_PIPELINE_SOURCE == "schedule"'
 
-
 k8s-tmc-scaling:
   stage: scaling
   extends:
@@ -206,7 +201,7 @@ k8s-tmc-scaling:
   variables:
     SUBARRAY_COUNT: 16
     COUNT: 1
-    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low'
+    KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low"
     CI_KEEP_NAMESPACE: true
     K8S_TIMEOUT: "1800s"
     TARANTA_ENABLED: "true"
@@ -219,8 +214,8 @@ k8s-tmc-scaling:
     auto_stop_in: never
     on_stop: stop-k8s-tmc-scaling
 
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+  # rules:
+  #   - if: '$CI_PIPELINE_SOURCE == "schedule"'
 
 stop-k8s-tmc-scaling:
   stage: scaling
@@ -229,31 +224,30 @@ stop-k8s-tmc-scaling:
   tags:
     - ska-k8s
   variables:
-    KUBE_NAMESPACE: 'ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low'
+    KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low"
   environment:
     name: ska-tmc-staging-env
     action: stop
 
-
 deploy-integration:
   when: manual
   rules:
-    - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH || $CI_COMMIT_TAG'
+    - if: "$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH || $CI_COMMIT_TAG"
 
 redeploy-integration:
   when: manual
   rules:
-    - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH || $CI_COMMIT_TAG'
+    - if: "$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH || $CI_COMMIT_TAG"
 
 info-integration:
   when: manual
   rules:
-    - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH || $CI_COMMIT_TAG'
+    - if: "$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH || $CI_COMMIT_TAG"
 
 stop-integration:
   when: manual
   rules:
-    - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH || $CI_COMMIT_TAG'
+    - if: "$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH || $CI_COMMIT_TAG"
 
 #staging
 deploy-staging:
