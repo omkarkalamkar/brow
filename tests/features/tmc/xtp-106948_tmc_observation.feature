@@ -56,7 +56,7 @@ Feature: Multi-subarray observation
         And I assign resources using plan map <PlanMap>
         And I configure subarrays using plan map <PlanMap>
         And the Subarrays are configured successfully with correct delaymodels
-        And I issue scan on all configured subarrays
+        And I scan on all configured subarrays
         And the involved subarrays transition to SCANNING and back to READY
         When I issue scan on all subarray with new scan_id
         Then the involved subarrays transition to SCANNING and back to READY
