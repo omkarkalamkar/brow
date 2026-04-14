@@ -89,6 +89,46 @@ def _parse_matrix(matrix_json: str, kind: str) -> dict[DefectKey, str]:
     return out
 
 
+def _leaf_nodes(subarray_node_low: SubarrayNodeWrapperLow) -> tuple:
+    """Return (csp, sdp, mccs) leaf nodes if present on the wrapper."""
+
+    csp = getattr(subarray_node_low, "csp_subarray_leaf_node", None)
+    sdp = getattr(subarray_node_low, "sdp_subarray_leaf_node", None)
+    mccs = getattr(subarray_node_low, "mccs_subarray_leaf_node", None)
+    return csp, sdp, mccs
+
+
+def _apply_defect(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    command: str,
+    defect: str,
+) -> None:
+    """Best-effort SetDefective application for a given command/defect."""
+
+    mapping = command_defect_mapping.get(command, {})
+    defect_payload = mapping.get(str(defect), mapping.get("FAULT"))
+
+    csp, sdp, mccs = _leaf_nodes(subarray_node_low)
+    if csp is not None:
+        csp.SetDefective(defect_payload)
+    if sdp is not None:
+        sdp.SetDefective(defect_payload)
+    if mccs is not None:
+        mccs.SetDefective(defect_payload)
+
+
+def _reset_defects(subarray_node_low: SubarrayNodeWrapperLow) -> None:
+    """Best-effort reset of SetDefective on available leaf nodes."""
+
+    csp, sdp, mccs = _leaf_nodes(subarray_node_low)
+    if csp is not None:
+        csp.SetDefective("{}")
+    if sdp is not None:
+        sdp.SetDefective("{}")
+    if mccs is not None:
+        mccs.SetDefective("{}")
+
+
 def _pss_id_for_subarray(base_pss_id: int, subarray_id: int) -> int:
     """Return a stable unique PSS beam id per subarray.
 
@@ -257,7 +297,7 @@ def _configure_json_for_subarray(
     return cfg
 
 
-@pytest.mark.SKA_tmc_low_multiple_subarrays
+@pytest.mark.SKA_tmc_low_multiple_subarrays16
 @scenario(
     "../features/tmc/xtp-16sa_planA1_defect_matrix_observation.feature",
     "Run 16-subarray observation with injected defects and recovery",
@@ -353,6 +393,8 @@ def when_run_observations(
     Defects are only parsed and stored here.
     """
 
+    _ = event_tracer
+
     pytest.plan_name = str(PlanName)
     pytest.defects = _parse_matrix(DefectMatrix, "DefectMatrix")
 
@@ -397,31 +439,11 @@ def when_run_observations(
         # we log and proceed.
         if defect:
             try:
-                mapping = command_defect_mapping.get("AssignResources", {})
-                defect_payload = mapping.get(str(defect), mapping.get("FAULT"))
-
-                csp = getattr(
+                _apply_defect(
                     subarray_node_low,
-                    "csp_subarray_leaf_node",
-                    None,
+                    "AssignResources",
+                    str(defect),
                 )
-                sdp = getattr(
-                    subarray_node_low,
-                    "sdp_subarray_leaf_node",
-                    None,
-                )
-                mccs = getattr(
-                    subarray_node_low,
-                    "mccs_subarray_leaf_node",
-                    None,
-                )
-
-                if csp is not None:
-                    csp.SetDefective(defect_payload)
-                if sdp is not None:
-                    sdp.SetDefective(defect_payload)
-                if mccs is not None:
-                    mccs.SetDefective(defect_payload)
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
                     "Failed to apply AssignResources defect for SA %s: %s",
@@ -442,28 +464,7 @@ def when_run_observations(
         # Best-effort reset after the command so later steps aren't polluted.
         if defect:
             try:
-                csp = getattr(
-                    subarray_node_low,
-                    "csp_subarray_leaf_node",
-                    None,
-                )
-                sdp = getattr(
-                    subarray_node_low,
-                    "sdp_subarray_leaf_node",
-                    None,
-                )
-                mccs = getattr(
-                    subarray_node_low,
-                    "mccs_subarray_leaf_node",
-                    None,
-                )
-
-                if csp is not None:
-                    csp.SetDefective("{}")
-                if sdp is not None:
-                    sdp.SetDefective("{}")
-                if mccs is not None:
-                    mccs.SetDefective("{}")
+                _reset_defects(subarray_node_low)
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
                     "Failed to reset defects after AssignResources for SA %s",
@@ -480,31 +481,11 @@ def when_run_observations(
         # Best-effort defect injection for Configure.
         if defect:
             try:
-                mapping = command_defect_mapping.get("Configure", {})
-                defect_payload = mapping.get(str(defect), mapping.get("FAULT"))
-
-                csp = getattr(
+                _apply_defect(
                     subarray_node_low,
-                    "csp_subarray_leaf_node",
-                    None,
+                    "Configure",
+                    str(defect),
                 )
-                sdp = getattr(
-                    subarray_node_low,
-                    "sdp_subarray_leaf_node",
-                    None,
-                )
-                mccs = getattr(
-                    subarray_node_low,
-                    "mccs_subarray_leaf_node",
-                    None,
-                )
-
-                if csp is not None:
-                    csp.SetDefective(defect_payload)
-                if sdp is not None:
-                    sdp.SetDefective(defect_payload)
-                if mccs is not None:
-                    mccs.SetDefective(defect_payload)
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
                     "Failed to apply Configure defect for SA %s: %s",
@@ -525,28 +506,7 @@ def when_run_observations(
         # Best-effort reset after the command so later steps aren't polluted.
         if defect:
             try:
-                csp = getattr(
-                    subarray_node_low,
-                    "csp_subarray_leaf_node",
-                    None,
-                )
-                sdp = getattr(
-                    subarray_node_low,
-                    "sdp_subarray_leaf_node",
-                    None,
-                )
-                mccs = getattr(
-                    subarray_node_low,
-                    "mccs_subarray_leaf_node",
-                    None,
-                )
-
-                if csp is not None:
-                    csp.SetDefective("{}")
-                if sdp is not None:
-                    sdp.SetDefective("{}")
-                if mccs is not None:
-                    mccs.SetDefective("{}")
+                _reset_defects(subarray_node_low)
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
                     "Failed to reset defects after Configure for SA %s",
@@ -563,6 +523,8 @@ def then_healthy_complete_observation_cycle(
     event_tracer: TangoEventTracer,
 ) -> None:
     """Smoke-check that subarrays without configured defects reach READY."""
+
+    _ = central_node_low
 
     defects: dict[DefectKey, str] = getattr(pytest, "defects", {})
 
@@ -595,6 +557,8 @@ def when_try_recovery(
     RecoverMatrix: str,
 ) -> None:
     """Attempt recovery actions for the configured subarrays (best-effort)."""
+
+    _ = event_tracer
 
     pytest.recovery = _parse_matrix(RecoverMatrix, "RecoverMatrix")
 
@@ -652,7 +616,7 @@ def then_recoverable_back_to_state(
 
     expected = ObsState[RecoveredObsState]
 
-    for key in getattr(pytest, "recovery", {}).keys():
+    for key in getattr(pytest, "recovery", {}):
         subarray_node_low.set_subarray_id(key.subarray_id)
         try:
             assert_that(event_tracer).within_timeout(

@@ -173,7 +173,7 @@ k8s-tmc-scaling:
     TARANTA_ENABLED: "true"
   script:
     - make taranta-link
-    - make k8s-test MARK=SKA_tmc_low_multiple_subarrays
+    - make k8s-test MARK=SKA_tmc_low_multiple_subarrays16
   
 
   environment:
@@ -181,8 +181,8 @@ k8s-tmc-scaling:
     auto_stop_in: never
     on_stop: stop-k8s-tmc-scaling
 
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+  # rules:
+  #   - if: '$CI_PIPELINE_SOURCE == "schedule"'
 
 stop-k8s-tmc-scaling:
   stage: scaling
