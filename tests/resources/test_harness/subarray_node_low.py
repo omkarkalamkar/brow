@@ -407,6 +407,7 @@ class SubarrayNodeWrapperLow:
             "Current Subarray Node ObsState is: %s",
             self.subarray_node.obsState,
         )
+
         self._reset_simulator_devices()
         self._clear_command_call_and_transition_data(clear_transition=True)
 

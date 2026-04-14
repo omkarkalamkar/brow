@@ -111,6 +111,7 @@ ska-tango-tangogql:
 
 ska-tmc-simulators:
   enabled: true
+  subarray_count: 16
   telescope: SKA-low
   deviceServers:
     mocks:
