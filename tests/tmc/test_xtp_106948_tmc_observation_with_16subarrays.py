@@ -514,10 +514,7 @@ def _delay_model_attributes_from_active_plan(
 ) -> list[str]:
     """Return delay-model attribute names, derived from the active plan."""
     plan_map = parse_plan_map(pytest.PlanMap)
-    # first_sa_id = pytest.active_subarray_ids[0]
-    # logging.info(
-    #     "pytest.active_subarray_ids[0] %s", pytest.active_subarray_ids[0]
-    # )
+
     plan_name = plan_map.get(subarray_id)
     plan = load_plan_json(_PLANS_FEATURE_PATH, plan_name)
     logging.info("subarray_id - %s , plan - %s", subarray_id, plan)
@@ -908,7 +905,7 @@ def end_all_involved(
     """End observations on active subarrays (best-effort)."""
     for subarray_id in getattr(pytest, "active_subarray_ids", []):
         subarray_node_low.set_subarray_id(subarray_id)
-        # subarray_node_low.end_observation_new()
+
         subarray_node_low.execute_transition("End")
         try:
             assert_that(event_tracer).within_timeout(
