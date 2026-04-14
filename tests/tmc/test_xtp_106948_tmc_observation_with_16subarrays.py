@@ -526,7 +526,7 @@ def _max_scan_duration_from_plan_map(plan_map: dict[int, str]) -> float:
     return max_duration
 
 
-@pytest.mark.SKA_tmc_low_multiple_subarrays_supress
+@pytest.mark.SKA_tmc_low_multiple_subarrays
 @scenario(
     "../features/tmc/xtp-106948_tmc_observation.feature",
     "Execute observation using <SNCount> subarrays with plan map <PlanMap>",
@@ -535,7 +535,7 @@ def test_tmc_observation_with_16subarrays_fast():
     """BDD scenario entrypoint (Scenario Outline filled from feature file)."""
 
 
-@pytest.mark.SKA_tmc_low_multiple_subarrays_supress
+@pytest.mark.SKA_tmc_low_multiple_subarrays
 @scenario(
     "../features/tmc/xtp-106948_tmc_observation.feature",
     "Execute long sequence on 16 Subarrays",
@@ -1061,6 +1061,13 @@ def release_all_involved(
             ObsState.EMPTY,
         )
 
+
+@then("I turn off the telescope")
+def turn_off_telescope(
+    central_node_low: CentralNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Move telescope to OFF."""
     central_node_low.move_to_off()
     assert_that(event_tracer).within_timeout(
         TIMEOUT

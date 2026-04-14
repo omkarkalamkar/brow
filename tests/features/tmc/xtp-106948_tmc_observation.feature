@@ -21,6 +21,7 @@ Feature: Multi-subarray observation
         Then the involved subarrays transition to SCANNING and back to READY
         And I end the observations on all involved subarrays
         And I release resources from all involved subarrays
+        And I turn off the telescope
 
         Examples:
             | SNCount | PlanMap                                                                                                                                                                                                                                                     |
@@ -44,6 +45,7 @@ Feature: Multi-subarray observation
         Then the involved subarrays transition to SCANNING and back to READY
         And I end the observations on all involved subarrays
         And I release resources from all involved subarrays
+        And I turn off the telescope
 
         Examples:
             | SNCount | PlanMap                                                                                                                                                                                                                                                     |
@@ -62,6 +64,7 @@ Feature: Multi-subarray observation
         Then the involved subarrays transition to SCANNING and back to READY
         And I end the observations on all involved subarrays
         And I release resources from all involved subarrays
+        And I turn off the telescope
 
         Examples:
             | SNCount | PlanMap                                                                                                                                                                                                                                                     |
