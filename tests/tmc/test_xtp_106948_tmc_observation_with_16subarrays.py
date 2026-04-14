@@ -375,18 +375,18 @@ def _build_assign_json_files(
 
 
 def _assign_resources_for_subarrays(
-    central_node_low: CentralNodeWrapperLow,
+    central_node_low_16_subarrays: CentralNodeWrapperLow,
     subarray_ids: list[int],
     logs_dir: Path,
 ) -> list:
     """Send AssignResources for each subarray and return unique ids."""
     unique_ids = []
     for sa_id in subarray_ids:
-        central_node_low.set_subarray_id(sa_id)
+        central_node_low_16_subarrays.set_subarray_id(sa_id)
         assign_str = (logs_dir / f"assign_subarray{sa_id}.json").read_text(
             encoding="utf-8"
         )
-        _, unique_id = central_node_low.perform_action(
+        _, unique_id = central_node_low_16_subarrays.perform_action(
             "AssignResources", assign_str
         )
         unique_ids.append(unique_id)
@@ -414,18 +414,18 @@ def _configure_subarrays(
 
 
 def _wait_for_subarrays_obsstate(
-    central_node_low: CentralNodeWrapperLow,
+    central_node_low_16_subarrays: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
     subarray_ids: list[int],
     expected_state: ObsState,
 ) -> None:
     """Wait for obsState on CN subarray nodes (best-effort)."""
     for sa_id in subarray_ids:
-        central_node_low.set_subarray_id(sa_id)
+        central_node_low_16_subarrays.set_subarray_id(sa_id)
         assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
-            central_node_low.subarray_node,
+            central_node_low_16_subarrays.subarray_node,
             "obsState",
             expected_state,
         )
@@ -555,7 +555,7 @@ def test_tmc_long_sequence_configure_scan():
 
 @given(parsers.parse("{SNCount:d} subarrays are in the EMPTY ObsState"))
 def verify_n_subarrays_in_empty(
-    central_node_low: CentralNodeWrapperLow,
+    central_node_low_16_subarrays: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
     SNCount: int,
 ):
@@ -564,11 +564,11 @@ def verify_n_subarrays_in_empty(
 
     # Best-effort check (resilient) on 1..SNCount.
     for subarray_id in range(1, pytest.sn_count + 1):
-        central_node_low.set_subarray_id(subarray_id)
+        central_node_low_16_subarrays.set_subarray_id(subarray_id)
         assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
-            central_node_low.subarray_node,
+            central_node_low_16_subarrays.subarray_node,
             "obsState",
             ObsState.EMPTY,
         )
@@ -576,39 +576,42 @@ def verify_n_subarrays_in_empty(
 
 @given("the telescope is in the ON state")
 def given_a_telescope_is_in_on(
-    central_node_low: CentralNodeWrapperLow,
+    central_node_low_16_subarrays: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """Move telescope to ON and subscribe to key events."""
     # Subscribe to CentralNode telescopeState + LRCR.
     event_tracer.subscribe_event(
-        central_node_low.central_node, "telescopeState"
+        central_node_low_16_subarrays.central_node, "telescopeState"
     )
     event_tracer.subscribe_event(
-        central_node_low.central_node, "longRunningCommandResult"
+        central_node_low_16_subarrays.central_node, "longRunningCommandResult"
     )
-    log_events({central_node_low.central_node: ["telescopeState"]})
+    log_events(
+        {central_node_low_16_subarrays.central_node: ["telescopeState"]}
+    )
     event_tracer.clear_events()
 
     # Bring mocks ON
 
     max_sa = int(getattr(pytest, "sn_count", 16))
     for subarray_id in range(1, max_sa + 1):
-        central_node_low.set_subarray_id(subarray_id)
+        central_node_low_16_subarrays.set_subarray_id(subarray_id)
         event_tracer.subscribe_event(
-            central_node_low.subarray_node, "obsState"
+            central_node_low_16_subarrays.subarray_node, "obsState"
         )
         event_tracer.subscribe_event(
-            central_node_low.subarray_node, "longRunningCommandResult"
+            central_node_low_16_subarrays.subarray_node,
+            "longRunningCommandResult",
         )
-        central_node_low.set_values_with_all_mocks(DevState.ON)
+        central_node_low_16_subarrays.set_values_with_all_mocks(DevState.ON)
 
-    central_node_low.move_to_on()
+    central_node_low_16_subarrays.move_to_on()
 
     assert_that(event_tracer).within_timeout(
         TIMEOUT
     ).has_change_event_occurred(
-        central_node_low.central_node,
+        central_node_low_16_subarrays.central_node,
         "telescopeState",
         DevState.ON,
     )
@@ -616,7 +619,7 @@ def given_a_telescope_is_in_on(
 
 @given(parsers.parse("I assign resources using plan map {PlanMap}"))
 def assign_using_plan_map(
-    central_node_low: CentralNodeWrapperLow,
+    central_node_low_16_subarrays: CentralNodeWrapperLow,
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
     PlanMap: str,
@@ -645,14 +648,14 @@ def assign_using_plan_map(
     _build_assign_json_files(plan_map, base_assign, logs_dir)
 
     assign_unique_ids = _assign_resources_for_subarrays(
-        central_node_low, pytest.active_subarray_ids, logs_dir
+        central_node_low_16_subarrays, pytest.active_subarray_ids, logs_dir
     )
 
     for unique_id in assign_unique_ids:
         assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
-            central_node_low.central_node,
+            central_node_low_16_subarrays.central_node,
             "longRunningCommandResult",
             (
                 unique_id[0],
@@ -661,7 +664,7 @@ def assign_using_plan_map(
         )
 
     _wait_for_subarrays_obsstate(
-        central_node_low,
+        central_node_low_16_subarrays,
         event_tracer,
         pytest.active_subarray_ids,
         ObsState.IDLE,
@@ -830,13 +833,15 @@ def given_scan_on_all_configured_subarrays(
 
 @given("I release resources from all involved subarrays")
 def given_release_resources_from_all_subarrays(
-    central_node_low: CentralNodeWrapperLow,
+    central_node_low_16_subarrays: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
     command_input_factory: JsonFactory,
 ):
     """Release resources on active subarrays from CN (best-effort)."""
     event_tracer.clear_events()
-    release_all_involved(central_node_low, command_input_factory, event_tracer)
+    release_all_involved(
+        central_node_low_16_subarrays, command_input_factory, event_tracer
+    )
 
 
 @given("the involved subarrays transition to SCANNING and back to READY")
@@ -852,13 +857,13 @@ def given_subarrays_transition_to_scanning_and_ready(
 
 @when("I reassign all subarrays.")
 def reassign_all_subarrays(
-    central_node_low: CentralNodeWrapperLow,
+    central_node_low_16_subarrays: CentralNodeWrapperLow,
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
 ):
     """Reassign active subarrays from CN using PlanMap."""
     assign_using_plan_map(
-        central_node_low=central_node_low,
+        central_node_low_16_subarrays=central_node_low_16_subarrays,
         command_input_factory=command_input_factory,
         event_tracer=event_tracer,
         PlanMap=getattr(pytest, "PlanMap", "{}"),
@@ -1022,7 +1027,7 @@ def end_all_involved(
 
 @then("I release resources from all involved subarrays")
 def release_all_involved(
-    central_node_low: CentralNodeWrapperLow,
+    central_node_low_16_subarrays: CentralNodeWrapperLow,
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
 ):
@@ -1035,17 +1040,17 @@ def release_all_involved(
     )
 
     for subarray_id in getattr(pytest, "active_subarray_ids", []):
-        central_node_low.set_subarray_id(subarray_id)
+        central_node_low_16_subarrays.set_subarray_id(subarray_id)
         rel = json.loads(json.dumps(release_input))
         rel["subarray_id"] = subarray_id
-        _, uid = central_node_low.perform_action(
+        _, uid = central_node_low_16_subarrays.perform_action(
             "ReleaseResources", json.dumps(rel)
         )
 
         assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
-            central_node_low.central_node,
+            central_node_low_16_subarrays.central_node,
             "longRunningCommandResult",
             (
                 uid[0],
@@ -1056,7 +1061,7 @@ def release_all_involved(
         assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
-            central_node_low.subarray_node,
+            central_node_low_16_subarrays.subarray_node,
             "obsState",
             ObsState.EMPTY,
         )
@@ -1064,15 +1069,15 @@ def release_all_involved(
 
 @then("I turn off the telescope")
 def turn_off_telescope(
-    central_node_low: CentralNodeWrapperLow,
+    central_node_low_16_subarrays: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """Move telescope to OFF."""
-    central_node_low.move_to_off()
+    central_node_low_16_subarrays.move_to_off()
     assert_that(event_tracer).within_timeout(
         TIMEOUT
     ).has_change_event_occurred(
-        central_node_low.central_node,
+        central_node_low_16_subarrays.central_node,
         "telescopeState",
         DevState.OFF,
     )
