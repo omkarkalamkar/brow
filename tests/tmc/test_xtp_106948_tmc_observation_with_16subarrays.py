@@ -535,7 +535,7 @@ def test_tmc_observation_with_16subarrays_fast():
     """BDD scenario entrypoint (Scenario Outline filled from feature file)."""
 
 
-@pytest.mark.SKA_tmc_low_multiple_subarrays
+@pytest.mark.SKA_tmc_low_multiple_subarrays_supress
 @scenario(
     "../features/tmc/xtp-106948_tmc_observation.feature",
     "Execute long sequence on 16 Subarrays",
@@ -544,7 +544,7 @@ def test_tmc_long_sequence_configure():
     """Test the long sequence of Configure with 16 subarrays."""
 
 
-@pytest.mark.SKA_tmc_low_multiple_subarrays_supress
+@pytest.mark.SKA_tmc_low_multiple_subarrays
 @scenario(
     "../features/tmc/xtp-106948_tmc_observation.feature",
     "Execute long sequence Scan on 16 Subarrays",
