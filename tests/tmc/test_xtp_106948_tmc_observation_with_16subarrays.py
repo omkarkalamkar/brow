@@ -653,6 +653,7 @@ def assign_using_plan_map(
     PlanMap: str,
 ):
     """Assign resources for active subarrays from PlanMap."""
+    event_tracer.clear_events()
     pytest.PlanMap = PlanMap
     plan_map = parse_plan_map(PlanMap)
     pytest.active_subarray_ids = _active_subarray_ids_from_plan_map(
@@ -712,6 +713,7 @@ def configure_using_plan_map(
     PlanMap: str,
 ):
     """Configure active subarrays from PlanMap."""
+    event_tracer.clear_events()
     plan_map = parse_plan_map(PlanMap)
     active_subarray_ids = getattr(
         pytest,
@@ -842,6 +844,7 @@ def end_observations_on_all_subarrays(
     event_tracer: TangoEventTracer,
 ):
     """End observations on active subarrays (best-effort)."""
+    event_tracer.clear_events()
     end_all_involved(
         subarray_node_low=subarray_node_low, event_tracer=event_tracer
     )
@@ -854,6 +857,7 @@ def given_scan_on_all_configured_subarrays(
     event_tracer: TangoEventTracer,
 ):
     """Start Scan on active subarrays (best-effort)."""
+    event_tracer.clear_events()
     scan_on_configured_subarrays(
         command_input_factory=command_input_factory,
         subarray_node_low=subarray_node_low,
@@ -868,6 +872,7 @@ def given_release_resources_from_all_subarrays(
     command_input_factory: JsonFactory,
 ):
     """Release resources on active subarrays from CN (best-effort)."""
+    event_tracer.clear_events()
     release_all_involved(central_node_low, command_input_factory, event_tracer)
 
 
@@ -919,6 +924,7 @@ def scan_on_configured_subarrays(
     event_tracer: TangoEventTracer,
 ):
     """Start Scan on active subarrays (best-effort)."""
+    event_tracer.clear_events()
     scan_input_json = prepare_json_args_for_commands(
         "scan_low", command_input_factory
     )
@@ -949,6 +955,7 @@ def scan_on_all_subarrays_with_new_scan_id(
     event_tracer: TangoEventTracer,
 ):
     """Start Scan with new scan_id on active subarrays (best-effort)."""
+    event_tracer.clear_events()
     scan_input_json = prepare_json_args_for_commands(
         "scan_low", command_input_factory
     )
@@ -1054,6 +1061,7 @@ def end_all_involved(
     event_tracer: TangoEventTracer,
 ):
     """End observations on active subarrays (best-effort)."""
+    event_tracer.clear_events()
     for subarray_id in getattr(pytest, "active_subarray_ids", []):
         subarray_node_low.set_subarray_id(subarray_id)
         # subarray_node_low.end_observation_new()
@@ -1081,6 +1089,7 @@ def release_all_involved(
     event_tracer: TangoEventTracer,
 ):
     """Release resources for active subarrays (best-effort)."""
+    event_tracer.clear_events()
     release_input = json.loads(
         prepare_json_args_for_centralnode_commands(
             "release_resources_low", command_input_factory
