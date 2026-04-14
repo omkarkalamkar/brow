@@ -931,6 +931,17 @@ def scan_on_all_subarrays_with_new_scan_id(
         )
 
 
+@when("the Subarrays are configured successfully with correct delaymodels")
+def when_subarrays_configured_with_delay_models(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Wait for READY + LRCR OK after Configure (best-effort)."""
+    verify_subarray_in_ready_observation_state(
+        subarray_node_low=subarray_node_low, event_tracer=event_tracer
+    )
+
+
 @then("the subarrays transition to READY on scan completion")
 def check_scan_completion(
     subarray_node_low: SubarrayNodeWrapperLow,

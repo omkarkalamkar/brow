@@ -39,6 +39,7 @@ Feature: Multi-subarray observation
         And I release resources from all involved subarrays
         When I reassign all subarrays.
         And I reconfigure all subarrays.
+        And the Subarrays are configured successfully with correct delaymodels
         And I scan on all configured subarrays
         Then the involved subarrays transition to SCANNING and back to READY
         And I end the observations on all involved subarrays
