@@ -73,7 +73,7 @@ centralnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-centralnode
-    tag: 1.1.0
+    tag: 1.2.0
     pullPolicy: IfNotPresent
 
 subarraynode:
@@ -94,14 +94,14 @@ cspmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.43.0
+    tag: 0.44.1
     pullPolicy: IfNotPresent
 
 cspsubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.43.0
+    tag: 0.44.1
     pullPolicy: IfNotPresent
 
 mccsmasterleafnode:
@@ -125,12 +125,7 @@ resource_monitor:
     tag: 0.5.0
     pullPolicy: IfNotPresent
 
-skatmcsimulators:
-  image:
-    registry: artefact.skao.int
-    image: ska-tmc-simulators
-    tag: 1.9.7
-    pullPolicy: IfNotPresent
+
 
 resources:
   limits:
@@ -156,6 +151,10 @@ deviceServers:
     DefaultArrayLayoutSourceURIs: "gitlab://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     DefaultArrayLayoutPath: "instrument/ska1_low/layout/low-layout.json"
     LoggingLevel: "4"
+    SubarrayPrefix: "low-tmc/subarray/"
+
+
+
 
   subarraynode:
     enabled: true

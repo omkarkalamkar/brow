@@ -5,6 +5,13 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[Unreleased]
+*************
+Updated
+-------
+* Tested 16 Subarrays with different configurations, performed end to end observations and delay models for station beams ,PSS and PST beams.
+* Tested 16 Subarrys for 30 min scan duration
+
 [2.14.0-rc.1]
 *************
 Updated
