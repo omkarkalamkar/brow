@@ -550,7 +550,7 @@ def _max_scan_duration_from_plan_map(plan_map: dict[int, str]) -> float:
     return max_duration
 
 
-@pytest.mark.SKA_tmc_low_multiple_subarrays
+@pytest.mark.SKA_tmc_low_multiple_subarrays_supress
 @scenario(
     "../features/tmc/xtp-106948_tmc_observation.feature",
     "Execute observation using <SNCount> subarrays with plan map <PlanMap>",
@@ -562,13 +562,13 @@ def test_tmc_observation_with_16subarrays_fast():
 @pytest.mark.SKA_tmc_low_multiple_subarrays
 @scenario(
     "../features/tmc/xtp-106948_tmc_observation.feature",
-    "Execute long sequence configure on 16 Subarrays",
+    "Execute long sequence on 16 Subarrays",
 )
 def test_tmc_long_sequence_configure():
     """Test the long sequence of Configure with 16 subarrays."""
 
 
-@pytest.mark.SKA_tmc_low_multiple_subarrays
+@pytest.mark.SKA_tmc_low_multiple_subarrays_supress
 @scenario(
     "../features/tmc/xtp-106948_tmc_observation.feature",
     "Execute long sequence Scan on 16 Subarrays",
@@ -844,6 +844,45 @@ def end_observations_on_all_subarrays(
     """End observations on active subarrays (best-effort)."""
     end_all_involved(
         subarray_node_low=subarray_node_low, event_tracer=event_tracer
+    )
+
+
+@given("I scan on all configured subarrays")
+def given_scan_on_all_configured_subarrays(
+    command_input_factory: JsonFactory,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Start Scan on active subarrays (best-effort)."""
+    scan_on_configured_subarrays(
+        command_input_factory=command_input_factory,
+        subarray_node_low=subarray_node_low,
+        event_tracer=event_tracer,
+    )
+
+
+@given("I release resources from all involved subarrays")
+def given_release_resources_from_all_subarrays(
+    central_node_low: CentralNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    command_input_factory: JsonFactory,
+):
+    """Release resources on active subarrays from CN (best-effort)."""
+    release_all_involved(central_node_low, command_input_factory, event_tracer)
+
+
+@when("I reassign all subarrays.")
+def reassign_all_subarrays(
+    central_node_low: CentralNodeWrapperLow,
+    command_input_factory: JsonFactory,
+    event_tracer: TangoEventTracer,
+):
+    """Reassign active subarrays from CN using PlanMap."""
+    assign_using_plan_map(
+        central_node_low=central_node_low,
+        command_input_factory=command_input_factory,
+        event_tracer=event_tracer,
+        PlanMap=getattr(pytest, "PlanMap", "{}"),
     )
 
 
