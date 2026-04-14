@@ -34,6 +34,7 @@ Feature: Multi-subarray observation
         And I configure subarrays using plan map <PlanMap>
         And the Subarrays are configured successfully with correct delaymodels
         And I scan on all configured subarrays
+        And the involved subarrays transition to SCANNING and back to READY
         And I end the observations on all involved subarrays
         And I release resources from all involved subarrays
         When I reassign all subarrays.

@@ -871,6 +871,17 @@ def given_release_resources_from_all_subarrays(
     release_all_involved(central_node_low, command_input_factory, event_tracer)
 
 
+@given("the involved subarrays transition to SCANNING and back to READY")
+def given_subarrays_transition_to_scanning_and_ready(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Verify SCANNING then READY on active subarrays."""
+    check_scanning_and_ready(
+        subarray_node_low=subarray_node_low, event_tracer=event_tracer
+    )
+
+
 @when("I reassign all subarrays.")
 def reassign_all_subarrays(
     central_node_low: CentralNodeWrapperLow,
@@ -1012,9 +1023,10 @@ def check_scanning_and_ready(
                 subarray_id,
             )
 
-    plan_map = parse_plan_map(pytest.PlanMap)
+    # plan_map = parse_plan_map(pytest.PlanMap)
 
-    max_scan_duration = _max_scan_duration_from_plan_map(plan_map)
+    # max_scan_duration = _max_scan_duration_from_plan_map(plan_map)
+    max_scan_duration = 10.0
 
     for subarray_id in getattr(pytest, "active_subarray_ids", []):
         subarray_node_low.set_subarray_id(subarray_id)
