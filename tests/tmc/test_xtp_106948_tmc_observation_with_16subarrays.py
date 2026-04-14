@@ -422,20 +422,13 @@ def _wait_for_subarrays_obsstate(
     """Wait for obsState on CN subarray nodes (best-effort)."""
     for sa_id in subarray_ids:
         central_node_low.set_subarray_id(sa_id)
-        try:
-            assert_that(event_tracer).within_timeout(
-                TIMEOUT
-            ).has_change_event_occurred(
-                central_node_low.subarray_node,
-                "obsState",
-                expected_state,
-            )
-        except AssertionError:
-            LOGGER.exception(
-                "ObsState=%s not observed within timeout for subarray %s",
-                expected_state,
-                sa_id,
-            )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            central_node_low.subarray_node,
+            "obsState",
+            expected_state,
+        )
 
 
 def _wait_for_subarraynode_obsstate(
@@ -447,20 +440,13 @@ def _wait_for_subarraynode_obsstate(
     """Wait for obsState on TMC SubarrayNode devices (best-effort)."""
     for sa_id in subarray_ids:
         subarray_node_low.set_subarray_id(sa_id)
-        try:
-            assert_that(event_tracer).within_timeout(
-                TIMEOUT
-            ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
-                "obsState",
-                expected_state,
-            )
-        except AssertionError:
-            LOGGER.exception(
-                "No obsState=%s within timeout for subarray %s",
-                expected_state,
-                sa_id,
-            )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            subarray_node_low.subarray_node,
+            "obsState",
+            expected_state,
+        )
 
 
 def _wait_for_configure_ready_and_lrcr_ok(
@@ -476,31 +462,21 @@ def _wait_for_configure_ready_and_lrcr_ok(
             json.dumps((int(ResultCode.OK), "Command Completed")),
         )
 
-        try:
-            assert_that(event_tracer).within_timeout(
-                TIMEOUT
-            ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
-                "obsState",
-                ObsState.READY,
-            )
-        except AssertionError:
-            LOGGER.exception("Not READY within timeout for subarray %s", sa_id)
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            subarray_node_low.subarray_node,
+            "obsState",
+            ObsState.READY,
+        )
 
-        try:
-            assert_that(event_tracer).within_timeout(
-                TIMEOUT
-            ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
-                "longRunningCommandResult",
-                expected_lrcr,
-            )
-        except AssertionError:
-            LOGGER.exception(
-                "No Configure LRCR OK.Timeout for subarray %s, unique_id=%s",
-                sa_id,
-                unique_id,
-            )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            subarray_node_low.subarray_node,
+            "longRunningCommandResult",
+            expected_lrcr,
+        )
 
 
 def _delay_model_attributes_from_active_plan(
@@ -589,20 +565,13 @@ def verify_n_subarrays_in_empty(
     # Best-effort check (resilient) on 1..SNCount.
     for subarray_id in range(1, pytest.sn_count + 1):
         central_node_low.set_subarray_id(subarray_id)
-        try:
-            assert_that(event_tracer).within_timeout(
-                TIMEOUT
-            ).has_change_event_occurred(
-                central_node_low.subarray_node,
-                "obsState",
-                ObsState.EMPTY,
-            )
-        except AssertionError:
-            LOGGER.exception(
-                "No obsState=%s within timeout for subarray %s",
-                ObsState.EMPTY,
-                subarray_id,
-            )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            central_node_low.subarray_node,
+            "obsState",
+            ObsState.EMPTY,
+        )
 
 
 @given("the telescope is in the ON state")
@@ -680,22 +649,16 @@ def assign_using_plan_map(
     )
 
     for unique_id in assign_unique_ids:
-        try:
-            assert_that(event_tracer).within_timeout(
-                TIMEOUT
-            ).has_change_event_occurred(
-                central_node_low.central_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
-        except AssertionError:
-            LOGGER.exception(
-                "No LRCR OK not for AssignResources unique_id=%s",
-                unique_id,
-            )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            central_node_low.central_node,
+            "longRunningCommandResult",
+            (
+                unique_id[0],
+                json.dumps((int(ResultCode.OK), "Command Completed")),
+            ),
+        )
 
     _wait_for_subarrays_obsstate(
         central_node_low,
@@ -932,20 +895,13 @@ def scan_on_configured_subarrays(
     for subarray_id in getattr(pytest, "active_subarray_ids", []):
         subarray_node_low.set_subarray_id(subarray_id)
         subarray_node_low.execute_transition("Scan", scan_input_json)
-        try:
-            assert_that(event_tracer).within_timeout(
-                TIMEOUT
-            ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
-                "obsState",
-                ObsState.SCANNING,
-            )
-        except AssertionError:
-            LOGGER.exception(
-                "No obsState=%s within timeout for subarray %s after Scan",
-                ObsState.SCANNING,
-                subarray_id,
-            )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            subarray_node_low.subarray_node,
+            "obsState",
+            ObsState.SCANNING,
+        )
 
 
 @when("I issue scan on all subarray with new scan_id")
@@ -966,21 +922,13 @@ def scan_on_all_subarrays_with_new_scan_id(
     for subarray_id in getattr(pytest, "active_subarray_ids", []):
         subarray_node_low.set_subarray_id(subarray_id)
         subarray_node_low.execute_transition("Scan", scan_input_json)
-        try:
-            assert_that(event_tracer).within_timeout(
-                TIMEOUT
-            ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
-                "obsState",
-                ObsState.SCANNING,
-            )
-        except AssertionError:
-            LOGGER.exception(
-                "No obsState=%s within timeout for subarray %s after"
-                " Scan with new scan_id",
-                ObsState.SCANNING,
-                subarray_id,
-            )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            subarray_node_low.subarray_node,
+            "obsState",
+            ObsState.SCANNING,
+        )
 
 
 @then("the subarrays transition to READY on scan completion")
@@ -1015,20 +963,13 @@ def check_scanning_and_ready(
     for subarray_id in getattr(pytest, "active_subarray_ids", []):
         subarray_node_low.set_subarray_id(subarray_id)
 
-        try:
-            assert_that(event_tracer).within_timeout(
-                TIMEOUT
-            ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
-                "obsState",
-                ObsState.SCANNING,
-            )
-        except AssertionError:
-            LOGGER.exception(
-                "No obsState=%s within timeout for subarray %s during scan",
-                ObsState.SCANNING,
-                subarray_id,
-            )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            subarray_node_low.subarray_node,
+            "obsState",
+            ObsState.SCANNING,
+        )
 
     # plan_map = parse_plan_map(pytest.PlanMap)
 
@@ -1039,20 +980,13 @@ def check_scanning_and_ready(
         subarray_node_low.set_subarray_id(subarray_id)
         logging.info("Checking for SN - %s", subarray_id)
 
-        try:
-            assert_that(event_tracer).within_timeout(
-                max_scan_duration + 10
-            ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
-                "obsState",
-                ObsState.READY,
-            )
-        except AssertionError:
-            LOGGER.exception(
-                "No obsState=%s within timeout for subarray %s after scan",
-                ObsState.READY,
-                subarray_id,
-            )
+        assert_that(event_tracer).within_timeout(
+            max_scan_duration + 10
+        ).has_change_event_occurred(
+            subarray_node_low.subarray_node,
+            "obsState",
+            ObsState.READY,
+        )
 
 
 @then("I end the observations on all involved subarrays")
@@ -1066,20 +1000,13 @@ def end_all_involved(
         subarray_node_low.set_subarray_id(subarray_id)
         # subarray_node_low.end_observation_new()
         subarray_node_low.execute_transition("End")
-        try:
-            assert_that(event_tracer).within_timeout(
-                TIMEOUT
-            ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
-                "obsState",
-                ObsState.IDLE,
-            )
-        except AssertionError:
-            LOGGER.exception(
-                "No obsState=%s within timeout for subarray %s after End",
-                ObsState.IDLE,
-                subarray_id,
-            )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            subarray_node_low.subarray_node,
+            "obsState",
+            ObsState.IDLE,
+        )
 
 
 @then("I release resources from all involved subarrays")
@@ -1104,39 +1031,24 @@ def release_all_involved(
             "ReleaseResources", json.dumps(rel)
         )
 
-        try:
-            assert_that(event_tracer).within_timeout(
-                TIMEOUT
-            ).has_change_event_occurred(
-                central_node_low.central_node,
-                "longRunningCommandResult",
-                (
-                    uid[0],
-                    json.dumps((int(ResultCode.OK), "Command Completed")),
-                ),
-            )
-        except AssertionError:
-            LOGGER.exception(
-                "No LRCR OK for ReleaseResources subarray %s, uid=%s",
-                subarray_id,
-                uid,
-            )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            central_node_low.central_node,
+            "longRunningCommandResult",
+            (
+                uid[0],
+                json.dumps((int(ResultCode.OK), "Command Completed")),
+            ),
+        )
 
-        try:
-            assert_that(event_tracer).within_timeout(
-                TIMEOUT
-            ).has_change_event_occurred(
-                central_node_low.subarray_node,
-                "obsState",
-                ObsState.EMPTY,
-            )
-        except AssertionError:
-            LOGGER.exception(
-                "No obsState=%s within timeout for subarray %s "
-                "after ReleaseResources",
-                ObsState.EMPTY,
-                subarray_id,
-            )
+        assert_that(event_tracer).within_timeout(
+            TIMEOUT
+        ).has_change_event_occurred(
+            central_node_low.subarray_node,
+            "obsState",
+            ObsState.EMPTY,
+        )
 
     central_node_low.move_to_off()
     assert_that(event_tracer).within_timeout(

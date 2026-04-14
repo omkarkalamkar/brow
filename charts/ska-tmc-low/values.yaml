@@ -94,14 +94,14 @@ cspmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.43.0
+    tag: 0.44.1
     pullPolicy: IfNotPresent
 
 cspsubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.43.0
+    tag: 0.44.1
     pullPolicy: IfNotPresent
 
 mccsmasterleafnode:
@@ -148,11 +148,8 @@ deviceServers:
     IsAutoRecoveryEnabled: "true"
     DefaultArrayLayoutSourceURIs: "gitlab://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     DefaultArrayLayoutPath: "instrument/ska1_low/layout/low-layout.json"
-    LoggingLevel: "4"
+    LoggingLevel: "5"
     SubarrayPrefix: "low-tmc/subarray/"
-
-
-
 
   subarraynode:
     enabled: true
@@ -174,7 +171,7 @@ deviceServers:
     MccsReleaseInterfaceURL: "https://schema.skatelescope.org/ska-low-mccs-controller-release/2.0"
     ScanStartTimeOffset: 10
     StartTimeEnabled: false
-    LoggingLevel: "4"
+    LoggingLevel: "5"
     PreRecoveryCheckTimeDuration: 1.0
 
   sdpsubarrayleafnode:
