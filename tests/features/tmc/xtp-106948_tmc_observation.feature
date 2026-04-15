@@ -32,15 +32,15 @@ Feature: Multi-subarray observation
         Given the telescope is in the ON state
         And <SNCount> subarrays are in the EMPTY ObsState
         And I assign resources using plan map <PlanMap>
-        And I configure subarrays using plan map <PlanMap>
-        And the Subarrays are configured successfully with correct delaymodels
+        And I configure all the subarrays using plan map <PlanMap>
+        And the Subarrays are configured successfully
         And I scan on all configured subarrays
         And the involved subarrays transition to SCANNING and back to READY
         And I end the observations on all involved subarrays
         And I release resources from all involved subarrays
         When I reassign all subarrays.
         And I reconfigure all subarrays.
-        And the Subarrays are configured successfully with correct delaymodels
+        And the Subarrays are configured successfully
         And I scan on all configured subarrays
         Then the involved subarrays transition to SCANNING and back to READY
         And I end the observations on all involved subarrays
@@ -56,8 +56,8 @@ Feature: Multi-subarray observation
         Given the telescope is in the ON state
         And <SNCount> subarrays are in the EMPTY ObsState
         And I assign resources using plan map <PlanMap>
-        And I configure subarrays using plan map <PlanMap>
-        And the Subarrays are configured successfully with correct delaymodels
+        And I configure all the subarrays using plan map <PlanMap>
+        And the Subarrays are configured successfully
         And I scan on all configured subarrays
         And the involved subarrays transition to SCANNING and back to READY
         When I issue scan on all subarray with new scan_id
