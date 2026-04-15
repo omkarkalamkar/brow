@@ -170,6 +170,12 @@ def _build_assign_json_files(
             per_sn,
             plan_name,
         )
+
+        # Override PSS beam ids so each subarray uses its own unique id.
+        # Shape expected by assign_resources_low: csp.pss.pss_beam_ids
+        assign_json.setdefault("csp", {}).setdefault("pss", {})[
+            "pss_beam_ids"
+        ] = [int(subarray_id)]
         _write_json(
             logs_dir / f"assign_subarray{subarray_id}.json",
             assign_json,
@@ -200,7 +206,7 @@ def _configure_json_for_subarray(
     # Override the plan-provided PSS IDs so each subarray uses a unique id.
     pss_beams = per_sn.get("pss_beams", [])
     if pss_beams:
-        base_pss_id = int(pss_beams[0].get("id", 1))
+        base_pss_id = int(subarray_id)
         for beam in pss_beams:
             beam["id"] = _pss_id_for_subarray(base_pss_id, subarray_id)
 
