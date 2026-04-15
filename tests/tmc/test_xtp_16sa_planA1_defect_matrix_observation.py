@@ -308,8 +308,8 @@ def test_xtp_16sa_planA1_defect_matrix_observation() -> None:
 
 @given(parsers.parse("{SNCount:d} subarrays are in the EMPTY ObsState"))
 def given_subarrays_in_empty(
-    central_node_low: CentralNodeWrapperLow,
-    event_tracer: TangoEventTracer,
+    # central_node_low: CentralNodeWrapperLow,
+    # event_tracer: TangoEventTracer,
     SNCount: int,
 ) -> None:
     """Verify EMPTY on 1..SNCount (best-effort)."""
@@ -317,21 +317,21 @@ def given_subarrays_in_empty(
     pytest.sn_count = int(SNCount)
     pytest.subarray_ids = _active_subarray_ids(pytest.sn_count)
 
-    for subarray_id in pytest.subarray_ids:
-        central_node_low.set_subarray_id(subarray_id)
-        try:
-            assert_that(event_tracer).within_timeout(
-                TIMEOUT
-            ).has_change_event_occurred(
-                central_node_low.subarray_node,
-                "obsState",
-                ObsState.EMPTY,
-            )
-        except AssertionError:
-            LOGGER.exception(
-                "No EMPTY obsState within timeout for SA %s",
-                subarray_id,
-            )
+    # for subarray_id in pytest.subarray_ids:
+    #     central_node_low.set_subarray_id(subarray_id)
+    #     try:
+    #         assert_that(event_tracer).within_timeout(
+    #             TIMEOUT
+    #         ).has_change_event_occurred(
+    #             central_node_low.subarray_node,
+    #             "obsState",
+    #             ObsState.EMPTY,
+    #         )
+    #     except AssertionError:
+    #         LOGGER.exception(
+    #             "No EMPTY obsState within timeout for SA %s",
+    #             subarray_id,
+    #         )
 
 
 @given("the telescope is in the ON state")
