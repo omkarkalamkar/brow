@@ -37,6 +37,7 @@ from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
 from tests.resources.test_harness.utils.common_utils import JsonFactory
+from tests.resources.test_support import constant_low
 from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
     prepare_json_args_for_commands,
@@ -46,7 +47,6 @@ from tests.tmc.test_xtp_106948_tmc_observation_with_16subarrays import (
 )
 from tests.tmc.tmc_new_iTH.utils import (
     _build_assign_json,
-    command_defect_mapping,
     ensure_logs_dir,
     load_plan_json,
     write_json,
@@ -103,28 +103,41 @@ def _subsystem_subarrays(subarray_node_low: SubarrayNodeWrapperLow) -> tuple:
     if isinstance(devs, dict):
         csp = devs.get("csp_subarray")
         sdp = devs.get("sdp_subarray")
+        mccs = devs.get("mccs_subarray")
 
     if csp is None:
         csp = getattr(subarray_node_low, "csp_subarray", None)
     if sdp is None:
         sdp = getattr(subarray_node_low, "sdp_subarray", None)
 
-    mccs = getattr(subarray_node_low, "mccs_subarray", None)
     if mccs is None:
-        mccs = getattr(subarray_node_low, "mccs_subarray1", None)
+        mccs = getattr(subarray_node_low, "mccs_subarray", None)
 
     return csp, sdp, mccs
 
 
 def _apply_defect(
     subarray_node_low: SubarrayNodeWrapperLow,
-    command: str,
+    # command: str,
     defect: str,
 ) -> None:
     """Best-effort SetDefective application for a given command/defect."""
 
-    mapping = command_defect_mapping.get(command, {})
-    defect_payload = mapping.get(str(defect), mapping.get("FAULT"))
+    # Try to resolve defect string to a constant in constant_low
+    if hasattr(constant_low, defect):
+        defect_obj = getattr(constant_low, defect)
+        # If the constant is already a JSON string, use as is
+        if isinstance(defect_obj, str):
+            defect_payload = defect_obj
+        else:
+            defect_payload = json.dumps(defect_obj)
+    else:
+        # fallback to mapping
+        # mapping = command_defect_mapping.get(command, {})
+        # defect_payload = mapping.get(str(defect), mapping.get("FAULT"))
+        assert (
+            False
+        ), f"Defect string '{defect}' not supported in constant_low "
 
     csp, sdp, mccs = _subsystem_subarrays(subarray_node_low)
     if csp is not None:
@@ -170,7 +183,7 @@ def _run_assign_resources_for_all(
             try:
                 _apply_defect(
                     subarray_node_low,
-                    "AssignResources",
+                    # "AssignResources",
                     str(defect),
                 )
             except Exception:  # pylint: disable=broad-exception-caught
