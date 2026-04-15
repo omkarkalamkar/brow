@@ -399,6 +399,72 @@ def _assign_resources_for_subarrays(
     return unique_ids
 
 
+def _configure_using_plan_map(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    command_input_factory: JsonFactory,
+    event_tracer: TangoEventTracer,
+    PlanMap: str,
+    is_long_scan: bool = True,
+):
+    """Configure active subarrays from PlanMap."""
+    event_tracer.clear_events()
+    plan_map = parse_plan_map(PlanMap)
+    active_subarray_ids = getattr(
+        pytest,
+        "active_subarray_ids",
+        _active_subarray_ids_from_plan_map(plan_map, pytest.sn_count),
+    )
+
+    base_configure = json.loads(
+        prepare_json_args_for_commands("configure_low", command_input_factory)
+    )
+
+    logs_dir = _ensure_logs_dir()
+
+    for subarray_id, plan_name in plan_map.items():
+        if subarray_id not in active_subarray_ids:
+            continue
+
+        plan = load_plan_json(_PLANS_FEATURE_PATH, plan_name)
+        per_sn = plan.get(str(subarray_id), plan)
+
+        cfg = json.loads(json.dumps(base_configure))
+        _reset_configure_payload(cfg)
+
+        if is_long_scan:
+            scan_duration = float(per_sn.get("scan_duration", 10.0))
+            cfg["tmc"]["scan_duration"] = scan_duration
+
+        station_beams = per_sn.get("station_beams", [])
+        _apply_lowcbf_stations(cfg, station_beams)
+        if station_beams:
+            cfg.setdefault("mccs", {})[
+                "subarray_beams"
+            ] = _build_mccs_subarray_beams(per_sn, subarray_id, station_beams)
+
+        pst_beams = per_sn.get("pst_beams", [])
+        pss_beams = per_sn.get("pss_beams", [])
+        _apply_lowcbf_timing_beams(cfg, pst_beams)
+        _apply_lowcbf_search_beams(cfg, pss_beams)
+        _apply_csp_pst(cfg, pst_beams)
+        _apply_csp_pss(cfg, pss_beams)
+
+        _write_json(logs_dir / f"configure_subarray{subarray_id}.json", cfg)
+
+    pytest.configure_unique_ids = _configure_subarrays(
+        subarray_node_low,
+        active_subarray_ids,
+        logs_dir,
+    )
+
+    _wait_for_subarraynode_obsstate(
+        subarray_node_low,
+        event_tracer,
+        active_subarray_ids,
+        ObsState.CONFIGURING,
+    )
+
+
 def _configure_subarrays(
     subarray_node_low: SubarrayNodeWrapperLow,
     subarray_ids: list[int],
@@ -731,7 +797,7 @@ def configure_all_using_plan_map(
     PlanMap: str,
 ):
     """Configure all subarrays from PlanMap."""
-    configure_using_plan_map(
+    _configure_using_plan_map(
         subarray_node_low=subarray_node_low,
         command_input_factory=command_input_factory,
         event_tracer=event_tracer,
@@ -741,69 +807,19 @@ def configure_all_using_plan_map(
 
 
 @given(parsers.parse("I configure subarrays using plan map {PlanMap}"))
-def configure_using_plan_map(
+def configure_using_plan_map_for_long_scan(
     subarray_node_low: SubarrayNodeWrapperLow,
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
     PlanMap: str,
-    is_long_scan: bool = True,
 ):
-    """Configure active subarrays from PlanMap."""
-    event_tracer.clear_events()
-    plan_map = parse_plan_map(PlanMap)
-    active_subarray_ids = getattr(
-        pytest,
-        "active_subarray_ids",
-        _active_subarray_ids_from_plan_map(plan_map, pytest.sn_count),
-    )
-
-    base_configure = json.loads(
-        prepare_json_args_for_commands("configure_low", command_input_factory)
-    )
-
-    logs_dir = _ensure_logs_dir()
-
-    for subarray_id, plan_name in plan_map.items():
-        if subarray_id not in active_subarray_ids:
-            continue
-
-        plan = load_plan_json(_PLANS_FEATURE_PATH, plan_name)
-        per_sn = plan.get(str(subarray_id), plan)
-
-        cfg = json.loads(json.dumps(base_configure))
-        _reset_configure_payload(cfg)
-
-        if is_long_scan:
-            scan_duration = float(per_sn.get("scan_duration", 10.0))
-            cfg["tmc"]["scan_duration"] = scan_duration
-
-        station_beams = per_sn.get("station_beams", [])
-        _apply_lowcbf_stations(cfg, station_beams)
-        if station_beams:
-            cfg.setdefault("mccs", {})[
-                "subarray_beams"
-            ] = _build_mccs_subarray_beams(per_sn, subarray_id, station_beams)
-
-        pst_beams = per_sn.get("pst_beams", [])
-        pss_beams = per_sn.get("pss_beams", [])
-        _apply_lowcbf_timing_beams(cfg, pst_beams)
-        _apply_lowcbf_search_beams(cfg, pss_beams)
-        _apply_csp_pst(cfg, pst_beams)
-        _apply_csp_pss(cfg, pss_beams)
-
-        _write_json(logs_dir / f"configure_subarray{subarray_id}.json", cfg)
-
-    pytest.configure_unique_ids = _configure_subarrays(
-        subarray_node_low,
-        active_subarray_ids,
-        logs_dir,
-    )
-
-    _wait_for_subarraynode_obsstate(
-        subarray_node_low,
-        event_tracer,
-        active_subarray_ids,
-        ObsState.CONFIGURING,
+    """Configure all subarrays from PlanMap, with long scan durations."""
+    _configure_using_plan_map(
+        subarray_node_low=subarray_node_low,
+        command_input_factory=command_input_factory,
+        event_tracer=event_tracer,
+        PlanMap=PlanMap,
+        is_long_scan=True,  # Use long scan durations for this step.
     )
 
 

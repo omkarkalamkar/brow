@@ -266,11 +266,11 @@ class SubarrayNodeWrapperLow:
                 result, message = self.subarray_node.command_inout(
                     command_name, argin
                 )
-                # LOGGER.info(
-                #     "Invoked %s on SubarrayNode with argin: %s",
-                #     command_name,
-                #     argin,
-                # )
+                LOGGER.info(
+                    "Invoked %s on SubarrayNode with argin: %s",
+                    command_name,
+                    argin,
+                )
                 return result, message
             else:
                 result, message = self.subarray_node.command_inout(
