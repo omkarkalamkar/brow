@@ -976,11 +976,12 @@ def reconfigure_all_subarrays(
     event_tracer: TangoEventTracer,
 ):
     """Reconfigure all active subarrays"""
-    configure_all_using_plan_map(
+    _configure_using_plan_map(
         subarray_node_low=subarray_node_low,
         command_input_factory=command_input_factory,
         event_tracer=event_tracer,
         PlanMap=getattr(pytest, "PlanMap", "{}"),
+        is_long_scan=False,  # Skip long scan durations for this step.
     )
 
 
