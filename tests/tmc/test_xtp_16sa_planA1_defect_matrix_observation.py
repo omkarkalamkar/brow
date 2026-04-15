@@ -92,12 +92,27 @@ def _parse_matrix(matrix_json: str, kind: str) -> dict[DefectKey, str]:
     return out
 
 
-def _leaf_nodes(subarray_node_low: SubarrayNodeWrapperLow) -> tuple:
-    """Return (csp, sdp, mccs) leaf nodes if present on the wrapper."""
+def _subsystem_subarrays(subarray_node_low: SubarrayNodeWrapperLow) -> tuple:
+    """Return (csp, sdp, mccs) subsystem subarray proxies if present."""
 
-    csp = getattr(subarray_node_low, "csp_subarray_leaf_node", None)
-    sdp = getattr(subarray_node_low, "sdp_subarray_leaf_node", None)
-    mccs = getattr(subarray_node_low, "mccs_subarray_leaf_node", None)
+    csp = None
+    sdp = None
+    mccs = None
+
+    devs = getattr(subarray_node_low, "subarray_devices", {})
+    if isinstance(devs, dict):
+        csp = devs.get("csp_subarray")
+        sdp = devs.get("sdp_subarray")
+
+    if csp is None:
+        csp = getattr(subarray_node_low, "csp_subarray", None)
+    if sdp is None:
+        sdp = getattr(subarray_node_low, "sdp_subarray", None)
+
+    mccs = getattr(subarray_node_low, "mccs_subarray", None)
+    if mccs is None:
+        mccs = getattr(subarray_node_low, "mccs_subarray1", None)
+
     return csp, sdp, mccs
 
 
@@ -111,7 +126,7 @@ def _apply_defect(
     mapping = command_defect_mapping.get(command, {})
     defect_payload = mapping.get(str(defect), mapping.get("FAULT"))
 
-    csp, sdp, mccs = _leaf_nodes(subarray_node_low)
+    csp, sdp, mccs = _subsystem_subarrays(subarray_node_low)
     if csp is not None:
         csp.SetDefective(defect_payload)
     if sdp is not None:
@@ -123,7 +138,7 @@ def _apply_defect(
 def _reset_defects(subarray_node_low: SubarrayNodeWrapperLow) -> None:
     """Best-effort reset of SetDefective on available leaf nodes."""
 
-    csp, sdp, mccs = _leaf_nodes(subarray_node_low)
+    csp, sdp, mccs = _subsystem_subarrays(subarray_node_low)
     if csp is not None:
         csp.SetDefective("{}")
     if sdp is not None:
