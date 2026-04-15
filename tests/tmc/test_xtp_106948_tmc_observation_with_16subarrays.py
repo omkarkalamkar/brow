@@ -1018,6 +1018,20 @@ def scan_on_configured_subarrays(
             )
 
 
+@when("the Subarrays are configured successfully")
+def when_subarrays_configured_successfully(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Wait for READY after Configure (best-effort)."""
+    _wait_for_configure_ready_and_lrcr_ok(
+        subarray_node_low=subarray_node_low,
+        event_tracer=event_tracer,
+        configure_unique_ids=pytest.configure_unique_ids,
+    )
+    event_tracer.clear_events()
+
+
 @when("I issue scan on all subarray with new scan_id")
 def scan_on_all_subarrays_with_new_scan_id(
     command_input_factory: JsonFactory,
