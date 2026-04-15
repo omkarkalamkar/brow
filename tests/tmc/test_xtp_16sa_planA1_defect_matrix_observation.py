@@ -193,7 +193,7 @@ def _run_assign_resources_for_all(
 
             try:
                 defective_assign_unique_ids[sa_id] = unique_id
-                # _reset_defects(subarray_node_low)
+                _reset_defects(subarray_node_low)
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
                     "Failed to reset defects after AssignResources for SA %s",
@@ -245,6 +245,16 @@ def _run_assign_resources_for_all(
         )
 
     if defect_sa_ids:
+        # for sa_id in defect_sa_ids:
+        #     subarray_node_low.set_subarray_id(sa_id)
+        #     try:
+        #         _reset_defects(subarray_node_low)
+        #     except Exception:  # pylint: disable=broad-exception-caught
+        #         LOGGER.exception(
+        #           "Failed to reset defects after AssignResources for SA %s",
+        #             sa_id,
+        #         )
+        #         assert False
         _wait_for_subarrays_obsstate(
             central_node_low,
             event_tracer,
