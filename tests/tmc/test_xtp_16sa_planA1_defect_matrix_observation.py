@@ -162,7 +162,7 @@ def _run_assign_resources_for_all(
     assign_defect_sa_ids: set[int] = set()
 
     for sa_id in subarray_ids:
-        central_node_low.set_subarray_id(sa_id)
+        subarray_node_low.set_subarray_id(sa_id)
         defect = defects.get(DefectKey(sa_id, "AssignResources"))
 
         if defect:
@@ -180,7 +180,7 @@ def _run_assign_resources_for_all(
                     defect,
                 )
 
-        # central_node_low.set_subarray_id(sa_id)
+        central_node_low.set_subarray_id(sa_id)
         assign_str = (logs_dir / f"assign_subarray{sa_id}.json").read_text(
             encoding="utf-8"
         )
