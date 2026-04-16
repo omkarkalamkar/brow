@@ -26,7 +26,7 @@ from pathlib import Path
 import pytest
 from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
-from ska_control_model import ObsState
+from ska_control_model import ObsState, ResultCode
 from ska_ser_logging import configure_logging
 from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DevState
@@ -208,6 +208,20 @@ def _run_assign_resources_for_all(
 
             try:
                 defective_assign_unique_ids[sa_id] = unique_id
+
+                assert_that(event_tracer).described_as(
+                    "TMC Subarray Leaf Node "
+                    "is expected to report a"
+                    "longRunningCommand  failure."
+                ).within_timeout(
+                    TIMEOUT
+                ).has_desired_result_code_message_in_lrcr_event(
+                    central_node_low.central_node,
+                    ["Exception occurred"],
+                    unique_id[0],
+                    ResultCode.FAILED,
+                )
+
                 _reset_defects(subarray_node_low)
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
