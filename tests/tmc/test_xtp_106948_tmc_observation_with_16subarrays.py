@@ -628,7 +628,7 @@ def _max_scan_duration_from_plan_map(plan_map: dict[int, str]) -> float:
     return max_duration
 
 
-@pytest.mark.SKA_tmc_low_multiple_subarrays_supress
+@pytest.mark.SKA_tmc_low_multiple_subarrays
 @scenario(
     "../features/tmc/xtp-106948_tmc_observation.feature",
     "Execute observation using <SNCount> subarrays with plan map <PlanMap>",
