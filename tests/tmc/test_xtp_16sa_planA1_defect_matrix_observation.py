@@ -31,13 +31,13 @@ from ska_ser_logging import configure_logging
 from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DevState
 
+from tests.resources.test_harness import constant
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.constant import TIMEOUT
 from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
 from tests.resources.test_harness.utils.common_utils import JsonFactory
-from tests.resources.test_support import constant_low
 from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
     prepare_json_args_for_commands,
@@ -123,9 +123,10 @@ def _apply_defect(
 ) -> None:
     """Best-effort SetDefective application for a given command/defect."""
 
-    # Try to resolve defect string to a constant in constant_low
-    if hasattr(constant_low, defect):
-        defect_obj = getattr(constant_low, defect)
+    logging.info("defect is %s", defect)
+    # Try to resolve defect string to a constant in constant
+    if hasattr(constant, defect):
+        defect_obj = getattr(constant, defect)
         # If the constant is already a JSON string, use as is
         if isinstance(defect_obj, str):
             defect_payload = defect_obj
@@ -135,9 +136,7 @@ def _apply_defect(
         # fallback to mapping
         # mapping = command_defect_mapping.get(command, {})
         # defect_payload = mapping.get(str(defect), mapping.get("FAULT"))
-        assert (
-            False
-        ), f"Defect string '{defect}' not supported in constant_low "
+        assert False, f"Defect string '{defect}' not supported "
 
     csp, sdp, mccs = _subsystem_subarrays(subarray_node_low)
     if csp is not None:
