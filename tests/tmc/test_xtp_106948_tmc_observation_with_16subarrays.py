@@ -1172,8 +1172,8 @@ def end_all_involved(
     event_tracer.clear_events()
     for subarray_id in getattr(pytest, "active_subarray_ids", []):
         subarray_node_low.set_subarray_id(subarray_id)
+        subarray_node_low.execute_transition("End")
         try:
-            subarray_node_low.execute_transition("End")
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(

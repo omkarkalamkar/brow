@@ -78,9 +78,9 @@ timeout value is preconfigured when the component starts for the first time.
 Logging
 -------
 
-The basic setting for logging allows setting logging level of all TMC devices 
-via ``TMCLoggingLevel`` parameter in **global** section. By default, the 
-logging level is set to 4 (``INFO`` level). To set the logging level of one or  
+The basic setting for logging allows setting logging level of all TMC devices
+via ``TMCLoggingLevel`` parameter in **global** section. By default, the
+logging level is set to 4 (``INFO`` level). To set the logging level of one or
 more specific component, refer to advanced cutomization options.
 
 Usage
@@ -176,6 +176,7 @@ Central Node
     #. **family** :  This refers to the family name of CentralNode TANGO device. Currently defaults to "central-node".
     #. **member** :  This refers to the member of CentralNode TANGO device. Currently defaults to "0".
     #. **IsAutoRecoveryEnabled** :  This refers to the feature flag i.e used temporarily till all the nodes are tested with auto recovery functionality. Currently defaults to "false".
+    #. **SubarrayPrefix** :  This refers to the prefix for subarray devices. Currently defaults to "low-tmc/subarray/".
 
 Subarray Node
 ^^^^^^^^^^^^^^
@@ -202,7 +203,7 @@ Subarray Node
         .. note::
             The `PreRecoveryCheckTimeDuration` property is introduced to handle a specific edge case in the automatic recovery of the subarray. It is recommended to NOT modify the default value without prior understanding of the behaviour of the Subarray Node auto recovery mechanics. Please refer auto recovery documentaPreRecoveryCheckTimeDurationtion for more details :ref:`Recovering TMC Low`.
 
-SDP Subarray Leaf Node   
+SDP Subarray Leaf Node
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.

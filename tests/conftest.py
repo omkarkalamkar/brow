@@ -181,7 +181,8 @@ def central_node_low() -> Generator[CentralNodeWrapperLow, None, None]:
 def central_node_low_16_subarrays() -> Generator[
     CentralNodeWrapperLow, None, None
 ]:
-    """Return CentralNode for Low Telescope calls tear down for 16 subarrays"""
+    """Return CentralNode for Low Telescope with 16 subarrays
+    and tear down all subarrays after completion of test"""
     central_node = CentralNodeWrapperLow()
     yield central_node
     # this will call after test complete
