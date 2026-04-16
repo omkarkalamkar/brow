@@ -38,6 +38,7 @@ from tests.resources.test_harness.subarray_node_low import (
     SubarrayNodeWrapperLow,
 )
 from tests.resources.test_harness.utils.common_utils import JsonFactory
+from tests.resources.test_support import constant_low
 from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
     prepare_json_args_for_commands,
@@ -125,16 +126,39 @@ def _apply_defect(
 
     logging.info("defect is %s", defect)
     # Try to resolve defect string to a constant in constant
+    # Try to resolve defect string to a constant in constant or constant_low
     if hasattr(constant, defect):
         defect_obj = getattr(constant, defect)
         # If the constant is already a JSON string, use as is
         if isinstance(defect_obj, str):
-            # defect_payload = defect_obj
-            defect_payload = json.dumps(json.loads(defect_obj))
+            try:
+                # Try to parse and dump to ensure formatting
+                defect_payload = json.dumps(json.loads(defect_obj))
+            except Exception:
+                # If not JSON, just use as is
+                defect_payload = defect_obj
             logging.info("defect_payload %s", defect_payload)
         else:
             defect_payload = json.dumps(defect_obj)
             logging.info("defect_payload %s", defect_payload)
+    else:
+        # Try to import constant_low and check there
+        try:
+            if hasattr(constant_low, defect):
+                defect_obj = getattr(constant_low, defect)
+                if isinstance(defect_obj, str):
+                    try:
+                        defect_payload = json.dumps(json.loads(defect_obj))
+                    except Exception:
+                        defect_payload = defect_obj
+                    logging.info("defect_payload %s", defect_payload)
+                else:
+                    defect_payload = json.dumps(defect_obj)
+                    logging.info("defect_payload %s", defect_payload)
+            else:
+                assert False, f"Defect string '{defect}' not supported"
+        except ImportError:
+            assert False, f"Defect string '{defect}' not supported and constant_low could not be imported"
     else:
         # fallback to mapping
         # mapping = command_defect_mapping.get(command, {})

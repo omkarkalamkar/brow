@@ -1,0 +1,436 @@
+1|2026-04-16T18:06:22.156Z|INFO|MainThread|set_logging_level|ska_device.py#218|tango-device:low-tmc/subarray/04|Logging level set to LoggingLevel.DEBUG on Python and Tango loggers
+1|2026-04-16T18:06:22.156Z|INFO|MainThread|update_logging_handlers|logging.py#379|tango-device:low-tmc/subarray/04|Logging targets set to ['tango::logger']
+1|2026-04-16T18:06:22.156Z|DEBUG|MainThread|_init_logging|ska_device.py#95|tango-device:low-tmc/subarray/04|Logger initialised
+1|2026-04-16T18:06:22.188Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device:  is unavailable
+1|2026-04-16T18:06:22.189Z|DEBUG|MainThread|_start_all_threads|subarray_node_component_manager.py#482|tango-device:low-tmc/subarray/04|Starting liveliness probe thread.
+1|2026-04-16T18:06:22.256Z|DEBUG|MainThread|update_device|component.py#215|tango-device:low-tmc/subarray/04|Adding device info object for: low-tmc/subarray-leaf-node-csp/04
+1|2026-04-16T18:06:22.257Z|DEBUG|MainThread|update_device|component.py#250|tango-device:low-tmc/subarray/04|For low-tmc/subarray-leaf-node-csp/04 obsState is: EMPTY
+1|2026-04-16T18:06:22.258Z|DEBUG|MainThread|add_device|liveliness_probe.py#227|tango-device:low-tmc/subarray/04|Added device: low-tmc/subarray-leaf-node-csp/04 to the list of monitoring devices. Updated list is: ['low-tmc/subarray-leaf-node-csp/04']
+1|2026-04-16T18:06:22.258Z|DEBUG|MainThread|update_device|component.py#215|tango-device:low-tmc/subarray/04|Adding device info object for: low-tmc/subarray-leaf-node-sdp/04
+1|2026-04-16T18:06:22.258Z|DEBUG|MainThread|update_device|component.py#250|tango-device:low-tmc/subarray/04|For low-tmc/subarray-leaf-node-sdp/04 obsState is: EMPTY
+1|2026-04-16T18:06:22.258Z|DEBUG|MainThread|add_device|liveliness_probe.py#227|tango-device:low-tmc/subarray/04|Added device: low-tmc/subarray-leaf-node-sdp/04 to the list of monitoring devices. Updated list is: ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-sdp/04']
+1|2026-04-16T18:06:22.258Z|DEBUG|MainThread|update_device|component.py#215|tango-device:low-tmc/subarray/04|Adding device info object for: low-csp/subarray/04
+1|2026-04-16T18:06:22.258Z|DEBUG|MainThread|update_device|component.py#250|tango-device:low-tmc/subarray/04|For low-csp/subarray/04 obsState is: EMPTY
+1|2026-04-16T18:06:22.259Z|DEBUG|MainThread|add_device|liveliness_probe.py#227|tango-device:low-tmc/subarray/04|Added device: low-csp/subarray/04 to the list of monitoring devices. Updated list is: ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-sdp/04', 'low-csp/subarray/04']
+1|2026-04-16T18:06:22.259Z|DEBUG|MainThread|update_device|component.py#215|tango-device:low-tmc/subarray/04|Adding device info object for: low-sdp/subarray/04
+1|2026-04-16T18:06:22.259Z|DEBUG|MainThread|update_device|component.py#243|tango-device:low-tmc/subarray/04|SDP Subarray low-sdp/subarray/04 obsState is: EMPTY
+1|2026-04-16T18:06:22.259Z|DEBUG|MainThread|add_device|liveliness_probe.py#227|tango-device:low-tmc/subarray/04|Added device: low-sdp/subarray/04 to the list of monitoring devices. Updated list is: ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-sdp/04', 'low-csp/subarray/04', 'low-sdp/subarray/04']
+1|2026-04-16T18:06:22.259Z|DEBUG|MainThread|update_device|component.py#215|tango-device:low-tmc/subarray/04|Adding device info object for: low-tmc/subarray-leaf-node-mccs/04
+1|2026-04-16T18:06:22.259Z|DEBUG|MainThread|update_device|component.py#250|tango-device:low-tmc/subarray/04|For low-tmc/subarray-leaf-node-mccs/04 obsState is: EMPTY
+1|2026-04-16T18:06:22.259Z|DEBUG|MainThread|add_device|liveliness_probe.py#227|tango-device:low-tmc/subarray/04|Added device: low-tmc/subarray-leaf-node-mccs/04 to the list of monitoring devices. Updated list is: ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-sdp/04', 'low-csp/subarray/04', 'low-sdp/subarray/04', 'low-tmc/subarray-leaf-node-mccs/04']
+1|2026-04-16T18:06:22.259Z|DEBUG|MainThread|update_device|component.py#215|tango-device:low-tmc/subarray/04|Adding device info object for: low-tmc/leaf-node-mccs/0
+1|2026-04-16T18:06:22.260Z|DEBUG|MainThread|update_device|component.py#250|tango-device:low-tmc/subarray/04|For low-tmc/leaf-node-mccs/0 obsState is: EMPTY
+1|2026-04-16T18:06:22.260Z|DEBUG|MainThread|add_device|liveliness_probe.py#227|tango-device:low-tmc/subarray/04|Added device: low-tmc/leaf-node-mccs/0 to the list of monitoring devices. Updated list is: ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-sdp/04', 'low-csp/subarray/04', 'low-sdp/subarray/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/leaf-node-mccs/0']
+1|2026-04-16T18:06:22.260Z|DEBUG|MainThread|update_device|component.py#215|tango-device:low-tmc/subarray/04|Adding device info object for: low-mccs/subarray/04
+1|2026-04-16T18:06:22.260Z|DEBUG|MainThread|update_device|component.py#250|tango-device:low-tmc/subarray/04|For low-mccs/subarray/04 obsState is: EMPTY
+1|2026-04-16T18:06:22.260Z|DEBUG|MainThread|add_device|liveliness_probe.py#227|tango-device:low-tmc/subarray/04|Added device: low-mccs/subarray/04 to the list of monitoring devices. Updated list is: ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-sdp/04', 'low-csp/subarray/04', 'low-sdp/subarray/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/leaf-node-mccs/0', 'low-mccs/subarray/04']
+1|2026-04-16T18:06:22.260Z|DEBUG|MainThread|build_device_attribute_map|subarray_node_component_manager.py#375|tango-device:low-tmc/subarray/04|Device-attribute map: {'low-tmc/subarray-leaf-node-csp/04': ['state', 'healthState', 'isSubsystemAvailable', 'healthInfo', 'cspSubarrayObsState', 'cspSubarrayAdminMode'], 'low-tmc/subarray-leaf-node-sdp/04': ['state', 'healthState', 'isSubsystemAvailable', 'healthInfo', 'sdpSubarrayObsState', 'sdpSubarrayAdminMode'], 'low-csp/subarray/04': ['state', 'healthState'], 'low-sdp/subarray/04': ['state', 'healthState', 'receiveAddresses'], 'low-tmc/subarray-leaf-node-mccs/04': ['state', 'healthState', 'isSubsystemAvailable', 'healthInfo', 'obsState', 'mccsSubarrayAdminMode'], 'low-tmc/leaf-node-mccs/0': ['state', 'healthState', 'mccsControllerAdminMode', 'isSubsystemAvailable'], 'low-mccs/subarray/04': ['state', 'healthState', 'assignedResources']}
+1|2026-04-16T18:06:22.262Z|DEBUG|MainThread|setup_event_subscription|subarray_node_component_manager.py#321|tango-device:low-tmc/subarray/04|Successfully subscribed the events
+1|2026-04-16T18:06:22.276Z|INFO|MainThread|exit|core.py#137||Finished processing state _UNINITIALISED exit callbacks.
+1|2026-04-16T18:06:22.276Z|INFO|MainThread|enter|core.py#131||Finished processing state INIT_ON enter callbacks.
+1|2026-04-16T18:06:22.277Z|INFO|MainThread|callbacks|core.py#1176||Executed callback '<bound method TMCOpStateMachine._state_changed of <ska_tmc_common.op_state_model.TMCOpStateMachine object at 0x7f16df039180>>'
+1|2026-04-16T18:06:22.277Z|DEBUG|MainThread|init_device|base_device.py#258|tango-device:low-tmc/subarray/04|Groups definitions: None
+1|2026-04-16T18:06:22.277Z|DEBUG|MainThread|init_device|base_device.py#262|tango-device:low-tmc/subarray/04|No Groups loaded for device: low-tmc/subarray/04
+/usr/local/lib/python3.10/dist-packages/ska_tango_base/subarray/subarray_device.py:210: UserWarning: JSON argument to command AssignResources will only be validated as a dictionary.
+  validator=JsonValidator("AssignResources", schema, logger=logger),
+/usr/local/lib/python3.10/dist-packages/ska_tango_base/subarray/subarray_device.py:242: UserWarning: JSON argument to command ReleaseResources will only be validated as a dictionary.
+  validator=JsonValidator("ReleaseResources", schema, logger=logger),
+/usr/local/lib/python3.10/dist-packages/ska_tango_base/subarray/subarray_device.py:302: UserWarning: JSON argument to command Configure will only be validated as a dictionary.
+  validator=JsonValidator("Configure", schema, logger=logger),
+/usr/local/lib/python3.10/dist-packages/ska_tango_base/subarray/subarray_device.py:334: UserWarning: JSON argument to command Scan will only be validated as a dictionary.
+  validator=JsonValidator("Scan", schema, logger=logger),
+1|2026-04-16T18:06:22.279Z|INFO|MainThread|exit|core.py#137||Finished processing state INIT_ON exit callbacks.
+1|2026-04-16T18:06:22.279Z|INFO|MainThread|enter|core.py#131||Finished processing state INIT_ON enter callbacks.
+1|2026-04-16T18:06:22.279Z|INFO|MainThread|callbacks|core.py#1176||Executed callback '<bound method TMCOpStateMachine._state_changed of <ska_tmc_common.op_state_model.TMCOpStateMachine object at 0x7f16df039180>>'
+1|2026-04-16T18:06:22.279Z|INFO|MainThread|exit|core.py#137||Finished processing state INIT_ON exit callbacks.
+1|2026-04-16T18:06:22.279Z|INFO|MainThread|enter|core.py#131||Finished processing state ON enter callbacks.
+1|2026-04-16T18:06:22.279Z|INFO|MainThread|callbacks|core.py#1176||Executed callback '<bound method TMCOpStateMachine._state_changed of <ska_tmc_common.op_state_model.TMCOpStateMachine object at 0x7f16df039180>>'
+1|2026-04-16T18:06:22.295Z|ERROR|state|check_event_error|subarray_node_component_manager.py#1124|tango-device:low-tmc/subarray/04|Error occurred on state_Callback for device: low-tmc/subarray-leaf-node-csp/04: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-2fd0ddcf-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/subarray-leaf-node-csp/04
+Check that device server is running...
+1|2026-04-16T18:06:22.296Z|ERROR|healthState|check_event_error|subarray_node_component_manager.py#1124|tango-device:low-tmc/subarray/04|Error occurred on healthState_Callback for device: low-tmc/subarray-leaf-node-csp/04: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-2fd0ddcf-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/subarray-leaf-node-csp/04
+Check that device server is running...
+1|2026-04-16T18:06:22.297Z|ERROR|isSubsystemAvailable|check_event_error|subarray_node_component_manager.py#1124|tango-device:low-tmc/subarray/04|Error occurred on isSubsystemAvailable_Callback for device: low-tmc/subarray-leaf-node-csp/04: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-2fd0ddcf-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/subarray-leaf-node-csp/04
+Check that device server is running...
+1|2026-04-16T18:06:22.298Z|ERROR|healthInfo|check_event_error|subarray_node_component_manager.py#1124|tango-device:low-tmc/subarray/04|Error occurred on healthInfo_Callback for device: low-tmc/subarray-leaf-node-csp/04: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-2fd0ddcf-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/subarray-leaf-node-csp/04
+Check that device server is running...
+1|2026-04-16T18:06:22.299Z|ERROR|obsState|check_event_error|subarray_node_component_manager.py#1124|tango-device:low-tmc/subarray/04|Error occurred on obsState_Callback for device: low-tmc/subarray-leaf-node-csp/04: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-2fd0ddcf-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/subarray-leaf-node-csp/04
+Check that device server is running...
+1|2026-04-16T18:06:22.300Z|ERROR|adminMode|check_event_error|subarray_node_component_manager.py#1124|tango-device:low-tmc/subarray/04|Error occurred on adminMode_Callback for device: low-tmc/subarray-leaf-node-csp/04: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-2fd0ddcf-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/subarray-leaf-node-csp/04
+Check that device server is running...
+Ready to accept request
+1|2026-04-16T18:06:22.349Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1800|tango-device:low-tmc/subarray/04|Updated State of low-tmc/subarray-leaf-node-sdp/04: ON
+1|2026-04-16T18:06:22.352Z|DEBUG|healthState|update_device_health_state|subarray_node_component_manager.py#910|tango-device:low-tmc/subarray/04|Received healthState event for: low-tmc/subarray-leaf-node-sdp/04: OK
+1|2026-04-16T18:06:22.356Z|DEBUG|isSubsystemAvailable|update_subarray_availability_status|subarray_node_component_manager.py#887|tango-device:low-tmc/subarray/04|Updating the availability status for: low-tmc/subarray-leaf-node-sdp/04: True
+1|2026-04-16T18:06:22.357Z|INFO|isSubsystemAvailable|aggregate|aggregators.py#245|tango-device:low-tmc/subarray/04|Unavailable devices list is : ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/leaf-node-mccs/0']
+1|2026-04-16T18:06:22.360Z|DEBUG|healthInfo|update_device_health_info|subarray_node_component_manager.py#946|tango-device:low-tmc/subarray/04|HealthInfo updated for device : low-tmc/subarray-leaf-node-sdp/04 , at timestamp: 2026-04-16 18:06:22.359203 ,  with value {"HealthSummary": ["SDP Subarray Health State: UNKNOWN"]}
+1|2026-04-16T18:06:22.360Z|DEBUG|healthInfo|update_health_info_details|subarray_node_component_manager.py#2779|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-sdp/04': ['SDP Subarray Health State: UNKNOWN']}
+1|2026-04-16T18:06:22.360Z|DEBUG|healthInfo|update_subarray_health_info_callback|subarray_node.py#264|tango-device:low-tmc/subarray/04|Executing HealthInfo callback on Tango using value {"low-tmc/subarray-leaf-node-sdp/04": ["SDP Subarray Health State: UNKNOWN"]}, type <class 'str'>
+1|2026-04-16T18:06:22.363Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called None
+1|2026-04-16T18:06:22.363Z|DEBUG|obsState|update_device_obs_state|subarray_node_component_manager.py#1148|tango-device:low-tmc/subarray/04|Received obsState event for low-tmc/subarray-leaf-node-sdp/04: EMPTY
+1|2026-04-16T18:06:22.367Z|DEBUG|adminMode|update_device_admin_mode|subarray_node_component_manager.py#1038|tango-device:low-tmc/subarray/04|Received adminMode event for low-tmc/subarray-leaf-node-sdp/04: ONLINE
+1|2026-04-16T18:06:22.372Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.OK
+1|2026-04-16T18:06:22.380Z|ERROR|Thread-1 (_run_bus_thread)|_process_emission|software_bus.py#332|tango-device:low-tmc/subarray/04|Observer LowTmcSubarray(low-tmc/subarray/04) threw an unexpected exception while processing emission ('._health_state', None). Continuing with remaining observers.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/ska_tango_base/software_bus.py", line 330, in _process_emission
+    obs.notify_emission(signal, value)
+  File "/usr/local/lib/python3.10/dist-packages/ska_tango_base/software_bus.py", line 1238, in notify_emission
+    attr.on_emission(self, value)
+  File "/usr/local/lib/python3.10/dist-packages/ska_tango_base/software_bus.py", line 1043, in on_emission
+    device.push_change_event(self.attr_name, new_value)
+  File "/usr/local/lib/python3.10/dist-packages/ska_tango_base/base/base_device.py", line 1354, in push_change_event
+    self._submit_tango_operation("push_change_event", name, *args)
+  File "/usr/local/lib/python3.10/dist-packages/ska_tango_base/base/base_device.py", line 1479, in _submit_tango_operation
+    getattr(super(), command_name)(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/tango/device_server.py", line 1208, in __DeviceImpl__push_change_event
+    self.__generic_push_event(attr_name, EventType.CHANGE_EVENT, *args, **kwargs)
+TypeError: an integer is required
+1|2026-04-16T18:06:22.401Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1800|tango-device:low-tmc/subarray/04|Updated State of low-csp/subarray/04: INIT
+1|2026-04-16T18:06:22.405Z|DEBUG|healthState|update_device_health_state|subarray_node_component_manager.py#910|tango-device:low-tmc/subarray/04|Received healthState event for: low-csp/subarray/04: OK
+1|2026-04-16T18:06:22.407Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.OK
+1|2026-04-16T18:06:22.426Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1800|tango-device:low-tmc/subarray/04|Updated State of low-sdp/subarray/04: ON
+1|2026-04-16T18:06:22.430Z|DEBUG|healthState|update_device_health_state|subarray_node_component_manager.py#910|tango-device:low-tmc/subarray/04|Received healthState event for: low-sdp/subarray/04: OK
+1|2026-04-16T18:06:22.432Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.OK
+1|2026-04-16T18:06:22.434Z|DEBUG|receiveAddresses|update_receive_addresses|subarray_node_component_manager.py#1069|tango-device:low-tmc/subarray/04|Received receiveAddresses event for low-sdp/subarray/04: {"science_A": {"vis0": {"function": "visibilities", "host": [[0, "192.168.0.1"], [2000, "192.168.0.2"]], "port": [[0, 9000, 1], [2000, 9000, 1]]}}, "target:a": {"vis0": {"function": "visibilities", "host": [[0, "192.168.0.1"], [2000, "192.168.0.2"]], "port": [[0, 9000, 1], [20, 9001, 1]]}}, "calibration:b": {"vis0": {"function": "visibilities", "host": [[0, "192.168.0.1"], [2000, "192.168.0.2"]], "port": [[0, 9000, 1], [20, 9001, 1]]}}}
+1|2026-04-16T18:06:22.440Z|ERROR|state|check_event_error|subarray_node_component_manager.py#1124|tango-device:low-tmc/subarray/04|Error occurred on state_Callback for device: low-tmc/subarray-leaf-node-mccs/04: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-2fd0ddcf-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/subarray-leaf-node-mccs/04
+Check that device server is running...
+1|2026-04-16T18:06:22.441Z|ERROR|healthState|check_event_error|subarray_node_component_manager.py#1124|tango-device:low-tmc/subarray/04|Error occurred on healthState_Callback for device: low-tmc/subarray-leaf-node-mccs/04: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-2fd0ddcf-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/subarray-leaf-node-mccs/04
+Check that device server is running...
+1|2026-04-16T18:06:22.441Z|ERROR|isSubsystemAvailable|check_event_error|subarray_node_component_manager.py#1124|tango-device:low-tmc/subarray/04|Error occurred on isSubsystemAvailable_Callback for device: low-tmc/subarray-leaf-node-mccs/04: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-2fd0ddcf-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/subarray-leaf-node-mccs/04
+Check that device server is running...
+1|2026-04-16T18:06:22.442Z|ERROR|healthInfo|check_event_error|subarray_node_component_manager.py#1124|tango-device:low-tmc/subarray/04|Error occurred on healthInfo_Callback for device: low-tmc/subarray-leaf-node-mccs/04: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-2fd0ddcf-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/subarray-leaf-node-mccs/04
+Check that device server is running...
+1|2026-04-16T18:06:22.443Z|ERROR|obsState|check_event_error|subarray_node_component_manager.py#1124|tango-device:low-tmc/subarray/04|Error occurred on obsState_Callback for device: low-tmc/subarray-leaf-node-mccs/04: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-2fd0ddcf-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/subarray-leaf-node-mccs/04
+Check that device server is running...
+1|2026-04-16T18:06:22.444Z|ERROR|adminMode|check_event_error|subarray_node_component_manager.py#1124|tango-device:low-tmc/subarray/04|Error occurred on adminMode_Callback for device: low-tmc/subarray-leaf-node-mccs/04: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-2fd0ddcf-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/subarray-leaf-node-mccs/04
+Check that device server is running...
+1|2026-04-16T18:06:22.449Z|ERROR|state|check_event_error|subarray_node_component_manager.py#1124|tango-device:low-tmc/subarray/04|Error occurred on state_Callback for device: low-tmc/leaf-node-mccs/0: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-2fd0ddcf-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/leaf-node-mccs/0
+Check that device server is running...
+1|2026-04-16T18:06:22.450Z|ERROR|healthState|check_event_error|subarray_node_component_manager.py#1124|tango-device:low-tmc/subarray/04|Error occurred on healthState_Callback for device: low-tmc/leaf-node-mccs/0: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-2fd0ddcf-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/leaf-node-mccs/0
+Check that device server is running...
+1|2026-04-16T18:06:22.450Z|ERROR|adminMode|check_event_error|subarray_node_component_manager.py#1124|tango-device:low-tmc/subarray/04|Error occurred on adminMode_Callback for device: low-tmc/leaf-node-mccs/0: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-2fd0ddcf-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/leaf-node-mccs/0
+Check that device server is running...
+1|2026-04-16T18:06:22.451Z|ERROR|isSubsystemAvailable|check_event_error|subarray_node_component_manager.py#1124|tango-device:low-tmc/subarray/04|Error occurred on isSubsystemAvailable_Callback for device: low-tmc/leaf-node-mccs/0: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-2fd0ddcf-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/leaf-node-mccs/0
+Check that device server is running...
+1|2026-04-16T18:06:22.474Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1800|tango-device:low-tmc/subarray/04|Updated State of low-mccs/subarray/04: ON
+1|2026-04-16T18:06:22.478Z|DEBUG|healthState|update_device_health_state|subarray_node_component_manager.py#910|tango-device:low-tmc/subarray/04|Received healthState event for: low-mccs/subarray/04: OK
+1|2026-04-16T18:06:22.480Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.OK
+1|2026-04-16T18:06:22.482Z|ERROR|assignedResources|check_event_error|subarray_node_component_manager.py#1124|tango-device:low-tmc/subarray/04|Error occurred on assignedResources_Callback for device: low-mccs/subarray/04: PyDs_PythonError , TypeError: can't translate python object to C char*
+
+1|2026-04-16T18:06:22.690Z|INFO|subarray_availability_thread|aggregate|aggregators.py#245|tango-device:low-tmc/subarray/04|Unavailable devices list is : ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/leaf-node-mccs/0']
+1|2026-04-16T18:06:22.698Z|DEBUG|Thread-3 (run)|device_task|liveliness_probe.py#109|tango-device:low-tmc/subarray/04|Device is not yet exported into the tango database, liveliness probe will retry to connect with device: low-tmc/subarray-leaf-node-csp/04
+1|2026-04-16T18:06:22.698Z|ERROR|Thread-3 (run)|update_exception_for_unresponsiveness|subarray_node_component_manager.py#1761|tango-device:low-tmc/subarray/04|Failed to ping device low-tmc/subarray-leaf-node-csp/04: Device is not yet exported into the tango database: low-tmc/subarray-leaf-node-csp/04
+1|2026-04-16T18:06:22.699Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2822|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04']}
+1|2026-04-16T18:06:22.699Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2779|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-sdp/04': ['SDP Subarray Health State: UNKNOWN'], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04']}
+1|2026-04-16T18:06:22.699Z|DEBUG|Thread-3 (run)|update_subarray_health_info_callback|subarray_node.py#264|tango-device:low-tmc/subarray/04|Executing HealthInfo callback on Tango using value {"low-tmc/subarray-leaf-node-sdp/04": ["SDP Subarray Health State: UNKNOWN"], "low-tmc/subarray/04": ["Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04"]}, type <class 'str'>
+1|2026-04-16T18:06:22.703Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.FAILED
+1|2026-04-16T18:06:22.769Z|ERROR|Thread-3 (run)|update_exception_for_unresponsiveness|subarray_node_component_manager.py#1761|tango-device:low-tmc/subarray/04|Failed to ping device low-tmc/subarray-leaf-node-mccs/04: Device is not yet exported into the tango database: low-tmc/subarray-leaf-node-mccs/04
+1|2026-04-16T18:06:22.769Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2822|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04', 'Liveliness check failed for device low-tmc/subarray-leaf-node-mccs/04']}
+1|2026-04-16T18:06:22.769Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2779|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-sdp/04': ['SDP Subarray Health State: UNKNOWN'], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04', 'Liveliness check failed for device low-tmc/subarray-leaf-node-mccs/04']}
+1|2026-04-16T18:06:22.770Z|DEBUG|Thread-3 (run)|update_subarray_health_info_callback|subarray_node.py#264|tango-device:low-tmc/subarray/04|Executing HealthInfo callback on Tango using value {"low-tmc/subarray-leaf-node-sdp/04": ["SDP Subarray Health State: UNKNOWN"], "low-tmc/subarray/04": ["Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04", "Liveliness check failed for device low-tmc/subarray-leaf-node-mccs/04"]}, type <class 'str'>
+1|2026-04-16T18:06:22.772Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.FAILED
+1|2026-04-16T18:06:22.777Z|ERROR|Thread-3 (run)|update_exception_for_unresponsiveness|subarray_node_component_manager.py#1761|tango-device:low-tmc/subarray/04|Failed to ping device low-tmc/leaf-node-mccs/0: Device is not yet exported into the tango database: low-tmc/leaf-node-mccs/0
+1|2026-04-16T18:06:22.777Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2822|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04', 'Liveliness check failed for device low-tmc/subarray-leaf-node-mccs/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-16T18:06:22.777Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2779|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-sdp/04': ['SDP Subarray Health State: UNKNOWN'], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04', 'Liveliness check failed for device low-tmc/subarray-leaf-node-mccs/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-16T18:06:22.778Z|DEBUG|Thread-3 (run)|update_subarray_health_info_callback|subarray_node.py#264|tango-device:low-tmc/subarray/04|Executing HealthInfo callback on Tango using value {"low-tmc/subarray-leaf-node-sdp/04": ["SDP Subarray Health State: UNKNOWN"], "low-tmc/subarray/04": ["Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04", "Liveliness check failed for device low-tmc/subarray-leaf-node-mccs/04", "Liveliness check failed for device low-tmc/leaf-node-mccs/0"]}, type <class 'str'>
+1|2026-04-16T18:06:22.780Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.FAILED
+1|2026-04-16T18:06:23.191Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:23.691Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:23.890Z|ERROR|Thread-3 (run)|device_task|liveliness_probe.py#172|tango-device:low-tmc/subarray/04|Error on low-tmc/subarray-leaf-node-mccs/04: DevFailed[
+    DevError[
+        desc = Failed to connect to device low-tmc/subarray-leaf-node-mccs/04
+            The connection request was delayed.
+            The last connection request was done less than 1000 ms ago
+        origin = virtual void Tango::Connection::reconnect(bool) at (/src/cppTango/src/client/devapi_base.cpp:1363)
+        reason = API_CantConnectToDevice
+        severity = ERR
+    ]
+]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/ska_tmc_common/v2/liveliness_probe.py", line 123, in device_task
+    proxy.state()
+  File "/usr/local/lib/python3.10/dist-packages/tango/green.py", line 231, in greener
+    return executor.run(fn, args, kwargs, wait=wait, timeout=timeout)
+  File "/usr/local/lib/python3.10/dist-packages/tango/green.py", line 121, in run
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/tango/device_proxy.py", line 2289, in __DeviceProxy__state
+    return self._state()
+tango._tango.DevFailed: DevFailed[
+    DevError[
+        desc = Failed to connect to device low-tmc/subarray-leaf-node-mccs/04
+            The connection request was delayed.
+            The last connection request was done less than 1000 ms ago
+        origin = virtual void Tango::Connection::reconnect(bool) at (/src/cppTango/src/client/devapi_base.cpp:1363)
+        reason = API_CantConnectToDevice
+        severity = ERR
+    ]
+]
+1|2026-04-16T18:06:23.892Z|ERROR|Thread-3 (run)|update_exception_for_unresponsiveness|subarray_node_component_manager.py#1761|tango-device:low-tmc/subarray/04|Failed to ping device low-tmc/subarray-leaf-node-mccs/04: Unable to reach device low-tmc/subarray-leaf-node-mccs/04
+1|2026-04-16T18:06:23.893Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2822|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04', 'Liveliness check failed for device low-tmc/subarray-leaf-node-mccs/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-16T18:06:23.893Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2779|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-sdp/04': ['SDP Subarray Health State: UNKNOWN'], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04', 'Liveliness check failed for device low-tmc/subarray-leaf-node-mccs/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-16T18:06:23.896Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.FAILED
+1|2026-04-16T18:06:24.192Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:24.693Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:25.025Z|ERROR|Thread-3 (run)|device_task|liveliness_probe.py#169|tango-device:low-tmc/subarray/04|('Connection Failed on %s: %s', 'low-tmc/subarray-leaf-node-mccs/04', DevFailed(args = (DevError(desc = 'TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CorbaException', severity = <ErrSeverity.ERR: 1>), DevError(desc = 'Failed to connect to device low-tmc/subarray-leaf-node-mccs/04', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CantConnectToDevice', severity = <ErrSeverity.ERR: 1>))))
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/ska_tmc_common/v2/liveliness_probe.py", line 123, in device_task
+    proxy.state()
+  File "/usr/local/lib/python3.10/dist-packages/tango/green.py", line 231, in greener
+    return executor.run(fn, args, kwargs, wait=wait, timeout=timeout)
+  File "/usr/local/lib/python3.10/dist-packages/tango/green.py", line 121, in run
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/tango/device_proxy.py", line 2289, in __DeviceProxy__state
+    return self._state()
+tango._tango.ConnectionFailed: DevFailed[
+    DevError[
+        desc = TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed
+        origin = void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)
+        reason = API_CorbaException
+        severity = ERR
+    ],
+    DevError[
+        desc = Failed to connect to device low-tmc/subarray-leaf-node-mccs/04
+        origin = void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)
+        reason = API_CantConnectToDevice
+        severity = ERR
+    ]
+]
+1|2026-04-16T18:06:25.026Z|ERROR|Thread-3 (run)|update_exception_for_unresponsiveness|subarray_node_component_manager.py#1761|tango-device:low-tmc/subarray/04|Failed to ping device low-tmc/subarray-leaf-node-mccs/04: ('Connection Failed on %s: %s', 'low-tmc/subarray-leaf-node-mccs/04', DevFailed(args = (DevError(desc = 'TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CorbaException', severity = <ErrSeverity.ERR: 1>), DevError(desc = 'Failed to connect to device low-tmc/subarray-leaf-node-mccs/04', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CantConnectToDevice', severity = <ErrSeverity.ERR: 1>))))
+1|2026-04-16T18:06:25.027Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2822|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04', 'Liveliness check failed for device low-tmc/subarray-leaf-node-mccs/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-16T18:06:25.027Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2779|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-sdp/04': ['SDP Subarray Health State: UNKNOWN'], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04', 'Liveliness check failed for device low-tmc/subarray-leaf-node-mccs/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-16T18:06:25.031Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.FAILED
+1|2026-04-16T18:06:25.194Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:25.599Z|ERROR|Thread-3 (run)|update_exception_for_unresponsiveness|subarray_node_component_manager.py#1761|tango-device:low-tmc/subarray/04|Failed to ping device low-tmc/leaf-node-mccs/0: ('Connection Failed on %s: %s', 'low-tmc/leaf-node-mccs/0', DevFailed(args = (DevError(desc = 'TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CorbaException', severity = <ErrSeverity.ERR: 1>), DevError(desc = 'Failed to connect to device low-tmc/leaf-node-mccs/0', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CantConnectToDevice', severity = <ErrSeverity.ERR: 1>))))
+1|2026-04-16T18:06:25.600Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2822|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04', 'Liveliness check failed for device low-tmc/subarray-leaf-node-mccs/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-16T18:06:25.600Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2779|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-sdp/04': ['SDP Subarray Health State: UNKNOWN'], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04', 'Liveliness check failed for device low-tmc/subarray-leaf-node-mccs/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-16T18:06:25.603Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.FAILED
+1|2026-04-16T18:06:25.695Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:26.159Z|ERROR|Thread-3 (run)|update_exception_for_unresponsiveness|subarray_node_component_manager.py#1761|tango-device:low-tmc/subarray/04|Failed to ping device low-tmc/subarray-leaf-node-mccs/04: ('Connection Failed on %s: %s', 'low-tmc/subarray-leaf-node-mccs/04', DevFailed(args = (DevError(desc = 'TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CorbaException', severity = <ErrSeverity.ERR: 1>), DevError(desc = 'Failed to connect to device low-tmc/subarray-leaf-node-mccs/04', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CantConnectToDevice', severity = <ErrSeverity.ERR: 1>))))
+1|2026-04-16T18:06:26.160Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2822|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04', 'Liveliness check failed for device low-tmc/subarray-leaf-node-mccs/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-16T18:06:26.160Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2779|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-sdp/04': ['SDP Subarray Health State: UNKNOWN'], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04', 'Liveliness check failed for device low-tmc/subarray-leaf-node-mccs/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-16T18:06:26.163Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.FAILED
+1|2026-04-16T18:06:26.196Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:26.697Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:26.745Z|ERROR|Thread-3 (run)|update_exception_for_unresponsiveness|subarray_node_component_manager.py#1761|tango-device:low-tmc/subarray/04|Failed to ping device low-tmc/leaf-node-mccs/0: ('Connection Failed on %s: %s', 'low-tmc/leaf-node-mccs/0', DevFailed(args = (DevError(desc = 'TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CorbaException', severity = <ErrSeverity.ERR: 1>), DevError(desc = 'Failed to connect to device low-tmc/leaf-node-mccs/0', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CantConnectToDevice', severity = <ErrSeverity.ERR: 1>))))
+1|2026-04-16T18:06:26.745Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2822|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04', 'Liveliness check failed for device low-tmc/subarray-leaf-node-mccs/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-16T18:06:26.745Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2779|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-sdp/04': ['SDP Subarray Health State: UNKNOWN'], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04', 'Liveliness check failed for device low-tmc/subarray-leaf-node-mccs/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-16T18:06:26.748Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.FAILED
+1|2026-04-16T18:06:27.198Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:27.317Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2822|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-16T18:06:27.317Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2779|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-sdp/04': ['SDP Subarray Health State: UNKNOWN'], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-16T18:06:27.318Z|DEBUG|Thread-3 (run)|update_subarray_health_info_callback|subarray_node.py#264|tango-device:low-tmc/subarray/04|Executing HealthInfo callback on Tango using value {"low-tmc/subarray-leaf-node-sdp/04": ["SDP Subarray Health State: UNKNOWN"], "low-tmc/subarray/04": ["Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04", "Liveliness check failed for device low-tmc/leaf-node-mccs/0"]}, type <class 'str'>
+1|2026-04-16T18:06:27.321Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.FAILED
+1|2026-04-16T18:06:27.698Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:27.841Z|DEBUG|Thread-3 (run)|device_task|liveliness_probe.py#109|tango-device:low-tmc/subarray/04|Device is not yet exported into the tango database, liveliness probe will retry to connect with device: low-tmc/subarray-leaf-node-csp/04
+1|2026-04-16T18:06:27.916Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2822|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04']}
+1|2026-04-16T18:06:27.917Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2779|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-sdp/04': ['SDP Subarray Health State: UNKNOWN'], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04']}
+1|2026-04-16T18:06:27.917Z|DEBUG|Thread-3 (run)|update_subarray_health_info_callback|subarray_node.py#264|tango-device:low-tmc/subarray/04|Executing HealthInfo callback on Tango using value {"low-tmc/subarray-leaf-node-sdp/04": ["SDP Subarray Health State: UNKNOWN"], "low-tmc/subarray/04": ["Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04"]}, type <class 'str'>
+1|2026-04-16T18:06:27.919Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.FAILED
+1|2026-04-16T18:06:28.200Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:28.701Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:28.791Z|DEBUG|obsState|update_device_obs_state|subarray_node_component_manager.py#1148|tango-device:low-tmc/subarray/04|Received obsState event for low-tmc/subarray-leaf-node-sdp/04: EMPTY
+1|2026-04-16T18:06:28.796Z|DEBUG|healthInfo|update_device_health_info|subarray_node_component_manager.py#946|tango-device:low-tmc/subarray/04|HealthInfo updated for device : low-tmc/subarray-leaf-node-sdp/04 , at timestamp: 2026-04-16 18:06:28.795088 ,  with value {"HealthSummary": []}
+1|2026-04-16T18:06:28.797Z|DEBUG|healthInfo|update_health_info_details|subarray_node_component_manager.py#2779|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-sdp/04': [], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04']}
+1|2026-04-16T18:06:28.797Z|DEBUG|healthInfo|update_subarray_health_info_callback|subarray_node.py#264|tango-device:low-tmc/subarray/04|Executing HealthInfo callback on Tango using value {"low-tmc/subarray-leaf-node-sdp/04": [], "low-tmc/subarray/04": ["Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04"]}, type <class 'str'>
+1|2026-04-16T18:06:28.798Z|DEBUG|adminMode|update_device_admin_mode|subarray_node_component_manager.py#1038|tango-device:low-tmc/subarray/04|Received adminMode event for low-tmc/subarray-leaf-node-sdp/04: ONLINE
+1|2026-04-16T18:06:29.201Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:29.702Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:30.109Z|ERROR|Thread-3 (run)|device_task|liveliness_probe.py#172|tango-device:low-tmc/subarray/04|Error on low-tmc/subarray-leaf-node-csp/04: DevFailed[
+    DevError[
+        desc = Failed to connect to device low-tmc/subarray-leaf-node-csp/04
+            The connection request was delayed.
+            The last connection request was done less than 1000 ms ago
+        origin = virtual void Tango::Connection::reconnect(bool) at (/src/cppTango/src/client/devapi_base.cpp:1363)
+        reason = API_CantConnectToDevice
+        severity = ERR
+    ]
+]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/ska_tmc_common/v2/liveliness_probe.py", line 123, in device_task
+    proxy.state()
+  File "/usr/local/lib/python3.10/dist-packages/tango/green.py", line 231, in greener
+    return executor.run(fn, args, kwargs, wait=wait, timeout=timeout)
+  File "/usr/local/lib/python3.10/dist-packages/tango/green.py", line 121, in run
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/tango/device_proxy.py", line 2289, in __DeviceProxy__state
+    return self._state()
+tango._tango.DevFailed: DevFailed[
+    DevError[
+        desc = Failed to connect to device low-tmc/subarray-leaf-node-csp/04
+            The connection request was delayed.
+            The last connection request was done less than 1000 ms ago
+        origin = virtual void Tango::Connection::reconnect(bool) at (/src/cppTango/src/client/devapi_base.cpp:1363)
+        reason = API_CantConnectToDevice
+        severity = ERR
+    ]
+]
+1|2026-04-16T18:06:30.110Z|ERROR|Thread-3 (run)|update_exception_for_unresponsiveness|subarray_node_component_manager.py#1761|tango-device:low-tmc/subarray/04|Failed to ping device low-tmc/subarray-leaf-node-csp/04: Unable to reach device low-tmc/subarray-leaf-node-csp/04
+1|2026-04-16T18:06:30.110Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2822|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04']}
+1|2026-04-16T18:06:30.110Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2779|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-sdp/04': [], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04']}
+1|2026-04-16T18:06:30.113Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.FAILED
+1|2026-04-16T18:06:30.203Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:30.704Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:31.205Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:31.229Z|ERROR|Thread-3 (run)|device_task|liveliness_probe.py#169|tango-device:low-tmc/subarray/04|('Connection Failed on %s: %s', 'low-tmc/subarray-leaf-node-csp/04', DevFailed(args = (DevError(desc = 'TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CorbaException', severity = <ErrSeverity.ERR: 1>), DevError(desc = 'Failed to connect to device low-tmc/subarray-leaf-node-csp/04', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CantConnectToDevice', severity = <ErrSeverity.ERR: 1>))))
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/ska_tmc_common/v2/liveliness_probe.py", line 123, in device_task
+    proxy.state()
+  File "/usr/local/lib/python3.10/dist-packages/tango/green.py", line 231, in greener
+    return executor.run(fn, args, kwargs, wait=wait, timeout=timeout)
+  File "/usr/local/lib/python3.10/dist-packages/tango/green.py", line 121, in run
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/tango/device_proxy.py", line 2289, in __DeviceProxy__state
+    return self._state()
+tango._tango.ConnectionFailed: DevFailed[
+    DevError[
+        desc = TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed
+        origin = void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)
+        reason = API_CorbaException
+        severity = ERR
+    ],
+    DevError[
+        desc = Failed to connect to device low-tmc/subarray-leaf-node-csp/04
+        origin = void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)
+        reason = API_CantConnectToDevice
+        severity = ERR
+    ]
+]
+1|2026-04-16T18:06:31.230Z|ERROR|Thread-3 (run)|update_exception_for_unresponsiveness|subarray_node_component_manager.py#1761|tango-device:low-tmc/subarray/04|Failed to ping device low-tmc/subarray-leaf-node-csp/04: ('Connection Failed on %s: %s', 'low-tmc/subarray-leaf-node-csp/04', DevFailed(args = (DevError(desc = 'TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CorbaException', severity = <ErrSeverity.ERR: 1>), DevError(desc = 'Failed to connect to device low-tmc/subarray-leaf-node-csp/04', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CantConnectToDevice', severity = <ErrSeverity.ERR: 1>))))
+1|2026-04-16T18:06:31.230Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2822|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04']}
+1|2026-04-16T18:06:31.231Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2779|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-sdp/04': [], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04']}
+1|2026-04-16T18:06:31.234Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.FAILED
+1|2026-04-16T18:06:31.706Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:32.207Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:32.285Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1800|tango-device:low-tmc/subarray/04|Updated State of low-tmc/subarray-leaf-node-csp/04: ON
+1|2026-04-16T18:06:32.288Z|DEBUG|healthState|update_device_health_state|subarray_node_component_manager.py#910|tango-device:low-tmc/subarray/04|Received healthState event for: low-tmc/subarray-leaf-node-csp/04: OK
+1|2026-04-16T18:06:32.290Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.FAILED
+1|2026-04-16T18:06:32.290Z|DEBUG|isSubsystemAvailable|update_subarray_availability_status|subarray_node_component_manager.py#887|tango-device:low-tmc/subarray/04|Updating the availability status for: low-tmc/subarray-leaf-node-csp/04: True
+1|2026-04-16T18:06:32.291Z|INFO|isSubsystemAvailable|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:32.293Z|DEBUG|healthInfo|update_device_health_info|subarray_node_component_manager.py#946|tango-device:low-tmc/subarray/04|HealthInfo updated for device : low-tmc/subarray-leaf-node-csp/04 , at timestamp: 2026-04-16 18:06:32.293059 ,  with value {"HealthSummary": []}
+1|2026-04-16T18:06:32.293Z|DEBUG|healthInfo|update_health_info_details|subarray_node_component_manager.py#2779|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-sdp/04': [], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04'], 'low-tmc/subarray-leaf-node-csp/04': []}
+1|2026-04-16T18:06:32.293Z|DEBUG|healthInfo|update_subarray_health_info_callback|subarray_node.py#264|tango-device:low-tmc/subarray/04|Executing HealthInfo callback on Tango using value {"low-tmc/subarray-leaf-node-sdp/04": [], "low-tmc/subarray/04": ["Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04"], "low-tmc/subarray-leaf-node-csp/04": []}, type <class 'str'>
+1|2026-04-16T18:06:32.295Z|DEBUG|obsState|update_device_obs_state|subarray_node_component_manager.py#1148|tango-device:low-tmc/subarray/04|Received obsState event for low-tmc/subarray-leaf-node-csp/04: EMPTY
+1|2026-04-16T18:06:32.298Z|DEBUG|adminMode|update_device_admin_mode|subarray_node_component_manager.py#1038|tango-device:low-tmc/subarray/04|Received adminMode event for low-tmc/subarray-leaf-node-csp/04: ONLINE
+1|2026-04-16T18:06:32.301Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.FAILED
+1|2026-04-16T18:06:32.315Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1800|tango-device:low-tmc/subarray/04|Updated State of low-tmc/subarray-leaf-node-mccs/04: ON
+1|2026-04-16T18:06:32.319Z|DEBUG|healthState|update_device_health_state|subarray_node_component_manager.py#910|tango-device:low-tmc/subarray/04|Received healthState event for: low-tmc/subarray-leaf-node-mccs/04: OK
+1|2026-04-16T18:06:32.321Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.FAILED
+1|2026-04-16T18:06:32.322Z|DEBUG|isSubsystemAvailable|update_subarray_availability_status|subarray_node_component_manager.py#887|tango-device:low-tmc/subarray/04|Updating the availability status for: low-tmc/subarray-leaf-node-mccs/04: True
+1|2026-04-16T18:06:32.322Z|INFO|isSubsystemAvailable|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:32.325Z|DEBUG|healthInfo|update_device_health_info|subarray_node_component_manager.py#946|tango-device:low-tmc/subarray/04|HealthInfo updated for device : low-tmc/subarray-leaf-node-mccs/04 , at timestamp: 2026-04-16 18:06:32.323062 ,  with value {"HealthSummary": []}
+1|2026-04-16T18:06:32.325Z|DEBUG|healthInfo|update_health_info_details|subarray_node_component_manager.py#2779|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-sdp/04': [], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04'], 'low-tmc/subarray-leaf-node-csp/04': [], 'low-tmc/subarray-leaf-node-mccs/04': []}
+1|2026-04-16T18:06:32.325Z|DEBUG|healthInfo|update_subarray_health_info_callback|subarray_node.py#264|tango-device:low-tmc/subarray/04|Executing HealthInfo callback on Tango using value {"low-tmc/subarray-leaf-node-sdp/04": [], "low-tmc/subarray/04": ["Liveliness check failed for device low-tmc/subarray-leaf-node-csp/04"], "low-tmc/subarray-leaf-node-csp/04": [], "low-tmc/subarray-leaf-node-mccs/04": []}, type <class 'str'>
+1|2026-04-16T18:06:32.328Z|DEBUG|obsState|update_device_obs_state|subarray_node_component_manager.py#1148|tango-device:low-tmc/subarray/04|Received obsState event for low-tmc/subarray-leaf-node-mccs/04: EMPTY
+1|2026-04-16T18:06:32.331Z|DEBUG|adminMode|update_device_admin_mode|subarray_node_component_manager.py#1038|tango-device:low-tmc/subarray/04|Received adminMode event for low-tmc/subarray-leaf-node-mccs/04: OFFLINE
+1|2026-04-16T18:06:32.333Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-16T18:06:32.352Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1800|tango-device:low-tmc/subarray/04|Updated State of low-tmc/leaf-node-mccs/0: ON
+1|2026-04-16T18:06:32.355Z|DEBUG|healthState|update_device_health_state|subarray_node_component_manager.py#910|tango-device:low-tmc/subarray/04|Received healthState event for: low-tmc/leaf-node-mccs/0: OK
+1|2026-04-16T18:06:32.358Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-16T18:06:32.358Z|DEBUG|adminMode|update_device_admin_mode|subarray_node_component_manager.py#1038|tango-device:low-tmc/subarray/04|Received adminMode event for low-tmc/leaf-node-mccs/0: OFFLINE
+1|2026-04-16T18:06:32.364Z|DEBUG|isSubsystemAvailable|update_subarray_availability_status|subarray_node_component_manager.py#887|tango-device:low-tmc/subarray/04|Updating the availability status for: low-tmc/leaf-node-mccs/0: True
+1|2026-04-16T18:06:32.365Z|INFO|isSubsystemAvailable|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device: low-tmc/subarray-leaf-node-csp/04 is unavailable
+1|2026-04-16T18:06:32.365Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-16T18:06:32.367Z|DEBUG|Thread-3 (run)|update_subarray_health_info_callback|subarray_node.py#264|tango-device:low-tmc/subarray/04|Executing HealthInfo callback on Tango using value {"low-tmc/subarray-leaf-node-sdp/04": [], "low-tmc/subarray-leaf-node-csp/04": [], "low-tmc/subarray-leaf-node-mccs/04": []}, type <class 'str'>
+1|2026-04-16T18:06:32.367Z|DEBUG|Thread-3 (run)|clear_internal_error_from_health_info|subarray_node_component_manager.py#2794|tango-device:low-tmc/subarray/04|Internal Error cleared from healthinfo: {'low-tmc/subarray-leaf-node-sdp/04': [], 'low-tmc/subarray-leaf-node-csp/04': [], 'low-tmc/subarray-leaf-node-mccs/04': []}
+1|2026-04-16T18:06:32.369Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-16T18:06:32.708Z|DEBUG|subarray_availability_thread|subarray_availability|component.py#463|tango-device:low-tmc/subarray/04|Updated subarray availability value:True
+1|2026-04-16T18:06:32.708Z|DEBUG|subarray_availability_thread|_aggregate_subarray_device_availability|subarray_node_component_manager.py#1186|tango-device:low-tmc/subarray/04|Aggregated availability status on subarray is: True and unavailable devices: []
+1|2026-04-16T18:07:30.669Z|DEBUG|adminMode|update_device_admin_mode|subarray_node_component_manager.py#1038|tango-device:low-tmc/subarray/04|Received adminMode event for low-tmc/leaf-node-mccs/0: ONLINE
+1|2026-04-16T18:07:30.672Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-16T18:07:31.116Z|DEBUG|adminMode|update_device_admin_mode|subarray_node_component_manager.py#1038|tango-device:low-tmc/subarray/04|Received adminMode event for low-tmc/subarray-leaf-node-mccs/04: ONLINE
+1|2026-04-16T18:07:31.118Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#421|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.OK
+1|2026-04-16T18:07:32.948Z|WARNING|Dummy-5|_read_longRunningCommandResult|mixin.py#625|tango-device:low-tmc/subarray/04|'longRunningCommandResult' is deprecated since ska-tango-base 1.2.0 and will be removed in a future major release. The client should use the 'ska_tango_base.long_running_commands.invoke_lrc()' method instead, which will automatically subscribe to the correct attribute. The client can check for the result of a command in the 'lrcFinished' attribute if needed.
+1|2026-04-16T18:07:32.952Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1800|tango-device:low-tmc/subarray/04|Updated State of low-csp/subarray/04: ON
+1|2026-04-16T18:07:34.178Z|DEBUG|Dummy-6|_debug_patch|ska_device.py#105|tango-device:low-tmc/subarray/04|-> LowTmcSubarray.On()
+1|2026-04-16T18:07:34.179Z|DEBUG|Dummy-6|_debug_patch|ska_device.py#105|tango-device:low-tmc/subarray/04|<- LowTmcSubarray.On()
+1|2026-04-16T18:07:34.181Z|DEBUG|ThreadPoolExecutor-0_0|check_subarray_device_availability|subarray_node_component_manager.py#1839|tango-device:low-tmc/subarray/04|Subarray availability attribute value is: True
+1|2026-04-16T18:07:34.193Z|DEBUG|ThreadPoolExecutor-0_0|clear_command_failure_info|subarray_node_component_manager_low.py#447|tango-device:low-tmc/subarray/04|Command failure info cleared after successful recovery
+1|2026-04-16T18:07:34.194Z|DEBUG|ThreadPoolExecutor-0_0|update_command_in_progress_id|subarray_node_command.py#418|tango-device:low-tmc/subarray/04|The status of commands in queue are: [('1776362854.1783004_34321664900396_On', <TaskStatus.IN_PROGRESS: 2>)]
+1|2026-04-16T18:07:34.194Z|DEBUG|ThreadPoolExecutor-0_0|update_command_in_progress_id|subarray_node_command.py#427|tango-device:low-tmc/subarray/04|Command in progress: On Command in progress id: 1776362854.1783004_34321664900396_On
+1|2026-04-16T18:07:34.222Z|INFO|ThreadPoolExecutor-0_0|invoke_sdp_on|on_command.py#115|tango-device:low-tmc/subarray/04|Command ID: 1776362854.1783004_34321664900396_On | On command is invoked on low-tmc/subarray-leaf-node-sdp/04
+1|2026-04-16T18:07:34.223Z|INFO|ThreadPoolExecutor-0_0|on_leaf_nodes|on_command.py#57|tango-device:low-tmc/subarray/04|On Command is invoked. Received ResultCode: OK and Message: Command Completed.
+1|2026-04-16T18:07:34.224Z|DEBUG|ThreadPoolExecutor-0_0|clear_device_events|subarray_node_command.py#488|tango-device:low-tmc/subarray/04|Clearing the device events dictionary
+1|2026-04-16T18:07:34.224Z|DEBUG|ThreadPoolExecutor-0_0|clear_device_events|subarray_node_command.py#495|tango-device:low-tmc/subarray/04|Removing the command object: Command OnLow() from command_in_progress_objects list: [Command OnLow()]
+1|2026-04-16T18:07:34.238Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1800|tango-device:low-tmc/subarray/04|Updated State of low-sdp/subarray/04: ON
+1|2026-04-16T18:07:48.798Z|DEBUG|Dummy-6|_debug_patch|ska_device.py#105|tango-device:low-tmc/subarray/04|-> LowTmcSubarray.AssignResources()
+1|2026-04-16T18:07:48.798Z|DEBUG|Dummy-6|_debug_patch|ska_device.py#105|tango-device:low-tmc/subarray/04|<- LowTmcSubarray.AssignResources()
+1|2026-04-16T18:07:48.799Z|DEBUG|ThreadPoolExecutor-0_0|check_subarray_device_availability|subarray_node_component_manager.py#1839|tango-device:low-tmc/subarray/04|Subarray availability attribute value is: True
+1|2026-04-16T18:07:48.807Z|DEBUG|ThreadPoolExecutor-0_0|clear_command_failure_info|subarray_node_component_manager_low.py#447|tango-device:low-tmc/subarray/04|Command failure info cleared after successful recovery
+1|2026-04-16T18:07:48.808Z|INFO|ThreadPoolExecutor-0_0|exit|core.py#137||Finished processing state EMPTY exit callbacks.
+1|2026-04-16T18:07:48.808Z|INFO|ThreadPoolExecutor-0_0|enter|core.py#131||Finished processing state RESOURCING_EMPTY enter callbacks.
+1|2026-04-16T18:07:48.808Z|INFO|ThreadPoolExecutor-0_0|callbacks|core.py#1176||Executed callback '<bound method _ObsStateMachine._state_changed of <ska_control_model.obs_state._ObsStateMachine object at 0x7f16d93c4e20>>'
+1|2026-04-16T18:07:48.808Z|INFO|ThreadPoolExecutor-0_0|invoke_assign_resources|assign_resources_command.py#81|tango-device:low-tmc/subarray/04|AssignResources command is invoked
+1|2026-04-16T18:07:48.808Z|DEBUG|ThreadPoolExecutor-0_0|update_command_in_progress_id|subarray_node_command.py#418|tango-device:low-tmc/subarray/04|The status of commands in queue are: [('1776362868.798112_116290003610927_AssignResources', <TaskStatus.IN_PROGRESS: 2>)]
+1|2026-04-16T18:07:48.808Z|DEBUG|ThreadPoolExecutor-0_0|update_command_in_progress_id|subarray_node_command.py#427|tango-device:low-tmc/subarray/04|Command in progress: AssignResources Command in progress id: 1776362868.798112_116290003610927_AssignResources
+1|2026-04-16T18:07:49.238Z|INFO|ThreadPoolExecutor-0_0|_load_data|backend.py#811||gitlab://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata: Loading Nexus tarball...
+1|2026-04-16T18:07:49.268Z|DEBUG|ThreadPoolExecutor-0_0|download_array_layout_json|subarray_node_component_manager.py#2633|tango-device:low-tmc/subarray/04|Array layout JSON fetched from TelModel.
+1|2026-04-16T18:07:49.268Z|DEBUG|ThreadPoolExecutor-0_0|do|assign_resources_command.py#77|tango-device:low-tmc/subarray/04|TelModel layout downloaded and validated successfully.
+1|2026-04-16T18:07:49.268Z|DEBUG|ThreadPoolExecutor-0_0|subarray_id|component.py#414|tango-device:low-tmc/subarray/04|Setting subarray ID to 4
+1|2026-04-16T18:07:49.268Z|DEBUG|ThreadPoolExecutor-0_0|_component_state_changed_callback|subarray_node.py#1024|tango-device:low-tmc/subarray/04|Current observation state before processing state change: ObsState.EMPTY
+1|2026-04-16T18:07:49.269Z|DEBUG|ThreadPoolExecutor-0_0|_component_state_changed_callback|subarray_node.py#1029|tango-device:low-tmc/subarray/04|State change reported: {'resourced': True}
+1|2026-04-16T18:07:49.269Z|INFO|ThreadPoolExecutor-0_0|exit|core.py#137||Finished processing state RESOURCING_EMPTY exit callbacks.
+1|2026-04-16T18:07:49.269Z|INFO|ThreadPoolExecutor-0_0|enter|core.py#131||Finished processing state RESOURCING_IDLE enter callbacks.
+1|2026-04-16T18:07:49.269Z|INFO|ThreadPoolExecutor-0_0|callbacks|core.py#1176||Executed callback '<bound method _ObsStateMachine._state_changed of <ska_control_model.obs_state._ObsStateMachine object at 0x7f16d93c4e20>>'
+1|2026-04-16T18:07:49.269Z|DEBUG|ThreadPoolExecutor-0_0|_component_state_changed_callback|subarray_node.py#1099|tango-device:low-tmc/subarray/04|Observation state after processing state change: ObsState.RESOURCING 
+1|2026-04-16T18:07:49.283Z|INFO|ThreadPoolExecutor-0_0|assign_csp_resources|assign_resources_command.py#246|tango-device:low-tmc/subarray/04|Command ID: 1776362868.798112_116290003610927_AssignResources | AssignResources command invoked on low-tmc/subarray-leaf-node-csp/04 
+1|2026-04-16T18:07:49.293Z|INFO|ThreadPoolExecutor-0_0|assign_sdp_resources|assign_resources_command.py#224|tango-device:low-tmc/subarray/04|Command ID: 1776362868.798112_116290003610927_AssignResources | AssignResources command invoked on low-tmc/subarray-leaf-node-sdp/04
+1|2026-04-16T18:07:49.328Z|DEBUG|obsState|update_device_obs_state|subarray_node_component_manager.py#1148|tango-device:low-tmc/subarray/04|Received obsState event for low-tmc/subarray-leaf-node-sdp/04: RESOURCING
+1|2026-04-16T18:07:49.330Z|DEBUG|Dummy-8|callback|subarray_node_command.py#89|tango-device:low-tmc/subarray/04|Got Command Result for low-tmc/subarray-leaf-node-sdp/04 [3, 'Exception occurred, command failed.']
+1|2026-04-16T18:07:49.334Z|INFO|ThreadPoolExecutor-0_0|assign_mccs_resources|assign_resources_command.py#297|tango-device:low-tmc/subarray/04|Command ID: 1776362868.798112_116290003610927_AssignResources | AssignResources command invoked on low-tmc/leaf-node-mccs/0 
+1|2026-04-16T18:07:49.334Z|DEBUG|ThreadPoolExecutor-0_0|do|assign_resources_command.py#121|tango-device:low-tmc/subarray/04|AssignResources command invoked on TMC SubarrayNode for the following subsystems: ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/subarray-leaf-node-sdp/04']
+1|2026-04-16T18:07:49.334Z|DEBUG|ThreadPoolExecutor-0_0|do|assign_resources_command.py#126|tango-device:low-tmc/subarray/04|Subarray node current obsState is: RESOURCING 
+1|2026-04-16T18:07:51.308Z|DEBUG|Dummy-8|callback|subarray_node_command.py#89|tango-device:low-tmc/subarray/04|Got Command Result for low-tmc/subarray-leaf-node-csp/04 [3, 'Exception occurred, command failed.']
+1|2026-04-16T18:07:53.362Z|DEBUG|Dummy-8|callback|subarray_node_command.py#89|tango-device:low-tmc/subarray/04|Got Command Result for low-tmc/leaf-node-mccs/0 [0, 'Command Completed']
+1|2026-04-16T18:07:53.365Z|DEBUG|ThreadPoolExecutor-0_0|set_command_failure_info|subarray_node_component_manager_low.py#440|tango-device:low-tmc/subarray/04|Command failure info set: ResultCode:3,Exception occurred on the following devices: low-tmc/subarray-leaf-node-csp/04: Exception occurred, command failed.low-tmc/subarray-leaf-node-sdp/04: Exception occurred, command failed.
+1|2026-04-16T18:07:53.365Z|INFO|ThreadPoolExecutor-0_0|update_task_status|assign_resources_command.py#399|tango-device:low-tmc/subarray/04|Command ID: 1776362868.798112_116290003610927_AssignResources | Updating task status with Result: {'result': (<ResultCode.FAILED: 3>, 'Exception occurred on the following devices: low-tmc/subarray-leaf-node-csp/04: Exception occurred, command failed.low-tmc/subarray-leaf-node-sdp/04: Exception occurred, command failed.'), 'exception': 'Exception occurred on the following devices: low-tmc/subarray-leaf-node-csp/04: Exception occurred, command failed.low-tmc/subarray-leaf-node-sdp/04: Exception occurred, command failed.'}
+1|2026-04-16T18:07:54.370Z|DEBUG|ThreadPoolExecutor-0_0|is_recovery_required|recovery_manager.py#85|tango-device:low-tmc/subarray/04|No recovery required based on current observation states.
+1|2026-04-16T18:07:54.371Z|DEBUG|ThreadPoolExecutor-0_0|update_task_status|assign_resources_command.py#462|tango-device:low-tmc/subarray/04|Is command recovery required: False
+1|2026-04-16T18:07:54.371Z|DEBUG|ThreadPoolExecutor-0_0|update_task_status|assign_resources_command.py#483|tango-device:low-tmc/subarray/04|Moving SubarrayNode ObsState to FAULT
+1|2026-04-16T18:07:54.373Z|ERROR|ThreadPoolExecutor-0_0|_log_command_exception|command_tracker.py#248||Command '1776362868.798112_116290003610927_AssignResources' raised exception with args 'Exception occurred on the following devices: low-tmc/subarray-leaf-node-csp/04: Exception occurred, command failed.low-tmc/subarray-leaf-node-sdp/04: Exception occurred, command failed.'
+Exception: Exception occurred on the following devices: low-tmc/subarray-leaf-node-csp/04: Exception occurred, command failed.low-tmc/subarray-leaf-node-sdp/04: Exception occurred, command failed.
+Stack (most recent call last):
+  File "/usr/lib/python3.10/threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "/usr/lib/python3.10/threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.10/threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/tango/utils.py", line 2920, in _thread_pool_executor_worker
+    _worker(executor_reference, work_queue, initializer, initargs)
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 83, in _worker
+    work_item.run()
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/ska_tango_base/executor/executor.py", line 466, in _run
+    func(
+  File "/app/src/ska_tmc_subarraynode/subarray_node.py", line 483, in task
+    self.component_manager.assign(
+  File "/app/src/ska_tmc_subarraynode/manager/subarray_node_component_manager_low.py", line 520, in assign
+    return assign_command_object.invoke_assign_resources(
+  File "/app/src/ska_tmc_subarraynode/commands/assign_resources_command.py", line 83, in invoke_assign_resources
+    self.call_update_task_status(result, message)
+  File "/app/src/ska_tmc_subarraynode/commands/subarray_node_command.py", line 120, in call_update_task_status
+    self.update_task_status(
+  File "/app/src/ska_tmc_subarraynode/commands/low/assign_resources_command.py", line 484, in update_task_status
+    _update_failure()
+  File "/app/src/ska_tmc_subarraynode/commands/low/assign_resources_command.py", line 382, in _update_failure
+    self.task_callback(
+  File "/usr/local/lib/python3.10/dist-packages/ska_tango_base/long_running_commands/command_tracker.py", line 176, in update_command_info
+    self._log_command_exception(command_id, exception)
+  File "/usr/local/lib/python3.10/dist-packages/ska_tango_base/long_running_commands/command_tracker.py", line 248, in _log_command_exception
+    logger.error(message, exc_info=exc_info, stack_info=True)
+1|2026-04-16T18:07:54.377Z|DEBUG|ThreadPoolExecutor-0_0|clear_resources|subarray_node_command.py#668|tango-device:low-tmc/subarray/04|Setting assigned resources to be EMPTY.
+1|2026-04-16T18:07:54.377Z|DEBUG|ThreadPoolExecutor-0_0|set_assigned_resources|subarray_node_component_manager_low.py#1053|tango-device:low-tmc/subarray/04|Resources assigned to Subarray []
+1|2026-04-16T18:07:54.377Z|DEBUG|ThreadPoolExecutor-0_0|subarray_id|component.py#414|tango-device:low-tmc/subarray/04|Setting subarray ID to None
+1|2026-04-16T18:07:54.377Z|DEBUG|ThreadPoolExecutor-0_0|clear_resources|subarray_node_command.py#675|tango-device:low-tmc/subarray/04|Cleanup operation completed.
+1|2026-04-16T18:07:54.377Z|DEBUG|ThreadPoolExecutor-0_0|clear_device_events|subarray_node_command.py#488|tango-device:low-tmc/subarray/04|Clearing the device events dictionary
+1|2026-04-16T18:07:54.377Z|DEBUG|ThreadPoolExecutor-0_0|clear_device_events|subarray_node_command.py#495|tango-device:low-tmc/subarray/04|Removing the command object: Command AssignResourcesLow() from command_in_progress_objects list: [Command AssignResourcesLow()]
+1|2026-04-16T18:09:57.672Z|WARNING|Dummy-10|_read_longRunningCommandResult|mixin.py#625|tango-device:low-tmc/subarray/04|'longRunningCommandResult' is deprecated since ska-tango-base 1.2.0 and will be removed in a future major release. The client should use the 'ska_tango_base.long_running_commands.invoke_lrc()' method instead, which will automatically subscribe to the correct attribute. The client can check for the result of a command in the 'lrcFinished' attribute if needed.
+1|2026-04-16T18:09:58.220Z|WARNING|Dummy-11|_read_longRunningCommandResult|mixin.py#625|tango-device:low-tmc/subarray/04|'longRunningCommandResult' is deprecated since ska-tango-base 1.2.0 and will be removed in a future major release. The client should use the 'ska_tango_base.long_running_commands.invoke_lrc()' method instead, which will automatically subscribe to the correct attribute. The client can check for the result of a command in the 'lrcFinished' attribute if needed.
+1|2026-04-16T18:10:59.661Z|WARNING|Dummy-11|_read_longRunningCommandResult|mixin.py#625|tango-device:low-tmc/subarray/04|'longRunningCommandResult' is deprecated since ska-tango-base 1.2.0 and will be removed in a future major release. The client should use the 'ska_tango_base.long_running_commands.invoke_lrc()' method instead, which will automatically subscribe to the correct attribute. The client can check for the result of a command in the 'lrcFinished' attribute if needed.
+1|2026-04-16T18:12:00.914Z|WARNING|Dummy-11|_read_longRunningCommandResult|mixin.py#625|tango-device:low-tmc/subarray/04|'longRunningCommandResult' is deprecated since ska-tango-base 1.2.0 and will be removed in a future major release. The client should use the 'ska_tango_base.long_running_commands.invoke_lrc()' method instead, which will automatically subscribe to the correct attribute. The client can check for the result of a command in the 'lrcFinished' attribute if needed.
+1|2026-04-16T18:13:02.039Z|WARNING|Dummy-11|_read_longRunningCommandResult|mixin.py#625|tango-device:low-tmc/subarray/04|'longRunningCommandResult' is deprecated since ska-tango-base 1.2.0 and will be removed in a future major release. The client should use the 'ska_tango_base.long_running_commands.invoke_lrc()' method instead, which will automatically subscribe to the correct attribute. The client can check for the result of a command in the 'lrcFinished' attribute if needed.
+1|2026-04-16T18:14:03.441Z|WARNING|Dummy-11|_read_longRunningCommandResult|mixin.py#625|tango-device:low-tmc/subarray/04|'longRunningCommandResult' is deprecated since ska-tango-base 1.2.0 and will be removed in a future major release. The client should use the 'ska_tango_base.long_running_commands.invoke_lrc()' method instead, which will automatically subscribe to the correct attribute. The client can check for the result of a command in the 'lrcFinished' attribute if needed.
+1|2026-04-16T18:15:04.898Z|WARNING|Dummy-11|_read_longRunningCommandResult|mixin.py#625|tango-device:low-tmc/subarray/04|'longRunningCommandResult' is deprecated since ska-tango-base 1.2.0 and will be removed in a future major release. The client should use the 'ska_tango_base.long_running_commands.invoke_lrc()' method instead, which will automatically subscribe to the correct attribute. The client can check for the result of a command in the 'lrcFinished' attribute if needed.
+1|2026-04-16T18:16:06.343Z|WARNING|Dummy-11|_read_longRunningCommandResult|mixin.py#625|tango-device:low-tmc/subarray/04|'longRunningCommandResult' is deprecated since ska-tango-base 1.2.0 and will be removed in a future major release. The client should use the 'ska_tango_base.long_running_commands.invoke_lrc()' method instead, which will automatically subscribe to the correct attribute. The client can check for the result of a command in the 'lrcFinished' attribute if needed.
+1|2026-04-16T18:17:12.606Z|WARNING|Dummy-11|_read_longRunningCommandResult|mixin.py#625|tango-device:low-tmc/subarray/04|'longRunningCommandResult' is deprecated since ska-tango-base 1.2.0 and will be removed in a future major release. The client should use the 'ska_tango_base.long_running_commands.invoke_lrc()' method instead, which will automatically subscribe to the correct attribute. The client can check for the result of a command in the 'lrcFinished' attribute if needed.
+1|2026-04-16T18:18:14.636Z|WARNING|Dummy-11|_read_longRunningCommandResult|mixin.py#625|tango-device:low-tmc/subarray/04|'longRunningCommandResult' is deprecated since ska-tango-base 1.2.0 and will be removed in a future major release. The client should use the 'ska_tango_base.long_running_commands.invoke_lrc()' method instead, which will automatically subscribe to the correct attribute. The client can check for the result of a command in the 'lrcFinished' attribute if needed.
