@@ -129,9 +129,12 @@ def _apply_defect(
         defect_obj = getattr(constant, defect)
         # If the constant is already a JSON string, use as is
         if isinstance(defect_obj, str):
-            defect_payload = defect_obj
+            # defect_payload = defect_obj
+            defect_payload = json.dumps(json.loads(defect_obj))
+            logging.info("defect_payload %s", defect_payload)
         else:
             defect_payload = json.dumps(defect_obj)
+            logging.info("defect_payload %s", defect_payload)
     else:
         # fallback to mapping
         # mapping = command_defect_mapping.get(command, {})
@@ -243,16 +246,16 @@ def _run_assign_resources_for_all(
                 unique_id,
             )
 
-    healthy_sa_ids = [
+    pytest.healthy_sa_ids = [
         sa_id for sa_id in subarray_ids if sa_id not in assign_defect_sa_ids
     ]
     defect_sa_ids = sorted(assign_defect_sa_ids)
 
-    if healthy_sa_ids:
+    if pytest.healthy_sa_ids:
         _wait_for_subarrays_obsstate(
             central_node_low,
             event_tracer,
-            healthy_sa_ids,
+            pytest.healthy_sa_ids,
             ObsState.IDLE,
         )
 
@@ -589,47 +592,114 @@ def when_run_observations(
         pytest.defects,
     )
 
-    # # Execute Configure for all SAs (best-effort).
-    # configure_unique_ids: dict[int, tuple] = {}
-    # for sa_id in pytest.subarray_ids:
-    #     defect = pytest.defects.get(DefectKey(sa_id, "Configure"))
+    # Execute Configure for all SAs (best-effort).
+    configure_unique_ids: dict[int, tuple] = {}
+    configure_defect_sa_ids: set[int] = set()
+    defective_configure_unique_ids: dict[int, tuple] = {}
+    for sa_id in pytest.healthy_sa_ids:
+        subarray_node_low.set_subarray_id(sa_id)
+        defect = pytest.defects.get(DefectKey(sa_id, "Configure"))
 
-    #     # Best-effort defect injection for Configure.
-    #     if defect:
-    #         try:
-    #             _apply_defect(
-    #                 subarray_node_low,
-    #                 "Configure",
-    #                 str(defect),
-    #             )
-    #         except Exception:  # pylint: disable=broad-exception-caught
-    #             LOGGER.exception(
-    #                 "Failed to apply Configure defect for SA %s: %s",
-    #                 sa_id,
-    #                 defect,
-    #             )
+        # Best-effort defect injection for Configure.
+        if defect:
+            try:
+                configure_defect_sa_ids.add(sa_id)
+                _apply_defect(
+                    subarray_node_low,
+                    # "Configure",
+                    str(defect),
+                )
+            except Exception:  # pylint: disable=broad-exception-caught
+                LOGGER.exception(
+                    "Failed to apply Configure defect for SA %s: %s",
+                    sa_id,
+                    defect,
+                )
 
-    #     subarray_node_low.set_subarray_id(sa_id)
-    #     cfg_str = (logs_dir / f"configure_subarray{sa_id}.json").read_text(
-    #         encoding="utf-8"
-    #     )
-    #     _, unique_id = subarray_node_low.execute_transition(
-    #         "Configure",
-    #         cfg_str,
-    #     )
-    #     configure_unique_ids[sa_id] = unique_id
+        subarray_node_low.set_subarray_id(sa_id)
+        cfg_str = (logs_dir / f"configure_subarray{sa_id}.json").read_text(
+            encoding="utf-8"
+        )
+        _, unique_id = subarray_node_low.execute_transition(
+            "Configure",
+            cfg_str,
+        )
+        # configure_unique_ids[sa_id] = unique_id
 
-    #     # Best-effort reset after the command so later steps aren't polluted.
-    #     if defect:
-    #         try:
-    #             _reset_defects(subarray_node_low)
-    #         except Exception:  # pylint: disable=broad-exception-caught
-    #             LOGGER.exception(
-    #                 "Failed to reset defects after Configure for SA %s",
-    #                 sa_id,
-    #             )
+        if defect:
 
-    # pytest.configure_unique_ids = configure_unique_ids
+            try:
+                defective_configure_unique_ids[sa_id] = unique_id
+                _reset_defects(subarray_node_low)
+            except Exception:  # pylint: disable=broad-exception-caught
+                LOGGER.exception(
+                    "Failed to reset defects after AssignResources for SA %s",
+                    sa_id,
+                )
+        else:
+            configure_unique_ids[sa_id] = unique_id
+
+    pytest.configure_unique_ids = configure_unique_ids
+    pytest.defective_configure_unique_ids = defective_configure_unique_ids
+    pytest.configure_defect_sa_ids = configure_defect_sa_ids
+
+    logging.info(
+        "configure_unique_ids=%s defective_configure_unique_ids=%s",
+        configure_unique_ids,
+        defective_configure_unique_ids,
+    )
+
+    for sa_id, unique_id in configure_unique_ids.items():
+        try:
+            assert_that(event_tracer).within_timeout(
+                TIMEOUT
+            ).has_change_event_occurred(
+                subarray_node_low.subarray_node,
+                "longRunningCommandResult",
+                (
+                    unique_id[0],
+                    json.dumps((0, "Command Completed")),
+                ),
+            )
+        except AssertionError:
+            LOGGER.exception(
+                "No LRCR OK for Configure SA %s unique_id=%s",
+                sa_id,
+                unique_id,
+            )
+
+    pytest.healthy_sa_ids = [
+        sa_id
+        for sa_id in pytest.healthy_sa_ids
+        if sa_id not in configure_defect_sa_ids
+    ]
+    defect_sa_ids = sorted(configure_defect_sa_ids)
+
+    if pytest.healthy_sa_ids:
+        _wait_for_subarrays_obsstate(
+            central_node_low,
+            event_tracer,
+            pytest.healthy_sa_ids,
+            ObsState.READY,
+        )
+
+    if defect_sa_ids:
+        # for sa_id in defect_sa_ids:
+        #     subarray_node_low.set_subarray_id(sa_id)
+        #     try:
+        #         _reset_defects(subarray_node_low)
+        #     except Exception:  # pylint: disable=broad-exception-caught
+        #         LOGGER.exception(
+        #           "Failed to reset defects after AssignResources for SA %s",
+        #             sa_id,
+        #         )
+        #         assert False
+        _wait_for_subarrays_obsstate(
+            central_node_low,
+            event_tracer,
+            defect_sa_ids,
+            ObsState.EMPTY,
+        )
 
 
 @then("healthy subarrays complete observation cycle")
