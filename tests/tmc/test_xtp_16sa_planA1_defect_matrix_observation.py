@@ -644,6 +644,20 @@ def when_run_observations(
 
             try:
                 defective_configure_unique_ids[sa_id] = unique_id
+
+                assert_that(event_tracer).described_as(
+                    "TMC Subarray Leaf Node "
+                    "is expected to report a"
+                    "longRunningCommand  failure."
+                ).within_timeout(
+                    TIMEOUT
+                ).has_desired_result_code_message_in_lrcr_event(
+                    subarray_node_low.subarray_node,
+                    ["Exception occurred"],
+                    unique_id[0],
+                    ResultCode.FAILED,
+                )
+
                 _reset_defects(subarray_node_low)
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
