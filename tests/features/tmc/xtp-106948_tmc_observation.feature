@@ -36,14 +36,14 @@ Feature: Multi-subarray observation
         And I configure all the subarrays using plan map <PlanMap>
         And the Subarrays are configured successfully
         And I scan on all configured subarrays
-        And the involved subarrays transition to SCANNING and back to READY
+        And the subarrays transition to SCANNING and back to READY
         And I end the observations on all involved subarrays
         And I release resources from all involved subarrays
         When I reassign all subarrays.
         And I reconfigure all subarrays.
         And the Subarrays are configured successfully
         And I scan on all configured subarrays
-        Then the involved subarrays transition to SCANNING and back to READY
+        Then the subarrays transition to SCANNING and back to READY
         And I end the observations on all involved subarrays
         And I release resources from all involved subarrays
         And I turn off the telescope
@@ -60,9 +60,9 @@ Feature: Multi-subarray observation
         And I configure all the subarrays using plan map <PlanMap>
         And the Subarrays are configured successfully
         And I scan on all configured subarrays
-        And the involved subarrays transition to SCANNING and back to READY
+        And the subarrays transition to SCANNING and back to READY
         When I issue scan on all subarray with new scan_id
-        Then the involved subarrays transition to SCANNING and back to READY
+        Then the subarrays transition to SCANNING and back to READY
         And I end the observations on all involved subarrays
         And I release resources from all involved subarrays
         And I turn off the telescope

@@ -178,9 +178,7 @@ def central_node_low() -> Generator[CentralNodeWrapperLow, None, None]:
 
 
 @pytest.fixture()
-def central_node_low_16_subarrays() -> Generator[
-    CentralNodeWrapperLow, None, None
-]:
+def CN_low_16_SN() -> Generator[CentralNodeWrapperLow, None, None]:
     """Return CentralNode for Low Telescope with 16 subarrays
     and tear down all subarrays after completion of test"""
     central_node = CentralNodeWrapperLow()
@@ -196,6 +194,16 @@ def subarray_node_low() -> Generator[SubarrayNodeWrapperLow, None, None]:
     yield subarray
     # this will call after test complete
     subarray.tear_down()
+
+
+@pytest.fixture()
+def SN_low_16_SN() -> Generator[SubarrayNodeWrapperLow, None, None]:
+    """Return SubarrayNode and calls tear down for
+    16 subarrays after completion of test"""
+    subarray = SubarrayNodeWrapperLow()
+    yield subarray
+    # this will call after test complete
+    subarray.tear_down_all_subarrays()
 
 
 @pytest.fixture()

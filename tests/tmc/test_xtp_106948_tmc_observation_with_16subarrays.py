@@ -381,26 +381,81 @@ def _build_assign_json_files(
 
 
 def _assign_resources_for_subarrays(
-    central_node_low_16_subarrays: CentralNodeWrapperLow,
+    CN_low_16_SN: CentralNodeWrapperLow,
     subarray_ids: list[int],
     logs_dir: Path,
 ) -> list:
     """Send AssignResources for each subarray and return unique ids."""
     unique_ids = []
     for sa_id in subarray_ids:
-        central_node_low_16_subarrays.set_subarray_id(sa_id)
+        CN_low_16_SN.set_subarray_id(sa_id)
         assign_str = (logs_dir / f"assign_subarray{sa_id}.json").read_text(
             encoding="utf-8"
         )
-        _, unique_id = central_node_low_16_subarrays.perform_action(
+        _, unique_id = CN_low_16_SN.perform_action(
             "AssignResources", assign_str
         )
         unique_ids.append(unique_id)
     return unique_ids
 
 
+def _check_scanning_and_ready(
+    SN_low_16_SN: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    is_long_scan: bool = True,
+):
+    """Verify SCANNING then READY on active subarrays."""
+    for subarray_id in getattr(pytest, "active_subarray_ids", []):
+        SN_low_16_SN.set_subarray_id(subarray_id)
+
+        try:
+
+            assert_that(event_tracer).within_timeout(
+                TIMEOUT
+            ).has_change_event_occurred(
+                SN_low_16_SN.subarray_node,
+                "obsState",
+                ObsState.SCANNING,
+            )
+        except AssertionError:
+            logging.exception(
+                "Did not observe obsState=SCANNING "
+                "for subarray_id=%s within timeout. "
+                "Continuing anyway",
+                subarray_id,
+            )
+
+    if is_long_scan:
+
+        plan_map = parse_plan_map(pytest.PlanMap)
+
+        max_scan_duration = _max_scan_duration_from_plan_map(plan_map)
+    else:
+        max_scan_duration = 10.0  # Use a short duration for this check
+
+    for subarray_id in getattr(pytest, "active_subarray_ids", []):
+        SN_low_16_SN.set_subarray_id(subarray_id)
+        logging.info("Checking for SN - %s", subarray_id)
+
+        try:
+            assert_that(event_tracer).within_timeout(
+                max_scan_duration + 10
+            ).has_change_event_occurred(
+                SN_low_16_SN.subarray_node,
+                "obsState",
+                ObsState.READY,
+            )
+        except AssertionError:
+            logging.exception(
+                "Did not observe obsState=READY "
+                "for subarray_id=%s within timeout. "
+                "Continuing anyway",
+                subarray_id,
+            )
+
+
 def _configure_using_plan_map(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
     PlanMap: str,
@@ -452,13 +507,13 @@ def _configure_using_plan_map(
         _write_json(logs_dir / f"configure_subarray{subarray_id}.json", cfg)
 
     pytest.configure_unique_ids = _configure_subarrays(
-        subarray_node_low,
+        SN_low_16_SN,
         active_subarray_ids,
         logs_dir,
     )
 
     _wait_for_subarraynode_obsstate(
-        subarray_node_low,
+        SN_low_16_SN,
         event_tracer,
         active_subarray_ids,
         ObsState.CONFIGURING,
@@ -466,40 +521,38 @@ def _configure_using_plan_map(
 
 
 def _configure_subarrays(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     subarray_ids: list[int],
     logs_dir: Path,
 ) -> dict[int, tuple]:
     """Send Configure for each subarray and return unique ids by id."""
     results: dict[int, tuple] = {}
     for sa_id in subarray_ids:
-        subarray_node_low.set_subarray_id(sa_id)
+        SN_low_16_SN.set_subarray_id(sa_id)
         cfg_str = (logs_dir / f"configure_subarray{sa_id}.json").read_text(
             encoding="utf-8"
         )
 
-        _, unique_id = subarray_node_low.execute_transition(
-            "Configure", cfg_str
-        )
+        _, unique_id = SN_low_16_SN.execute_transition("Configure", cfg_str)
         results[sa_id] = unique_id
     return results
 
 
 def _wait_for_subarrays_obsstate(
-    central_node_low_16_subarrays: CentralNodeWrapperLow,
+    CN_low_16_SN: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
     subarray_ids: list[int],
     expected_state: ObsState,
 ) -> None:
     """Wait for obsState on CN subarray nodes (best-effort)."""
     for sa_id in subarray_ids:
-        central_node_low_16_subarrays.set_subarray_id(sa_id)
+        CN_low_16_SN.set_subarray_id(sa_id)
 
         try:
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                central_node_low_16_subarrays.subarray_node,
+                CN_low_16_SN.subarray_node,
                 "obsState",
                 expected_state,
             )
@@ -514,19 +567,19 @@ def _wait_for_subarrays_obsstate(
 
 
 def _wait_for_subarraynode_obsstate(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
     subarray_ids: list[int],
     expected_state: ObsState,
 ) -> None:
     """Wait for obsState on TMC SubarrayNode devices (best-effort)."""
     for sa_id in subarray_ids:
-        subarray_node_low.set_subarray_id(sa_id)
+        SN_low_16_SN.set_subarray_id(sa_id)
         try:
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
+                SN_low_16_SN.subarray_node,
                 "obsState",
                 expected_state,
             )
@@ -541,13 +594,13 @@ def _wait_for_subarraynode_obsstate(
 
 
 def _wait_for_configure_ready_and_lrcr_ok(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
     configure_unique_ids: dict[int, tuple],
 ) -> None:
     """Wait for READY and LRCR OK per subarray after Configure."""
     for sa_id, unique_id in configure_unique_ids.items():
-        subarray_node_low.set_subarray_id(sa_id)
+        SN_low_16_SN.set_subarray_id(sa_id)
         expected_lrcr = (
             unique_id[0],
             json.dumps((int(ResultCode.OK), "Command Completed")),
@@ -556,7 +609,7 @@ def _wait_for_configure_ready_and_lrcr_ok(
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
+                SN_low_16_SN.subarray_node,
                 "obsState",
                 ObsState.READY,
             )
@@ -572,7 +625,7 @@ def _wait_for_configure_ready_and_lrcr_ok(
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
+                SN_low_16_SN.subarray_node,
                 "longRunningCommandResult",
                 expected_lrcr,
             )
@@ -586,7 +639,7 @@ def _wait_for_configure_ready_and_lrcr_ok(
 
 
 def _delay_model_attributes_from_active_plan(
-    subarray_node_low: SubarrayNodeWrapperLow, subarray_id
+    SN_low_16_SN: SubarrayNodeWrapperLow, subarray_id
 ) -> list[str]:
     """Return delay-model attribute names, derived from the active plan."""
     plan_map = parse_plan_map(pytest.PlanMap)
@@ -612,7 +665,7 @@ def _delay_model_attributes_from_active_plan(
     pss_attrs = [f"delayModelPSSBeam{i}" for i in pss_ids]
     pst_attrs = [f"delayModelPSTBeam{i}" for i in pst_ids]
     stn_attrs = [f"delaymodelstationbeam0{i}" for i in station_ids]
-    subarray_node_low.set_subarray_id(subarray_id)
+    SN_low_16_SN.set_subarray_id(subarray_id)
 
     return pss_attrs + pst_attrs + stn_attrs
 
@@ -657,7 +710,7 @@ def test_tmc_long_sequence_configure_scan():
 
 @given(parsers.parse("{SNCount:d} subarrays are in the EMPTY ObsState"))
 def verify_n_subarrays_in_empty(
-    central_node_low_16_subarrays: CentralNodeWrapperLow,
+    CN_low_16_SN: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
     SNCount: int,
 ):
@@ -666,12 +719,12 @@ def verify_n_subarrays_in_empty(
 
     # Best-effort check (resilient) on 1..SNCount.
     for subarray_id in range(1, pytest.sn_count + 1):
-        central_node_low_16_subarrays.set_subarray_id(subarray_id)
+        CN_low_16_SN.set_subarray_id(subarray_id)
         try:
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                central_node_low_16_subarrays.subarray_node,
+                CN_low_16_SN.subarray_node,
                 "obsState",
                 ObsState.EMPTY,
             )
@@ -686,42 +739,36 @@ def verify_n_subarrays_in_empty(
 
 @given("the telescope is in the ON state")
 def given_a_telescope_is_in_on(
-    central_node_low_16_subarrays: CentralNodeWrapperLow,
+    CN_low_16_SN: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """Move telescope to ON and subscribe to key events."""
     # Subscribe to CentralNode telescopeState + LRCR.
+    event_tracer.subscribe_event(CN_low_16_SN.central_node, "telescopeState")
     event_tracer.subscribe_event(
-        central_node_low_16_subarrays.central_node, "telescopeState"
+        CN_low_16_SN.central_node, "longRunningCommandResult"
     )
-    event_tracer.subscribe_event(
-        central_node_low_16_subarrays.central_node, "longRunningCommandResult"
-    )
-    log_events(
-        {central_node_low_16_subarrays.central_node: ["telescopeState"]}
-    )
+    log_events({CN_low_16_SN.central_node: ["telescopeState"]})
     event_tracer.clear_events()
 
     # Bring mocks ON
 
     max_sa = int(getattr(pytest, "sn_count", 16))
     for subarray_id in range(1, max_sa + 1):
-        central_node_low_16_subarrays.set_subarray_id(subarray_id)
+        CN_low_16_SN.set_subarray_id(subarray_id)
+        event_tracer.subscribe_event(CN_low_16_SN.subarray_node, "obsState")
         event_tracer.subscribe_event(
-            central_node_low_16_subarrays.subarray_node, "obsState"
-        )
-        event_tracer.subscribe_event(
-            central_node_low_16_subarrays.subarray_node,
+            CN_low_16_SN.subarray_node,
             "longRunningCommandResult",
         )
-        central_node_low_16_subarrays.set_values_with_all_mocks(DevState.ON)
+        CN_low_16_SN.set_values_with_all_mocks(DevState.ON)
 
-    central_node_low_16_subarrays.move_to_on()
+    CN_low_16_SN.move_to_on()
 
     assert_that(event_tracer).within_timeout(
         TIMEOUT
     ).has_change_event_occurred(
-        central_node_low_16_subarrays.central_node,
+        CN_low_16_SN.central_node,
         "telescopeState",
         DevState.ON,
     )
@@ -729,7 +776,7 @@ def given_a_telescope_is_in_on(
 
 @given(parsers.parse("I assign resources using plan map {PlanMap}"))
 def assign_using_plan_map(
-    central_node_low_16_subarrays: CentralNodeWrapperLow,
+    CN_low_16_SN: CentralNodeWrapperLow,
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
     PlanMap: str,
@@ -758,7 +805,7 @@ def assign_using_plan_map(
     _build_assign_json_files(plan_map, base_assign, logs_dir)
 
     assign_unique_ids = _assign_resources_for_subarrays(
-        central_node_low_16_subarrays, pytest.active_subarray_ids, logs_dir
+        CN_low_16_SN, pytest.active_subarray_ids, logs_dir
     )
 
     for unique_id in assign_unique_ids:
@@ -766,7 +813,7 @@ def assign_using_plan_map(
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                central_node_low_16_subarrays.central_node,
+                CN_low_16_SN.central_node,
                 "longRunningCommandResult",
                 (
                     unique_id[0],
@@ -782,7 +829,7 @@ def assign_using_plan_map(
             )
 
     _wait_for_subarrays_obsstate(
-        central_node_low_16_subarrays,
+        CN_low_16_SN,
         event_tracer,
         pytest.active_subarray_ids,
         ObsState.IDLE,
@@ -791,14 +838,14 @@ def assign_using_plan_map(
 
 @given(parsers.parse("I configure all the subarrays using plan map {PlanMap}"))
 def configure_all_using_plan_map(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
     PlanMap: str,
 ):
     """Configure all subarrays from PlanMap."""
     _configure_using_plan_map(
-        subarray_node_low=subarray_node_low,
+        SN_low_16_SN=SN_low_16_SN,
         command_input_factory=command_input_factory,
         event_tracer=event_tracer,
         PlanMap=PlanMap,
@@ -808,14 +855,14 @@ def configure_all_using_plan_map(
 
 @given(parsers.parse("I configure subarrays using plan map {PlanMap}"))
 def configure_using_plan_map_for_long_scan(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
     PlanMap: str,
 ):
     """Configure all subarrays from PlanMap, with long scan durations."""
     _configure_using_plan_map(
-        subarray_node_low=subarray_node_low,
+        SN_low_16_SN=SN_low_16_SN,
         command_input_factory=command_input_factory,
         event_tracer=event_tracer,
         PlanMap=PlanMap,
@@ -825,12 +872,12 @@ def configure_using_plan_map_for_long_scan(
 
 @given("the Subarrays are configured successfully")
 def subarrays_configured_successfully(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """Wait for READY after Configure (best-effort)."""
     _wait_for_configure_ready_and_lrcr_ok(
-        subarray_node_low=subarray_node_low,
+        SN_low_16_SN=SN_low_16_SN,
         event_tracer=event_tracer,
         configure_unique_ids=pytest.configure_unique_ids,
     )
@@ -839,22 +886,22 @@ def subarrays_configured_successfully(
 
 @given("the Subarrays are configured successfully with correct delaymodels")
 def verify_subarray_in_ready_observation_state(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """Wait for READY + LRCR OK after Configure (best-effort)."""
     _wait_for_configure_ready_and_lrcr_ok(
-        subarray_node_low=subarray_node_low,
+        SN_low_16_SN=SN_low_16_SN,
         event_tracer=event_tracer,
         configure_unique_ids=pytest.configure_unique_ids,
     )
     event_tracer.clear_events()
 
     for subarray_id in getattr(pytest, "active_subarray_ids", []):
-        subarray_node_low.set_subarray_id(subarray_id)
+        SN_low_16_SN.set_subarray_id(subarray_id)
 
         attributes = _delay_model_attributes_from_active_plan(
-            subarray_node_low, subarray_id
+            SN_low_16_SN, subarray_id
         )
         logging.info(
             "attributes for subarray_id  %s are ---%s", subarray_id, attributes
@@ -866,7 +913,7 @@ def verify_subarray_in_ready_observation_state(
             while time.time() < wait_time:
 
                 generated_delay_model = (
-                    subarray_node_low.csp_subarray_leaf_node.read_attribute(
+                    SN_low_16_SN.csp_subarray_leaf_node.read_attribute(
                         attribute
                     ).value
                 )
@@ -877,7 +924,7 @@ def verify_subarray_in_ready_observation_state(
                     logging.info(
                         "Attribute %s returned empty value, for %s",
                         attribute,
-                        subarray_node_low.csp_subarray_leaf_node.dev_name(),
+                        SN_low_16_SN.csp_subarray_leaf_node.dev_name(),
                     )
 
                     continue
@@ -905,64 +952,78 @@ def verify_subarray_in_ready_observation_state(
 
 @given("I end the observations on all involved subarrays")
 def end_observations_on_all_subarrays(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """End observations on active subarrays (best-effort)."""
     event_tracer.clear_events()
     end_all_involved(
-        subarray_node_low=subarray_node_low, event_tracer=event_tracer
+        SN_low_16_SN=SN_low_16_SN,
+        event_tracer=event_tracer,
     )
 
 
 @given("I scan on all configured subarrays")
 def given_scan_on_all_configured_subarrays(
     command_input_factory: JsonFactory,
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """Start Scan on active subarrays (best-effort)."""
     event_tracer.clear_events()
     scan_on_configured_subarrays(
         command_input_factory=command_input_factory,
-        subarray_node_low=subarray_node_low,
+        SN_low_16_SN=SN_low_16_SN,
         event_tracer=event_tracer,
     )
 
 
 @given("I release resources from all involved subarrays")
 def given_release_resources_from_all_subarrays(
-    central_node_low_16_subarrays: CentralNodeWrapperLow,
+    CN_low_16_SN: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
     command_input_factory: JsonFactory,
 ):
     """Release resources on active subarrays from CN (best-effort)."""
     event_tracer.clear_events()
-    release_all_involved(
-        central_node_low_16_subarrays, command_input_factory, event_tracer
+    release_all_involved(CN_low_16_SN, command_input_factory, event_tracer)
+
+
+@given("the subarrays transition to SCANNING and back to READY")
+def subarrays_transition_to_scanning_and_ready(
+    SN_low_16_SN: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Verify SCANNING then READY on active subarrays."""
+    _check_scanning_and_ready(
+        SN_low_16_SN=SN_low_16_SN,
+        event_tracer=event_tracer,
+        is_long_scan=False,
     )
 
 
 @given("the involved subarrays transition to SCANNING and back to READY")
 def given_subarrays_transition_to_scanning_and_ready(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """Verify SCANNING then READY on active subarrays."""
-    check_scanning_and_ready(
-        subarray_node_low=subarray_node_low, event_tracer=event_tracer
+    _check_scanning_and_ready(
+        SN_low_16_SN=SN_low_16_SN,
+        event_tracer=event_tracer,
+        is_long_scan=True,
     )
 
 
 @when("I reassign all subarrays.")
 def reassign_all_subarrays(
-    central_node_low_16_subarrays: CentralNodeWrapperLow,
+    CN_low_16_SN: CentralNodeWrapperLow,
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
 ):
     """Reassign active subarrays from CN using PlanMap."""
     assign_using_plan_map(
-        central_node_low_16_subarrays=central_node_low_16_subarrays,
+        CN_low_16_SN=CN_low_16_SN,
         command_input_factory=command_input_factory,
         event_tracer=event_tracer,
         PlanMap=getattr(pytest, "PlanMap", "{}"),
@@ -971,13 +1032,13 @@ def reassign_all_subarrays(
 
 @when("I reconfigure all subarrays.")
 def reconfigure_all_subarrays(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
 ):
     """Reconfigure all active subarrays"""
     _configure_using_plan_map(
-        subarray_node_low=subarray_node_low,
+        SN_low_16_SN=SN_low_16_SN,
         command_input_factory=command_input_factory,
         event_tracer=event_tracer,
         PlanMap=getattr(pytest, "PlanMap", "{}"),
@@ -988,7 +1049,7 @@ def reconfigure_all_subarrays(
 @when("I scan on all configured subarrays")
 def scan_on_configured_subarrays(
     command_input_factory: JsonFactory,
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """Start Scan on active subarrays (best-effort)."""
@@ -998,15 +1059,15 @@ def scan_on_configured_subarrays(
     )
 
     for subarray_id in getattr(pytest, "active_subarray_ids", []):
-        subarray_node_low.set_subarray_id(subarray_id)
-        subarray_node_low.execute_transition("Scan", scan_input_json)
+        SN_low_16_SN.set_subarray_id(subarray_id)
+        SN_low_16_SN.execute_transition("Scan", scan_input_json)
 
         try:
 
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
+                SN_low_16_SN.subarray_node,
                 "obsState",
                 ObsState.SCANNING,
             )
@@ -1021,12 +1082,12 @@ def scan_on_configured_subarrays(
 
 @when("the Subarrays are configured successfully")
 def when_subarrays_configured_successfully(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """Wait for READY after Configure (best-effort)."""
     _wait_for_configure_ready_and_lrcr_ok(
-        subarray_node_low=subarray_node_low,
+        SN_low_16_SN=SN_low_16_SN,
         event_tracer=event_tracer,
         configure_unique_ids=pytest.configure_unique_ids,
     )
@@ -1036,7 +1097,7 @@ def when_subarrays_configured_successfully(
 @when("I issue scan on all subarray with new scan_id")
 def scan_on_all_subarrays_with_new_scan_id(
     command_input_factory: JsonFactory,
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """Start Scan with new scan_id on active subarrays (best-effort)."""
@@ -1049,13 +1110,13 @@ def scan_on_all_subarrays_with_new_scan_id(
     scan_input_json = json.dumps(scan_input)
 
     for subarray_id in getattr(pytest, "active_subarray_ids", []):
-        subarray_node_low.set_subarray_id(subarray_id)
-        subarray_node_low.execute_transition("Scan", scan_input_json)
+        SN_low_16_SN.set_subarray_id(subarray_id)
+        SN_low_16_SN.execute_transition("Scan", scan_input_json)
         try:
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
+                SN_low_16_SN.subarray_node,
                 "obsState",
                 ObsState.SCANNING,
             )
@@ -1070,25 +1131,26 @@ def scan_on_all_subarrays_with_new_scan_id(
 
 @when("the Subarrays are configured successfully with correct delaymodels")
 def when_subarrays_configured_with_delay_models(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """Wait for READY + LRCR OK after Configure (best-effort)."""
     verify_subarray_in_ready_observation_state(
-        subarray_node_low=subarray_node_low, event_tracer=event_tracer
+        SN_low_16_SN=SN_low_16_SN,
+        event_tracer=event_tracer,
     )
 
 
 @then("the subarrays transition to READY on scan completion")
 def check_scan_completion(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """Verify that the subarray is in the READY obsState."""
 
     # Check if Scan is completed on all the subarrays
     for subarray_id in [1, 2, 3, 4]:
-        subarray_node_low.set_subarray_id(subarray_id)
+        SN_low_16_SN.set_subarray_id(subarray_id)
 
         try:
             assert_that(event_tracer).described_as(
@@ -1096,10 +1158,10 @@ def check_scan_completion(
                 "'the subarray must be in the"
                 " SCANNING obsState until finished'"
                 "Subarray Node device"
-                f"({subarray_node_low.subarray_node.dev_name()}) "
+                f"({SN_low_16_SN.subarray_node.dev_name()}) "
                 "is expected to be in READY obstate",
             ).within_timeout(TIMEOUT).has_change_event_occurred(
-                subarray_node_low.subarray_node,
+                SN_low_16_SN.subarray_node,
                 "obsState",
                 ObsState.READY,
             )
@@ -1110,74 +1172,49 @@ def check_scan_completion(
                 "Continuing anyway",
                 subarray_id,
             )
+
+
+@then("the subarrays transition to SCANNING and back to READY")
+def then_subarrays_transition_to_scanning_and_ready(
+    SN_low_16_SN: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Verify SCANNING then READY on active subarrays."""
+    _check_scanning_and_ready(
+        SN_low_16_SN=SN_low_16_SN,
+        event_tracer=event_tracer,
+        is_long_scan=False,
+    )
 
 
 @then("the involved subarrays transition to SCANNING and back to READY")
 def check_scanning_and_ready(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """Verify SCANNING then READY on active subarrays."""
-    for subarray_id in getattr(pytest, "active_subarray_ids", []):
-        subarray_node_low.set_subarray_id(subarray_id)
-
-        try:
-
-            assert_that(event_tracer).within_timeout(
-                TIMEOUT
-            ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
-                "obsState",
-                ObsState.SCANNING,
-            )
-        except AssertionError:
-            logging.exception(
-                "Did not observe obsState=SCANNING "
-                "for subarray_id=%s within timeout. "
-                "Continuing anyway",
-                subarray_id,
-            )
-
-    plan_map = parse_plan_map(pytest.PlanMap)
-
-    max_scan_duration = _max_scan_duration_from_plan_map(plan_map)
-
-    for subarray_id in getattr(pytest, "active_subarray_ids", []):
-        subarray_node_low.set_subarray_id(subarray_id)
-        logging.info("Checking for SN - %s", subarray_id)
-
-        try:
-            assert_that(event_tracer).within_timeout(
-                max_scan_duration + 10
-            ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
-                "obsState",
-                ObsState.READY,
-            )
-        except AssertionError:
-            logging.exception(
-                "Did not observe obsState=READY "
-                "for subarray_id=%s within timeout. "
-                "Continuing anyway",
-                subarray_id,
-            )
+    _check_scanning_and_ready(
+        SN_low_16_SN=SN_low_16_SN,
+        event_tracer=event_tracer,
+        is_long_scan=True,  # Use long scan durations for this check.
+    )
 
 
 @then("I end the observations on all involved subarrays")
 def end_all_involved(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """End observations on active subarrays (best-effort)."""
     event_tracer.clear_events()
     for subarray_id in getattr(pytest, "active_subarray_ids", []):
-        subarray_node_low.set_subarray_id(subarray_id)
-        subarray_node_low.execute_transition("End")
+        SN_low_16_SN.set_subarray_id(subarray_id)
+        SN_low_16_SN.execute_transition("End")
         try:
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
+                SN_low_16_SN.subarray_node,
                 "obsState",
                 ObsState.IDLE,
             )
@@ -1192,7 +1229,7 @@ def end_all_involved(
 
 @then("I release resources from all involved subarrays")
 def release_all_involved(
-    central_node_low_16_subarrays: CentralNodeWrapperLow,
+    CN_low_16_SN: CentralNodeWrapperLow,
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
 ):
@@ -1205,10 +1242,10 @@ def release_all_involved(
     )
 
     for subarray_id in getattr(pytest, "active_subarray_ids", []):
-        central_node_low_16_subarrays.set_subarray_id(subarray_id)
+        CN_low_16_SN.set_subarray_id(subarray_id)
         rel = json.loads(json.dumps(release_input))
         rel["subarray_id"] = subarray_id
-        _, uid = central_node_low_16_subarrays.perform_action(
+        _, uid = CN_low_16_SN.perform_action(
             "ReleaseResources", json.dumps(rel)
         )
         try:
@@ -1216,7 +1253,7 @@ def release_all_involved(
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                central_node_low_16_subarrays.central_node,
+                CN_low_16_SN.central_node,
                 "longRunningCommandResult",
                 (
                     uid[0],
@@ -1235,7 +1272,7 @@ def release_all_involved(
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                central_node_low_16_subarrays.subarray_node,
+                CN_low_16_SN.subarray_node,
                 "obsState",
                 ObsState.EMPTY,
             )
@@ -1250,15 +1287,15 @@ def release_all_involved(
 
 @then("I turn off the telescope")
 def turn_off_telescope(
-    central_node_low_16_subarrays: CentralNodeWrapperLow,
+    CN_low_16_SN: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
     """Move telescope to OFF."""
-    central_node_low_16_subarrays.move_to_off()
+    CN_low_16_SN.move_to_off()
     assert_that(event_tracer).within_timeout(
         TIMEOUT
     ).has_change_event_occurred(
-        central_node_low_16_subarrays.central_node,
+        CN_low_16_SN.central_node,
         "telescopeState",
         DevState.OFF,
     )
