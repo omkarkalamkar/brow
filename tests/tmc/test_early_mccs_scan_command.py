@@ -197,9 +197,17 @@ def send_scan(
     )
 
     subarray_node_low.execute_transition("Scan", scan_input_json)
+
+
+@then("the subarray must be in the SCANNING obsState until finished")
+def check_scan_completion(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Verify that the subarray is in the SCANNING obsState."""
     assert_that(event_tracer).described_as(
-        'FAILED ASSUMPTION IN "GIVEN" STEP: '
-        "'a subarray in READY obsState'"
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'a subarray triggers Scan command with MCCS already running a scan'"
         "MCCS Leaf Node device"
         f"({subarray_node_low.mccs_subarray_leaf_node.dev_name()}) "
         "is expected have longRunningCommand as"
@@ -214,14 +222,6 @@ def send_scan(
             ),
         ),
     )
-
-
-@then("the subarray must be in the SCANNING obsState until finished")
-def check_scan_completion(
-    subarray_node_low: SubarrayNodeWrapperLow,
-    event_tracer: TangoEventTracer,
-):
-    """Verify that the subarray is in the SCANNING obsState."""
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         "'the subarray must be in the SCANNING obsState until finished'"
