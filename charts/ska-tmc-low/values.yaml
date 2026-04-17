@@ -22,7 +22,7 @@ global:
   #  .Values.global.subarray_count
   # subarray_count, this will be expanded (1 to N inclusive)
   subarray_count: 1
-  TMCLoggingLevel: "4"
+  TMCLoggingLevel: "5"
 
 domain: "low-tmc"
 ##  Order of instances resolution ##
@@ -150,7 +150,7 @@ deviceServers:
     IsAutoRecoveryEnabled: "true"
     DefaultArrayLayoutSourceURIs: "gitlab://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     DefaultArrayLayoutPath: "instrument/ska1_low/layout/low-layout.json"
-    LoggingLevel: "4"
+    LoggingLevel: "5"
     SubarrayPrefix: "low-tmc/subarray/"
 
 
