@@ -1,0 +1,883 @@
+1|2026-04-17T09:56:19.961Z|INFO|MainThread|set_logging_level|ska_device.py#218|tango-device:low-tmc/subarray/04|Logging level set to LoggingLevel.DEBUG on Python and Tango loggers
+1|2026-04-17T09:56:19.961Z|INFO|MainThread|update_logging_handlers|logging.py#379|tango-device:low-tmc/subarray/04|Logging targets set to ['tango::logger']
+1|2026-04-17T09:56:19.961Z|DEBUG|MainThread|_init_logging|ska_device.py#95|tango-device:low-tmc/subarray/04|Logger initialised
+1|2026-04-17T09:56:19.995Z|INFO|subarray_availability_thread|aggregate|aggregators.py#220|tango-device:low-tmc/subarray/04|CSP Subarray Leaf Node device:  is unavailable
+1|2026-04-17T09:56:19.996Z|DEBUG|MainThread|_start_all_threads|subarray_node_component_manager.py#524|tango-device:low-tmc/subarray/04|Starting liveliness probe thread.
+1|2026-04-17T09:56:20.049Z|DEBUG|MainThread|update_device|component.py#215|tango-device:low-tmc/subarray/04|Adding device info object for: low-tmc/subarray-leaf-node-csp/04
+1|2026-04-17T09:56:20.050Z|DEBUG|MainThread|update_device|component.py#250|tango-device:low-tmc/subarray/04|For low-tmc/subarray-leaf-node-csp/04 obsState is: EMPTY
+1|2026-04-17T09:56:20.051Z|DEBUG|MainThread|add_device|liveliness_probe.py#227|tango-device:low-tmc/subarray/04|Added device: low-tmc/subarray-leaf-node-csp/04 to the list of monitoring devices. Updated list is: ['low-tmc/subarray-leaf-node-csp/04']
+1|2026-04-17T09:56:20.051Z|DEBUG|MainThread|update_device|component.py#215|tango-device:low-tmc/subarray/04|Adding device info object for: low-tmc/subarray-leaf-node-sdp/04
+1|2026-04-17T09:56:20.051Z|DEBUG|MainThread|update_device|component.py#250|tango-device:low-tmc/subarray/04|For low-tmc/subarray-leaf-node-sdp/04 obsState is: EMPTY
+1|2026-04-17T09:56:20.051Z|DEBUG|MainThread|add_device|liveliness_probe.py#227|tango-device:low-tmc/subarray/04|Added device: low-tmc/subarray-leaf-node-sdp/04 to the list of monitoring devices. Updated list is: ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-sdp/04']
+1|2026-04-17T09:56:20.052Z|DEBUG|MainThread|update_device|component.py#215|tango-device:low-tmc/subarray/04|Adding device info object for: low-csp/subarray/04
+1|2026-04-17T09:56:20.052Z|DEBUG|MainThread|update_device|component.py#250|tango-device:low-tmc/subarray/04|For low-csp/subarray/04 obsState is: EMPTY
+1|2026-04-17T09:56:20.052Z|DEBUG|MainThread|add_device|liveliness_probe.py#227|tango-device:low-tmc/subarray/04|Added device: low-csp/subarray/04 to the list of monitoring devices. Updated list is: ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-sdp/04', 'low-csp/subarray/04']
+1|2026-04-17T09:56:20.052Z|DEBUG|MainThread|update_device|component.py#215|tango-device:low-tmc/subarray/04|Adding device info object for: low-sdp/subarray/04
+1|2026-04-17T09:56:20.052Z|DEBUG|MainThread|update_device|component.py#243|tango-device:low-tmc/subarray/04|SDP Subarray low-sdp/subarray/04 obsState is: EMPTY
+1|2026-04-17T09:56:20.052Z|DEBUG|MainThread|add_device|liveliness_probe.py#227|tango-device:low-tmc/subarray/04|Added device: low-sdp/subarray/04 to the list of monitoring devices. Updated list is: ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-sdp/04', 'low-csp/subarray/04', 'low-sdp/subarray/04']
+1|2026-04-17T09:56:20.053Z|DEBUG|MainThread|update_device|component.py#215|tango-device:low-tmc/subarray/04|Adding device info object for: low-tmc/subarray-leaf-node-mccs/04
+1|2026-04-17T09:56:20.053Z|DEBUG|MainThread|update_device|component.py#250|tango-device:low-tmc/subarray/04|For low-tmc/subarray-leaf-node-mccs/04 obsState is: EMPTY
+1|2026-04-17T09:56:20.053Z|DEBUG|MainThread|add_device|liveliness_probe.py#227|tango-device:low-tmc/subarray/04|Added device: low-tmc/subarray-leaf-node-mccs/04 to the list of monitoring devices. Updated list is: ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-sdp/04', 'low-csp/subarray/04', 'low-sdp/subarray/04', 'low-tmc/subarray-leaf-node-mccs/04']
+1|2026-04-17T09:56:20.053Z|DEBUG|MainThread|update_device|component.py#215|tango-device:low-tmc/subarray/04|Adding device info object for: low-tmc/leaf-node-mccs/0
+1|2026-04-17T09:56:20.053Z|DEBUG|MainThread|update_device|component.py#250|tango-device:low-tmc/subarray/04|For low-tmc/leaf-node-mccs/0 obsState is: EMPTY
+1|2026-04-17T09:56:20.053Z|DEBUG|MainThread|add_device|liveliness_probe.py#227|tango-device:low-tmc/subarray/04|Added device: low-tmc/leaf-node-mccs/0 to the list of monitoring devices. Updated list is: ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-sdp/04', 'low-csp/subarray/04', 'low-sdp/subarray/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/leaf-node-mccs/0']
+1|2026-04-17T09:56:20.053Z|DEBUG|MainThread|update_device|component.py#215|tango-device:low-tmc/subarray/04|Adding device info object for: low-mccs/subarray/04
+1|2026-04-17T09:56:20.053Z|DEBUG|MainThread|update_device|component.py#250|tango-device:low-tmc/subarray/04|For low-mccs/subarray/04 obsState is: EMPTY
+1|2026-04-17T09:56:20.054Z|DEBUG|MainThread|add_device|liveliness_probe.py#227|tango-device:low-tmc/subarray/04|Added device: low-mccs/subarray/04 to the list of monitoring devices. Updated list is: ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-sdp/04', 'low-csp/subarray/04', 'low-sdp/subarray/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/leaf-node-mccs/0', 'low-mccs/subarray/04']
+1|2026-04-17T09:56:20.054Z|DEBUG|MainThread|build_device_attribute_map|subarray_node_component_manager.py#417|tango-device:low-tmc/subarray/04|Device-attribute map: {'low-tmc/subarray-leaf-node-csp/04': ['state', 'healthState', 'isSubsystemAvailable', 'healthInfo', 'cspSubarrayObsState', 'cspSubarrayAdminMode'], 'low-tmc/subarray-leaf-node-sdp/04': ['state', 'healthState', 'isSubsystemAvailable', 'healthInfo', 'sdpSubarrayObsState', 'sdpSubarrayAdminMode'], 'low-csp/subarray/04': ['state', 'healthState'], 'low-sdp/subarray/04': ['state', 'healthState', 'receiveAddresses'], 'low-tmc/subarray-leaf-node-mccs/04': ['state', 'healthState', 'isSubsystemAvailable', 'healthInfo', 'obsState', 'mccsSubarrayAdminMode'], 'low-tmc/leaf-node-mccs/0': ['state', 'healthState', 'mccsControllerAdminMode', 'isSubsystemAvailable'], 'low-mccs/subarray/04': ['state', 'healthState', 'assignedResources']}
+1|2026-04-17T09:56:20.055Z|DEBUG|MainThread|setup_event_subscription|subarray_node_component_manager.py#363|tango-device:low-tmc/subarray/04|Successfully subscribed the events
+1|2026-04-17T09:56:20.067Z|INFO|MainThread|exit|core.py#137||Finished processing state _UNINITIALISED exit callbacks.
+1|2026-04-17T09:56:20.067Z|INFO|MainThread|enter|core.py#131||Finished processing state INIT_ON enter callbacks.
+1|2026-04-17T09:56:20.067Z|INFO|MainThread|callbacks|core.py#1176||Executed callback '<bound method TMCOpStateMachine._state_changed of <ska_tmc_common.op_state_model.TMCOpStateMachine object at 0x7f80ed6870d0>>'
+1|2026-04-17T09:56:20.068Z|DEBUG|MainThread|init_device|base_device.py#258|tango-device:low-tmc/subarray/04|Groups definitions: None
+1|2026-04-17T09:56:20.068Z|DEBUG|MainThread|init_device|base_device.py#262|tango-device:low-tmc/subarray/04|No Groups loaded for device: low-tmc/subarray/04
+/usr/local/lib/python3.10/dist-packages/ska_tango_base/subarray/subarray_device.py:210: UserWarning: JSON argument to command AssignResources will only be validated as a dictionary.
+  validator=JsonValidator("AssignResources", schema, logger=logger),
+/usr/local/lib/python3.10/dist-packages/ska_tango_base/subarray/subarray_device.py:242: UserWarning: JSON argument to command ReleaseResources will only be validated as a dictionary.
+  validator=JsonValidator("ReleaseResources", schema, logger=logger),
+/usr/local/lib/python3.10/dist-packages/ska_tango_base/subarray/subarray_device.py:302: UserWarning: JSON argument to command Configure will only be validated as a dictionary.
+  validator=JsonValidator("Configure", schema, logger=logger),
+/usr/local/lib/python3.10/dist-packages/ska_tango_base/subarray/subarray_device.py:334: UserWarning: JSON argument to command Scan will only be validated as a dictionary.
+  validator=JsonValidator("Scan", schema, logger=logger),
+1|2026-04-17T09:56:20.070Z|INFO|MainThread|exit|core.py#137||Finished processing state INIT_ON exit callbacks.
+1|2026-04-17T09:56:20.070Z|INFO|MainThread|enter|core.py#131||Finished processing state INIT_ON enter callbacks.
+1|2026-04-17T09:56:20.070Z|INFO|MainThread|callbacks|core.py#1176||Executed callback '<bound method TMCOpStateMachine._state_changed of <ska_tmc_common.op_state_model.TMCOpStateMachine object at 0x7f80ed6870d0>>'
+1|2026-04-17T09:56:20.070Z|INFO|MainThread|exit|core.py#137||Finished processing state INIT_ON exit callbacks.
+1|2026-04-17T09:56:20.070Z|INFO|MainThread|enter|core.py#131||Finished processing state ON enter callbacks.
+1|2026-04-17T09:56:20.071Z|INFO|MainThread|callbacks|core.py#1176||Executed callback '<bound method TMCOpStateMachine._state_changed of <ska_tmc_common.op_state_model.TMCOpStateMachine object at 0x7f80ed6870d0>>'
+Ready to accept request
+1|2026-04-17T09:56:20.096Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1863|tango-device:low-tmc/subarray/04|Updated State of low-tmc/subarray-leaf-node-csp/04: ON
+1|2026-04-17T09:56:20.100Z|DEBUG|healthState|update_device_health_state|subarray_node_component_manager.py#973|tango-device:low-tmc/subarray/04|Received healthState event for: low-tmc/subarray-leaf-node-csp/04: OK
+1|2026-04-17T09:56:20.100Z|INFO|healthState|update_event_data|event_data_manager.py#642||Device low-tmc/subarray-leaf-node-csp/04 reported HealthState: OK ; updating accordingly
+1|2026-04-17T09:56:20.100Z|INFO|healthState|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                            StateType   State UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04 HealthState OK    -        2026-04-17T09:56:20.100182Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:20.103Z|INFO|healthState|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:20.104Z|INFO|isSubsystemAvailable|aggregate|aggregators.py#245|tango-device:low-tmc/subarray/04|Unavailable devices list is : ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-sdp/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/leaf-node-mccs/0']
+1|2026-04-17T09:56:20.107Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called None
+1|2026-04-17T09:56:20.107Z|DEBUG|healthInfo|update_device_health_info|subarray_node_component_manager.py#1009|tango-device:low-tmc/subarray/04|HealthInfo updated for device : low-tmc/subarray-leaf-node-csp/04 , at timestamp: 2026-04-17 09:56:20.107244 ,  with value {}
+1|2026-04-17T09:56:20.107Z|DEBUG|healthInfo|update_health_info_details|subarray_node_component_manager.py#2852|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-csp/04': []}
+1|2026-04-17T09:56:20.108Z|DEBUG|healthInfo|update_subarray_health_info_callback|subarray_node.py#290|tango-device:low-tmc/subarray/04|Executing HealthInfo callback on Tango using value {"low-tmc/subarray-leaf-node-csp/04": []}, type <class 'str'>
+1|2026-04-17T09:56:20.110Z|DEBUG|obsState|update_device_obs_state|subarray_node_component_manager.py#1211|tango-device:low-tmc/subarray/04|Received obsState event for low-tmc/subarray-leaf-node-csp/04: EMPTY
+1|2026-04-17T09:56:20.111Z|INFO|obsState|update_event_data|event_data_manager.py#570||Device low-tmc/subarray-leaf-node-csp/04 reported ObsState: EMPTY ; Updating accordingly
+1|2026-04-17T09:56:20.111Z|INFO|obsState|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                            StateType   State UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04 HealthState OK    -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-csp/04 ObsState    EMPTY -        2026-04-17T09:56:20.110928Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:20.114Z|INFO|obsState|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:20.116Z|DEBUG|adminMode|update_device_admin_mode|subarray_node_component_manager.py#1101|tango-device:low-tmc/subarray/04|Received adminMode event for low-tmc/subarray-leaf-node-csp/04: ONLINE
+1|2026-04-17T09:56:20.116Z|INFO|adminMode|update_event_data|event_data_manager.py#654||Device low-tmc/subarray-leaf-node-csp/04 reported AdminMode: ONLINE ; updating accordingly
+1|2026-04-17T09:56:20.116Z|INFO|adminMode|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                            StateType   State  UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04 AdminMode   ONLINE -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-csp/04 HealthState OK     -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-csp/04 ObsState    EMPTY  -        2026-04-17T09:56:20.110928Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:20.118Z|INFO|adminMode|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:20.119Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.OK
+1|2026-04-17T09:56:20.138Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1863|tango-device:low-tmc/subarray/04|Updated State of low-tmc/subarray-leaf-node-sdp/04: ON
+1|2026-04-17T09:56:20.141Z|DEBUG|healthState|update_device_health_state|subarray_node_component_manager.py#973|tango-device:low-tmc/subarray/04|Received healthState event for: low-tmc/subarray-leaf-node-sdp/04: OK
+1|2026-04-17T09:56:20.142Z|INFO|healthState|update_event_data|event_data_manager.py#642||Device low-tmc/subarray-leaf-node-sdp/04 reported HealthState: OK ; updating accordingly
+1|2026-04-17T09:56:20.142Z|INFO|healthState|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                            StateType   State  UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04 AdminMode   ONLINE -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-csp/04 HealthState OK     -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04 HealthState OK     -        2026-04-17T09:56:20.141450Z
+  low-tmc/subarray-leaf-node-csp/04 ObsState    EMPTY  -        2026-04-17T09:56:20.110928Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:20.143Z|INFO|healthState|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:20.143Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.OK
+1|2026-04-17T09:56:20.145Z|DEBUG|isSubsystemAvailable|update_subarray_availability_status|subarray_node_component_manager.py#950|tango-device:low-tmc/subarray/04|Updating the availability status for: low-tmc/subarray-leaf-node-sdp/04: True
+1|2026-04-17T09:56:20.145Z|INFO|isSubsystemAvailable|aggregate|aggregators.py#245|tango-device:low-tmc/subarray/04|Unavailable devices list is : ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/leaf-node-mccs/0']
+1|2026-04-17T09:56:20.148Z|DEBUG|healthInfo|update_device_health_info|subarray_node_component_manager.py#1009|tango-device:low-tmc/subarray/04|HealthInfo updated for device : low-tmc/subarray-leaf-node-sdp/04 , at timestamp: 2026-04-17 09:56:20.148456 ,  with value {"HealthSummary": []}
+1|2026-04-17T09:56:20.149Z|DEBUG|healthInfo|update_health_info_details|subarray_node_component_manager.py#2852|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-csp/04': [], 'low-tmc/subarray-leaf-node-sdp/04': []}
+1|2026-04-17T09:56:20.149Z|DEBUG|healthInfo|update_subarray_health_info_callback|subarray_node.py#290|tango-device:low-tmc/subarray/04|Executing HealthInfo callback on Tango using value {"low-tmc/subarray-leaf-node-csp/04": [], "low-tmc/subarray-leaf-node-sdp/04": []}, type <class 'str'>
+1|2026-04-17T09:56:20.152Z|DEBUG|obsState|update_device_obs_state|subarray_node_component_manager.py#1211|tango-device:low-tmc/subarray/04|Received obsState event for low-tmc/subarray-leaf-node-sdp/04: EMPTY
+1|2026-04-17T09:56:20.153Z|INFO|obsState|update_event_data|event_data_manager.py#570||Device low-tmc/subarray-leaf-node-sdp/04 reported ObsState: EMPTY ; Updating accordingly
+1|2026-04-17T09:56:20.153Z|INFO|obsState|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                            StateType   State  UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04 AdminMode   ONLINE -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-csp/04 HealthState OK     -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04 HealthState OK     -        2026-04-17T09:56:20.141450Z
+  low-tmc/subarray-leaf-node-csp/04 ObsState    EMPTY  -        2026-04-17T09:56:20.110928Z
+  low-tmc/subarray-leaf-node-sdp/04 ObsState    EMPTY  -        2026-04-17T09:56:20.152548Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:20.153Z|INFO|obsState|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:20.156Z|DEBUG|adminMode|update_device_admin_mode|subarray_node_component_manager.py#1101|tango-device:low-tmc/subarray/04|Received adminMode event for low-tmc/subarray-leaf-node-sdp/04: ONLINE
+1|2026-04-17T09:56:20.156Z|INFO|adminMode|update_event_data|event_data_manager.py#654||Device low-tmc/subarray-leaf-node-sdp/04 reported AdminMode: ONLINE ; updating accordingly
+1|2026-04-17T09:56:20.156Z|INFO|adminMode|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                            StateType   State  UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04 AdminMode   ONLINE -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04 AdminMode   ONLINE -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-csp/04 HealthState OK     -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04 HealthState OK     -        2026-04-17T09:56:20.141450Z
+  low-tmc/subarray-leaf-node-csp/04 ObsState    EMPTY  -        2026-04-17T09:56:20.110928Z
+  low-tmc/subarray-leaf-node-sdp/04 ObsState    EMPTY  -        2026-04-17T09:56:20.152548Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:20.157Z|INFO|adminMode|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:20.158Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.OK
+1|2026-04-17T09:56:20.162Z|ERROR|state|check_event_error|subarray_node_component_manager.py#1187|tango-device:low-tmc/subarray/04|Error occurred on state_Callback for device: low-csp/subarray/04: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-11b3b98a-tmc-low.svc.techops.internal.skao.int:10000/low-csp/subarray/04
+Check that device server is running...
+1|2026-04-17T09:56:20.163Z|ERROR|healthState|check_event_error|subarray_node_component_manager.py#1187|tango-device:low-tmc/subarray/04|Error occurred on healthState_Callback for device: low-csp/subarray/04: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-11b3b98a-tmc-low.svc.techops.internal.skao.int:10000/low-csp/subarray/04
+Check that device server is running...
+1|2026-04-17T09:56:20.171Z|ERROR|Thread-1 (_run_bus_thread)|_process_emission|software_bus.py#332|tango-device:low-tmc/subarray/04|Observer LowTmcSubarray(low-tmc/subarray/04) threw an unexpected exception while processing emission ('._health_state', None). Continuing with remaining observers.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/ska_tango_base/software_bus.py", line 330, in _process_emission
+    obs.notify_emission(signal, value)
+  File "/usr/local/lib/python3.10/dist-packages/ska_tango_base/software_bus.py", line 1238, in notify_emission
+    attr.on_emission(self, value)
+  File "/usr/local/lib/python3.10/dist-packages/ska_tango_base/software_bus.py", line 1043, in on_emission
+    device.push_change_event(self.attr_name, new_value)
+  File "/usr/local/lib/python3.10/dist-packages/ska_tango_base/base/base_device.py", line 1354, in push_change_event
+    self._submit_tango_operation("push_change_event", name, *args)
+  File "/usr/local/lib/python3.10/dist-packages/ska_tango_base/base/base_device.py", line 1479, in _submit_tango_operation
+    getattr(super(), command_name)(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/tango/device_server.py", line 1208, in __DeviceImpl__push_change_event
+    self.__generic_push_event(attr_name, EventType.CHANGE_EVENT, *args, **kwargs)
+TypeError: an integer is required
+1|2026-04-17T09:56:20.183Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1863|tango-device:low-tmc/subarray/04|Updated State of low-sdp/subarray/04: ON
+1|2026-04-17T09:56:20.187Z|DEBUG|healthState|update_device_health_state|subarray_node_component_manager.py#973|tango-device:low-tmc/subarray/04|Received healthState event for: low-sdp/subarray/04: OK
+1|2026-04-17T09:56:20.187Z|INFO|healthState|update_event_data|event_data_manager.py#642||Device low-sdp/subarray/04 reported HealthState: OK ; updating accordingly
+1|2026-04-17T09:56:20.188Z|INFO|healthState|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                            StateType   State  UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04 AdminMode   ONLINE -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04 AdminMode   ONLINE -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-csp/04 HealthState OK     -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04 HealthState OK     -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04               HealthState OK     -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-csp/04 ObsState    EMPTY  -        2026-04-17T09:56:20.110928Z
+  low-tmc/subarray-leaf-node-sdp/04 ObsState    EMPTY  -        2026-04-17T09:56:20.152548Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:20.188Z|INFO|healthState|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:20.189Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.OK
+1|2026-04-17T09:56:20.190Z|DEBUG|receiveAddresses|update_receive_addresses|subarray_node_component_manager.py#1132|tango-device:low-tmc/subarray/04|Received receiveAddresses event for low-sdp/subarray/04: {"science_A": {"vis0": {"function": "visibilities", "host": [[0, "192.168.0.1"], [2000, "192.168.0.2"]], "port": [[0, 9000, 1], [2000, 9000, 1]]}}, "target:a": {"vis0": {"function": "visibilities", "host": [[0, "192.168.0.1"], [2000, "192.168.0.2"]], "port": [[0, 9000, 1], [20, 9001, 1]]}}, "calibration:b": {"vis0": {"function": "visibilities", "host": [[0, "192.168.0.1"], [2000, "192.168.0.2"]], "port": [[0, 9000, 1], [20, 9001, 1]]}}}
+1|2026-04-17T09:56:20.215Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1863|tango-device:low-tmc/subarray/04|Updated State of low-tmc/subarray-leaf-node-mccs/04: ON
+1|2026-04-17T09:56:20.219Z|DEBUG|healthState|update_device_health_state|subarray_node_component_manager.py#973|tango-device:low-tmc/subarray/04|Received healthState event for: low-tmc/subarray-leaf-node-mccs/04: OK
+1|2026-04-17T09:56:20.220Z|INFO|healthState|update_event_data|event_data_manager.py#642||Device low-tmc/subarray-leaf-node-mccs/04 reported HealthState: OK ; updating accordingly
+1|2026-04-17T09:56:20.220Z|INFO|healthState|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType   State  UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode   ONLINE -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode   ONLINE -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState OK     -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState OK     -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState OK     -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState OK     -        2026-04-17T09:56:20.220184Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState    EMPTY  -        2026-04-17T09:56:20.110928Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState    EMPTY  -        2026-04-17T09:56:20.152548Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:20.220Z|INFO|healthState|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:20.221Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.OK
+1|2026-04-17T09:56:20.223Z|DEBUG|isSubsystemAvailable|update_subarray_availability_status|subarray_node_component_manager.py#950|tango-device:low-tmc/subarray/04|Updating the availability status for: low-tmc/subarray-leaf-node-mccs/04: True
+1|2026-04-17T09:56:20.223Z|INFO|isSubsystemAvailable|aggregate|aggregators.py#245|tango-device:low-tmc/subarray/04|Unavailable devices list is : ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/leaf-node-mccs/0']
+1|2026-04-17T09:56:20.226Z|DEBUG|healthInfo|update_device_health_info|subarray_node_component_manager.py#1009|tango-device:low-tmc/subarray/04|HealthInfo updated for device : low-tmc/subarray-leaf-node-mccs/04 , at timestamp: 2026-04-17 09:56:20.227008 ,  with value {"HealthSummary": []}
+1|2026-04-17T09:56:20.226Z|DEBUG|healthInfo|update_health_info_details|subarray_node_component_manager.py#2852|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-csp/04': [], 'low-tmc/subarray-leaf-node-sdp/04': [], 'low-tmc/subarray-leaf-node-mccs/04': []}
+1|2026-04-17T09:56:20.227Z|DEBUG|healthInfo|update_subarray_health_info_callback|subarray_node.py#290|tango-device:low-tmc/subarray/04|Executing HealthInfo callback on Tango using value {"low-tmc/subarray-leaf-node-csp/04": [], "low-tmc/subarray-leaf-node-sdp/04": [], "low-tmc/subarray-leaf-node-mccs/04": []}, type <class 'str'>
+1|2026-04-17T09:56:20.229Z|DEBUG|obsState|update_device_obs_state|subarray_node_component_manager.py#1211|tango-device:low-tmc/subarray/04|Received obsState event for low-tmc/subarray-leaf-node-mccs/04: EMPTY
+1|2026-04-17T09:56:20.230Z|INFO|obsState|update_event_data|event_data_manager.py#570||Device low-tmc/subarray-leaf-node-mccs/04 reported ObsState: EMPTY ; Updating accordingly
+1|2026-04-17T09:56:20.230Z|INFO|obsState|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType   State  UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode   ONLINE -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode   ONLINE -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState OK     -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState OK     -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState OK     -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState OK     -        2026-04-17T09:56:20.220184Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState    EMPTY  -        2026-04-17T09:56:20.110928Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState    EMPTY  -        2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState    EMPTY  -        2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:20.230Z|INFO|obsState|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:20.233Z|DEBUG|adminMode|update_device_admin_mode|subarray_node_component_manager.py#1101|tango-device:low-tmc/subarray/04|Received adminMode event for low-tmc/subarray-leaf-node-mccs/04: OFFLINE
+1|2026-04-17T09:56:20.233Z|INFO|adminMode|update_event_data|event_data_manager.py#654||Device low-tmc/subarray-leaf-node-mccs/04 reported AdminMode: OFFLINE ; updating accordingly
+1|2026-04-17T09:56:20.233Z|INFO|adminMode|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType   State   UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode   OFFLINE -        2026-04-17T09:56:20.233441Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState OK      -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState OK      -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState OK      -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState OK      -        2026-04-17T09:56:20.220184Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.110928Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState    EMPTY   -        2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:20.234Z|INFO|adminMode|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:20.235Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-17T09:56:20.239Z|ERROR|state|check_event_error|subarray_node_component_manager.py#1187|tango-device:low-tmc/subarray/04|Error occurred on state_Callback for device: low-tmc/leaf-node-mccs/0: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-11b3b98a-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/leaf-node-mccs/0
+Check that device server is running...
+1|2026-04-17T09:56:20.240Z|ERROR|healthState|check_event_error|subarray_node_component_manager.py#1187|tango-device:low-tmc/subarray/04|Error occurred on healthState_Callback for device: low-tmc/leaf-node-mccs/0: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-11b3b98a-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/leaf-node-mccs/0
+Check that device server is running...
+1|2026-04-17T09:56:20.240Z|ERROR|adminMode|check_event_error|subarray_node_component_manager.py#1187|tango-device:low-tmc/subarray/04|Error occurred on adminMode_Callback for device: low-tmc/leaf-node-mccs/0: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-11b3b98a-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/leaf-node-mccs/0
+Check that device server is running...
+1|2026-04-17T09:56:20.241Z|ERROR|isSubsystemAvailable|check_event_error|subarray_node_component_manager.py#1187|tango-device:low-tmc/subarray/04|Error occurred on isSubsystemAvailable_Callback for device: low-tmc/leaf-node-mccs/0: API_CantConnectToDevice , Can't subscribe to event for device tango://tango-databaseds.ci-ska-tmc-low-integration-11b3b98a-tmc-low.svc.techops.internal.skao.int:10000/low-tmc/leaf-node-mccs/0
+Check that device server is running...
+1|2026-04-17T09:56:20.269Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1863|tango-device:low-tmc/subarray/04|Updated State of low-mccs/subarray/04: ON
+1|2026-04-17T09:56:20.272Z|DEBUG|healthState|update_device_health_state|subarray_node_component_manager.py#973|tango-device:low-tmc/subarray/04|Received healthState event for: low-mccs/subarray/04: OK
+1|2026-04-17T09:56:20.272Z|INFO|healthState|update_event_data|event_data_manager.py#642||Device low-mccs/subarray/04 reported HealthState: OK ; updating accordingly
+1|2026-04-17T09:56:20.272Z|INFO|healthState|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType   State   UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode   OFFLINE -        2026-04-17T09:56:20.233441Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState OK      -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState OK      -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState OK      -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState OK      -        2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState OK      -        2026-04-17T09:56:20.272556Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.110928Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState    EMPTY   -        2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:20.273Z|INFO|healthState|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:20.274Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-17T09:56:20.275Z|ERROR|assignedResources|check_event_error|subarray_node_component_manager.py#1187|tango-device:low-tmc/subarray/04|Error occurred on assignedResources_Callback for device: low-mccs/subarray/04: PyDs_PythonError , TypeError: can't translate python object to C char*
+
+1|2026-04-17T09:56:20.497Z|INFO|subarray_availability_thread|aggregate|aggregators.py#245|tango-device:low-tmc/subarray/04|Unavailable devices list is : ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/leaf-node-mccs/0']
+1|2026-04-17T09:56:20.521Z|DEBUG|Thread-3 (run)|device_task|liveliness_probe.py#109|tango-device:low-tmc/subarray/04|Device is not yet exported into the tango database, liveliness probe will retry to connect with device: low-csp/subarray/04
+1|2026-04-17T09:56:20.521Z|ERROR|Thread-3 (run)|update_exception_for_unresponsiveness|subarray_node_component_manager.py#1824|tango-device:low-tmc/subarray/04|Failed to ping device low-csp/subarray/04: Device is not yet exported into the tango database: low-csp/subarray/04
+1|2026-04-17T09:56:20.521Z|INFO|Thread-3 (run)|update_event_data|event_data_manager.py#674||Device low-csp/subarray/04 reported Liveliness: unresponsive=True
+1|2026-04-17T09:56:20.522Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2895|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-csp/subarray/04']}
+1|2026-04-17T09:56:20.522Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2852|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-csp/04': [], 'low-tmc/subarray-leaf-node-sdp/04': [], 'low-tmc/subarray-leaf-node-mccs/04': [], 'low-tmc/subarray/04': ['Liveliness check failed for device low-csp/subarray/04']}
+1|2026-04-17T09:56:20.522Z|DEBUG|Thread-3 (run)|update_subarray_health_info_callback|subarray_node.py#290|tango-device:low-tmc/subarray/04|Executing HealthInfo callback on Tango using value {"low-tmc/subarray-leaf-node-csp/04": [], "low-tmc/subarray-leaf-node-sdp/04": [], "low-tmc/subarray-leaf-node-mccs/04": [], "low-tmc/subarray/04": ["Liveliness check failed for device low-csp/subarray/04"]}, type <class 'str'>
+1|2026-04-17T09:56:20.522Z|INFO|Thread-3 (run)|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType   State   UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode   OFFLINE -        2026-04-17T09:56:20.233441Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState OK      -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState OK      -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState OK      -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState OK      -        2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState OK      -        2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                Livelinesss True    -        2026-04-17T09:56:20.521905Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.110928Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState    EMPTY   -        2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:20.524Z|INFO|Thread-3 (run)|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:20.526Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-17T09:56:20.548Z|ERROR|Thread-3 (run)|update_exception_for_unresponsiveness|subarray_node_component_manager.py#1824|tango-device:low-tmc/subarray/04|Failed to ping device low-tmc/leaf-node-mccs/0: Device is not yet exported into the tango database: low-tmc/leaf-node-mccs/0
+1|2026-04-17T09:56:20.548Z|INFO|Thread-3 (run)|update_event_data|event_data_manager.py#674||Device low-tmc/leaf-node-mccs/0 reported Liveliness: unresponsive=True
+1|2026-04-17T09:56:20.548Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2895|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-csp/subarray/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-17T09:56:20.548Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2852|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-csp/04': [], 'low-tmc/subarray-leaf-node-sdp/04': [], 'low-tmc/subarray-leaf-node-mccs/04': [], 'low-tmc/subarray/04': ['Liveliness check failed for device low-csp/subarray/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-17T09:56:20.548Z|DEBUG|Thread-3 (run)|update_subarray_health_info_callback|subarray_node.py#290|tango-device:low-tmc/subarray/04|Executing HealthInfo callback on Tango using value {"low-tmc/subarray-leaf-node-csp/04": [], "low-tmc/subarray-leaf-node-sdp/04": [], "low-tmc/subarray-leaf-node-mccs/04": [], "low-tmc/subarray/04": ["Liveliness check failed for device low-csp/subarray/04", "Liveliness check failed for device low-tmc/leaf-node-mccs/0"]}, type <class 'str'>
+1|2026-04-17T09:56:20.549Z|INFO|Thread-3 (run)|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType   State   UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode   OFFLINE -        2026-04-17T09:56:20.233441Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState OK      -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState OK      -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState OK      -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState OK      -        2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState OK      -        2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                Livelinesss True    -        2026-04-17T09:56:20.521905Z
+  low-tmc/leaf-node-mccs/0           Livelinesss True    -        2026-04-17T09:56:20.548360Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.110928Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState    EMPTY   -        2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:20.549Z|INFO|Thread-3 (run)|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:20.551Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-17T09:56:20.997Z|INFO|subarray_availability_thread|aggregate|aggregators.py#239|tango-device:low-tmc/subarray/04|MCCS Master Leaf Node device: low-tmc/leaf-node-mccs/0 is unavailable
+1|2026-04-17T09:56:21.498Z|INFO|subarray_availability_thread|aggregate|aggregators.py#239|tango-device:low-tmc/subarray/04|MCCS Master Leaf Node device: low-tmc/leaf-node-mccs/0 is unavailable
+1|2026-04-17T09:56:21.999Z|INFO|subarray_availability_thread|aggregate|aggregators.py#239|tango-device:low-tmc/subarray/04|MCCS Master Leaf Node device: low-tmc/leaf-node-mccs/0 is unavailable
+1|2026-04-17T09:56:22.500Z|INFO|subarray_availability_thread|aggregate|aggregators.py#239|tango-device:low-tmc/subarray/04|MCCS Master Leaf Node device: low-tmc/leaf-node-mccs/0 is unavailable
+1|2026-04-17T09:56:23.000Z|INFO|subarray_availability_thread|aggregate|aggregators.py#239|tango-device:low-tmc/subarray/04|MCCS Master Leaf Node device: low-tmc/leaf-node-mccs/0 is unavailable
+1|2026-04-17T09:56:23.341Z|ERROR|Thread-3 (run)|device_task|liveliness_probe.py#172|tango-device:low-tmc/subarray/04|Error on low-tmc/leaf-node-mccs/0: DevFailed[
+    DevError[
+        desc = Failed to connect to device low-tmc/leaf-node-mccs/0
+            The connection request was delayed.
+            The last connection request was done less than 1000 ms ago
+        origin = virtual void Tango::Connection::reconnect(bool) at (/src/cppTango/src/client/devapi_base.cpp:1363)
+        reason = API_CantConnectToDevice
+        severity = ERR
+    ]
+]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/ska_tmc_common/v2/liveliness_probe.py", line 123, in device_task
+    proxy.state()
+  File "/usr/local/lib/python3.10/dist-packages/tango/green.py", line 231, in greener
+    return executor.run(fn, args, kwargs, wait=wait, timeout=timeout)
+  File "/usr/local/lib/python3.10/dist-packages/tango/green.py", line 121, in run
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/tango/device_proxy.py", line 2289, in __DeviceProxy__state
+    return self._state()
+tango._tango.DevFailed: DevFailed[
+    DevError[
+        desc = Failed to connect to device low-tmc/leaf-node-mccs/0
+            The connection request was delayed.
+            The last connection request was done less than 1000 ms ago
+        origin = virtual void Tango::Connection::reconnect(bool) at (/src/cppTango/src/client/devapi_base.cpp:1363)
+        reason = API_CantConnectToDevice
+        severity = ERR
+    ]
+]
+1|2026-04-17T09:56:23.342Z|ERROR|Thread-3 (run)|update_exception_for_unresponsiveness|subarray_node_component_manager.py#1824|tango-device:low-tmc/subarray/04|Failed to ping device low-tmc/leaf-node-mccs/0: Unable to reach device low-tmc/leaf-node-mccs/0
+1|2026-04-17T09:56:23.342Z|INFO|Thread-3 (run)|update_event_data|event_data_manager.py#674||Device low-tmc/leaf-node-mccs/0 reported Liveliness: unresponsive=True
+1|2026-04-17T09:56:23.342Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2895|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-csp/subarray/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-17T09:56:23.342Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2852|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-csp/04': [], 'low-tmc/subarray-leaf-node-sdp/04': [], 'low-tmc/subarray-leaf-node-mccs/04': [], 'low-tmc/subarray/04': ['Liveliness check failed for device low-csp/subarray/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-17T09:56:23.343Z|INFO|Thread-3 (run)|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType   State   UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode   OFFLINE -        2026-04-17T09:56:20.233441Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState OK      -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState OK      -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState OK      -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState OK      -        2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState OK      -        2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                Livelinesss True    -        2026-04-17T09:56:20.521905Z
+  low-tmc/leaf-node-mccs/0           Livelinesss True    -        2026-04-17T09:56:23.342744Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.110928Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState    EMPTY   -        2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:23.343Z|INFO|Thread-3 (run)|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:23.345Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-17T09:56:23.501Z|INFO|subarray_availability_thread|aggregate|aggregators.py#239|tango-device:low-tmc/subarray/04|MCCS Master Leaf Node device: low-tmc/leaf-node-mccs/0 is unavailable
+1|2026-04-17T09:56:24.002Z|INFO|subarray_availability_thread|aggregate|aggregators.py#239|tango-device:low-tmc/subarray/04|MCCS Master Leaf Node device: low-tmc/leaf-node-mccs/0 is unavailable
+1|2026-04-17T09:56:24.440Z|ERROR|Thread-3 (run)|device_task|liveliness_probe.py#169|tango-device:low-tmc/subarray/04|('Connection Failed on %s: %s', 'low-tmc/leaf-node-mccs/0', DevFailed(args = (DevError(desc = 'TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CorbaException', severity = <ErrSeverity.ERR: 1>), DevError(desc = 'Failed to connect to device low-tmc/leaf-node-mccs/0', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CantConnectToDevice', severity = <ErrSeverity.ERR: 1>))))
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/ska_tmc_common/v2/liveliness_probe.py", line 123, in device_task
+    proxy.state()
+  File "/usr/local/lib/python3.10/dist-packages/tango/green.py", line 231, in greener
+    return executor.run(fn, args, kwargs, wait=wait, timeout=timeout)
+  File "/usr/local/lib/python3.10/dist-packages/tango/green.py", line 121, in run
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/tango/device_proxy.py", line 2289, in __DeviceProxy__state
+    return self._state()
+tango._tango.ConnectionFailed: DevFailed[
+    DevError[
+        desc = TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed
+        origin = void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)
+        reason = API_CorbaException
+        severity = ERR
+    ],
+    DevError[
+        desc = Failed to connect to device low-tmc/leaf-node-mccs/0
+        origin = void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)
+        reason = API_CantConnectToDevice
+        severity = ERR
+    ]
+]
+1|2026-04-17T09:56:24.441Z|ERROR|Thread-3 (run)|update_exception_for_unresponsiveness|subarray_node_component_manager.py#1824|tango-device:low-tmc/subarray/04|Failed to ping device low-tmc/leaf-node-mccs/0: ('Connection Failed on %s: %s', 'low-tmc/leaf-node-mccs/0', DevFailed(args = (DevError(desc = 'TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CorbaException', severity = <ErrSeverity.ERR: 1>), DevError(desc = 'Failed to connect to device low-tmc/leaf-node-mccs/0', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CantConnectToDevice', severity = <ErrSeverity.ERR: 1>))))
+1|2026-04-17T09:56:24.441Z|INFO|Thread-3 (run)|update_event_data|event_data_manager.py#674||Device low-tmc/leaf-node-mccs/0 reported Liveliness: unresponsive=True
+1|2026-04-17T09:56:24.441Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2895|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-csp/subarray/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-17T09:56:24.441Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2852|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-csp/04': [], 'low-tmc/subarray-leaf-node-sdp/04': [], 'low-tmc/subarray-leaf-node-mccs/04': [], 'low-tmc/subarray/04': ['Liveliness check failed for device low-csp/subarray/04', 'Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-17T09:56:24.442Z|INFO|Thread-3 (run)|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType   State   UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode   OFFLINE -        2026-04-17T09:56:20.233441Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState OK      -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState OK      -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState OK      -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState OK      -        2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState OK      -        2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                Livelinesss True    -        2026-04-17T09:56:20.521905Z
+  low-tmc/leaf-node-mccs/0           Livelinesss True    -        2026-04-17T09:56:24.441457Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.110928Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState    EMPTY   -        2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:24.442Z|INFO|Thread-3 (run)|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:24.447Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-17T09:56:24.503Z|INFO|subarray_availability_thread|aggregate|aggregators.py#239|tango-device:low-tmc/subarray/04|MCCS Master Leaf Node device: low-tmc/leaf-node-mccs/0 is unavailable
+1|2026-04-17T09:56:25.004Z|INFO|subarray_availability_thread|aggregate|aggregators.py#239|tango-device:low-tmc/subarray/04|MCCS Master Leaf Node device: low-tmc/leaf-node-mccs/0 is unavailable
+1|2026-04-17T09:56:25.504Z|INFO|subarray_availability_thread|aggregate|aggregators.py#239|tango-device:low-tmc/subarray/04|MCCS Master Leaf Node device: low-tmc/leaf-node-mccs/0 is unavailable
+1|2026-04-17T09:56:25.513Z|INFO|Thread-3 (run)|update_event_data|event_data_manager.py#674||Device low-csp/subarray/04 reported Liveliness: unresponsive=False
+1|2026-04-17T09:56:25.513Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2895|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-17T09:56:25.513Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2852|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-csp/04': [], 'low-tmc/subarray-leaf-node-sdp/04': [], 'low-tmc/subarray-leaf-node-mccs/04': [], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-17T09:56:25.513Z|DEBUG|Thread-3 (run)|update_subarray_health_info_callback|subarray_node.py#290|tango-device:low-tmc/subarray/04|Executing HealthInfo callback on Tango using value {"low-tmc/subarray-leaf-node-csp/04": [], "low-tmc/subarray-leaf-node-sdp/04": [], "low-tmc/subarray-leaf-node-mccs/04": [], "low-tmc/subarray/04": ["Liveliness check failed for device low-tmc/leaf-node-mccs/0"]}, type <class 'str'>
+1|2026-04-17T09:56:25.514Z|INFO|Thread-3 (run)|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType   State   UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode   OFFLINE -        2026-04-17T09:56:20.233441Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState OK      -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState OK      -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState OK      -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState OK      -        2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState OK      -        2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                Livelinesss False   -        2026-04-17T09:56:25.512974Z
+  low-tmc/leaf-node-mccs/0           Livelinesss True    -        2026-04-17T09:56:24.441457Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.110928Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState    EMPTY   -        2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:25.514Z|INFO|Thread-3 (run)|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:25.515Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-17T09:56:25.536Z|ERROR|Thread-3 (run)|update_exception_for_unresponsiveness|subarray_node_component_manager.py#1824|tango-device:low-tmc/subarray/04|Failed to ping device low-tmc/leaf-node-mccs/0: ('Connection Failed on %s: %s', 'low-tmc/leaf-node-mccs/0', DevFailed(args = (DevError(desc = 'TRANSIENT CORBA system exception: TRANSIENT_ConnectFailed', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CorbaException', severity = <ErrSeverity.ERR: 1>), DevError(desc = 'Failed to connect to device low-tmc/leaf-node-mccs/0', origin = 'void Tango::Connection::connect(const string&) at (/src/cppTango/src/client/devapi_base.cpp:1261)', reason = 'API_CantConnectToDevice', severity = <ErrSeverity.ERR: 1>))))
+1|2026-04-17T09:56:25.536Z|INFO|Thread-3 (run)|update_event_data|event_data_manager.py#674||Device low-tmc/leaf-node-mccs/0 reported Liveliness: unresponsive=True
+1|2026-04-17T09:56:25.536Z|DEBUG|Thread-3 (run)|update_liveliness_error_in_health_info|subarray_node_component_manager.py#2895|tango-device:low-tmc/subarray/04|Updating healthInfo with data: {'HealthSummary': ['Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-17T09:56:25.536Z|DEBUG|Thread-3 (run)|update_health_info_details|subarray_node_component_manager.py#2852|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-csp/04': [], 'low-tmc/subarray-leaf-node-sdp/04': [], 'low-tmc/subarray-leaf-node-mccs/04': [], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-17T09:56:25.537Z|INFO|Thread-3 (run)|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType   State   UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode   OFFLINE -        2026-04-17T09:56:20.233441Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState OK      -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState OK      -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState OK      -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState OK      -        2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState OK      -        2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                Livelinesss False   -        2026-04-17T09:56:25.512974Z
+  low-tmc/leaf-node-mccs/0           Livelinesss True    -        2026-04-17T09:56:25.536756Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.110928Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState    EMPTY   -        2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:25.537Z|INFO|Thread-3 (run)|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:25.538Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-17T09:56:25.726Z|DEBUG|isSubsystemAvailable|update_subarray_availability_status|subarray_node_component_manager.py#950|tango-device:low-tmc/subarray/04|Updating the availability status for: low-tmc/subarray-leaf-node-csp/04: True
+1|2026-04-17T09:56:25.727Z|INFO|isSubsystemAvailable|aggregate|aggregators.py#239|tango-device:low-tmc/subarray/04|MCCS Master Leaf Node device: low-tmc/leaf-node-mccs/0 is unavailable
+1|2026-04-17T09:56:26.005Z|INFO|subarray_availability_thread|aggregate|aggregators.py#239|tango-device:low-tmc/subarray/04|MCCS Master Leaf Node device: low-tmc/leaf-node-mccs/0 is unavailable
+1|2026-04-17T09:56:26.227Z|DEBUG|healthInfo|update_device_health_info|subarray_node_component_manager.py#1009|tango-device:low-tmc/subarray/04|HealthInfo updated for device : low-tmc/subarray-leaf-node-csp/04 , at timestamp: 2026-04-17 09:56:26.226773 ,  with value {"HealthSummary": []}
+1|2026-04-17T09:56:26.227Z|DEBUG|healthInfo|update_health_info_details|subarray_node_component_manager.py#2852|tango-device:low-tmc/subarray/04|Updated health_info {'low-tmc/subarray-leaf-node-csp/04': [], 'low-tmc/subarray-leaf-node-sdp/04': [], 'low-tmc/subarray-leaf-node-mccs/04': [], 'low-tmc/subarray/04': ['Liveliness check failed for device low-tmc/leaf-node-mccs/0']}
+1|2026-04-17T09:56:26.229Z|DEBUG|adminMode|update_device_admin_mode|subarray_node_component_manager.py#1101|tango-device:low-tmc/subarray/04|Received adminMode event for low-tmc/subarray-leaf-node-csp/04: ONLINE
+1|2026-04-17T09:56:26.232Z|DEBUG|obsState|update_device_obs_state|subarray_node_component_manager.py#1211|tango-device:low-tmc/subarray/04|Received obsState event for low-tmc/subarray-leaf-node-csp/04: EMPTY
+1|2026-04-17T09:56:26.233Z|INFO|obsState|update_event_data|event_data_manager.py#570||Device low-tmc/subarray-leaf-node-csp/04 reported ObsState: EMPTY ; Updating accordingly
+1|2026-04-17T09:56:26.233Z|INFO|obsState|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType   State   UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode   OFFLINE -        2026-04-17T09:56:20.233441Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState OK      -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState OK      -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState OK      -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState OK      -        2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState OK      -        2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                Livelinesss False   -        2026-04-17T09:56:25.512974Z
+  low-tmc/leaf-node-mccs/0           Livelinesss True    -        2026-04-17T09:56:25.536756Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState    EMPTY   -        2026-04-17T09:56:26.232804Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState    EMPTY   -        2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:26.233Z|INFO|obsState|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:26.506Z|INFO|subarray_availability_thread|aggregate|aggregators.py#239|tango-device:low-tmc/subarray/04|MCCS Master Leaf Node device: low-tmc/leaf-node-mccs/0 is unavailable
+1|2026-04-17T09:56:26.630Z|INFO|Thread-3 (run)|update_event_data|event_data_manager.py#674||Device low-tmc/leaf-node-mccs/0 reported Liveliness: unresponsive=False
+1|2026-04-17T09:56:26.630Z|DEBUG|Thread-3 (run)|update_subarray_health_info_callback|subarray_node.py#290|tango-device:low-tmc/subarray/04|Executing HealthInfo callback on Tango using value {"low-tmc/subarray-leaf-node-csp/04": [], "low-tmc/subarray-leaf-node-sdp/04": [], "low-tmc/subarray-leaf-node-mccs/04": []}, type <class 'str'>
+1|2026-04-17T09:56:26.630Z|DEBUG|Thread-3 (run)|clear_internal_error_from_health_info|subarray_node_component_manager.py#2867|tango-device:low-tmc/subarray/04|Internal Error cleared from healthinfo: {'low-tmc/subarray-leaf-node-csp/04': [], 'low-tmc/subarray-leaf-node-sdp/04': [], 'low-tmc/subarray-leaf-node-mccs/04': []}
+1|2026-04-17T09:56:26.630Z|INFO|Thread-3 (run)|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType   State   UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode   OFFLINE -        2026-04-17T09:56:20.233441Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState OK      -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState OK      -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState OK      -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState OK      -        2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState OK      -        2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                Livelinesss False   -        2026-04-17T09:56:25.512974Z
+  low-tmc/leaf-node-mccs/0           Livelinesss False   -        2026-04-17T09:56:26.629985Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState    EMPTY   -        2026-04-17T09:56:26.232804Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState    EMPTY   -        2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:26.631Z|INFO|Thread-3 (run)|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:26.632Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-17T09:56:27.007Z|INFO|subarray_availability_thread|aggregate|aggregators.py#245|tango-device:low-tmc/subarray/04|Unavailable devices list is : ['low-tmc/leaf-node-mccs/0']
+1|2026-04-17T09:56:27.508Z|INFO|subarray_availability_thread|aggregate|aggregators.py#245|tango-device:low-tmc/subarray/04|Unavailable devices list is : ['low-tmc/leaf-node-mccs/0']
+1|2026-04-17T09:56:28.008Z|INFO|subarray_availability_thread|aggregate|aggregators.py#245|tango-device:low-tmc/subarray/04|Unavailable devices list is : ['low-tmc/leaf-node-mccs/0']
+1|2026-04-17T09:56:28.509Z|INFO|subarray_availability_thread|aggregate|aggregators.py#245|tango-device:low-tmc/subarray/04|Unavailable devices list is : ['low-tmc/leaf-node-mccs/0']
+1|2026-04-17T09:56:29.010Z|INFO|subarray_availability_thread|aggregate|aggregators.py#245|tango-device:low-tmc/subarray/04|Unavailable devices list is : ['low-tmc/leaf-node-mccs/0']
+1|2026-04-17T09:56:29.511Z|INFO|subarray_availability_thread|aggregate|aggregators.py#245|tango-device:low-tmc/subarray/04|Unavailable devices list is : ['low-tmc/leaf-node-mccs/0']
+1|2026-04-17T09:56:30.012Z|INFO|subarray_availability_thread|aggregate|aggregators.py#245|tango-device:low-tmc/subarray/04|Unavailable devices list is : ['low-tmc/leaf-node-mccs/0']
+1|2026-04-17T09:56:30.081Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1863|tango-device:low-tmc/subarray/04|Updated State of low-csp/subarray/04: INIT
+1|2026-04-17T09:56:30.085Z|DEBUG|healthState|update_device_health_state|subarray_node_component_manager.py#973|tango-device:low-tmc/subarray/04|Received healthState event for: low-csp/subarray/04: OK
+1|2026-04-17T09:56:30.085Z|INFO|healthState|update_event_data|event_data_manager.py#642||Device low-csp/subarray/04 reported HealthState: OK ; updating accordingly
+1|2026-04-17T09:56:30.085Z|INFO|healthState|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType   State   UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode   OFFLINE -        2026-04-17T09:56:20.233441Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState OK      -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState OK      -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState OK      -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState OK      -        2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState OK      -        2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                HealthState OK      -        2026-04-17T09:56:30.084651Z
+  low-csp/subarray/04                Livelinesss False   -        2026-04-17T09:56:25.512974Z
+  low-tmc/leaf-node-mccs/0           Livelinesss False   -        2026-04-17T09:56:26.629985Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState    EMPTY   -        2026-04-17T09:56:26.232804Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState    EMPTY   -        2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:30.086Z|INFO|healthState|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:30.087Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-17T09:56:30.098Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1863|tango-device:low-tmc/subarray/04|Updated State of low-tmc/leaf-node-mccs/0: ON
+1|2026-04-17T09:56:30.101Z|DEBUG|healthState|update_device_health_state|subarray_node_component_manager.py#973|tango-device:low-tmc/subarray/04|Received healthState event for: low-tmc/leaf-node-mccs/0: OK
+1|2026-04-17T09:56:30.101Z|INFO|healthState|update_event_data|event_data_manager.py#642||Device low-tmc/leaf-node-mccs/0 reported HealthState: OK ; updating accordingly
+1|2026-04-17T09:56:30.102Z|INFO|healthState|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType   State   UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode   OFFLINE -        2026-04-17T09:56:20.233441Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState OK      -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState OK      -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState OK      -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState OK      -        2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState OK      -        2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                HealthState OK      -        2026-04-17T09:56:30.084651Z
+  low-tmc/leaf-node-mccs/0           HealthState OK      -        2026-04-17T09:56:30.101881Z
+  low-csp/subarray/04                Livelinesss False   -        2026-04-17T09:56:25.512974Z
+  low-tmc/leaf-node-mccs/0           Livelinesss False   -        2026-04-17T09:56:26.629985Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState    EMPTY   -        2026-04-17T09:56:26.232804Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState    EMPTY   -        2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:30.102Z|INFO|healthState|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:30.103Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-17T09:56:30.104Z|DEBUG|adminMode|update_device_admin_mode|subarray_node_component_manager.py#1101|tango-device:low-tmc/subarray/04|Received adminMode event for low-tmc/leaf-node-mccs/0: OFFLINE
+1|2026-04-17T09:56:30.104Z|INFO|adminMode|update_event_data|event_data_manager.py#654||Device low-tmc/leaf-node-mccs/0 reported AdminMode: OFFLINE ; updating accordingly
+1|2026-04-17T09:56:30.105Z|INFO|adminMode|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType   State   UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode   OFFLINE -        2026-04-17T09:56:20.233441Z
+  low-tmc/leaf-node-mccs/0           AdminMode   OFFLINE -        2026-04-17T09:56:30.104892Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState OK      -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState OK      -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState OK      -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState OK      -        2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState OK      -        2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                HealthState OK      -        2026-04-17T09:56:30.084651Z
+  low-tmc/leaf-node-mccs/0           HealthState OK      -        2026-04-17T09:56:30.101881Z
+  low-csp/subarray/04                Livelinesss False   -        2026-04-17T09:56:25.512974Z
+  low-tmc/leaf-node-mccs/0           Livelinesss False   -        2026-04-17T09:56:26.629985Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState    EMPTY   -        2026-04-17T09:56:26.232804Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState    EMPTY   -        2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:56:30.105Z|INFO|adminMode|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:56:30.106Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-17T09:56:30.107Z|DEBUG|isSubsystemAvailable|update_subarray_availability_status|subarray_node_component_manager.py#950|tango-device:low-tmc/subarray/04|Updating the availability status for: low-tmc/leaf-node-mccs/0: True
+1|2026-04-17T09:56:30.107Z|DEBUG|isSubsystemAvailable|subarray_availability|component.py#488|tango-device:low-tmc/subarray/04|Updated subarray availability value:True
+1|2026-04-17T09:56:30.107Z|DEBUG|isSubsystemAvailable|_aggregate_subarray_device_availability|subarray_node_component_manager.py#1249|tango-device:low-tmc/subarray/04|Aggregated availability status on subarray is: True and unavailable devices: []
+1|2026-04-17T09:57:30.346Z|DEBUG|adminMode|update_device_admin_mode|subarray_node_component_manager.py#1101|tango-device:low-tmc/subarray/04|Received adminMode event for low-tmc/leaf-node-mccs/0: ONLINE
+1|2026-04-17T09:57:30.346Z|INFO|adminMode|update_event_data|event_data_manager.py#654||Device low-tmc/leaf-node-mccs/0 reported AdminMode: ONLINE ; updating accordingly
+1|2026-04-17T09:57:30.346Z|INFO|adminMode|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType   State   UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode   ONLINE  -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode   OFFLINE -        2026-04-17T09:56:20.233441Z
+  low-tmc/leaf-node-mccs/0           AdminMode   ONLINE  -        2026-04-17T09:57:30.343536Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState OK      -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState OK      -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState OK      -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState OK      -        2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState OK      -        2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                HealthState OK      -        2026-04-17T09:56:30.084651Z
+  low-tmc/leaf-node-mccs/0           HealthState OK      -        2026-04-17T09:56:30.101881Z
+  low-csp/subarray/04                Livelinesss False   -        2026-04-17T09:56:25.512974Z
+  low-tmc/leaf-node-mccs/0           Livelinesss False   -        2026-04-17T09:56:26.629985Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState    EMPTY   -        2026-04-17T09:56:26.232804Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState    EMPTY   -        2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState    EMPTY   -        2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:57:30.347Z|INFO|adminMode|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:57:30.348Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.DEGRADED
+1|2026-04-17T09:57:30.812Z|DEBUG|adminMode|update_device_admin_mode|subarray_node_component_manager.py#1101|tango-device:low-tmc/subarray/04|Received adminMode event for low-tmc/subarray-leaf-node-mccs/04: ONLINE
+1|2026-04-17T09:57:30.812Z|INFO|adminMode|update_event_data|event_data_manager.py#654||Device low-tmc/subarray-leaf-node-mccs/04 reported AdminMode: ONLINE ; updating accordingly
+1|2026-04-17T09:57:30.813Z|INFO|adminMode|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType   State  UniqueID Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode   ONLINE -        2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode   ONLINE -        2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode   ONLINE -        2026-04-17T09:57:30.810957Z
+  low-tmc/leaf-node-mccs/0           AdminMode   ONLINE -        2026-04-17T09:57:30.343536Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState OK     -        2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState OK     -        2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState OK     -        2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState OK     -        2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState OK     -        2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                HealthState OK     -        2026-04-17T09:56:30.084651Z
+  low-tmc/leaf-node-mccs/0           HealthState OK     -        2026-04-17T09:56:30.101881Z
+  low-csp/subarray/04                Livelinesss False  -        2026-04-17T09:56:25.512974Z
+  low-tmc/leaf-node-mccs/0           Livelinesss False  -        2026-04-17T09:56:26.629985Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState    EMPTY  -        2026-04-17T09:56:26.232804Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState    EMPTY  -        2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState    EMPTY  -        2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=[], assigned_resources_len=0
+1|2026-04-17T09:57:30.813Z|INFO|adminMode|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:57:30.814Z|DEBUG|subarraynode_health_monitor_thread|healthstate_aggregate_monitor|subarray_node_component_manager.py#463|tango-device:low-tmc/subarray/04|Aggregate subarray health state called HealthState.OK
+1|2026-04-17T09:57:32.666Z|WARNING|Dummy-5|_read_longRunningCommandResult|mixin.py#625|tango-device:low-tmc/subarray/04|'longRunningCommandResult' is deprecated since ska-tango-base 1.2.0 and will be removed in a future major release. The client should use the 'ska_tango_base.long_running_commands.invoke_lrc()' method instead, which will automatically subscribe to the correct attribute. The client can check for the result of a command in the 'lrcFinished' attribute if needed.
+1|2026-04-17T09:57:32.671Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1863|tango-device:low-tmc/subarray/04|Updated State of low-csp/subarray/04: ON
+1|2026-04-17T09:57:34.156Z|DEBUG|Dummy-6|_debug_patch|ska_device.py#105|tango-device:low-tmc/subarray/04|-> LowTmcSubarray.On()
+1|2026-04-17T09:57:34.156Z|DEBUG|Dummy-6|_debug_patch|ska_device.py#105|tango-device:low-tmc/subarray/04|<- LowTmcSubarray.On()
+1|2026-04-17T09:57:34.157Z|DEBUG|ThreadPoolExecutor-1_0|check_subarray_device_availability|subarray_node_component_manager.py#1902|tango-device:low-tmc/subarray/04|Subarray availability attribute value is: True
+1|2026-04-17T09:57:34.164Z|DEBUG|ThreadPoolExecutor-1_0|clear_command_failure_info|subarray_node_component_manager_low.py#445|tango-device:low-tmc/subarray/04|Command failure info cleared after successful recovery
+1|2026-04-17T09:57:34.164Z|DEBUG|ThreadPoolExecutor-1_0|update_command_in_progress_id|subarray_node_command.py#422|tango-device:low-tmc/subarray/04|The status of commands in queue are: [('1776419854.156186_212993704782664_On', <TaskStatus.IN_PROGRESS: 2>)]
+1|2026-04-17T09:57:34.164Z|DEBUG|ThreadPoolExecutor-1_0|update_command_in_progress_id|subarray_node_command.py#431|tango-device:low-tmc/subarray/04|Command in progress: On Command in progress id: 1776419854.156186_212993704782664_On
+1|2026-04-17T09:57:34.175Z|INFO|ThreadPoolExecutor-1_0|invoke_sdp_on|on_command.py#115|tango-device:low-tmc/subarray/04|Command ID: 1776419854.156186_212993704782664_On | On command is invoked on low-tmc/subarray-leaf-node-sdp/04
+1|2026-04-17T09:57:34.176Z|INFO|ThreadPoolExecutor-1_0|on_leaf_nodes|on_command.py#57|tango-device:low-tmc/subarray/04|On Command is invoked. Received ResultCode: OK and Message: Command Completed.
+1|2026-04-17T09:57:34.177Z|DEBUG|ThreadPoolExecutor-1_0|clear_device_events|subarray_node_command.py#492|tango-device:low-tmc/subarray/04|Clearing the device events dictionary
+1|2026-04-17T09:57:34.177Z|DEBUG|ThreadPoolExecutor-1_0|clear_device_events|subarray_node_command.py#499|tango-device:low-tmc/subarray/04|Removing the command object: Command OnLow() from command_in_progress_objects list: [Command OnLow()]
+1|2026-04-17T09:57:34.177Z|INFO|ThreadPoolExecutor-1_0|clear_lrcr|event_data_manager.py#273||Clearing command results from event info
+1|2026-04-17T09:57:34.189Z|DEBUG|state|update_device_state|subarray_node_component_manager.py#1863|tango-device:low-tmc/subarray/04|Updated State of low-sdp/subarray/04: ON
+1|2026-04-17T09:57:48.908Z|DEBUG|Dummy-6|_debug_patch|ska_device.py#105|tango-device:low-tmc/subarray/04|-> LowTmcSubarray.AssignResources()
+1|2026-04-17T09:57:48.908Z|DEBUG|Dummy-6|_debug_patch|ska_device.py#105|tango-device:low-tmc/subarray/04|<- LowTmcSubarray.AssignResources()
+1|2026-04-17T09:57:48.908Z|DEBUG|ThreadPoolExecutor-1_0|check_subarray_device_availability|subarray_node_component_manager.py#1902|tango-device:low-tmc/subarray/04|Subarray availability attribute value is: True
+1|2026-04-17T09:57:48.915Z|DEBUG|ThreadPoolExecutor-1_0|clear_command_failure_info|subarray_node_component_manager_low.py#445|tango-device:low-tmc/subarray/04|Command failure info cleared after successful recovery
+1|2026-04-17T09:57:48.915Z|INFO|ThreadPoolExecutor-1_0|exit|core.py#137||Finished processing state EMPTY exit callbacks.
+1|2026-04-17T09:57:48.915Z|INFO|ThreadPoolExecutor-1_0|enter|core.py#131||Finished processing state RESOURCING_EMPTY enter callbacks.
+1|2026-04-17T09:57:48.915Z|INFO|ThreadPoolExecutor-1_0|callbacks|core.py#1176||Executed callback '<bound method _ObsStateMachine._state_changed of <ska_control_model.obs_state._ObsStateMachine object at 0x7f80e7c5bd60>>'
+1|2026-04-17T09:57:48.916Z|INFO|ThreadPoolExecutor-1_0|invoke_assign_resources|assign_resources_command.py#81|tango-device:low-tmc/subarray/04|AssignResources command is invoked
+1|2026-04-17T09:57:48.916Z|DEBUG|ThreadPoolExecutor-1_0|update_command_in_progress_id|subarray_node_command.py#422|tango-device:low-tmc/subarray/04|The status of commands in queue are: [('1776419868.9079206_264608204005066_AssignResources', <TaskStatus.IN_PROGRESS: 2>)]
+1|2026-04-17T09:57:48.916Z|DEBUG|ThreadPoolExecutor-1_0|update_command_in_progress_id|subarray_node_command.py#431|tango-device:low-tmc/subarray/04|Command in progress: AssignResources Command in progress id: 1776419868.9079206_264608204005066_AssignResources
+1|2026-04-17T09:57:49.409Z|INFO|ThreadPoolExecutor-1_0|_load_data|backend.py#811||gitlab://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata: Loading Nexus tarball...
+1|2026-04-17T09:57:49.432Z|DEBUG|ThreadPoolExecutor-1_0|download_array_layout_json|subarray_node_component_manager.py#2706|tango-device:low-tmc/subarray/04|Array layout JSON fetched from TelModel.
+1|2026-04-17T09:57:49.432Z|DEBUG|ThreadPoolExecutor-1_0|do|assign_resources_command.py#77|tango-device:low-tmc/subarray/04|TelModel layout downloaded and validated successfully.
+1|2026-04-17T09:57:49.432Z|DEBUG|ThreadPoolExecutor-1_0|subarray_id|component.py#439|tango-device:low-tmc/subarray/04|Setting subarray ID to 4
+1|2026-04-17T09:57:49.432Z|DEBUG|ThreadPoolExecutor-1_0|_component_state_changed_callback|subarray_node.py#1050|tango-device:low-tmc/subarray/04|Current observation state before processing state change: ObsState.EMPTY
+1|2026-04-17T09:57:49.432Z|DEBUG|ThreadPoolExecutor-1_0|_component_state_changed_callback|subarray_node.py#1055|tango-device:low-tmc/subarray/04|State change reported: {'resourced': True}
+1|2026-04-17T09:57:49.433Z|INFO|ThreadPoolExecutor-1_0|exit|core.py#137||Finished processing state RESOURCING_EMPTY exit callbacks.
+1|2026-04-17T09:57:49.433Z|INFO|ThreadPoolExecutor-1_0|enter|core.py#131||Finished processing state RESOURCING_IDLE enter callbacks.
+1|2026-04-17T09:57:49.433Z|INFO|ThreadPoolExecutor-1_0|callbacks|core.py#1176||Executed callback '<bound method _ObsStateMachine._state_changed of <ska_control_model.obs_state._ObsStateMachine object at 0x7f80e7c5bd60>>'
+1|2026-04-17T09:57:49.433Z|DEBUG|ThreadPoolExecutor-1_0|_component_state_changed_callback|subarray_node.py#1125|tango-device:low-tmc/subarray/04|Observation state after processing state change: ObsState.RESOURCING 
+1|2026-04-17T09:57:49.442Z|INFO|ThreadPoolExecutor-1_0|update_event_data|event_data_manager.py#587||Device low-tmc/subarray-leaf-node-csp/04 reported CommandResult: UNKNOWN ; updating accordingly
+1|2026-04-17T09:57:49.442Z|INFO|ThreadPoolExecutor-1_0|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType     State   UniqueID                                          Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode     ONLINE  -                                                 2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode     ONLINE  -                                                 2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode     ONLINE  -                                                 2026-04-17T09:57:30.810957Z
+  low-tmc/leaf-node-mccs/0           AdminMode     ONLINE  -                                                 2026-04-17T09:57:30.343536Z
+  low-tmc/subarray-leaf-node-csp/04  CommandResult UNKNOWN 1776419869.4410176_52527427161340_AssignResources None                       
+  low-tmc/subarray-leaf-node-csp/04  HealthState   OK      -                                                 2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState   OK      -                                                 2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState   OK      -                                                 2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState   OK      -                                                 2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState   OK      -                                                 2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                HealthState   OK      -                                                 2026-04-17T09:56:30.084651Z
+  low-tmc/leaf-node-mccs/0           HealthState   OK      -                                                 2026-04-17T09:56:30.101881Z
+  low-csp/subarray/04                Livelinesss   False   -                                                 2026-04-17T09:56:25.512974Z
+  low-tmc/leaf-node-mccs/0           Livelinesss   False   -                                                 2026-04-17T09:56:26.629985Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState      EMPTY   -                                                 2026-04-17T09:56:26.232804Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState      EMPTY   -                                                 2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState      EMPTY   -                                                 2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='AssignResources', is_partial_configuration=False, subarrays_to_config=['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/subarray-leaf-node-sdp/04'], assigned_resources_len=0
+1|2026-04-17T09:57:49.443Z|INFO|ThreadPoolExecutor-1_0|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:57:49.443Z|INFO|ThreadPoolExecutor-1_0|assign_csp_resources|assign_resources_command.py#246|tango-device:low-tmc/subarray/04|Command ID: 1776419868.9079206_264608204005066_AssignResources | AssignResources command invoked on low-tmc/subarray-leaf-node-csp/04 
+1|2026-04-17T09:57:49.450Z|INFO|ThreadPoolExecutor-1_0|update_event_data|event_data_manager.py#587||Device low-tmc/subarray-leaf-node-sdp/04 reported CommandResult: UNKNOWN ; updating accordingly
+1|2026-04-17T09:57:49.451Z|INFO|ThreadPoolExecutor-1_0|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType     State   UniqueID                                           Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode     ONLINE  -                                                  2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode     ONLINE  -                                                  2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode     ONLINE  -                                                  2026-04-17T09:57:30.810957Z
+  low-tmc/leaf-node-mccs/0           AdminMode     ONLINE  -                                                  2026-04-17T09:57:30.343536Z
+  low-tmc/subarray-leaf-node-csp/04  CommandResult UNKNOWN 1776419869.4410176_52527427161340_AssignResources  None                       
+  low-tmc/subarray-leaf-node-sdp/04  CommandResult UNKNOWN 1776419869.4500217_190865596885358_AssignResources None                       
+  low-tmc/subarray-leaf-node-csp/04  HealthState   OK      -                                                  2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState   OK      -                                                  2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState   OK      -                                                  2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState   OK      -                                                  2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState   OK      -                                                  2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                HealthState   OK      -                                                  2026-04-17T09:56:30.084651Z
+  low-tmc/leaf-node-mccs/0           HealthState   OK      -                                                  2026-04-17T09:56:30.101881Z
+  low-csp/subarray/04                Livelinesss   False   -                                                  2026-04-17T09:56:25.512974Z
+  low-tmc/leaf-node-mccs/0           Livelinesss   False   -                                                  2026-04-17T09:56:26.629985Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState      EMPTY   -                                                  2026-04-17T09:56:26.232804Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState      EMPTY   -                                                  2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState      EMPTY   -                                                  2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='AssignResources', is_partial_configuration=False, subarrays_to_config=['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/subarray-leaf-node-sdp/04'], assigned_resources_len=0
+1|2026-04-17T09:57:49.451Z|INFO|ThreadPoolExecutor-1_0|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:57:49.451Z|INFO|ThreadPoolExecutor-1_0|assign_sdp_resources|assign_resources_command.py#224|tango-device:low-tmc/subarray/04|Command ID: 1776419868.9079206_264608204005066_AssignResources | AssignResources command invoked on low-tmc/subarray-leaf-node-sdp/04
+1|2026-04-17T09:57:49.461Z|INFO|ThreadPoolExecutor-1_0|update_event_data|event_data_manager.py#587||Device low-tmc/leaf-node-mccs/0 reported CommandResult: UNKNOWN ; updating accordingly
+1|2026-04-17T09:57:49.462Z|INFO|ThreadPoolExecutor-1_0|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType     State   UniqueID                                           Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode     ONLINE  -                                                  2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode     ONLINE  -                                                  2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode     ONLINE  -                                                  2026-04-17T09:57:30.810957Z
+  low-tmc/leaf-node-mccs/0           AdminMode     ONLINE  -                                                  2026-04-17T09:57:30.343536Z
+  low-tmc/subarray-leaf-node-csp/04  CommandResult UNKNOWN 1776419869.4410176_52527427161340_AssignResources  None                       
+  low-tmc/subarray-leaf-node-sdp/04  CommandResult UNKNOWN 1776419869.4500217_190865596885358_AssignResources None                       
+  low-tmc/leaf-node-mccs/0           CommandResult UNKNOWN 1776419869.4617999_122854897127912_AssignResources None                       
+  low-tmc/subarray-leaf-node-csp/04  HealthState   OK      -                                                  2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState   OK      -                                                  2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState   OK      -                                                  2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState   OK      -                                                  2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState   OK      -                                                  2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                HealthState   OK      -                                                  2026-04-17T09:56:30.084651Z
+  low-tmc/leaf-node-mccs/0           HealthState   OK      -                                                  2026-04-17T09:56:30.101881Z
+  low-csp/subarray/04                Livelinesss   False   -                                                  2026-04-17T09:56:25.512974Z
+  low-tmc/leaf-node-mccs/0           Livelinesss   False   -                                                  2026-04-17T09:56:26.629985Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState      EMPTY   -                                                  2026-04-17T09:56:26.232804Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState      EMPTY   -                                                  2026-04-17T09:56:20.152548Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState      EMPTY   -                                                  2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='AssignResources', is_partial_configuration=False, subarrays_to_config=['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/subarray-leaf-node-sdp/04'], assigned_resources_len=0
+1|2026-04-17T09:57:49.462Z|INFO|ThreadPoolExecutor-1_0|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:57:49.462Z|INFO|ThreadPoolExecutor-1_0|assign_mccs_resources|assign_resources_command.py#297|tango-device:low-tmc/subarray/04|Command ID: 1776419868.9079206_264608204005066_AssignResources | AssignResources command invoked on low-tmc/leaf-node-mccs/0 
+1|2026-04-17T09:57:49.462Z|DEBUG|ThreadPoolExecutor-1_0|do|assign_resources_command.py#121|tango-device:low-tmc/subarray/04|AssignResources command invoked on TMC SubarrayNode for the following subsystems: ['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/subarray-leaf-node-sdp/04']
+1|2026-04-17T09:57:49.463Z|DEBUG|ThreadPoolExecutor-1_0|do|assign_resources_command.py#126|tango-device:low-tmc/subarray/04|Subarray node current obsState is: RESOURCING 
+1|2026-04-17T09:57:49.466Z|DEBUG|obsState|update_device_obs_state|subarray_node_component_manager.py#1211|tango-device:low-tmc/subarray/04|Received obsState event for low-tmc/subarray-leaf-node-sdp/04: RESOURCING
+1|2026-04-17T09:57:49.467Z|INFO|obsState|update_event_data|event_data_manager.py#570||Device low-tmc/subarray-leaf-node-sdp/04 reported ObsState: RESOURCING ; Updating accordingly
+1|2026-04-17T09:57:49.467Z|INFO|obsState|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType     State      UniqueID                                           Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode     ONLINE     -                                                  2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode     ONLINE     -                                                  2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode     ONLINE     -                                                  2026-04-17T09:57:30.810957Z
+  low-tmc/leaf-node-mccs/0           AdminMode     ONLINE     -                                                  2026-04-17T09:57:30.343536Z
+  low-tmc/subarray-leaf-node-csp/04  CommandResult UNKNOWN    1776419869.4410176_52527427161340_AssignResources  None                       
+  low-tmc/subarray-leaf-node-sdp/04  CommandResult UNKNOWN    1776419869.4500217_190865596885358_AssignResources None                       
+  low-tmc/leaf-node-mccs/0           CommandResult UNKNOWN    1776419869.4617999_122854897127912_AssignResources None                       
+  low-tmc/subarray-leaf-node-csp/04  HealthState   OK         -                                                  2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState   OK         -                                                  2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState   OK         -                                                  2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState   OK         -                                                  2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState   OK         -                                                  2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                HealthState   OK         -                                                  2026-04-17T09:56:30.084651Z
+  low-tmc/leaf-node-mccs/0           HealthState   OK         -                                                  2026-04-17T09:56:30.101881Z
+  low-csp/subarray/04                Livelinesss   False      -                                                  2026-04-17T09:56:25.512974Z
+  low-tmc/leaf-node-mccs/0           Livelinesss   False      -                                                  2026-04-17T09:56:26.629985Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState      EMPTY      -                                                  2026-04-17T09:56:26.232804Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState      RESOURCING -                                                  2026-04-17T09:57:49.466677Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState      EMPTY      -                                                  2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='AssignResources', is_partial_configuration=False, subarrays_to_config=['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/subarray-leaf-node-sdp/04'], assigned_resources_len=0
+1|2026-04-17T09:57:49.467Z|INFO|obsState|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:57:49.469Z|DEBUG|Dummy-8|callback|subarray_node_command.py#89|tango-device:low-tmc/subarray/04|Got Command Result for low-tmc/subarray-leaf-node-sdp/04 [3, 'Exception occurred, command failed.']
+1|2026-04-17T09:57:49.469Z|INFO|Dummy-8|update_event_data|event_data_manager.py#587||Device low-tmc/subarray-leaf-node-sdp/04 reported CommandResult: FAILED ; updating accordingly
+1|2026-04-17T09:57:49.469Z|INFO|Dummy-8|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType     State      UniqueID                                           Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode     ONLINE     -                                                  2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode     ONLINE     -                                                  2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode     ONLINE     -                                                  2026-04-17T09:57:30.810957Z
+  low-tmc/leaf-node-mccs/0           AdminMode     ONLINE     -                                                  2026-04-17T09:57:30.343536Z
+  low-tmc/subarray-leaf-node-csp/04  CommandResult UNKNOWN    1776419869.4410176_52527427161340_AssignResources  None                       
+  low-tmc/subarray-leaf-node-sdp/04  CommandResult FAILED     1776419869.4500217_190865596885358_AssignResources 2026-04-17T09:57:49.469221Z
+  low-tmc/leaf-node-mccs/0           CommandResult UNKNOWN    1776419869.4617999_122854897127912_AssignResources None                       
+  low-tmc/subarray-leaf-node-csp/04  HealthState   OK         -                                                  2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState   OK         -                                                  2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState   OK         -                                                  2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState   OK         -                                                  2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState   OK         -                                                  2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                HealthState   OK         -                                                  2026-04-17T09:56:30.084651Z
+  low-tmc/leaf-node-mccs/0           HealthState   OK         -                                                  2026-04-17T09:56:30.101881Z
+  low-csp/subarray/04                Livelinesss   False      -                                                  2026-04-17T09:56:25.512974Z
+  low-tmc/leaf-node-mccs/0           Livelinesss   False      -                                                  2026-04-17T09:56:26.629985Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState      EMPTY      -                                                  2026-04-17T09:56:26.232804Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState      RESOURCING -                                                  2026-04-17T09:57:49.466677Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState      EMPTY      -                                                  2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='AssignResources', is_partial_configuration=False, subarrays_to_config=['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/subarray-leaf-node-sdp/04'], assigned_resources_len=0
+1|2026-04-17T09:57:49.471Z|INFO|Dummy-8|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:57:51.462Z|DEBUG|Dummy-8|callback|subarray_node_command.py#89|tango-device:low-tmc/subarray/04|Got Command Result for low-tmc/subarray-leaf-node-csp/04 [3, 'Exception occurred, command failed.']
+1|2026-04-17T09:57:51.462Z|INFO|Dummy-8|update_event_data|event_data_manager.py#587||Device low-tmc/subarray-leaf-node-csp/04 reported CommandResult: FAILED ; updating accordingly
+1|2026-04-17T09:57:51.462Z|INFO|Dummy-8|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType     State      UniqueID                                           Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode     ONLINE     -                                                  2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode     ONLINE     -                                                  2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode     ONLINE     -                                                  2026-04-17T09:57:30.810957Z
+  low-tmc/leaf-node-mccs/0           AdminMode     ONLINE     -                                                  2026-04-17T09:57:30.343536Z
+  low-tmc/subarray-leaf-node-csp/04  CommandResult FAILED     1776419869.4410176_52527427161340_AssignResources  2026-04-17T09:57:51.462480Z
+  low-tmc/subarray-leaf-node-sdp/04  CommandResult FAILED     1776419869.4500217_190865596885358_AssignResources 2026-04-17T09:57:49.469221Z
+  low-tmc/leaf-node-mccs/0           CommandResult UNKNOWN    1776419869.4617999_122854897127912_AssignResources None                       
+  low-tmc/subarray-leaf-node-csp/04  HealthState   OK         -                                                  2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState   OK         -                                                  2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState   OK         -                                                  2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState   OK         -                                                  2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState   OK         -                                                  2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                HealthState   OK         -                                                  2026-04-17T09:56:30.084651Z
+  low-tmc/leaf-node-mccs/0           HealthState   OK         -                                                  2026-04-17T09:56:30.101881Z
+  low-csp/subarray/04                Livelinesss   False      -                                                  2026-04-17T09:56:25.512974Z
+  low-tmc/leaf-node-mccs/0           Livelinesss   False      -                                                  2026-04-17T09:56:26.629985Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState      EMPTY      -                                                  2026-04-17T09:56:26.232804Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState      RESOURCING -                                                  2026-04-17T09:57:49.466677Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState      EMPTY      -                                                  2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='AssignResources', is_partial_configuration=False, subarrays_to_config=['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/subarray-leaf-node-sdp/04'], assigned_resources_len=0
+1|2026-04-17T09:57:51.464Z|INFO|Dummy-8|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:57:53.491Z|DEBUG|Dummy-8|callback|subarray_node_command.py#89|tango-device:low-tmc/subarray/04|Got Command Result for low-tmc/leaf-node-mccs/0 [0, 'Command Completed']
+1|2026-04-17T09:57:53.491Z|INFO|Dummy-8|update_event_data|event_data_manager.py#587||Device low-tmc/leaf-node-mccs/0 reported CommandResult: OK ; updating accordingly
+1|2026-04-17T09:57:53.491Z|INFO|Dummy-8|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType     State      UniqueID                                           Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode     ONLINE     -                                                  2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode     ONLINE     -                                                  2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode     ONLINE     -                                                  2026-04-17T09:57:30.810957Z
+  low-tmc/leaf-node-mccs/0           AdminMode     ONLINE     -                                                  2026-04-17T09:57:30.343536Z
+  low-tmc/subarray-leaf-node-csp/04  CommandResult FAILED     1776419869.4410176_52527427161340_AssignResources  2026-04-17T09:57:51.462480Z
+  low-tmc/subarray-leaf-node-sdp/04  CommandResult FAILED     1776419869.4500217_190865596885358_AssignResources 2026-04-17T09:57:49.469221Z
+  low-tmc/leaf-node-mccs/0           CommandResult OK         1776419869.4617999_122854897127912_AssignResources 2026-04-17T09:57:53.491300Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState   OK         -                                                  2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState   OK         -                                                  2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState   OK         -                                                  2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState   OK         -                                                  2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState   OK         -                                                  2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                HealthState   OK         -                                                  2026-04-17T09:56:30.084651Z
+  low-tmc/leaf-node-mccs/0           HealthState   OK         -                                                  2026-04-17T09:56:30.101881Z
+  low-csp/subarray/04                Livelinesss   False      -                                                  2026-04-17T09:56:25.512974Z
+  low-tmc/leaf-node-mccs/0           Livelinesss   False      -                                                  2026-04-17T09:56:26.629985Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState      EMPTY      -                                                  2026-04-17T09:56:26.232804Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState      RESOURCING -                                                  2026-04-17T09:57:49.466677Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState      EMPTY      -                                                  2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='AssignResources', is_partial_configuration=False, subarrays_to_config=['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/subarray-leaf-node-sdp/04'], assigned_resources_len=0
+1|2026-04-17T09:57:53.492Z|INFO|Dummy-8|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:57:53.493Z|DEBUG|ThreadPoolExecutor-1_0|set_command_failure_info|subarray_node_component_manager_low.py#438|tango-device:low-tmc/subarray/04|Command failure info set: ResultCode:3,Exception occurred on the following devices: low-tmc/subarray-leaf-node-csp/04: Exception occurred, command failed.low-tmc/subarray-leaf-node-sdp/04: Exception occurred, command failed.
+1|2026-04-17T09:57:53.493Z|INFO|ThreadPoolExecutor-1_0|update_task_status|assign_resources_command.py#399|tango-device:low-tmc/subarray/04|Command ID: 1776419868.9079206_264608204005066_AssignResources | Updating task status with Result: {'result': (<ResultCode.FAILED: 3>, 'Exception occurred on the following devices: low-tmc/subarray-leaf-node-csp/04: Exception occurred, command failed.low-tmc/subarray-leaf-node-sdp/04: Exception occurred, command failed.'), 'exception': 'Exception occurred on the following devices: low-tmc/subarray-leaf-node-csp/04: Exception occurred, command failed.low-tmc/subarray-leaf-node-sdp/04: Exception occurred, command failed.'}
+1|2026-04-17T09:57:54.496Z|DEBUG|ThreadPoolExecutor-1_0|is_recovery_required|recovery_manager.py#85|tango-device:low-tmc/subarray/04|No recovery required based on current observation states.
+1|2026-04-17T09:57:54.497Z|DEBUG|ThreadPoolExecutor-1_0|update_task_status|assign_resources_command.py#462|tango-device:low-tmc/subarray/04|Is command recovery required: False
+1|2026-04-17T09:57:54.497Z|DEBUG|ThreadPoolExecutor-1_0|update_task_status|assign_resources_command.py#483|tango-device:low-tmc/subarray/04|Moving SubarrayNode ObsState to FAULT
+1|2026-04-17T09:57:54.499Z|ERROR|ThreadPoolExecutor-1_0|_log_command_exception|command_tracker.py#248||Command '1776419868.9079206_264608204005066_AssignResources' raised exception with args 'Exception occurred on the following devices: low-tmc/subarray-leaf-node-csp/04: Exception occurred, command failed.low-tmc/subarray-leaf-node-sdp/04: Exception occurred, command failed.'
+Exception: Exception occurred on the following devices: low-tmc/subarray-leaf-node-csp/04: Exception occurred, command failed.low-tmc/subarray-leaf-node-sdp/04: Exception occurred, command failed.
+Stack (most recent call last):
+  File "/usr/lib/python3.10/threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+  File "/usr/lib/python3.10/threading.py", line 1016, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.10/threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/tango/utils.py", line 2920, in _thread_pool_executor_worker
+    _worker(executor_reference, work_queue, initializer, initargs)
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 83, in _worker
+    work_item.run()
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/ska_tango_base/executor/executor.py", line 466, in _run
+    func(
+  File "/app/src/ska_tmc_subarraynode/subarray_node.py", line 509, in task
+    self.component_manager.assign(
+  File "/app/src/ska_tmc_subarraynode/manager/subarray_node_component_manager_low.py", line 518, in assign
+    return assign_command_object.invoke_assign_resources(
+  File "/app/src/ska_tmc_subarraynode/commands/assign_resources_command.py", line 83, in invoke_assign_resources
+    self.call_update_task_status(result, message)
+  File "/app/src/ska_tmc_subarraynode/commands/subarray_node_command.py", line 120, in call_update_task_status
+    self.update_task_status(
+  File "/app/src/ska_tmc_subarraynode/commands/low/assign_resources_command.py", line 484, in update_task_status
+    _update_failure()
+  File "/app/src/ska_tmc_subarraynode/commands/low/assign_resources_command.py", line 382, in _update_failure
+    self.task_callback(
+  File "/usr/local/lib/python3.10/dist-packages/ska_tango_base/long_running_commands/command_tracker.py", line 176, in update_command_info
+    self._log_command_exception(command_id, exception)
+  File "/usr/local/lib/python3.10/dist-packages/ska_tango_base/long_running_commands/command_tracker.py", line 248, in _log_command_exception
+    logger.error(message, exc_info=exc_info, stack_info=True)
+1|2026-04-17T09:57:54.500Z|INFO|ThreadPoolExecutor-1_0|update_aggregation_queue|event_data_manager.py#529||EventDataStorage:
+  Device                             StateType     State      UniqueID                                           Timestamp                  
+  low-tmc/subarray-leaf-node-csp/04  AdminMode     ONLINE     -                                                  2026-04-17T09:56:20.116142Z
+  low-tmc/subarray-leaf-node-sdp/04  AdminMode     ONLINE     -                                                  2026-04-17T09:56:20.156052Z
+  low-tmc/subarray-leaf-node-mccs/04 AdminMode     ONLINE     -                                                  2026-04-17T09:57:30.810957Z
+  low-tmc/leaf-node-mccs/0           AdminMode     ONLINE     -                                                  2026-04-17T09:57:30.343536Z
+  low-tmc/subarray-leaf-node-csp/04  CommandResult FAILED     1776419869.4410176_52527427161340_AssignResources  2026-04-17T09:57:51.462480Z
+  low-tmc/subarray-leaf-node-sdp/04  CommandResult FAILED     1776419869.4500217_190865596885358_AssignResources 2026-04-17T09:57:49.469221Z
+  low-tmc/leaf-node-mccs/0           CommandResult OK         1776419869.4617999_122854897127912_AssignResources 2026-04-17T09:57:53.491300Z
+  low-tmc/subarray-leaf-node-csp/04  HealthState   OK         -                                                  2026-04-17T09:56:20.100182Z
+  low-tmc/subarray-leaf-node-sdp/04  HealthState   OK         -                                                  2026-04-17T09:56:20.141450Z
+  low-sdp/subarray/04                HealthState   OK         -                                                  2026-04-17T09:56:20.186853Z
+  low-tmc/subarray-leaf-node-mccs/04 HealthState   OK         -                                                  2026-04-17T09:56:20.220184Z
+  low-mccs/subarray/04               HealthState   OK         -                                                  2026-04-17T09:56:20.272556Z
+  low-csp/subarray/04                HealthState   OK         -                                                  2026-04-17T09:56:30.084651Z
+  low-tmc/leaf-node-mccs/0           HealthState   OK         -                                                  2026-04-17T09:56:30.101881Z
+  low-csp/subarray/04                Livelinesss   False      -                                                  2026-04-17T09:56:25.512974Z
+  low-tmc/leaf-node-mccs/0           Livelinesss   False      -                                                  2026-04-17T09:56:26.629985Z
+  low-tmc/subarray-leaf-node-csp/04  ObsState      EMPTY      -                                                  2026-04-17T09:56:26.232804Z
+  low-tmc/subarray-leaf-node-sdp/04  ObsState      RESOURCING -                                                  2026-04-17T09:57:49.466677Z
+  low-tmc/subarray-leaf-node-mccs/04 ObsState      EMPTY      -                                                  2026-04-17T09:56:20.230116Z
+  command_timestamp=None, command_in_progress='', is_partial_configuration=False, subarrays_to_config=['low-tmc/subarray-leaf-node-csp/04', 'low-tmc/subarray-leaf-node-mccs/04', 'low-tmc/subarray-leaf-node-sdp/04'], assigned_resources_len=0
+1|2026-04-17T09:57:54.501Z|INFO|ThreadPoolExecutor-1_0|update_aggregation_queue|event_data_manager.py#537||Lock released from update_aggregation_queue 
+1|2026-04-17T09:57:54.501Z|DEBUG|ThreadPoolExecutor-1_0|clear_resources|subarray_node_command.py#672|tango-device:low-tmc/subarray/04|Setting assigned resources to be EMPTY.
+1|2026-04-17T09:57:54.501Z|DEBUG|ThreadPoolExecutor-1_0|set_assigned_resources|subarray_node_component_manager_low.py#1051|tango-device:low-tmc/subarray/04|Resources assigned to Subarray []
+1|2026-04-17T09:57:54.501Z|DEBUG|ThreadPoolExecutor-1_0|subarray_id|component.py#439|tango-device:low-tmc/subarray/04|Setting subarray ID to None
+1|2026-04-17T09:57:54.501Z|INFO|ThreadPoolExecutor-1_0|clear_lrcr|event_data_manager.py#273||Clearing command results from event info
+1|2026-04-17T09:57:54.501Z|DEBUG|ThreadPoolExecutor-1_0|clear_resources|subarray_node_command.py#679|tango-device:low-tmc/subarray/04|Cleanup operation completed.
+1|2026-04-17T09:57:54.501Z|DEBUG|ThreadPoolExecutor-1_0|clear_device_events|subarray_node_command.py#492|tango-device:low-tmc/subarray/04|Clearing the device events dictionary
+1|2026-04-17T09:57:54.501Z|DEBUG|ThreadPoolExecutor-1_0|clear_device_events|subarray_node_command.py#499|tango-device:low-tmc/subarray/04|Removing the command object: Command AssignResourcesLow() from command_in_progress_objects list: [Command AssignResourcesLow()]
+1|2026-04-17T09:57:54.502Z|INFO|ThreadPoolExecutor-1_0|clear_lrcr|event_data_manager.py#273||Clearing command results from event info
