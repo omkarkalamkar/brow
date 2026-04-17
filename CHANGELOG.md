@@ -11,6 +11,7 @@ Updated
 -------
 * Tested 16 Subarrays with different configurations, performed end to end observations and delay models for station beams ,PSS and PST beams.
 * Tested 16 Subarrys for 30 min scan duration
+* Tested 16 Subarrys for multi observation and multi scan scenario.
 
 [2.14.0-rc.1]
 *************
