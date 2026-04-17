@@ -117,50 +117,6 @@ Feature: Multi-subarray observation plans
           {"id": 1, "stations": [1, 2, 3,4,5,6]},
           {"id": 2, "stations": [1, 2, 3,4,5,6]},
           {"id": 3, "stations": [1, 2, 3,4,5,6]},
-          {"id": 4, "stations": [1, 2, 3,4,5,6]}
-
-
-        ],
-        "pss_beams": [{"id": 2, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
-
-        ], "scan_duration": 1800.0
-
-    }
-    """
-
-    #This scenario checks if TMC is able to process 8 subarry beams,
-    #1 PSS beam and 2 PST beams and PSS and PST beams do not share stations
-      Scenario: PlanA2
-    """
-    {
-
-        "station_beams": [
-          {"id": 1, "stations": [1, 2, 3,4,5,6]},
-          {"id": 2, "stations": [1, 2, 3,4,5,6]},
-          {"id": 3, "stations": [1, 2, 3,4,5,6]},
-          {"id": 4, "stations": [1, 2, 3,4,5,6]}
-
-
-        ],
-        "pss_beams": [{"id": 5, "stations": [3, 4]}],
-        "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
-
-        ]
-
-    }
-    """
-
-    #This scenario checks if TMC is able to process 8 subarry beams,
-    #1 PSS beam and 2 PST beams
-      Scenario: PlanA1
-    """
-    {
-
-        "station_beams": [
-          {"id": 1, "stations": [1, 2, 3,4,5,6]},
-          {"id": 2, "stations": [1, 2, 3,4,5,6]},
-          {"id": 3, "stations": [1, 2, 3,4,5,6]},
           {"id": 4, "stations": [1, 2, 3,4,5,6]},
           {"id": 5, "stations": [1, 2, 3,4,5,6]},
           {"id": 6, "stations": [1, 2, 3,4,5,6]},
@@ -171,7 +127,7 @@ Feature: Multi-subarray observation plans
         "pss_beams": [{"id": 2, "stations": [3, 4]}],
         "pst_beams": [{"id": 1, "stations": [1, 2]},{"id": 2, "stations": [5, 6]}
 
-        ]
+        ], "scan_duration": 1800.0
 
     }
     """
@@ -202,6 +158,7 @@ Feature: Multi-subarray observation plans
     """
     #This scenario checks if TMC is able to process 8 subarry beams,
     #1 PSS beam and 2 PST beams and PSS and PST beams do not share stations
+
 
 
       Scenario: PlanA3
@@ -283,6 +240,7 @@ Feature: Multi-subarray observation plans
     #This scenario checks if TMC is able to process 8 subarry beams,
     #3 PSS beam and 2 PST beams and PSS and PST beams do not share stations
 
+
       Scenario: PlanA6
     """
     {
@@ -310,6 +268,7 @@ Feature: Multi-subarray observation plans
     #3 PSS beam and 2 PST beams and PSS and PST beams  share all stations
 
 
+
       Scenario: PlanA7
     """
     {
@@ -334,6 +293,7 @@ Feature: Multi-subarray observation plans
     """
     #This scenario checks if TMC is able to process 8 subarry beams,
     #1 PSS beam and 2 PST beams and all beams operate from 1 single station
+
 
       Scenario: PlanA8
     """
@@ -361,6 +321,7 @@ Feature: Multi-subarray observation plans
     #This scenario checks if TMC is able to process 3 subarry beams,
     #1 PSS beam and 1 PST beams and PSS and PST beams do not share  stations
 
+
       Scenario: PlanA9
     """
     {
@@ -382,6 +343,7 @@ Feature: Multi-subarray observation plans
     """
     #This scenario checks if TMC is able to process 4 subarry beams,
     #1 PSS beam and 1 PST beams and PSS and PST beams  share all stations
+
 
       Scenario: PlanA10
     """

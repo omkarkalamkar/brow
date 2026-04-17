@@ -29,9 +29,6 @@ server:
         - name: "CspMasterFQDN"
           values:
           - "{{.Values.devices_fqdn.csp_master}}"
-        - name: "SubarrayPrefix"
-          values:
-          - "{{.Values.deviceServers.centralnode.SubarrayPrefix}}"
         - name: "SdpMasterLeafNodeFQDN"
           values:
           - "{{.Values.devices_fqdn.sdp_master_ln}}"
