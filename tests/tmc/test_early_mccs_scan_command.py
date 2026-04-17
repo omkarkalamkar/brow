@@ -10,6 +10,7 @@ from assertpy import assert_that
 from pytest_bdd import given, scenario, then, when
 from ska_control_model import ObsState
 from ska_tango_testing.integration import TangoEventTracer, log_events
+from ska_tango_testing.mock.placeholders import Anything
 from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
@@ -25,6 +26,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 
 
+@pytest.mark.sah1901
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_scan_command.feature",
@@ -37,7 +39,9 @@ def test_tmc_scan_command():
 
 @given("a TMC")
 def given_tmc(
-    central_node_low: CentralNodeWrapperLow, event_tracer: TangoEventTracer
+    central_node_low: CentralNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    subarray_node_low: SubarrayNodeWrapperLow,
 ):
     """Set up a TMC and ensure it is in the ON state."""
     event_tracer.subscribe_event(
@@ -46,6 +50,9 @@ def given_tmc(
     event_tracer.subscribe_event(
         central_node_low.central_node, "longRunningCommandResult"
     )
+    event_tracer.subscribe_event(
+        subarray_node_low.mccs_subarray_leaf_node, "longRunningCommandResult"
+    )
     log_events(
         {
             central_node_low.central_node: [
@@ -53,6 +60,10 @@ def given_tmc(
                 "longRunningCommandResult",
             ],
             central_node_low.subarray_node: ["obsState"],
+            subarray_node_low.mccs_subarray_leaf_node: [
+                "obsState",
+                "longRunningCommandResult",
+            ],
         }
     )
     event_tracer.subscribe_event(central_node_low.subarray_node, "obsState")
@@ -187,6 +198,23 @@ def send_scan(
     )
 
     subarray_node_low.execute_transition("Scan", scan_input_json)
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN" STEP: '
+        "'a subarray in READY obsState'"
+        "MCCS Leaf Node device"
+        f"({subarray_node_low.mccs_subarray_leaf_node.dev_name()}) "
+        "is expected have longRunningCommand as"
+        '(unique_id,(ResultCode.OK,"Scan command already in progress"))',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.mccs_subarray_leaf_node,
+        "longRunningCommandResult",
+        (
+            Anything,
+            json.dumps(
+                (int(ResultCode.OK), "Scan command already in progress")
+            ),
+        ),
+    )
 
 
 @then("the subarray must be in the SCANNING obsState until finished")
