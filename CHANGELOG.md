@@ -14,7 +14,6 @@ Updated
 * Tested 16 Subarrys for multi observation and multi scan scenario.
 * SAH-1905: Update TMC to support MCCS early scan.
 
-
 [2.14.0-rc.1]
 *************
 Updated
