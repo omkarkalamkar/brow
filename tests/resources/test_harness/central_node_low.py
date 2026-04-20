@@ -306,6 +306,22 @@ class CentralNodeWrapperLow(object):
         # Adding a small sleep to allow the systems to clean up processes
         sleep(0.15)
 
+    def tear_down_all_subarrays(self):
+        """Handle Tear down of all subarrays"""
+        LOGGER.info("Calling Tear down for all subarrays.")
+        self._reset_health_state_for_mock_devices()
+        self.reset_defects_for_devices()
+        for subarray_id in range(1, 17):
+            self.set_subarray_id(subarray_id)
+            self.tear_down_subarray(self.subarray_node)
+
+        self.move_to_off()
+        self._clear_command_call_and_transition_data(clear_transition=True)
+        self.event_recorder.clear_events()
+        self.event_tracer.clear_events()
+        # Adding a small sleep to allow the systems to clean up processes
+        sleep(0.15)
+
     @sync_set_to_on(device_dict=device_dict_low)
     def move_to_on(self):
         """

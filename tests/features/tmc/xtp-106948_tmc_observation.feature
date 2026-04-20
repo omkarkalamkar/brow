@@ -21,8 +21,52 @@ Feature: Multi-subarray observation
         Then the involved subarrays transition to SCANNING and back to READY
         And I end the observations on all involved subarrays
         And I release resources from all involved subarrays
+        And I turn off the telescope
 
         Examples:
             | SNCount | PlanMap                                                                                                                                                                                                                                                     |
             | 16      | {"1":"PlanA1","2":"PlanA2","3":"PlanA3","4":"PlanB","5":"PlanA5","6":"PlanA6","7":"PlanA7","8":"PlanA8","9":"PlanA9","10":"PlanA10","11":"PlanA11","12":"PlanA12","13":"PlanA13","14":"PlanA14","15":"PlanA15","16":"PlanA16"} |
             | 10      | {"1":"PlanA","2":"PlanB","3":"PlanC","4":"PlanD","5":"PlanA5","6":"PlanA6","7":"PlanA7","8":"PlanA8","9":"PlanA9","10":"PlanA10"}                                                                                           |
+
+    @XTP-107759 @XTP-28348 @TEAM_SAHYADRI
+    Scenario Outline: Execute long sequence on 16 Subarrays
+        Given the telescope is in the ON state
+        And <SNCount> subarrays are in the EMPTY ObsState
+        And I assign resources using plan map <PlanMap>
+        And I configure all the subarrays using plan map <PlanMap>
+        And the Subarrays are configured successfully
+        And I scan on all configured subarrays
+        And the subarrays transition to SCANNING and back to READY
+        And I end the observations on all involved subarrays
+        And I release resources from all involved subarrays
+        When I reassign all subarrays.
+        And I reconfigure all subarrays.
+        And the Subarrays are configured successfully
+        And I scan on all configured subarrays
+        Then the subarrays transition to SCANNING and back to READY
+        And I end the observations on all involved subarrays
+        And I release resources from all involved subarrays
+        And I turn off the telescope
+
+        Examples:
+            | SNCount | PlanMap                                                                                                                                                                                                                                                     |
+            | 16      | {"1":"PlanA1","2":"PlanA2","3":"PlanA3","4":"PlanB","5":"PlanA5","6":"PlanA6","7":"PlanA7","8":"PlanA8","9":"PlanA9","10":"PlanA10","11":"PlanA11","12":"PlanA12","13":"PlanA13","14":"PlanA14","15":"PlanA15","16":"PlanA16"} |
+
+    @XTP-107760 @XTP-28348 @TEAM_SAHYADRI
+    Scenario Outline: Execute long sequence Scan on 16 Subarrays
+        Given the telescope is in the ON state
+        And <SNCount> subarrays are in the EMPTY ObsState
+        And I assign resources using plan map <PlanMap>
+        And I configure all the subarrays using plan map <PlanMap>
+        And the Subarrays are configured successfully
+        And I scan on all configured subarrays
+        And the subarrays transition to SCANNING and back to READY
+        When I issue scan on all subarray with new scan_id
+        Then the subarrays transition to SCANNING and back to READY
+        And I end the observations on all involved subarrays
+        And I release resources from all involved subarrays
+        And I turn off the telescope
+
+        Examples:
+            | SNCount | PlanMap                                                                                                                                                                                                                                                     |
+            | 16      | {"1":"PlanA1","2":"PlanA2","3":"PlanA3","4":"PlanB","5":"PlanA5","6":"PlanA6","7":"PlanA7","8":"PlanA8","9":"PlanA9","10":"PlanA10","11":"PlanA11","12":"PlanA12","13":"PlanA13","14":"PlanA14","15":"PlanA15","16":"PlanA16"} |

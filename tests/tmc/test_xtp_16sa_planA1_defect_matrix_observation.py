@@ -169,7 +169,8 @@ def _apply_defect(
     if csp is not None:
         csp.SetDefective(defect_payload)
     if sdp is not None:
-        sdp.SetDefective(defect_payload)
+        pass
+        # sdp.SetDefective(defect_payload)
     if mccs is not None:
         mccs.SetDefective(defect_payload)
 
