@@ -10,6 +10,7 @@ configuration is verified by checking that the subarray transitions to
 the READY observation state.
 """
 import json
+import logging
 
 import pytest
 from assertpy import assert_that
@@ -31,8 +32,10 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_commands,
 )
 
+logger = logging.getLogger(__name__)
 
-@pytest.mark.SKA_low
+
+@pytest.mark.sah1904
 @scenario(
     "../features/tmc/check_configure_command.feature",
     "Successful Configuration of Low Telescope Subarray in TMC",
@@ -123,6 +126,16 @@ def given_subarray_in_idle(
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
+
+
+@given("a quality monitor reports readyToScan flag to be False")
+def given_quality_monitor_not_ready_for_scan(
+    subarray_node_low: SubarrayNodeWrapperLow,
+):
+    """Verify quality monitor readyToScan attrbute"""
+    assert subarray_node_low.quality_monitor.readyToScan is False
+    csp_qa_metrics = subarray_node_low.qualityMetricsCspSubarray
+    logger.info("qualityMetricsCspSubarray: %s", csp_qa_metrics)
 
 
 @when("I configure it for a scan")
@@ -225,3 +238,38 @@ def check_configure_completion(
         "obsState",
         ObsState.READY,
     )
+
+
+@then("a the the quality monitor reports readyToScan flag to be True")
+def check_if_quality_monitor_ready_for_scan(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Verify that the subarray is in the READY obsState."""
+
+    event_tracer.subscribe_event(
+        subarray_node_low.quality_monitor, "readyToScan"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.quality_monitor, "qualityMetricsCspSubarray"
+    )
+    log_events(
+        {
+            subarray_node_low.quality_monitor: [
+                "readyToScan",
+                "qualityMetricsCspSubarray",
+            ],
+        }
+    )
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the quality monitor readyToScan must be True'"
+        f"({subarray_node_low.quality_monitor.dev_name()}) "
+        "readyToScan flag is expected to be True",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.quality_monitor,
+        "readyToScan",
+        True,
+    )
+    csp_qa_metrics = subarray_node_low.qualityMetricsCspSubarray
+    logger.info("qualityMetricsCspSubarray: %s", csp_qa_metrics)
