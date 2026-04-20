@@ -167,7 +167,6 @@ k8s-tmc-scaling:
   script:
     - make taranta-link
     - make k8s-test MARK=SKA_tmc_low_multiple_subarrays16
-  
 
   environment:
     name: ska-tmc-staging-env

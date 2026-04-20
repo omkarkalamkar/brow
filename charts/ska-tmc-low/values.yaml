@@ -125,8 +125,6 @@ resource_monitor:
     tag: 0.5.0
     pullPolicy: IfNotPresent
 
-
-
 resources:
   limits:
     memory: 500Mi
@@ -152,9 +150,6 @@ deviceServers:
     DefaultArrayLayoutPath: "instrument/ska1_low/layout/low-layout.json"
     LoggingLevel: "5"
     SubarrayPrefix: "low-tmc/subarray/"
-
-
-
 
   subarraynode:
     enabled: true
