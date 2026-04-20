@@ -201,6 +201,7 @@ def send_scan(
 
 @then("the subarray must be in the SCANNING obsState until finished")
 def check_scan_completion(
+    command_input_factory: JsonFactory,
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
@@ -237,6 +238,39 @@ def check_scan_completion(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         "'the subarray must be in the SCANNING obsState until finished'"
         "Subarray Node device"
+        f"({subarray_node_low.subarray_node.dev_name()}) "
+        "is expected to be in READY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.subarray_node,
+        "obsState",
+        ObsState.READY,
+    )
+
+    # Trigger an additional scan to check a regular SCAN via TMC gets
+    # completed post an early scan.
+    scan_input_json = prepare_json_args_for_commands(
+        "scan_low", command_input_factory
+    )
+    # Modify the scan_id for the test
+    scan_input = json.loads(scan_input_json)
+    scan_input["scan_id"] = 15
+    scan_input_json = json.dumps(scan_input)
+    subarray_node_low.execute_transition("Scan", scan_input_json)
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the subarray must be in the SCANNING obsState until finished'"
+        "Subarray Node device for regular scan"
+        f"({subarray_node_low.subarray_node.dev_name()}) "
+        "is expected to be in SCANNING obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_node_low.subarray_node,
+        "obsState",
+        ObsState.SCANNING,
+    )
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "THEN" STEP: '
+        "'the subarray must be in the SCANNING obsState until finished'"
+        "Subarray Node device for regular scan"
         f"({subarray_node_low.subarray_node.dev_name()}) "
         "is expected to be in READY obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
