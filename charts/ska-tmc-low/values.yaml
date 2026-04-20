@@ -127,9 +127,9 @@ resource_monitor:
 
 skatmcsimulators:
   image:
-    registry: artefact.skao.int
+    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-simulators
     image: ska-tmc-simulators
-    tag: 1.9.7
+    tag: 1.10.0-dev.cecdfa4f5
     pullPolicy: IfNotPresent
 
 resources:
