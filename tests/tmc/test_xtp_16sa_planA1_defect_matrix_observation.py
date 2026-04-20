@@ -93,32 +93,32 @@ def _parse_matrix(matrix_json: str, kind: str) -> dict[DefectKey, str]:
     return out
 
 
-def _subsystem_subarrays(subarray_node_low: SubarrayNodeWrapperLow) -> tuple:
+def _subsystem_subarrays(SN_low_16_SN: SubarrayNodeWrapperLow) -> tuple:
     """Return (csp, sdp, mccs) subsystem subarray proxies if present."""
 
     csp = None
     sdp = None
     mccs = None
 
-    devs = getattr(subarray_node_low, "subarray_devices", {})
+    devs = getattr(SN_low_16_SN, "subarray_devices", {})
     if isinstance(devs, dict):
         csp = devs.get("csp_subarray")
         sdp = devs.get("sdp_subarray")
         mccs = devs.get("mccs_subarray")
 
     if csp is None:
-        csp = getattr(subarray_node_low, "csp_subarray", None)
+        csp = getattr(SN_low_16_SN, "csp_subarray", None)
     if sdp is None:
-        sdp = getattr(subarray_node_low, "sdp_subarray", None)
+        sdp = getattr(SN_low_16_SN, "sdp_subarray", None)
 
     if mccs is None:
-        mccs = getattr(subarray_node_low, "mccs_subarray", None)
+        mccs = getattr(SN_low_16_SN, "mccs_subarray", None)
 
     return csp, sdp, mccs
 
 
 def _apply_defect(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     # command: str,
     defect: str,
 ) -> None:
@@ -165,7 +165,7 @@ def _apply_defect(
     #     # defect_payload = mapping.get(str(defect), mapping.get("FAULT"))
     #     assert False, f"Defect string '{defect}' not supported "
 
-    csp, sdp, mccs = _subsystem_subarrays(subarray_node_low)
+    csp, sdp, mccs = _subsystem_subarrays(SN_low_16_SN)
     if csp is not None:
         csp.SetDefective(defect_payload)
     if sdp is not None:
@@ -175,21 +175,23 @@ def _apply_defect(
         mccs.SetDefective(defect_payload)
 
 
-def _reset_defects(subarray_node_low: SubarrayNodeWrapperLow) -> None:
+def _reset_defects(SN_low_16_SN: SubarrayNodeWrapperLow) -> None:
     """Best-effort reset of SetDefective on available leaf nodes."""
 
-    csp, sdp, mccs = _subsystem_subarrays(subarray_node_low)
+    csp, sdp, mccs = _subsystem_subarrays(SN_low_16_SN)
     if csp is not None:
-        csp.SetDefective("{}")
+        csp.SetDefective(json.dumps({"enabled": False}))
     if sdp is not None:
-        sdp.SetDefective("{}")
+        # sdp.SetDefective("{}")
+        pass
     if mccs is not None:
-        mccs.SetDefective("{}")
+        # mccs.SetDefective("{}")
+        mccs.SetDefective(json.dumps({"enabled": False}))
 
 
 def _run_assign_resources_for_all(
     central_node_low: CentralNodeWrapperLow,
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
     logs_dir: Path,
     subarray_ids: list[int],
@@ -202,14 +204,14 @@ def _run_assign_resources_for_all(
     assign_defect_sa_ids: set[int] = set()
 
     for sa_id in subarray_ids:
-        subarray_node_low.set_subarray_id(sa_id)
+        SN_low_16_SN.set_subarray_id(sa_id)
         defect = defects.get(DefectKey(sa_id, "AssignResources"))
 
         if defect:
             assign_defect_sa_ids.add(sa_id)
             try:
                 _apply_defect(
-                    subarray_node_low,
+                    SN_low_16_SN,
                     str(defect),
                 )
             except Exception:  # pylint: disable=broad-exception-caught
@@ -239,13 +241,13 @@ def _run_assign_resources_for_all(
                 ).within_timeout(
                     TIMEOUT
                 ).has_desired_result_code_message_in_lrcr_event(
-                    subarray_node_low.subarray_node,
+                    SN_low_16_SN.subarray_node,
                     ["Exception occurred"],
                     unique_id[0],
                     ResultCode.FAILED,
                 )
 
-                _reset_defects(subarray_node_low)
+                _reset_defects(SN_low_16_SN)
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
                     "Failed to reset defects after AssignResources for SA %s",
@@ -298,9 +300,9 @@ def _run_assign_resources_for_all(
 
     if defect_sa_ids:
         # for sa_id in defect_sa_ids:
-        #     subarray_node_low.set_subarray_id(sa_id)
+        #     SN_low_16_SN.set_subarray_id(sa_id)
         #     try:
-        #         _reset_defects(subarray_node_low)
+        #         _reset_defects(SN_low_16_SN)
         #     except Exception:  # pylint: disable=broad-exception-caught
         #         LOGGER.exception(
         #           "Failed to reset defects after AssignResources for SA %s",
@@ -574,7 +576,7 @@ def given_telescope_on(
 )
 def when_run_observations(
     central_node_low: CentralNodeWrapperLow,
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
     PlanName: str,
@@ -622,7 +624,7 @@ def when_run_observations(
 
     _run_assign_resources_for_all(
         central_node_low,
-        subarray_node_low,
+        SN_low_16_SN,
         event_tracer,
         logs_dir,
         pytest.subarray_ids,
@@ -634,7 +636,7 @@ def when_run_observations(
     configure_defect_sa_ids: set[int] = set()
     defective_configure_unique_ids: dict[int, tuple] = {}
     for sa_id in pytest.healthy_sa_ids:
-        subarray_node_low.set_subarray_id(sa_id)
+        SN_low_16_SN.set_subarray_id(sa_id)
         defect = pytest.defects.get(DefectKey(sa_id, "Configure"))
 
         # Best-effort defect injection for Configure.
@@ -642,7 +644,7 @@ def when_run_observations(
             try:
                 configure_defect_sa_ids.add(sa_id)
                 _apply_defect(
-                    subarray_node_low,
+                    SN_low_16_SN,
                     # "Configure",
                     str(defect),
                 )
@@ -653,11 +655,11 @@ def when_run_observations(
                     defect,
                 )
 
-        subarray_node_low.set_subarray_id(sa_id)
+        SN_low_16_SN.set_subarray_id(sa_id)
         cfg_str = (logs_dir / f"configure_subarray{sa_id}.json").read_text(
             encoding="utf-8"
         )
-        _, unique_id = subarray_node_low.execute_transition(
+        _, unique_id = SN_low_16_SN.execute_transition(
             "Configure",
             cfg_str,
         )
@@ -675,13 +677,13 @@ def when_run_observations(
                 ).within_timeout(
                     TIMEOUT
                 ).has_desired_result_code_message_in_lrcr_event(
-                    subarray_node_low.subarray_node,
+                    SN_low_16_SN.subarray_node,
                     ["Exception occurred"],
                     unique_id[0],
                     ResultCode.FAILED,
                 )
 
-                _reset_defects(subarray_node_low)
+                _reset_defects(SN_low_16_SN)
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
                     "Failed to reset defects after AssignResources for SA %s",
@@ -705,7 +707,7 @@ def when_run_observations(
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
+                SN_low_16_SN.subarray_node,
                 "longRunningCommandResult",
                 (
                     unique_id[0],
@@ -736,9 +738,9 @@ def when_run_observations(
 
     if defect_sa_ids:
         # for sa_id in defect_sa_ids:
-        #     subarray_node_low.set_subarray_id(sa_id)
+        #     SN_low_16_SN.set_subarray_id(sa_id)
         #     try:
-        #         _reset_defects(subarray_node_low)
+        #         _reset_defects(SN_low_16_SN)
         #     except Exception:  # pylint: disable=broad-exception-caught
         #         LOGGER.exception(
         #           "Failed to reset defects after AssignResources for SA %s",
@@ -756,7 +758,7 @@ def when_run_observations(
 @then("healthy subarrays complete observation cycle")
 def then_healthy_complete_observation_cycle(
     central_node_low: CentralNodeWrapperLow,
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ) -> None:
     """Smoke-check that subarrays without configured defects reach READY."""
@@ -773,12 +775,12 @@ def then_healthy_complete_observation_cycle(
         if DefectKey(sa_id, "Configure") in defects:
             continue
 
-        subarray_node_low.set_subarray_id(sa_id)
+        SN_low_16_SN.set_subarray_id(sa_id)
         try:
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
+                SN_low_16_SN.subarray_node,
                 "obsState",
                 ObsState.READY,
             )
@@ -789,7 +791,7 @@ def then_healthy_complete_observation_cycle(
 @when(parsers.parse("I try recovery as per {RecoverMatrix}"))
 def when_try_recovery(
     central_node_low: CentralNodeWrapperLow,
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
     RecoverMatrix: str,
 ) -> None:
@@ -804,20 +806,20 @@ def when_try_recovery(
         action = action.upper()
 
         if action == "RESTART":
-            subarray_node_low.set_subarray_id(sa_id)
+            SN_low_16_SN.set_subarray_id(sa_id)
             try:
-                subarray_node_low.execute_transition("Restart")
+                SN_low_16_SN.execute_transition("Restart")
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception("Restart failed for SA %s", sa_id)
 
         elif action == "ABORT_THEN_RESTART":
-            subarray_node_low.set_subarray_id(sa_id)
+            SN_low_16_SN.set_subarray_id(sa_id)
             try:
-                subarray_node_low.execute_transition("Abort")
+                SN_low_16_SN.execute_transition("Abort")
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception("Abort failed for SA %s", sa_id)
             try:
-                subarray_node_low.execute_transition("Restart")
+                SN_low_16_SN.execute_transition("Restart")
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception("Restart after Abort failed for SA %s", sa_id)
 
@@ -845,7 +847,7 @@ def when_try_recovery(
     )
 )
 def then_recoverable_back_to_state(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
     RecoveredObsState: str,
 ) -> None:
@@ -854,12 +856,12 @@ def then_recoverable_back_to_state(
     expected = ObsState[RecoveredObsState]
 
     for key in getattr(pytest, "recovery", {}):
-        subarray_node_low.set_subarray_id(key.subarray_id)
+        SN_low_16_SN.set_subarray_id(key.subarray_id)
         try:
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
+                SN_low_16_SN.subarray_node,
                 "obsState",
                 expected,
             )
