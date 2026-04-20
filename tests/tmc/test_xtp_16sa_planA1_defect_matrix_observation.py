@@ -767,6 +767,7 @@ def then_healthy_complete_observation_cycle(
 
     defects: dict[DefectKey, str] = getattr(pytest, "defects", {})
 
+    logging.info("Assertion started for healthy SNs")
     for sa_id in getattr(pytest, "subarray_ids", []):
         # Consider a subarray healthy if it has no defect for
         # AssignResources/Configure.
@@ -787,6 +788,8 @@ def then_healthy_complete_observation_cycle(
         except AssertionError:
             LOGGER.exception("Healthy SA %s did not reach READY", sa_id)
 
+    logging.info("Assertion completed for healthy SNs")
+
 
 @when(parsers.parse("I try recovery as per {RecoverMatrix}"))
 def when_try_recovery(
@@ -800,13 +803,16 @@ def when_try_recovery(
     _ = event_tracer
 
     pytest.recovery = _parse_matrix(RecoverMatrix, "RecoverMatrix")
+    logging.info("RecoverMatrix %s", RecoverMatrix)
 
     for key, action in pytest.recovery.items():
         sa_id = key.subarray_id
         action = action.upper()
 
         if action == "RESTART":
+
             SN_low_16_SN.set_subarray_id(sa_id)
+            logging.info(" Restart on - %s", sa_id)
             try:
                 SN_low_16_SN.execute_transition("Restart")
             except Exception:  # pylint: disable=broad-exception-caught
@@ -814,6 +820,7 @@ def when_try_recovery(
 
         elif action == "ABORT_THEN_RESTART":
             SN_low_16_SN.set_subarray_id(sa_id)
+            logging.info(" ABORT_THEN_RESTART on - %s", sa_id)
             try:
                 SN_low_16_SN.execute_transition("Abort")
             except Exception:  # pylint: disable=broad-exception-caught
@@ -827,6 +834,7 @@ def when_try_recovery(
             # Recovery via ReleaseResources runs through CentralNode.
             CN_low_16_SN.set_subarray_id(sa_id)
             try:
+                logging.info(" RELEASE_RESOURCES on %s", sa_id)
                 CN_low_16_SN.perform_action("ReleaseResources")
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception("ReleaseResources failed for SA %s", sa_id)
@@ -869,3 +877,5 @@ def then_recoverable_back_to_state(
             LOGGER.exception(
                 "Recoverable SA %s did not reach %s", key.subarray_id, expected
             )
+
+    logging.info("All Sns are moved to Ready")
