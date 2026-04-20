@@ -134,7 +134,9 @@ def given_quality_monitor_not_ready_for_scan(
 ):
     """Verify quality monitor readyToScan attrbute"""
     assert subarray_node_low.quality_monitor.readyToScan is False
-    csp_qa_metrics = subarray_node_low.qualityMetricsCspSubarray
+    csp_qa_metrics = (
+        subarray_node_low.quality_monitor.qualityMetricsCspSubarray
+    )
     logger.info("qualityMetricsCspSubarray: %s", csp_qa_metrics)
 
 
@@ -271,5 +273,7 @@ def check_if_quality_monitor_ready_for_scan(
         "readyToScan",
         True,
     )
-    csp_qa_metrics = subarray_node_low.qualityMetricsCspSubarray
+    csp_qa_metrics = (
+        subarray_node_low.quality_monitor.qualityMetricsCspSubarray
+    )
     logger.info("qualityMetricsCspSubarray: %s", csp_qa_metrics)
