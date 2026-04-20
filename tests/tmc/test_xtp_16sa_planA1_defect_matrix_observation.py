@@ -299,16 +299,6 @@ def _run_assign_resources_for_all(
         )
 
     if defect_sa_ids:
-        # for sa_id in defect_sa_ids:
-        #     SN_low_16_SN.set_subarray_id(sa_id)
-        #     try:
-        #         _reset_defects(SN_low_16_SN)
-        #     except Exception:  # pylint: disable=broad-exception-caught
-        #         LOGGER.exception(
-        #           "Failed to reset defects after AssignResources for SA %s",
-        #             sa_id,
-        #         )
-        #         assert False
         _wait_for_subarrays_obsstate(
             CN_low_16_SN,
             event_tracer,
@@ -393,6 +383,7 @@ def _run_configure_for_all(
     )
 
     for sa_id, unique_id in configure_unique_ids.items():
+        SN_low_16_SN.set_subarray_id(sa_id)
         try:
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
@@ -431,23 +422,26 @@ def _run_configure_for_all(
             CN_low_16_SN,
             event_tracer,
             defect_sa_ids,
-            ObsState.EMPTY,
+            ObsState.IDLE,
         )
 
 
 def _run_scan_for_all(
     CN_low_16_SN: CentralNodeWrapperLow,
     SN_low_16_SN: SubarrayNodeWrapperLow,
+    command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
-    defects: dict[DefectKey, str],
 ) -> None:
     # Execute Scan for all SAs (best-effort).
     scan_unique_ids: dict[int, tuple] = {}
     scan_defect_sa_ids: set[int] = set()
     defective_scan_unique_ids: dict[int, tuple] = {}
+    scan_input_json = prepare_json_args_for_commands(
+        "scan_low", command_input_factory
+    )
     for sa_id in pytest.healthy_sa_ids:
         SN_low_16_SN.set_subarray_id(sa_id)
-        defect = defects.get(DefectKey(sa_id, "Scan"))
+        defect = pytest.defects.get(DefectKey(sa_id, "Scan"))
 
         if defect:
             try:
@@ -464,7 +458,7 @@ def _run_scan_for_all(
                     defect,
                 )
 
-        _, unique_id = SN_low_16_SN.execute_transition("Scan")
+        _, unique_id = SN_low_16_SN.execute_transition("Scan", scan_input_json)
 
         if defect:
             try:
@@ -499,6 +493,8 @@ def _run_scan_for_all(
             )
 
     for sa_id, unique_id in scan_unique_ids.items():
+        SN_low_16_SN.set_subarray_id(sa_id)
+
         try:
             assert_that(event_tracer).within_timeout(
                 TIMEOUT * 2
@@ -855,8 +851,8 @@ def when_run_observations(
     _run_scan_for_all(
         CN_low_16_SN,
         SN_low_16_SN,
+        command_input_factory,
         event_tracer,
-        pytest.defects,
     )
 
 
