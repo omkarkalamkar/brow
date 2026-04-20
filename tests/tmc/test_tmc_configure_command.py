@@ -252,14 +252,14 @@ def check_if_quality_monitor_ready_for_scan(
     event_tracer.subscribe_event(
         subarray_node_low.quality_monitor, "readyToScan"
     )
-    event_tracer.subscribe_event(
-        subarray_node_low.quality_monitor, "qualityMetricsCspSubarray"
-    )
+    # event_tracer.subscribe_event(
+    #     subarray_node_low.quality_monitor, "qualityMetricsCspSubarray"
+    # )
     log_events(
         {
             subarray_node_low.quality_monitor: [
                 "readyToScan",
-                "qualityMetricsCspSubarray",
+                # "qualityMetricsCspSubarray",
             ],
         }
     )
