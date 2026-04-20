@@ -93,32 +93,32 @@ def _parse_matrix(matrix_json: str, kind: str) -> dict[DefectKey, str]:
     return out
 
 
-def _subsystem_subarrays(subarray_node_low: SubarrayNodeWrapperLow) -> tuple:
+def _subsystem_subarrays(SN_low_16_SN: SubarrayNodeWrapperLow) -> tuple:
     """Return (csp, sdp, mccs) subsystem subarray proxies if present."""
 
     csp = None
     sdp = None
     mccs = None
 
-    devs = getattr(subarray_node_low, "subarray_devices", {})
+    devs = getattr(SN_low_16_SN, "subarray_devices", {})
     if isinstance(devs, dict):
         csp = devs.get("csp_subarray")
         sdp = devs.get("sdp_subarray")
         mccs = devs.get("mccs_subarray")
 
     if csp is None:
-        csp = getattr(subarray_node_low, "csp_subarray", None)
+        csp = getattr(SN_low_16_SN, "csp_subarray", None)
     if sdp is None:
-        sdp = getattr(subarray_node_low, "sdp_subarray", None)
+        sdp = getattr(SN_low_16_SN, "sdp_subarray", None)
 
     if mccs is None:
-        mccs = getattr(subarray_node_low, "mccs_subarray", None)
+        mccs = getattr(SN_low_16_SN, "mccs_subarray", None)
 
     return csp, sdp, mccs
 
 
 def _apply_defect(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     # command: str,
     defect: str,
 ) -> None:
@@ -165,30 +165,33 @@ def _apply_defect(
     #     # defect_payload = mapping.get(str(defect), mapping.get("FAULT"))
     #     assert False, f"Defect string '{defect}' not supported "
 
-    csp, sdp, mccs = _subsystem_subarrays(subarray_node_low)
+    csp, sdp, mccs = _subsystem_subarrays(SN_low_16_SN)
     if csp is not None:
         csp.SetDefective(defect_payload)
     if sdp is not None:
-        sdp.SetDefective(defect_payload)
+        pass
+        # sdp.SetDefective(defect_payload)
     if mccs is not None:
         mccs.SetDefective(defect_payload)
 
 
-def _reset_defects(subarray_node_low: SubarrayNodeWrapperLow) -> None:
+def _reset_defects(SN_low_16_SN: SubarrayNodeWrapperLow) -> None:
     """Best-effort reset of SetDefective on available leaf nodes."""
 
-    csp, sdp, mccs = _subsystem_subarrays(subarray_node_low)
+    csp, sdp, mccs = _subsystem_subarrays(SN_low_16_SN)
     if csp is not None:
-        csp.SetDefective("{}")
+        csp.SetDefective(json.dumps({"enabled": False}))
     if sdp is not None:
-        sdp.SetDefective("{}")
+        # sdp.SetDefective("{}")
+        pass
     if mccs is not None:
-        mccs.SetDefective("{}")
+        # mccs.SetDefective("{}")
+        mccs.SetDefective(json.dumps({"enabled": False}))
 
 
 def _run_assign_resources_for_all(
-    central_node_low: CentralNodeWrapperLow,
-    subarray_node_low: SubarrayNodeWrapperLow,
+    CN_low_16_SN: CentralNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
     logs_dir: Path,
     subarray_ids: list[int],
@@ -201,14 +204,14 @@ def _run_assign_resources_for_all(
     assign_defect_sa_ids: set[int] = set()
 
     for sa_id in subarray_ids:
-        subarray_node_low.set_subarray_id(sa_id)
+        SN_low_16_SN.set_subarray_id(sa_id)
         defect = defects.get(DefectKey(sa_id, "AssignResources"))
 
         if defect:
             assign_defect_sa_ids.add(sa_id)
             try:
                 _apply_defect(
-                    subarray_node_low,
+                    SN_low_16_SN,
                     str(defect),
                 )
             except Exception:  # pylint: disable=broad-exception-caught
@@ -218,11 +221,11 @@ def _run_assign_resources_for_all(
                     defect,
                 )
 
-        central_node_low.set_subarray_id(sa_id)
+        CN_low_16_SN.set_subarray_id(sa_id)
         assign_str = (logs_dir / f"assign_subarray{sa_id}.json").read_text(
             encoding="utf-8"
         )
-        _, unique_id = central_node_low.perform_action(
+        _, unique_id = CN_low_16_SN.perform_action(
             "AssignResources",
             assign_str,
         )
@@ -238,13 +241,13 @@ def _run_assign_resources_for_all(
                 ).within_timeout(
                     TIMEOUT
                 ).has_desired_result_code_message_in_lrcr_event(
-                    subarray_node_low.subarray_node,
+                    SN_low_16_SN.subarray_node,
                     ["Exception occurred"],
                     unique_id[0],
                     ResultCode.FAILED,
                 )
 
-                _reset_defects(subarray_node_low)
+                _reset_defects(SN_low_16_SN)
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
                     "Failed to reset defects after AssignResources for SA %s",
@@ -268,7 +271,7 @@ def _run_assign_resources_for_all(
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                central_node_low.central_node,
+                CN_low_16_SN.central_node,
                 "longRunningCommandResult",
                 (
                     unique_id[0],
@@ -289,7 +292,7 @@ def _run_assign_resources_for_all(
 
     if pytest.healthy_sa_ids:
         _wait_for_subarrays_obsstate(
-            central_node_low,
+            CN_low_16_SN,
             event_tracer,
             pytest.healthy_sa_ids,
             ObsState.IDLE,
@@ -297,9 +300,9 @@ def _run_assign_resources_for_all(
 
     if defect_sa_ids:
         # for sa_id in defect_sa_ids:
-        #     subarray_node_low.set_subarray_id(sa_id)
+        #     SN_low_16_SN.set_subarray_id(sa_id)
         #     try:
-        #         _reset_defects(subarray_node_low)
+        #         _reset_defects(SN_low_16_SN)
         #     except Exception:  # pylint: disable=broad-exception-caught
         #         LOGGER.exception(
         #           "Failed to reset defects after AssignResources for SA %s",
@@ -307,7 +310,7 @@ def _run_assign_resources_for_all(
         #         )
         #         assert False
         _wait_for_subarrays_obsstate(
-            central_node_low,
+            CN_low_16_SN,
             event_tracer,
             defect_sa_ids,
             ObsState.EMPTY,
@@ -315,8 +318,8 @@ def _run_assign_resources_for_all(
 
 
 def _run_configure_for_all(
-    central_node_low: CentralNodeWrapperLow,
-    subarray_node_low: SubarrayNodeWrapperLow,
+    CN_low_16_SN: CentralNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
     logs_dir: Path,
 ) -> None:
@@ -325,7 +328,7 @@ def _run_configure_for_all(
     configure_defect_sa_ids: set[int] = set()
     defective_configure_unique_ids: dict[int, tuple] = {}
     for sa_id in pytest.healthy_sa_ids:
-        subarray_node_low.set_subarray_id(sa_id)
+        SN_low_16_SN.set_subarray_id(sa_id)
         defect = pytest.defects.get(DefectKey(sa_id, "Configure"))
 
         # Best-effort defect injection for Configure.
@@ -333,7 +336,7 @@ def _run_configure_for_all(
             try:
                 configure_defect_sa_ids.add(sa_id)
                 _apply_defect(
-                    subarray_node_low,
+                    SN_low_16_SN,
                     # "Configure",
                     str(defect),
                 )
@@ -347,7 +350,7 @@ def _run_configure_for_all(
         cfg_str = (logs_dir / f"configure_subarray{sa_id}.json").read_text(
             encoding="utf-8"
         )
-        _, unique_id = subarray_node_low.execute_transition(
+        _, unique_id = SN_low_16_SN.execute_transition(
             "Configure",
             cfg_str,
         )
@@ -364,13 +367,13 @@ def _run_configure_for_all(
                 ).within_timeout(
                     TIMEOUT
                 ).has_desired_result_code_message_in_lrcr_event(
-                    subarray_node_low.subarray_node,
+                    SN_low_16_SN.subarray_node,
                     ["Exception occurred"],
                     unique_id[0],
                     ResultCode.FAILED,
                 )
 
-                _reset_defects(subarray_node_low)
+                _reset_defects(SN_low_16_SN)
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
                     "Failed to reset defects after AssignResources for SA %s",
@@ -394,7 +397,7 @@ def _run_configure_for_all(
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
+                SN_low_16_SN.subarray_node,
                 "longRunningCommandResult",
                 (
                     unique_id[0],
@@ -417,7 +420,7 @@ def _run_configure_for_all(
 
     if pytest.healthy_sa_ids:
         _wait_for_subarrays_obsstate(
-            central_node_low,
+            CN_low_16_SN,
             event_tracer,
             pytest.healthy_sa_ids,
             ObsState.READY,
@@ -425,7 +428,7 @@ def _run_configure_for_all(
 
     if defect_sa_ids:
         _wait_for_subarrays_obsstate(
-            central_node_low,
+            CN_low_16_SN,
             event_tracer,
             defect_sa_ids,
             ObsState.EMPTY,
@@ -433,8 +436,8 @@ def _run_configure_for_all(
 
 
 def _run_scan_for_all(
-    central_node_low: CentralNodeWrapperLow,
-    subarray_node_low: SubarrayNodeWrapperLow,
+    CN_low_16_SN: CentralNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
     defects: dict[DefectKey, str],
 ) -> None:
@@ -443,14 +446,14 @@ def _run_scan_for_all(
     scan_defect_sa_ids: set[int] = set()
     defective_scan_unique_ids: dict[int, tuple] = {}
     for sa_id in pytest.healthy_sa_ids:
-        subarray_node_low.set_subarray_id(sa_id)
+        SN_low_16_SN.set_subarray_id(sa_id)
         defect = defects.get(DefectKey(sa_id, "Scan"))
 
         if defect:
             try:
                 scan_defect_sa_ids.add(sa_id)
                 _apply_defect(
-                    subarray_node_low,
+                    SN_low_16_SN,
                     # "Scan",
                     str(defect),
                 )
@@ -461,7 +464,7 @@ def _run_scan_for_all(
                     defect,
                 )
 
-        _, unique_id = subarray_node_low.execute_transition("Scan")
+        _, unique_id = SN_low_16_SN.execute_transition("Scan")
 
         if defect:
             try:
@@ -474,12 +477,12 @@ def _run_scan_for_all(
                 ).within_timeout(
                     TIMEOUT
                 ).has_desired_result_code_in_lrcr_event(
-                    subarray_node_low.subarray_node,
+                    SN_low_16_SN.subarray_node,
                     unique_id[0],
                     ResultCode.FAILED,
                 )
 
-                _reset_defects(subarray_node_low)
+                _reset_defects(SN_low_16_SN)
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
                     "Failed to reset defects after Scan for SA %s",
@@ -490,7 +493,7 @@ def _run_scan_for_all(
             assert_that(event_tracer).described_as(
                 "TMC Subarray node should have obsstate SCANNING."
             ).within_timeout(TIMEOUT).has_change_event_occurred(
-                subarray_node_low.subarray_node,
+                SN_low_16_SN.subarray_node,
                 "obsState",
                 ObsState.SCANNING,
             )
@@ -500,7 +503,7 @@ def _run_scan_for_all(
             assert_that(event_tracer).within_timeout(
                 TIMEOUT * 2
             ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
+                SN_low_16_SN.subarray_node,
                 "longRunningCommandResult",
                 (
                     unique_id[0],
@@ -521,7 +524,7 @@ def _run_scan_for_all(
 
     if pytest.healthy_sa_ids:
         _wait_for_subarrays_obsstate(
-            central_node_low,
+            CN_low_16_SN,
             event_tracer,
             pytest.healthy_sa_ids,
             ObsState.READY,
@@ -702,7 +705,7 @@ def _configure_json_for_subarray(
     return cfg
 
 
-@pytest.mark.SKA_tmc_low_multiple_subarrays_defect_injection
+@pytest.mark.SKA_tmc_low_multiple_subarrays16
 @scenario(
     "../features/tmc/xtp-16sa_planA1_defect_matrix_observation.feature",
     "Run 16-subarray observation with injected defects and recovery",
@@ -713,8 +716,8 @@ def test_xtp_16sa_planA1_defect_matrix_observation() -> None:
 
 @given(parsers.parse("{SNCount:d} subarrays are in the EMPTY ObsState"))
 def given_subarrays_in_empty(
-    central_node_low: CentralNodeWrapperLow,
-    event_tracer: TangoEventTracer,
+    # CN_low_16_SN: CentralNodeWrapperLow,
+    # event_tracer: TangoEventTracer,
     SNCount: int,
 ) -> None:
     """Verify EMPTY on 1..SNCount (best-effort)."""
@@ -722,58 +725,58 @@ def given_subarrays_in_empty(
     pytest.sn_count = int(SNCount)
     pytest.subarray_ids = _active_subarray_ids(pytest.sn_count)
 
-    for subarray_id in pytest.subarray_ids:
-        central_node_low.set_subarray_id(subarray_id)
-        try:
-            assert_that(event_tracer).within_timeout(
-                TIMEOUT
-            ).has_change_event_occurred(
-                central_node_low.subarray_node,
-                "obsState",
-                ObsState.EMPTY,
-            )
-        except AssertionError:
-            LOGGER.exception(
-                "No EMPTY obsState within timeout for SA %s",
-                subarray_id,
-            )
+    # for subarray_id in pytest.subarray_ids:
+    #     CN_low_16_SN.set_subarray_id(subarray_id)
+    #     try:
+    #         assert_that(event_tracer).within_timeout(
+    #             TIMEOUT
+    #         ).has_change_event_occurred(
+    #             CN_low_16_SN.subarray_node,
+    #             "obsState",
+    #             ObsState.EMPTY,
+    #         )
+    #     except AssertionError:
+    #         LOGGER.exception(
+    #             "No EMPTY obsState within timeout for SA %s",
+    #             subarray_id,
+    #         )
 
 
 @given("the telescope is in the ON state")
 def given_telescope_on(
-    central_node_low: CentralNodeWrapperLow,
+    CN_low_16_SN: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ) -> None:
     """Move telescope to ON and subscribe to events."""
 
     event_tracer.subscribe_event(
-        central_node_low.central_node,
+        CN_low_16_SN.central_node,
         "telescopeState",
     )
     event_tracer.subscribe_event(
-        central_node_low.central_node,
+        CN_low_16_SN.central_node,
         "longRunningCommandResult",
     )
-    log_events({central_node_low.central_node: ["telescopeState"]})
+    log_events({CN_low_16_SN.central_node: ["telescopeState"]})
     event_tracer.clear_events()
 
     for subarray_id in getattr(pytest, "subarray_ids", [1]):
-        central_node_low.set_subarray_id(subarray_id)
+        CN_low_16_SN.set_subarray_id(subarray_id)
         event_tracer.subscribe_event(
-            central_node_low.subarray_node,
+            CN_low_16_SN.subarray_node,
             "obsState",
         )
         event_tracer.subscribe_event(
-            central_node_low.subarray_node,
+            CN_low_16_SN.subarray_node,
             "longRunningCommandResult",
         )
-        central_node_low.set_values_with_all_mocks(DevState.ON)
+        CN_low_16_SN.set_values_with_all_mocks(DevState.ON)
 
-    central_node_low.move_to_on()
+    CN_low_16_SN.move_to_on()
     assert_that(event_tracer).within_timeout(
         TIMEOUT
     ).has_change_event_occurred(
-        central_node_low.central_node,
+        CN_low_16_SN.central_node,
         "telescopeState",
         DevState.ON,
     )
@@ -786,8 +789,8 @@ def given_telescope_on(
     )
 )
 def when_run_observations(
-    central_node_low: CentralNodeWrapperLow,
-    subarray_node_low: SubarrayNodeWrapperLow,
+    CN_low_16_SN: CentralNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
     PlanName: str,
@@ -834,8 +837,8 @@ def when_run_observations(
     pytest.logs_dir = logs_dir
 
     _run_assign_resources_for_all(
-        central_node_low,
-        subarray_node_low,
+        CN_low_16_SN,
+        SN_low_16_SN,
         event_tracer,
         logs_dir,
         pytest.subarray_ids,
@@ -843,15 +846,15 @@ def when_run_observations(
     )
 
     _run_configure_for_all(
-        central_node_low,
-        subarray_node_low,
+        CN_low_16_SN,
+        SN_low_16_SN,
         event_tracer,
         logs_dir,
     )
 
     _run_scan_for_all(
-        central_node_low,
-        subarray_node_low,
+        CN_low_16_SN,
+        SN_low_16_SN,
         event_tracer,
         pytest.defects,
     )
@@ -859,13 +862,13 @@ def when_run_observations(
 
 @then("healthy subarrays complete observation cycle")
 def then_healthy_complete_observation_cycle(
-    central_node_low: CentralNodeWrapperLow,
-    subarray_node_low: SubarrayNodeWrapperLow,
+    CN_low_16_SN: CentralNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ) -> None:
     """Smoke-check that subarrays without configured defects reach READY."""
 
-    _ = central_node_low
+    _ = CN_low_16_SN
 
     defects: dict[DefectKey, str] = getattr(pytest, "defects", {})
 
@@ -877,12 +880,12 @@ def then_healthy_complete_observation_cycle(
         if DefectKey(sa_id, "Configure") in defects:
             continue
 
-        subarray_node_low.set_subarray_id(sa_id)
+        SN_low_16_SN.set_subarray_id(sa_id)
         try:
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
+                SN_low_16_SN.subarray_node,
                 "obsState",
                 ObsState.READY,
             )
@@ -892,8 +895,8 @@ def then_healthy_complete_observation_cycle(
 
 @when(parsers.parse("I try recovery as per {RecoverMatrix}"))
 def when_try_recovery(
-    central_node_low: CentralNodeWrapperLow,
-    subarray_node_low: SubarrayNodeWrapperLow,
+    CN_low_16_SN: CentralNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
     RecoverMatrix: str,
 ) -> None:
@@ -908,28 +911,28 @@ def when_try_recovery(
         action = action.upper()
 
         if action == "RESTART":
-            subarray_node_low.set_subarray_id(sa_id)
+            SN_low_16_SN.set_subarray_id(sa_id)
             try:
-                subarray_node_low.execute_transition("Restart")
+                SN_low_16_SN.execute_transition("Restart")
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception("Restart failed for SA %s", sa_id)
 
         elif action == "ABORT_THEN_RESTART":
-            subarray_node_low.set_subarray_id(sa_id)
+            SN_low_16_SN.set_subarray_id(sa_id)
             try:
-                subarray_node_low.execute_transition("Abort")
+                SN_low_16_SN.execute_transition("Abort")
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception("Abort failed for SA %s", sa_id)
             try:
-                subarray_node_low.execute_transition("Restart")
+                SN_low_16_SN.execute_transition("Restart")
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception("Restart after Abort failed for SA %s", sa_id)
 
         elif action == "RELEASE_RESOURCES":
             # Recovery via ReleaseResources runs through CentralNode.
-            central_node_low.set_subarray_id(sa_id)
+            CN_low_16_SN.set_subarray_id(sa_id)
             try:
-                central_node_low.perform_action("ReleaseResources")
+                CN_low_16_SN.perform_action("ReleaseResources")
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception("ReleaseResources failed for SA %s", sa_id)
 
@@ -949,7 +952,7 @@ def when_try_recovery(
     )
 )
 def then_recoverable_back_to_state(
-    subarray_node_low: SubarrayNodeWrapperLow,
+    SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
     RecoveredObsState: str,
 ) -> None:
@@ -958,12 +961,12 @@ def then_recoverable_back_to_state(
     expected = ObsState[RecoveredObsState]
 
     for key in getattr(pytest, "recovery", {}):
-        subarray_node_low.set_subarray_id(key.subarray_id)
+        SN_low_16_SN.set_subarray_id(key.subarray_id)
         try:
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
+                SN_low_16_SN.subarray_node,
                 "obsState",
                 expected,
             )

@@ -78,9 +78,9 @@ centralnode:
 
 subarraynode:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-subarraynode
+    registry: artefact.skao.int
     image: ska-tmc-subarraynode
-    tag: 1.8.0-dev.c723969fd
+    tag: 1.5.0
     pullPolicy: IfNotPresent
 
 sdpleafnodes:
@@ -183,7 +183,7 @@ deviceServers:
     EventSubscriptionCheckPeriod: 0.5
     SDPSubarrayAdminModeEnabled: true
     family: "subarray-leaf-node-sdp"
-    LoggingLevel: "5"
+    LoggingLevel: "4"
 
   sdpmasterleafnode:
     enabled: true
@@ -195,7 +195,7 @@ deviceServers:
     SDPMasterAdminModeEnabled: true
     family: "leaf-node-sdp"
     member: "0"
-    LoggingLevel: "5"
+    LoggingLevel: "4"
 
   cspmasterleafnode:
     enabled: true
@@ -206,7 +206,7 @@ deviceServers:
     EventSubscriptionCheckPeriod: 0.5
     family: "leaf-node-csp"
     member: "0"
-    LoggingLevel: "5"
+    LoggingLevel: "4"
 
   mccsmasterleafnode:
     enabled: true
@@ -218,7 +218,7 @@ deviceServers:
     AdapterTimeOut: 2.0
     family: "leaf-node-mccs"
     member: "0"
-    LoggingLevel: "5"
+    LoggingLevel: "4"
 
   cspsubarrayleafnode:
     enabled: true
@@ -240,7 +240,7 @@ deviceServers:
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     family: "subarray-leaf-node-csp"
-    LoggingLevel: "5"
+    LoggingLevel: "4"
 
   mccssubarrayleafnode:
     enabled: true
@@ -250,7 +250,7 @@ deviceServers:
     CommandTimeOutDefault: 50
     AdapterTimeOut: 2.0
     family: "subarray-leaf-node-mccs"
-    LoggingLevel: "5"
+    LoggingLevel: "4"
 
   resourcemonitor:
     enabled: true
@@ -259,7 +259,7 @@ deviceServers:
     LivelinessCheckPeriod: 0.5
     EventSubscriptionCheckPeriod: 0.5
     family: "resource-monitor"
-    LoggingLevel: "5"
+    LoggingLevel: "4"
 
 nodeSelector: {}
 
