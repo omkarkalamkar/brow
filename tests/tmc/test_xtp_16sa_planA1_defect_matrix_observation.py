@@ -314,6 +314,220 @@ def _run_assign_resources_for_all(
         )
 
 
+def _run_configure_for_all(
+    central_node_low: CentralNodeWrapperLow,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    logs_dir: Path,
+) -> None:
+    # Execute Configure for all SAs (best-effort).
+    configure_unique_ids: dict[int, tuple] = {}
+    configure_defect_sa_ids: set[int] = set()
+    defective_configure_unique_ids: dict[int, tuple] = {}
+    for sa_id in pytest.healthy_sa_ids:
+        subarray_node_low.set_subarray_id(sa_id)
+        defect = pytest.defects.get(DefectKey(sa_id, "Configure"))
+
+        # Best-effort defect injection for Configure.
+        if defect:
+            try:
+                configure_defect_sa_ids.add(sa_id)
+                _apply_defect(
+                    subarray_node_low,
+                    # "Configure",
+                    str(defect),
+                )
+            except Exception:  # pylint: disable=broad-exception-caught
+                LOGGER.exception(
+                    "Failed to apply Configure defect for SA %s: %s",
+                    sa_id,
+                    defect,
+                )
+
+        cfg_str = (logs_dir / f"configure_subarray{sa_id}.json").read_text(
+            encoding="utf-8"
+        )
+        _, unique_id = subarray_node_low.execute_transition(
+            "Configure",
+            cfg_str,
+        )
+
+        if defect:
+
+            try:
+                defective_configure_unique_ids[sa_id] = unique_id
+
+                assert_that(event_tracer).described_as(
+                    "TMC Subarray Leaf Node "
+                    "is expected to report a"
+                    "longRunningCommand  failure."
+                ).within_timeout(
+                    TIMEOUT
+                ).has_desired_result_code_message_in_lrcr_event(
+                    subarray_node_low.subarray_node,
+                    ["Exception occurred"],
+                    unique_id[0],
+                    ResultCode.FAILED,
+                )
+
+                _reset_defects(subarray_node_low)
+            except Exception:  # pylint: disable=broad-exception-caught
+                LOGGER.exception(
+                    "Failed to reset defects after AssignResources for SA %s",
+                    sa_id,
+                )
+        else:
+            configure_unique_ids[sa_id] = unique_id
+
+    pytest.configure_unique_ids = configure_unique_ids
+    pytest.defective_configure_unique_ids = defective_configure_unique_ids
+    pytest.configure_defect_sa_ids = configure_defect_sa_ids
+
+    logging.info(
+        "configure_unique_ids=%s defective_configure_unique_ids=%s",
+        configure_unique_ids,
+        defective_configure_unique_ids,
+    )
+
+    for sa_id, unique_id in configure_unique_ids.items():
+        try:
+            assert_that(event_tracer).within_timeout(
+                TIMEOUT
+            ).has_change_event_occurred(
+                subarray_node_low.subarray_node,
+                "longRunningCommandResult",
+                (
+                    unique_id[0],
+                    json.dumps((0, "Command Completed")),
+                ),
+            )
+        except AssertionError:
+            LOGGER.exception(
+                "No LRCR OK for Configure SA %s unique_id=%s",
+                sa_id,
+                unique_id,
+            )
+
+    pytest.healthy_sa_ids = [
+        sa_id
+        for sa_id in pytest.healthy_sa_ids
+        if sa_id not in configure_defect_sa_ids
+    ]
+    defect_sa_ids = sorted(configure_defect_sa_ids)
+
+    if pytest.healthy_sa_ids:
+        _wait_for_subarrays_obsstate(
+            central_node_low,
+            event_tracer,
+            pytest.healthy_sa_ids,
+            ObsState.READY,
+        )
+
+    if defect_sa_ids:
+        _wait_for_subarrays_obsstate(
+            central_node_low,
+            event_tracer,
+            defect_sa_ids,
+            ObsState.EMPTY,
+        )
+
+
+def _run_scan_for_all(
+    central_node_low: CentralNodeWrapperLow,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    defects: dict[DefectKey, str],
+) -> None:
+    # Execute Scan for all SAs (best-effort).
+    scan_unique_ids: dict[int, tuple] = {}
+    scan_defect_sa_ids: set[int] = set()
+    defective_scan_unique_ids: dict[int, tuple] = {}
+    for sa_id in pytest.healthy_sa_ids:
+        subarray_node_low.set_subarray_id(sa_id)
+        defect = defects.get(DefectKey(sa_id, "Scan"))
+
+        if defect:
+            try:
+                scan_defect_sa_ids.add(sa_id)
+                _apply_defect(
+                    subarray_node_low,
+                    # "Scan",
+                    str(defect),
+                )
+            except Exception:  # pylint: disable=broad-exception-caught
+                LOGGER.exception(
+                    "Failed to apply Scan defect for SA %s: %s",
+                    sa_id,
+                    defect,
+                )
+
+        _, unique_id = subarray_node_low.execute_transition("Scan")
+
+        if defect:
+            try:
+                defective_scan_unique_ids[sa_id] = unique_id
+
+                assert_that(event_tracer).described_as(
+                    "TMC Subarray Leaf Node "
+                    "is expected to report a"
+                    "longRunningCommand  failure."
+                ).within_timeout(
+                    TIMEOUT
+                ).has_desired_result_code_in_lrcr_event(
+                    subarray_node_low.subarray_node,
+                    unique_id[0],
+                    ResultCode.FAILED,
+                )
+
+                _reset_defects(subarray_node_low)
+            except Exception:  # pylint: disable=broad-exception-caught
+                LOGGER.exception(
+                    "Failed to reset defects after Scan for SA %s",
+                    sa_id,
+                )
+        else:
+            scan_unique_ids[sa_id] = unique_id
+            assert_that(event_tracer).described_as(
+                "TMC Subarray node should have obsstate SCANNING."
+            ).within_timeout(TIMEOUT).has_change_event_occurred(
+                subarray_node_low.subarray_node,
+                "obsState",
+                ObsState.SCANNING,
+            )
+
+    for sa_id, unique_id in scan_unique_ids.items():
+        try:
+            assert_that(event_tracer).within_timeout(
+                TIMEOUT * 2
+            ).has_change_event_occurred(
+                subarray_node_low.subarray_node,
+                "longRunningCommandResult",
+                (
+                    unique_id[0],
+                    json.dumps((0, "Command Completed")),
+                ),
+            )
+        except AssertionError:
+            LOGGER.exception(
+                "No LRCR OK for Scan SA %s unique_id=%s",
+                sa_id,
+                unique_id,
+            )
+    pytest.healthy_sa_ids = [
+        sa_id
+        for sa_id in pytest.healthy_sa_ids
+        if sa_id not in scan_defect_sa_ids
+    ]
+
+    if pytest.healthy_sa_ids:
+        _wait_for_subarrays_obsstate(
+            central_node_low,
+            event_tracer,
+            pytest.healthy_sa_ids,
+            ObsState.READY,
+        )
+
+
 def _pss_id_for_subarray(base_pss_id: int, subarray_id: int) -> int:
     """Return a stable unique PSS beam id per subarray.
 
@@ -499,8 +713,8 @@ def test_xtp_16sa_planA1_defect_matrix_observation() -> None:
 
 @given(parsers.parse("{SNCount:d} subarrays are in the EMPTY ObsState"))
 def given_subarrays_in_empty(
-    # central_node_low: CentralNodeWrapperLow,
-    # event_tracer: TangoEventTracer,
+    central_node_low: CentralNodeWrapperLow,
+    event_tracer: TangoEventTracer,
     SNCount: int,
 ) -> None:
     """Verify EMPTY on 1..SNCount (best-effort)."""
@@ -508,21 +722,21 @@ def given_subarrays_in_empty(
     pytest.sn_count = int(SNCount)
     pytest.subarray_ids = _active_subarray_ids(pytest.sn_count)
 
-    # for subarray_id in pytest.subarray_ids:
-    #     central_node_low.set_subarray_id(subarray_id)
-    #     try:
-    #         assert_that(event_tracer).within_timeout(
-    #             TIMEOUT
-    #         ).has_change_event_occurred(
-    #             central_node_low.subarray_node,
-    #             "obsState",
-    #             ObsState.EMPTY,
-    #         )
-    #     except AssertionError:
-    #         LOGGER.exception(
-    #             "No EMPTY obsState within timeout for SA %s",
-    #             subarray_id,
-    #         )
+    for subarray_id in pytest.subarray_ids:
+        central_node_low.set_subarray_id(subarray_id)
+        try:
+            assert_that(event_tracer).within_timeout(
+                TIMEOUT
+            ).has_change_event_occurred(
+                central_node_low.subarray_node,
+                "obsState",
+                ObsState.EMPTY,
+            )
+        except AssertionError:
+            LOGGER.exception(
+                "No EMPTY obsState within timeout for SA %s",
+                subarray_id,
+            )
 
 
 @given("the telescope is in the ON state")
@@ -628,128 +842,19 @@ def when_run_observations(
         pytest.defects,
     )
 
-    # Execute Configure for all SAs (best-effort).
-    configure_unique_ids: dict[int, tuple] = {}
-    configure_defect_sa_ids: set[int] = set()
-    defective_configure_unique_ids: dict[int, tuple] = {}
-    for sa_id in pytest.healthy_sa_ids:
-        subarray_node_low.set_subarray_id(sa_id)
-        defect = pytest.defects.get(DefectKey(sa_id, "Configure"))
-
-        # Best-effort defect injection for Configure.
-        if defect:
-            try:
-                configure_defect_sa_ids.add(sa_id)
-                _apply_defect(
-                    subarray_node_low,
-                    # "Configure",
-                    str(defect),
-                )
-            except Exception:  # pylint: disable=broad-exception-caught
-                LOGGER.exception(
-                    "Failed to apply Configure defect for SA %s: %s",
-                    sa_id,
-                    defect,
-                )
-
-        subarray_node_low.set_subarray_id(sa_id)
-        cfg_str = (logs_dir / f"configure_subarray{sa_id}.json").read_text(
-            encoding="utf-8"
-        )
-        _, unique_id = subarray_node_low.execute_transition(
-            "Configure",
-            cfg_str,
-        )
-        # configure_unique_ids[sa_id] = unique_id
-
-        if defect:
-
-            try:
-                defective_configure_unique_ids[sa_id] = unique_id
-
-                assert_that(event_tracer).described_as(
-                    "TMC Subarray Leaf Node "
-                    "is expected to report a"
-                    "longRunningCommand  failure."
-                ).within_timeout(
-                    TIMEOUT
-                ).has_desired_result_code_message_in_lrcr_event(
-                    subarray_node_low.subarray_node,
-                    ["Exception occurred"],
-                    unique_id[0],
-                    ResultCode.FAILED,
-                )
-
-                _reset_defects(subarray_node_low)
-            except Exception:  # pylint: disable=broad-exception-caught
-                LOGGER.exception(
-                    "Failed to reset defects after AssignResources for SA %s",
-                    sa_id,
-                )
-        else:
-            configure_unique_ids[sa_id] = unique_id
-
-    pytest.configure_unique_ids = configure_unique_ids
-    pytest.defective_configure_unique_ids = defective_configure_unique_ids
-    pytest.configure_defect_sa_ids = configure_defect_sa_ids
-
-    logging.info(
-        "configure_unique_ids=%s defective_configure_unique_ids=%s",
-        configure_unique_ids,
-        defective_configure_unique_ids,
+    _run_configure_for_all(
+        central_node_low,
+        subarray_node_low,
+        event_tracer,
+        logs_dir,
     )
 
-    for sa_id, unique_id in configure_unique_ids.items():
-        try:
-            assert_that(event_tracer).within_timeout(
-                TIMEOUT
-            ).has_change_event_occurred(
-                subarray_node_low.subarray_node,
-                "longRunningCommandResult",
-                (
-                    unique_id[0],
-                    json.dumps((0, "Command Completed")),
-                ),
-            )
-        except AssertionError:
-            LOGGER.exception(
-                "No LRCR OK for Configure SA %s unique_id=%s",
-                sa_id,
-                unique_id,
-            )
-
-    pytest.healthy_sa_ids = [
-        sa_id
-        for sa_id in pytest.healthy_sa_ids
-        if sa_id not in configure_defect_sa_ids
-    ]
-    defect_sa_ids = sorted(configure_defect_sa_ids)
-
-    if pytest.healthy_sa_ids:
-        _wait_for_subarrays_obsstate(
-            central_node_low,
-            event_tracer,
-            pytest.healthy_sa_ids,
-            ObsState.READY,
-        )
-
-    if defect_sa_ids:
-        # for sa_id in defect_sa_ids:
-        #     subarray_node_low.set_subarray_id(sa_id)
-        #     try:
-        #         _reset_defects(subarray_node_low)
-        #     except Exception:  # pylint: disable=broad-exception-caught
-        #         LOGGER.exception(
-        #           "Failed to reset defects after AssignResources for SA %s",
-        #             sa_id,
-        #         )
-        #         assert False
-        _wait_for_subarrays_obsstate(
-            central_node_low,
-            event_tracer,
-            defect_sa_ids,
-            ObsState.EMPTY,
-        )
+    _run_scan_for_all(
+        central_node_low,
+        subarray_node_low,
+        event_tracer,
+        pytest.defects,
+    )
 
 
 @then("healthy subarrays complete observation cycle")
