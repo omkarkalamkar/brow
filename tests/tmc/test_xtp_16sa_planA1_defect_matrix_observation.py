@@ -702,7 +702,7 @@ def _configure_json_for_subarray(
     return cfg
 
 
-@pytest.mark.SKA_tmc_low_multiple_subarrays16
+@pytest.mark.SKA_tmc_low_multiple_subarrays_defect_injection
 @scenario(
     "../features/tmc/xtp-16sa_planA1_defect_matrix_observation.feature",
     "Run 16-subarray observation with injected defects and recovery",
