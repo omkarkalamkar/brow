@@ -20,6 +20,7 @@ from tests.resources.test_harness.constant import (
     low_sdp_subarray_leaf_node,
     mccs_subarray1,
     mccs_subarray_leaf_node,
+    quality_monitor1,
     tmc_low_subarraynode1,
 )
 from tests.resources.test_harness.event_recorder import EventRecorder
@@ -92,6 +93,7 @@ class SubarrayNodeWrapperLow:
         self.csp_subarray1 = DeviceProxy(low_csp_subarray1)
         self.sdp_subarray1 = DeviceProxy(low_sdp_subarray1)
         self.mccs_subarray1 = DeviceProxy(mccs_subarray1)
+        self.quality_monitor = DeviceProxy(quality_monitor1)
         self.subarray_devices = {
             "csp_subarray": DeviceProxy(low_csp_subarray1),
             "sdp_subarray": DeviceProxy(low_sdp_subarray1),
@@ -293,6 +295,9 @@ class SubarrayNodeWrapperLow:
         )
         self.sdp_subarray_leaf_node = DeviceProxy(
             f"low-tmc/subarray-leaf-node-sdp/{subarray_id}"
+        )
+        self.quality_monitor = DeviceProxy(
+            f"low-tmc/subarray-quality-monitor/{subarray_id}"
         )
         self.device_dict = get_device_dict(int(requested_subarray_id))
 
