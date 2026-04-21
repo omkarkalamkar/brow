@@ -173,8 +173,8 @@ k8s-tmc-scaling:
     auto_stop_in: never
     on_stop: stop-k8s-tmc-scaling
 
-  # rules:
-  #   - if: '$CI_PIPELINE_SOURCE == "schedule"'
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
 
 stop-k8s-tmc-scaling:
   stage: scaling

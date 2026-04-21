@@ -15,7 +15,6 @@ Notes:
 - PlanA1 includes a single PSS beam id; this test overrides PSS beam ids per
   subarray at Configure time so that each SA uses a unique PSS id.
 """
-
 from __future__ import annotations
 
 import json
@@ -82,7 +81,6 @@ def _parse_matrix(matrix_json: str, kind: str) -> dict[DefectKey, str]:
     items = json.loads(matrix_json)
     if not isinstance(items, list):
         raise ValueError(f"{kind} must be a JSON list")
-
     out: dict[DefectKey, str] = {}
     for item in items:
         if not isinstance(item, dict):
@@ -97,33 +95,25 @@ def _subsystem_subarrays(
     SN_low_16_SN: SubarrayNodeWrapperLow, subarray_id: int
 ) -> tuple:
     """Return (csp, mccs) subsystem subarray proxies if present."""
-
     SN_low_16_SN.set_subarray_id(subarray_id)
-
     csp = None
-
     mccs = None
-
     devs = getattr(SN_low_16_SN, "subarray_devices", {})
     if isinstance(devs, dict):
         csp = devs.get("csp_subarray")
-
         mccs = devs.get("mccs_subarray")
-
     if csp is None:
         LOGGER.exception(
             "CSP subarray proxy not found for SA %s; attempting fallback",
             subarray_id,
         )
         SN_low_16_SN.get_device_proxy("csp_subarray")
-
     if mccs is None:
         LOGGER.exception(
             "MCCS subarray proxy not found for SA %s; attempting fallback",
             subarray_id,
         )
         SN_low_16_SN.get_device_proxy("mccs_subarray")
-
     return csp, mccs
 
 
@@ -133,27 +123,20 @@ def _apply_defect(
     said: int = 1,
 ) -> None:
     """Best-effort SetDefective application for a given command/defect."""
-
     logging.info("defect is %s", defect)
-
     if hasattr(constant, defect):
         defect_obj = getattr(constant, defect)
-
         if isinstance(defect_obj, str):
-
             defect_payload = json.dumps(json.loads(defect_obj))
-
             logging.info("defect_payload %s", defect_payload)
         else:
             defect_payload = json.dumps(defect_obj)
             logging.info("defect_payload %s", defect_payload)
     else:
-
         try:
             if hasattr(constant_low, defect):
                 defect_obj = getattr(constant_low, defect)
                 if isinstance(defect_obj, str):
-
                     defect_payload = json.dumps(json.loads(defect_obj))
                     logging.info("defect_payload %s", defect_payload)
                 else:
@@ -167,7 +150,6 @@ def _apply_defect(
     csp, mccs = _subsystem_subarrays(SN_low_16_SN, said)
     if csp is not None:
         csp.SetDefective(defect_payload)
-
     if mccs is not None:
         mccs.SetDefective(defect_payload)
 
@@ -176,11 +158,9 @@ def _reset_defects(
     SN_low_16_SN: SubarrayNodeWrapperLow, said: int = 1
 ) -> None:
     """Best-effort reset of SetDefective on available leaf nodes."""
-
     csp, mccs = _subsystem_subarrays(SN_low_16_SN, said)
     if csp is not None:
         csp.SetDefective(json.dumps({"enabled": False}))
-
     if mccs is not None:
         mccs.SetDefective(json.dumps({"enabled": False}))
 
@@ -194,15 +174,12 @@ def _run_assign_resources_for_all(
     defects: dict[DefectKey, str],
 ) -> None:
     """AssignResources for all subarrays with special handling for defects."""
-
     assign_unique_ids: dict[int, tuple] = {}
     defective_assign_unique_ids: dict[int, tuple] = {}
     assign_defect_sa_ids: set[int] = set()
-
     for sa_id in subarray_ids:
         SN_low_16_SN.set_subarray_id(sa_id)
         defect = defects.get(DefectKey(sa_id, "AssignResources"))
-
         if defect:
             assign_defect_sa_ids.add(sa_id)
             try:
@@ -217,7 +194,6 @@ def _run_assign_resources_for_all(
                     sa_id,
                     defect,
                 )
-
         assign_str = (logs_dir / f"assign_subarray{sa_id}.json").read_text(
             encoding="utf-8"
         )
@@ -225,11 +201,9 @@ def _run_assign_resources_for_all(
             "AssignResources",
             assign_str,
         )
-
         if defect:
             try:
                 defective_assign_unique_ids[sa_id] = unique_id
-
                 assert_that(event_tracer).described_as(
                     "TMC Subarray Leaf Node "
                     "is expected to report a"
@@ -242,7 +216,6 @@ def _run_assign_resources_for_all(
                     unique_id[0],
                     ResultCode.FAILED,
                 )
-
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
                     "Failed to assert LRCR "
@@ -319,7 +292,6 @@ def _run_configure_for_all(
     for sa_id in pytest.healthy_sa_ids:
         SN_low_16_SN.set_subarray_id(sa_id)
         defect = pytest.defects.get(DefectKey(sa_id, "Configure"))
-
         if defect:
             try:
                 configure_defect_sa_ids.add(sa_id)
@@ -334,7 +306,6 @@ def _run_configure_for_all(
                     sa_id,
                     defect,
                 )
-
         cfg_str = (logs_dir / f"configure_subarray{sa_id}.json").read_text(
             encoding="utf-8"
         )
@@ -342,12 +313,9 @@ def _run_configure_for_all(
             "Configure",
             cfg_str,
         )
-
         if defect:
-
             try:
                 defective_configure_unique_ids[sa_id] = unique_id
-
                 assert_that(event_tracer).described_as(
                     "TMC Subarray Leaf Node "
                     "is expected to report a"
@@ -360,7 +328,6 @@ def _run_configure_for_all(
                     unique_id[0],
                     ResultCode.FAILED,
                 )
-
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
                     "FAILED to assert LRCR "
@@ -402,14 +369,12 @@ def _run_configure_for_all(
                 sa_id,
                 unique_id,
             )
-
     pytest.healthy_sa_ids = [
         sa_id
         for sa_id in pytest.healthy_sa_ids
         if sa_id not in configure_defect_sa_ids
     ]
     defect_sa_ids = sorted(configure_defect_sa_ids)
-
     if pytest.healthy_sa_ids:
         _wait_for_subarrays_obsstate(
             CN_low_16_SN,
@@ -417,7 +382,6 @@ def _run_configure_for_all(
             pytest.healthy_sa_ids,
             ObsState.READY,
         )
-
     if defect_sa_ids:
         # Assert that Configure defects cause the SA to go back to
         # IDLE from recovery
@@ -445,7 +409,6 @@ def _run_scan_for_all(
     for sa_id in pytest.healthy_sa_ids:
         SN_low_16_SN.set_subarray_id(sa_id)
         defect = pytest.defects.get(DefectKey(sa_id, "Scan"))
-
         if defect:
             try:
                 scan_defect_sa_ids.add(sa_id)
@@ -460,9 +423,7 @@ def _run_scan_for_all(
                     sa_id,
                     defect,
                 )
-
         _, unique_id = SN_low_16_SN.execute_transition("Scan", scan_input_json)
-
         if defect:
             try:
                 defective_scan_unique_ids[sa_id] = unique_id
@@ -478,7 +439,6 @@ def _run_scan_for_all(
                     unique_id[0],
                     ResultCode.FAILED,
                 )
-
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
                     "FAILED to assert LRCR "
@@ -574,7 +534,6 @@ def _build_assign_json_files(
             per_sn,
             plan_name,
         )
-
         # Override PSS beam ids so each subarray uses its own unique id.
         # Shape expected by assign_resources_low: csp.pss.pss_beam_ids
         assign_json.setdefault("csp", {}).setdefault("pss", {})[
@@ -595,18 +554,14 @@ def _configure_json_for_subarray(
 
     PSS ids are overridden per subarray.
     """
-
     plan = load_plan_json(_PLANS_FEATURE_PATH, plan_name)
     per_sn = plan.get(str(subarray_id), plan)
-
     cfg = json.loads(json.dumps(base_configure))
-
     # Ensure scan duration stays at 10 seconds (per user requirement).
     # Do not rely on the plan JSON (feature-driven plans may change).
     cfg.setdefault("tmc", {})["scan_duration"] = 10.0
     per_sn["scan_duration"] = 10.0
     plan["scan_duration"] = 10.0
-
     # Override the plan-provided PSS IDs so each subarray uses a unique id.
     pss_beams = per_sn.get("pss_beams", [])
     if pss_beams:
@@ -765,7 +720,6 @@ def given_telescope_on(
     """Move telescope to ON and subscribe to events."""
 
     log_events({CN_low_16_SN.central_node: ["telescopeState"]})
-
     for subarray_id in getattr(pytest, "subarray_ids", [1]):
         CN_low_16_SN.set_subarray_id(subarray_id)
         event_tracer.subscribe_event(
@@ -777,7 +731,6 @@ def given_telescope_on(
             "longRunningCommandResult",
         )
         CN_low_16_SN.set_values_with_all_mocks(DevState.ON)
-
     CN_low_16_SN.move_to_on()
     assert_that(event_tracer).within_timeout(
         TIMEOUT
@@ -806,14 +759,10 @@ def when_run_observations(
 
     Defects are only parsed and stored here.
     """
-
     _ = event_tracer
-
     pytest.plan_name = str(PlanName)
     pytest.defects = _parse_matrix(DefectMatrix, "DefectMatrix")
-
     logs_dir = _ensure_logs_dir()
-
     # AssignResources files.
     base_assign = json.loads(
         prepare_json_args_for_centralnode_commands(
@@ -827,7 +776,6 @@ def when_run_observations(
         logs_dir,
         pytest.subarray_ids,
     )
-
     # Configure files.
     base_configure = json.loads(
         prepare_json_args_for_commands("configure_low", command_input_factory)
@@ -839,7 +787,6 @@ def when_run_observations(
             sa_id,
         )
         _write_json(logs_dir / f"configure_subarray{sa_id}.json", cfg)
-
     pytest.logs_dir = logs_dir
 
     _run_assign_resources_for_all(
@@ -878,9 +825,7 @@ def then_healthy_complete_observation_cycle(
     _ = CN_low_16_SN
 
     logging.info("Assertion started for healthy SNs")
-
     if pytest.healthy_sa_ids:
-
         for sa_id in pytest.healthy_sa_ids:
             CN_low_16_SN.set_subarray_id(sa_id)
 
@@ -891,5 +836,4 @@ def then_healthy_complete_observation_cycle(
                 "obsState",
                 ObsState.READY,
             )
-
     logging.info("Assertion completed for healthy SNs")
