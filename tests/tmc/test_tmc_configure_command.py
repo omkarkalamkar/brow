@@ -128,7 +128,7 @@ def given_subarray_in_idle(
     )
 
 
-@given("a quality monitor reports readyToScan flag to be False")
+@given("the quality monitor reports readyToScan flag to be False")
 def given_quality_monitor_not_ready_for_scan(
     subarray_node_low: SubarrayNodeWrapperLow,
 ):
@@ -242,7 +242,7 @@ def check_configure_completion(
     )
 
 
-@then("a the the quality monitor reports readyToScan flag to be True")
+@then("the quality monitor reports readyToScan flag to be True")
 def check_if_quality_monitor_ready_for_scan(
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
