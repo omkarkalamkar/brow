@@ -301,6 +301,19 @@ class SubarrayNodeWrapperLow:
 
         self.device_dict = get_device_dict(int(requested_subarray_id))
 
+    def get_device_proxy(self, device_name: str) -> DeviceProxy:
+        """Returns the device proxy for the given device name.
+
+        Args:
+            device_name (str): The name of the device for which the proxy is
+            required.
+
+        Returns:
+            DeviceProxy: The device proxy corresponding to the given device
+            name.
+        """
+        return DeviceProxy(self.device_dict.get(device_name))
+
     def move_to_on(self):
         """Move the Subarray to On State"""
         if self.csp_subarray1.adminMode != AdminMode.ONLINE:

@@ -93,8 +93,12 @@ def _parse_matrix(matrix_json: str, kind: str) -> dict[DefectKey, str]:
     return out
 
 
-def _subsystem_subarrays(SN_low_16_SN: SubarrayNodeWrapperLow) -> tuple:
+def _subsystem_subarrays(
+    SN_low_16_SN: SubarrayNodeWrapperLow, subarray_id: int
+) -> tuple:
     """Return (csp, sdp, mccs) subsystem subarray proxies if present."""
+
+    SN_low_16_SN.set_subarray_id(subarray_id)
 
     csp = None
     sdp = None
@@ -107,20 +111,32 @@ def _subsystem_subarrays(SN_low_16_SN: SubarrayNodeWrapperLow) -> tuple:
         mccs = devs.get("mccs_subarray")
 
     if csp is None:
-        csp = getattr(SN_low_16_SN, "csp_subarray", None)
+        LOGGER.exception(
+            "CSP subarray proxy not found for SA %s; attempting fallback",
+            subarray_id,
+        )
+        SN_low_16_SN.get_device_proxy("csp_subarray")
     if sdp is None:
-        sdp = getattr(SN_low_16_SN, "sdp_subarray", None)
+        LOGGER.exception(
+            "SDP subarray proxy not found for SA %s; attempting fallback",
+            subarray_id,
+        )
+        SN_low_16_SN.get_device_proxy("sdp_subarray")
 
     if mccs is None:
-        mccs = getattr(SN_low_16_SN, "mccs_subarray", None)
+        LOGGER.exception(
+            "MCCS subarray proxy not found for SA %s; attempting fallback",
+            subarray_id,
+        )
+        SN_low_16_SN.get_device_proxy("mccs_subarray")
 
     return csp, sdp, mccs
 
 
 def _apply_defect(
     SN_low_16_SN: SubarrayNodeWrapperLow,
-    # command: str,
     defect: str,
+    said: int = 1,
 ) -> None:
     """Best-effort SetDefective application for a given command/defect."""
 
@@ -165,7 +181,7 @@ def _apply_defect(
     #     # defect_payload = mapping.get(str(defect), mapping.get("FAULT"))
     #     assert False, f"Defect string '{defect}' not supported "
 
-    csp, sdp, mccs = _subsystem_subarrays(SN_low_16_SN)
+    csp, sdp, mccs = _subsystem_subarrays(SN_low_16_SN, said)
     if csp is not None:
         csp.SetDefective(defect_payload)
     if sdp is not None:
@@ -175,17 +191,18 @@ def _apply_defect(
         mccs.SetDefective(defect_payload)
 
 
-def _reset_defects(SN_low_16_SN: SubarrayNodeWrapperLow) -> None:
+def _reset_defects(
+    SN_low_16_SN: SubarrayNodeWrapperLow, said: int = 1
+) -> None:
     """Best-effort reset of SetDefective on available leaf nodes."""
 
-    csp, sdp, mccs = _subsystem_subarrays(SN_low_16_SN)
+    csp, sdp, mccs = _subsystem_subarrays(SN_low_16_SN, said)
     if csp is not None:
         csp.SetDefective(json.dumps({"enabled": False}))
     if sdp is not None:
         # sdp.SetDefective("{}")
         pass
     if mccs is not None:
-        # mccs.SetDefective("{}")
         mccs.SetDefective(json.dumps({"enabled": False}))
 
 
@@ -213,6 +230,7 @@ def _run_assign_resources_for_all(
                 _apply_defect(
                     SN_low_16_SN,
                     str(defect),
+                    sa_id,
                 )
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
@@ -221,7 +239,6 @@ def _run_assign_resources_for_all(
                     defect,
                 )
 
-        CN_low_16_SN.set_subarray_id(sa_id)
         assign_str = (logs_dir / f"assign_subarray{sa_id}.json").read_text(
             encoding="utf-8"
         )
@@ -247,12 +264,15 @@ def _run_assign_resources_for_all(
                     ResultCode.FAILED,
                 )
 
-                _reset_defects(SN_low_16_SN)
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
-                    "Failed to reset defects after AssignResources for SA %s",
+                    "Failed to assert LRCR "
+                    "failure for AssignResources SA %s unique_id=%s",
                     sa_id,
+                    unique_id,
                 )
+            finally:
+                _reset_defects(SN_low_16_SN, sa_id)
         else:
             assign_unique_ids[sa_id] = unique_id
 
@@ -327,8 +347,8 @@ def _run_configure_for_all(
                 configure_defect_sa_ids.add(sa_id)
                 _apply_defect(
                     SN_low_16_SN,
-                    # "Configure",
                     str(defect),
+                    sa_id,
                 )
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
@@ -363,12 +383,15 @@ def _run_configure_for_all(
                     ResultCode.FAILED,
                 )
 
-                _reset_defects(SN_low_16_SN)
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
-                    "Failed to reset defects after AssignResources for SA %s",
+                    "FAILED to assert LRCR "
+                    "failure for Configure SA %s unique_id=%s",
                     sa_id,
+                    unique_id,
                 )
+            finally:
+                _reset_defects(SN_low_16_SN, sa_id)
         else:
             configure_unique_ids[sa_id] = unique_id
 
@@ -418,6 +441,8 @@ def _run_configure_for_all(
         )
 
     if defect_sa_ids:
+        # Assert that Configure defects cause the SA to go back to
+        # IDLE from recovery
         _wait_for_subarrays_obsstate(
             CN_low_16_SN,
             event_tracer,
@@ -427,7 +452,7 @@ def _run_configure_for_all(
 
 
 def _run_scan_for_all(
-    # CN_low_16_SN: CentralNodeWrapperLow,
+    CN_low_16_SN: CentralNodeWrapperLow,
     SN_low_16_SN: SubarrayNodeWrapperLow,
     command_input_factory: JsonFactory,
     event_tracer: TangoEventTracer,
@@ -448,8 +473,8 @@ def _run_scan_for_all(
                 scan_defect_sa_ids.add(sa_id)
                 _apply_defect(
                     SN_low_16_SN,
-                    # "Scan",
                     str(defect),
+                    sa_id,
                 )
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
@@ -476,12 +501,15 @@ def _run_scan_for_all(
                     ResultCode.FAILED,
                 )
 
-                _reset_defects(SN_low_16_SN)
             except Exception:  # pylint: disable=broad-exception-caught
                 LOGGER.exception(
-                    "Failed to reset defects after Scan for SA %s",
+                    "FAILED to assert LRCR "
+                    "failure for Scan SA %s unique_id=%s",
                     sa_id,
+                    unique_id,
                 )
+            finally:
+                _reset_defects(SN_low_16_SN, sa_id)
         else:
             scan_unique_ids[sa_id] = unique_id
             assert_that(event_tracer).described_as(
@@ -518,13 +546,13 @@ def _run_scan_for_all(
         if sa_id not in scan_defect_sa_ids
     ]
 
-    # if pytest.healthy_sa_ids:
-    #     _wait_for_subarrays_obsstate(
-    #         CN_low_16_SN,
-    #         event_tracer,
-    #         pytest.healthy_sa_ids,
-    #         ObsState.READY,
-    #     )
+    if pytest.healthy_sa_ids:
+        _wait_for_subarrays_obsstate(
+            CN_low_16_SN,
+            event_tracer,
+            pytest.healthy_sa_ids,
+            ObsState.READY,
+        )
 
 
 def _pss_id_for_subarray(base_pss_id: int, subarray_id: int) -> int:
@@ -849,6 +877,7 @@ def when_run_observations(
     )
 
     _run_scan_for_all(
+        CN_low_16_SN,
         SN_low_16_SN,
         command_input_factory,
         event_tracer,
