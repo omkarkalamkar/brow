@@ -706,7 +706,7 @@ def _configure_json_for_subarray(
 @pytest.mark.SKA_tmc_low_multiple_subarrays
 @scenario(
     "../features/tmc/xtp_108081_16_sn_neagative_observations.feature",
-    "Run 16-subarray observation with injected defects and recovery",
+    "Run 16-subarray observation with injected defects",
 )
 def test_xtp_16sa_planA1_defect_matrix_observation() -> None:
     """BDD scenario entrypoint."""
