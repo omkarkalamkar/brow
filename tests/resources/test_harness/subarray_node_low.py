@@ -412,6 +412,7 @@ class SubarrayNodeWrapperLow:
             "Current Subarray Node ObsState is: %s",
             self.subarray_node.obsState,
         )
+
         self._reset_simulator_devices()
         self._clear_command_call_and_transition_data(clear_transition=True)
 
@@ -444,6 +445,12 @@ class SubarrayNodeWrapperLow:
         self.move_to_off()
         # Adding a small sleep to allow the systems to clean up processes
         sleep(1)
+
+    def tear_down_all_subarrays(self):
+        """Tear down for all subarrays after each test run"""
+        for subarray_id in range(1, 17):
+            self.set_subarray_id(subarray_id)
+            self.tear_down()
 
     def set_scan_id(self, scan_id: int, input_str: str) -> str:
         """

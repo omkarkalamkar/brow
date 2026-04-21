@@ -60,7 +60,7 @@ TARANTA ?= true
 MINIKUBE ?= false ## Minikube or not
 FAKE_DEVICES ?= false ## Install fake devices or not
 SUBARRAY_COMMAND_TIMEOUT ?= 70
-
+SKA_TANGO_OPERATOR ?= true
 ITANGO_DOCKER_IMAGE = $(CAR_OCI_REGISTRY_HOST)/ska-tango-images-tango-itango:9.3.10
 
 # Test runner - run to completion job in K8s
@@ -86,7 +86,7 @@ K8S_CHART_PARAMS = --set global.minikube=$(MINIKUBE) \
 	--set ska-tango-base.jive.enabled=$(JIVE) \
 	--set global.exposeAllDS=false \
 	--set global.cluster_domain=$(CLUSTER_DOMAIN) \
-	--set global.operator=true \
+	--set global.operator=$(SKA_TANGO_OPERATOR) \
 	--set ska-taranta.enabled=$(TARANTA_ENABLED)\
 	--set tmc-low.global.subarray_count=$(SUBARRAY_COUNT)\
 	--set tmc-low.deviceServers.subarraynode.CommandTimeOutDefault=$(SUBARRAY_COMMAND_TIMEOUT) \

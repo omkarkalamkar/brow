@@ -1,4 +1,7 @@
 import json
+import re
+from copy import deepcopy
+from pathlib import Path
 
 from ska_control_model import ObsState
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
@@ -56,6 +59,118 @@ command_defect_mapping = {
     "EndScan": {"FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT)},
     "End": {"FAULT": json.dumps(INTERMEDIATE_FAULT_OBS_STATE_DEFECT)},
 }
+
+
+def load_plan_json(plans_feature_path: Path, plan_name: str) -> dict:
+    """Load a named plan JSON docstring from a plans feature file."""
+    text = plans_feature_path.resolve().read_text(encoding="utf-8")
+    pattern = (
+        rf"^\s*Scenario:\s*{re.escape(plan_name)}\s*$\s*"
+        r"^\s*\"\"\"\s*$\s*(.*?)\s*^\s*\"\"\"\s*$"
+    )
+    m = re.search(pattern, text, flags=re.MULTILINE | re.DOTALL)
+    if not m:
+        raise ValueError(
+            f"Plan '{plan_name}' not found in {plans_feature_path}"
+        )
+    return json.loads(m.group(1))
+
+
+def parse_plan_map(plan_map_str: str) -> dict[int, str]:
+    """Parse PlanMap JSON string into an int-keyed dict."""
+    plan_map = json.loads(plan_map_str)
+    return {int(k): v for k, v in plan_map.items()}
+
+
+def ensure_logs_dir(build_dir: Path | str = "build") -> Path:
+    """Create and return a ${build_dir}/logs directory."""
+    logs_dir = Path(build_dir) / "logs"
+    logs_dir.mkdir(parents=True, exist_ok=True)
+    return logs_dir
+
+
+def write_json(path: Path, payload: dict) -> None:
+    """Write a JSON payload to a file with stable formatting."""
+    path.write_text(
+        json.dumps(payload, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+
+
+def _build_assign_json(
+    base_assign: dict,
+    subarray_id: int,
+    per_sn_plan: dict,
+    plan_name: str | None = None,
+) -> dict:
+    """Build an AssignResources JSON payload for a given subarray and plan.
+
+    This helper is used by plan-driven multi-subarray tests.
+
+    Args:
+        base_assign: A dict loaded from the standard assign template
+            (e.g. `assign_resources_low.json`).
+        subarray_id: Subarray id the payload should target.
+        per_sn_plan: Plan fragment for this subarray.
+        plan_name: Optional plan name (for logging/debugging only).
+
+    Returns:
+        A dict ready to be json.dumps()'d.
+
+    Notes:
+        - TMC low assign schema requires the MCCS "subarray_beams" list.
+          We derive it from the first "station_beam" entry when present.
+        - Apertures are derived from the union of station ids referenced by
+          PSS/PST beams (preferred) or station_beams.
+    """
+
+    assign_json = deepcopy(base_assign)
+    assign_json["subarray_id"] = int(subarray_id)
+
+    station_beams = per_sn_plan.get("station_beams", [])
+    pss_beams = per_sn_plan.get("pss_beams", [])
+    pst_beams = per_sn_plan.get("pst_beams", [])
+
+    # CSP allocation
+    assign_json.setdefault("csp", {}).setdefault("pss", {})["pss_beam_ids"] = [
+        int(b["id"]) for b in pss_beams
+    ]
+    assign_json.setdefault("csp", {}).setdefault("pst", {})["pst_beam_ids"] = [
+        int(b["id"]) for b in pst_beams
+    ]
+
+    # MCCS station beam allocation: use first station_beam if present
+    if station_beams:
+        sb = station_beams[0]
+        sb_id = int(sb.get("id", subarray_id))
+
+        stations_from_pss = [
+            int(st) for b in pss_beams for st in b.get("stations", [])
+        ]
+        stations_from_pst = [
+            int(st) for b in pst_beams for st in b.get("stations", [])
+        ]
+
+        station_ids = sorted(
+            {int(s) for s in (stations_from_pss + stations_from_pst)}
+        )
+
+        apertures = [
+            {"station_id": st_id, "aperture_id": f"AP{st_id:03}.01"}
+            for st_id in sorted(set(station_ids))
+        ]
+
+        assign_json.setdefault("mccs", {})["subarray_beams"] = [
+            {
+                "subarray_beam_id": sb_id,
+                "apertures": apertures,
+                "number_of_channels": 8,
+            }
+        ]
+
+    # Ensure SDP section exists (template should have it); keep as-is.
+    _ = plan_name  # reserved for future debug logging
+    return assign_json
 
 
 def set_subsystem_defects(

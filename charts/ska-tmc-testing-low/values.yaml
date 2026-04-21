@@ -111,6 +111,7 @@ ska-tango-tangogql:
 
 ska-tmc-simulators:
   enabled: true
+  subarray_count: 16
   telescope: SKA-low
   deviceServers:
     mocks:
@@ -119,4 +120,4 @@ ska-tmc-simulators:
   ska_tmc_simulators:
     image:
       registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-simulators
-      tag: 1.10.0-dev.c922661f9
+      tag: 1.10.1-dev.c4fccb3f1
