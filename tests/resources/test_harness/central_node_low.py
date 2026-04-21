@@ -18,6 +18,7 @@ from tests.resources.test_harness.constant import (
     low_csp_master,
     low_csp_master_leaf_node,
     low_csp_subarray1,
+    low_csp_subarray2,
     low_csp_subarray_leaf_node,
     low_sdp_master,
     low_sdp_master_leaf_node,
@@ -26,6 +27,7 @@ from tests.resources.test_harness.constant import (
     mccs_controller,
     mccs_master_leaf_node,
     mccs_subarray1,
+    mccs_subarray2,
     mccs_subarray_leaf_node,
     tmc_low_subarraynode1,
 )
@@ -530,6 +532,9 @@ class CentralNodeWrapperLow(object):
             csp_master_device.adminMode = 0
         if csp_subarray_device.adminMode != 0:
             csp_subarray_device.adminMode = 0
+        csp_subarray_device2 = tango.DeviceProxy(low_csp_subarray2)
+        if csp_subarray_device2.adminMode != 0:
+            csp_subarray_device2.adminMode = 0
 
         mccs_master_device = tango.DeviceProxy(mccs_controller)
         mccs_subarray_device = tango.DeviceProxy(mccs_subarray1)
@@ -537,6 +542,9 @@ class CentralNodeWrapperLow(object):
             mccs_master_device.adminMode = 0
         if mccs_subarray_device.adminMode != 0:
             mccs_subarray_device.adminMode = 0
+        mccs_subarray_device2 = tango.DeviceProxy(mccs_subarray2)
+        if mccs_subarray_device2.adminMode != 0:
+            mccs_subarray_device2.adminMode = 0
 
     def get_subarray_id(self, subarray: DeviceProxy) -> str:
         """Returns current subarray id from the subarray_node device proxy."""
