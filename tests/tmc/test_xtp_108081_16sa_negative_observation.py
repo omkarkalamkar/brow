@@ -5,7 +5,7 @@ This test is based on the mechanics of the existing XTP-106948 16-subarray test
 single plan (PlanA1) and per-(subarray, command) defect and recovery matrices.
 
 Feature file:
-- `tests/features/tmc/xtp-16sa_planA1_defect_matrix_observation.feature`
+- `tests/features/tmc/xtp_108081_16_sn_neagative_observations.feature`
 
 Plan definition source:
 - `tests/features/tmc/tmc_observation_plans.feature` (Scenario: PlanA1)
@@ -58,7 +58,7 @@ LOGGER = logging.getLogger(__name__)
 
 _FEATURE_PATH = (
     Path(__file__).resolve().parent
-    / "../features/tmc/xtp-16sa_planA1_defect_matrix_observation.feature"
+    / "../features/tmc/xtp_108081_16_sn_neagative_observations.feature"
 )
 
 _PLANS_FEATURE_PATH = (
@@ -703,9 +703,9 @@ def _configure_json_for_subarray(
     return cfg
 
 
-@pytest.mark.SKA_tmc_low_multiple_subarrays16
+@pytest.mark.SKA_tmc_low_multiple_subarrays
 @scenario(
-    "../features/tmc/xtp-16sa_planA1_defect_matrix_observation.feature",
+    "../features/tmc/xtp_108081_16_sn_neagative_observations.feature",
     "Run 16-subarray observation with injected defects and recovery",
 )
 def test_xtp_16sa_planA1_defect_matrix_observation() -> None:

@@ -22,7 +22,7 @@ global:
   #  .Values.global.subarray_count
   # subarray_count, this will be expanded (1 to N inclusive)
   subarray_count: 1
-  TMCLoggingLevel: "5"
+  TMCLoggingLevel: "4"
 
 domain: "low-tmc"
 ##  Order of instances resolution ##
@@ -148,7 +148,7 @@ deviceServers:
     IsAutoRecoveryEnabled: "true"
     DefaultArrayLayoutSourceURIs: "gitlab://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     DefaultArrayLayoutPath: "instrument/ska1_low/layout/low-layout.json"
-    LoggingLevel: "5"
+    LoggingLevel: "4"
     SubarrayPrefix: "low-tmc/subarray/"
 
   subarraynode:
@@ -171,7 +171,7 @@ deviceServers:
     MccsReleaseInterfaceURL: "https://schema.skatelescope.org/ska-low-mccs-controller-release/2.0"
     ScanStartTimeOffset: 10
     StartTimeEnabled: false
-    LoggingLevel: "5"
+    LoggingLevel: "4"
     PreRecoveryCheckTimeDuration: 1.0
 
   sdpsubarrayleafnode:

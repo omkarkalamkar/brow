@@ -12,6 +12,8 @@ Updated
 * Tested 16 Subarrays with different configurations, performed end to end observations and delay models for station beams ,PSS and PST beams.
 * Tested 16 Subarrys for 30 min scan duration
 * Tested 16 Subarrys for multi observation and multi scan scenario.
+* Tested 16 Subarrays for negative observations
+* Utilized CentralNode v1.2.0
 
 [2.14.0-rc.1]
 *************
