@@ -96,18 +96,18 @@ def _parse_matrix(matrix_json: str, kind: str) -> dict[DefectKey, str]:
 def _subsystem_subarrays(
     SN_low_16_SN: SubarrayNodeWrapperLow, subarray_id: int
 ) -> tuple:
-    """Return (csp, sdp, mccs) subsystem subarray proxies if present."""
+    """Return (csp, mccs) subsystem subarray proxies if present."""
 
     SN_low_16_SN.set_subarray_id(subarray_id)
 
     csp = None
-    sdp = None
+
     mccs = None
 
     devs = getattr(SN_low_16_SN, "subarray_devices", {})
     if isinstance(devs, dict):
         csp = devs.get("csp_subarray")
-        sdp = devs.get("sdp_subarray")
+
         mccs = devs.get("mccs_subarray")
 
     if csp is None:
@@ -116,12 +116,6 @@ def _subsystem_subarrays(
             subarray_id,
         )
         SN_low_16_SN.get_device_proxy("csp_subarray")
-    if sdp is None:
-        LOGGER.exception(
-            "SDP subarray proxy not found for SA %s; attempting fallback",
-            subarray_id,
-        )
-        SN_low_16_SN.get_device_proxy("sdp_subarray")
 
     if mccs is None:
         LOGGER.exception(
@@ -130,7 +124,7 @@ def _subsystem_subarrays(
         )
         SN_low_16_SN.get_device_proxy("mccs_subarray")
 
-    return csp, sdp, mccs
+    return csp, mccs
 
 
 def _apply_defect(
@@ -141,32 +135,26 @@ def _apply_defect(
     """Best-effort SetDefective application for a given command/defect."""
 
     logging.info("defect is %s", defect)
-    # Try to resolve defect string to a constant in constant
-    # Try to resolve defect string to a constant in constant or constant_low
+
     if hasattr(constant, defect):
         defect_obj = getattr(constant, defect)
-        # If the constant is already a JSON string, use as is
+
         if isinstance(defect_obj, str):
-            # try:
-            # Try to parse and dump to ensure formatting
+
             defect_payload = json.dumps(json.loads(defect_obj))
-            # except Exception:
-            #     # If not JSON, just use as is
-            #     defect_payload = defect_obj
+
             logging.info("defect_payload %s", defect_payload)
         else:
             defect_payload = json.dumps(defect_obj)
             logging.info("defect_payload %s", defect_payload)
     else:
-        # Try to import constant_low and check there
+
         try:
             if hasattr(constant_low, defect):
                 defect_obj = getattr(constant_low, defect)
                 if isinstance(defect_obj, str):
-                    # try:
+
                     defect_payload = json.dumps(json.loads(defect_obj))
-                    # except Exception:
-                    #     defect_payload = defect_obj
                     logging.info("defect_payload %s", defect_payload)
                 else:
                     defect_payload = json.dumps(defect_obj)
@@ -175,18 +163,11 @@ def _apply_defect(
                 assert False, f"Defect string '{defect}' not supported"
         except ImportError:
             assert False, f"Defect string '{defect}' not supported "
-    # else:
-    #     # fallback to mapping
-    #     # mapping = command_defect_mapping.get(command, {})
-    #     # defect_payload = mapping.get(str(defect), mapping.get("FAULT"))
-    #     assert False, f"Defect string '{defect}' not supported "
 
-    csp, sdp, mccs = _subsystem_subarrays(SN_low_16_SN, said)
+    csp, mccs = _subsystem_subarrays(SN_low_16_SN, said)
     if csp is not None:
         csp.SetDefective(defect_payload)
-    if sdp is not None:
-        pass
-        # sdp.SetDefective(defect_payload)
+
     if mccs is not None:
         mccs.SetDefective(defect_payload)
 
@@ -196,12 +177,10 @@ def _reset_defects(
 ) -> None:
     """Best-effort reset of SetDefective on available leaf nodes."""
 
-    csp, sdp, mccs = _subsystem_subarrays(SN_low_16_SN, said)
+    csp, mccs = _subsystem_subarrays(SN_low_16_SN, said)
     if csp is not None:
         csp.SetDefective(json.dumps({"enabled": False}))
-    if sdp is not None:
-        # sdp.SetDefective("{}")
-        pass
+
     if mccs is not None:
         mccs.SetDefective(json.dumps({"enabled": False}))
 
@@ -341,7 +320,6 @@ def _run_configure_for_all(
         SN_low_16_SN.set_subarray_id(sa_id)
         defect = pytest.defects.get(DefectKey(sa_id, "Configure"))
 
-        # Best-effort defect injection for Configure.
         if defect:
             try:
                 configure_defect_sa_ids.add(sa_id)
@@ -636,10 +614,6 @@ def _configure_json_for_subarray(
         for beam in pss_beams:
             beam["id"] = _pss_id_for_subarray(base_pss_id, subarray_id)
 
-    # Persist the updated per-subarray plan content into cfg by reusing how the
-    # existing XTP-106948 test overlays station_beams / pst_beams / pss_beams.
-    # We keep this logic inline to avoid over-coupling until the steps settle.
-
     station_beams = per_sn.get("station_beams", [])
     if station_beams:
         unique_stations = {
@@ -740,38 +714,15 @@ def test_xtp_16sa_planA1_defect_matrix_observation() -> None:
 
 @given(parsers.parse("{SNCount:d} subarrays are in the EMPTY ObsState"))
 def given_subarrays_in_empty(
-    # CN_low_16_SN: CentralNodeWrapperLow,
-    # event_tracer: TangoEventTracer,
+    CN_low_16_SN: CentralNodeWrapperLow,
+    event_tracer: TangoEventTracer,
     SNCount: int,
 ) -> None:
     """Verify EMPTY on 1..SNCount (best-effort)."""
 
+    event_tracer.clear_events()
     pytest.sn_count = int(SNCount)
     pytest.subarray_ids = _active_subarray_ids(pytest.sn_count)
-
-    # for subarray_id in pytest.subarray_ids:
-    #     CN_low_16_SN.set_subarray_id(subarray_id)
-    #     try:
-    #         assert_that(event_tracer).within_timeout(
-    #             TIMEOUT
-    #         ).has_change_event_occurred(
-    #             CN_low_16_SN.subarray_node,
-    #             "obsState",
-    #             ObsState.EMPTY,
-    #         )
-    #     except AssertionError:
-    #         LOGGER.exception(
-    #             "No EMPTY obsState within timeout for SA %s",
-    #             subarray_id,
-    #         )
-
-
-@given("the telescope is in the ON state")
-def given_telescope_on(
-    CN_low_16_SN: CentralNodeWrapperLow,
-    event_tracer: TangoEventTracer,
-) -> None:
-    """Move telescope to ON and subscribe to events."""
 
     event_tracer.subscribe_event(
         CN_low_16_SN.central_node,
@@ -781,8 +732,39 @@ def given_telescope_on(
         CN_low_16_SN.central_node,
         "longRunningCommandResult",
     )
+
+    for subarray_id in getattr(pytest, "subarray_ids", [1]):
+        CN_low_16_SN.set_subarray_id(subarray_id)
+        event_tracer.subscribe_event(
+            CN_low_16_SN.subarray_node,
+            "obsState",
+        )
+
+    for subarray_id in pytest.subarray_ids:
+        CN_low_16_SN.set_subarray_id(subarray_id)
+        try:
+            assert_that(event_tracer).within_timeout(
+                TIMEOUT
+            ).has_change_event_occurred(
+                CN_low_16_SN.subarray_node,
+                "obsState",
+                ObsState.EMPTY,
+            )
+        except AssertionError:
+            LOGGER.exception(
+                "No EMPTY obsState within timeout for SA %s",
+                subarray_id,
+            )
+
+
+@given("the telescope is in the ON state")
+def given_telescope_on(
+    CN_low_16_SN: CentralNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+) -> None:
+    """Move telescope to ON and subscribe to events."""
+
     log_events({CN_low_16_SN.central_node: ["telescopeState"]})
-    event_tracer.clear_events()
 
     for subarray_id in getattr(pytest, "subarray_ids", [1]):
         CN_low_16_SN.set_subarray_id(subarray_id)
@@ -868,6 +850,7 @@ def when_run_observations(
         pytest.subarray_ids,
         pytest.defects,
     )
+    event_tracer.clear_events()
 
     _run_configure_for_all(
         CN_low_16_SN,
@@ -875,6 +858,7 @@ def when_run_observations(
         event_tracer,
         logs_dir,
     )
+    event_tracer.clear_events()
 
     _run_scan_for_all(
         CN_low_16_SN,
@@ -887,7 +871,6 @@ def when_run_observations(
 @then("healthy subarrays complete observation cycle")
 def then_healthy_complete_observation_cycle(
     CN_low_16_SN: CentralNodeWrapperLow,
-    # SN_low_16_SN: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ) -> None:
     """Smoke-check that subarrays without configured defects reach READY."""
