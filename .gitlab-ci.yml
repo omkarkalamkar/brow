@@ -94,7 +94,6 @@ k8s-test:
   variables:
     KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA"
     SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA"
-    TARANTA_ENABLED: "false"
   before_script:
     - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
     - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
@@ -124,7 +123,6 @@ k8s-test-tmc-low-negative-tests:
     MARK: "SKA_tmc_low_negative_tests"
     SUBARRAY_COMMAND_TIMEOUT: 10
     COUNT: 1
-    TARANTA_ENABLED: "false"
   before_script:
     - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
     - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
