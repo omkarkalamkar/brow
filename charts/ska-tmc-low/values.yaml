@@ -278,7 +278,7 @@ ska-tango-transducer:
           subscribedAttributes: ["qualityMetricsCspSubarray|low-csp/subarray/02/qualityAssuranceMetrics|json"]
           readAttributes: []
           aggregatedClassAttributes: []
-          derivedAttributes: ["readyToScan|Boolean|qualityMetricsCspSubarray['low-cbf/subarray/02']['processorsReadyPercent'] == 100.0"]
+          derivedAttributes: ["readyToScan|Boolean|qualityMetricsCspSubarray['low-cbf/subarray/02']['processorsReadyPercent'] >= 90.0"]
 
 
 nodeSelector: {}
