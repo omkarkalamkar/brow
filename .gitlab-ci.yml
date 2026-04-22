@@ -123,6 +123,7 @@ k8s-test-tmc-low-negative-tests:
     MARK: "SKA_tmc_low_negative_tests"
     SUBARRAY_COMMAND_TIMEOUT: 10
     COUNT: 1
+    TARANTA_ENABLED: "true"
   before_script:
     - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
     - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
@@ -130,6 +131,7 @@ k8s-test-tmc-low-negative-tests:
     - make k8s-install-chart
     - make k8s-wait
   script:
+    - make taranta-link
     - make k8s-test
     - |
       if [[ "$CI_KEEP_NAMESPACE" != "true" ]]; then
