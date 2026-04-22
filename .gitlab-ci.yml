@@ -156,7 +156,7 @@ k8s-tmc-scaling:
   extends:
     - k8s-test
   tags:
-    - ska-k8s
+    - ska-staging-tmc
   variables:
     SUBARRAY_COUNT: 16
     COUNT: 1
@@ -181,7 +181,7 @@ stop-k8s-tmc-scaling:
   extends:
     - stop-k8s-test
   tags:
-    - ska-k8s
+    - ska-staging-tmc
   variables:
     KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low"
   environment:
