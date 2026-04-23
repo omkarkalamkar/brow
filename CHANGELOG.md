@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 [Unreleased]
+************
 Fixed
 -----
 * Fixed KeyError in release resources command when attempting to remove PSS beams/subsystems assignment for subarrays that were not assigned PSS beams/subsystems. Resolves SKB-1300.
