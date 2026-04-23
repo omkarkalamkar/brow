@@ -3,7 +3,7 @@ manager: low-eda/cm/01
 archiver: low-eda/es/01
 
 configuration:
-  - class: CentralNodeLow
+  - class: LowTmcCentralNode
     attributes:
       state:
         code_push_event: true
@@ -16,7 +16,7 @@ configuration:
       telescopeAvailability:
         code_push_event: true
 
-  - class: SubarrayNodeLow
+  - class: LowTmcSubarray
     attributes:
       state:
         code_push_event: true
@@ -27,7 +27,7 @@ configuration:
       isSubarrayAvailable:
         code_push_event: true
     
-  - class: CspMasterLeafNode
+  - class: TmcLeafNodeCspControl
     attributes:
       state:
         code_push_event: true
@@ -36,7 +36,7 @@ configuration:
       isSubsystemAvailable:
         code_push_event: true
 
-  - class: CspSubarrayLeafNodeLow 
+  - class: LowTmcLeafNodeCspSubarray
     attributes:
       state:
         code_push_event: true
@@ -127,7 +127,7 @@ configuration:
       cspSubarrayObsState:
         code_push_event: true
 
-  - class: SdpMasterLeafNode
+  - class: LowTmcLeafNodeSdp
     attributes:
       state:
         code_push_event: true
@@ -147,7 +147,7 @@ configuration:
       sdpSubarrayObsState:
         code_push_event: true
         
-  - class: MccsMasterLeafNode
+  - class: LowTmcLeafNodeMccs
     attributes:
       state:
         code_push_event: true
@@ -156,7 +156,7 @@ configuration:
       isSubsystemAvailable:
         code_push_event: true
 
-  - class: MccsSubarrayLeafNode
+  - class: LowTmcLeafNodeMccsSubarray
     attributes:
       state:
         code_push_event: true
@@ -176,4 +176,11 @@ configuration:
       stations:
         code_push_event: true
       stationBeams:
+        code_push_event: true
+
+  - class: Transducer
+    attributes:
+      qualityMetricsCspSubarray:
+        code_push_event: true
+      readyToScan:
         code_push_event: true

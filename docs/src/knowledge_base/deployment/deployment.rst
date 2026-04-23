@@ -285,7 +285,7 @@ There is one quality monitor device per subarray, thus total 16 instances. For e
 quality monitor device, below set of parameters need to be provided as per the requirement. 
 For more details, refer ska-tango-transducer repository: `<https://gitlab.com/ska-telescope/ska-tango-transducer>`_.
 
-    #. **name** : This defines instance name of the quality monitor. The value is "qualitymonitor01" for instance one.
+    #. **name** : This defines TANGO server instance name of the quality monitor. The value is "qualitymonitor01" for instance one.
     #. **deviceName** : This defines the TANGO device name of quality monitor. The value is "low-tmc/subarray-quality-monitor/01" for quality monitor 1.
     #. **readPeriod** : This defines the Read period for the *readAttributes* property.
     #. **subscribedAttributes** :  This defines the list of the device attributes to be subscribed on change events. Currenlty QA metrics of CSP Subarray is subcribed using this property.
