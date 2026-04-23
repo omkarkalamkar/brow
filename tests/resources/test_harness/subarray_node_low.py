@@ -300,10 +300,10 @@ class SubarrayNodeWrapperLow:
         self.mccs_subarray_leaf_node = DeviceProxy(
             f"low-tmc/subarray-leaf-node-mccs/{subarray_id}"
         )
-
-        self.quality_monitor = DeviceProxy(
-            f"low-tmc/subarray-quality-monitor/{subarray_id}"
-        )
+        if 0 < int(requested_subarray_id) < 3:
+            self.quality_monitor = DeviceProxy(
+                f"low-tmc/quality-monitor/{subarray_id}"
+            )
         self.device_dict = get_device_dict(int(requested_subarray_id))
 
     def get_device_proxy(self, device_name: str) -> DeviceProxy:
