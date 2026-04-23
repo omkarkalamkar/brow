@@ -10,7 +10,7 @@ Standard deployment
 The TMC Low is packaged as a `helm chart <https://helm.sh/>`_ and can be
 deployed uing helm commands. The default deployment configuration is
 assumed to be the SKA production environment. In the current version,
-TMC supports `two` subarray operation. Following list shows default number
+TMC supports `two` subarray operations. Following list shows default number
 of instances deployed for each of the TMC component.
 
 #. Central Node - 1
@@ -285,8 +285,8 @@ device, below set of parameters need to be provided as per the requirement.
 
     #. **name** : This defines instance name of the quality monitor. The value is "qualitymonitor01" for instance one.
     #. **deviceName** : This defines the TANGO device name of quality monitor. The value is "low-tmc/subarray-quality-monitor/01" for quality monitor 1.
-    #. **readPeriod** : This defines the Read period for the *readAttributes** property.
-    #. **subscribedAttributes** :  This defines the list of the device attributes to be subscribed on change events. Currenlty QA metric of CSP Subarray is subcribed using this property.
+    #. **readPeriod** : This defines the Read period for the *readAttributes* property.
+    #. **subscribedAttributes** :  This defines the list of the device attributes to be subscribed on change events. Currenlty QA metrics of CSP Subarray is subcribed using this property.
     #. **readAttributes** :  This defines the list of the attributes to be read periodically (poll). Currently defaults to empty list.
     #. **aggregatedClassAttributes** :  This defines the list of the TANGO classes for which the attributes are to be subscribed from all the instances. Currently defaults to empty list.
-    #. **derivedAttributes** :  This defines the list of the new attributes to be computed/derived using above attributes. Currently rule for attribute is readyToScan configured.
+    #. **derivedAttributes** :  This defines the list of the new attributes to be computed/derived using above attributes. Currently rule for attribute *readyToScan* is configured using *qualityMetricsCspSubarray*.
