@@ -279,9 +279,11 @@ Resource Monitor
 Quality Monitor
 ---------------------------------
 This section specifies the configuration required to deploy quality monitor devices.
-Navigate to **ska-tango-transducer.deviceServers.transducer.devices** section in values.yaml file.
-There is one quality monitor device per subarray, thus total 16 instances. For each quality monitor 
-device, below set of parameters need to be provided as per the requirement. 
+Navigate to **ska-tango-transducer.deviceServers.transducer.devices** section in 
+values.yaml file. The quality monitor device utilizes ska-tango-transducer chart. 
+There is one quality monitor device per subarray, thus total 16 instances. For each 
+quality monitor device, below set of parameters need to be provided as per the requirement. 
+For more details, refer ska-tango-transducer repository: `<https://gitlab.com/ska-telescope/ska-tango-transducer>`_.
 
     #. **name** : This defines instance name of the quality monitor. The value is "qualitymonitor01" for instance one.
     #. **deviceName** : This defines the TANGO device name of quality monitor. The value is "low-tmc/subarray-quality-monitor/01" for quality monitor 1.
