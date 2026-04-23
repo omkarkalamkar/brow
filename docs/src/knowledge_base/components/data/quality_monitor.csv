@@ -1,0 +1,5 @@
+Attribute Name,Data Type,Is archived?,Archiver config
+State,DevState (Enum),Yes,Change Event
+Status,DevString,No,
+desiredTelescopeState,DevString,Yes,Change Event
+readyToScan,DevBoolean,Yes,Change Event
