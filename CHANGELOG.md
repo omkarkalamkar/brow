@@ -17,7 +17,7 @@ Added
 
 Updated
 -------
-* Updated TMC Low to support MCCS early Scan scenario
+* Updated TMC Low to support MCCS early Scan scenario. Here the Scan command is invoked on MCCS Subarray via Subarray Leaf Node. Later the normal Scan command is invoked from TMC Subarray.
 * Utilized CentralNode v1.2.0
 
 [2.14.0-rc.1]
