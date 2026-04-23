@@ -14,7 +14,7 @@ Updated
 * Tested 16 Subarrys for multi observation and multi scan scenario.
 * Tested 16 Subarrays for negative observations
 * Utilized CentralNode v1.2.0
-* SAH-1905: Update TMC to support MCCS early scan.
+* Update TMC to support MCCS early scan.
 
 [2.14.0-rc.1]
 *************

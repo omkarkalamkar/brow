@@ -156,7 +156,7 @@ k8s-tmc-scaling:
   extends:
     - k8s-test
   tags:
-    - ska-k8s
+    - ska-staging-tmc
   variables:
     SUBARRAY_COUNT: 16
     COUNT: 1
@@ -173,15 +173,15 @@ k8s-tmc-scaling:
     auto_stop_in: never
     on_stop: stop-k8s-tmc-scaling
 
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+  # rules:
+  #   - if: '$CI_PIPELINE_SOURCE == "schedule"'
 
 stop-k8s-tmc-scaling:
   stage: scaling
   extends:
     - stop-k8s-test
   tags:
-    - ska-k8s
+    - ska-staging-tmc
   variables:
     KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low"
   environment:

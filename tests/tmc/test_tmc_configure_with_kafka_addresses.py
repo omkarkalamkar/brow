@@ -38,11 +38,12 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_configure_command.feature",
-    "Successful Configuration of Low Telescope Subarray in TMC",
+    "Successful Configuration of Low Telescope Subarray in TMC with kafka "
+    + "addresses",
 )
 def test_tmc_configure_with_kafka_addresses():
     """BDD test scenario for verifying successful execution of
-    the Low Configure command in a TMC."""
+    the Low Configure command in TMC with kafka addresses."""
 
 
 @given("a TMC")
