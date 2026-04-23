@@ -525,18 +525,21 @@ class CentralNodeWrapperLow(object):
     def set_low_devices_admin_mode(self):
         """Set the admin mode of low  devices"""
         csp_master_device = tango.DeviceProxy(low_csp_master)
-        csp_subarray_device = tango.DeviceProxy(low_csp_subarray1)
         if csp_master_device.adminMode != 0:
             csp_master_device.adminMode = 0
-        if csp_subarray_device.adminMode != 0:
-            csp_subarray_device.adminMode = 0
-
         mccs_master_device = tango.DeviceProxy(mccs_controller)
-        mccs_subarray_device = tango.DeviceProxy(mccs_subarray1)
         if mccs_master_device.adminMode != 0:
             mccs_master_device.adminMode = 0
-        if mccs_subarray_device.adminMode != 0:
-            mccs_subarray_device.adminMode = 0
+        for subarray_id in range(1, 17):
+            self.set_subarray_id(subarray_id)
+            csp_subarray_device = self.subarray_devices.get("csp_subarray")
+            if csp_subarray_device:
+                if csp_subarray_device.adminMode != 0:
+                    csp_subarray_device.adminMode = 0
+            mccs_subarray_device = self.subarray_devices.get("mccs_subarray")
+            if mccs_subarray_device:
+                if mccs_subarray_device.adminMode != 0:
+                    mccs_subarray_device.adminMode = 0
 
     def get_subarray_id(self, subarray: DeviceProxy) -> str:
         """Returns current subarray id from the subarray_node device proxy."""
