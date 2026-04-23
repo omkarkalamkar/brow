@@ -18,3 +18,4 @@ This section specifies the attributes exposed by each of the TMC Low component.
    mccs_master_leaf_node
    mccs_subarray_leaf_node
    resource_monitor
+   quality_monitor

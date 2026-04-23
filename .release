@@ -1,25 +1,39 @@
-release=2.14.0-rc.1
-tag=2.14.0-rc.1
+release=2.15.0-rc.1
+tag=2.15.0-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.14.0-rc.1**
+**1. ska-tmc-low-integration 2.15.0-rc.1**
 
-    **1.1 ska-tmc-low 2.13.0 - 2.14.0-rc.1:**
+    **1.1 ska-tmc-low 2.14.0-rc.1 - 2.15.0-rc.1:**
+        Added
+        -------
+        * Introduced TMC Quality Monitor device
+        * Tested 16 Subarrays with different configurations, performed end to end observations and delay models for station beams ,PSS and PST beams.
+        * Tested 16 Subarrys for 30 min scan duration
+        * Tested 16 Subarrys for multi observation and multi scan scenario.
+        * Tested 16 Subarrays for negative observations
+        
         Updated
         -------
-        * Subarray node v1.4.0: Introduced new property `PreRecoveryCheckTimeDuration`,which ensures that the devices with successful command result reach final observation state and devices with failed command result reach the previous observation state. This would help in auto recovery the subarray to appropriate observation state in case of failure. If the device is stuck in transitioning observation state till time duration the subarray node won't be recovered.
-        * Subarray node v1.5.0: Update rules to consider `longRunningCommandResult` in addition to `ObsState=Aborted` for Abort Command.
-        * MCCS Leaf node v0.15.2: Fixed the issue of liveliness error not getting cleared from healthinfo.
+        * Updated TMC Low to support MCCS early Scan scenario. Here the Scan command is invoked on MCCS Subarray via Subarray Leaf Node. Later the normal Scan command is invoked from TMC Subarray.
+        * Utilized CentralNode v1.2.0
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.14.0-rc.1**
+**1. ska-tmc-low-integration 2.15.0-rc.1**
 
-    **1.1 ska-tmc-low 2.13.0 - 2.14.0-rc.1:**
+    **1.1 ska-tmc-low 2.14.0-rc.1 - 2.15.0-rc.1:**
+        Added
+        -------
+        * Introduced TMC Quality Monitor device
+        * Tested 16 Subarrays with different configurations, performed end to end observations and delay models for station beams ,PSS and PST beams.
+        * Tested 16 Subarrys for 30 min scan duration
+        * Tested 16 Subarrys for multi observation and multi scan scenario.
+        * Tested 16 Subarrays for negative observations
+        
         Updated
         -------
-        * Subarray node v1.4.0: Introduced new property `PreRecoveryCheckTimeDuration`,which ensures that the devices with successful command result reach final observation state and devices with failed command result reach the previous observation state. This would help in auto recovery the subarray to appropriate observation state in case of failure. If the device is stuck in transitioning observation state till time duration the subarray node won't be recovered.
-        * Subarray node v1.5.0: Update rules to consider `longRunningCommandResult` in addition to `ObsState=Aborted` for Abort Command.
-        * MCCS Leaf node v0.15.2: Fixed the issue of liveliness error not getting cleared from healthinfo.
+        * Updated TMC Low to support MCCS early Scan scenario. Here the Scan command is invoked on MCCS Subarray via Subarray Leaf Node. Later the normal Scan command is invoked from TMC Subarray.
+        * Utilized CentralNode v1.2.0
