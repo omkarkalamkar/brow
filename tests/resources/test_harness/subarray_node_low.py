@@ -302,7 +302,7 @@ class SubarrayNodeWrapperLow:
         )
         if 0 < int(requested_subarray_id) < 3:
             self.quality_monitor = DeviceProxy(
-                f"low-tmc/quality-monitor/{subarray_id}"
+                f"low-tmc/subarray-quality-monitor/{subarray_id}"
             )
         self.device_dict = get_device_dict(int(requested_subarray_id))
 
