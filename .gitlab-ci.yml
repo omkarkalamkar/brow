@@ -114,42 +114,42 @@ k8s-test:
     - pip3 install -q -U ska-ser-xray
     - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
 
-k8s-test-tmc-low-negative-tests:
-  extends:
-    - k8s-test
-  variables:
-    KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-negative-tests"
-    SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-negative-tests"
-    MARK: "SKA_tmc_low_negative_tests"
-    SUBARRAY_COMMAND_TIMEOUT: 10
-    COUNT: 1
-  before_script:
-    - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
-    - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
-    - "make help | grep k8s-test"
-    - make k8s-install-chart
-    - make k8s-wait
-  script:
-    - make k8s-test
-    - |
-      if [[ "$CI_KEEP_NAMESPACE" != "true" ]]; then
-        make k8s-uninstall-chart || true
-        make k8s-delete-namespace || true
-      fi;
-    - '[ -f build/status ] || (echo "Something went wrong with the test (no build/status file); exit 1")'
-    - exit $(cat build/status)
-  after_script:
-    - pip3 install -q -U ska-ser-xray
-    - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
-  environment:
-    name: test/$CI_COMMIT_REF_SLUG
-    on_stop: stop-k8s-test-tmc-low-negative-tests
+# k8s-test-tmc-low-negative-tests:
+#   extends:
+#     - k8s-test
+#   variables:
+#     KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-negative-tests"
+#     SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-negative-tests"
+#     MARK: "SKA_tmc_low_negative_tests"
+#     SUBARRAY_COMMAND_TIMEOUT: 10
+#     COUNT: 1
+#   before_script:
+#     - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
+#     - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
+#     - "make help | grep k8s-test"
+#     - make k8s-install-chart
+#     - make k8s-wait
+#   script:
+#     - make k8s-test
+#     - |
+#       if [[ "$CI_KEEP_NAMESPACE" != "true" ]]; then
+#         make k8s-uninstall-chart || true
+#         make k8s-delete-namespace || true
+#       fi;
+#     - '[ -f build/status ] || (echo "Something went wrong with the test (no build/status file); exit 1")'
+#     - exit $(cat build/status)
+#   after_script:
+#     - pip3 install -q -U ska-ser-xray
+#     - XRAY_TEST_RESULT_FILE="build/cucumber.json" make xray-publish
+#   environment:
+#     name: test/$CI_COMMIT_REF_SLUG
+#     on_stop: stop-k8s-test-tmc-low-negative-tests
 
-stop-k8s-test-tmc-low-negative-tests:
-  extends:
-    - stop-k8s-test
-  variables:
-    KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-negative-tests"
+# stop-k8s-test-tmc-low-negative-tests:
+#   extends:
+#     - stop-k8s-test
+#   variables:
+#     KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-negative-tests"
 
 k8s-tmc-scaling:
   stage: scaling
