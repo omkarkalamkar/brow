@@ -18,6 +18,7 @@ from tests.resources.test_harness.constant import (
     low_csp_master,
     low_csp_master_leaf_node,
     low_csp_subarray1,
+    low_csp_subarray2,
     low_csp_subarray_leaf_node,
     low_sdp_master,
     low_sdp_master_leaf_node,
@@ -26,6 +27,7 @@ from tests.resources.test_harness.constant import (
     mccs_controller,
     mccs_master_leaf_node,
     mccs_subarray1,
+    mccs_subarray2,
     mccs_subarray_leaf_node,
     tmc_low_subarraynode1,
 )
@@ -350,6 +352,34 @@ class CentralNodeWrapperLow(object):
             ),
         )
 
+    @sync_set_to_on(device_dict=device_dict_low)
+    def move_to_on_16_SA(self):
+        """
+        A method to invoke TelescopeOn command to
+        put telescope in ON state
+        """
+        LOGGER.info(
+            "Starting up the Telescope %s", self.central_node.telescopeState
+        )
+        self.set_low_devices_admin_mode_16_SA()
+        LOGGER.info("Invoking TelescopeOn command with all Mocks")
+        _, unique_id = self.central_node.TelescopeOn()
+        self.set_values_with_all_mocks(DevState.ON)
+        assert_that(self.event_tracer).described_as(
+            "FAILED ASSUMPTION AFTER ON COMMAND: "
+            "Central Node device"
+            f"({self.central_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            self.central_node,
+            "longRunningCommandResult",
+            (
+                unique_id[0],
+                json.dumps((int(ResultCode.OK), "Command Completed")),
+            ),
+        )
+
     def set_standby(self):
         """
         A method to invoke TelescopeStandby command to
@@ -525,9 +555,31 @@ class CentralNodeWrapperLow(object):
     def set_low_devices_admin_mode(self):
         """Set the admin mode of low  devices"""
         csp_master_device = tango.DeviceProxy(low_csp_master)
+        csp_subarray_device = tango.DeviceProxy(low_csp_subarray1)
         if csp_master_device.adminMode != 0:
             csp_master_device.adminMode = 0
+        if csp_subarray_device.adminMode != 0:
+            csp_subarray_device.adminMode = 0
+        csp_subarray_device2 = tango.DeviceProxy(low_csp_subarray2)
+        if csp_subarray_device2.adminMode != 0:
+            csp_subarray_device2.adminMode = 0
+
         mccs_master_device = tango.DeviceProxy(mccs_controller)
+        mccs_subarray_device = tango.DeviceProxy(mccs_subarray1)
+        if mccs_master_device.adminMode != 0:
+            mccs_master_device.adminMode = 0
+            if mccs_subarray_device.adminMode != 0:
+                mccs_subarray_device.adminMode = 0
+        mccs_subarray_device2 = tango.DeviceProxy(mccs_subarray2)
+        if mccs_subarray_device2.adminMode != 0:
+            mccs_subarray_device2.adminMode = 0
+
+    def set_low_devices_admin_mode_16_SA(self):
+        """Set the admin mode of low  devices"""
+        csp_master_device = tango.DeviceProxy(low_csp_master)
+        mccs_master_device = tango.DeviceProxy(mccs_controller)
+        if csp_master_device.adminMode != 0:
+            csp_master_device.adminMode = 0
         if mccs_master_device.adminMode != 0:
             mccs_master_device.adminMode = 0
         for subarray_id in range(1, 17):
