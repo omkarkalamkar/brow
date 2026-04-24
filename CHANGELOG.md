@@ -6,15 +6,29 @@ All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 [Unreleased]
-*************
+************
+Fixed
+-----
+* Fixed KeyError in release resources command when attempting to remove PSS beams/subsystems assignment for subarrays that were not assigned PSS beams/subsystems. Resolves SKB-1300.
+
 Updated
 -------
+* Utilized CentralNode v1.3.1
+
+[2.15.0-rc.1]
+*************
+Added
+-------
+* Introduced TMC Quality Monitor device
 * Tested 16 Subarrays with different configurations, performed end to end observations and delay models for station beams ,PSS and PST beams.
 * Tested 16 Subarrys for 30 min scan duration
 * Tested 16 Subarrys for multi observation and multi scan scenario.
 * Tested 16 Subarrays for negative observations
+
+Updated
+-------
+* Updated TMC Low to support MCCS early Scan scenario. Here the Scan command is invoked on MCCS Subarray via Subarray Leaf Node. Later the normal Scan command is invoked from TMC Subarray.
 * Utilized CentralNode v1.2.0
-* Update TMC to support MCCS early scan.
 
 [2.14.0-rc.1]
 *************
