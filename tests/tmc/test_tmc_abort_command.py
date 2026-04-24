@@ -35,7 +35,7 @@ def test_tmc_abort_command():
     the Abort command in a TMC."""
 
 
-@pytest.mark.SKA_low
+@pytest.mark.aki
 @scenario(
     "../features/tmc/check_abort_command.feature",
     "TMC validates Abort Command in intermediate obsState",
