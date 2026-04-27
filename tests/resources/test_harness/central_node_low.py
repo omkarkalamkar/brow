@@ -193,6 +193,7 @@ class CentralNodeWrapperLow(object):
         self._subarray_nodes_fqdn_list = Resource(self.central_node).get(
             "TMCSubarrayNodes"
         )
+        LOGGER.info("Subarray nodes list: %s", self._subarray_nodes_fqdn_list)
         return len(self._subarray_nodes_fqdn_list)
 
     @telescope_state.setter
