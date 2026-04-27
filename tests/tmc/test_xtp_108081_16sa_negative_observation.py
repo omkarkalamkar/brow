@@ -731,7 +731,7 @@ def given_telescope_on(
             "longRunningCommandResult",
         )
         CN_low_16_SN.set_values_with_all_mocks(DevState.ON)
-    CN_low_16_SN.move_to_on_16_SA()
+    CN_low_16_SN.move_to_on()
     assert_that(event_tracer).within_timeout(
         TIMEOUT
     ).has_change_event_occurred(

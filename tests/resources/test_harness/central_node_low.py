@@ -187,6 +187,14 @@ class CentralNodeWrapperLow(object):
         )
         return self._telescope_state
 
+    @property
+    def subarray_count(self):
+        """Returns the count of subarrays from central node device proxy."""
+        self._subarray_nodes_fqdn_list = Resource(self.central_node).get(
+            "TMCSubarrayNodes"
+        )
+        return len(self._subarray_nodes_fqdn_list)
+
     @telescope_state.setter
     def telescope_state(self, value):
         """Telescope state representing overall state of telescope
@@ -333,7 +341,7 @@ class CentralNodeWrapperLow(object):
         LOGGER.info(
             "Starting up the Telescope %s", self.central_node.telescopeState
         )
-        self.set_low_devices_admin_mode()
+        self.set_low_device_admin_mode_by_subarray_count()
         LOGGER.info("Invoking TelescopeOn command with all Mocks")
         _, unique_id = self.central_node.TelescopeOn()
         self.set_values_with_all_mocks(DevState.ON)
@@ -583,6 +591,25 @@ class CentralNodeWrapperLow(object):
         if mccs_master_device.adminMode != 0:
             mccs_master_device.adminMode = 0
         for subarray_id in range(1, 17):
+            self.set_subarray_id(subarray_id)
+            csp_subarray_device = self.subarray_devices.get("csp_subarray")
+            if csp_subarray_device:
+                if csp_subarray_device.adminMode != 0:
+                    csp_subarray_device.adminMode = 0
+            mccs_subarray_device = self.subarray_devices.get("mccs_subarray")
+            if mccs_subarray_device:
+                if mccs_subarray_device.adminMode != 0:
+                    mccs_subarray_device.adminMode = 0
+
+    def set_low_device_admin_mode_by_subarray_count(self):
+        """Set the admin mode of low  devices based on subarray count"""
+        csp_master_device = tango.DeviceProxy(low_csp_master)
+        mccs_master_device = tango.DeviceProxy(mccs_controller)
+        if csp_master_device.adminMode != 0:
+            csp_master_device.adminMode = 0
+        if mccs_master_device.adminMode != 0:
+            mccs_master_device.adminMode = 0
+        for subarray_id in range(1, self.subarray_count + 1):
             self.set_subarray_id(subarray_id)
             csp_subarray_device = self.subarray_devices.get("csp_subarray")
             if csp_subarray_device:
