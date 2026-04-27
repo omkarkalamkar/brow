@@ -65,6 +65,17 @@ extensions = [
     "sphinx-jsonschema"
 ]
 
+intersphinx_mapping = {
+    "ska-tmc-centralnode": (
+        "https://developer.skao.int/projects/ska-tmc-centralnode/en/latest/",
+        None,
+    ),
+    "ska-tmc-subarraynode": (
+        "https://developer.skao.int/projects/ska-tmc-subarraynode/en/latest/",
+        None,
+    ),
+}
+
 # Add any paths that contain templates here, relative to this directory.
 #templates_path = ["_templates"]
 
