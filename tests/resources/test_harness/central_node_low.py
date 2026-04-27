@@ -579,6 +579,8 @@ class CentralNodeWrapperLow(object):
             if mccs_subarray_device:
                 if mccs_subarray_device.adminMode != 0:
                     mccs_subarray_device.adminMode = 0
+        # reset subarray_id back to 1 after setting admin mode.
+        self.set_subarray_id(1)
 
     def get_subarray_id(self, subarray: DeviceProxy) -> str:
         """Returns current subarray id from the subarray_node device proxy."""
