@@ -5,12 +5,20 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[2.14.0]
+*************
+Updated
+-------
+* Subarray node v1.4.0: Introduced new property `PreRecoveryCheckTimeDuration`,which ensures that the devices with successful command result reach final observation state and devices with failed command result reach the previous observation state. This would help in auto recovery the subarray to appropriate observation state in case of failure. If the device is stuck in transitioning observation state till time duration the subarray node won't be recovered.
+* Subarray node v1.5.0: Updated rules to consider `longRunningCommandResult` in addition to `ObsState=Aborted` for Abort Command. This change fixed SKB-1210.
+* MCCS Leaf node v0.15.2: Fixed the issue of liveliness error not getting cleared from healthinfo.
+
 [2.14.0-rc.1]
 *************
 Updated
 -------
 * Subarray node v1.4.0: Introduced new property `PreRecoveryCheckTimeDuration`,which ensures that the devices with successful command result reach final observation state and devices with failed command result reach the previous observation state. This would help in auto recovery the subarray to appropriate observation state in case of failure. If the device is stuck in transitioning observation state till time duration the subarray node won't be recovered.
-* Subarray node v1.5.0: Update rules to consider `longRunningCommandResult` in addition to `ObsState=Aborted` for Abort Command.
+* Subarray node v1.5.0: Updated rules to consider `longRunningCommandResult` in addition to `ObsState=Aborted` for Abort Command. This change fixed SKB-1210.
 * MCCS Leaf node v0.15.2: Fixed the issue of liveliness error not getting cleared from healthinfo.
 
 [2.13.0]
