@@ -190,7 +190,7 @@ class CentralNodeWrapperLow(object):
     @property
     def subarray_count(self):
         """Returns the count of subarrays from central node device proxy."""
-        self._subarray_nodes_fqdn_list = Resource(self.central_node).get(
+        self._subarray_nodes_fqdn_list = self.central_node.get_property(
             "TMCSubarrayNodes"
         )
         LOGGER.info("Subarray nodes list: %s", self._subarray_nodes_fqdn_list)
