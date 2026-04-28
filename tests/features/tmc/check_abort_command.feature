@@ -18,6 +18,7 @@ Scenario: TMC validates Abort Command in intermediate obsState
 
     Examples:
     | obs_state         |
+    | RESOURCING        |
     | CONFIGURING       |
 
 @XTP-28865

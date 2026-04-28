@@ -35,7 +35,7 @@ def test_tmc_abort_command():
     the Abort command in a TMC."""
 
 
-@pytest.mark.aki
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_abort_command.feature",
     "TMC validates Abort Command in intermediate obsState",
@@ -59,9 +59,6 @@ def given_tmc(
         subarray_node_low.subarray_node, "longRunningCommandResult"
     )
     event_tracer.subscribe_event(
-        subarray_node_low.subarray_node, "longRunningCommandsInQueue"
-    )
-    event_tracer.subscribe_event(
         subarray_node_low.subarray_node, "longRunningCommandInProgress"
     )
     event_tracer.subscribe_event(
@@ -73,7 +70,6 @@ def given_tmc(
             subarray_node_low.subarray_node: [
                 "obsState",
                 "longRunningCommandResult",
-                "longRunningCommandsInQueue",
                 "longRunningCommandInProgress",
             ],
         }
@@ -170,7 +166,6 @@ def given_tmc_in_intermediate_obsstate(
             subarray_node_low.subarray_node: [
                 "obsState",
                 "longRunningCommandResult",
-                "longRunningCommandsInQueue",
                 "longRunningCommandInProgress",
             ]
         }
