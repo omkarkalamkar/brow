@@ -1,8 +1,8 @@
 .. _components_quality_monitor:
 
-==============
+===============
 Quality Monitor
-==============
+===============
 
 
 TRL
