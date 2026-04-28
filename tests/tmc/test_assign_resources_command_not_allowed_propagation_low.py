@@ -12,7 +12,6 @@ from tests.resources.test_harness.constant import (
     COMMAND_NOT_ALLOWED_DEFECT,
     TIMEOUT,
     low_sdp_subarray_leaf_node,
-    mccs_controller,
 )
 from tests.resources.test_harness.helpers import (
     wait_and_validate_device_attribute_value,
@@ -256,7 +255,8 @@ class TestAssignCommandNotAllowedPropagation:
         )
         # Constructing the error message
         exception_message = (
-            f"Exception occurred on the following devices: {mccs_controller}:"
+            "Exception occurred on the following devices: "
+            "low-tmc/leaf-node-mccs/0"
         )
 
         assert_that(event_tracer).described_as(
