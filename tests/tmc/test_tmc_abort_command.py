@@ -161,6 +161,10 @@ def given_tmc_in_intermediate_obsstate(
     event_tracer.subscribe_event(
         subarray_node_low.subarray_node, "longRunningCommandResult"
     )
+    event_tracer.subscribe_event(subarray_node_low.subarray_node, "lrcQueue")
+    event_tracer.subscribe_event(
+        subarray_node_low.subarray_node, "longRunningCommandInProgress"
+    )
     log_events(
         {
             subarray_node_low.subarray_node: [
@@ -212,12 +216,20 @@ def invoke_abort_command(
             json.dumps((int(ResultCode.OK), "Abort command completed")),
         ),
     )
+    # After abort command, the longRunningCommandInProgress and
+    # lrcQueue attributes are expected to be empty
     assert_that(
         subarray_node_low.subarray_node.longRunningCommandInProgress
     ).described_as(
         'FAILED ASSUMPTION IN "THEN STEP: '
         '"the Subarray transitions to ABORTED obsState" '
         "longRunningCommandInProgress is expected to be empty"
+    ).is_empty()
+
+    assert_that(subarray_node_low.subarray_node.lrcQueue).described_as(
+        'FAILED ASSUMPTION IN "THEN STEP: '
+        '"the Subarray transitions to ABORTED obsState" '
+        "lrcQueue is expected to be empty"
     ).is_empty()
 
 
@@ -246,14 +258,4 @@ def check_obs_state(
         f"is expected to be in ABORTED obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         subarray_node_low.subarray_node, "obsState", ObsState.ABORTED
-    )
-    log_events(
-        {
-            subarray_node_low.subarray_node: [
-                "obsState",
-                "longRunningCommandResult",
-                "longRunningCommandsInQueue",
-                "longRunningCommandInProgress",
-            ]
-        }
     )
