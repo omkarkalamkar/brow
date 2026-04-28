@@ -18,6 +18,7 @@ from tests.resources.test_harness.constant import (
     low_csp_master,
     low_csp_master_leaf_node,
     low_csp_subarray1,
+    low_csp_subarray2,
     low_csp_subarray_leaf_node,
     low_sdp_master,
     low_sdp_master_leaf_node,
@@ -26,6 +27,7 @@ from tests.resources.test_harness.constant import (
     mccs_controller,
     mccs_master_leaf_node,
     mccs_subarray1,
+    mccs_subarray2,
     mccs_subarray_leaf_node,
     tmc_low_subarraynode1,
 )
@@ -185,6 +187,21 @@ class CentralNodeWrapperLow(object):
         )
         return self._telescope_state
 
+    @property
+    def subarray_count(self) -> int:
+        """Returns the count of subarrays from central node device
+        proxy by accessing the TMCSubarrayNodes property."""
+
+        self._tmc_subarray_node_property = self.central_node.get_property(
+            "TMCSubarrayNodes"
+        )
+        LOGGER.info(
+            "Subarray nodes list: %s", self._tmc_subarray_node_property
+        )
+        return len(
+            self._tmc_subarray_node_property.get("TMCSubarrayNodes", [])
+        )
+
     @telescope_state.setter
     def telescope_state(self, value):
         """Telescope state representing overall state of telescope
@@ -306,6 +323,22 @@ class CentralNodeWrapperLow(object):
         # Adding a small sleep to allow the systems to clean up processes
         sleep(0.15)
 
+    def tear_down_all_subarrays(self):
+        """Handle Tear down of all subarrays"""
+        LOGGER.info("Calling Tear down for all subarrays.")
+        self._reset_health_state_for_mock_devices()
+        self.reset_defects_for_devices()
+        for subarray_id in range(1, 17):
+            self.set_subarray_id(subarray_id)
+            self.tear_down_subarray(self.subarray_node)
+
+        self.move_to_off()
+        self._clear_command_call_and_transition_data(clear_transition=True)
+        self.event_recorder.clear_events()
+        self.event_tracer.clear_events()
+        # Adding a small sleep to allow the systems to clean up processes
+        sleep(0.15)
+
     @sync_set_to_on(device_dict=device_dict_low)
     def move_to_on(self):
         """
@@ -315,7 +348,7 @@ class CentralNodeWrapperLow(object):
         LOGGER.info(
             "Starting up the Telescope %s", self.central_node.telescopeState
         )
-        self.set_low_devices_admin_mode()
+        self.set_low_device_admin_mode_by_subarray_count()
         LOGGER.info("Invoking TelescopeOn command with all Mocks")
         _, unique_id = self.central_node.TelescopeOn()
         self.set_values_with_all_mocks(DevState.ON)
@@ -514,13 +547,40 @@ class CentralNodeWrapperLow(object):
             csp_master_device.adminMode = 0
         if csp_subarray_device.adminMode != 0:
             csp_subarray_device.adminMode = 0
+        csp_subarray_device2 = tango.DeviceProxy(low_csp_subarray2)
+        if csp_subarray_device2.adminMode != 0:
+            csp_subarray_device2.adminMode = 0
 
         mccs_master_device = tango.DeviceProxy(mccs_controller)
         mccs_subarray_device = tango.DeviceProxy(mccs_subarray1)
         if mccs_master_device.adminMode != 0:
             mccs_master_device.adminMode = 0
-        if mccs_subarray_device.adminMode != 0:
-            mccs_subarray_device.adminMode = 0
+            if mccs_subarray_device.adminMode != 0:
+                mccs_subarray_device.adminMode = 0
+        mccs_subarray_device2 = tango.DeviceProxy(mccs_subarray2)
+        if mccs_subarray_device2.adminMode != 0:
+            mccs_subarray_device2.adminMode = 0
+
+    def set_low_device_admin_mode_by_subarray_count(self):
+        """Set the admin mode of low  devices based on subarray count"""
+        csp_master_device = tango.DeviceProxy(low_csp_master)
+        mccs_master_device = tango.DeviceProxy(mccs_controller)
+        if csp_master_device.adminMode != 0:
+            csp_master_device.adminMode = 0
+        if mccs_master_device.adminMode != 0:
+            mccs_master_device.adminMode = 0
+        for subarray_id in range(1, self.subarray_count + 1):
+            self.set_subarray_id(subarray_id)
+            csp_subarray_device = self.subarray_devices.get("csp_subarray")
+            if csp_subarray_device:
+                if csp_subarray_device.adminMode != 0:
+                    csp_subarray_device.adminMode = 0
+            mccs_subarray_device = self.subarray_devices.get("mccs_subarray")
+            if mccs_subarray_device:
+                if mccs_subarray_device.adminMode != 0:
+                    mccs_subarray_device.adminMode = 0
+        # reset subarray_id back to 1 after setting admin mode.
+        self.set_subarray_id(1)
 
     def get_subarray_id(self, subarray: DeviceProxy) -> str:
         """Returns current subarray id from the subarray_node device proxy."""

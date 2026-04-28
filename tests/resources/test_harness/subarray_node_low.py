@@ -20,6 +20,7 @@ from tests.resources.test_harness.constant import (
     low_sdp_subarray_leaf_node,
     mccs_subarray1,
     mccs_subarray_leaf_node,
+    quality_monitor1,
     tmc_low_subarraynode1,
 )
 from tests.resources.test_harness.event_recorder import EventRecorder
@@ -92,6 +93,7 @@ class SubarrayNodeWrapperLow:
         self.csp_subarray1 = DeviceProxy(low_csp_subarray1)
         self.sdp_subarray1 = DeviceProxy(low_sdp_subarray1)
         self.mccs_subarray1 = DeviceProxy(mccs_subarray1)
+        self.quality_monitor = DeviceProxy(quality_monitor1)
         self.subarray_devices = {
             "csp_subarray": DeviceProxy(low_csp_subarray1),
             "sdp_subarray": DeviceProxy(low_sdp_subarray1),
@@ -287,6 +289,7 @@ class SubarrayNodeWrapperLow:
         self.subarray_devices = {
             "csp_subarray": DeviceProxy(f"low-csp/subarray/{subarray_id}"),
             "sdp_subarray": DeviceProxy(f"low-sdp/subarray/{subarray_id}"),
+            "mccs_subarray": DeviceProxy(f"low-mccs/subarray/{subarray_id}"),
         }
         self.csp_subarray_leaf_node = DeviceProxy(
             f"low-tmc/subarray-leaf-node-csp/{subarray_id}"
@@ -294,7 +297,27 @@ class SubarrayNodeWrapperLow:
         self.sdp_subarray_leaf_node = DeviceProxy(
             f"low-tmc/subarray-leaf-node-sdp/{subarray_id}"
         )
+        self.mccs_subarray_leaf_node = DeviceProxy(
+            f"low-tmc/subarray-leaf-node-mccs/{subarray_id}"
+        )
+        if 0 < int(requested_subarray_id) < 3:
+            self.quality_monitor = DeviceProxy(
+                f"low-tmc/subarray-quality-monitor/{subarray_id}"
+            )
         self.device_dict = get_device_dict(int(requested_subarray_id))
+
+    def get_device_proxy(self, device_name: str) -> DeviceProxy:
+        """Returns the device proxy for the given device name.
+
+        Args:
+            device_name (str): The name of the device for which the proxy is
+            required.
+
+        Returns:
+            DeviceProxy: The device proxy corresponding to the given device
+            name.
+        """
+        return DeviceProxy(self.device_dict.get(device_name))
 
     def move_to_on(self):
         """Move the Subarray to On State"""
@@ -407,6 +430,7 @@ class SubarrayNodeWrapperLow:
             "Current Subarray Node ObsState is: %s",
             self.subarray_node.obsState,
         )
+
         self._reset_simulator_devices()
         self._clear_command_call_and_transition_data(clear_transition=True)
 
@@ -439,6 +463,12 @@ class SubarrayNodeWrapperLow:
         self.move_to_off()
         # Adding a small sleep to allow the systems to clean up processes
         sleep(1)
+
+    def tear_down_all_subarrays(self):
+        """Tear down for all subarrays after each test run"""
+        for subarray_id in range(1, 17):
+            self.set_subarray_id(subarray_id)
+            self.tear_down()
 
     def set_scan_id(self, scan_id: int, input_str: str) -> str:
         """

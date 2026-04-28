@@ -5,6 +5,37 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[Unreleased]
+************
+Fixed
+-----
+* Fixed issue with scalability job where test were failing due to admin mode not being updated in ON command for subsystem subarray devices with subarray_id >=3
+
+[2.15.0-rc.2]
+*************
+Fixed
+-----
+* Fixed KeyError in release resources command when attempting to remove PSS beams/subsystems assignment for subarrays that were not assigned PSS beams/subsystems. Resolves SKB-1300.
+
+Updated
+-------
+* Utilized CentralNode v1.3.1
+
+[2.15.0-rc.1]
+*************
+Added
+-------
+* Introduced TMC Quality Monitor device
+* Tested 16 Subarrays with different configurations, performed end to end observations and delay models for station beams ,PSS and PST beams.
+* Tested 16 Subarrys for 30 min scan duration
+* Tested 16 Subarrys for multi observation and multi scan scenario.
+* Tested 16 Subarrays for negative observations
+
+Updated
+-------
+* Updated TMC Low to support MCCS early Scan scenario. Here the Scan command is invoked on MCCS Subarray via Subarray Leaf Node. Later the normal Scan command is invoked from TMC Subarray.
+* Utilized CentralNode v1.2.0
+
 [2.14.0]
 *************
 Updated
@@ -12,6 +43,8 @@ Updated
 * Subarray node v1.4.0: Introduced new property `PreRecoveryCheckTimeDuration`,which ensures that the devices with successful command result reach final observation state and devices with failed command result reach the previous observation state. This would help in auto recovery the subarray to appropriate observation state in case of failure. If the device is stuck in transitioning observation state till time duration the subarray node won't be recovered.
 * Subarray node v1.5.0: Updated rules to consider `longRunningCommandResult` in addition to `ObsState=Aborted` for Abort Command. This change fixed SKB-1210.
 * MCCS Leaf node v0.15.2: Fixed the issue of liveliness error not getting cleared from healthinfo.
+
+Note: There is an End command timeout issue observed in CSP Subarray Leaf Node with this chart. It occurs when the delay calculation stop operation takes longer and CSP simulator obsState and LRCR events received earlier. The issue is resolved in the tmc-low chart 2.15.0-rc.1.
 
 [2.14.0-rc.1]
 *************

@@ -18,7 +18,7 @@ dependencies:
     version: 1.0.7
     repository: https://artefact.skao.int/repository/helm-internal
   - name: ska-tmc-low
-    version: 2.14.0
+    version: 2.15.0-rc.2
     repository: file://../ska-tmc-low
     alias: tmc-low
   - name: ska-tango-taranta
@@ -30,6 +30,6 @@ dependencies:
     repository: https://artefact.skao.int/repository/helm-internal
     condition: ska-taranta.enabled
   - name: ska-tmc-simulators
-    version: 1.9.7
+    version: 1.11.0
     repository: https://artefact.skao.int/repository/helm-internal
     condition: ska-tmc-simulators.enabled

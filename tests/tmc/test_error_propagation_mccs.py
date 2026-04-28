@@ -32,10 +32,6 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 
 
-@pytest.mark.skip(
-    reason="Failing due to delayed register_command in End command on CSP "
-    + "Subarray Leaf Node."
-)
 @pytest.mark.SKA_tmc_low_negative_tests
 @scenario(
     "../features/tmc/check_error_propagation_mccs.feature",

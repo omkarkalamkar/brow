@@ -2,8 +2,8 @@ apiVersion: v2
 name: ska-tmc-low
 description: A subchart for ska-tmc-low deployment.
 type: application
-version: 2.14.0
-appVersion: 2.14.0
+version: 2.15.0-rc.2
+appVersion: 2.15.0-rc.2
 icon: https://www.skatelescope.org/wp-content/uploads/2016/07/09545_NEW_LOGO_2014.png
 maintainers:
   - name: Team Sahyadri and Team Himalay
@@ -15,4 +15,7 @@ dependencies:
     condition: ska-tango-base.enabled,global.sub-system.ska-tango-base.enabled
   - name: ska-tango-util
     version: 1.0.7
+    repository: https://artefact.skao.int/repository/helm-internal
+  - name: ska-tango-transducer
+    version: 0.1.0
     repository: https://artefact.skao.int/repository/helm-internal

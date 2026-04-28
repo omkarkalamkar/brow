@@ -1,25 +1,29 @@
-release=2.14.0
-tag=2.14.0
+release=2.15.0-rc.2
+tag=2.15.0-rc.2
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.14.0**
+**1. ska-tmc-low-integration 2.15.0-rc.2**
 
-    **1.1 ska-tmc-low 2.14.0-rc.1 - 2.14.0:**
+    **1.1 ska-tmc-low 2.15.0-rc.1 - 2.15.0-rc.2:**
+        Fixed
+        -----
+        * Fixed KeyError in release resources command when attempting to remove PSS beams/subsystems assignment for subarrays that were not assigned PSS beams/subsystems. Resolves SKB-1300.
+
         Updated
         -------
-        * Subarray node v1.4.0: Introduced new property `PreRecoveryCheckTimeDuration`,which ensures that the devices with successful command result reach final observation state and devices with failed command result reach the previous observation state. This would help in auto recovery the subarray to appropriate observation state in case of failure. If the device is stuck in transitioning observation state till time duration the subarray node won't be recovered.
-        * Subarray node v1.5.0: Updated rules to consider `longRunningCommandResult` in addition to `ObsState=Aborted` for Abort Command. This change fixed SKB-1210.
-        * MCCS Leaf node v0.15.2: Fixed the issue of liveliness error not getting cleared from healthinfo.
+        * Utilized CentralNode v1.3.1
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.14.0**
+**1. ska-tmc-low-integration 2.15.0-rc.2**
 
-    **1.1 ska-tmc-low 2.14.0-rc.1 - 2.14.0:**
+    **1.1 ska-tmc-low 2.15.0-rc.1 - 2.15.0-rc.2:**
+        Fixed
+        -----
+        * Fixed KeyError in release resources command when attempting to remove PSS beams/subsystems assignment for subarrays that were not assigned PSS beams/subsystems. Resolves SKB-1300.
+
         Updated
         -------
-        * Subarray node v1.4.0: Introduced new property `PreRecoveryCheckTimeDuration`,which ensures that the devices with successful command result reach final observation state and devices with failed command result reach the previous observation state. This would help in auto recovery the subarray to appropriate observation state in case of failure. If the device is stuck in transitioning observation state till time duration the subarray node won't be recovered.
-        * Subarray node v1.5.0: Updated rules to consider `longRunningCommandResult` in addition to `ObsState=Aborted` for Abort Command. This change fixed SKB-1210.
-        * MCCS Leaf node v0.15.2: Fixed the issue of liveliness error not getting cleared from healthinfo.
+        * Utilized CentralNode v1.3.1

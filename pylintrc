@@ -67,8 +67,6 @@ disable=invalid-name,
         too-many-statements
 
 
-        
-
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
 # multiple time (only on the command line, not in the configuration file where
@@ -353,7 +351,7 @@ indent-string='    '
 max-line-length=79
 
 # Maximum number of lines in a module.
-max-module-lines=1000
+max-module-lines=1500
 
 # List of optional constructs for which whitespace checking is disabled. `dict-
 # separator` is used to allow tabulation in dicts, etc.: {1  : 1,\n222: 2}.
@@ -406,7 +404,7 @@ max-bool-expr=5
 max-branches=12
 
 # Maximum number of locals for function / method body.
-max-locals=16
+max-locals=20
 
 # Maximum number of parents for a class (see R0901).
 max-parents=7

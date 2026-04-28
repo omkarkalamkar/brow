@@ -10,22 +10,24 @@ Standard deployment
 The TMC Low is packaged as a `helm chart <https://helm.sh/>`_ and can be
 deployed uing helm commands. The default deployment configuration is
 assumed to be the SKA production environment. In the current version,
-TMC supports `one` subarray operation. Following list shows default number
+TMC supports `two` subarray operations. Following list shows default number
 of instances deployed for each of the TMC component.
 
 #. Central Node - 1
-#. Subarray Node - 1
+#. Subarray Node - 2
 #. CSP Master Leaf Node - 1
-#. CSP Subarray Leaf Node - 1
+#. CSP Subarray Leaf Node - 2
 #. SDP Master Leaf Node - 1
-#. SDP Subarray Leaf Node - 1
+#. SDP Subarray Leaf Node - 2
 #. MCCS Master Leaf Node - 1
-#. MCCS Subarray Leaf Node - 1
+#. MCCS Subarray Leaf Node - 2
 #. Resource Monitor - 1
+#. Quality Monitor - 2
 
 .. warning:: The number of instances of Central Node, MCCS Master Leaf Node,
-    SDP Master, Leaf Node and CSP Master Leaf Node should always be one even
-    though it is technically possible to deploy multiple instances.
+    SDP Master Leaf Node, CSP Master Leaf Node and Resource Monitor should 
+    always be one even though it is technically possible to deploy multiple 
+    instances.
 
 To deploy the TMC use following command on the terminal:
 
@@ -78,9 +80,9 @@ timeout value is preconfigured when the component starts for the first time.
 Logging
 -------
 
-The basic setting for logging allows setting logging level of all TMC devices 
-via ``TMCLoggingLevel`` parameter in **global** section. By default, the 
-logging level is set to 4 (``INFO`` level). To set the logging level of one or  
+The basic setting for logging allows setting logging level of all TMC devices
+via ``TMCLoggingLevel`` parameter in **global** section. By default, the
+logging level is set to 4 (``INFO`` level). To set the logging level of one or
 more specific component, refer to advanced cutomization options.
 
 Usage
@@ -176,6 +178,7 @@ Central Node
     #. **family** :  This refers to the family name of CentralNode TANGO device. Currently defaults to "central-node".
     #. **member** :  This refers to the member of CentralNode TANGO device. Currently defaults to "0".
     #. **IsAutoRecoveryEnabled** :  This refers to the feature flag i.e used temporarily till all the nodes are tested with auto recovery functionality. Currently defaults to "false".
+    #. **SubarrayPrefix** :  This refers to the prefix for subarray devices. Currently defaults to "low-tmc/subarray/".
 
 Subarray Node
 ^^^^^^^^^^^^^^
@@ -202,7 +205,7 @@ Subarray Node
         .. note::
             The `PreRecoveryCheckTimeDuration` property is introduced to handle a specific edge case in the automatic recovery of the subarray. It is recommended to NOT modify the default value without prior understanding of the behaviour of the Subarray Node auto recovery mechanics. Please refer auto recovery documentaPreRecoveryCheckTimeDurationtion for more details :ref:`Recovering TMC Low`.
 
-SDP Subarray Leaf Node   
+SDP Subarray Leaf Node
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
     #. **LivelinessCheckPeriod** :  This refers to the Period (in seconds) for the liveliness probe to monitor each device in a loop. Currently defaults to 0.5 seconds.
@@ -272,3 +275,20 @@ Resource Monitor
     #. **LivelinessCheckPeriod** : This defines how often (in seconds) the system checks if each connected device is active. The default value is 0.5 seconds.
     #. **EventSubscriptionCheckPeriod** :  This defines the period (in seconds) for the event subscriber to verify and maintain active subscriptions. Currently defaults to 0.5 seconds.
     #. **family** :  This refers to the family name of the Resource Monitor Tango device. Currently defaults to **"resource-monitor"**.
+
+Quality Monitor
+---------------------------------
+This section specifies the configuration required to deploy quality monitor devices.
+Navigate to **ska-tango-transducer.deviceServers.transducer.devices** section in 
+values.yaml file. The quality monitor device utilizes ska-tango-transducer chart. 
+There is one quality monitor device per subarray, thus total 16 instances. For each 
+quality monitor device, below set of parameters need to be provided as per the requirement. 
+For more details, refer ska-tango-transducer repository: `<https://gitlab.com/ska-telescope/ska-tango-transducer>`_.
+
+    #. **name** : This defines TANGO server instance name of the quality monitor. The value is "qualitymonitor01" for instance one.
+    #. **deviceName** : This defines the TANGO device name of quality monitor. The value is "low-tmc/subarray-quality-monitor/01" for quality monitor 1.
+    #. **readPeriod** : This defines the Read period for the *readAttributes* property.
+    #. **subscribedAttributes** :  This defines the list of the device attributes to be subscribed on change events. Currenlty QA metrics of CSP Subarray is subcribed using this property.
+    #. **readAttributes** :  This defines the list of the attributes to be read periodically (poll). Currently defaults to empty list.
+    #. **aggregatedClassAttributes** :  This defines the list of the TANGO classes for which the attributes are to be subscribed from all the instances. Currently defaults to empty list.
+    #. **derivedAttributes** :  This defines the list of the new attributes to be computed/derived using above attributes. Currently rule for attribute *readyToScan* is configured using *qualityMetricsCspSubarray*.

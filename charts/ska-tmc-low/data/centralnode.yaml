@@ -20,6 +20,9 @@ server:
       devices:
       - name: "{{ $domain }}/{{ $family }}/{{ $member }}"
         properties:
+        - name: "SubarrayPrefix"
+          values:
+          - "{{.Values.deviceServers.centralnode.SubarrayPrefix}}"
         - name: "CspMasterLeafNodeFQDN"
           values:
           - "{{.Values.devices_fqdn.csp_master_ln}}"
