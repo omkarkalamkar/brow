@@ -13,7 +13,6 @@ from tests.resources.test_harness.constant import (
     TIMEOUT,
     low_sdp_subarray_leaf_node,
     mccs_controller,
-    mccs_master_leaf_node,
 )
 from tests.resources.test_harness.helpers import (
     wait_and_validate_device_attribute_value,
@@ -257,8 +256,7 @@ class TestAssignCommandNotAllowedPropagation:
         )
         # Constructing the error message
         exception_message = (
-            f"{mccs_master_leaf_node}: The invocation of the Allocate command"
-            + f" is failed on MCCS Controller device {mccs_controller}"
+            f"Exception occurred on the following devices: {mccs_controller}:"
         )
 
         assert_that(event_tracer).described_as(
