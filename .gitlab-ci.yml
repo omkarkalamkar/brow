@@ -57,7 +57,7 @@ on-demand-deploy:
     KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-on-demand"
     TARANTA_ENABLED: "true"
   script:
-    - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
+    # - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
     - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
     - make k8s-install-chart
     - make k8s-wait
@@ -79,7 +79,7 @@ on-demand-destroy:
     SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA"
     KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-on-demand"
   script:
-    - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
+    # - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
     - '[ -f .make/k8s.mk ] || (echo "File k8s.mk not included in Makefile; exit 1")'
     - make k8s-uninstall-chart
   environment:

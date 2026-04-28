@@ -59,6 +59,12 @@ def given_tmc(
         subarray_node_low.subarray_node, "longRunningCommandResult"
     )
     event_tracer.subscribe_event(
+        subarray_node_low.subarray_node, "longRunningCommandsInQueue"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.subarray_node, "longRunningCommandInProgress"
+    )
+    event_tracer.subscribe_event(
         central_node_low.central_node, "telescopeState"
     )
     log_events(
@@ -67,6 +73,8 @@ def given_tmc(
             subarray_node_low.subarray_node: [
                 "obsState",
                 "longRunningCommandResult",
+                "longRunningCommandsInQueue",
+                "longRunningCommandInProgress",
             ],
         }
     )
@@ -158,6 +166,8 @@ def given_tmc_in_intermediate_obsstate(
             subarray_node_low.subarray_node: [
                 "obsState",
                 "longRunningCommandResult",
+                "longRunningCommandsInQueue",
+                "longRunningCommandInProgress",
             ]
         }
     )
@@ -202,6 +212,16 @@ def invoke_abort_command(
             json.dumps((int(ResultCode.OK), "Abort command completed")),
         ),
     )
+    log_events(
+        {
+            subarray_node_low.subarray_node: [
+                "obsState",
+                "longRunningCommandResult",
+                "longRunningCommandsInQueue",
+                "longRunningCommandInProgress",
+            ]
+        }
+    )
 
 
 @then("the Subarray transitions to ABORTED obsState")
@@ -230,3 +250,14 @@ def check_obs_state(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         subarray_node_low.subarray_node, "obsState", ObsState.ABORTED
     )
+    log_events(
+        {
+            subarray_node_low.subarray_node: [
+                "obsState",
+                "longRunningCommandResult",
+                "longRunningCommandsInQueue",
+                "longRunningCommandInProgress",
+            ]
+        }
+    )
+    assert 0
