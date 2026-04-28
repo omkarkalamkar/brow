@@ -81,8 +81,8 @@ class TestAssignCommandNotAllowedPropagation:
         )
 
         exception_message = (
-            "The invocation of the AssignResources command failed on Csp "
-            + "Subarray Device low-csp/subarray/01"
+            "Exception occurred on the following devices: "
+            "low-tmc/subarray-leaf-node-csp/01"
         )
         log_events(
             {central_node_low.central_node: ["longRunningCommandResult"]}
