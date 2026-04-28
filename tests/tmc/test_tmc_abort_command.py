@@ -212,16 +212,13 @@ def invoke_abort_command(
             json.dumps((int(ResultCode.OK), "Abort command completed")),
         ),
     )
-    log_events(
-        {
-            subarray_node_low.subarray_node: [
-                "obsState",
-                "longRunningCommandResult",
-                "longRunningCommandsInQueue",
-                "longRunningCommandInProgress",
-            ]
-        }
-    )
+    assert_that(
+        subarray_node_low.subarray_node.longRunningCommandInProgress
+    ).described_as(
+        'FAILED ASSUMPTION IN "THEN STEP: '
+        '"the Subarray transitions to ABORTED obsState" '
+        "longRunningCommandInProgress is expected to be empty"
+    ).is_empty()
 
 
 @then("the Subarray transitions to ABORTED obsState")
@@ -260,4 +257,3 @@ def check_obs_state(
             ]
         }
     )
-    assert 0
