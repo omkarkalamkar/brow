@@ -45,18 +45,15 @@ def test_tmc_command_error_propagation():
 exception_messages = {
     "CSP": (
         '[3, "Exception occurred on the following devices: '
-        "low-tmc/subarray-leaf-node-csp/01: Exception occurred, "
-        'command failed."]'
+        'low-tmc/subarray-leaf-node-csp/01"]'
     ),
     "SDP": (
         '[3, "Exception occurred on the following devices: '
-        "low-tmc/subarray-leaf-node-sdp/01: Exception occurred, "
-        'command failed"]'
+        'low-tmc/subarray-leaf-node-sdp/01"]'
     ),
     "MCCS": (
         '[3, "Exception occurred on the following devices: '
-        "low-tmc/subarray-leaf-node-mccs/01: Exception occurred, "
-        'command failed."]'
+        'low-tmc/subarray-leaf-node-mccs/01"]'
     ),
 }
 
