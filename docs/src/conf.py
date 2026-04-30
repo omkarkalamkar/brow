@@ -67,11 +67,11 @@ extensions = [
 
 intersphinx_mapping = {
     "centralnode": (
-        "https://developer.skao.int/projects/ska-tmc-centralnode/develop/",
+        "https://developer.skao.int/projects/ska-tmc-centralnode/en/latest/",
         None,
     ),
-    "ska-tmc-subarraynode": (
-        "https://developer.skao.int/projects/ska-tmc-subarraynode/develop/",
+    "subarraynode": (
+        "https://developer.skao.int/projects/ska-tmc-subarraynode/en/latest/",
         None,
     ),
 }
