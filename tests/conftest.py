@@ -277,7 +277,7 @@ def set_admin_mode_mccs():
     set_admin_mode_values_mccs()
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="session")
 def set_default_array_layout_url_attribute():
     """set DefaultArrayLayoutURL attribute"""
     logging.info("--- Session Setup ---")

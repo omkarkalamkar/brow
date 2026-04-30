@@ -25,7 +25,9 @@ from tests.resources.test_support.constant_low import TIMEOUT
     "../features/tmc/check_abort_command.feature",
     "TMC executes Abort Command in EMPTY obsState.",
 )
-def test_abort_command_not_allowed_empty():
+def test_abort_command_not_allowed_empty(
+    set_default_array_layout_url_attribute,
+):
     """BDD test scenario for verifying execution of the Abort
     command in EMPTY obsState in TMC."""
 
