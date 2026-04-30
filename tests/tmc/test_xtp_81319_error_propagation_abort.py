@@ -30,6 +30,7 @@ TIMEOUT = 60
 
 
 @pytest.mark.SKA_low
+@pytest.mark.test
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
     "Error Propagation Reported by TMC Low Abort Command for "
@@ -52,14 +53,14 @@ exception_messages = {
     "SDP": (
         '[3, "Exception occurred on the following devices: '
         "low-tmc/subarray-leaf-node-sdp/01: "
-        "Exception occurred on devices: low-sdp/subarray/01: "
-        'Exception occurred, command failed."]'
+        "Exception occurred on devices: "
+        'low-sdp/subarray/01: Exception occurred, command failed"]'
     ),
     "MCCS": (
         '[3, "Exception occurred on the following devices: '
         "low-tmc/subarray-leaf-node-mccs/01: "
         "Exception occurred on devices: low-mcss/subarray/01: "
-        'Exception occurred, command failed."]'
+        'Exception occurred, command failed"]'
     ),
 }
 
