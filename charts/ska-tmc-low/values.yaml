@@ -71,9 +71,9 @@ itango:
 
 centralnode:
   image:
-    registry: artefact.skao.int
+    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-centralnode
     image: ska-tmc-centralnode
-    tag: 1.3.1
+    tag: 1.3.2-dev.c028b3bf3
     pullPolicy: IfNotPresent
 
 subarraynode:
@@ -146,8 +146,8 @@ deviceServers:
     family: "central-node"
     member: "0"
     IsAutoRecoveryEnabled: "true"
-    DefaultArrayLayoutSourceURIs: "gitlab://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
-    DefaultArrayLayoutPath: "instrument/ska1_low/layout/low-layout.json"
+    DefaultArrayLayoutSourceURIs: ""
+    DefaultArrayLayoutPath: ""
     LoggingLevel: "4"
     SubarrayPrefix: "low-tmc/subarray/"
 
