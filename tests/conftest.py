@@ -278,17 +278,18 @@ def set_admin_mode_mccs():
 
 
 @pytest.fixture(scope="session", autouse=True)
-def set_default_array_layout_url_attribute(central_node_low):
+def set_default_array_layout_url_attribute():
     """set DefaultArrayLayoutURL attribute"""
     logging.info("--- Session Setup ---")
+    central_node_low = CentralNodeWrapperLow()
     logging.info(
         "CentralNode Low Initial arrayLayoutFileProvided: %s",
-        central_node_low.arrayLayoutFileProvided,
+        central_node_low.central_node.arrayLayoutFileProvided,
     )
-    assert central_node_low.arrayLayoutFileProvided is False
+    assert central_node_low.central_node.arrayLayoutFileProvided is False
     logging.info(
         "CentralNode Low Initial DefaultArrayLayoutURL: %s",
-        central_node_low.DefaultArrayLayoutURL,
+        central_node_low.central_node.DefaultArrayLayoutURL,
     )
     url = (
         '{"source_uris":["gitlab://gitlab.com/ska-telescope/'
@@ -296,16 +297,16 @@ def set_default_array_layout_url_attribute(central_node_low):
         + '"instrument/ska1_low/layout/low-layout.json"}'
     )
     logging.info("URL is: %s", url)
-    central_node_low.DefaultArrayLayoutURL = url
+    central_node_low.central_node.DefaultArrayLayoutURL = url
     logging.info(
         "CentralNode Low DefaultArrayLayoutURL: %s",
-        central_node_low.DefaultArrayLayoutURL,
+        central_node_low.central_node.DefaultArrayLayoutURL,
     )
     logging.info(
         "CentralNode Low Initial arrayLayoutFileProvided: %s",
-        central_node_low.arrayLayoutFileProvided,
+        central_node_low.central_node.arrayLayoutFileProvided,
     )
-    assert central_node_low.arrayLayoutFileProvided is True
+    assert central_node_low.central_node.arrayLayoutFileProvided is True
     logging.info("--- Session Teardown ---")
 
 
