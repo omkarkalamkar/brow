@@ -18,14 +18,14 @@ def test_array_layout_file_provided_updates(
     """Verify the arrayLayoutFileProvided attribute updates"""
     LOGGER.info(
         "CentralNode Low Initial arrayLayoutFileProvided: %s",
-        central_node_low.arrayLayoutFileProvided,
+        central_node_low.central_node.arrayLayoutFileProvided,
     )
-    assert central_node_low.arrayLayoutFileProvided is True
+    assert central_node_low.central_node.arrayLayoutFileProvided is True
 
     url = '{"source_uris":[""],"array_layout_path":""}'
     LOGGER.info("URL is: %s", url)
-    central_node_low.DefaultArrayLayoutURL = url
-    assert central_node_low.arrayLayoutFileProvided is False
+    central_node_low.central_node.DefaultArrayLayoutURL = url
+    assert central_node_low.central_node.arrayLayoutFileProvided is False
 
     url = (
         '{"source_uris":["gitlab://gitlab.com/ska-telescope/'
@@ -33,5 +33,5 @@ def test_array_layout_file_provided_updates(
         + '"instrument/ska1_low/layout/low-layout.json"}'
     )
     LOGGER.info("URL is: %s", url)
-    central_node_low.DefaultArrayLayoutURL = url
-    assert central_node_low.arrayLayoutFileProvided is True
+    central_node_low.central_node.DefaultArrayLayoutURL = url
+    assert central_node_low.central_node.arrayLayoutFileProvided is True
