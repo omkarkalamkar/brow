@@ -19,6 +19,7 @@ from tests.resources.test_harness.subarray_node_low import (
 from tests.resources.test_support.constant_low import TIMEOUT
 
 
+# pylint: disable=unused-argument
 @pytest.mark.SKA_low_test
 @pytest.mark.SKA_low
 @scenario(
@@ -92,3 +93,6 @@ def tmc_status(
         "obsState",
         ObsState.EMPTY,
     )
+
+
+# pylint: enable=unused-argument
