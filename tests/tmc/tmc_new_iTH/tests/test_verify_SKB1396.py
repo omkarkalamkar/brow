@@ -271,7 +271,7 @@ def verify_subarray_lrcr_failure(
     ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
         tmc.subarray_node,
         exception_message,
-        pytest.unique_id[0],
+        pytest.unique_id[1],
         ResultCode.FAILED,
     )
     csp.csp_subarray.SetDefective(RESET_DEFECT)
