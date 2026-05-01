@@ -61,10 +61,10 @@ def _setup_event_subscriptions(
 @pytest.mark.new
 @scenario(
     "../tmc/tmc_new_iTH/features/xtp_109108.feature",
-    "Verify SKB-1396",
+    "Verify SKB-1326",
 )
-def test_configure_command_with_itf_jsons_to_verify_skb_1396():
-    """BDD test scenario for verifying SKB-1396."""
+def test_configure_command_with_itf_jsons_to_verify_skb_1326():
+    """BDD test scenario for verifying SKB-1326."""
 
 
 def setup_tmc(
