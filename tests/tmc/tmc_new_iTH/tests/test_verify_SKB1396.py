@@ -109,10 +109,11 @@ def verify_tmc_subarray_observation_state_restarting(
     csp: CSPFacade,
     sdp: SDPFacade,
     mccs: MCCSFacade,
+    default_commands_inputs: TestHarnessInputs,
 ):
     """Verifies the TMC subarray observation state IDLE"""
     setup_tmc(tmc, csp, sdp, mccs, event_tracer)
-    tmc.force_change_of_obs_state(ObsState.ABORTED)
+    tmc.force_change_of_obs_state(ObsState.ABORTED, default_commands_inputs)
 
     assert_that(event_tracer).described_as(
         f"Both TMC Subarray Node device ({tmc.subarray_node})"
