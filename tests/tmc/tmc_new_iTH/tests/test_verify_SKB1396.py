@@ -71,7 +71,7 @@ def _setup_event_subscriptions(
     "../tmc/tmc_new_iTH/features/xtp_109108.feature",
     "Verify SKB-1326",
 )
-def test_configure_command_with_itf_jsons_to_verify_skb_1326():
+def test_verify_skb_1326():
     """BDD test scenario for verifying SKB-1326."""
 
 
