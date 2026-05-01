@@ -40,6 +40,9 @@ def _setup_event_subscriptions(
     event_tracer.subscribe_event(tmc.central_node, "longRunningCommandResult")
     event_tracer.subscribe_event(tmc.subarray_node, "longRunningCommandResult")
     event_tracer.subscribe_event(
+        tmc.csp_subarray_leaf_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(
         tmc.sdp_subarray_leaf_node, "SdpSubarrayObsState"
     )
     event_tracer.subscribe_event(
@@ -184,7 +187,9 @@ def verify_sdp_empty(tmc: TMCFacade, event_tracer: TangoEventTracer):
 def verify_csp_ln_error(
     csp: CSPFacade, tmc: TMCFacade, event_tracer: TangoEventTracer
 ):
-    exception_message = "Exception occurred, command failed."
+    exception_message = [
+        "Exception occurred, command failed.",
+    ]
     csp.csp_subarray.SetDirectObsState(ObsState.EMPTY)
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
