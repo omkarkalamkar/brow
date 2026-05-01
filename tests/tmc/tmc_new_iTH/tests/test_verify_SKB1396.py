@@ -10,7 +10,12 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
     TestHarnessInputs,
 )
 from ska_tango_testing.integration import TangoEventTracer, log_events
+from ska_tango_testing.mock.placeholders import Anything
 
+from tests.resources.test_harness.constant import (
+    ERROR_PROPAGATION_DEFECT,
+    RESET_DEFECT,
+)
 from tests.tmc.tmc_new_iTH.utils import TIMEOUT
 
 
@@ -138,6 +143,7 @@ def verify_tmc_subarray_observation_state_restarting(
         "obsState",
         ObsState.ABORTED,
     )
+    csp.csp_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
     pytest.unique_id = tmc.restart(wait_termination=False)
     assert_that(event_tracer).described_as(
         f"TMC Subarray Node device ({tmc.subarray_node})"
@@ -154,10 +160,10 @@ def verify_sdp_empty(tmc: TMCFacade, event_tracer: TangoEventTracer):
     """Verify SDP leaf node in observation state EMPTY"""
 
     assert_that(event_tracer).described_as(
-        f"TMC Subarray Node device ({tmc.sdp_subarray_leaf_node})"
-        "ObsState attribute values should be RESTARTING."
+        f"TMC Subarray Node device ({tmc.sdp_subarray_leaf_node.dev_name()})"
+        "ObsState attribute values should be EMPTY."
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        tmc.subarray_node,
+        tmc.sdp_subarray_leaf_node,
         "SdpSubarrayObsState",
         ObsState.EMPTY,
     )
@@ -167,8 +173,32 @@ def verify_sdp_empty(tmc: TMCFacade, event_tracer: TangoEventTracer):
     "CSP subarray leaf node raises error and transitions"
     " to observation state EMPTY"
 )
-def verify_csp_ln_error():
-    pass
+def verify_csp_ln_error(
+    csp: CSPFacade, tmc: TMCFacade, event_tracer: TangoEventTracer
+):
+    exception_message = "Exception occurred, command failed."
+    csp.csp_subarray.SetDirectObsState(ObsState.EMPTY)
+    assert_that(event_tracer).described_as(
+        "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
+        "Central Node device"
+        f"({tmc.subarray_node.dev_name()}) "
+        "is expected have longRunningCommandResult"
+        "(ResultCode.FAILED,exception)",
+    ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
+        tmc.csp_subarray_leaf_node,
+        exception_message,
+        Anything,
+        ResultCode.FAILED,
+    )
+
+    assert_that(event_tracer).described_as(
+        f"TMC Subarray Node device ({tmc.csp_subarray_leaf_node.dev_name()})"
+        "ObsState attribute values should be EMPTY."
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        tmc.csp_subarray_leaf_node,
+        "CspSubarrayObsState",
+        ObsState.EMPTY,
+    )
 
 
 @then("the TMC subarray aggregates to observation state EMPTY")
@@ -210,14 +240,14 @@ def verify_sdp_csp_mccs_in_empty_observation_state(
 
 @then("the TMC subarray reports failure on LongRunningCommandResult attribute")
 def verify_subarray_lrcr_failure(
-    tmc: TMCFacade, event_tracer: TangoEventTracer
+    tmc: TMCFacade, csp: CSPFacade, event_tracer: TangoEventTracer
 ):
     """Verify subarray failure"""
 
     exception_message = [
         "Exception occurred on the following devices:",
         f"{tmc.csp_subarray_leaf_node.dev_name()}:",
-        "Command is not allowed",
+        "Exception occurred, command failed.",
     ]
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
@@ -231,3 +261,4 @@ def verify_subarray_lrcr_failure(
         pytest.unique_id[0],
         ResultCode.FAILED,
     )
+    csp.csp_subarray.SetDefective(RESET_DEFECT)
