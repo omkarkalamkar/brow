@@ -6,5 +6,5 @@ Feature: Default
 		Given TMC Subarray in observation state RESTARTING
 		And SDP Subarray leaf node in Observation state EMPTY
 		When CSP subarray leaf node raises error and transitions to observation state EMPTY
-		Then the TMC subarray aggregates to observation state EMPTY
-		And the TMC subarray reports failure on LongRunningCommandResult attribute
+        Then the TMC subarray reports failure on LongRunningCommandResult attribute
+		And the TMC subarray aggregates to observation state EMPTY
