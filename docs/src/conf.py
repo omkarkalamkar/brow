@@ -202,7 +202,7 @@ epub_exclude_files = ["search.html"]
 
 intersphinx_mapping = {
     "centralnode": (
-        "https://ska-telescope.gitlab.io/-/ska-tmc/ska-tmc-centralnode/-/jobs/14161353496/artifacts/docs/build/html/index.html",
+        "https://ska-telescope.gitlab.io/-/ska-tmc/ska-tmc-centralnode/-/jobs/14161353496/artifacts/docs/build/html/",
         None,
     ),
     "subarraynode": (
