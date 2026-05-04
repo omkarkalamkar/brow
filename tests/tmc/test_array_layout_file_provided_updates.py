@@ -23,7 +23,6 @@ def test_array_layout_file_provided_updates(
     assert central_node_low.central_node.arrayLayoutFileProvided is True
 
     url = '{"source_uris":[""],"array_layout_path":""}'
-    LOGGER.info("URL is: %s", url)
     central_node_low.central_node.DefaultArrayLayoutURL = url
     assert central_node_low.central_node.arrayLayoutFileProvided is False
 
@@ -32,6 +31,5 @@ def test_array_layout_file_provided_updates(
         + 'ska-telmodel-data?main#tmdata"],"array_layout_path":'
         + '"instrument/ska1_low/layout/low-layout.json"}'
     )
-    LOGGER.info("URL is: %s", url)
     central_node_low.central_node.DefaultArrayLayoutURL = url
     assert central_node_low.central_node.arrayLayoutFileProvided is True
