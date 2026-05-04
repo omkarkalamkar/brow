@@ -122,6 +122,7 @@ k8s-test-tmc-low-negative-tests:
     SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA-tmc-low-negative-tests"
     MARK: "SKA_tmc_low_negative_tests"
     SUBARRAY_COMMAND_TIMEOUT: 10
+    LEAF_NODE_COMMAND_TIMEOUT: 7
     COUNT: 1
   before_script:
     - make cred SERVICE_ACCOUNT=$SERVICE_ACCOUNT
