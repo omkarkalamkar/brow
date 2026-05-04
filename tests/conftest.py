@@ -277,6 +277,36 @@ def set_admin_mode_mccs():
     set_admin_mode_values_mccs()
 
 
+@pytest.fixture(scope="session", autouse=True)
+def set_default_array_layout_url_attribute():
+    """set DefaultArrayLayoutURL attribute"""
+    central_node_low = CentralNodeWrapperLow()
+    logging.debug(
+        "CentralNode Low Initial arrayLayoutFileProvided: %s",
+        central_node_low.central_node.arrayLayoutFileProvided,
+    )
+    logging.debug(
+        "CentralNode Low Initial DefaultArrayLayoutURL: %s",
+        central_node_low.central_node.DefaultArrayLayoutURL,
+    )
+    if central_node_low.central_node.arrayLayoutFileProvided is False:
+        url = (
+            '{"source_uris":["gitlab://gitlab.com/ska-telescope/'
+            + 'ska-telmodel-data?main#tmdata"],"array_layout_path":'
+            + '"instrument/ska1_low/layout/low-layout.json"}'
+        )
+        central_node_low.central_node.DefaultArrayLayoutURL = url
+        logging.debug(
+            "CentralNode Low DefaultArrayLayoutURL: %s",
+            central_node_low.central_node.DefaultArrayLayoutURL,
+        )
+        logging.debug(
+            "CentralNode Low Initial arrayLayoutFileProvided: %s",
+            central_node_low.central_node.arrayLayoutFileProvided,
+        )
+        assert central_node_low.central_node.arrayLayoutFileProvided is True
+
+
 def wait_for_obsstate_state_change(
     target_mode: int, device: str, timeout_seconds: int
 ):
