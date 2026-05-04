@@ -30,7 +30,7 @@ There are two ways to apply an Array Layout in TMC:
 
 .. note::
    As per SKB-1282 resolution, the default value of the properties **DefaultArrayLayoutSourceURIs** and
-   **DefaultArrayLayoutPath** on CentralNode are set to empty string. Therefore attribute **DefaultArrayLayoutURL**
+   **DefaultArrayLayoutPath** on CentralNode are set to empty strings. Therefore attribute **DefaultArrayLayoutURL**
    on CentralNode must be set once after the deployment is done, then the value will get applied to all
    the observations executed after.
 
