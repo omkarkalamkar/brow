@@ -59,6 +59,9 @@ def given_tmc(
         subarray_node_low.subarray_node, "longRunningCommandResult"
     )
     event_tracer.subscribe_event(
+        subarray_node_low.subarray_node, "longRunningCommandInProgress"
+    )
+    event_tracer.subscribe_event(
         central_node_low.central_node, "telescopeState"
     )
     log_events(
@@ -67,6 +70,7 @@ def given_tmc(
             subarray_node_low.subarray_node: [
                 "obsState",
                 "longRunningCommandResult",
+                "longRunningCommandInProgress",
             ],
         }
     )
@@ -153,11 +157,16 @@ def given_tmc_in_intermediate_obsstate(
     event_tracer.subscribe_event(
         subarray_node_low.subarray_node, "longRunningCommandResult"
     )
+    event_tracer.subscribe_event(subarray_node_low.subarray_node, "lrcQueue")
+    event_tracer.subscribe_event(
+        subarray_node_low.subarray_node, "longRunningCommandInProgress"
+    )
     log_events(
         {
             subarray_node_low.subarray_node: [
                 "obsState",
                 "longRunningCommandResult",
+                "longRunningCommandInProgress",
             ]
         }
     )
@@ -202,6 +211,21 @@ def invoke_abort_command(
             json.dumps((int(ResultCode.OK), "Abort command completed")),
         ),
     )
+    # After abort command, the longRunningCommandInProgress and
+    # lrcQueue attributes are expected to be empty
+    assert_that(
+        subarray_node_low.subarray_node.longRunningCommandInProgress
+    ).described_as(
+        'FAILED ASSUMPTION IN "THEN STEP: '
+        '"the Subarray transitions to ABORTED obsState" '
+        "longRunningCommandInProgress is expected to be empty"
+    ).is_empty()
+
+    assert_that(subarray_node_low.subarray_node.lrcQueue).described_as(
+        'FAILED ASSUMPTION IN "THEN STEP: '
+        '"the Subarray transitions to ABORTED obsState" '
+        "lrcQueue is expected to be empty"
+    ).is_empty()
 
 
 @then("the Subarray transitions to ABORTED obsState")
