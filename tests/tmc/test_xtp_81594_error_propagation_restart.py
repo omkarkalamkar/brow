@@ -1,7 +1,6 @@
 """Test case to verify error propagation functionality for
 the Restart command"""
 import json
-import logging
 
 import pytest
 from assertpy import assert_that
@@ -17,6 +16,7 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
 from ska_tango_testing.integration import TangoEventTracer
 
 from tests.conftest import SubarrayTestContextData, _setup_event_subscriptions
+from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.constant import (
     ERROR_PROPAGATION_DEFECT,
     FAILED_RESULT_DEFECT,
@@ -72,10 +72,10 @@ def subarray_in_aborted_state(
     mccs: MCCSFacade,
     event_tracer: TangoEventTracer,
     default_commands_inputs: TestHarnessInputs,
-    admin_mode,
+    central_node_low: CentralNodeWrapperLow,
 ):
     """Ensure the subarray is in the initial obsstate state."""
-    logging.info("admin mode is %s", admin_mode)
+    central_node_low.move_to_on()
     _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
     context_data.starting_state = ObsState.ABORTED
     tmc.force_change_of_obs_state(
