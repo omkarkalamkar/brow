@@ -13,37 +13,63 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 
-autodoc_mock_imports = []
+autodoc_mock_imports = [
+    "astropy",
+    "backoff",
+    "fire",
+    "jsonschema",
+    "numpy",
+    "pyfabil",
+    "scipy",
+    "ska_tango_base",
+    "tango",
+    "uritools",
+    "yaml",
+    "tango",
+    "tango.server",
+    "run",
+    "DeviceMeta",
+    "command",
+    "future",
+    "future.utils",
+    "numpy",
+    "marshmallow",
+    "ska_tmc_cdm",
+    "CODEC",
+    "ValidationError",
+    "ska_telmodel",
+    "transitions",
+    "ska_tmc_common",
+    "ska_ser_log_transactions",
+    "load_dish_config_command",
+    "ska_control_model",
+    "pandas",
+    "ska_ser_logging",
+    "retry",
+    "rule_engine", 
+    "tenacity",
+    "pydantic",
+    "ska_schemas",
+]
 
 import os
 import sys
 
-import yaml
-
 sys.path.insert(0, os.path.abspath("../../src"))
+sys.path.insert(1, os.path.abspath("../.."))
+
 
 
 # -- Project information -----------------------------------------------------
 
-project = "TMC-LOW Documentation"
-copyright = "2022, NCRA India"
-author = "Team-Himalaya, Team-Sahyadri"
-
-def get_version():
-    """Reads and returns the version from tmc low chart to display in 
-    the documentation"""
-    tmc_version = "0.0"
-    with open("../../charts/ska-tmc-low/Chart.yaml", "r") as chart_yaml:
-        yaml_data = yaml.safe_load(chart_yaml)
-        tmc_version = yaml_data["version"]
-    return tmc_version
-tmc_version = get_version()
+project = "ska-tmc-centralnode"
+copyright = "2021, NCRA India"
+author = "NCRA India"
 
 # The short X.Y version
-version = tmc_version
-
+version = "1.0"
 # The full version, including alpha/beta/rc tags
-release = tmc_version
+release = "1.0"
 
 
 # -- General configuration ---------------------------------------------------
@@ -60,29 +86,19 @@ extensions = [
     "sphinx.ext.doctest",
     "sphinx.ext.githubpages",
     "sphinx.ext.napoleon",
-    "myst_parser",
+    "recommonmark",
     "sphinx.ext.intersphinx",
-    "sphinx-jsonschema"
+    "sphinx_autodoc_typehints",
 ]
 
-intersphinx_mapping = {
-    "centralnode": (
-        "https://developer.skao.int/projects/ska-tmc-centralnode/en/latest/",
-        None,
-    ),
-    "subarraynode": (
-        "https://developer.skao.int/projects/ska-tmc-subarraynode/en/latest/",
-        None,
-    ),
-}
-
 # Add any paths that contain templates here, relative to this directory.
-#templates_path = ["_templates"]
+#templates_path = []
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 #
 source_suffix = ['.rst', '.md']
+# source_suffix = ".rst"
 
 # The master toctree document.
 master_doc = "index"
@@ -92,7 +108,7 @@ master_doc = "index"
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = 'En-en'
+#language = None
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -102,8 +118,6 @@ exclude_patterns = []
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
 
-# Suppress warning of specific types
-suppress_warnings = ['autosectionlabel.*']
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -121,7 +135,7 @@ html_theme = "ska_ser_sphinx_theme"
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-#html_static_path = ["_static"]
+#html_static_path = []
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -137,7 +151,7 @@ html_theme = "ska_ser_sphinx_theme"
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "tmclowintegrationdoc"
+htmlhelp_basename = "CentralNodedoc"
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -146,15 +160,12 @@ latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     #
     # 'papersize': 'letterpaper',
-
     # The font size ('10pt', '11pt' or '12pt').
     #
     # 'pointsize': '10pt',
-
     # Additional stuff for the LaTeX preamble.
     #
     # 'preamble': '',
-
     # Latex figure (float) alignment
     #
     # 'figure_align': 'htbp',
@@ -164,8 +175,13 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "TMCLOWintegration.tex", "TMC LOW integration Documentation",
-     "NCRA India", "manual"),
+    (
+        master_doc,
+        "CentralNode.tex",
+        "Central Node Documentation",
+        "NCRA India",
+        "manual",
+    ),
 ]
 
 
@@ -174,8 +190,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, "tmclowintegration", "TMC LOW integration Documentation",
-     [author], 1)
+    (master_doc, "centralnode", "Central Node Documentation", [author], 1)
 ]
 
 
@@ -185,9 +200,15 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, "tmclowintegration", "TMC LOW integration Documentation",
-     author, "tmclowintegration", "One line description of project.",
-     "Miscellaneous"),
+    (
+        master_doc,
+        "Centralnode",
+        "Central Node Documentation",
+        author,
+        "centralnode",
+        "One line description of project.",
+        "Miscellaneous",
+    ),
 ]
 
 
@@ -210,3 +231,14 @@ epub_exclude_files = ["search.html"]
 
 
 # -- Extension configuration -------------------------------------------------
+
+intersphinx_mapping = {
+    "ska-tmc-low-integration": (
+        "https://developer.skao.int/projects/ska-tmc-low-integration/en/latest/",
+        None,
+    ),
+    "ska-tmc-mid-integration": (
+        "https://developer.skao.int/projects/ska-tmc-mid-integration/en/latest/",
+        None,
+    ),
+}
