@@ -30,7 +30,6 @@ TIMEOUT = 60
 
 
 @pytest.mark.SKA_low
-@pytest.mark.test
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
     "Error Propagation Reported by TMC Low Abort Command for "

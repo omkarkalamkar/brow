@@ -15,7 +15,6 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
 )
 from ska_tango_testing.integration import TangoEventTracer, log_events
 
-from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.utils.my_file_json_input import (
     MyFileJSONInput,
 )
@@ -62,17 +61,13 @@ def _setup_event_subscriptions(
     )
 
 
-@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/command_queing.feature",
     "Test TMC Low command queuing",
 )
-def test_command_queuing(
-    central_node_low: CentralNodeWrapperLow,
-):
+def test_command_queuing():
     """Test command queuing"""
-    central_node_low.move_to_on()
 
 
 @given("the subarray is in the EMPTY state")
