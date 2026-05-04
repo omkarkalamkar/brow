@@ -1,6 +1,7 @@
 """Test case to verify error propagation functionality for
 the Restart command"""
 import json
+import logging
 
 import pytest
 from assertpy import assert_that
@@ -71,8 +72,10 @@ def subarray_in_aborted_state(
     mccs: MCCSFacade,
     event_tracer: TangoEventTracer,
     default_commands_inputs: TestHarnessInputs,
+    admin_mode,
 ):
     """Ensure the subarray is in the initial obsstate state."""
+    logging.info("admin mode is %s", admin_mode)
     _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
     context_data.starting_state = ObsState.ABORTED
     tmc.force_change_of_obs_state(
