@@ -27,6 +27,7 @@ from tests.resources.test_harness.helpers import (
 TIMEOUT = 60
 
 
+@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/error_propagation_timeout_abort.feature",
@@ -42,18 +43,21 @@ def test_tmc_command_error_propagation():
 exception_messages = {
     "CSP": (
         '[3, "Exception occurred on the following devices: '
-        "low-tmc/subarray-leaf-node-csp/01: Exception occurred, "
-        'command failed."]'
+        "low-tmc/subarray-leaf-node-csp/01: "
+        "Exception occurred on devices: low-csp/subarray/01: "
+        'Exception occurred, command failed"]'
     ),
     "SDP": (
         '[3, "Exception occurred on the following devices: '
-        "low-tmc/subarray-leaf-node-sdp/01: Exception occurred, "
-        'command failed"]'
+        "low-tmc/subarray-leaf-node-sdp/01: "
+        "Exception occurred on devices: "
+        'low-sdp/subarray/01: Exception occurred, command failed"]'
     ),
     "MCCS": (
         '[3, "Exception occurred on the following devices: '
-        "low-tmc/subarray-leaf-node-mccs/01: Exception occurred, "
-        'command failed."]'
+        "low-tmc/subarray-leaf-node-mccs/01: "
+        "Exception occurred on devices: "
+        'low-mccs/subarray/01: Exception occurred, command failed"]'
     ),
 }
 
