@@ -24,14 +24,15 @@ There are two ways to apply an Array Layout in TMC:
    This layout applies automatically to all subarrays unless a specific layout is later provided.  
    You can set this using the **DefaultArrayLayoutURL** attribute on CentralNode.
 
-   The attribute arrayLayoutFileProvided (Boolean) on CentralNode indicates whether the default
+   The attribute **arrayLayoutFileProvided** (Boolean) on CentralNode indicates whether the default
    array layout file is provided or not. An alarm event can be generated when the default layout
    file url is not defined.
 
 .. note::
-   As per SKB-1282 resolution, the default value of the properties DefaultArrayLayoutSourceURIs and
-   DefaultArrayLayoutPath are set to empty string. Therefore this attribute must be set once after
-   the deployment is done, then the value will get applied to all the observations executed after.
+   As per SKB-1282 resolution, the default value of the properties **DefaultArrayLayoutSourceURIs** and
+   **DefaultArrayLayoutPath** on CentralNode are set to empty strings. Therefore attribute **DefaultArrayLayoutURL**
+   on CentralNode must be set once after the deployment is done, then the value will get applied to all
+   the observations executed after.
 
 2. **Set a Subarray-specific Layout**  
 
@@ -47,7 +48,7 @@ There are two ways to apply an Array Layout in TMC:
 AssignResources Example
 -----------------------
 
-The Array Layout can be provided as part of the **AssignResources** command using the ``telmodel`` section.  
+The Array Layout URL can be provided in the ``telmodel`` block of the **AssignResources** command JSON.  
 
 This feature is supported from schema version  
 ``"https://schema.skao.int/ska-low-tmc-assignresources/4.3"`` onwards.  
