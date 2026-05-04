@@ -32,16 +32,13 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 
 
-# pylint: disable=unused-argument
 @pytest.mark.SKA_tmc_low_negative_tests
 @scenario(
     "../features/tmc/check_error_propagation_mccs.feature",
     "Error Propagation Reported by TMC Low Configure Command for"
     + " Defective MCCS Subarray",
 )
-def test_mccs_configure_command_error_propagation(
-    set_default_array_layout_url_attribute,
-):
+def test_mccs_configure_command_error_propagation():
     """
     Test case to verify TMC-MCCS Error Propagation functionality.
     """
@@ -204,6 +201,3 @@ def configure_command_reports_error_propagate(
         "obsState",
         ObsState.IDLE,
     )
-
-
-# pylint: enable=unused-argument

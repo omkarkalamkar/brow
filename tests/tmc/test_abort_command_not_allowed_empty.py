@@ -19,16 +19,13 @@ from tests.resources.test_harness.subarray_node_low import (
 from tests.resources.test_support.constant_low import TIMEOUT
 
 
-# pylint: disable=unused-argument
 @pytest.mark.SKA_low_test
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_abort_command.feature",
     "TMC executes Abort Command in EMPTY obsState.",
 )
-def test_abort_command_not_allowed_empty(
-    set_default_array_layout_url_attribute,
-):
+def test_abort_command_not_allowed_empty():
     """BDD test scenario for verifying execution of the Abort
     command in EMPTY obsState in TMC."""
 
@@ -93,6 +90,3 @@ def tmc_status(
         "obsState",
         ObsState.EMPTY,
     )
-
-
-# pylint: enable=unused-argument
