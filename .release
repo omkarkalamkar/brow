@@ -1,29 +1,26 @@
-release=2.15.0-rc.2
-tag=2.15.0-rc.2
+release=2.15.1-rc.1
+tag=2.15.1-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.15.0-rc.2**
+**1. ska-tmc-low-integration 2.15.1-rc.1**
 
-    **1.1 ska-tmc-low 2.15.0-rc.1 - 2.15.0-rc.2:**
+    **1.1 ska-tmc-low 2.15.0-rc.2 - 2.15.1-rc.1:**
         Fixed
         -----
-        * Fixed KeyError in release resources command when attempting to remove PSS beams/subsystems assignment for subarrays that were not assigned PSS beams/subsystems. Resolves SKB-1300.
+        * Fixed issue with scalability job where test were failing due to admin mode not being updated in ON command for subsystem subarray devices with subarray_id >=3
+        * Set the default value of the properties DefaultArrayLayoutSourceURIs and DefaultArrayLayoutPath to empty strings to resolve SKB-1282
+        * Introduced a read-only boolean attribute arrayLayoutFileProvided on CentralNode. An alarm event can be generated when the default layout file url is not defined.
 
-        Updated
-        -------
-        * Utilized CentralNode v1.3.1
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.15.0-rc.2**
+**1. ska-tmc-low-integration 2.15.1-rc.1**
 
-    **1.1 ska-tmc-low 2.15.0-rc.1 - 2.15.0-rc.2:**
+    **1.1 ska-tmc-low 2.15.0-rc.2 - 2.15.1-rc.1:**
         Fixed
         -----
-        * Fixed KeyError in release resources command when attempting to remove PSS beams/subsystems assignment for subarrays that were not assigned PSS beams/subsystems. Resolves SKB-1300.
-
-        Updated
-        -------
-        * Utilized CentralNode v1.3.1
+        * Fixed issue with scalability job where test were failing due to admin mode not being updated in ON command for subsystem subarray devices with subarray_id >=3
+        * Set the default value of the properties DefaultArrayLayoutSourceURIs and DefaultArrayLayoutPath to empty strings to resolve SKB-1282
+        * Introduced a read-only boolean attribute arrayLayoutFileProvided on CentralNode. An alarm event can be generated when the default layout file url is not defined.
