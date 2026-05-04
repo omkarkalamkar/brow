@@ -77,16 +77,15 @@ def test_command_queuing(
 
 @given("the subarray is in the EMPTY state")
 def subarray_in_empty_state(
-    context_fixt: TestContextData,
     tmc: TMCFacade,
     sdp: SDPFacade,
     csp: CSPFacade,
     event_tracer: TangoEventTracer,
     default_commands_inputs: TestHarnessInputs,
+    context_data: TestContextData,
 ):
     """Ensure the subarray is in the EMPTY state."""
     _setup_event_subscriptions(tmc, csp, sdp, event_tracer)
-    context_fixt.starting_state = ObsState.IDLE
     # sdp.sdp_subarray.SetDirectreceiveAddresses("{}")
     # sdp.sdp_subarray.SetDefective(EVENT_DEFECT)
     # sdp.sdp_subarray.SetDirectreceiveAddresses(RECEIVE_ADDRESSES)
@@ -96,6 +95,9 @@ def subarray_in_empty_state(
         default_commands_inputs,
         wait_termination=True,
     )
+    context_data.csp_obsstate = ObsState.EMPTY
+    context_data.sdp_obsstate = ObsState.EMPTY
+    context_data.mccs_obsstate = ObsState.EMPTY
 
 
 @when("I queue Configure and Scan command")
@@ -163,7 +165,7 @@ def command_results_ok(event_tracer, tmc: TMCFacade):
 
 @then("the subarray transitions to the READY state")
 def verify_ready_state(
-    context_fixt: TestContextData,
+    context_data: TestContextData,
     tmc: TMCFacade,
     csp: CSPFacade,
     sdp: SDPFacade,
@@ -183,7 +185,7 @@ def verify_ready_state(
         f", CSP Subarray device ({csp.csp_subarray}) "
         f"and SDP Subarray device ({sdp.sdp_subarray}) "
         "ObsState attribute values should move "
-        f"from {str(context_fixt.starting_state)} to READY."
+        f"from {str(context_data.starting_state)} to READY."
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         tmc.subarray_node,
         "obsState",
