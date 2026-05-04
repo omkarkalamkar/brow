@@ -44,7 +44,7 @@ exception_messages = {
         '[3, "Exception occurred on the following devices: '
         "low-tmc/subarray-leaf-node-csp/01: "
         "Exception occurred on devices: low-csp/subarray/01: "
-        'Exception occurred, command failed"]'
+        'Exception occurred, command failed."]'
     ),
     "SDP": (
         '[3, "Exception occurred on the following devices: '
@@ -56,7 +56,7 @@ exception_messages = {
         '[3, "Exception occurred on the following devices: '
         "low-tmc/subarray-leaf-node-mccs/01: "
         "Exception occurred on devices: "
-        'low-mccs/subarray/01: Exception occurred, command failed"]'
+        'low-mccs/subarray/01: Exception occurred, command failed."]'
     ),
 }
 
