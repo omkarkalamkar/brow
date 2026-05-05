@@ -178,28 +178,16 @@ def verify_assign_failed_on_subarray_leaf_node(
     for failed_device in failed_devices.split(","):
         if failed_device == "CSP":
             csp_error_message = (
-                "Exception occurred on the following devices: "
-                "low-tmc/subarray/01: Exception occurred on "
-                "the following devices: "
-                "low-tmc/subarray-leaf-node-csp/01: "
                 "Exception occurred on devices: "
-                "low-csp/subarray/01: "
-                "Exception occurred on device: "
-                "low-csp/subarray/01 and Recovery Successful, "
-                "Subarray transitioned back to EMPTY"
+                "low-csp/subarray/01: Exception occurred "
+                "on device: low-csp/subarray/01"
             )
             error_message = f'[3, "{csp_error_message}"]'
         elif failed_device == "MCCS":
             mccs_error_message = (
-                "Exception occurred on the following devices: "
-                "low-tmc/subarray/01: Exception occurred on "
-                "the following devices: "
-                "low-tmc/subarray-leaf-node-mccs/01: "
                 "Exception occurred on devices: "
-                "low-mccs/subarray/01: "
-                "Exception occurred on device: "
-                "low-mccs/subarray/01 and Recovery Successful, "
-                "Subarray transitioned back to EMPTY"
+                "low-mccs/subarray/01: Exception occurred "
+                "on device: low-mccs/subarray/01"
             )
             error_message = f'[3, "{mccs_error_message}"]'
         elif failed_device == "SDP":
