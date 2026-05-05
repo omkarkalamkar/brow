@@ -1,6 +1,6 @@
 """
-This module defines a Pytest BDD test scenario for the successful execution of
-Scan Command of a Low Telescope Subarray in the Telescope Monitoring and
+This module defines a Pytest BDD test scenario for the MCCS early Scan scenario
+of a Low Telescope Subarray in the Telescope Monitoring and
 Control (TMC) system.
 """
 import json
