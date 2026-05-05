@@ -104,13 +104,13 @@ form of Tango attributes. These attribute publish the delay model as a json
 string. Any interested consumer can subscribe to the change events of thse
 attributes.
 
-.. jsonschema:: examples/delay_model.json
+.. jsonschema:: examples/delay_model_format.json
    :lift_definitions:
    :auto_reference:
 
 Following example shows a subarray beam delay model:
 
-.. literalinclude:: examples/station_delay_model_format.json
+.. literalinclude:: examples/station_delay_model.json
    :language: json
    :linenos:
 
