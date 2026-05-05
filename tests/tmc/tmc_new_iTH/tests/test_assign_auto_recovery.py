@@ -188,7 +188,7 @@ def verify_assign_failed_on_subarray_leaf_node(
                 "low-csp/subarray/01 and Recovery Successful, "
                 "Subarray transitioned back to EMPTY"
             )
-            error_message = f"[3, {csp_error_message}]"
+            error_message = f'[3, "{csp_error_message}"]'
         elif failed_device == "MCCS":
             mccs_error_message = (
                 "Exception occurred on the following devices: "
@@ -201,7 +201,7 @@ def verify_assign_failed_on_subarray_leaf_node(
                 "low-mccs/subarray/01 and Recovery Successful, "
                 "Subarray transitioned back to EMPTY"
             )
-            error_message = f"[3, {mccs_error_message}]"
+            error_message = f'[3, "{mccs_error_message}"]'
         elif failed_device == "SDP":
             error_message = '[3, "Device defective."]'
         assert_that(event_tracer).described_as(
