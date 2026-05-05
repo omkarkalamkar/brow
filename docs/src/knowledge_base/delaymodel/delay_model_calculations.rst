@@ -110,7 +110,7 @@ attributes.
 
 Following example shows a subarray beam delay model:
 
-.. literalinclude:: examples/station_delay_model.json
+.. literalinclude:: examples/station_delay_model_format.json
    :language: json
    :linenos:
 

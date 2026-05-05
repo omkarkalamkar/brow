@@ -1,0 +1,82 @@
+{
+  "$id": "https://schema.skao.int/ska-low-csp-delaymodel/1.1",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": true,
+  "definitions": {
+    "station_beam_delays_1.1": {
+      "additionalProperties": true,
+      "properties": {
+        "station_id": {
+          "description": "The station ids for which the delay polynomials\napply to.\n\nType: int\nRange: Integer from 1-512 inclusive",
+          "type": "integer"
+        },
+        "substation_id": {
+          "description": "The substation ids for which the delay polynomials\napply to.\n\nType: int",
+          "type": "integer"
+        },
+        "xypol_coeffs_ns": {
+          "description": "X coefficient set\nDelay Model is specified as coefficients\nfor a 5th order polynomial.\nCoefficients of the polynomial are specified as an array.\nThe delay at time t, where t is measured with respect the\nbeginning of the validity interval is calculated as:\n\nd(t) = c0 + c1*t + c2*t^2 + c3*t^3 + c4*t^4 + c5*t^5\n\nUnits for coefficients c0,c1,..c5:\nns/s^k where k=0,1,..5\n\nType: float\n\nRange for coefficients: 64 bit number",
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "ypol_offset_ns": {
+          "description": "Offset for the Y polarisation\n\nType: float",
+          "type": "number"
+        }
+      },
+      "required": [
+        "station_id",
+        "substation_id",
+        "xypol_coeffs_ns",
+        "ypol_offset_ns"
+      ],
+      "title": "station_beam_delays_1.1",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "cadence_sec": {
+      "description": "The time in seconds between updates/publications of the\n    delay polynomials.\n\nType: float\n\nRange: Non-zero positive number",
+      "type": "number"
+    },
+    "config_id": {
+      "description": "A string, should be the same as the equivalent value in the\nlast \"configure\" JSON. If not it indicates that these are\nnot yet valid polys for the current configuration.\n\nType: str",
+      "type": "string"
+    },
+    "interface": {
+      "description": "URI of JSON schema applicable to this JSON payload.\nType: str",
+      "type": "string"
+    },
+    "start_validity_sec": {
+      "description": "Time when delay model becomes valid\nStart point of polynomial validity\nno sensible default. It indicates an epoch, which could be anytime.\n\nType: float",
+      "type": "number"
+    },
+    "station_beam_delays": {
+      "items": {
+        "$ref": "#/definitions/station_beam_delays_1.1"
+      },
+      "type": "array"
+    },
+    "subarray": {
+      "description": "The subarray for which the delay polynomials\napply to.\n\nType: int\n\nRange: Integer from 1-16 inclusive",
+      "type": "integer"
+    },
+    "validity_period_sec": {
+      "description": "Validity period of the delay model (starting at epoch) [s]\n\nType: float\n\nRange: Non-zero positive number",
+      "type": "number"
+    }
+  },
+  "required": [
+    "interface",
+    "start_validity_sec",
+    "cadence_sec",
+    "validity_period_sec",
+    "config_id",
+    "subarray",
+    "station_beam_delays"
+  ],
+  "title": "CSP low delaymodel 1.1",
+  "type": "object"
+}
