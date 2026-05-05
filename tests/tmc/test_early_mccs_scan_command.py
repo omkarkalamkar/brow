@@ -32,7 +32,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
     "Successful Execution of early MCCS Scan scenario Low Telescope Subarray "
     + "in TMC",
 )
-def test_tmc_scan_command():
+def test_early_mccs_scan_scenario():
     """BDD test scenario for verifying successful execution of
     the Low Scan command in a TMC."""
 
