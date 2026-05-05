@@ -16,7 +16,6 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
 from ska_tango_testing.integration import TangoEventTracer
 from ska_tango_testing.mock.placeholders import Anything
 
-from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_support.constant_low import (
     FAILED_RESULT_DEFECT_EMPTY,
     SDP_BACK_TO_INITIAL_STATE,
@@ -40,9 +39,8 @@ FAILED_DEVICE_MAP = {
     "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
     "TMC Perform Auto Recovery when AssignResources Failed",
 )
-def test_assign_auto_recovery(central_node_low: CentralNodeWrapperLow):
+def test_assign_auto_recovery():
     """BDD test scenario to verify auto recovery when assignresources failed"""
-    central_node_low.move_to_on()
 
 
 @pytest.mark.SKA_low
@@ -56,7 +54,6 @@ def test_auto_recovery_failed():
     """
 
 
-@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
