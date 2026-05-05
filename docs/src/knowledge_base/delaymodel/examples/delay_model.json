@@ -1,0 +1,37 @@
+{
+  "interface": "https://schema.skao.int/ska-low-csp-delaymodel/1.1",
+  "start_validity_sec": 748656000.0,
+  "cadence_sec": 10.0,
+  "validity_period_sec": 600.0,
+  "config_id": "sbi-mvp02-20200325-00001-science_A",
+  "subarray": 2,
+  "station_beam_delays": [
+    {
+      "station_id": 512,
+      "substation_id": 3,
+      "xypol_coeffs_ns": [
+        7.5e2,
+        4.6e-3,
+        -2.0e-6,
+        -4.1e-12,
+        9.0e-16,
+        -1.9e-19
+      ],
+      "ypol_offset_ns": -0.1
+    },
+    {
+      "station_id": 1,
+      "substation_id": 0,
+      "xypol_coeffs_ns": [
+        7.5e2,
+        4.6e-3,
+        -2.0e-6,
+        -4.1e-12,
+        9.0e-16,
+        -1.9e-19
+      ],
+      "ypol_offset_ns": 0.5
+    }
+  ]
+}
+
