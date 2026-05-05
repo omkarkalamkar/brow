@@ -2,7 +2,8 @@ name: "mccssubarrayleafnode-test"
 function: telescope-monitoring
 domain: general-monitoring
 instances: ["01"]
-command: "python3 /app/src/ska_tmc_mccssubarrayleafnode/mccs_subarray_leaf_node.py -v5"
+entrypoints:
+  - name: "ska_tmc_mccssubarrayleafnode.mccs_subarray_leaf_node.LowTmcLeafNodeMccsSubarray"
 server:
   name: "mccs_subarray_leaf_node"
   instances:
