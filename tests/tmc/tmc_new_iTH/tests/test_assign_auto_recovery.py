@@ -253,8 +253,10 @@ def recovery_successful(
     )
     failed_message = (
         "low-tmc/subarray/01: Exception occurred on the following devices: "
-        "low-tmc/subarray-leaf-node-sdp/01: Device defective. and Recovery "
-        "Successful, Subarray transitioned back to EMPTY"
+        "low-tmc/subarray-leaf-node-sdp/01: "
+        "Exception occurred on devices: low-sdp/subarray/01: "
+        "Device defective. and Recovery Successful, "
+        "Subarray transitioned back to EMPTY"
     )
     assert_that(event_tracer).described_as(
         "TMC Subarray Leaf Node "
