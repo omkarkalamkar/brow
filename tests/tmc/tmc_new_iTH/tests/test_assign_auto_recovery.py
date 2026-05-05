@@ -45,7 +45,6 @@ def test_assign_auto_recovery(central_node_low: CentralNodeWrapperLow):
     central_node_low.move_to_on()
 
 
-@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
@@ -57,6 +56,7 @@ def test_auto_recovery_failed():
     """
 
 
+@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
