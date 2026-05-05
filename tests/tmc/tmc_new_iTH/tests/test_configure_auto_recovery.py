@@ -161,17 +161,16 @@ def verify_configure_failed_on_subarray_leaf_node(
         # if pytest.is_successive_configure:
         if failed_device == "CSP":
             error_message = (
-                '[3, "Exception occurred on the following devices: '
-                "low-tmc/subarray-leaf-node-csp/01: "
-                "Exception occurred on devices: "
-                "low-csp/subarray/01: Exception occurred on device: "
-                "low-csp/subarray/01 and Recovery Successful, "
-                "Subarray transitioned back to READY "
-                'with previous configuration."]'
+                '[3, "Exception occurred on devices: '
+                "low-csp/subarray/01: "
+                "Exception occurred on device: "
+                'low-csp/subarray/01"]'
             )
         elif failed_device == "MCCS":
             error_message = (
-                '[3, "Exception occurred on device: low-mccs/subarray/01"]'
+                '[3, "Exception occurred on devices: '
+                "low-mccs/subarray/01: Exception occurred on device: "
+                'low-mccs/subarray/01"]'
             )
         elif failed_device == "SDP":
             error_message = (
