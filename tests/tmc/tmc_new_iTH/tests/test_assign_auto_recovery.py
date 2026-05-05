@@ -190,7 +190,11 @@ def verify_assign_failed_on_subarray_leaf_node(
             )
             error_message = f'[3, "{mccs_error_message}"]'
         elif failed_device == "SDP":
-            error_message = '[3, "Device defective."]'
+            error_message = (
+                '[3, "Exception occurred on devices: '
+                "low-sdp/subarray/01: "
+                'Device defective."]'
+            )
         assert_that(event_tracer).described_as(
             "TMC Subarray Leaf Node "
             f"({tmc.subarray_node}) "
