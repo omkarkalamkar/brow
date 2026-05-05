@@ -16,6 +16,7 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
 from ska_tango_testing.integration import TangoEventTracer
 from ska_tango_testing.mock.placeholders import Anything
 
+from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_support.constant_low import (
     FAILED_RESULT_DEFECT,
     SDP_BACK_TO_INITIAL_STATE,
@@ -34,13 +35,15 @@ FAILED_DEVICE_MAP = {
 }
 
 
+@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
     "TMC Perform Auto Recovery when Configure Failed",
 )
-def test_configure_auto_recovery():
+def test_configure_auto_recovery(central_node_low: CentralNodeWrapperLow):
     """BDD test scenario for verifying auto recovery when configure failed"""
+    central_node_low.move_to_on()
 
 
 @pytest.mark.SKA_low
@@ -163,7 +166,11 @@ def verify_configure_failed_on_subarray_leaf_node(
                 '[3, "Exception occurred on device: low-mccs/subarray/01"]'
             )
         elif failed_device == "SDP":
-            error_message = '[3, "Device defective."]'
+            error_message = (
+                '[3, "Exception occurred on devices: '
+                "low-sdp/subarray/01: "
+                'Device defective."]'
+            )
         # else:
         #     error_message = '[3, "Device defective."]'
         assert_that(event_tracer).described_as(
