@@ -16,7 +16,6 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
 from ska_tango_testing.integration import TangoEventTracer
 from ska_tango_testing.mock.placeholders import Anything
 
-from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_support.constant_low import (
     FAILED_RESULT_DEFECT,
     SDP_BACK_TO_INITIAL_STATE,
@@ -56,19 +55,15 @@ def test_successive_configure_auto_recovery():
     """
 
 
-@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
     "TMC Auto Recovery Failed",
 )
-def test_auto_recovery_failed(
-    central_node_low: CentralNodeWrapperLow,
-):
+def test_auto_recovery_failed():
     """
     BDD test scenario for verifying auto recovery Failed
     """
-    central_node_low.move_to_on()
 
 
 @given("a subarray is in the IDLE obsState")
