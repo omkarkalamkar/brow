@@ -5,11 +5,14 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
-[Unreleased]
-************
+[2.15.1-rc.1]
+*************
 Fixed
 -----
 * Fixed issue with scalability job where test were failing due to admin mode not being updated in ON command for subsystem subarray devices with subarray_id >=3
+* Set the default value of the properties DefaultArrayLayoutSourceURIs and DefaultArrayLayoutPath to empty strings to resolve SKB-1282
+* Introduced a read-only boolean attribute arrayLayoutFileProvided on CentralNode. An alarm event can be generated when the default layout file url is not defined.
+
 
 [2.15.0-rc.2]
 *************
