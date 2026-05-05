@@ -328,7 +328,9 @@ def verify_tmc_subarray_lrcr_failed(
     else:
         failed_message = (
             "Exception occurred on the following devices: "
-            "low-tmc/subarray-leaf-node-sdp/01: Device defective. "
+            "low-tmc/subarray-leaf-node-sdp/01: "
+            "Exception occurred on devices: "
+            "low-sdp/subarray/01: Device defective. "
             "and Recovery Successful, "
             "Subarray transitioned back to IDLE"
         )
