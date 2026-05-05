@@ -35,7 +35,6 @@ FAILED_DEVICE_MAP = {
 }
 
 
-@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
