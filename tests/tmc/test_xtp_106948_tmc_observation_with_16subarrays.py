@@ -376,6 +376,7 @@ def _build_assign_json_files(
             base_assign, subarray_id, per_sn, plan_name
         )
         logging.info("subarray_id- %s, plan_name - %s", subarray_id, plan_name)
+        logging.info("assign_json - %s", assign_json)
 
         _write_json(
             logs_dir / f"assign_subarray{subarray_id}.json", assign_json
