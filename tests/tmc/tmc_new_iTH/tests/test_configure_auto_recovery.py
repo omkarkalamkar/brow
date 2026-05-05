@@ -328,9 +328,12 @@ def verify_tmc_subarray_lrcr_failed(
     if pytest.is_successive_configure:
         failed_message = (
             "Exception occurred on the following devices: "
-            "low-tmc/subarray-leaf-node-csp/01: Exception occurred "
-            "on device: low-csp/subarray/01 and Recovery Successful, "
-            "Subarray transitioned back to READY with previous configuration."
+            "low-tmc/subarray-leaf-node-csp/01: "
+            "Exception occurred on devices: low-csp/subarray/01: "
+            "Exception occurred on device: low-csp/subarray/01 "
+            "and Recovery Successful, "
+            "Subarray transitioned back to READY "
+            "with previous configuration."
         )
     else:
         failed_message = (
