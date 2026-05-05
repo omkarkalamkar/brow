@@ -35,27 +35,29 @@ FAILED_DEVICE_MAP = {
 }
 
 
-@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
     "TMC Perform Auto Recovery when Configure Failed",
 )
-def test_configure_auto_recovery(central_node_low: CentralNodeWrapperLow):
+def test_configure_auto_recovery():
     """BDD test scenario for verifying auto recovery when configure failed"""
-    central_node_low.move_to_on()
 
 
+@pytest.mark.test
 @pytest.mark.SKA_low
 @scenario(
     "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
     "TMC Perform Auto Recovery when Successive Configure Failed",
 )
-def test_successive_configure_auto_recovery():
+def test_successive_configure_auto_recovery(
+    central_node_low: CentralNodeWrapperLow,
+):
     """
     BDD test scenario for verifying auto recovery
     when successive configure failed
     """
+    central_node_low.move_to_on()
 
 
 @pytest.mark.SKA_low
