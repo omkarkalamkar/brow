@@ -375,6 +375,8 @@ def _build_assign_json_files(
         assign_json = _build_assign_json(
             base_assign, subarray_id, per_sn, plan_name
         )
+        logging.info("subarray_id- %s, plan_name - %s", subarray_id, plan_name)
+
         _write_json(
             logs_dir / f"assign_subarray{subarray_id}.json", assign_json
         )
@@ -834,6 +836,7 @@ def assign_using_plan_map(
         pytest.active_subarray_ids,
         ObsState.IDLE,
     )
+    assert False
 
 
 @given(parsers.parse("I configure all the subarrays using plan map {PlanMap}"))

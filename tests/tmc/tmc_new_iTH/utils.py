@@ -170,6 +170,7 @@ def _build_assign_json(
 
     # Ensure SDP section exists (template should have it); keep as-is.
     _ = plan_name  # reserved for future debug logging
+
     return assign_json
 
 
