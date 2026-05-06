@@ -30,7 +30,7 @@ def _get_proxy_by_subsystem(
         case "SDP":
             return sdp.sdp_subarray
         case "MCCS":
-            return mccs.mccs_subarray
+            return mccs.mccs_controller
 
 
 def _get_leaf_node_proxy_by_subsystem(
@@ -210,10 +210,10 @@ def verify_tmc_subarray_observation_state_restarting(
         "obsState",
         ObsState.ABORTED,
     )
-    subarray = _get_proxy_by_subsystem(
+    subsystem = _get_proxy_by_subsystem(
         pytest.defective_subsystem, csp, sdp, mccs
     )
-    subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
+    subsystem.SetDefective(ERROR_PROPAGATION_DEFECT)
     pytest.unique_id = tmc.restart(wait_termination=False)
     assert_that(event_tracer).described_as(
         f"TMC Subarray Node device ({tmc.subarray_node})"
@@ -286,8 +286,10 @@ def verify_csp_ln_error(
     exception_message = [
         "Exception occurred, command failed.",
     ]
-    subarray = _get_proxy_by_subsystem(subsystem3, csp, sdp, mccs)
-    subarray.SetDirectObsState(ObsState.EMPTY)
+    subsystem = _get_proxy_by_subsystem(subsystem3, csp, sdp, mccs)
+    if subsystem3 == "MCCS":
+        # Mccs controller is getting used
+        subsystem.SetDirectObsState(ObsState.EMPTY)
     subarray_ln = _get_leaf_node_proxy_by_subsystem(subsystem3, tmc)
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
@@ -378,7 +380,7 @@ def verify_subarray_lrcr_failure(
         pytest.unique_id[1][0],
         ResultCode.FAILED,
     )
-    subarray = _get_proxy_by_subsystem(
+    subsystem = _get_proxy_by_subsystem(
         pytest.defective_subsystem, csp, sdp, mccs
     )
-    subarray.SetDefective(RESET_DEFECT)
+    subsystem.SetDefective(RESET_DEFECT)
