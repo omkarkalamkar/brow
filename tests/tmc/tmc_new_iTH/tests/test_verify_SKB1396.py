@@ -81,12 +81,18 @@ def _setup_event_subscriptions(
         tmc.csp_subarray_leaf_node, "longRunningCommandResult"
     )
     event_tracer.subscribe_event(
+        tmc.sdp_subarray_leaf_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(
+        tmc.mccs_subarray_leaf_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(
         tmc.sdp_subarray_leaf_node, "SdpSubarrayObsState"
     )
     event_tracer.subscribe_event(
         tmc.csp_subarray_leaf_node, "CspSubarrayObsState"
     )
-
+    event_tracer.subscribe_event(tmc.mccs_subarray_leaf_node, "ObsState")
     log_events(
         {
             tmc.subarray_node: [
@@ -97,10 +103,24 @@ def _setup_event_subscriptions(
             sdp.sdp_subarray: ["obsState"],
             mccs.mccs_subarray: ["obsState"],
             tmc.central_node: ["longRunningCommandResult"],
-            tmc.sdp_subarray_leaf_node: ["SdpSubarrayObsState"],
-            tmc.csp_subarray_leaf_node: ["CspSubarrayObsState"],
+            tmc.sdp_subarray_leaf_node: [
+                "SdpSubarrayObsState",
+                "longRunningCommandResult",
+            ],
+            tmc.csp_subarray_leaf_node: [
+                "CspSubarrayObsState",
+                "longRunningCommandResult",
+            ],
+            tmc.mccs_subarray_leaf_node: [
+                "ObsState",
+                "longRunningCommandResult",
+            ],
         },
-        event_enum_mapping={"obsState": ObsState},
+        event_enum_mapping={
+            "obsState": ObsState,
+            "SdpSubarrayObsState": ObsState,
+            "CspSubarrayObsState": ObsState,
+        },
     )
 
 
@@ -190,7 +210,9 @@ def verify_tmc_subarray_observation_state_restarting(
         "obsState",
         ObsState.ABORTED,
     )
-    subarray = _get_proxy_by_subsystem(pytest.defective_subsystem)
+    subarray = _get_proxy_by_subsystem(
+        pytest.defective_subsystem, csp, sdp, mccs
+    )
     subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
     pytest.unique_id = tmc.restart(wait_termination=False)
     assert_that(event_tracer).described_as(
@@ -236,7 +258,7 @@ def verify_subsystem2_ln_empty(
     tmc: TMCFacade, event_tracer: TangoEventTracer, subsystem2: str
 ):
     """Verify SDP leaf node in observation state EMPTY"""
-    subarray_ln = _get_leaf_node_proxy_by_subsystem(subsystem2)
+    subarray_ln = _get_leaf_node_proxy_by_subsystem(subsystem2, tmc)
     assert_that(event_tracer).described_as(
         f"TMC Subarray Node device ({subarray_ln.dev_name()})"
         "ObsState attribute values should be EMPTY."
@@ -255,6 +277,8 @@ def verify_subsystem2_ln_empty(
 )
 def verify_csp_ln_error(
     csp: CSPFacade,
+    sdp: SDPFacade,
+    mccs: MCCSFacade,
     tmc: TMCFacade,
     event_tracer: TangoEventTracer,
     subsystem3: str,
@@ -262,9 +286,9 @@ def verify_csp_ln_error(
     exception_message = [
         "Exception occurred, command failed.",
     ]
-    subarray = _get_proxy_by_subsystem(subsystem3)
+    subarray = _get_proxy_by_subsystem(subsystem3, csp, sdp, mccs)
     subarray.SetDirectObsState(ObsState.EMPTY)
-    subarray_ln = _get_leaf_node_proxy_by_subsystem(subsystem3)
+    subarray_ln = _get_leaf_node_proxy_by_subsystem(subsystem3, tmc)
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
         "Central Node device"
@@ -327,10 +351,16 @@ def verify_sdp_csp_mccs_in_empty_observation_state(
 
 @then("the TMC subarray reports failure on LongRunningCommandResult attribute")
 def verify_subarray_lrcr_failure(
-    tmc: TMCFacade, csp: CSPFacade, event_tracer: TangoEventTracer
+    tmc: TMCFacade,
+    csp: CSPFacade,
+    sdp: SDPFacade,
+    mccs: MCCSFacade,
+    event_tracer: TangoEventTracer,
 ):
     """Verify subarray failure"""
-    subarray_ln = _get_leaf_node_proxy_by_subsystem(pytest.defective_subsystem)
+    subarray_ln = _get_leaf_node_proxy_by_subsystem(
+        pytest.defective_subsystem, tmc
+    )
     exception_message = [
         "Exception occurred on the following devices:",
         f"{subarray_ln}:",
@@ -348,5 +378,7 @@ def verify_subarray_lrcr_failure(
         pytest.unique_id[1][0],
         ResultCode.FAILED,
     )
-    subarray = _get_proxy_by_subsystem(pytest.defective_subsystem)
+    subarray = _get_proxy_by_subsystem(
+        pytest.defective_subsystem, csp, sdp, mccs
+    )
     subarray.SetDefective(RESET_DEFECT)
