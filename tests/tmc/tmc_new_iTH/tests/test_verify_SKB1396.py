@@ -240,7 +240,7 @@ def verify_subsystem1_ln_empty(
     tmc: TMCFacade, event_tracer: TangoEventTracer, subsystem1: str
 ):
     """Verify SDP leaf node in observation state EMPTY"""
-    subarray_ln = _get_leaf_node_proxy_by_subsystem(subsystem1)
+    subarray_ln = _get_leaf_node_proxy_by_subsystem(subsystem1, tmc)
     assert_that(event_tracer).described_as(
         f"TMC Subarray Node device ({subarray_ln.dev_name()})"
         "ObsState attribute values should be EMPTY."
