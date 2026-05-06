@@ -363,7 +363,7 @@ def verify_subarray_lrcr_failure(
     )
     exception_message = [
         "Exception occurred on the following devices:",
-        f"{subarray_ln}:",
+        f"{subarray_ln.dev_name()}:",
         "Exception occurred, command failed.",
     ]
     assert_that(event_tracer).described_as(
