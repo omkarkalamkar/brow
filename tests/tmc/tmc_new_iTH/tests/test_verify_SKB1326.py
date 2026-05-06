@@ -139,6 +139,7 @@ def setup_tmc(
     sdp: SDPFacade,
     mccs: MCCSFacade,
     event_tracer: TangoEventTracer,
+    admin_mode,
 ):
     """Verifies TMC initial state."""
     _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
