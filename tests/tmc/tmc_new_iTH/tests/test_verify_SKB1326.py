@@ -287,7 +287,7 @@ def verify_csp_ln_error(
         "Exception occurred, command failed.",
     ]
     subsystem = _get_proxy_by_subsystem(subsystem3, csp, sdp, mccs)
-    if subsystem3 == "MCCS":
+    if subsystem3 != "MCCS":
         # Mccs controller is getting used
         subsystem.SetDirectObsState(ObsState.EMPTY)
     subarray_ln = _get_leaf_node_proxy_by_subsystem(subsystem3, tmc)
