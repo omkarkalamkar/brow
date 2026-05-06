@@ -1,6 +1,6 @@
 import pytest
 from assertpy import assert_that
-from pytest_bdd import given, scenario, then, when
+from pytest_bdd import given, parser, scenario, then, when
 from ska_control_model import ObsState, ResultCode
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
 from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
@@ -11,12 +11,50 @@ from ska_integration_test_harness.inputs.test_harness_inputs import (
 )
 from ska_tango_testing.integration import TangoEventTracer, log_events
 from ska_tango_testing.mock.placeholders import Anything
+from tango import DeviceProxy
 
 from tests.resources.test_harness.constant import (
     ERROR_PROPAGATION_DEFECT,
     RESET_DEFECT,
 )
 from tests.tmc.tmc_new_iTH.utils import TIMEOUT
+
+
+def _get_proxy_by_subsystem(
+    subsystem: str, csp: CSPFacade, sdp: SDPFacade, mccs: MCCSFacade
+) -> DeviceProxy:
+    """Returns subsystem proxy."""
+    match subsystem:
+        case "CSP":
+            return csp.csp_subarray
+        case "SDP":
+            return sdp.sdp_subarray
+        case "MCCS":
+            return mccs.mccs_subarray
+
+
+def _get_leaf_node_proxy_by_subsystem(
+    subsystem: str, tmc: TMCFacade
+) -> DeviceProxy:
+    """Returns subsystem leaf node proxy."""
+    match subsystem:
+        case "CSP":
+            return tmc.csp_subarray_leaf_node
+        case "SDP":
+            return tmc.sdp_subarray_leaf_node
+        case "MCCS":
+            return tmc.mccs_subarray_leaf_node
+
+
+def _get_leaf_node_obs_state(subsystem: str) -> str:
+    """Returns observation state."""
+    match subsystem:
+        case "CSP":
+            return "CspSubarrayObsState"
+        case "SDP":
+            return "SdpSubarrayObsState"
+        case "MCCS":
+            return "ObsState"
 
 
 def _setup_event_subscriptions(
@@ -110,6 +148,12 @@ def setup_tmc(
     )
 
 
+@given(parser.parse("{subsystem3} subarray as defective device"))
+def set_device_defective(subsystem3: str):
+    """Set device as defective."""
+    pytest.defective_subsystem = subsystem3
+
+
 @given("TMC Subarray in observation state RESTARTING")
 def verify_tmc_subarray_observation_state_restarting(
     event_tracer: TangoEventTracer,
@@ -146,7 +190,8 @@ def verify_tmc_subarray_observation_state_restarting(
         "obsState",
         ObsState.ABORTED,
     )
-    csp.csp_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
+    subarray = _get_proxy_by_subsystem(pytest.defective_subsystem)
+    subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
     pytest.unique_id = tmc.restart(wait_termination=False)
     assert_that(event_tracer).described_as(
         f"TMC Subarray Node device ({tmc.subarray_node})"
@@ -166,49 +211,78 @@ def verify_tmc_subarray_observation_state_restarting(
     )
 
 
-@given("SDP Subarray leaf node in Observation state EMPTY")
-def verify_sdp_empty(tmc: TMCFacade, event_tracer: TangoEventTracer):
+@given(
+    parser.parse("{subsystem1} subarray leaf node in Observation state EMPTY")
+)
+def verify_subsystem1_ln_empty(
+    tmc: TMCFacade, event_tracer: TangoEventTracer, subsystem1: str
+):
     """Verify SDP leaf node in observation state EMPTY"""
-
+    subarray_ln = _get_leaf_node_proxy_by_subsystem(subsystem1)
     assert_that(event_tracer).described_as(
-        f"TMC Subarray Node device ({tmc.sdp_subarray_leaf_node.dev_name()})"
+        f"TMC Subarray Node device ({subarray_ln.dev_name()})"
         "ObsState attribute values should be EMPTY."
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        tmc.sdp_subarray_leaf_node,
-        "SdpSubarrayObsState",
+        subarray_ln,
+        _get_leaf_node_obs_state(subsystem1),
+        ObsState.EMPTY,
+    )
+
+
+@given(
+    parser.parse("{subsystem2} subarray leaf node in Observation state EMPTY")
+)
+def verify_subsystem2_ln_empty(
+    tmc: TMCFacade, event_tracer: TangoEventTracer, subsystem2: str
+):
+    """Verify SDP leaf node in observation state EMPTY"""
+    subarray_ln = _get_leaf_node_proxy_by_subsystem(subsystem2)
+    assert_that(event_tracer).described_as(
+        f"TMC Subarray Node device ({subarray_ln.dev_name()})"
+        "ObsState attribute values should be EMPTY."
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_ln,
+        _get_leaf_node_obs_state(subsystem2),
         ObsState.EMPTY,
     )
 
 
 @when(
-    "CSP subarray leaf node raises error and transitions"
-    " to observation state EMPTY"
+    parser.parse(
+        "{subsystem3} subarray leaf node raises error"
+        " and transitions to observation state EMPTY"
+    )
 )
 def verify_csp_ln_error(
-    csp: CSPFacade, tmc: TMCFacade, event_tracer: TangoEventTracer
+    csp: CSPFacade,
+    tmc: TMCFacade,
+    event_tracer: TangoEventTracer,
+    subsystem3: str,
 ):
     exception_message = [
         "Exception occurred, command failed.",
     ]
-    csp.csp_subarray.SetDirectObsState(ObsState.EMPTY)
+    subarray = _get_proxy_by_subsystem(subsystem3)
+    subarray.SetDirectObsState(ObsState.EMPTY)
+    subarray_ln = _get_leaf_node_proxy_by_subsystem(subsystem3)
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
         "Central Node device"
-        f"({tmc.subarray_node.dev_name()}) "
+        f"({subarray_ln.dev_name()}) "
         "is expected have longRunningCommandResult"
         "(ResultCode.FAILED,exception)",
     ).within_timeout(TIMEOUT).has_desired_result_code_message_in_lrcr_event(
-        tmc.csp_subarray_leaf_node,
+        subarray_ln,
         exception_message,
         Anything,
         ResultCode.FAILED,
     )
 
     assert_that(event_tracer).described_as(
-        f"TMC Subarray Node device ({tmc.csp_subarray_leaf_node.dev_name()})"
+        f"TMC Subarray Node device ({subarray_ln.dev_name()})"
         "ObsState attribute values should be EMPTY."
     ).within_timeout(TIMEOUT).has_change_event_occurred(
-        tmc.csp_subarray_leaf_node,
+        subarray_ln,
         "CspSubarrayObsState",
         ObsState.EMPTY,
     )
@@ -256,10 +330,10 @@ def verify_subarray_lrcr_failure(
     tmc: TMCFacade, csp: CSPFacade, event_tracer: TangoEventTracer
 ):
     """Verify subarray failure"""
-
+    subarray_ln = _get_leaf_node_proxy_by_subsystem(pytest.defective_subsystem)
     exception_message = [
         "Exception occurred on the following devices:",
-        f"{tmc.csp_subarray_leaf_node.dev_name()}:",
+        f"{subarray_ln}:",
         "Exception occurred, command failed.",
     ]
     assert_that(event_tracer).described_as(
@@ -274,4 +348,5 @@ def verify_subarray_lrcr_failure(
         pytest.unique_id[1][0],
         ResultCode.FAILED,
     )
-    csp.csp_subarray.SetDefective(RESET_DEFECT)
+    subarray = _get_proxy_by_subsystem(pytest.defective_subsystem)
+    subarray.SetDefective(RESET_DEFECT)

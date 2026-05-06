@@ -117,7 +117,3 @@ ska-tmc-simulators:
     mocks:
       enabled: true
       LoggingLevel: "5"
-  ska_tmc_simulators:
-    image:
-      registry: artefact.skao.int
-      tag: 1.11.0
