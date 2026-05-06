@@ -1,6 +1,6 @@
 import pytest
 from assertpy import assert_that
-from pytest_bdd import given, parser, scenario, then, when
+from pytest_bdd import given, parsers, scenario, then, when
 from ska_control_model import ObsState, ResultCode
 from ska_integration_test_harness.facades.csp_facade import CSPFacade
 from ska_integration_test_harness.facades.mccs_facade import MCCSFacade
@@ -148,7 +148,7 @@ def setup_tmc(
     )
 
 
-@given(parser.parse("{subsystem3} subarray as defective device"))
+@given(parsers.parse("{subsystem3} subarray as defective device"))
 def set_device_defective(subsystem3: str):
     """Set device as defective."""
     pytest.defective_subsystem = subsystem3
@@ -212,7 +212,7 @@ def verify_tmc_subarray_observation_state_restarting(
 
 
 @given(
-    parser.parse("{subsystem1} subarray leaf node in Observation state EMPTY")
+    parsers.parse("{subsystem1} subarray leaf node in Observation state EMPTY")
 )
 def verify_subsystem1_ln_empty(
     tmc: TMCFacade, event_tracer: TangoEventTracer, subsystem1: str
@@ -230,7 +230,7 @@ def verify_subsystem1_ln_empty(
 
 
 @given(
-    parser.parse("{subsystem2} subarray leaf node in Observation state EMPTY")
+    parsers.parse("{subsystem2} subarray leaf node in Observation state EMPTY")
 )
 def verify_subsystem2_ln_empty(
     tmc: TMCFacade, event_tracer: TangoEventTracer, subsystem2: str
@@ -248,7 +248,7 @@ def verify_subsystem2_ln_empty(
 
 
 @when(
-    parser.parse(
+    parsers.parse(
         "{subsystem3} subarray leaf node raises error"
         " and transitions to observation state EMPTY"
     )
