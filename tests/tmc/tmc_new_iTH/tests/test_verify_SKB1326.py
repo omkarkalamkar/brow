@@ -139,7 +139,6 @@ def setup_tmc(
     sdp: SDPFacade,
     mccs: MCCSFacade,
     event_tracer: TangoEventTracer,
-    admin_mode,
 ):
     """Verifies TMC initial state."""
     _setup_event_subscriptions(tmc, csp, sdp, mccs, event_tracer)
@@ -170,7 +169,7 @@ def setup_tmc(
 
 
 @given(parsers.parse("{subsystem3} subarray as defective device"))
-def set_device_defective(subsystem3: str):
+def set_device_defective(subsystem3: str, admin_mode):
     """Set device as defective."""
     pytest.defective_subsystem = subsystem3
 
