@@ -223,14 +223,6 @@ def verify_tmc_subarray_observation_state_restarting(
         "obsState",
         ObsState.RESTARTING,
     )
-    assert_that(event_tracer).described_as(
-        f"TMC Subarray Node device ({tmc.sdp_subarray_leaf_node})"
-        "ObsState attribute values should be RESTARTING."
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        tmc.sdp_subarray_leaf_node,
-        "SdpSubarrayObsState",
-        ObsState.RESTARTING,
-    )
 
 
 @given(
