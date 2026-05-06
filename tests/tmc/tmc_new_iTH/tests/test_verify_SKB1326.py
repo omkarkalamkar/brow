@@ -309,7 +309,7 @@ def verify_csp_ln_error(
         "ObsState attribute values should be EMPTY."
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         subarray_ln,
-        "CspSubarrayObsState",
+        _get_leaf_node_obs_state(subsystem3),
         ObsState.EMPTY,
     )
 
