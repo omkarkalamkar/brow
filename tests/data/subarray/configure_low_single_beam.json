@@ -20,11 +20,8 @@
         {
           "aperture_id": "AP001.01",
           "weighting_key_ref": "aperture2"
-        },
-        {
-          "aperture_id": "AP002.01",
-          "weighting_key_ref": "aperture2"
         }
+        
       ],
       "field": {
         "target_name": "Polaris Australis",
