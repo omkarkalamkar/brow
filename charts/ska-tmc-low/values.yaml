@@ -94,28 +94,28 @@ cspmasterleafnode:
   image:
     registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-cspleafnodes
     image: ska-tmc-cspleafnodes
-    tag: 0.45.2-dev.c7f7b7f8c
+    tag: 0.45.2-dev.c870f7112
     pullPolicy: IfNotPresent
 
 cspsubarrayleafnode:
   image:
     registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-cspleafnodes
     image: ska-tmc-cspleafnodes
-    tag: 0.45.2-dev.c7f7b7f8c
+    tag: 0.45.2-dev.c870f7112
     pullPolicy: IfNotPresent
 
 mccsmasterleafnode:
   image:
     registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
     image: ska-tmc-mccsleafnodes
-    tag: 0.17.2-dev.c33b3a330
+    tag: 0.17.2-dev.c338df7ff
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
     registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
     image: ska-tmc-mccsleafnodes
-    tag: 0.17.2-dev.c33b3a330
+    tag: 0.17.2-dev.c338df7ff
     pullPolicy: IfNotPresent
 
 resource_monitor:
