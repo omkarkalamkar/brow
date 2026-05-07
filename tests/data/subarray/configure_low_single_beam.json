@@ -85,21 +85,8 @@
             },
             "stn_beam_id": 1,
             "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
-          }, {
-            "pst_beam_id": 2,
-            "field": {
-              "target_name": "PSR J0024-7204R",
-              "reference_frame": "icrs",
-              "attrs": {
-                "c1": 6.023625,
-                "c2": -72.08128333,
-                "pm_c1": 4.8,
-                "pm_c2": -3.3
-              }
-            },
-            "stn_beam_id": 1,
-            "stn_weights": [0.9, 1.0, 1.0, 1.0, 0.9, 1.0]
-          }]
+          }
+         ]
         },
         "search_beams": {
           "firmware": "pss",
@@ -135,31 +122,10 @@
             "receptor_weights": [0.4, 0.6],
             "rfi_frequency_masks": []
           }
-        }, {
-          "beam_id": 2,
-          "scan": {
-            "centre_frequency": 200000000.0,
-            "total_bandwidth": 1562500.0,
-            "pst_processing_mode": "VOLTAGE_RECORDER",
-            "observer_id": "jdoe",
-            "project_id": "project1",
-            "target": {
-              "target_name": "J1921+2153",
-              "reference_frame": "icrs",
-              "attrs": {
-                "c1": 6.023625,
-                "c2": -72.08128333,
-                "epoch": 2000.0
-              }
-            },
-            "receiver_id": "receiver3",
-            "max_scan_length": 20000.0,
-            "subint_duration": 30.0,
-            "receptors": ["receptor1", "receptor2"],
-            "receptor_weights": [0.4, 0.6],
-            "rfi_frequency_masks": []
-          }
-        }]
+        }
+       
+    
+    ]
       },
       "pss": {
         "beam": [{
