@@ -186,6 +186,7 @@ def given_mccs_subarray_scanning(
 
     # Early Scan on MCCS Subarray Leaf Node
     subarray_node_low.mccs_subarray_leaf_node.Scan(json.dumps(mccs_scan_json))
+    subarray_node_low.execute_transition("Scan", scan_input_json)
     # assert_that(event_tracer).described_as(
     #     'FAILED ASSUMPTION IN "GIVEN" STEP: '
     #     "'a MCCS subarray Leaf Node in SCANNING obsState'"
@@ -201,13 +202,12 @@ def given_mccs_subarray_scanning(
 @when("I command TMC Subarray to scan for a given period")
 def send_scan(
     command_input_factory: JsonFactory,
-    subarray_node_low: SubarrayNodeWrapperLow,
+    # subarray_node_low: SubarrayNodeWrapperLow,
 ):
     """Execute Scan command on TMC SubarrayNode"""
-    scan_input_json = prepare_json_args_for_commands(
-        "scan_low", command_input_factory
-    )
-    subarray_node_low.execute_transition("Scan", scan_input_json)
+    prepare_json_args_for_commands("scan_low", command_input_factory)
+
+    # subarray_node_low.execute_transition("Scan", scan_input_json)
 
 
 @then("the subarray must be in the SCANNING obsState until a scan finished")
