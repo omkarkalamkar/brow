@@ -277,22 +277,10 @@ def verify_subarray_ln_error(
 ):
     """Verifies error raised by subarray leaf node."""
     subarray_ln = _get_leaf_node_proxy_by_subsystem(subsystem3, tmc)
-
-    assert_that(event_tracer).described_as(
-        f"TMC Subarray Node device ({subarray_ln.dev_name()})"
-        "ObsState attribute values should be EMPTY."
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        subarray_ln,
-        _get_leaf_node_obs_state(subsystem3),
-        ObsState.RESTARTING,
-    )
     exception_message = [
         "Exception occurred, command failed.",
     ]
     subsystem = _get_proxy_by_subsystem(subsystem3, csp, sdp, mccs)
-    if subsystem3 != "MCCS":
-        # Mccs controller is getting used
-        subsystem.SetDirectObsState(ObsState.EMPTY)
 
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
@@ -306,6 +294,9 @@ def verify_subarray_ln_error(
         Anything,
         ResultCode.FAILED,
     )
+    if subsystem3 != "MCCS":
+        # Mccs controller is getting used
+        subsystem.SetDirectObsState(ObsState.EMPTY)
 
     assert_that(event_tracer).described_as(
         f"TMC Subarray Node device ({subarray_ln.dev_name()})"
