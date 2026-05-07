@@ -36,7 +36,7 @@ def _get_proxy_by_subsystem(
 def _get_leaf_node_proxy_by_subsystem(
     subsystem: str, tmc: TMCFacade
 ) -> DeviceProxy:
-    """Returns subsystem leaf node proxy."""
+    """Returns TMC leaf node proxy."""
     match subsystem:
         case "CSP":
             return tmc.csp_subarray_leaf_node
@@ -47,7 +47,7 @@ def _get_leaf_node_proxy_by_subsystem(
 
 
 def _get_leaf_node_obs_state(subsystem: str) -> str:
-    """Returns observation state."""
+    """Returns observation state attribute name of subarray leaf node"""
     match subsystem:
         case "CSP":
             return "CspSubarrayObsState"
@@ -170,7 +170,7 @@ def setup_tmc(
 
 @given(parsers.parse("{subsystem3} subarray as defective device"))
 def set_device_defective(subsystem3: str, admin_mode):
-    """Set device as defective."""
+    """Method to set defective device."""
     pytest.defective_subsystem = subsystem3
 
 
@@ -183,7 +183,7 @@ def verify_tmc_subarray_observation_state_restarting(
     mccs: MCCSFacade,
     default_commands_inputs: TestHarnessInputs,
 ):
-    """Verifies the TMC subarray observation state IDLE"""
+    """Verifies the TMC subarray observation state Restarting"""
     setup_tmc(tmc, csp, sdp, mccs, event_tracer)
     tmc.force_change_of_obs_state(ObsState.ABORTED, default_commands_inputs)
 
@@ -231,7 +231,7 @@ def verify_tmc_subarray_observation_state_restarting(
 def verify_subsystem1_ln_empty(
     tmc: TMCFacade, event_tracer: TangoEventTracer, subsystem1: str
 ):
-    """Verify SDP leaf node in observation state EMPTY"""
+    """Verifies subarray leaf node in observation state EMPTY"""
     subarray_ln = _get_leaf_node_proxy_by_subsystem(subsystem1, tmc)
     assert_that(event_tracer).described_as(
         f"TMC Subarray Node device ({subarray_ln.dev_name()})"
@@ -249,7 +249,7 @@ def verify_subsystem1_ln_empty(
 def verify_subsystem2_ln_empty(
     tmc: TMCFacade, event_tracer: TangoEventTracer, subsystem2: str
 ):
-    """Verify SDP leaf node in observation state EMPTY"""
+    """Verifies subarray leaf node in observation state EMPTY"""
     subarray_ln = _get_leaf_node_proxy_by_subsystem(subsystem2, tmc)
     assert_that(event_tracer).described_as(
         f"TMC Subarray Node device ({subarray_ln.dev_name()})"
@@ -267,7 +267,7 @@ def verify_subsystem2_ln_empty(
         " and transitions to observation state EMPTY"
     )
 )
-def verify_csp_ln_error(
+def verify_subarray_ln_error(
     csp: CSPFacade,
     sdp: SDPFacade,
     mccs: MCCSFacade,
@@ -275,6 +275,17 @@ def verify_csp_ln_error(
     event_tracer: TangoEventTracer,
     subsystem3: str,
 ):
+    """Verifies error raised by subarray leaf node."""
+    subarray_ln = _get_leaf_node_proxy_by_subsystem(subsystem3, tmc)
+
+    assert_that(event_tracer).described_as(
+        f"TMC Subarray Node device ({subarray_ln.dev_name()})"
+        "ObsState attribute values should be EMPTY."
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        subarray_ln,
+        _get_leaf_node_obs_state(subsystem3),
+        ObsState.RESTARTING,
+    )
     exception_message = [
         "Exception occurred, command failed.",
     ]
@@ -282,7 +293,7 @@ def verify_csp_ln_error(
     if subsystem3 != "MCCS":
         # Mccs controller is getting used
         subsystem.SetDirectObsState(ObsState.EMPTY)
-    subarray_ln = _get_leaf_node_proxy_by_subsystem(subsystem3, tmc)
+
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ASSIGN RESOURCES: "
         "Central Node device"
@@ -316,7 +327,7 @@ def verify_sdp_csp_mccs_in_empty_observation_state(
     default_commands_inputs: TestHarnessInputs,
 ):
     """Verifies the observation states of SDP,CSP and MCCS
-    after command Configure.
+    after command Restart.
     """
     assert_that(event_tracer).described_as(
         f"Both TMC Subarray Node device ({tmc.subarray_node})"
@@ -351,7 +362,7 @@ def verify_subarray_lrcr_failure(
     mccs: MCCSFacade,
     event_tracer: TangoEventTracer,
 ):
-    """Verify subarray failure"""
+    """Verifies TMC subarray failure"""
     subarray_ln = _get_leaf_node_proxy_by_subsystem(
         pytest.defective_subsystem, tmc
     )
