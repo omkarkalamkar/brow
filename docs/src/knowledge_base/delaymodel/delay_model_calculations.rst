@@ -104,7 +104,7 @@ form of Tango attributes. These attribute publish the delay model as a json
 string. Any interested consumer can subscribe to the change events of thse
 attributes.
 
-.. jsonschema:: examples/delay_model_format.json
+.. jsonschema:: https://ska-telescope.gitlab.io/ska-schemas/json_schema/ska-low-csp-delaymodel/1.1
    :lift_definitions:
    :auto_reference:
 

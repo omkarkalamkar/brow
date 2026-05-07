@@ -634,14 +634,14 @@ reference = "PyPI-public"
 
 [[package]]
 name = "gitpython"
-version = "3.1.49"
+version = "3.1.50"
 description = "GitPython is a Python library used to interact with Git repositories"
 optional = false
 python-versions = ">=3.7"
 groups = ["main"]
 files = [
-    {file = "gitpython-3.1.49-py3-none-any.whl", hash = "sha256:024b0422d7f84d15cd794844e029ffebd4c5d42a7eb9b936b458697ef550a02c"},
-    {file = "gitpython-3.1.49.tar.gz", hash = "sha256:42f9399c9eb33fc581014bedd76049dfbaf6375aa2a5754575966387280315e1"},
+    {file = "gitpython-3.1.50-py3-none-any.whl", hash = "sha256:d352abe2908d07355014abdd21ddf798c2a961469239afec4962e9da884858f9"},
+    {file = "gitpython-3.1.50.tar.gz", hash = "sha256:80da2d12504d52e1f998772dc5baf6e553f8d2fcfe1fcc226c9d9a2ee3372dcc"},
 ]
 
 [package.dependencies]
@@ -2444,6 +2444,28 @@ url = "https://artefact.skao.int/repository/pypi-internal/simple"
 reference = "ska-nexus"
 
 [[package]]
+name = "ska-schemas"
+version = "1.33.0"
+description = "SKA schema repository"
+optional = false
+python-versions = ">=3.10,<4.0"
+groups = ["main"]
+files = [
+    {file = "ska_schemas-1.33.0-py3-none-any.whl", hash = "sha256:5c94ba5f77fd461d2a7c4c26716bdd9dfad31a5b187d332f01f5c4bccae88b34"},
+    {file = "ska_schemas-1.33.0.tar.gz", hash = "sha256:810ad7c213c85829fb9ea39ea2aad12377e24caeac97749a1bd075476598d4f2"},
+]
+
+[package.dependencies]
+appdirs = ">=1.4.4,<2.0.0"
+jsonschema = ">=4.26.0,<5.0.0"
+schema = ">=0.7.8,<0.8.0"
+
+[package.source]
+type = "legacy"
+url = "https://artefact.skao.int/repository/pypi-internal/simple"
+reference = "ska-nexus"
+
+[[package]]
 name = "ska-ser-logging"
 version = "0.4.3"
 description = "Square Kilometre Array logging configuration library"
@@ -3196,4 +3218,4 @@ reference = "PyPI-public"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "fb45978edf11d2da98309e0601f8dd088e8b16743a1016e1a02cadf16ed926e7"
+content-hash = "77722bd0e59b4aa021fa6601f4ab3b693055b5383f5fd1963ab375f8835b621f"
