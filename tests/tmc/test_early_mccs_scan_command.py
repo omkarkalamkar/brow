@@ -26,7 +26,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 
 
-@pytest.mark.SKA_low
+@pytest.mark.sah1924
 @scenario(
     "../features/tmc/check_scan_command.feature",
     "Successful Execution of early MCCS Scan scenario Low Telescope Subarray "

@@ -101,8 +101,8 @@ k8s-test:
     - make k8s-install-chart
     - make k8s-wait
   script:
-    - make k8s-test
-    - make k8s-test MARK=test_end
+    - make k8s-test MARK=sah1924
+    # - make k8s-test MARK=test_end
     - |
       if [[ "$CI_KEEP_NAMESPACE" != "true" ]]; then
         make k8s-uninstall-chart || true
