@@ -101,8 +101,8 @@ k8s-test:
     - make k8s-install-chart
     - make k8s-wait
   script:
-    - make k8s-test MARK=SKA_low_single_scan
-   
+    - make k8s-test MARK=SKA_tmc_low_multiple_subarrays1
+    
     - |
       if [[ "$CI_KEEP_NAMESPACE" != "true" ]]; then
         make k8s-uninstall-chart || true
@@ -166,7 +166,7 @@ k8s-tmc-scaling:
     TARANTA_ENABLED: "true"
   script:
     - make taranta-link
-    - make k8s-test MARK=SKA_low_single_scan
+    - make k8s-test MARK=SKA_tmc_low_multiple_subarrays
 
   environment:
     name: ska-tmc-staging-env
