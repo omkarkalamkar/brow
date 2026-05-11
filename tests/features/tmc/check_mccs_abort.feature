@@ -21,3 +21,4 @@ Scenario: Verify Abort propagates timeout when MccsController AbortSubarray is s
     And the MccsController AbortSubarray is set to timeout
     When I invoke abort on subarray node
     Then the Subarray node transitions to observation state ObsState.FAULT
+    

@@ -17,7 +17,6 @@ from tango import DevState
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.constant import (
     FAILED_DEFECT,
-    RESET_DEFECT,
     TIMEOUT,
     TIMEOUT_DEFECT,
 )
@@ -232,8 +231,6 @@ def mccs_controller_set_defective(simulator_factory: SimulatorFactory):
         SimulatorDeviceType.MCCS_MASTER_DEVICE
     )
     mccs_controller_sim.SetDefective(FAILED_DEFECT)
-    yield
-    mccs_controller_sim.SetDefective(RESET_DEFECT)
 
 
 @given("the MccsController AbortSubarray is set to timeout")
@@ -243,8 +240,6 @@ def mccs_controller_abort_set_to_timeout(simulator_factory: SimulatorFactory):
         SimulatorDeviceType.MCCS_MASTER_DEVICE
     )
     mccs_controller_sim.SetDefective(TIMEOUT_DEFECT)
-    yield
-    mccs_controller_sim.SetDefective(RESET_DEFECT)
 
 
 @when("I invoke abort on subarray node")
