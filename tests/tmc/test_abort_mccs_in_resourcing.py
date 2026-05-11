@@ -247,7 +247,7 @@ def mccs_controller_abort_set_to_timeout(simulator_factory: SimulatorFactory):
 def mccs_subarray_node_invoke_abort(subarray_node_low: SubarrayNodeWrapperLow):
     """Invokes Abort on SubarrayNode."""
     pytest.abort_start_time = time.monotonic()
-    subarray_node_low.subarray_node.Abort()  
+    subarray_node_low.subarray_node.Abort()
 
 
 @then("the MccsController AbortSubarray is invoked promptly")
@@ -260,7 +260,7 @@ def mccs_controller_abort_subarray_invoked_promptly(
         "FAILED ASSUMPTION AFTER ABORT COMMAND: "
         "MCCS Master Leaf Node device "
         f"({central_node_low.mccs_master_leaf_node.dev_name()}) "
-        'is expected have longRunningCommandResult '
+        "is expected have longRunningCommandResult "
         '[0, "Command Completed"]'
     ).within_timeout(ABORT_COMPLETION_TIMEOUT).has_change_event_occurred(
         central_node_low.mccs_master_leaf_node,
