@@ -246,7 +246,7 @@ def mccs_controller_abort_set_to_timeout(simulator_factory: SimulatorFactory):
 def mccs_subarray_node_invoke_abort(subarray_node_low: SubarrayNodeWrapperLow):
     """Invokes Abort on SubarrayNode."""
     pytest.abort_start_time = time.monotonic()
-    subarray_node_low.abort_subarray()
+    subarray_node_low.subarray_node.Abort()
 
 
 @then("the MccsController AbortSubarray is invoked promptly")
