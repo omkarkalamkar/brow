@@ -245,7 +245,7 @@ def error_reporting(
         )
     elif defective_subsystem == "MCCS":
         mccs.mccs_controller.SetDefective(json.dumps({"enabled": False}))
-        mccs.mccs_controller.Abort()
+        mccs.mccs_subarray.Abort()
         assert_that(event_tracer).within_timeout(
             TIMEOUT
         ).has_change_event_occurred(
