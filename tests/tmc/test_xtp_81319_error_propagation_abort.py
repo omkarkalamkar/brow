@@ -59,6 +59,8 @@ exception_messages = {
         '[3, "Exception occurred on the following devices: '
         "low-tmc/subarray-leaf-node-mccs/01: "
         "Exception occurred on devices: "
+        "low-tmc/leaf-node-mccs/0: "
+        "Exception occurred on devices: "
         "low-mccs/control/control: "
         'Exception occurred, command failed."]'
     ),
