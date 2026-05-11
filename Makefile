@@ -10,6 +10,7 @@ KUBE_NAMESPACE ?= ska-tmc-low-integration
 KUBE_NAMESPACE_SDP ?= ska-tmc-integration-sdp
 K8S_TIMEOUT ?= 600s
 PYTHON_LINT_TARGET ?= tests/
+k8s_test_src_dir = pyproject.toml $(PYTHON_SRC)/
 
 DEPLOYMENT_TYPE = $(shell echo $(TELESCOPE) | cut -d '-' -f2)
 MARK ?= $(shell echo $(TELESCOPE) | sed "s/-/_/g") ## What -m opt to pass to pytest
@@ -125,5 +126,12 @@ cred:
 	make k8s-namespace
 	curl -s https://gitlab.com/ska-telescope/templates-repository/-/raw/master/scripts/namespace_auth.sh | bash -s $(SERVICE_ACCOUNT) $(KUBE_NAMESPACE) || true
 test-requirements:
-	@poetry export --without-hashes --with dev --format requirements.txt --output tests/requirements.txt
+	@if poetry export --help >/dev/null 2>&1; then \
+		poetry export --without-hashes --with dev --format requirements.txt --output tests/requirements.txt; \
+	elif [ -f tests/requirements.txt ]; then \
+		echo "poetry export unavailable; using committed tests/requirements.txt"; \
+	else \
+		echo "poetry export unavailable and tests/requirements.txt is missing"; \
+		exit 1; \
+	fi
 k8s-pre-test: test-requirements
