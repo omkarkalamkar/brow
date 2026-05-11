@@ -16,7 +16,7 @@ from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.constant import (
-    ERROR_PROPAGATION_DEFECT,
+    FAILED_DEFECT,
     RESET_DEFECT,
     TIMEOUT,
     TIMEOUT_DEFECT,
@@ -38,8 +38,8 @@ ABORT_COMPLETION_TIMEOUT = 30
 @scenario(
     "../features/tmc/check_mccs_abort.feature",
     (
-        "Verify Abort in Resourcing completes without 60-second delay via"
-        " MccsController"
+        "Verify Abort in Resourcing completes without 60-second delay "
+        "via MccsController"
     ),
 )
 def test_verify_abort_mccs_via_controller():
@@ -50,8 +50,8 @@ def test_verify_abort_mccs_via_controller():
 @scenario(
     "../features/tmc/check_mccs_abort.feature",
     (
-        "Verify Abort propagates error when MccsController AbortSubarray is"
-        " defective"
+        "Verify Abort propagates error when MccsController "
+        "AbortSubarray is defective"
     ),
 )
 def test_verify_abort_mccs_controller_defective():
@@ -62,8 +62,8 @@ def test_verify_abort_mccs_controller_defective():
 @scenario(
     "../features/tmc/check_mccs_abort.feature",
     (
-        "Verify Abort propagates timeout when MccsController AbortSubarray is"
-        " stuck"
+        "Verify Abort propagates timeout when MccsController "
+        "AbortSubarray is stuck"
     ),
 )
 def test_verify_abort_mccs_controller_timeout():
@@ -75,7 +75,7 @@ def given_a_tmc(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
-    """Given a TMC."""
+    """Brings telescope to ON state and subscribes to events."""
     event_tracer.clear_events()
     event_tracer.subscribe_event(
         central_node_low.central_node, "telescopeState"
@@ -102,6 +102,7 @@ def given_a_tmc(
     event_tracer.subscribe_event(
         central_node_low.sdp_subarray_leaf_node, "sdpSubarrayObsState"
     )
+
     log_events(
         {
             central_node_low.central_node: [
@@ -125,7 +126,9 @@ def given_a_tmc(
             ],
         }
     )
+
     central_node_low.move_to_on()
+
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
         "'the telescope is in ON state' "
@@ -135,6 +138,7 @@ def given_a_tmc(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.central_node, "telescopeState", DevState.ON
     )
+
     assert_that(event_tracer).described_as(
         "FAILED UNEXPECTED INITIAL OBSSTATE: "
         "Subarray Node device "
@@ -150,7 +154,7 @@ def central_node_assign_resources(
     central_node_low: CentralNodeWrapperLow,
     command_input_factory: JsonFactory,
 ):
-    """Given central node assigns resources."""
+    """Invokes AssignResources on Central Node."""
     assign_input_json = prepare_json_args_for_centralnode_commands(
         "assign_resources_low", command_input_factory
     )
@@ -169,12 +173,13 @@ def subarray_node_obs_state_resourcing(
     event_tracer: TangoEventTracer,
     simulator_factory: SimulatorFactory,
 ):
-    """Given MCCS subarray in RESOURCING state."""
+    """Forces MCCS subarray into RESOURCING with delayed AssignResources."""
     mccs_sim = simulator_factory.get_or_create_simulator_device(
         SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
     )
     event_tracer.subscribe_event(mccs_sim, "obsState")
     mccs_sim.SetDelayInfo(json.dumps({"AssignResources": 50}))
+
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
         "'the subarray must be in the RESOURCING obsState' "
@@ -186,6 +191,7 @@ def subarray_node_obs_state_resourcing(
         "cspSubarrayObsState",
         ObsState.RESOURCING,
     )
+
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "GIVEN" STEP: '
         "'the subarray must be in the RESOURCING obsState' "
@@ -197,6 +203,7 @@ def subarray_node_obs_state_resourcing(
         "sdpSubarrayObsState",
         ObsState.RESOURCING,
     )
+
     assert_that(event_tracer).described_as(
         "FAILED UNEXPECTED OBSSTATE: "
         "Subarray Node device "
@@ -205,6 +212,7 @@ def subarray_node_obs_state_resourcing(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node, "obsState", ObsState.RESOURCING
     )
+
     assert_that(event_tracer).described_as(
         "FAILED UNEXPECTED OBSSTATE: "
         "mccs subarray device "
@@ -213,23 +221,24 @@ def subarray_node_obs_state_resourcing(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         mccs_sim, "obsState", ObsState.RESOURCING
     )
+
     mccs_sim.ResetDelayInfo()
 
 
 @given("the MccsController is set as defective")
 def mccs_controller_set_defective(simulator_factory: SimulatorFactory):
-    """Given MccsController is defective."""
+    """Sets MccsController simulator as defective."""
     mccs_controller_sim = simulator_factory.get_or_create_simulator_device(
         SimulatorDeviceType.MCCS_MASTER_DEVICE
     )
-    mccs_controller_sim.SetDefective(ERROR_PROPAGATION_DEFECT)
+    mccs_controller_sim.SetDefective(FAILED_DEFECT)
     yield
     mccs_controller_sim.SetDefective(RESET_DEFECT)
 
 
 @given("the MccsController AbortSubarray is set to timeout")
 def mccs_controller_abort_set_to_timeout(simulator_factory: SimulatorFactory):
-    """Given MccsController AbortSubarray times out."""
+    """Sets timeout defect on MccsController.AbortSubarray."""
     mccs_controller_sim = simulator_factory.get_or_create_simulator_device(
         SimulatorDeviceType.MCCS_MASTER_DEVICE
     )
@@ -240,7 +249,7 @@ def mccs_controller_abort_set_to_timeout(simulator_factory: SimulatorFactory):
 
 @when("I invoke abort on subarray node")
 def mccs_subarray_node_invoke_abort(subarray_node_low: SubarrayNodeWrapperLow):
-    """When abort is invoked on subarray node."""
+    """Invokes Abort on SubarrayNode."""
     pytest.abort_start_time = time.monotonic()
     subarray_node_low.abort_subarray()
 
@@ -250,7 +259,7 @@ def mccs_controller_abort_subarray_invoked_promptly(
     central_node_low: CentralNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
-    """Then MccsController AbortSubarray is invoked promptly."""
+    """Verifies MccsController.AbortSubarray completes promptly."""
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ABORT COMMAND: "
         "MCCS Master Leaf Node device "
@@ -265,6 +274,7 @@ def mccs_controller_abort_subarray_invoked_promptly(
             json.dumps([ResultCode.OK, "Command Completed"]),
         ),
     )
+
     elapsed = time.monotonic() - pytest.abort_start_time
     assert elapsed < ABORT_COMPLETION_TIMEOUT, (
         f"Abort completed in {elapsed:.1f}s which exceeds "
@@ -277,7 +287,7 @@ def subarray_node_transitions_to_aborted(
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
-    """Then subarray transitions to ABORTED."""
+    """Verifies SubarrayNode transitions to ObsState.ABORTED."""
     assert_that(event_tracer).described_as(
         '"the Subarray transitions to ABORTED" '
         "Subarray Node device "
@@ -294,7 +304,7 @@ def subarray_node_transitions_to_fault(
     event_tracer: TangoEventTracer,
     simulator_factory: SimulatorFactory,
 ):
-    """Then subarray transitions to FAULT."""
+    """Verifies SubarrayNode transitions to FAULT and cleans MCCS subarray."""
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         "'the tmc subarray must be in the ABORTING obsState' "
@@ -304,6 +314,7 @@ def subarray_node_transitions_to_fault(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         subarray_node_low.subarray_node, "obsState", ObsState.ABORTING
     )
+
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         "'the tmc subarray must be in the FAULT obsState' "
@@ -313,11 +324,13 @@ def subarray_node_transitions_to_fault(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         subarray_node_low.subarray_node, "obsState", ObsState.FAULT
     )
+
     mccs_sub_sim = simulator_factory.get_or_create_simulator_device(
         SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
     )
     event_tracer.subscribe_event(mccs_sub_sim, "obsState")
     mccs_sub_sim.Abort()
+
     assert_that(event_tracer).described_as(
         "FAILED ASSUMPTION AFTER ABORT COMMAND: "
         "mccs subarray device "
