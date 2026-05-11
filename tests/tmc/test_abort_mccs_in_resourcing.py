@@ -17,6 +17,7 @@ from tango import DevState
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.constant import (
     FAILED_DEFECT,
+    RESET_DEFECT,
     TIMEOUT,
     TIMEOUT_DEFECT,
 )
@@ -246,7 +247,7 @@ def mccs_controller_abort_set_to_timeout(simulator_factory: SimulatorFactory):
 def mccs_subarray_node_invoke_abort(subarray_node_low: SubarrayNodeWrapperLow):
     """Invokes Abort on SubarrayNode."""
     pytest.abort_start_time = time.monotonic()
-    subarray_node_low.subarray_node.Abort()
+    subarray_node_low.abort_subarray()
 
 
 @then("the MccsController AbortSubarray is invoked promptly")
@@ -319,6 +320,11 @@ def subarray_node_transitions_to_fault(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         subarray_node_low.subarray_node, "obsState", ObsState.FAULT
     )
+
+    mccs_controller_sim = simulator_factory.get_or_create_simulator_device(
+        SimulatorDeviceType.MCCS_MASTER_DEVICE
+    )
+    mccs_controller_sim.SetDefective(RESET_DEFECT)
 
     mccs_sub_sim = simulator_factory.get_or_create_simulator_device(
         SimulatorDeviceType.MCCS_SUBARRAY_DEVICE
