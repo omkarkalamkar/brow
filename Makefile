@@ -127,12 +127,5 @@ cred:
 	make k8s-namespace
 	curl -s https://gitlab.com/ska-telescope/templates-repository/-/raw/master/scripts/namespace_auth.sh | bash -s $(SERVICE_ACCOUNT) $(KUBE_NAMESPACE) || true
 test-requirements:
-	@if poetry export --help >/dev/null 2>&1; then \
-		poetry export --without-hashes --with dev --format requirements.txt --output tests/requirements.txt; \
-	elif [ -f tests/requirements.txt ]; then \
-		echo "poetry export unavailable; using committed tests/requirements.txt"; \
-	else \
-		echo "poetry export unavailable and tests/requirements.txt is missing"; \
-		exit 1; \
-	fi
+	@poetry export --without-hashes --with dev --format requirements.txt --output tests/requirements.txt
 k8s-pre-test: test-requirements
