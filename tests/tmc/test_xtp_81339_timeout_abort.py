@@ -232,7 +232,7 @@ def error_reporting(
         )
         sdp.sdp_subarray.ResetDelayInfo()
     elif defective_subsystem == "MCCS":
-        mccs.mccs_subarray.SetDefective(json.dumps({"enabled": False}))
+        mccs.mccs_controller.SetDefective(json.dumps({"enabled": False}))
         mccs.mccs_subarray.Abort()
         assert_that(event_tracer).within_timeout(
             TIMEOUT
