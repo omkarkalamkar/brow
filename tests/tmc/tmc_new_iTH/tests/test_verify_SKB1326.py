@@ -124,7 +124,6 @@ def _setup_event_subscriptions(
     )
 
 
-@pytest.mark.new
 @scenario(
     "../tmc/tmc_new_iTH/features/xtp_109108.feature",
     "Verify SKB-1326",
