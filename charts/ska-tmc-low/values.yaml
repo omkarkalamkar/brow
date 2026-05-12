@@ -268,7 +268,7 @@ ska-tango-transducer:
         - name: "qualitymonitor01"
           deviceName: "low-tmc/subarray-quality-monitor/01"
           readPeriod: "1000"
-          subscribedAttributes: ["qualityMetricsCspSubarray|low-csp/subarray/01/qualityAssuranceMetrics|json"]
+          subscribedAttributes: ["qualityMetricsCspSubarray|low-csp/subarray/01/qualityAssuranceMetrics|json", "qualityMetricsMccsSubarray|low-mccs/subarray/01/qualityAssuranceMetrics|json"]
           readAttributes: []
           aggregatedClassAttributes: []
           derivedAttributes: ["readyToScan|Boolean|qualityMetricsCspSubarray['low-cbf/subarray/01']['processorsReadyPercent'] == 100.0"]
