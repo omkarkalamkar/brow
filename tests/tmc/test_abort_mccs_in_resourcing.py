@@ -289,8 +289,14 @@ def subarray_node_transitions_to_aborted(
         "Subarray Node device "
         f"({central_node_low.subarray_node.dev_name()}) "
         "is expected to be in ABORTED obstate"
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
+    ).within_timeout(ABORT_COMPLETION_TIMEOUT).has_change_event_occurred(
         central_node_low.subarray_node, "obsState", ObsState.ABORTED
+    )
+
+    elapsed = time.monotonic() - pytest.abort_start_time
+    assert elapsed < ABORT_COMPLETION_TIMEOUT, (
+        f"Abort completed in {elapsed:.1f}s which exceeds "
+        f"{ABORT_COMPLETION_TIMEOUT}s threshold"
     )
 
 
