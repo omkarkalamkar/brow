@@ -120,7 +120,7 @@ def execute_command_abort(
     elif defective_subsystem == "SDP":
         sdp.sdp_subarray.SetDelayInfo(json.dumps({"Abort": 60}))
     elif defective_subsystem == "MCCS":
-        mccs.mccs_subarray.SetDefective(TIMEOUT_DEFECT)
+        mccs.mccs_controller.SetDefective(TIMEOUT_DEFECT)
     context_data.when_action_name = "Abort"
     _, pytest.unique_id = tmc.subarray_node.Abort()
 
