@@ -7,9 +7,9 @@ Observation Execution APIs
 The observation execution can be done by following a sequence of APIs as follows:
 
 * :ref:`Resource allocation <centralnode:assign_resources>`
-* :py:mod:`Configure a scan <ska_tmc_subarraynode.commands.low.configure_command>`
-* :py:mod:`Perform scan <ska_tmc_subarraynode.commands.low.scan_command>`
-* :py:mod:`End a scan <ska_tmc_subarraynode.commands.low.end_scan_command>`
+* :ref:`Configure a scan <subarraynode:configure_low>`
+* :ref:`Perform scan <subarraynode:scan_low>`
+* :ref:`End a scan <subarraynode:end_scan_low>`
 * :ref:`Resource de-allocation <centralnode:release_resources>`
 
 Before performing any observation related operation it is necessary that the telescope is in ON state.
