@@ -34,7 +34,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 ABORT_COMPLETION_TIMEOUT = 30
 
 
-@pytest.mark.test1
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_mccs_abort.feature",
     (
@@ -46,7 +46,7 @@ def test_verify_abort_mccs_via_controller():
     """BDD scenario for MCCS 6.4.0+ AbortSubarray flow in RESOURCING."""
 
 
-@pytest.mark.test1
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_mccs_abort.feature",
     (
@@ -58,7 +58,7 @@ def test_verify_abort_mccs_controller_defective():
     """BDD scenario for error propagation from defective MccsController."""
 
 
-@pytest.mark.test1
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_mccs_abort.feature",
     (

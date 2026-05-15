@@ -1,4 +1,4 @@
-Feature:
+Feature: MCCS Abort Flow via MccsController (MCCS v6.4.0+)
     Scenario: Verify Abort in Resourcing completes without 60-second delay via MccsController
         Given a TMC
         And central node is busy assigning resources
