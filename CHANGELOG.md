@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 [2.16.0-rc.1]
-************
+*************
 Fixed
 -----
 * Fixed the Bug SKB-1326: Subarray goes into FAULT from EMPTY
