@@ -199,3 +199,14 @@ epub_exclude_files = ["search.html"]
 
 
 # -- Extension configuration -------------------------------------------------
+
+intersphinx_mapping = {
+    "centralnode": (
+        "https://developer.skao.int/projects/ska-tmc-centralnode/en/latest/",
+        None,
+    ),
+    "subarraynode": (
+        "https://developer.skao.int/projects/ska-tmc-subarraynode/en/latest/",
+        None,
+    ),
+}

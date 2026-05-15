@@ -117,7 +117,7 @@ def error_reporting(
     failure message in the longRunningCommandResult event."""
     exception_message = [
         f" {mccs_master_leaf_node}: ",
-        "Exception occurred on device:",
+        "Exception occurred, command failed.",
     ]
 
     assert_that(event_tracers).described_as(
