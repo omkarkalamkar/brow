@@ -5,8 +5,17 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[Unreleased]
+*************
+Updated
+-------
+* Utilized simulators chart 1.13.0 with QualityMetrics introduced on MCCS Subarray simulator
+* Subscribed MCCS Subarray QualityMetrics on TMC Quality Monitor
+* Improved test for MCCS early Scan scenario test
+
+
 [2.15.1-rc.1]
-************
+*************
 Fixed
 -----
 * Fixed issue with scalability job where test were failing due to admin mode not being updated in ON command for subsystem subarray devices with subarray_id >=3
