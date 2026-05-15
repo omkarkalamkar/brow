@@ -6,11 +6,11 @@ Observation Execution APIs
 
 The observation execution can be done by following a sequence of APIs as follows:
 
-* `Resource allocation <https://developer.skao.int/projects/ska-tmc-centralnode/en/latest/developer_guide/api/ska_tmc_centralnode.commands.html#module-ska_tmc_centralnode.commands.assign_resources_command>`_
-* `Configure a scan <https://developer.skao.int/projects/ska-tmc-subarraynode/en/latest/developer_guide/api/ska_tmc_subarraynode.commands.low.html#configure-command>`_
-* `Perform scan <https://developer.skao.int/projects/ska-tmc-subarraynode/en/latest/developer_guide/api/ska_tmc_subarraynode.commands.low.html#scan-command>`_
-* `End a scan <https://developer.skao.int/projects/ska-tmc-subarraynode/en/latest/developer_guide/api/ska_tmc_subarraynode.commands.low.html#end-scan-command>`_
-* `Resource de-allocation <https://developer.skao.int/projects/ska-tmc-centralnode/en/latest/developer_guide/api/ska_tmc_centralnode.commands.html#module-ska_tmc_centralnode.commands.release_resources_command>`_
+* :ref:`Resource allocation <centralnode:assign_resources>`
+* :ref:`Configure a scan <subarraynode:configure_low>`
+* :ref:`Perform scan <subarraynode:scan_low>`
+* :ref:`End a scan <subarraynode:end_scan_low>`
+* :ref:`Resource de-allocation <centralnode:release_resources>`
 
 Before performing any observation related operation it is necessary that the telescope is in ON state.
 
