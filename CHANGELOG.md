@@ -5,8 +5,20 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
-[Unreleased]
+[2.16.0-rc.1]
 *************
+Fixed
+-----
+* Fixed the Bug SKB-1326: Subarray goes into FAULT from EMPTY
+
+Added
+-----
+* Added support for command queueing in TMC.
+  - SDP Leaf Node: v0.30.1
+  - CSP Leaf Node: v0.45.4
+  - MCCS Leaf Node: v0.17.3
+  - Subarray Node: v1.10.0
+
 Updated
 -------
 * Utilized simulators chart 1.13.0 with QualityMetrics introduced on MCCS Subarray simulator
@@ -18,7 +30,7 @@ Updated
 *************
 Fixed
 -----
-* Fixed issue with scalability job where test were failing due to admin mode not being updated in ON command for subsystem subarray devices with subarray_id >=3
+* Fixed issue with scalability job where test were failing due to admin mode not being updated in ON command for subsystem subarray devices with subarray_id >=3.
 * Set the default value of the properties DefaultArrayLayoutSourceURIs and DefaultArrayLayoutPath to empty strings to resolve SKB-1282
 * Introduced a read-only boolean attribute arrayLayoutFileProvided on CentralNode. An alarm event can be generated when the default layout file url is not defined.
 
