@@ -156,14 +156,23 @@ def verify_configure_failed_on_subarray_leaf_node(
         # if pytest.is_successive_configure:
         if failed_device == "CSP":
             error_message = (
-                '[3, "Exception occurred on device: low-csp/subarray/01"]'
+                '[3, "Exception occurred on devices: '
+                "low-csp/subarray/01: "
+                "Exception occurred on device: "
+                'low-csp/subarray/01"]'
             )
         elif failed_device == "MCCS":
             error_message = (
-                '[3, "Exception occurred on device: low-mccs/subarray/01"]'
+                '[3, "Exception occurred on devices: '
+                "low-mccs/subarray/01: Exception occurred on device: "
+                'low-mccs/subarray/01"]'
             )
         elif failed_device == "SDP":
-            error_message = '[3, "Device defective."]'
+            error_message = (
+                '[3, "Exception occurred on devices: '
+                "low-sdp/subarray/01: "
+                'Device defective."]'
+            )
         # else:
         #     error_message = '[3, "Device defective."]'
         assert_that(event_tracer).described_as(
@@ -314,14 +323,19 @@ def verify_tmc_subarray_lrcr_failed(
     if pytest.is_successive_configure:
         failed_message = (
             "Exception occurred on the following devices: "
-            "low-tmc/subarray-leaf-node-csp/01: Exception occurred "
-            "on device: low-csp/subarray/01 and Recovery Successful, "
-            "Subarray transitioned back to READY with previous configuration."
+            "low-tmc/subarray-leaf-node-csp/01: "
+            "Exception occurred on devices: low-csp/subarray/01: "
+            "Exception occurred on device: low-csp/subarray/01 "
+            "and Recovery Successful, "
+            "Subarray transitioned back to READY "
+            "with previous configuration."
         )
     else:
         failed_message = (
             "Exception occurred on the following devices: "
-            "low-tmc/subarray-leaf-node-sdp/01: Device defective. "
+            "low-tmc/subarray-leaf-node-sdp/01: "
+            "Exception occurred on devices: "
+            "low-sdp/subarray/01: Device defective. "
             "and Recovery Successful, "
             "Subarray transitioned back to IDLE"
         )

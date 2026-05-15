@@ -45,18 +45,24 @@ def test_tmc_command_error_propagation():
 exception_messages = {
     "CSP": (
         '[3, "Exception occurred on the following devices: '
-        "low-tmc/subarray-leaf-node-csp/01: Exception occurred, "
-        'command failed."]'
+        "low-tmc/subarray-leaf-node-csp/01: "
+        "Exception occurred on devices: low-csp/subarray/01: "
+        'Exception occurred, command failed."]'
     ),
     "SDP": (
         '[3, "Exception occurred on the following devices: '
-        "low-tmc/subarray-leaf-node-sdp/01: Exception occurred, "
-        'command failed"]'
+        "low-tmc/subarray-leaf-node-sdp/01: "
+        "Exception occurred on devices: "
+        'low-sdp/subarray/01: Exception occurred, command failed"]'
     ),
     "MCCS": (
         '[3, "Exception occurred on the following devices: '
-        "low-tmc/subarray-leaf-node-mccs/01: Exception occurred, "
-        'command failed."]'
+        "low-tmc/subarray-leaf-node-mccs/01: "
+        "Exception occurred on devices: "
+        "low-tmc/leaf-node-mccs/0: "
+        "Exception occurred on devices: "
+        "low-mccs/control/control: "
+        'Exception occurred, command failed."]'
     ),
 }
 
@@ -127,7 +133,7 @@ def execute_command_abort(
     elif defective_subsystem == "SDP":
         sdp.sdp_subarray.SetDefective(FAILED_RESULT_DEFECT)
     elif defective_subsystem == "MCCS":
-        mccs.mccs_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
+        mccs.mccs_controller.SetDefective(ERROR_PROPAGATION_DEFECT)
     context_data.when_action_name = "Abort"
     _, pytest.unique_id = tmc.subarray_node.Abort()
 
@@ -238,7 +244,7 @@ def error_reporting(
             tmc.sdp_subarray_leaf_node, "sdpSubarrayObsState", ObsState.ABORTED
         )
     elif defective_subsystem == "MCCS":
-        mccs.mccs_subarray.SetDefective(json.dumps({"enabled": False}))
+        mccs.mccs_controller.SetDefective(json.dumps({"enabled": False}))
         mccs.mccs_subarray.Abort()
         assert_that(event_tracer).within_timeout(
             TIMEOUT

@@ -12,8 +12,6 @@ from tests.resources.test_harness.constant import (
     COMMAND_NOT_ALLOWED_DEFECT,
     TIMEOUT,
     low_sdp_subarray_leaf_node,
-    mccs_controller,
-    mccs_master_leaf_node,
 )
 from tests.resources.test_harness.helpers import (
     wait_and_validate_device_attribute_value,
@@ -81,8 +79,8 @@ class TestAssignCommandNotAllowedPropagation:
         )
 
         exception_message = (
-            "The invocation of the AssignResources command failed on Csp "
-            + "Subarray Device low-csp/subarray/01"
+            "Exception occurred on the following devices: "
+            "low-tmc/subarray-leaf-node-csp/01"
         )
         log_events(
             {central_node_low.central_node: ["longRunningCommandResult"]}
@@ -257,8 +255,8 @@ class TestAssignCommandNotAllowedPropagation:
         )
         # Constructing the error message
         exception_message = (
-            f"{mccs_master_leaf_node}: The invocation of the Allocate command"
-            + f" is failed on MCCS Controller device {mccs_controller}"
+            "Exception occurred on the following devices: "
+            "low-tmc/leaf-node-mccs/0"
         )
 
         assert_that(event_tracer).described_as(
