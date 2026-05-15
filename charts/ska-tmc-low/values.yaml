@@ -92,30 +92,30 @@ sdpleafnodes:
 
 cspmasterleafnode:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-cspleafnodes
+    registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.45.4-dev.cbe230b6c
+    tag: 0.45.4
     pullPolicy: IfNotPresent
 
 cspsubarrayleafnode:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-cspleafnodes
+    registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.45.4-dev.cbe230b6c
+    tag: 0.45.4
     pullPolicy: IfNotPresent
 
 mccsmasterleafnode:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
+    registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.17.2-dev.cb7ead6e4
+    tag: 0.17.3
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-mccsleafnodes
+    registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.17.2-dev.cb7ead6e4
+    tag: 0.17.3
     pullPolicy: IfNotPresent
 
 resource_monitor:
@@ -127,10 +127,10 @@ resource_monitor:
 
 resources:
   limits:
-    memory: 700Mi
-  requests:
-    cpu: 500m
     memory: 500Mi
+  requests:
+    cpu: 200m
+    memory: 200Mi
 
 deviceServers:
   centralnode:
