@@ -120,4 +120,4 @@ ska-tmc-simulators:
   ska_tmc_simulators:
     image:
       registry: artefact.skao.int
-      tag: 1.11.0
+      tag: 1.12.0

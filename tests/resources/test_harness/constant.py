@@ -104,7 +104,7 @@ COMMAND_FAILED_WITH_EXCEPTION_OBSSTATE_EMPTY = {
     "enabled": True,
     "fault_type": FaultType.FAILED_RESULT,
     "error_message": "Default exception.",
-    "result": ResultCode.FAILED,
+    "result": ResultCode.QUEUED,
     "target_obsstates": [ObsState.RESOURCING, ObsState.EMPTY],
 }
 
