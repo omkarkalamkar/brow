@@ -8,7 +8,7 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 [Unreleased]
 *************
 Updated
------
+-------
 - Adapted Abort command flow for MCCS 6.4.0+ AbortSubarray workflow.
 - Utilized ska-tmc-mccsleafnodes 0.17.3 and ska-tmc-simulators 1.13.0.
 
