@@ -5,6 +5,27 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[2.16.0-rc.1]
+*************
+Fixed
+-----
+* Fixed the Bug SKB-1326: Subarray goes into FAULT from EMPTY
+
+Added
+-----
+* Added support for command queueing in TMC.
+  - SDP Leaf Node: v0.30.1
+  - CSP Leaf Node: v0.45.4
+  - MCCS Leaf Node: v0.17.3
+  - Subarray Node: v1.10.0
+
+Updated
+-------
+* Utilized simulators chart 1.13.0 with QualityMetrics introduced on MCCS Subarray simulator
+* Subscribed MCCS Subarray QualityMetrics on TMC Quality Monitor
+* Improved test for MCCS early Scan scenario test
+
+
 [2.15.1-rc.1]
 *************
 Fixed
