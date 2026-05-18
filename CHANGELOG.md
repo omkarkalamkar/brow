@@ -24,7 +24,9 @@ Updated
 * Utilized simulators chart 1.13.0 with QualityMetrics introduced on MCCS Subarray simulator
 * Subscribed MCCS Subarray QualityMetrics on TMC Quality Monitor
 * Improved test for MCCS early Scan scenario test
-* Improved test data for scalability tests
+* Improved test data for scalability tests to check below issues -
+1.if PST details are missing in json , threads for PSS are able to start
+2.PST beam IDs other than just 1 , can be provided 
 
 
 [2.15.1-rc.1]
