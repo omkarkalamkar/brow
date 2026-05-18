@@ -837,7 +837,6 @@ def assign_using_plan_map(
         pytest.active_subarray_ids,
         ObsState.IDLE,
     )
-    # assert False
 
 
 @given(parsers.parse("I configure all the subarrays using plan map {PlanMap}"))

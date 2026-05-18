@@ -97,14 +97,13 @@ def write_json(path: Path, payload: dict) -> None:
     )
 
 
-
 def _build_assign_json(
     base_assign: dict,
     subarray_id: int,
     per_sn_plan: dict,
     plan_name: str | None = None,
 ) -> dict:
-    # ...existing code...
+
     assign_json = deepcopy(base_assign)
     assign_json["subarray_id"] = int(subarray_id)
 
@@ -154,9 +153,6 @@ def _build_assign_json(
         assign_json.setdefault("mccs", {})["subarray_beams"] = beams
 
     return assign_json
-
-
-# ...existing code...
 
 
 def set_subsystem_defects(

@@ -38,7 +38,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 logger = logging.getLogger(__name__)
 
 
-@pytest.mark.SKA_low_max
+@pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_tmc_max_subarray_XTP-105118.feature",
     "Execute Scan Lifecycle with max resources",
