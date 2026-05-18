@@ -19,6 +19,13 @@ Added
   - MCCS Leaf Node: v0.17.3
   - Subarray Node: v1.10.0
 
+Updated
+-------
+* Utilized simulators chart 1.13.0 with QualityMetrics introduced on MCCS Subarray simulator
+* Subscribed MCCS Subarray QualityMetrics on TMC Quality Monitor
+* Improved test for MCCS early Scan scenario test
+
+
 [2.15.1-rc.1]
 *************
 Fixed
