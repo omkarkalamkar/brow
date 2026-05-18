@@ -103,26 +103,6 @@ def _build_assign_json(
     per_sn_plan: dict,
     plan_name: str | None = None,
 ) -> dict:
-    """Build an AssignResources JSON payload for a given subarray and plan.
-
-    This helper is used by plan-driven multi-subarray tests.
-
-    Args:
-        base_assign: A dict loaded from the standard assign template
-            (e.g. `assign_resources_low.json`).
-        subarray_id: Subarray id the payload should target.
-        per_sn_plan: Plan fragment for this subarray.
-        plan_name: Optional plan name (for logging/debugging only).
-
-    Returns:
-        A dict ready to be json.dumps()'d.
-
-    Notes:
-        - TMC low assign schema requires the MCCS "subarray_beams" list.
-          We derive it from the first "station_beam" entry when present.
-        - Apertures are derived from the union of station ids referenced by
-          PSS/PST beams (preferred) or station_beams.
-    """
 
     assign_json = deepcopy(base_assign)
     assign_json["subarray_id"] = int(subarray_id)
@@ -139,37 +119,39 @@ def _build_assign_json(
         int(b["id"]) for b in pst_beams
     ]
 
-    # MCCS station beam allocation: use first station_beam if present
+    # Collect stations referenced by PSS/PST beams (preferred source)
+    stations_from_pss = [
+        int(st) for b in pss_beams for st in b.get("stations", [])
+    ]
+    stations_from_pst = [
+        int(st) for b in pst_beams for st in b.get("stations", [])
+    ]
+    station_ids = sorted(
+        {int(s) for s in (stations_from_pss + stations_from_pst)}
+    )
+
+    apertures = [
+        {"station_id": st_id, "aperture_id": f"AP{st_id:03}.01"}
+        for st_id in station_ids
+    ]
+
+    # MCCS station beam allocation:
+    # If plan defines multiple station_beams,
+    #  create one subarray_beams entry per beam id.
+    # Otherwise keep the existing single-beam behaviour.
     if station_beams:
-        sb = station_beams[0]
-        sb_id = int(sb.get("id", subarray_id))
+        beams = []
+        for sb in station_beams:
+            sb_id = int(sb.get("id", subarray_id))
+            beams.append(
+                {
+                    "subarray_beam_id": sb_id,
+                    "apertures": apertures,
+                    "number_of_channels": 8,
+                }
+            )
+        assign_json.setdefault("mccs", {})["subarray_beams"] = beams
 
-        stations_from_pss = [
-            int(st) for b in pss_beams for st in b.get("stations", [])
-        ]
-        stations_from_pst = [
-            int(st) for b in pst_beams for st in b.get("stations", [])
-        ]
-
-        station_ids = sorted(
-            {int(s) for s in (stations_from_pss + stations_from_pst)}
-        )
-
-        apertures = [
-            {"station_id": st_id, "aperture_id": f"AP{st_id:03}.01"}
-            for st_id in sorted(set(station_ids))
-        ]
-
-        assign_json.setdefault("mccs", {})["subarray_beams"] = [
-            {
-                "subarray_beam_id": sb_id,
-                "apertures": apertures,
-                "number_of_channels": 8,
-            }
-        ]
-
-    # Ensure SDP section exists (template should have it); keep as-is.
-    _ = plan_name  # reserved for future debug logging
     return assign_json
 
 
