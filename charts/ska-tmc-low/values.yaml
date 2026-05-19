@@ -94,14 +94,14 @@ cspmasterleafnode:
   image:
     registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-cspleafnodes
     image: ska-tmc-cspleafnodes
-    tag: 0.45.4-dev.cd5dcdc93
+    tag: 0.45.5-dev.cef6ad0a0
     pullPolicy: IfNotPresent
 
 cspsubarrayleafnode:
   image:
     registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-cspleafnodes
     image: ska-tmc-cspleafnodes
-    tag: 0.45.4-dev.cd5dcdc93
+    tag: 0.45.5-dev.cef6ad0a0
     pullPolicy: IfNotPresent
 
 mccsmasterleafnode:
