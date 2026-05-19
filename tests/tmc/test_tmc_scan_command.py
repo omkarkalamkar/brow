@@ -123,7 +123,7 @@ def given_subarray_in_ready(
     )
 
     configure_input_json = prepare_json_args_for_commands(
-        "configure_low", command_input_factory
+        "configure_low_single_beam", command_input_factory
     )
     _, unique_id = subarray_node_low.store_configuration_data(
         configure_input_json

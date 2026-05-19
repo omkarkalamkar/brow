@@ -5,6 +5,13 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[Unreleased]
+*************
+Updated
+-------
+- Adapted Abort command flow for MCCS 6.4.0+ AbortSubarray workflow.
+- Utilized ska-tmc-mccsleafnodes 0.17.3 and ska-tmc-simulators 1.13.0.
+
 [2.16.0-rc.1]
 *************
 Fixed
@@ -24,6 +31,9 @@ Updated
 * Utilized simulators chart 1.13.0 with QualityMetrics introduced on MCCS Subarray simulator
 * Subscribed MCCS Subarray QualityMetrics on TMC Quality Monitor
 * Improved test for MCCS early Scan scenario test
+* Improved test data for scalability tests to check below issues -
+1.if PST details are missing in json , threads for PSS are able to start
+2.PST beam IDs other than just 1 , can be provided 
 
 
 [2.15.1-rc.1]

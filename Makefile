@@ -10,6 +10,7 @@ KUBE_NAMESPACE ?= ska-tmc-low-integration
 KUBE_NAMESPACE_SDP ?= ska-tmc-integration-sdp
 K8S_TIMEOUT ?= 600s
 PYTHON_LINT_TARGET ?= tests/
+k8s_test_src_dir = pyproject.toml $(PYTHON_SRC)/
 
 DEPLOYMENT_TYPE = $(shell echo $(TELESCOPE) | cut -d '-' -f2)
 MARK ?= $(shell echo $(TELESCOPE) | sed "s/-/_/g") ## What -m opt to pass to pytest
