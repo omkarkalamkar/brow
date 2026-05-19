@@ -177,7 +177,7 @@ k8s-tmc-scaling:
     on_stop: stop-k8s-tmc-scaling
 
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "master"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
 
 stop-k8s-tmc-scaling:
   stage: scaling
@@ -190,6 +190,8 @@ stop-k8s-tmc-scaling:
   environment:
     name: ska-tmc-staging-env
     action: stop
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
 
 deploy-integration:
   when: manual
