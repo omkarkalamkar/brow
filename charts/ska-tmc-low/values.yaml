@@ -73,49 +73,49 @@ centralnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-centralnode
-    tag: 1.3.1
+    tag: 1.3.3
     pullPolicy: IfNotPresent
 
 subarraynode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-subarraynode
-    tag: 1.8.0
+    tag: 1.10.0
     pullPolicy: IfNotPresent
 
 sdpleafnodes:
   image:
     registry: artefact.skao.int
     image: ska-tmc-sdpleafnodes
-    tag: 0.29.0
+    tag: 0.30.1
     pullPolicy: IfNotPresent
 
 cspmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.44.1
+    tag: 0.45.5
     pullPolicy: IfNotPresent
 
 cspsubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.44.1
+    tag: 0.45.5
     pullPolicy: IfNotPresent
 
 mccsmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.16.0
+    tag: 0.17.3
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.16.0
+    tag: 0.17.3
     pullPolicy: IfNotPresent
 
 resource_monitor:
@@ -146,8 +146,8 @@ deviceServers:
     family: "central-node"
     member: "0"
     IsAutoRecoveryEnabled: "true"
-    DefaultArrayLayoutSourceURIs: "gitlab://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
-    DefaultArrayLayoutPath: "instrument/ska1_low/layout/low-layout.json"
+    DefaultArrayLayoutSourceURIs: ""
+    DefaultArrayLayoutPath: ""
     LoggingLevel: "4"
     SubarrayPrefix: "low-tmc/subarray/"
 
@@ -268,14 +268,14 @@ ska-tango-transducer:
         - name: "qualitymonitor01"
           deviceName: "low-tmc/subarray-quality-monitor/01"
           readPeriod: "1000"
-          subscribedAttributes: ["qualityMetricsCspSubarray|low-csp/subarray/01/qualityAssuranceMetrics|json"]
+          subscribedAttributes: ["qualityMetricsCspSubarray|low-csp/subarray/01/qualityAssuranceMetrics|json", "qualityMetricsMccsSubarray|low-mccs/subarray/01/qualityAssuranceMetrics|json"]
           readAttributes: []
           aggregatedClassAttributes: []
           derivedAttributes: ["readyToScan|Boolean|qualityMetricsCspSubarray['low-cbf/subarray/01']['processorsReadyPercent'] == 100.0"]
         - name: "qualitymonitor02"
           deviceName: "low-tmc/subarray-quality-monitor/02"
           readPeriod: "1000"
-          subscribedAttributes: ["qualityMetricsCspSubarray|low-csp/subarray/02/qualityAssuranceMetrics|json"]
+          subscribedAttributes: ["qualityMetricsCspSubarray|low-csp/subarray/02/qualityAssuranceMetrics|json", "qualityMetricsMccsSubarray|low-mccs/subarray/02/qualityAssuranceMetrics|json"]
           readAttributes: []
           aggregatedClassAttributes: []
           derivedAttributes: ["readyToScan|Boolean|qualityMetricsCspSubarray['low-cbf/subarray/02']['processorsReadyPercent'] == 100.0"]

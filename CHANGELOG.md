@@ -5,11 +5,49 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
-[Unreleased]
-************
+[2.16.0-rc.2]
+*************
+Updated
+-------
+* Adapted Abort command flow for MCCS 6.4.0+ AbortSubarray workflow.
+* Utilized ska-tmc-mccsleafnodes 0.17.3 and ska-tmc-simulators 1.13.0.
+
 Fixed
 -----
-* Fixed issue with scalability job where test were failing due to admin mode not being updated in ON command for subsystem subarray devices with subarray_id >=3
+* Updated CSP Subarray Leaf Node (0.45.5) to invoke GoToIdle command on CSP Subarray as part of End command
+
+[2.16.0-rc.1]
+*************
+Fixed
+-----
+* Fixed the Bug SKB-1326: Subarray goes into FAULT from EMPTY
+
+Added
+-----
+* Added support for command queueing in TMC.
+  - SDP Leaf Node: v0.30.1
+  - CSP Leaf Node: v0.45.4
+  - MCCS Leaf Node: v0.17.3
+  - Subarray Node: v1.10.0
+
+Updated
+-------
+* Utilized simulators chart 1.13.0 with QualityMetrics introduced on MCCS Subarray simulator
+* Subscribed MCCS Subarray QualityMetrics on TMC Quality Monitor
+* Improved test for MCCS early Scan scenario test
+* Improved test data for scalability tests to check below issues -
+1.if PST details are missing in json , threads for PSS are able to start
+2.PST beam IDs other than just 1 , can be provided 
+
+
+[2.15.1-rc.1]
+*************
+Fixed
+-----
+* Fixed issue with scalability job where test were failing due to admin mode not being updated in ON command for subsystem subarray devices with subarray_id >=3.
+* Set the default value of the properties DefaultArrayLayoutSourceURIs and DefaultArrayLayoutPath to empty strings to resolve SKB-1282
+* Introduced a read-only boolean attribute arrayLayoutFileProvided on CentralNode. An alarm event can be generated when the default layout file url is not defined.
+
 
 [2.15.0-rc.2]
 *************

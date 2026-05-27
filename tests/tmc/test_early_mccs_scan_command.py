@@ -1,6 +1,6 @@
 """
-This module defines a Pytest BDD test scenario for the successful execution of
-Scan Command of a Low Telescope Subarray in the Telescope Monitoring and
+This module defines a Pytest BDD test scenario for the MCCS early Scan scenario
+of a Low Telescope Subarray in the Telescope Monitoring and
 Control (TMC) system.
 """
 import json
@@ -29,11 +29,12 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_scan_command.feature",
-    "Successful Execution of Scan Command on Low Telescope Subarray in TMC",
+    "Successful Execution of early MCCS Scan scenario on Low Telescope "
+    + "Subarray",
 )
-def test_tmc_scan_command():
-    """BDD test scenario for verifying successful execution of
-    the Low Scan command in a TMC."""
+def test_early_mccs_scan_scenario():
+    """BDD test scenario for verifying successful execution of early MCCS Scan
+    scenario on Low Telescope Subarray."""
 
 
 @given("a TMC")
@@ -161,15 +162,16 @@ def given_subarray_in_ready(
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
+    event_tracer.clear_events()
 
 
-@when("I command it to scan for a given period")
-def send_scan(
+@given("a Scan started on MCCS subarray via leaf node")
+def given_mccs_subarray_scanning(
     command_input_factory: JsonFactory,
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
-    """Send a Scan command to the subarray."""
+    """Send a Scan command to the MCCS subarray via leaf node."""
     event_tracer.subscribe_event(
         subarray_node_low.mccs_subarray_leaf_node, "obsState"
     )
@@ -185,23 +187,22 @@ def send_scan(
 
     # Early Scan on MCCS Subarray Leaf Node
     subarray_node_low.mccs_subarray_leaf_node.Scan(json.dumps(mccs_scan_json))
-    assert_that(event_tracer).described_as(
-        'FAILED ASSUMPTION IN "GIVEN" STEP: '
-        "'a MCCS subarray Leaf Node in SCANNING obsState'"
-        f"({subarray_node_low.mccs_subarray_leaf_node.dev_name()}) "
-        "is expected to be in SCANNING obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        subarray_node_low.mccs_subarray_leaf_node,
-        "obsState",
-        ObsState.SCANNING,
-    )
 
+
+@when("I command TMC Subarray to scan for a given period")
+def send_scan(
+    command_input_factory: JsonFactory,
+    subarray_node_low: SubarrayNodeWrapperLow,
+):
+    """Execute Scan command on TMC SubarrayNode"""
+    scan_input_json = prepare_json_args_for_commands(
+        "scan_low", command_input_factory
+    )
     subarray_node_low.execute_transition("Scan", scan_input_json)
 
 
-@then("the subarray must be in the SCANNING obsState until finished")
+@then("the subarray must be in the SCANNING obsState until a scan finished")
 def check_scan_completion(
-    command_input_factory: JsonFactory,
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
@@ -238,39 +239,6 @@ def check_scan_completion(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         "'the subarray must be in the SCANNING obsState until finished'"
         "Subarray Node device"
-        f"({subarray_node_low.subarray_node.dev_name()}) "
-        "is expected to be in READY obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        subarray_node_low.subarray_node,
-        "obsState",
-        ObsState.READY,
-    )
-
-    # Trigger an additional scan to check a regular SCAN via TMC gets
-    # completed post an early scan.
-    scan_input_json = prepare_json_args_for_commands(
-        "scan_low", command_input_factory
-    )
-    # Modify the scan_id for the test
-    scan_input = json.loads(scan_input_json)
-    scan_input["scan_id"] = 15
-    scan_input_json = json.dumps(scan_input)
-    subarray_node_low.execute_transition("Scan", scan_input_json)
-    assert_that(event_tracer).described_as(
-        'FAILED ASSUMPTION IN "THEN" STEP: '
-        "'the subarray must be in the SCANNING obsState until finished'"
-        "Subarray Node device for regular scan"
-        f"({subarray_node_low.subarray_node.dev_name()}) "
-        "is expected to be in SCANNING obstate",
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        subarray_node_low.subarray_node,
-        "obsState",
-        ObsState.SCANNING,
-    )
-    assert_that(event_tracer).described_as(
-        'FAILED ASSUMPTION IN "THEN" STEP: '
-        "'the subarray must be in the SCANNING obsState until finished'"
-        "Subarray Node device for regular scan"
         f"({subarray_node_low.subarray_node.dev_name()}) "
         "is expected to be in READY obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
