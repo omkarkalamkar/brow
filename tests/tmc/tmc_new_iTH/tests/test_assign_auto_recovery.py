@@ -173,15 +173,25 @@ def verify_assign_failed_on_subarray_leaf_node(
     """Verifies that AssignResources failed on subarray leaf node."""
     for failed_device in failed_devices.split(","):
         if failed_device == "CSP":
-            error_message = (
-                '[3, "Exception occurred on device: low-csp/subarray/01"]'
+            csp_error_message = (
+                "Exception occurred on devices: "
+                "low-csp/subarray/01: Exception occurred "
+                "on device: low-csp/subarray/01"
             )
+            error_message = f'[3, "{csp_error_message}"]'
         elif failed_device == "MCCS":
-            error_message = (
-                '[3, "Exception occurred on device: low-mccs/subarray/01"]'
+            mccs_error_message = (
+                "Exception occurred on devices: "
+                "low-mccs/subarray/01: Exception occurred "
+                "on device: low-mccs/subarray/01"
             )
+            error_message = f'[3, "{mccs_error_message}"]'
         elif failed_device == "SDP":
-            error_message = '[3, "Device defective."]'
+            error_message = (
+                '[3, "Exception occurred on devices: '
+                "low-sdp/subarray/01: "
+                'Device defective."]'
+            )
         assert_that(event_tracer).described_as(
             "TMC Subarray Leaf Node "
             f"({tmc.subarray_node}) "
@@ -240,8 +250,10 @@ def recovery_successful(
     )
     failed_message = (
         "low-tmc/subarray/01: Exception occurred on the following devices: "
-        "low-tmc/subarray-leaf-node-sdp/01: Device defective. and Recovery "
-        "Successful, Subarray transitioned back to EMPTY"
+        "low-tmc/subarray-leaf-node-sdp/01: "
+        "Exception occurred on devices: low-sdp/subarray/01: "
+        "Device defective. and Recovery Successful, "
+        "Subarray transitioned back to EMPTY"
     )
     assert_that(event_tracer).described_as(
         "TMC Subarray Leaf Node "
@@ -385,19 +397,21 @@ def verify_tmc_subarray_lrcr_failed(
             )
         elif failed_device == "CSP":
             failed_message = (
-                "low-tmc/subarray/01: Exception occurred on the following "
-                "devices: "
-                "low-tmc/subarray-leaf-node-csp/01: Exception occurred on "
-                "device: low-csp/subarray/01 and Recovery "
-                "Successful, Subarray transitioned back to EMPTY"
+                "low-tmc/subarray/01: "
+                "Exception occurred on the following devices: "
+                "low-tmc/subarray-leaf-node-csp/01: "
+                "Exception occurred on devices: low-csp/subarray/01: "
+                "Exception occurred on device: low-csp/subarray/01 "
+                "and Recovery Successful, Subarray transitioned back to EMPTY"
             )
         elif failed_device == "MCCS":
             failed_message = (
-                "low-tmc/subarray/01: Exception occurred on the following "
-                "devices: "
-                "low-tmc/subarray-leaf-node-mccs/01: Exception occurred on "
-                "device: low-mccs/subarray/01 and Recovery "
-                "Successful, Subarray transitioned back to EMPTY"
+                "low-tmc/subarray/01: "
+                "Exception occurred on the following devices: "
+                "low-tmc/subarray-leaf-node-mccs/01: "
+                "Exception occurred on devices: low-mccs/subarray/01: "
+                "Exception occurred on device: low-mccs/subarray/01 "
+                "and Recovery Successful, Subarray transitioned back to EMPTY"
             )
     assert_that(event_tracer).described_as(
         "TMC Subarray Leaf Node "

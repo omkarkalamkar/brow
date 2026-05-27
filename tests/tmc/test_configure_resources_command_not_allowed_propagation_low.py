@@ -325,9 +325,8 @@ class TestConfigureCommandNotAllowedPropagation:
         )
 
         exception_message = (
-            "The invocation of the Configure command is"
-            " failed on MCCS Subarray device"
-            " low-mccs/subarray/01."
+            "Exception occurred on the following devices: "
+            "low-tmc/subarray-leaf-node-mccs/01"
         )
 
         log_events(

@@ -25,9 +25,12 @@ from tango import DeviceProxy
 
 from tests.resources.test_harness.constant import (
     low_csp_subarray1,
+    low_csp_subarray2,
     low_sdp_subarray1,
+    low_sdp_subarray2,
     mccs_controller,
     mccs_subarray1,
+    mccs_subarray2,
 )
 from tests.resources.test_harness.utils.my_file_json_input import (
     MyFileJSONInput,
@@ -188,15 +191,18 @@ def event_tracer() -> TangoEventTracer:
 
 @pytest.fixture
 def admin_mode() -> None:
-    csp_subarray1 = DeviceProxy(low_csp_subarray1)
-    sdp_subarray1 = DeviceProxy(low_sdp_subarray1)
-    mccs_subarray = DeviceProxy(mccs_subarray1)
+    subarray_devices = [
+        low_csp_subarray1,
+        low_sdp_subarray1,
+        mccs_subarray1,
+        low_csp_subarray2,
+        low_sdp_subarray2,
+        mccs_subarray2,
+    ]
     mccs_control = DeviceProxy(mccs_controller)
     mccs_control.adminMode = 0
     mccs_control.on()
-    if csp_subarray1.adminMode != AdminMode.ONLINE:
-        csp_subarray1.adminMode = AdminMode.ONLINE
-    if sdp_subarray1.adminMode != AdminMode.ONLINE:
-        sdp_subarray1.adminMode = AdminMode.ONLINE
-    if mccs_subarray.adminMode != AdminMode.ONLINE:
-        mccs_subarray.adminMode = AdminMode.ONLINE
+    for device in subarray_devices:
+        subarray = DeviceProxy(device)
+        if subarray.adminMode != AdminMode.ONLINE:
+            subarray.adminMode = AdminMode.ONLINE

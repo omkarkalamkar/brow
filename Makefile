@@ -10,6 +10,7 @@ KUBE_NAMESPACE ?= ska-tmc-low-integration
 KUBE_NAMESPACE_SDP ?= ska-tmc-integration-sdp
 K8S_TIMEOUT ?= 600s
 PYTHON_LINT_TARGET ?= tests/
+k8s_test_src_dir = pyproject.toml $(PYTHON_SRC)/
 
 DEPLOYMENT_TYPE = $(shell echo $(TELESCOPE) | cut -d '-' -f2)
 MARK ?= $(shell echo $(TELESCOPE) | sed "s/-/_/g") ## What -m opt to pass to pytest
@@ -60,12 +61,14 @@ TARANTA ?= false
 MINIKUBE ?= false ## Minikube or not
 FAKE_DEVICES ?= false ## Install fake devices or not
 SUBARRAY_COMMAND_TIMEOUT ?= 70
+LEAF_NODE_COMMAND_TIMEOUT ?= 50
 SKA_TANGO_OPERATOR ?= true
 ITANGO_DOCKER_IMAGE = $(CAR_OCI_REGISTRY_HOST)/ska-tango-images-tango-itango:9.3.10
 
 # Test runner - run to completion job in K8s
 # name of the pod running the k8s_tests
 K8S_TEST_RUNNER = test-runner-$(HELM_RELEASE)
+k8s_test_src_dir = pyproject.toml $(PYTHON_SRC)/
 
 CI_PROJECT_PATH_SLUG ?= ska-tmc-low-integration
 CI_ENVIRONMENT_SLUG ?= ska-tmc-low-integration
@@ -90,6 +93,9 @@ K8S_CHART_PARAMS = --set global.minikube=$(MINIKUBE) \
 	--set ska-taranta.enabled=$(TARANTA_ENABLED)\
 	--set tmc-low.global.subarray_count=$(SUBARRAY_COUNT)\
 	--set tmc-low.deviceServers.subarraynode.CommandTimeOutDefault=$(SUBARRAY_COMMAND_TIMEOUT) \
+	--set tmc-low.deviceServers.mccssubarrayleafnode.CommandTimeOutDefault=$(LEAF_NODE_COMMAND_TIMEOUT) \
+	--set tmc-low.deviceServers.cspsubarrayleafnode.CommandTimeOutDefault=$(LEAF_NODE_COMMAND_TIMEOUT) \
+	--set tmc-low.deviceServers.sdpsubarrayleafnode.CommandTimeOutDefault=$(LEAF_NODE_COMMAND_TIMEOUT) \
 	$(CUSTOM_VALUES)
 
 PYTHON_VARS_BEFORE_PYTEST ?= PYTHONPATH=.:./src \

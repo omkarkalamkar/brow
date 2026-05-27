@@ -18,6 +18,7 @@ from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.constant import (
     ERROR_PROPAGATION_DEFECT,
     TIMEOUT,
+    mccs_subarray1,
     mccs_subarray_leaf_node,
 )
 from tests.resources.test_harness.simulator_factory import SimulatorFactory
@@ -174,8 +175,14 @@ def configure_command_reports_error_propagate(
         + f" {mccs_subarray_leaf_node}:"
         + " Exception occurred, command failed."
     )
+    exception_message = (
+        "Exception occurred on the following devices: "
+        f"{mccs_subarray_leaf_node}: Exception "
+        f"occurred on devices: {mccs_subarray1}: "
+        f"Exception occurred, command failed."
+    )
     exception_message2 = (
-        "Recovery Successful, Subarray transitioned back to IDLE"
+        "and Recovery Successful, Subarray transitioned back to IDLE"
     )
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
