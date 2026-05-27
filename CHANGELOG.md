@@ -93,12 +93,22 @@ Updated
 * Updated TMC Low to support MCCS early Scan scenario. Here the Scan command is invoked on MCCS Subarray via Subarray Leaf Node. Later the normal Scan command is invoked from TMC Subarray.
 * Utilized CentralNode v1.2.0
 
+[2.14.0]
+*************
+Updated
+-------
+* Subarray node v1.4.0: Introduced new property `PreRecoveryCheckTimeDuration`,which ensures that the devices with successful command result reach final observation state and devices with failed command result reach the previous observation state. This would help in auto recovery the subarray to appropriate observation state in case of failure. If the device is stuck in transitioning observation state till time duration the subarray node won't be recovered.
+* Subarray node v1.5.0: Updated rules to consider `longRunningCommandResult` in addition to `ObsState=Aborted` for Abort Command. This change fixed SKB-1210.
+* MCCS Leaf node v0.15.2: Fixed the issue of liveliness error not getting cleared from healthinfo.
+
+Note: There is an End command timeout issue observed in CSP Subarray Leaf Node with this chart. It occurs when the delay calculation stop operation takes longer and CSP simulator obsState and LRCR events received earlier. The issue is resolved in the tmc-low chart 2.15.0-rc.1.
+
 [2.14.0-rc.1]
 *************
 Updated
 -------
 * Subarray node v1.4.0: Introduced new property `PreRecoveryCheckTimeDuration`,which ensures that the devices with successful command result reach final observation state and devices with failed command result reach the previous observation state. This would help in auto recovery the subarray to appropriate observation state in case of failure. If the device is stuck in transitioning observation state till time duration the subarray node won't be recovered.
-* Subarray node v1.5.0: Update rules to consider `longRunningCommandResult` in addition to `ObsState=Aborted` for Abort Command.
+* Subarray node v1.5.0: Updated rules to consider `longRunningCommandResult` in addition to `ObsState=Aborted` for Abort Command. This change fixed SKB-1210.
 * MCCS Leaf node v0.15.2: Fixed the issue of liveliness error not getting cleared from healthinfo.
 
 [2.13.0]
