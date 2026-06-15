@@ -11,6 +11,7 @@ from assertpy import assert_that
 from pytest_bdd import given, parsers, scenario, then, when
 from ska_control_model import ObsState
 from ska_tango_testing.integration import TangoEventTracer, log_events
+from ska_tango_testing.mock.placeholders import Anything
 from tango import DevState
 
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
@@ -70,6 +71,15 @@ def given_tmc(
         subarray_node_low.sdp_subarray_leaf_node,
         "sdpSubarrayObsState",
     )
+    event_tracer.subscribe_event(
+        subarray_node_low.mccs_subarray_leaf_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.csp_subarray_leaf_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.sdp_subarray_leaf_node, "longRunningCommandResult"
+    )
     log_events(
         {
             central_node_low.central_node: [
@@ -80,9 +90,18 @@ def given_tmc(
                 "longRunningCommandResult",
                 "obsState",
             ],
-            subarray_node_low.mccs_subarray_leaf_node: ["obsState"],
-            subarray_node_low.csp_subarray_leaf_node: ["cspSubarrayObsState"],
-            subarray_node_low.sdp_subarray_leaf_node: ["sdpSubarrayObsState"],
+            subarray_node_low.mccs_subarray_leaf_node: [
+                "obsState",
+                "longRunningCommandResult",
+            ],
+            subarray_node_low.csp_subarray_leaf_node: [
+                "cspSubarrayObsState",
+                "longRunningCommandResult",
+            ],
+            subarray_node_low.sdp_subarray_leaf_node: [
+                "sdpSubarrayObsState",
+                "longRunningCommandResult",
+            ],
         }
     )
     LOGGER.info("Subscribed to events and set up logging for TMC devices.")
@@ -248,11 +267,28 @@ def given_subarray_ended_scan(
             "obsState",
             ObsState.READY,
         )
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "GIVEN" STEP: '
+            "'a mccs subarray in READY obsState'"
+            f"({subarray_node_low.mccs_subarray_leaf_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            subarray_node_low.mccs_subarray_leaf_node,
+            "longRunningCommandResult",
+            (
+                Anything,
+                json.dumps((int(ResultCode.OK), "Command Completed")),
+            ),
+        )
 
     if "sdp" in subsystems_to_endscan:
 
         subarray_node_low.sdp_subarray_leaf_node.EndScan()
-
+        LOGGER.info(
+            "Invoked EndScan on SDP Subarray Leaf Node: %s",
+            subarray_node_low.sdp_subarray_leaf_node.dev_name(),
+        )
         assert_that(event_tracer).described_as(
             'FAILED ASSUMPTION IN "GIVEN" STEP: '
             "'a sdp subarray in READY obsState'"
@@ -263,14 +299,28 @@ def given_subarray_ended_scan(
             "obsState",
             ObsState.READY,
         )
-        LOGGER.info(
-            "Invoked EndScan on SDP Subarray Leaf Node: %s",
-            subarray_node_low.sdp_subarray_leaf_node.dev_name(),
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "GIVEN" STEP: '
+            "'a sdp subarray in READY obsState'"
+            f"({subarray_node_low.sdp_subarray_leaf_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            subarray_node_low.sdp_subarray_leaf_node,
+            "longRunningCommandResult",
+            (
+                Anything,
+                json.dumps((int(ResultCode.OK), "Command Completed")),
+            ),
         )
 
     if "csp" in subsystems_to_endscan:
 
         subarray_node_low.csp_subarray_leaf_node.EndScan()
+        LOGGER.info(
+            "Invoked EndScan on CSP Subarray Leaf Node: %s",
+            subarray_node_low.csp_subarray_leaf_node.dev_name(),
+        )
         assert_that(event_tracer).described_as(
             'FAILED ASSUMPTION IN "GIVEN" STEP: '
             "'a csp subarray in READY obsState'"
@@ -281,9 +331,19 @@ def given_subarray_ended_scan(
             "obsState",
             ObsState.READY,
         )
-        LOGGER.info(
-            "Invoked EndScan on CSP Subarray Leaf Node: %s",
-            subarray_node_low.csp_subarray_leaf_node.dev_name(),
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "GIVEN" STEP: '
+            "'a csp subarray in READY obsState'"
+            f"({subarray_node_low.csp_subarray_leaf_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            subarray_node_low.csp_subarray_leaf_node,
+            "longRunningCommandResult",
+            (
+                Anything,
+                json.dumps((int(ResultCode.OK), "Command Completed")),
+            ),
         )
 
 
