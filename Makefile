@@ -76,8 +76,7 @@ CI_ENVIRONMENT_SLUG ?= ska-tmc-low-integration
 
 ifeq ($(MAKECMDGOALS),k8s-test)
 ADD_ARGS +=  --true-context -x
-# MARK ?= $(shell echo $(TELESCOPE) | sed "s/-/_/g")
-MARK ?= sah1946
+MARK ?= $(shell echo $(TELESCOPE) | sed "s/-/_/g")
 endif
 
 PYTHON_VARS_AFTER_PYTEST ?= -m '$(MARK)' $(ADD_ARGS) $(FILE) -x --count=$(COUNT)
