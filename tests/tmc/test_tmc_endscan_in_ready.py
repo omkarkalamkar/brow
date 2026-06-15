@@ -62,11 +62,11 @@ def given_tmc(
     )
     event_tracer.subscribe_event(
         subarray_node_low.csp_subarray_leaf_node,
-        "obsState",
+        "cspSubarrayObsState",
     )
     event_tracer.subscribe_event(
         subarray_node_low.sdp_subarray_leaf_node,
-        "obsState",
+        "sdpSubarrayObsState",
     )
     log_events(
         {
@@ -79,8 +79,8 @@ def given_tmc(
                 "obsState",
             ],
             subarray_node_low.mccs_subarray_leaf_node: ["obsState"],
-            subarray_node_low.csp_subarray_leaf_node: ["obsState"],
-            subarray_node_low.sdp_subarray_leaf_node: ["obsState"],
+            subarray_node_low.csp_subarray_leaf_node: ["cspSubarrayObsState"],
+            subarray_node_low.sdp_subarray_leaf_node: ["sdpSubarrayObsState"],
         }
     )
     # ----------Move TMC to ON State and Verify----------
