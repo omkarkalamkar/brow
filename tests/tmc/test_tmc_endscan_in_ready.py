@@ -296,7 +296,7 @@ def given_subarray_ended_scan(
             "is expected to be in READY obstate",
         ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.sdp_subarray_leaf_node,
-            "obsState",
+            "sdpSubarrayObsState",
             ObsState.READY,
         )
         assert_that(event_tracer).described_as(
@@ -328,7 +328,7 @@ def given_subarray_ended_scan(
             "is expected to be in READY obstate",
         ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.csp_subarray_leaf_node,
-            "obsState",
+            "cspSubarrayObsState",
             ObsState.READY,
         )
         assert_that(event_tracer).described_as(
