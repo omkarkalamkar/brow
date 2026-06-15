@@ -16,6 +16,7 @@ from tango import DevState
 from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
 from tests.resources.test_harness.constant import TIMEOUT
 from tests.resources.test_harness.subarray_node_low import (
+    LOGGER,
     SubarrayNodeWrapperLow,
 )
 from tests.resources.test_harness.utils.common_utils import JsonFactory
@@ -26,6 +27,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 
 
+@pytest.mark.sah1946
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_endscan_in_ready.feature",
@@ -83,6 +85,7 @@ def given_tmc(
             subarray_node_low.sdp_subarray_leaf_node: ["sdpSubarrayObsState"],
         }
     )
+    LOGGER.info("Subscribed to events and set up logging for TMC devices.")
     # ----------Move TMC to ON State and Verify----------
     central_node_low.move_to_on()
     assert_that(event_tracer).described_as(
@@ -145,10 +148,13 @@ def given_subarray_in_scanning(
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
+    LOGGER.info(
+        "Assigned resources to subarray and verified it is in IDLE obsState."
+    )
 
     # -----------------Configure Subarray-----------------
     configure_input_json = prepare_json_args_for_commands(
-        "configure_low_single_beam", command_input_factory
+        "configure_low", command_input_factory
     )
     _, unique_id = subarray_node_low.store_configuration_data(
         configure_input_json
@@ -176,12 +182,15 @@ def given_subarray_in_scanning(
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
+    LOGGER.info("Configured subarray and verified it is in READY obsState.")
 
     # -----------------Execute Scan Command-----------------
     scan_input_json = prepare_json_args_for_commands(
         "scan_low", command_input_factory
     )
-    subarray_node_low.execute_transition("Scan", scan_input_json)
+    _, unique_id = subarray_node_low.execute_transition(
+        "Scan", scan_input_json
+    )
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "WHEN" STEP: '
         "'the subarray must be in the SCANNING obsState'"
@@ -191,6 +200,21 @@ def given_subarray_in_scanning(
         subarray_node_low.subarray_node,
         "obsState",
         ObsState.SCANNING,
+    )
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN" STEP: '
+        "'a subarray in SCANNING obsState'"
+        "Subarray Node device"
+        f"({central_node_low.subarray_node.dev_name()}) "
+        "is expected have longRunningCommand as"
+        '(unique_id,(ResultCode.OK,"Command Completed"))',
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "longRunningCommandResult",
+        (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
+    )
+    LOGGER.info(
+        "Executed Scan command and verified subarray is in SCANNING obsState."
     )
 
 
@@ -209,6 +233,10 @@ def given_subarray_ended_scan(
     if "mccs" in subsystems_to_endscan:
 
         subarray_node_low.mccs_subarray_leaf_node.EndScan()
+        LOGGER.info(
+            "Invoked EndScan on MCCS Subarray Leaf Node: %s",
+            subarray_node_low.mccs_subarray_leaf_node.dev_name(),
+        )
 
         assert_that(event_tracer).described_as(
             'FAILED ASSUMPTION IN "GIVEN" STEP: '
@@ -235,6 +263,10 @@ def given_subarray_ended_scan(
             "obsState",
             ObsState.READY,
         )
+        LOGGER.info(
+            "Invoked EndScan on SDP Subarray Leaf Node: %s",
+            subarray_node_low.sdp_subarray_leaf_node.dev_name(),
+        )
 
     if "csp" in subsystems_to_endscan:
 
@@ -249,6 +281,10 @@ def given_subarray_ended_scan(
             "obsState",
             ObsState.READY,
         )
+        LOGGER.info(
+            "Invoked EndScan on CSP Subarray Leaf Node: %s",
+            subarray_node_low.csp_subarray_leaf_node.dev_name(),
+        )
 
 
 @when("I invoked EndScan")
@@ -259,6 +295,10 @@ def when_endscan_invoked(
     """Invoke EndScan on the subarray."""
 
     _, unique_id = subarray_node_low.execute_transition("EndScan")
+    LOGGER.info(
+        "Invoked EndScan on Subarray Node: %s",
+        subarray_node_low.subarray_node.dev_name(),
+    )
 
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "WHEN" STEP: '
