@@ -400,7 +400,7 @@ def then_subarrays_in_ready_obsstate(
         "is expected to be in READY obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         subarray_node_low.csp_subarray_leaf_node,
-        "obsState",
+        "cspSubarrayObsState",
         ObsState.READY,
     )
 
@@ -422,6 +422,6 @@ def then_subarrays_in_ready_obsstate(
         "is expected to be in READY obstate",
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         subarray_node_low.sdp_subarray_leaf_node,
-        "obsState",
+        "sdpSubarrayObsState",
         ObsState.READY,
     )
