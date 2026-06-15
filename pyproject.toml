@@ -30,7 +30,7 @@ msgpack = "1.0.7"
 msgpack_numpy = "0.4.8"
 ska-telmodel = "1.29.0"
 ska-schemas = "1.33.0" 
-ska-integration-test-harness = "1.0.0"
+ska-integration-test-harness = "0.4.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.8.0"
