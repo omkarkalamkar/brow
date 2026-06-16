@@ -30,7 +30,6 @@ TIMEOUT = 100
     "Assign resources to Low subarray",
 )
 def test_telescope_assign_resources():
-
     """
     Test case to verify AssignResources functionality
     """
@@ -43,7 +42,6 @@ def test_telescope_assign_resources():
     "in adminmode ENGINEERING",
 )
 def test_assignresources_command_sdp_adminmode_engineering():
-
     """Test case to verify assignresources
     command if sdp in adminmode ENGINEERING"""
 

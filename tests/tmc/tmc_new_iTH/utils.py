@@ -103,7 +103,6 @@ def _build_assign_json(
     per_sn_plan: dict,
     plan_name: str | None = None,
 ) -> dict:
-
     assign_json = deepcopy(base_assign)
     assign_json["subarray_id"] = int(subarray_id)
 
