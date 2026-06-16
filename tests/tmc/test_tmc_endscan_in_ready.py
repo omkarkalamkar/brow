@@ -245,11 +245,11 @@ def given_subarray_ended_scan(
 ):
     """EndScan on the specified subsystem."""
 
-    subsystems_to_endscan = subsystem.split(",")
+    pytest.subsystems_to_endscan = subsystem.split(",")
 
     # Invoke EndScan on the specified subsystem(s) and verify that the
     # obsState changes to READY
-    if "mccs" in subsystems_to_endscan:
+    if "mccs" in pytest.subsystems_to_endscan:
 
         subarray_node_low.mccs_subarray_leaf_node.EndScan()
         LOGGER.info(
@@ -282,7 +282,7 @@ def given_subarray_ended_scan(
             ),
         )
 
-    if "sdp" in subsystems_to_endscan:
+    if "sdp" in pytest.subsystems_to_endscan:
 
         subarray_node_low.sdp_subarray_leaf_node.EndScan()
         LOGGER.info(
@@ -314,7 +314,7 @@ def given_subarray_ended_scan(
             ),
         )
 
-    if "csp" in subsystems_to_endscan:
+    if "csp" in pytest.subsystems_to_endscan:
 
         subarray_node_low.csp_subarray_leaf_node.EndScan()
         LOGGER.info(
@@ -425,3 +425,69 @@ def then_subarrays_in_ready_obsstate(
         "sdpSubarrayObsState",
         ObsState.READY,
     )
+
+    if "mccs" in pytest.subsystems_to_endscan:
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "GIVEN" STEP: '
+            "'a mccs subarray in READY obsState'"
+            f"({subarray_node_low.mccs_subarray_leaf_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            subarray_node_low.mccs_subarray_leaf_node,
+            "longRunningCommandResult",
+            (
+                Anything,
+                json.dumps(
+                    (
+                        int(ResultCode.OK),
+                        "EndScan command is not invoked as the MCCS"
+                        " Subarray is already in READY ObsState.",
+                    )
+                ),
+            ),
+        )
+
+    if "sdp" in pytest.subsystems_to_endscan:
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "GIVEN" STEP: '
+            "'a sdp subarray in READY obsState'"
+            f"({subarray_node_low.sdp_subarray_leaf_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            subarray_node_low.sdp_subarray_leaf_node,
+            "longRunningCommandResult",
+            (
+                Anything,
+                json.dumps(
+                    (
+                        int(ResultCode.OK),
+                        "EndScan command is not invoked as the SDP"
+                        " Subarray is already in READY ObsState.",
+                    )
+                ),
+            ),
+        )
+
+    if "csp" in pytest.subsystems_to_endscan:
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "GIVEN" STEP: '
+            "'a csp subarray in READY obsState'"
+            f"({subarray_node_low.csp_subarray_leaf_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
+            subarray_node_low.csp_subarray_leaf_node,
+            "longRunningCommandResult",
+            (
+                Anything,
+                json.dumps(
+                    (
+                        int(ResultCode.OK),
+                        "EndScan command is not invoked as the CSP"
+                        " Subarray is already in READY ObsState.",
+                    )
+                ),
+            ),
+        )
