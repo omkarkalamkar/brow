@@ -1,6 +1,7 @@
 {
-    "interface": "https://schema.skao.int/ska-low-tmc-scan/4.1",
+    "interface": "https://schema.skao.int/ska-low-tmc-scan/4.2",
     "transaction_id": "txn-....-00001",
     "scan_id": 1,
-    "start_time": "2025-12-23T08:25:00.412Z"
+    "start_time": "2025-12-23T08:25:00.412Z",
+    "duration": 8.0
 }

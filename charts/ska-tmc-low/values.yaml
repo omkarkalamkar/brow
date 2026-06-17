@@ -169,8 +169,8 @@ deviceServers:
     TelmodelSource: "car://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata"
     TelmodelPath: "instrument/ska1_low/layout/low-layout.json"
     MccsReleaseInterfaceURL: "https://schema.skatelescope.org/ska-low-mccs-controller-release/2.0"
-    ScanStartTimeOffset: 10
-    StartTimeEnabled: false
+    ScanStartTimeEnabled: true
+    ScanDurationEnabled: true
     LoggingLevel: "4"
     PreRecoveryCheckTimeDuration: 1.0
 
