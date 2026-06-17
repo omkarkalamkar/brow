@@ -152,6 +152,7 @@ def given_subarray_in_ready(
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
+    event_tracer.clear_events()
 
 
 @when("I command it to scan for a given period")
