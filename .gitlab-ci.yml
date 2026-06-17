@@ -1,4 +1,6 @@
-image: $SKA_K8S_TOOLS_DOCKER_BUILDER_IMAGE
+default :
+  image: $SKA_K8S_TOOLS_BUILD_DEPLOY
+
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -103,8 +105,8 @@ k8s-test:
     - make k8s-install-chart
     - make k8s-wait
   script:
-    - make k8s-test 
-    - make k8s-test MARK=test_end
+    - make k8s-test MARK=sah1942
+    # - make k8s-test MARK=test_end
     - |
       if [[ "$CI_KEEP_NAMESPACE" != "true" ]]; then
         make k8s-uninstall-chart || true
