@@ -120,4 +120,4 @@ ska-tmc-simulators:
   ska_tmc_simulators:
     image:
       registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-simulators
-      tag: 1.15.0-dev.c544383d4
+      tag: 1.15.0-dev.ca5612c7c
