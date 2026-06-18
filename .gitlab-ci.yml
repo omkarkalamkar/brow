@@ -105,7 +105,6 @@ k8s-test:
     - make k8s-install-chart
     - make k8s-wait
   script:
-    - make k8s-test 
     - make k8s-test MARK=sah_1947
     - |
       if [[ "$CI_KEEP_NAMESPACE" != "true" ]]; then
