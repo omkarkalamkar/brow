@@ -47,7 +47,7 @@ LOGGER = logging.getLogger(__name__)
 
 _PLANS_FEATURE_PATH = (
     Path(__file__).resolve().parent
-    / "../features/tmc/tmc_observation_plans.feature"
+    / "features/tmc/tmc_observation_plans.feature"
 )
 
 
@@ -686,7 +686,7 @@ def _max_scan_duration_from_plan_map(plan_map: dict[int, str]) -> float:
 
 @pytest.mark.SKA_tmc_low_multiple_subarrays
 @scenario(
-    "../features/tmc/xtp-106948_tmc_observation.feature",
+    "features/tmc/xtp-106948_tmc_observation.feature",
     "Execute observation using <SNCount> subarrays with plan map <PlanMap>",
 )
 def test_tmc_observation_with_16subarrays_fast():
@@ -695,7 +695,7 @@ def test_tmc_observation_with_16subarrays_fast():
 
 @pytest.mark.SKA_tmc_low_multiple_subarrays
 @scenario(
-    "../features/tmc/xtp-106948_tmc_observation.feature",
+    "features/tmc/xtp-106948_tmc_observation.feature",
     "Execute long sequence on 16 Subarrays",
 )
 def test_tmc_long_sequence_configure():
@@ -704,7 +704,7 @@ def test_tmc_long_sequence_configure():
 
 @pytest.mark.SKA_tmc_low_multiple_subarrays
 @scenario(
-    "../features/tmc/xtp-106948_tmc_observation.feature",
+    "features/tmc/xtp-106948_tmc_observation.feature",
     "Execute long sequence Scan on 16 Subarrays",
 )
 def test_tmc_long_sequence_configure_scan():

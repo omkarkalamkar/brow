@@ -25,7 +25,7 @@ from tests.resources.test_support.constant_low import TIMEOUT
 
 @pytest.mark.SKA_low
 @scenario(
-    "../features/tmc/SKB_1158.feature",
+    "features/tmc/SKB_1158.feature",
     "Verify SKB-1158",
 )
 def test_verify_skb_1158():

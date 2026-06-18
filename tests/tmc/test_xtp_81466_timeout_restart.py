@@ -27,7 +27,7 @@ TIMEOUT = 60
 
 @pytest.mark.SKA_low
 @scenario(
-    "../features/tmc/error_propagation_timeout_abort.feature",
+    "features/tmc/error_propagation_timeout_abort.feature",
     "Timeout Reported by TMC Low Reset Command for Defective Subarray",
 )
 def test_tmc_command_timeout():

@@ -41,7 +41,7 @@ def pss_beams_from_json(command_input_factory: JsonFactory) -> list[int]:
 
 @pytest.mark.SKA_low
 @scenario(
-    "../features/tmc/check_pss_assign_resource_rejection.feature",
+    "features/tmc/check_pss_assign_resource_rejection.feature",
     "Verify for PSS scan integration with shared beam rejection",
 )
 def test_verify_assign_resource_rejection():

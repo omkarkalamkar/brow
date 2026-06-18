@@ -22,7 +22,7 @@ TIMEOUT = 100
 
 @pytest.mark.SKA_low
 @scenario(
-    "../features/tmc/check_releaseresource.feature",
+    "features/tmc/check_releaseresource.feature",
     "Release resources from Low subarray",
 )
 def test_telescope_releaseresources():
