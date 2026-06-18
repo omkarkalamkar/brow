@@ -34,6 +34,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 
 logger = logging.getLogger(__name__)
 
+
 @pytest.mark.sah_1947
 @pytest.mark.SKA_low
 @scenario(
