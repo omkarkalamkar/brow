@@ -1,5 +1,3 @@
-Feature: TMC Abort Command
-
 @XTP-28864
 Scenario: TMC validates Abort Command
     Given a Subarray in <obs_state> obsState
