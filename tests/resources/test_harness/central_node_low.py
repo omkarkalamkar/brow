@@ -520,14 +520,9 @@ class CentralNodeWrapperLow(object):
             self.mccs_master,
             self.mccs_subarray1,
         ]:
-            try:
-                mock_device.unsubscribe_all_events()
-
-                mock_device.SetDefective(RESET_DEFECT)
-                if mock_device != self.mccs_master:
-                    mock_device.ResetDelayInfo()
-            except Exception:
-                pass
+            mock_device.SetDefective(RESET_DEFECT)
+            if mock_device != self.mccs_master:
+                mock_device.ResetDelayInfo()
 
     def are_sdp_components_online(self):
         start_time = time.time()
