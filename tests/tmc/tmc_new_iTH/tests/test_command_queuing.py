@@ -65,6 +65,7 @@ def _setup_event_subscriptions(
 @scenario(
     "command_queing.feature",
     "Test TMC Low command queuing",
+    features_base_dir="tests/tmc/tmc_new_iTH/features",
 )
 def test_command_queuing():
     """Test command queuing"""

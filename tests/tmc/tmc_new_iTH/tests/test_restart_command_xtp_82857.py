@@ -60,6 +60,7 @@ def _setup_event_subscriptions(
     "xtp_82857.feature",
     "Test Restart Command flow when TMC Subarray observation state is FAULT"
     " and subsystems are EMPTY",
+    features_base_dir="tests/tmc/tmc_new_iTH/features",
 )
 def test_restart_command_from_observation_state_resourcing_fault():
     """BDD test scenario for verifying execution of the Restart

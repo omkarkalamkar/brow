@@ -38,6 +38,7 @@ FAILED_DEVICE_MAP = {
 @scenario(
     "assignresources_auto_recovery.feature",
     "TMC Perform Auto Recovery when AssignResources Failed",
+    features_base_dir="tests/tmc/tmc_new_iTH/features",
 )
 def test_assign_auto_recovery():
     """BDD test scenario to verify auto recovery when assignresources failed"""
@@ -47,6 +48,7 @@ def test_assign_auto_recovery():
 @scenario(
     "assignresources_auto_recovery.feature",
     "TMC Auto Recovery Failed for AssignResources",
+    features_base_dir="tests/tmc/tmc_new_iTH/features",
 )
 def test_auto_recovery_failed():
     """
@@ -58,6 +60,7 @@ def test_auto_recovery_failed():
 @scenario(
     "assignresources_auto_recovery.feature",
     "Succesive AssignResources command execution after recovery",
+    features_base_dir="tests/tmc/tmc_new_iTH/features",
 )
 def test_assign_after_recovery():
     """

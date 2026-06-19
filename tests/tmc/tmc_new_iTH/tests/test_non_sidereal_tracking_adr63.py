@@ -37,6 +37,7 @@ from tests.tmc.tmc_new_iTH.utils import (
     "non_sidereal_tracking_adr63.feature",
     "Configure using ADR-63 field key with different "
     "reference frames in TMC Low",
+    features_base_dir="tests/tmc/tmc_new_iTH/features",
 )
 def test_non_sidereal_tracking():
     """BDD test scenario for verifying ADR-63 field key support in TMC Low."""

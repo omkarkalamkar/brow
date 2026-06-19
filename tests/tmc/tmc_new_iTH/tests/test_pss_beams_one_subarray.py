@@ -33,6 +33,7 @@ from tests.tmc.tmc_new_iTH.utils import (
     "pss_beams_one_subarray.feature",
     "Execute observation where a subarray is allocated "
     "30 PSS beams in TMC Low",
+    features_base_dir="tests/tmc/tmc_new_iTH/features",
 )
 def test_pss_beams_one_subarray():
     """BDD test scenario for verifying pss beams with one subarrays."""

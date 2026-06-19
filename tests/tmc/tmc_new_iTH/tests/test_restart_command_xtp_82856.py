@@ -115,6 +115,7 @@ def _check_abort_flow(
     "xtp_82856.feature",
     "Test Restart Command when TMC subarray transitions to "
     "FAULT observation state",
+    features_base_dir="tests/tmc/tmc_new_iTH/features",
 )
 def test_restart_command_in_observation_state_fault():
     """BDD test scenario for verifying execution of the Restart

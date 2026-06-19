@@ -1,3 +1,6 @@
+Feature:
+Non sidereal tracking adr63
+
 @XTP-93405 @XTP-93734 @XTP-28348 @TEAM_HIMALAYA
 Scenario Outline: Configure using ADR-63 field key with different reference frames in TMC Low
     Given a Subarray with resources assigned
