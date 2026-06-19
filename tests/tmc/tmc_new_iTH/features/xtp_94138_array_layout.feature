@@ -1,3 +1,4 @@
+Feature: TMC Array Layout
 
 @XTP-94138 @XTP-94137 @TEAM_HIMALAYA
 Scenario: Array layout functionality in TMC Low
