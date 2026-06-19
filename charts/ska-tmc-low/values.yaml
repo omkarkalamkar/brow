@@ -127,10 +127,10 @@ resource_monitor:
 
 resources:
   limits:
-    memory: 800Mi
+    memory: 500Mi
   requests:
     cpu: 200m
-    memory: 500Mi
+    memory: 200Mi
 
 deviceServers:
   centralnode:
