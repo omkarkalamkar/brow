@@ -1,4 +1,4 @@
-Feature: SKB-1326
+Feature: Default
 
 	#This tests verify the bug related to observation state transition from EMPTY to FAULT during execution of restart command on TMC Subarray when there is an error in any one of the subsystems.
 	@XTP-109108 @XTP-28348

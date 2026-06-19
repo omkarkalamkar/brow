@@ -38,7 +38,6 @@ FAILED_DEVICE_MAP = {
 @scenario(
     "configure_auto_recovery.feature",
     "TMC Perform Auto Recovery when Configure Failed",
-    features_base_dir="tests/tmc/tmc_new_iTH/features",
 )
 def test_configure_auto_recovery():
     """BDD test scenario for verifying auto recovery when configure failed"""
@@ -48,7 +47,6 @@ def test_configure_auto_recovery():
 @scenario(
     "configure_auto_recovery.feature",
     "TMC Perform Auto Recovery when Successive Configure Failed",
-    features_base_dir="tests/tmc/tmc_new_iTH/features",
 )
 def test_successive_configure_auto_recovery():
     """
@@ -61,7 +59,6 @@ def test_successive_configure_auto_recovery():
 @scenario(
     "configure_auto_recovery.feature",
     "TMC Auto Recovery Failed",
-    features_base_dir="tests/tmc/tmc_new_iTH/features",
 )
 def test_auto_recovery_failed():
     """

@@ -1,5 +1,3 @@
-Feature: Assign Resources auto recovery
-
 @XTP-93186 @XTP-91746 @Team_HIMALAYA
 Scenario: TMC Perform Auto Recovery when AssignResources Failed
 	Given a subarray is in the EMPTY obsState

@@ -127,7 +127,6 @@ def _setup_event_subscriptions(
 @scenario(
     "xtp_109108.feature",
     "Verify SKB-1326",
-    features_base_dir="tests/tmc/tmc_new_iTH/features",
 )
 def test_verify_skb_1326():
     """BDD test scenario for verifying SKB-1326."""

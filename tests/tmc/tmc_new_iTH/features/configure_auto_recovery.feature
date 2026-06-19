@@ -1,5 +1,3 @@
-Feature: Configure auto recovery
-
 @XTP-91743 @XTP-91746 @XTP-28348 @Team_HIMALAYA
 Scenario: TMC Perform Auto Recovery when Configure Failed
 	Given a subarray is in the IDLE obsState

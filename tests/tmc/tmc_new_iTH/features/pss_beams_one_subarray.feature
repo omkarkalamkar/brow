@@ -1,5 +1,3 @@
-Feature: Multiple pss beams one subarray
-
 @XTP-98755 @XTP-98925 @XTP-28348 @TEAM_HIMALAYA
 Scenario Outline: Execute observation where a subarray is allocated 30 PSS beams in TMC Low
     Given subarray in EMPTY ObsState

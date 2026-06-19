@@ -1,4 +1,4 @@
-Feature: Command queuing
+Feature: Default
 
 	#The tests check for command queuing mechanism in TMC MID with help of Mock devices for other subsystems.
 	@XTP-109506 @XTP-108789 @TEAM_HIMALAYA
