@@ -27,7 +27,7 @@ TIMEOUT = 100
 
 @pytest.mark.SKA_low
 @scenario(
-    "features/tmc/check_on_command.feature",
+    "tmc/check_on_command.feature",
     "Starting up low telescope",
 )
 def test_telescope_on_command_flow():
@@ -38,7 +38,7 @@ def test_telescope_on_command_flow():
 
 @pytest.mark.SKA_low
 @scenario(
-    "features/tmc/check_on_command.feature",
+    "tmc/check_on_command.feature",
     "Starting up low telescope if one subsystem in adminmode ENGINEERING",
 )
 def test_telescope_on_command_sdp_adminmode_engineering():

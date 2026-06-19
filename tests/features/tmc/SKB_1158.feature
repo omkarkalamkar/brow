@@ -1,3 +1,5 @@
+Feature: Skb 1158
+
 @XTP-96989 @XTP-28348
 Scenario: Verify SKB-1158
     Given a TMC

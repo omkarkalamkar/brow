@@ -32,7 +32,7 @@ from tests.tmc.conftest import move_to_idle, move_to_ready, move_to_scanning
 
 @pytest.mark.SKA_tmc_low_negative_tests
 @scenario(
-    "features/tmc/check_error_propagation_mccs_only.feature",
+    "tmc/check_error_propagation_mccs_only.feature",
     "Error Propagation Reported by TMC Low Configure/End/EndScan/Scan "
     "Commands for Defective MCCS Subarray",
 )

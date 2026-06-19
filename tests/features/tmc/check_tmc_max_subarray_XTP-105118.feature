@@ -1,3 +1,5 @@
+Feature: Check Tmc Max Subarray Xtp-105118
+
 @XTP-28568 @XTP-105118
 Scenario: Execute Scan Lifecycle with max resources
     

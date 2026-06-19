@@ -36,7 +36,7 @@ FAILED_DEVICE_MAP = {
 
 @pytest.mark.SKA_low
 @scenario(
-    "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
+    "configure_auto_recovery.feature",
     "TMC Perform Auto Recovery when Configure Failed",
 )
 def test_configure_auto_recovery():
@@ -45,7 +45,7 @@ def test_configure_auto_recovery():
 
 @pytest.mark.SKA_low
 @scenario(
-    "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
+    "configure_auto_recovery.feature",
     "TMC Perform Auto Recovery when Successive Configure Failed",
 )
 def test_successive_configure_auto_recovery():
@@ -57,7 +57,7 @@ def test_successive_configure_auto_recovery():
 
 @pytest.mark.SKA_low
 @scenario(
-    "../tmc/tmc_new_iTH/features/configure_auto_recovery.feature",
+    "configure_auto_recovery.feature",
     "TMC Auto Recovery Failed",
 )
 def test_auto_recovery_failed():

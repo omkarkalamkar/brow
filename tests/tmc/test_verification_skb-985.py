@@ -45,7 +45,7 @@ TIMEOUT = 100  # seconds
 @pytest.mark.post_deployment
 @pytest.mark.SKA_low
 @scenario(
-    "features/tmc/check_restart_cleanup.feature",
+    "tmc/check_restart_cleanup.feature",
     "Restart when Subarray is in obsState FAULT with"
     " CSP defective during Configure",
 )
@@ -260,7 +260,7 @@ def verify_subarray_empty(
 @pytest.mark.post_deployment
 @pytest.mark.SKA_low
 @scenario(
-    "features/tmc/check_restart_cleanup.feature",
+    "tmc/check_restart_cleanup.feature",
     "Restart when Subarray is in obsState FAULT with"
     " CSP defective during AssignResources",
 )

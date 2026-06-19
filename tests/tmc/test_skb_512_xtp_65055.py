@@ -35,7 +35,7 @@ from tests.resources.test_support.constant_low import (
 
 @pytest.mark.SKA_low
 @scenario(
-    "features/tmc/SKB_512.feature",
+    "tmc/SKB_512.feature",
     "TMC executes EndScan on other sub-systems even if one sub-system goes "
     + "to FAULT",
 )

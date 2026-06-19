@@ -1,3 +1,5 @@
+Feature: Skb 477
+
 @XTP-60864 @XTP-28348
 Scenario: Verify SKB-477 - with TMC entrypoint
 		Given a TMC

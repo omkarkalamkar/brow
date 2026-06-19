@@ -28,7 +28,7 @@ from tests.resources.test_support.common_utils.result_code import ResultCode
 
 @pytest.mark.SKA_low
 @scenario(
-    "features/tmc/check_mccs_only_endscan.feature",
+    "tmc/check_mccs_only_endscan.feature",
     "Successful Execution of the EndScan Command on a Low"
     + " Telescope Subarray with an MCCS-Only subsystem",
 )

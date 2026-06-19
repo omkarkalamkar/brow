@@ -1,3 +1,5 @@
+Feature: Check Scan Command
+
 @XTP-28568
 Scenario: Successful Execution of Scan Command on Low Telescope Subarray in TMC
     Given a TMC

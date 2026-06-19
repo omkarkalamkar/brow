@@ -1,3 +1,5 @@
+Feature: Check Mccs Only Endscan
+
 @XTP-79504
 Scenario: Successful Execution of the EndScan Command on a Low Telescope Subarray with an MCCS-Only subsystem
 	Given the telescope is in the ON state

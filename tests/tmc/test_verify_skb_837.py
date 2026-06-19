@@ -33,7 +33,7 @@ from tests.resources.test_support.constant_low import (
 
 @pytest.mark.SKA_low
 @scenario(
-    "features/tmc/check_configure_command_missing_event.feature",
+    "tmc/check_configure_command_missing_event.feature",
     "Fallback to attribute‑read when no change event for attribute"
     " receiveAddresses",
 )

@@ -1,3 +1,5 @@
+Feature: Check Error Propagation Ith
+
 @XTP-76912 @XTP-73592 @XTP-28348 @Team_SAHYADRI
 Scenario: Error Propagation Reported by TMC Low AssignResources Command for Defective MCCS Controller 
     Given the telescope is in ON state

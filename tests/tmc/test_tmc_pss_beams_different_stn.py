@@ -38,7 +38,7 @@ logger = logging.getLogger(__name__)
 
 @pytest.mark.SKA_low
 @scenario(
-    "features/tmc/tmc_pss_beams_different_stn.feature",
+    "tmc/tmc_pss_beams_different_stn.feature",
     "TMC generates delay values for different station beams",
 )
 def test_pss_beams_different_stn():

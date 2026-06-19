@@ -63,7 +63,7 @@ def _setup_event_subscriptions(
 
 @pytest.mark.SKA_low
 @scenario(
-    "../tmc/tmc_new_iTH/features/command_queing.feature",
+    "command_queing.feature",
     "Test TMC Low command queuing",
 )
 def test_command_queuing():

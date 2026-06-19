@@ -1,3 +1,5 @@
+Feature: Start Up Tmc Sdp
+
 @XTP-29228 @XTP-29227
 Scenario: Start up the telescope having TMC and SDP subsystems
     Given a Telescope consisting of TMC, SDP, simulated CSP and simulated MCCS

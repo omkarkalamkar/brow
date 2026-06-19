@@ -1,3 +1,5 @@
+Feature: Skb 476
+
 @XTP-60161 @XTP-28348
 Scenario: Verify SKB-476
     Given a TMC

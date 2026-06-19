@@ -73,7 +73,7 @@ def _update_tel_model_for_csp(tmc: TMCFacade, telmodel_src: str):
 
 @pytest.mark.test_end
 @scenario(
-    "../tmc/tmc_new_iTH/features/skb_1056.feature",
+    "skb_1056.feature",
     "Verify SKB-1056",
 )
 def test_configure_command_with_itf_jsons_to_verify_skb_1056():

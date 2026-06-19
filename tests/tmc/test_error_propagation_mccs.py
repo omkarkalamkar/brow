@@ -35,7 +35,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 
 @pytest.mark.SKA_tmc_low_negative_tests
 @scenario(
-    "features/tmc/check_error_propagation_mccs.feature",
+    "tmc/check_error_propagation_mccs.feature",
     "Error Propagation Reported by TMC Low Configure Command for"
     + " Defective MCCS Subarray",
 )

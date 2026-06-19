@@ -1,3 +1,5 @@
+Feature: Check Error Propagation Mccs Only
+
 @SKA_tmc_low_negative_tests @XTP-73592 @XTP-84145
 	Scenario Outline: Error Propagation Reported by TMC Low Configure/End/EndScan/Scan Commands for Defective MCCS Subarray
 		Given the telescope is in the ON state

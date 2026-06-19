@@ -27,7 +27,7 @@ TIMEOUT = 80
 
 @pytest.mark.SKA_tmc_low_negative_tests
 @scenario(
-    "features/tmc/check_error_propagation_ith.feature",
+    "tmc/check_error_propagation_ith.feature",
     "Error Propagation Reported by TMC Low AssignResources Command for "
     "Defective MCCS Controller",
 )

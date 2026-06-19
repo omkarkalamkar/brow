@@ -33,7 +33,7 @@ from tests.resources.test_support.constant_low import (
 
 @pytest.mark.SKA_tmc_low_negative_tests
 @scenario(
-    "features/tmc/SKB_646.feature",
+    "tmc/SKB_646.feature",
     "Verify SKB-646",
 )
 def test_verify_skb_646():

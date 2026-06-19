@@ -1,3 +1,5 @@
+Feature: Xtp 65989 Pst Beam Delay Model
+
 #Test case to verify  PST Beams Delay Calculation
 @XTP-65989 @XTP-73581 @XTP-73579
 Scenario: TMC generates delay values for PST Beams

@@ -1,3 +1,5 @@
+Feature: Skb 646
+
 @SKA_tmc_low_negative_tests @XTP-74377
 Scenario Outline: Verify SKB-646
     Given ReleaseAllResource completed on CSP, MCCS, SDP Subarray

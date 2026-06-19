@@ -35,7 +35,7 @@ from tests.tmc.tmc_new_iTH.utils import setup_event_subscriptions
 
 @pytest.mark.test_end
 @scenario(
-    "../tmc/tmc_new_iTH/features/xtp_94138_array_layout.feature",
+    "xtp_94138_array_layout.feature",
     "Array layout functionality in TMC Low",
 )
 def test_array_layout_functionality():

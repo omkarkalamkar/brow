@@ -1,3 +1,5 @@
+Feature: Tmc Observation With Four Subarray
+
 @XTP-105375 @XTP-28348 @TEAM_SAHYADRI
 Scenario Outline: Execute observations simultaneously on four subarrays
     Given the telescope is in the ON state

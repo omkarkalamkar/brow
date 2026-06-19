@@ -1,3 +1,5 @@
+Feature: Skb 1051
+
 #This test verifies the behaviour of Release Resources on TMC with multiple subarrays.
 @XTP-90244 @XTP-28348 @SKA_low
 Scenario: Verify SKB-1051

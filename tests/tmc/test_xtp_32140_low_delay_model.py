@@ -39,7 +39,7 @@ logger = logging.getLogger(__name__)
 
 @pytest.mark.SKA_low
 @scenario(
-    "features/tmc/xtp_32140_low_delay_model.feature",
+    "tmc/xtp_32140_low_delay_model.feature",
     "TMC generates delay values",
 )
 def test_low_delay_model():
