@@ -32,7 +32,7 @@ LOGGER = logging.getLogger(__name__)
 
 @pytest.mark.SKA_tmc_low_multiple_subarrays
 @scenario(
-    "features/tmc/tmc_observation_with_four_subarray.feature",
+    "tmc/tmc_observation_with_four_subarray.feature",
     "Execute observations simultaneously on four subarrays",
 )
 def test_tmc_observation_with_four_subarrays():

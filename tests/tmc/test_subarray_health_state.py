@@ -17,7 +17,7 @@ state = {}
 
 @pytest.mark.SKA_low
 @scenario(
-    "features/tmc/check_subarray_healthstate.feature",
+    "tmc/check_subarray_healthstate.feature",
     "Subarray health reflects correct aggregated healthstate of "
     "CSP, SDP, and MCCS subarrays",
 )
