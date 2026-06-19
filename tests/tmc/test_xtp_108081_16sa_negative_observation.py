@@ -57,12 +57,12 @@ LOGGER = logging.getLogger(__name__)
 
 _FEATURE_PATH = (
     Path(__file__).resolve().parent
-    / "features/tmc/xtp_108081_16_sn_neagative_observations.feature"
+    / "../features/tmc/xtp_108081_16_sn_neagative_observations.feature"
 )
 
 _PLANS_FEATURE_PATH = (
     Path(__file__).resolve().parent
-    / "features/tmc/tmc_observation_plans.feature"
+    / "../features/tmc/tmc_observation_plans.feature"
 )
 
 
@@ -660,7 +660,7 @@ def _configure_json_for_subarray(
 
 @pytest.mark.SKA_tmc_low_multiple_subarrays
 @scenario(
-    "features/tmc/xtp_108081_16_sn_neagative_observations.feature",
+    "../features/tmc/xtp_108081_16_sn_neagative_observations.feature",
     "Run 16-subarray observation with injected defects",
 )
 def test_xtp_16sa_planA1_defect_matrix_observation() -> None:

@@ -26,7 +26,7 @@ SUBSYSTEM_DEVICES = {
 
 @pytest.mark.SKA_low
 @scenario(
-    "features/tmc/check_cmd_not_allowed_adminmode.feature",
+    "../features/tmc/check_cmd_not_allowed_adminmode.feature",
     "Command not allowed from SubarrayNode when subsystem adminmode "
     "is OFFLINE/NOT_FITTED",
 )

@@ -27,7 +27,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 
 @pytest.mark.SKA_low
 @scenario(
-    "features/tmc/check_abort_command.feature",
+    "../features/tmc/check_abort_command.feature",
     "TMC validates Abort Command",
 )
 def test_tmc_abort_command():
@@ -37,7 +37,7 @@ def test_tmc_abort_command():
 
 @pytest.mark.SKA_low
 @scenario(
-    "features/tmc/check_abort_command.feature",
+    "../features/tmc/check_abort_command.feature",
     "TMC validates Abort Command in intermediate obsState",
 )
 def test_tmc_abort_command_in_intermediate_obs_state():

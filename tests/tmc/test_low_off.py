@@ -24,7 +24,7 @@ TIMEOUT = 100
 
 @pytest.mark.SKA_low
 @scenario(
-    "features/tmc/check_off_command.feature",
+    "../features/tmc/check_off_command.feature",
     "Switch off the low telescope",
 )
 def test_telescope_off_command_flow():
