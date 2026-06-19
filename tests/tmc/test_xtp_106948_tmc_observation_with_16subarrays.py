@@ -2,7 +2,7 @@
 This module defines BDD test scenario for the successful execution of
 of end to end observstion for 16 subarrays
 This keeps the same BDD feature
-(`tests/features/tmc/xtp-106948_tmc_observation.feature`).
+(`tests/tmc/xtp-106948_tmc_observation.feature`).
 """
 
 import json
