@@ -24,7 +24,7 @@ state = {}
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/check_telescope_healthstate.feature",
+    "features/tmc/check_telescope_healthstate.feature",
     "CentralNode reports OK telescopeHealthState",
 )
 def test_telescope_health_state_ok():
@@ -33,7 +33,7 @@ def test_telescope_health_state_ok():
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/check_telescope_healthstate.feature",
+    "features/tmc/check_telescope_healthstate.feature",
     "CentralNode reports FAILED telescopeHealthState",
 )
 def test_telescope_health_state_failed():
@@ -42,7 +42,7 @@ def test_telescope_health_state_failed():
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/check_telescope_healthstate.feature",
+    "features/tmc/check_telescope_healthstate.feature",
     "CentralNode reports DEGRADED telescopeHealthState",
 )
 def test_telescope_health_state_degraded():
@@ -51,7 +51,7 @@ def test_telescope_health_state_degraded():
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/check_telescope_healthstate.feature",
+    "features/tmc/check_telescope_healthstate.feature",
     "CentralNode reports UNKNOWN telescopeHealthState",
 )
 def test_telescope_health_state_unknown():

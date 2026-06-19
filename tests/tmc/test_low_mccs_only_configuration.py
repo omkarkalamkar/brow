@@ -30,7 +30,7 @@ from tests.resources.test_support.common_utils.result_code import ResultCode
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/check_mccs_only_configuration.feature",
+    "features/tmc/check_mccs_only_configuration.feature",
     "Successful Configuration of Low Telescope Subarray with Only MCCS in TMC",
 )
 def test_tmc_configure_command():

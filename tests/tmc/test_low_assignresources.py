@@ -26,7 +26,7 @@ TIMEOUT = 100
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/check_assignresources_command.feature",
+    "features/tmc/check_assignresources_command.feature",
     "Assign resources to Low subarray",
 )
 def test_telescope_assign_resources():
@@ -37,7 +37,7 @@ def test_telescope_assign_resources():
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/check_assignresources_command.feature",
+    "features/tmc/check_assignresources_command.feature",
     "Assign resources to Low subarray if one subarray "
     "in adminmode ENGINEERING",
 )

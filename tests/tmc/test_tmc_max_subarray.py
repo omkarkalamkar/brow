@@ -40,7 +40,7 @@ logger = logging.getLogger(__name__)
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/check_tmc_max_subarray_XTP-105118.feature",
+    "features/tmc/check_tmc_max_subarray_XTP-105118.feature",
     "Execute Scan Lifecycle with max resources",
 )
 def test_tmc_scan_command():

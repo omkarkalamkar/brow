@@ -27,7 +27,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/check_scan_command.feature",
+    "features/tmc/check_scan_command.feature",
     "Successful Execution of Scan Command on Low Telescope Subarray in TMC",
 )
 def test_tmc_scan_command():

@@ -36,7 +36,7 @@ RESOURCE_MONITOR_FQDN = "low-tmc/resource-monitor/01"
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/resource_monitor.feature",
+    "features/tmc/resource_monitor.feature",
     "Test Resource Monitor updates when SubarrayNode and MCCS "
     "controller attributes change",
 )

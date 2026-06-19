@@ -125,7 +125,7 @@ def _setup_event_subscriptions(
 
 
 @scenario(
-    "xtp_109108.feature",
+    "../tmc/tmc_new_iTH/features/xtp_109108.feature",
     "Verify SKB-1326",
 )
 def test_verify_skb_1326():

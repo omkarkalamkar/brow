@@ -1,5 +1,3 @@
-Feature: Tmc Scan With Various Subsystems
-
 @XTP-87343
 Scenario: Successful Execution of TMC Scan with subsystems configuration provided in input JSON
     Given a TMC

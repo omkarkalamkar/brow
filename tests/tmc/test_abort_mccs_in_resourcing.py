@@ -36,7 +36,7 @@ ABORT_COMPLETION_TIMEOUT = 30
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/check_mccs_abort.feature",
+    "features/tmc/check_mccs_abort.feature",
     (
         "Verify Abort in Resourcing completes without 60-second delay "
         "via MccsController"
@@ -48,7 +48,7 @@ def test_verify_abort_mccs_via_controller():
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/check_mccs_abort.feature",
+    "features/tmc/check_mccs_abort.feature",
     (
         "Verify Abort propagates error when MccsController "
         "AbortSubarray is defective"
@@ -60,7 +60,7 @@ def test_verify_abort_mccs_controller_defective():
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/check_mccs_abort.feature",
+    "features/tmc/check_mccs_abort.feature",
     (
         "Verify Abort propagates timeout when MccsController "
         "AbortSubarray is stuck"

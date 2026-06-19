@@ -38,7 +38,7 @@ LOGGER = logging.getLogger(__name__)
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/xtp_65989_pst_beam_delay_model.feature",
+    "features/tmc/xtp_65989_pst_beam_delay_model.feature",
     "TMC generates delay values for PST Beams",
 )
 def test_low_delay_model_for_pst_beams():

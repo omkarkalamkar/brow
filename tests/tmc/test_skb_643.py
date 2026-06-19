@@ -40,7 +40,7 @@ RESOURCE_CONFIG = {
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/SKB_643.feature",
+    "features/tmc/SKB_643.feature",
     "Verify SKB-643",
 )
 def test_verify_skb_643():

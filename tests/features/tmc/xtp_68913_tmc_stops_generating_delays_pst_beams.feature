@@ -1,5 +1,3 @@
-Feature: Xtp 68913 Tmc Stops Generating Delays Pst Beams
-
 @XTP-68913 @XTP-73581 @XTP-73579
 Scenario: TMC stops generating delay values for PST Beams
     Given the telescope is in ON state

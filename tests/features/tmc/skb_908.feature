@@ -1,5 +1,3 @@
-Feature: Skb 908
-
 #This test verifies Assign Resources flow with multiple subarrays
 @XTP-90283 @XTP-28348 @SKA_low
 Scenario: Verify SKB-908 for assign resources flow

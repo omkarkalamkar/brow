@@ -1,5 +1,3 @@
-Feature: Check Configure Command
-
 @XTP-28567
 Scenario: Successful Configuration of Low Telescope Subarray in TMC
 	Given a TMC

@@ -1,5 +1,3 @@
-Feature: Skb 512
-
 #This test verifies SKB-512.
 @XTP-65055
 Scenario: TMC executes EndScan on other sub-systems even if one sub-system goes to FAULT

@@ -31,7 +31,7 @@ TIMEOUT = 60
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/error_propagation_timeout_abort.feature",
+    "features/tmc/error_propagation_timeout_abort.feature",
     "Error Propagation Reported by TMC Low Abort Command for "
     "Defective Subarray",
 )

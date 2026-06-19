@@ -38,7 +38,7 @@ from tests.tmc.conftest import (
 
 @pytest.mark.SKA_tmc_low_negative_tests
 @scenario(
-    "tmc/check_error_propagation.feature",
+    "features/tmc/check_error_propagation.feature",
     "Error Propagation Reported by TMC Low Configure/End/EndScan/Scan "
     "Commands for Defective Subarray",
 )
@@ -50,7 +50,7 @@ def test_tmc_command_error_propagation():
 
 @pytest.mark.SKA_tmc_low_negative_tests
 @scenario(
-    "tmc/check_error_propagation.feature",
+    "features/tmc/check_error_propagation.feature",
     "TimeOut Reported by TMC Low Configure/End/EndScan/Scan "
     "Commands for Defective Subarray",
 )

@@ -1,5 +1,3 @@
-Feature: Check Pss Assign Resource Rejection
-
 @XTP-98756 @XTP-98925 @XTP-28348 @TEAM_HIMALAYA
 Scenario: Verify for PSS scan integration with shared beam rejection
     Given the telescope is in the ON state

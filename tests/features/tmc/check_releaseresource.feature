@@ -1,5 +1,3 @@
-Feature: Check Releaseresource
-
 @XTP-65636
 Scenario: Release resources from Low subarray
     Given the telescope is in the ON state

@@ -37,7 +37,7 @@ logger = logging.getLogger(__name__)
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/check_configure_command.feature",
+    "features/tmc/check_configure_command.feature",
     "Successful Configuration of Low Telescope Subarray in TMC",
 )
 def test_tmc_configure_command():

@@ -1,5 +1,3 @@
-Feature: Check Assignresources Command
-
 @XTP-65635
 Scenario: Assign resources to Low subarray
     Given the telescope is in the ON state

@@ -1,5 +1,3 @@
-Feature: Check Mccs Only Configuration
-
 @XTP-78908
 Scenario: Successful Configuration of Low Telescope Subarray with Only MCCS in TMC
 	Given the telescope is in the ON state

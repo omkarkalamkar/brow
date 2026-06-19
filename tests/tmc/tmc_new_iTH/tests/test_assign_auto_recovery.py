@@ -36,7 +36,7 @@ FAILED_DEVICE_MAP = {
 
 @pytest.mark.SKA_low
 @scenario(
-    "assignresources_auto_recovery.feature",
+    "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
     "TMC Perform Auto Recovery when AssignResources Failed",
 )
 def test_assign_auto_recovery():
@@ -45,7 +45,7 @@ def test_assign_auto_recovery():
 
 @pytest.mark.SKA_low
 @scenario(
-    "assignresources_auto_recovery.feature",
+    "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
     "TMC Auto Recovery Failed for AssignResources",
 )
 def test_auto_recovery_failed():
@@ -56,7 +56,7 @@ def test_auto_recovery_failed():
 
 @pytest.mark.SKA_low
 @scenario(
-    "assignresources_auto_recovery.feature",
+    "../tmc/tmc_new_iTH/features/assignresources_auto_recovery.feature",
     "Succesive AssignResources command execution after recovery",
 )
 def test_assign_after_recovery():

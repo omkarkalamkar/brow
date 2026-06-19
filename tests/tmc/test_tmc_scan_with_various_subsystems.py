@@ -32,7 +32,7 @@ LOGGER = logging.getLogger(__name__)
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/tmc_scan_with_various_subsystems.feature",
+    "features/tmc/tmc_scan_with_various_subsystems.feature",
     "Successful Execution of TMC Scan with subsystems configuration provided "
     + "in input JSON",
 )

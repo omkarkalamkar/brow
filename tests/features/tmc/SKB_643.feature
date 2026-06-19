@@ -1,5 +1,3 @@
-Feature: Skb 643
-
 @SKA_low @XTP-69891
 Scenario Outline: Verify SKB-643
     Given TMC Subarray is in observation state EMPTY

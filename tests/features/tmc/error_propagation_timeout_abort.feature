@@ -1,5 +1,3 @@
-Feature: Error Propagation Timeout Abort
-
 @XTP-81319 @XTP-28348 @XTP-73592
 Scenario Outline: Error Propagation Reported by TMC Low Abort Command for Defective Subarray
     Given the telescope is in ON state

@@ -40,7 +40,7 @@ from tests.tmc.tmc_new_iTH.utils import PSS_BEAMS_CONFIG
 
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/tmc_pss_beams_two_subarray.feature",
+    "features/tmc/tmc_pss_beams_two_subarray.feature",
     "Execute two observations simultaneously where two subarrays are "
     "allocated PSS beams without sharing in TMC Low",
 )
