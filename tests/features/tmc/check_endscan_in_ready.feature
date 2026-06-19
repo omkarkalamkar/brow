@@ -1,5 +1,5 @@
-@XTP-112768
-Scenario: Successful Execution of EndScan on Low Telescope Subarray when some subsystem have Ended Scan.
+@XTP-112768 @XTP-28348
+Scenario: Successful Execution of EndScan on Low Telescope Subarray when csp, sdp, mccs subsystems have Ended Scan.
     Given a TMC
     And a subarray in SCANNING obsState
     And <subsystem> have Ended Scan
