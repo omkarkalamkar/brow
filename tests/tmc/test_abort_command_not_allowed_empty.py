@@ -22,7 +22,7 @@ from tests.resources.test_support.constant_low import TIMEOUT
 @pytest.mark.SKA_low_test
 @pytest.mark.SKA_low
 @scenario(
-    "tmc/check_abort_command.feature",
+    "features/tmc/check_abort_command.feature",
     "TMC executes Abort Command in EMPTY obsState.",
 )
 def test_abort_command_not_allowed_empty():
