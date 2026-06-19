@@ -348,9 +348,13 @@ class SubarrayNodeWrapperLow:
         ]
 
         for sim_device_proxy in sim_device_proxy_list:
-            sim_device_proxy.ResetDelayInfo()
-            sim_device_proxy.SetDirectHealthState(HealthState.UNKNOWN)
-            sim_device_proxy.SetDefective(json.dumps({"enabled": False}))
+            try:
+                sim_device_proxy.unsubscribe_all_events()
+                sim_device_proxy.ResetDelayInfo()
+                sim_device_proxy.SetDirectHealthState(HealthState.UNKNOWN)
+                sim_device_proxy.SetDefective(json.dumps({"enabled": False}))
+            except Exception:
+                pass
 
     def force_change_of_obs_state(
         self,
