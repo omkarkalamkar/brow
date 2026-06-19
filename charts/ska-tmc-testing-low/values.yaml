@@ -119,5 +119,5 @@ ska-tmc-simulators:
       LoggingLevel: "5"
   ska_tmc_simulators:
     image:
-      registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-simulators
-      tag: 1.15.0-dev.ca5612c7c
+      registry: artefact.skao.int
+      tag: 1.15.0
