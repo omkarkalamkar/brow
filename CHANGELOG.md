@@ -5,6 +5,18 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[Unreleased]
+************
+Updated
+-------
+* Utilized following charts with Pytango 10.3.0 update:
+  - ska-tmc-centralnode: v1.5.0
+  - ska-tmc-subarraynode: v1.14.0
+  - ska-tmc-sdpleafnodes: v0.31.0
+  - ska-tmc-cspleafnodes: v0.46.0
+  - ska-tmc-mccsleafnodes: v0.18.0
+  - ska-tmc-simulators: v1.14.0
+
 [2.15.0]
 ********
 Added
@@ -55,8 +67,8 @@ Updated
 * Subscribed MCCS Subarray QualityMetrics on TMC Quality Monitor
 * Improved test for MCCS early Scan scenario test
 * Improved test data for scalability tests to check below issues -
-1.if PST details are missing in json , threads for PSS are able to start
-2.PST beam IDs other than just 1 , can be provided 
+  1.if PST details are missing in json , threads for PSS are able to start
+  2.PST beam IDs other than just 1 , can be provided
 
 
 [2.15.1-rc.1]
