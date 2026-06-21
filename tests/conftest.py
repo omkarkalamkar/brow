@@ -1,9 +1,7 @@
 """Test configuration file for ska_tmc_low_integration"""
 import json
 import logging
-import multiprocessing
 import os
-import sys
 import time
 from dataclasses import dataclass
 from os.path import dirname, join
@@ -87,17 +85,6 @@ def pytest_addoption(parser):
             "need to spin up a Tango test context"
         ),
     )
-
-
-# this hook runs before any tets are collected or executed
-def pytest_configure(config):
-    """Force Python to spawn clean processes
-    instead of forking corrupt cpp stuctures"""
-    if sys.platform != "win32":
-        try:
-            multiprocessing.set_start_method("spawn", force=True)
-        except (RuntimeError, ValueError):
-            pass
 
 
 def get_input_str(path):
@@ -281,25 +268,7 @@ def event_tracer():
     """Returns a TangoEventTracer instance."""
     tracer = TangoEventTracer()
     yield tracer
-    tracer.unsubscribe_all()
     tracer.clear_events()
-
-
-@pytest.fixture(scope="function", autouse=True)
-def clear_tango_cache():
-    "Clears the internal cpp nettwork cache"
-    # Clean up before the test starts
-    try:
-        tango.ApiUtil.cleanup()
-    except tango.DevFailed:
-        pass
-
-    yield
-    # Clean up after the test finishes
-    try:
-        tango.ApiUtil.cleanup()
-    except tango.DevFailed:
-        pass
 
 
 @pytest.fixture(scope="session", autouse=True)
