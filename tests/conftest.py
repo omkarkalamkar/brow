@@ -272,6 +272,16 @@ def event_tracer():
     tracer.clear_events()
 
 
+@pytest.fixture(scope="function", autouse=True)
+def clear_tango_cache():
+    "Clears the internal cpp nettwork cache"
+    yield
+    try:
+        tango.ApiUtil.cleanup()
+    except tango.DevFailed:
+        pass
+
+
 @pytest.fixture(scope="session", autouse=True)
 def set_admin_mode_mccs():
     """Fixture to set admin mode values"""
