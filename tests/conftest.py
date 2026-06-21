@@ -268,6 +268,7 @@ def event_tracer():
     """Returns a TangoEventTracer instance."""
     tracer = TangoEventTracer()
     yield tracer
+    tracer.unsubscribe_all()
     tracer.clear_events()
 
 
