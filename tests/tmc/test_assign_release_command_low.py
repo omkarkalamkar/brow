@@ -2,7 +2,6 @@
  Command for low"""
 import json
 import logging
-import time
 
 import pytest
 from assertpy import assert_that
@@ -136,7 +135,7 @@ def test_assign_release_defective_csp_sdp(
         csp_sim.SetDefective(json.dumps({"enabled": False}))
     elif defective_device == "sdp_subarray":
         sdp_sim.SetDefective(json.dumps({"enabled": False}))
-    time.sleep(0.15)
+        event_tracer.unsubscribe_all()
 
 
 @pytest.mark.SKA_low
