@@ -3,7 +3,6 @@ default :
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-  PYTHONFAULTHANDLER: "1"
 
 cache:
   paths:
@@ -95,7 +94,6 @@ on-demand-destroy:
   allow_failure: true
 
 k8s-test:
-  timeout: 10m
   variables:
     KUBE_NAMESPACE: "ci-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA"
     SERVICE_ACCOUNT: "ci-svc-$CI_PROJECT_NAME-$CI_COMMIT_SHORT_SHA"

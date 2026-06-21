@@ -35,7 +35,6 @@ LOGGER = logging.getLogger(__name__)
 
 
 @pytest.mark.SKA_low
-@pytest.mark.skip
 @pytest.mark.parametrize("defective_device", ["csp_subarray", "sdp_subarray"])
 def test_assign_release_defective_csp_sdp(
     central_node_low: CentralNodeWrapperLow,

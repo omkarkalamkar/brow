@@ -266,10 +266,9 @@ def event_recorder() -> Generator[EventRecorder, None, None]:
 @pytest.fixture
 def event_tracer():
     """Returns a TangoEventTracer instance."""
-    return TangoEventTracer()
-    # yield tracer
-    # tracer.unsubscribe_all()
-    # tracer.clear_events()
+    tracer = TangoEventTracer()
+    yield tracer
+    tracer.clear_events()
 
 
 # @pytest.fixture(scope="function", autouse=True)
