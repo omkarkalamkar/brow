@@ -845,7 +845,7 @@ version = "3.29.0"
 description = "A platform independent file lock."
 optional = false
 python-versions = ">=3.10"
-groups = ["main"]
+groups = ["main", "dev"]
 files = [
     {file = "filelock-3.29.0-py3-none-any.whl", hash = "sha256:96f5f6344709aa1572bbf631c640e4ebeeb519e08da902c39a001882f30ac258"},
     {file = "filelock-3.29.0.tar.gz", hash = "sha256:69974355e960702e789734cb4871f884ea6fe50bd8404051a3530bc07809cf90"},
@@ -3020,6 +3020,33 @@ url = "https://pypi.org/simple"
 reference = "PyPI-public"
 
 [[package]]
+name = "pytest-isolate"
+version = "0.0.14"
+description = "Run pytest tests in isolated subprocesses "
+optional = false
+python-versions = ">=3.7"
+groups = ["dev"]
+files = [
+    {file = "pytest_isolate-0.0.14-py3-none-any.whl", hash = "sha256:966052a9eac9c28b52f92880efd057e1eb85681618c186113dfd59ee4edb800e"},
+    {file = "pytest_isolate-0.0.14.tar.gz", hash = "sha256:c1be5b2f0c5d981e347935aba3874b394d6c051a6a1346cbd020a4a5485148ce"},
+]
+
+[package.dependencies]
+dill = "*"
+filelock = "*"
+pytest = "*"
+tblib = "*"
+
+[package.extras]
+dev = ["twine"]
+gpu = ["pynvml"]
+
+[package.source]
+type = "legacy"
+url = "https://pypi.org/simple"
+reference = "PyPI-public"
+
+[[package]]
 name = "pytest-json-report"
 version = "1.5.0"
 description = "A pytest plugin to report test results as JSON files"
@@ -3126,26 +3153,6 @@ files = [
 
 [package.dependencies]
 pytest = "*"
-
-[package.source]
-type = "legacy"
-url = "https://pypi.org/simple"
-reference = "PyPI-public"
-
-[[package]]
-name = "pytest-timeout"
-version = "2.4.0"
-description = "pytest plugin to abort hanging tests"
-optional = false
-python-versions = ">=3.7"
-groups = ["dev"]
-files = [
-    {file = "pytest_timeout-2.4.0-py3-none-any.whl", hash = "sha256:c42667e5cdadb151aeb5b26d114aff6bdf5a907f176a007a30b940d3d865b5c2"},
-    {file = "pytest_timeout-2.4.0.tar.gz", hash = "sha256:7e68e90b01f9eff71332b25001f85c75495fc4e3a836701876183c4bcfd0540a"},
-]
-
-[package.dependencies]
-pytest = ">=7.0.0"
 
 [package.source]
 type = "legacy"
@@ -4120,6 +4127,23 @@ url = "https://pypi.org/simple"
 reference = "PyPI-public"
 
 [[package]]
+name = "tblib"
+version = "3.2.2"
+description = "Traceback serialization library."
+optional = false
+python-versions = ">=3.9"
+groups = ["dev"]
+files = [
+    {file = "tblib-3.2.2-py3-none-any.whl", hash = "sha256:26bdccf339bcce6a88b2b5432c988b266ebbe63a4e593f6b578b1d2e723d2b76"},
+    {file = "tblib-3.2.2.tar.gz", hash = "sha256:e9a652692d91bf4f743d4a15bc174c0b76afc750fe8c7b6d195cc1c1d6d2ccec"},
+]
+
+[package.source]
+type = "legacy"
+url = "https://pypi.org/simple"
+reference = "PyPI-public"
+
+[[package]]
 name = "tomli"
 version = "2.4.1"
 description = "A lil' TOML parser"
@@ -4434,4 +4458,4 @@ reference = "PyPI-public"
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.10"
-content-hash = "fbca47a8a14da0807405b801a08d6c4a3837d05d29498846f511754615b8732a"
+content-hash = "a83fd7e58a3e5a11c54e40798d067b183d12ad242f2dfcc1876b7cb71504a1b7"
