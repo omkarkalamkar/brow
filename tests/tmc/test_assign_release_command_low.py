@@ -223,6 +223,7 @@ def test_assign_release_timeout_sdp(
         ResultCode.FAILED,
     )
     sdp_sim.ResetDelayInfo()
+    event_tracer.unsubscribe_all()
 
 
 @pytest.mark.SKA_low
@@ -339,6 +340,7 @@ def test_release_exception_propagation(
         ResultCode.FAILED,
     )
     csp_sim.SetDefective(json.dumps(RESET_DEFECT))
+    event_tracer.unsubscribe_all()
 
 
 @pytest.mark.SKA_low
@@ -422,3 +424,4 @@ def test_assign_release_timeout_csp(
         ObsState.EMPTY,
     )
     csp_subarray_sim.SetDefective(json.dumps(RESET_DEFECT))
+    event_tracer.unsubscribe_all()

@@ -244,3 +244,4 @@ def validate_subarry_obsState(
         "obsState",
         ObsState.FAULT,
     )
+    event_tracer.unsubscribe_all()
