@@ -208,4 +208,3 @@ def configure_command_reports_error_propagate(
         "obsState",
         ObsState.IDLE,
     )
-    event_tracer.unsubscribe_all()

@@ -346,4 +346,3 @@ def subarray_node_transitions_to_fault(
     ).within_timeout(TIMEOUT).has_change_event_occurred(
         mccs_sub_sim, "obsState", ObsState.ABORTED
     )
-    event_tracer.unsubscribe_all()

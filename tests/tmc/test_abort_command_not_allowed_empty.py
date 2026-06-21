@@ -90,4 +90,3 @@ def tmc_status(
         "obsState",
         ObsState.EMPTY,
     )
-    event_tracer.unsubscribe_all()

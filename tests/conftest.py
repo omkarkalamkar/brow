@@ -266,27 +266,27 @@ def event_recorder() -> Generator[EventRecorder, None, None]:
 @pytest.fixture
 def event_tracer():
     """Returns a TangoEventTracer instance."""
-    tracer = TangoEventTracer()
-    yield tracer
-    tracer.unsubscribe_all()
-    tracer.clear_events()
+    return TangoEventTracer()
+    # yield tracer
+    # tracer.unsubscribe_all()
+    # tracer.clear_events()
 
 
-@pytest.fixture(scope="function", autouse=True)
-def clear_tango_cache():
-    "Clears the internal cpp nettwork cache"
-    # Clean up before the test starts
-    try:
-        tango.ApiUtil.cleanup()
-    except tango.DevFailed:
-        pass
+# @pytest.fixture(scope="function", autouse=True)
+# def clear_tango_cache():
+#     "Clears the internal cpp nettwork cache"
+#     # Clean up before the test starts
+#     try:
+#         tango.ApiUtil.cleanup()
+#     except tango.DevFailed:
+#         pass
 
-    yield
-    # Clean up after the test finishes
-    try:
-        tango.ApiUtil.cleanup()
-    except tango.DevFailed:
-        pass
+#     yield
+#     # Clean up after the test finishes
+#     try:
+#         tango.ApiUtil.cleanup()
+#     except tango.DevFailed:
+#         pass
 
 
 @pytest.fixture(scope="session", autouse=True)
