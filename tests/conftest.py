@@ -1,7 +1,9 @@
 """Test configuration file for ska_tmc_low_integration"""
 import json
 import logging
+import multiprocessing
 import os
+import sys
 import time
 from dataclasses import dataclass
 from os.path import dirname, join
@@ -85,6 +87,17 @@ def pytest_addoption(parser):
             "need to spin up a Tango test context"
         ),
     )
+
+
+# this hook runs before any tets are collected or executed
+def pytest_configure(config):
+    """Force Python to spawn clean processes
+    instead of forking corrupt cpp stuctures"""
+    if sys.platform != "win32":
+        try:
+            multiprocessing.set_start_method("spawn", force=True)
+        except (RuntimeError, ValueError):
+            pass
 
 
 def get_input_str(path):
