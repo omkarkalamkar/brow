@@ -114,7 +114,6 @@ def central_node_assign_resources(
     subarray_node_low: SubarrayNodeWrapperLow,
     event_tracer: TangoEventTracer,
 ):
-
     """
     This method invokes simulates empty event in sdpsubarray device
 

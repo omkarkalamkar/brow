@@ -52,7 +52,6 @@ def execute_command(
 
     pytest.defective_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
     match command:
-
         case "ENDSCAN":
             _, pytest.unique_id = tmc.subarray_node.EndScan()
         case "SCAN":
