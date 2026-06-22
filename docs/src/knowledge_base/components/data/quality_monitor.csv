@@ -3,3 +3,8 @@ State,DevState (Enum),Yes,Change Event
 Status,DevString,No,
 qualityMetricsCspSubarray,DevString,Yes,Change Event
 readyToScan,DevBoolean,Yes,Change Event
+percentageVisReceiveStreamsStarted,DevDouble,Yes,Change Event
+totalVisReceiveHeaps,DevLong64,Yes,Change Event
+totalVisReceiveHeapsIncomplete,DevLong64,Yes,Change Event
+totalVisReceiveHeapsBlocked,DevLong64,Yes,Change Event
+totalVisReceiveHeapsDropped,DevLong64,Yes,Change Event
