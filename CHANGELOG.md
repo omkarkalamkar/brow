@@ -12,8 +12,8 @@ Updated
 * TMC supports optional parameter `duration` for scan command
 * Updated SubarrayNode Low to support CSP Scan schema 8.4 and SDP Scan schema 2.1
 * This version has two feature flags one for Scan Start time and other for duration. The default values for these flags are set to false. User needs to enable them in the umbrella chart as per the input JSON to be provided.
-  - **ScanStartTimeEnabled** :  This refers to the property provided to enable/disable start_time in Scan JSON. Currently defaults to false.
-  - **ScanDurationEnabled** :  This refers to the property provided to enable/disable duration in Scan JSON. Currently defaults to false.
+    * **ScanStartTimeEnabled** :  This refers to the property provided to enable/disable start_time in Scan JSON. Currently defaults to false.
+    * **ScanDurationEnabled** :  This refers to the property provided to enable/disable duration in Scan JSON. Currently defaults to false.
 
 **PLEASE NOTE: Since this version, SubarrayNode Low supports CSP Scan schema 8.4 or higher version. There is no backword compatibility.**
 
@@ -164,11 +164,6 @@ Fixed
   ObsState when applicable.
 
 * logging level is set to 4 (``INFO`` level). To set the logging level of one or more specific component, refer to advanced cutomization options.
-
-
-
-
-
 
 [2.12.0]
 ************
