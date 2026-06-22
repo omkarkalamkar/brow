@@ -7,11 +7,12 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 [Unreleased]
 ************
-**PLEASE NOTE: Since this version, SubarrayNode Low supports CSP Scan schema 8.4 or higher version. There is no backword compatibility.**
 Updated
 -------
 * TMC supports optional parameter `duration` for scan command
 * Updated SubarrayNode Low to support CSP Scan schema 8.4 and SDP Scan schema 2.1
+
+**PLEASE NOTE: Since this version, SubarrayNode Low supports CSP Scan schema 8.4 or higher version. There is no backword compatibility.**
 
 [2.15.0]
 ********
