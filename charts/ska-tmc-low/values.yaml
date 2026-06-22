@@ -268,14 +268,27 @@ ska-tango-transducer:
         - name: "qualitymonitor01"
           deviceName: "low-tmc/subarray-quality-monitor/01"
           readPeriod: "1000"
-          subscribedAttributes: ["qualityMetricsCspSubarray|low-csp/subarray/01/qualityAssuranceMetrics|json", "qualityMetricsMccsSubarray|low-mccs/subarray/01/qualityAssuranceMetrics|json"]
+          subscribedAttributes: ["qualityMetricsCspSubarray|low-csp/subarray/01/qualityAssuranceMetrics|json", 
+                                 "qualityMetricsMccsSubarray|low-mccs/subarray/01/qualityAssuranceMetrics|json",
+                                 "qualityMetricsSdpStreamsStarted|low-sdp/queueconnector/01/percentageVisReceiveStreamsStarted",
+                                 "qualityMetricsSdpHeaps|low-sdp/queueconnector/01/totalVisReceiveHeaps",
+                                 "qualityMetricsSdpHeapsIncomplete|low-sdp/queueconnector/01/totalVisReceiveHeapsIncomplete",
+                                 "qualityMetricsSdpHeapsBlocked|low-sdp/queueconnector/01/totalVisReceiveHeapsBlocked",
+                                 "qualityMetricsSdpHeapsDropped|low-sdp/queueconnector/01/totalVisReceiveHeapsDropped"]
           readAttributes: []
           aggregatedClassAttributes: []
           derivedAttributes: ["readyToScan|Boolean|qualityMetricsCspSubarray['low-cbf/subarray/01']['processorsReadyPercent'] == 100.0"]
         - name: "qualitymonitor02"
           deviceName: "low-tmc/subarray-quality-monitor/02"
           readPeriod: "1000"
-          subscribedAttributes: ["qualityMetricsCspSubarray|low-csp/subarray/02/qualityAssuranceMetrics|json", "qualityMetricsMccsSubarray|low-mccs/subarray/02/qualityAssuranceMetrics|json"]
+          subscribedAttributes: ["qualityMetricsCspSubarray|low-csp/subarray/02/qualityAssuranceMetrics|json", 
+                                 "qualityMetricsMccsSubarray|low-mccs/subarray/02/qualityAssuranceMetrics|json",
+                                  "qualityMetricsSdpStreamsStarted|low-sdp/queueconnector/02/percentageVisReceiveStreamsStarted",
+                                  "qualityMetricsSdpHeaps|low-sdp/queueconnector/02/totalVisReceiveHeaps",
+                                  "qualityMetricsSdpHeapsIncomplete|low-sdp/queueconnector/02/totalVisReceiveHeapsIncomplete",
+                                  "qualityMetricsSdpHeapsBlocked|low-sdp/queueconnector/02/totalVisReceiveHeapsBlocked",
+                                  "qualityMetricsSdpHeapsDropped|low-sdp/queueconnector/02/totalVisReceiveHeapsDropped"]
+
           readAttributes: []
           aggregatedClassAttributes: []
           derivedAttributes: ["readyToScan|Boolean|qualityMetricsCspSubarray['low-cbf/subarray/02']['processorsReadyPercent'] == 100.0"]
