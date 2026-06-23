@@ -19,6 +19,10 @@ Updated
   - ska-tmc-cspleafnodes: v0.46.0
   - ska-tmc-mccsleafnodes: v0.18.0
 
+Fixed
+-----
+* Fixed the bug SKB-1391: Abort command failure on CSP subarray leaf node
+
 [2.15.0]
 ********
 Added
