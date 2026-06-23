@@ -19,9 +19,9 @@ Updated
 * Utilized following charts with Pytango 10.3.0 update:
 
   - ska-tmc-centralnode: v1.5.0
-  - ska-tmc-subarraynode: v1.14.0
+  - ska-tmc-subarraynode: v2.1.0
   - ska-tmc-sdpleafnodes: v0.31.0
-  - ska-tmc-cspleafnodes: v0.46.0
+  - ska-tmc-cspleafnodes: v0.47.0
   - ska-tmc-mccsleafnodes: v0.18.0
 
 **PLEASE NOTE: Since this version, SubarrayNode Low supports CSP Scan schema 8.4 or higher version. There is no backword compatibility.**
