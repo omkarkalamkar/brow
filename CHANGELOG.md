@@ -14,8 +14,11 @@ Updated
 * This version has two feature flags one for Scan Start time and other for duration. User needs to enable them in the umbrella chart as per the input JSON to be provided.
     * ScanStartTimeEnabled :  This refers to the property provided to enable/disable start_time in Scan JSON. Currently defaults to false.
     * ScanDurationEnabled :  This refers to the property provided to enable/disable duration in Scan JSON. Currently defaults to false.
+* Utilized simulators chart 1.15.0 with QualityMetrics introduced on SDP Subarray simulator
+* Subscribed SDP Subarray QualityMetrics on TMC Quality Monitor
 
 **PLEASE NOTE: Since this version, SubarrayNode Low supports CSP Scan schema 8.4 or higher version. There is no backword compatibility.**
+
 
 [2.15.0]
 ********
@@ -67,6 +70,7 @@ Updated
 * Subscribed MCCS Subarray QualityMetrics on TMC Quality Monitor
 * Improved test for MCCS early Scan scenario test
 * Improved test data for scalability tests to check below issues -
+
 1.if PST details are missing in json , threads for PSS are able to start
 2.PST beam IDs other than just 1 , can be provided 
 
