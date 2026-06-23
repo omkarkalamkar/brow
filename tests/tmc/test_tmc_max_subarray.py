@@ -196,7 +196,6 @@ def delay_models_ready(
     generated_delay_model_json = INITIAL_LOW_DELAY_JSON
     for attribute in attributes:
         while time.time() < wait_time:
-
             generated_delay_model = (
                 subarray_node_low.csp_subarray_leaf_node.read_attribute(
                     attribute
@@ -206,7 +205,6 @@ def delay_models_ready(
                 generated_delay_model is None
                 or str(generated_delay_model).strip() == ""
             ):
-
                 continue
 
             generated_delay_model_json = json.loads(generated_delay_model)

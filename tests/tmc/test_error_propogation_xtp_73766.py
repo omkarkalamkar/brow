@@ -83,7 +83,6 @@ def execute_command(
                 )
 
             case "ENDSCAN":
-
                 pytest.defective_subarray.SetDefective(
                     INTERMEDIATE_CONFIGURING_STATE_DEFECT
                 )
@@ -92,7 +91,6 @@ def execute_command(
                     subarray_node_low,
                 )
             case "SCAN":
-
                 pytest.defective_subarray.SetDefective(
                     INTERMEDIATE_CONFIGURING_STATE_DEFECT
                 )
@@ -102,10 +100,8 @@ def execute_command(
                     command_input_factory,
                 )
     elif device == "SDP":
-
         match command:
             case "END":
-
                 pytest.defective_subarray.SetDelayInfo(json.dumps({"End": 55}))
 
                 perform_ready_transition_with_end(
@@ -114,7 +110,6 @@ def execute_command(
                 )
 
             case "ENDSCAN":
-
                 pytest.defective_subarray.SetDelayInfo(
                     json.dumps({"EndScan": 55})
                 )
@@ -124,7 +119,6 @@ def execute_command(
                     # event_tracer,
                 )
             case "SCAN":
-
                 pytest.defective_subarray.SetDelayInfo(
                     json.dumps({"Scan": 55})
                 )

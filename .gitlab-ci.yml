@@ -1,5 +1,4 @@
 default :
-
     image: $SKA_K8S_TOOLS_BUILD_DEPLOY
 
 variables:
