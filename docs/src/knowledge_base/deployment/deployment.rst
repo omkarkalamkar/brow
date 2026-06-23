@@ -198,8 +198,8 @@ Subarray Node
     #. **IsAutoRecoveryEnabled** :  This refers to the feature flag i.e used temporarily till all the nodes are tested with auto recovery functionality. Currently defaults to "false".
     #. **TelmodelSource** :  This refers to the TelmodelSource of SubarrayNode TANGO device. Currently defaults to "car://gitlab.com/ska-telescope/ska-telmodel-data?main#tmdata".
     #. **TelmodelPath** :  This refers to the TelmodelPath of SubarrayNode TANGO device. Currently defaults to "instrument/ska1_low/layout/low-layout.json".
-    #. **ScanStartTimeOffset** :  This refers to the offset (in nanoseconds) that can be added when TMC determines scan time. Currently defaults to 10 nanoseconds.
-    #. **StartTimeEnabled** :  This refers to the property provided to enable/disable start_time in Scan JSON. Currently defaults to false.
+    #. **ScanStartTimeEnabled** :  This refers to the property provided to enable/disable start_time in Scan JSON. Currently defaults to false.
+    #. **ScanDurationEnabled** :  This refers to the property provided to enable/disable duration in Scan JSON. Currently defaults to false.
     #. **PreRecoveryCheckTimeDuration** : This property refers to time duration subarray node needs to wait before evaluating the auto recovery condition. Within the time duration if the subsystems transition into final/previous observation state then the auto recovery can be proceeded as per conditions. Default value is 1 second.
 
         .. note::
