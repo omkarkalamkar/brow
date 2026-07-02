@@ -338,6 +338,11 @@ def then_subarrays_in_ready_obsstate(
             transitions and long-running command results.
     """
 
+    MESSAGE = (
+        "EndScan command is not invoked as the subsystem Subarray"
+        " is already in READY ObsState."
+    )
+
     assert_that(event_tracer).described_as(
         'FAILED ASSUMPTION IN "THEN" STEP: '
         "'the csp subarray must be in the READY obsState'"
@@ -386,8 +391,7 @@ def then_subarrays_in_ready_obsstate(
                 json.dumps(
                     (
                         int(ResultCode.OK),
-                        "EndScan command is not invoked as the subsystem"
-                        " Subarray is already in READY ObsState.",
+                        MESSAGE,
                     )
                 ),
             ),
@@ -408,8 +412,7 @@ def then_subarrays_in_ready_obsstate(
                 json.dumps(
                     (
                         int(ResultCode.OK),
-                        "EndScan command is not invoked as the subsystem"
-                        " Subarray is already in READY ObsState.",
+                        MESSAGE,
                     )
                 ),
             ),
@@ -430,8 +433,7 @@ def then_subarrays_in_ready_obsstate(
                 json.dumps(
                     (
                         int(ResultCode.OK),
-                        "EndScan command is not invoked as the subsystem"
-                        " Subarray is already in READY ObsState.",
+                        MESSAGE,
                     )
                 ),
             ),
