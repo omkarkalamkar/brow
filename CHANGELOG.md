@@ -5,6 +5,40 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[Unreleased]
+*************
+Updated
+-------
+* TMC supports optional parameter `duration` for scan command
+* Updated SubarrayNode Low to support CSP Scan schema 8.4 and SDP Scan schema 2.1
+* This version has two feature flags one for Scan Start time and other for duration. User needs to enable them in the umbrella chart as per the input JSON to be provided.
+    * ScanStartTimeEnabled :  This refers to the property provided to enable/disable start_time in Scan JSON. Currently defaults to false.
+    * ScanDurationEnabled :  This refers to the property provided to enable/disable duration in Scan JSON. Currently defaults to false.
+* Updated following TMC component docker images:
+
+  - ska-tmc-subarraynode: v2.1.0
+  - ska-tmc-cspleafnodes: v0.47.0
+
+**PLEASE NOTE: Since this version, SubarrayNode Low supports CSP Scan schema 8.4 or higher version. There is no backword compatibility.**
+
+[2.17.0-rc.1]
+*************
+Updated
+-------
+* Utilized simulators chart 1.15.0 with QualityMetrics introduced on SDP Subarray simulator
+* Subscribed SDP Subarray QualityMetrics on TMC Quality Monitor
+* Utilized following charts with Pytango 10.3.0 update:
+
+  - ska-tmc-centralnode: v1.5.0
+  - ska-tmc-subarraynode: v1.14.0
+  - ska-tmc-sdpleafnodes: v0.31.0
+  - ska-tmc-cspleafnodes: v0.46.0
+  - ska-tmc-mccsleafnodes: v0.18.0
+
+Fixed
+-----
+* Fixed the bug SKB-1391: Abort command failure on CSP subarray leaf node
+
 [2.15.0]
 ********
 Added
@@ -55,8 +89,9 @@ Updated
 * Subscribed MCCS Subarray QualityMetrics on TMC Quality Monitor
 * Improved test for MCCS early Scan scenario test
 * Improved test data for scalability tests to check below issues -
-1.if PST details are missing in json , threads for PSS are able to start
-2.PST beam IDs other than just 1 , can be provided 
+
+  1. if PST details are missing in json , threads for PSS are able to start
+  2. PST beam IDs other than just 1 , can be provided
 
 
 [2.15.1-rc.1]
@@ -152,11 +187,6 @@ Fixed
   ObsState when applicable.
 
 * logging level is set to 4 (``INFO`` level). To set the logging level of one or more specific component, refer to advanced cutomization options.
-
-
-
-
-
 
 [2.12.0]
 ************

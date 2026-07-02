@@ -210,7 +210,6 @@ def verify_delay_generated_for_used_stn_beams(
                 generated_delay_model is None
                 or str(generated_delay_model).strip() == ""
             ):
-
                 continue
 
             generated_delay_model_json = json.loads(generated_delay_model)

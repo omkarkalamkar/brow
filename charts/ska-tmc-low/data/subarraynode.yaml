@@ -17,8 +17,8 @@ entrypoints:
 {{- $TelmodelSource := .Values.deviceServers.subarraynode.TelmodelSource }}
 {{- $TelmodelPath := .Values.deviceServers.subarraynode.TelmodelPath }}
 {{- $AutoRecoveryEnabled := .Values.deviceServers.subarraynode.IsAutoRecoveryEnabled }}
-{{- $ScanStartTimeOffset := .Values.deviceServers.subarraynode.ScanStartTimeOffset }}
-{{- $StartTimeEnabled := .Values.deviceServers.subarraynode.StartTimeEnabled }}
+{{- $ScanStartTimeEnabled := .Values.deviceServers.subarraynode.ScanStartTimeEnabled }}
+{{- $ScanDurationEnabled := .Values.deviceServers.subarraynode.ScanDurationEnabled }}
 {{- $PreRecoveryCheckTimeDuration := .Values.deviceServers.subarraynode.PreRecoveryCheckTimeDuration }}
 
 server:
@@ -120,12 +120,12 @@ server:
           - name: "IsAutoRecoveryEnabled"
             values:
               - "{{ $AutoRecoveryEnabled }}"
-          - name: "ScanStartTimeOffset"
+          - name: "ScanStartTimeEnabled"
             values:
-              - "{{ $ScanStartTimeOffset }}"
-          - name: "StartTimeEnabled"
+              - "{{ $ScanStartTimeEnabled }}"
+          - name: "ScanDurationEnabled"
             values:
-              - "{{ $StartTimeEnabled }}"
+              - "{{ $ScanDurationEnabled }}"
           - name: "PreRecoveryCheckTimeDuration"
             values:
               - "{{ $PreRecoveryCheckTimeDuration }}"

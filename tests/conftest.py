@@ -207,9 +207,9 @@ def SN_low_16_SN() -> Generator[SubarrayNodeWrapperLow, None, None]:
 
 
 @pytest.fixture()
-def subarray_node_real_csp_low() -> Generator[
-    SubarrayNodeCspWrapperLow, None, None
-]:
+def subarray_node_real_csp_low() -> (
+    Generator[SubarrayNodeCspWrapperLow, None, None]
+):
     """Return SubarrayNode and calls tear down"""
     subarray = SubarrayNodeCspWrapperLow()
     yield subarray
@@ -218,9 +218,9 @@ def subarray_node_real_csp_low() -> Generator[
 
 
 @pytest.fixture()
-def central_node_real_csp_low() -> Generator[
-    CentralNodeCspWrapperLow, None, None
-]:
+def central_node_real_csp_low() -> (
+    Generator[CentralNodeCspWrapperLow, None, None]
+):
     """Return CentralNode for Low Telescope and calls tear down"""
     central_node = CentralNodeCspWrapperLow()
     yield central_node

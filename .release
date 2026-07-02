@@ -1,32 +1,46 @@
-release=2.16.0-rc.2
-tag=2.16.0-rc.2
+release=2.17.0-rc.1
+tag=2.17.0-rc.1
 tag_description=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.16.0-rc.2**
+**1. ska-tmc-low-integration 2.17.0-rc.1**
 
-    **1.1 ska-tmc-low 2.16.0-rc.1 - 2.16.0-rc.2:**
+    **1.1 ska-tmc-low 2.16.0-rc.2 - 2.17.0-rc.1:**
         Updated
         -------
-        * Adapted Abort command flow for MCCS 6.4.0+ AbortSubarray workflow.
-        * Utilized ska-tmc-mccsleafnodes 0.17.3 and ska-tmc-simulators 1.13.0.
+        * Utilized simulators chart 1.15.0 with QualityMetrics introduced on SDP Subarray simulator
+        * Subscribed SDP Subarray QualityMetrics on TMC Quality Monitor
+        * Utilized following charts with Pytango 10.3.0 update:
+
+        - ska-tmc-centralnode: v1.5.0
+        - ska-tmc-subarraynode: v1.14.0
+        - ska-tmc-sdpleafnodes: v0.31.0
+        - ska-tmc-cspleafnodes: v0.46.0
+        - ska-tmc-mccsleafnodes: v0.18.0
 
         Fixed
         -----
-        * Updated CSP Subarray Leaf Node (0.45.5) to invoke GoToIdle command on CSP Subarray as part of End command
+        * Fixed the bug SKB-1391: Abort command failure on CSP subarray leaf node
 
 
 release_notes=
 **Charts:**
 
-**1. ska-tmc-low-integration 2.16.0-rc.2**
+**1. ska-tmc-low-integration 2.17.0-rc.1**
 
-    **1.1 ska-tmc-low 2.16.0-rc.1 - 2.16.0-rc.2:**
+    **1.1 ska-tmc-low 2.16.0-rc.2 - 2.17.0-rc.1:**
         Updated
         -------
-        * Adapted Abort command flow for MCCS 6.4.0+ AbortSubarray workflow.
-        * Utilized ska-tmc-mccsleafnodes 0.17.3 and ska-tmc-simulators 1.13.0.
+        * Utilized simulators chart 1.15.0 with QualityMetrics introduced on SDP Subarray simulator
+        * Subscribed SDP Subarray QualityMetrics on TMC Quality Monitor
+        * Utilized following charts with Pytango 10.3.0 update:
+
+        - ska-tmc-centralnode: v1.5.0
+        - ska-tmc-subarraynode: v1.14.0
+        - ska-tmc-sdpleafnodes: v0.31.0
+        - ska-tmc-cspleafnodes: v0.46.0
+        - ska-tmc-mccsleafnodes: v0.18.0
 
         Fixed
         -----
-        * Updated CSP Subarray Leaf Node (0.45.5) to invoke GoToIdle command on CSP Subarray as part of End command
+        * Fixed the bug SKB-1391: Abort command failure on CSP subarray leaf node

@@ -414,7 +414,6 @@ def _check_scanning_and_ready(
         SN_low_16_SN.set_subarray_id(subarray_id)
 
         try:
-
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
@@ -431,7 +430,6 @@ def _check_scanning_and_ready(
             )
 
     if is_long_scan:
-
         plan_map = parse_plan_map(pytest.PlanMap)
 
         max_scan_duration = _max_scan_duration_from_plan_map(plan_map)
@@ -916,7 +914,6 @@ def verify_subarray_in_ready_observation_state(
             wait_time = time.time() + 10
             logging.info("chekcing for attribute %s", attribute)
             while time.time() < wait_time:
-
                 generated_delay_model = (
                     SN_low_16_SN.csp_subarray_leaf_node.read_attribute(
                         attribute
@@ -1068,7 +1065,6 @@ def scan_on_configured_subarrays(
         SN_low_16_SN.execute_transition("Scan", scan_input_json)
 
         try:
-
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(
@@ -1254,7 +1250,6 @@ def release_all_involved(
             "ReleaseResources", json.dumps(rel)
         )
         try:
-
             assert_that(event_tracer).within_timeout(
                 TIMEOUT
             ).has_change_event_occurred(

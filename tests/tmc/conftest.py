@@ -537,7 +537,6 @@ def move_tmc_to_intial_state(
     """
 
     match initialObsState:
-
         case "IDLE":
             perform_idle_transition(
                 central_node_low,
@@ -547,7 +546,6 @@ def move_tmc_to_intial_state(
             )
 
         case "READY":
-
             perform_idle_transition(
                 central_node_low,
                 subarray_node_low,
@@ -562,7 +560,6 @@ def move_tmc_to_intial_state(
                 command_input_factory,
             )
         case "SCANNING":
-
             perform_idle_transition(
                 central_node_low,
                 subarray_node_low,
@@ -632,7 +629,6 @@ def execute_command_on_tmc_with_defectivesetup(
             pytest.defective_subarray.SetDefective(ERROR_PROPAGATION_DEFECT)
 
     match command:
-
         case "CONFIGURE":
             perform_configure(
                 subarray_node_low,
@@ -640,19 +636,16 @@ def execute_command_on_tmc_with_defectivesetup(
             )
 
         case "END":
-
             perform_ready_transition_with_end(
                 subarray_node_low,
                 event_tracer,
             )
 
         case "ENDSCAN":
-
             verify_scanning_transition_with_endscan(
                 subarray_node_low,
             )
         case "SCAN":
-
             perform_scan(
                 subarray_node_low,
                 command_input_factory,
