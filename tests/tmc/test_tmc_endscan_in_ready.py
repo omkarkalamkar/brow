@@ -386,7 +386,7 @@ def then_subarrays_in_ready_obsstate(
                 json.dumps(
                     (
                         int(ResultCode.OK),
-                        "EndScan command is not invoked as the MCCS"
+                        "EndScan command is not invoked as the subsystem"
                         " Subarray is already in READY ObsState.",
                     )
                 ),
@@ -408,7 +408,7 @@ def then_subarrays_in_ready_obsstate(
                 json.dumps(
                     (
                         int(ResultCode.OK),
-                        "EndScan command is not invoked as the SDP"
+                        "EndScan command is not invoked as the subsystem"
                         " Subarray is already in READY ObsState.",
                     )
                 ),
@@ -430,7 +430,7 @@ def then_subarrays_in_ready_obsstate(
                 json.dumps(
                     (
                         int(ResultCode.OK),
-                        "EndScan command is not invoked as the CSP"
+                        "EndScan command is not invoked as the subsystem"
                         " Subarray is already in READY ObsState.",
                     )
                 ),
