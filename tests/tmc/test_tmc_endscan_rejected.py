@@ -246,9 +246,7 @@ def given_subarray_ended_scan(
             command_result,
             "mccs",
         )
-        subarray_node_low.mccs_subarray1.SetDefective(
-            SDP_COMMAND_REJECTED_DEFECT
-        )
+        subarray_node_low.mccs_subarray1.SetDefective(COMMAND_REJECTED_DEFECT)
     elif "sdp" in pytest.subsystems_to_endscan:
         subarray_node_low.sdp_subarray_leaf_node.EndScan()
         LOGGER.info(
@@ -266,6 +264,9 @@ def given_subarray_ended_scan(
             subarray_node_low.sdp_subarray_leaf_node,
             command_result,
             "sdp",
+        )
+        subarray_node_low.sdp_subarray1.SetDefective(
+            SDP_COMMAND_REJECTED_DEFECT
         )
     elif "csp" in pytest.subsystems_to_endscan:
         subarray_node_low.csp_subarray_leaf_node.EndScan()
