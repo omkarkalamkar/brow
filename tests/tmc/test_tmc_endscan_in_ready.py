@@ -44,23 +44,6 @@ def test_tmc_endscan_command_in_ready():
     """
 
 
-@scenario(
-    "../features/tmc/check_endscan_in_ready.feature",
-    "EndScan transitions the subarray to READY when selected subsystems have"
-    " already ended scan and reject the EndScan command.",
-)
-def test_tmc_endscan_command_in_rejected():
-    """BDD test scenario for verifying successful execution of
-    the Low EndScan command in a TMC when some subsystem subarrays
-    have already ended scan and are in READY obsState and reject the
-    EndScan command.
-
-    This scenario validates the TMC behavior when a subarray and its
-    subsystem leaf nodes are already in READY before the EndScan
-    command is invoked and the subsystems reject the EndScan command.
-    """
-
-
 @given("a subarray is in SCANNING obsState")
 def given_subarray_in_scanning(
     command_input_factory: JsonFactory,

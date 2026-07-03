@@ -54,40 +54,6 @@ def _normalize_subsystems(subsystem: str) -> list[str]:
     return [name.strip() for name in subsystem.split(",") if name.strip()]
 
 
-def _assert_subsystem_ready_state(
-    event_tracer: TangoEventTracer,
-    leaf_node,
-    state_attribute: str,
-    subsystem_name: str,
-) -> None:
-    """Assert that a subsystem leaf node reaches the READY state."""
-    assert_that(event_tracer).described_as(
-        f'FAILED ASSUMPTION IN "GIVEN" STEP: "{subsystem_name}" '
-        f"subsystem is expected to be in READY obstate"
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        leaf_node,
-        state_attribute,
-        ObsState.READY,
-    )
-
-
-def _assert_subsystem_command_result(
-    event_tracer: TangoEventTracer,
-    leaf_node,
-    expected_result: tuple,
-    subsystem_name: str,
-) -> None:
-    """Assert that a subsystem leaf node reports expected command result."""
-    assert_that(event_tracer).described_as(
-        f'FAILED ASSUMPTION IN "GIVEN" STEP: "{subsystem_name}" '
-        "subsystem is expected to report the expected command result"
-    ).within_timeout(TIMEOUT).has_change_event_occurred(
-        leaf_node,
-        "longRunningCommandResult",
-        expected_result,
-    )
-
-
 @given("a subarray is in SCANNING obsState")
 def given_subarray_in_scanning(
     command_input_factory: JsonFactory,
@@ -220,71 +186,108 @@ def given_subarray_ended_scan(
         event_tracer: Tango event tracer used to verify subsystem state
             transitions and command completion.
     """
+    pytest.subsystems_to_endscan = subsystem.split(",")
 
-    pytest.subsystems_to_endscan = _normalize_subsystems(subsystem)
-
-    command_result = (
-        Anything,
-        json.dumps((int(ResultCode.OK), "Command Completed")),
-    )
-
+    # Invoke EndScan on the specified subsystem(s) and verify that the
+    # obsState changes to READY
     if "mccs" in pytest.subsystems_to_endscan:
+
         subarray_node_low.mccs_subarray_leaf_node.EndScan()
         LOGGER.info(
             "Invoked EndScan on MCCS Subarray Leaf Node: %s",
             subarray_node_low.mccs_subarray_leaf_node.dev_name(),
         )
-        _assert_subsystem_ready_state(
-            event_tracer,
+
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "GIVEN" STEP: '
+            "'a mccs subarray in READY obsState'"
+            f"({subarray_node_low.mccs_subarray_leaf_node.dev_name()}) "
+            "is expected to be in READY obstate",
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.mccs_subarray_leaf_node,
             "obsState",
-            "mccs",
+            ObsState.READY,
         )
-        _assert_subsystem_command_result(
-            event_tracer,
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "GIVEN" STEP: '
+            "'a mccs subarray in READY obsState'"
+            f"({subarray_node_low.mccs_subarray_leaf_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.mccs_subarray_leaf_node,
-            command_result,
-            "mccs",
+            "longRunningCommandResult",
+            (
+                Anything,
+                json.dumps((int(ResultCode.OK), "Command Completed")),
+            ),
         )
         subarray_node_low.mccs_subarray1.SetDefective(COMMAND_REJECTED_DEFECT)
+
     if "sdp" in pytest.subsystems_to_endscan:
+
         subarray_node_low.sdp_subarray_leaf_node.EndScan()
         LOGGER.info(
             "Invoked EndScan on SDP Subarray Leaf Node: %s",
             subarray_node_low.sdp_subarray_leaf_node.dev_name(),
         )
-        _assert_subsystem_ready_state(
-            event_tracer,
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "GIVEN" STEP: '
+            "'a sdp subarray in READY obsState'"
+            f"({subarray_node_low.sdp_subarray_leaf_node.dev_name()}) "
+            "is expected to be in READY obstate",
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.sdp_subarray_leaf_node,
             "sdpSubarrayObsState",
-            "sdp",
+            ObsState.READY,
         )
-        _assert_subsystem_command_result(
-            event_tracer,
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "GIVEN" STEP: '
+            "'a sdp subarray in READY obsState'"
+            f"({subarray_node_low.sdp_subarray_leaf_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.sdp_subarray_leaf_node,
-            command_result,
-            "sdp",
+            "longRunningCommandResult",
+            (
+                Anything,
+                json.dumps((int(ResultCode.OK), "Command Completed")),
+            ),
         )
         subarray_node_low.sdp_subarray1.SetDefective(
             SDP_COMMAND_REJECTED_DEFECT
         )
     if "csp" in pytest.subsystems_to_endscan:
+
         subarray_node_low.csp_subarray_leaf_node.EndScan()
         LOGGER.info(
             "Invoked EndScan on CSP Subarray Leaf Node: %s",
             subarray_node_low.csp_subarray_leaf_node.dev_name(),
         )
-        _assert_subsystem_ready_state(
-            event_tracer,
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "GIVEN" STEP: '
+            "'a csp subarray in READY obsState'"
+            f"({subarray_node_low.csp_subarray_leaf_node.dev_name()}) "
+            "is expected to be in READY obstate",
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.csp_subarray_leaf_node,
             "cspSubarrayObsState",
-            "csp",
+            ObsState.READY,
         )
-        _assert_subsystem_command_result(
-            event_tracer,
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "GIVEN" STEP: '
+            "'a csp subarray in READY obsState'"
+            f"({subarray_node_low.csp_subarray_leaf_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.csp_subarray_leaf_node,
-            command_result,
-            "csp",
+            "longRunningCommandResult",
+            (
+                Anything,
+                json.dumps((int(ResultCode.OK), "Command Completed")),
+            ),
         )
         subarray_node_low.csp_subarray1.SetDefective(COMMAND_REJECTED_DEFECT)
 
@@ -401,9 +404,15 @@ def then_subarrays_in_ready_obsstate(
     )
 
     if "mccs" in pytest.subsystems_to_endscan:
-        _assert_subsystem_command_result(
-            event_tracer,
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "THEN" STEP: '
+            "'a mccs subarray in READY obsState'"
+            f"({subarray_node_low.mccs_subarray_leaf_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.mccs_subarray_leaf_node,
+            "longRunningCommandResult",
             (
                 Anything,
                 json.dumps(
@@ -413,12 +422,18 @@ def then_subarrays_in_ready_obsstate(
                     )
                 ),
             ),
-            "mccs",
         )
+
     if "sdp" in pytest.subsystems_to_endscan:
-        _assert_subsystem_command_result(
-            event_tracer,
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "THEN" STEP: '
+            "'a sdp subarray in READY obsState'"
+            f"({subarray_node_low.sdp_subarray_leaf_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.sdp_subarray_leaf_node,
+            "longRunningCommandResult",
             (
                 Anything,
                 json.dumps(
@@ -428,12 +443,18 @@ def then_subarrays_in_ready_obsstate(
                     )
                 ),
             ),
-            "sdp",
         )
+
     if "csp" in pytest.subsystems_to_endscan:
-        _assert_subsystem_command_result(
-            event_tracer,
+        assert_that(event_tracer).described_as(
+            'FAILED ASSUMPTION IN "THEN" STEP: '
+            "'a csp subarray in READY obsState'"
+            f"({subarray_node_low.csp_subarray_leaf_node.dev_name()}) "
+            "is expected have longRunningCommand as"
+            '(unique_id,(ResultCode.OK,"Command Completed"))',
+        ).within_timeout(TIMEOUT).has_change_event_occurred(
             subarray_node_low.csp_subarray_leaf_node,
+            "longRunningCommandResult",
             (
                 Anything,
                 json.dumps(
@@ -443,5 +464,4 @@ def then_subarrays_in_ready_obsstate(
                     )
                 ),
             ),
-            "csp",
         )
