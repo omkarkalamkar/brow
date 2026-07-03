@@ -37,7 +37,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
     "EndScan transitions the subarray to READY when selected subsystems have"
     " already ended scan and reject the EndScan command.",
 )
-def test_tmc_endscan_command_in_ready():
+def test_tmc_endscan_command_is_rejected():
     """BDD test scenario for verifying successful execution of
     the Low EndScan command in a TMC when some subsystem subarrays
     have already ended scan and are in READY obsState and reject the
@@ -247,7 +247,7 @@ def given_subarray_ended_scan(
             "mccs",
         )
         subarray_node_low.mccs_subarray1.SetDefective(COMMAND_REJECTED_DEFECT)
-    elif "sdp" in pytest.subsystems_to_endscan:
+    if "sdp" in pytest.subsystems_to_endscan:
         subarray_node_low.sdp_subarray_leaf_node.EndScan()
         LOGGER.info(
             "Invoked EndScan on SDP Subarray Leaf Node: %s",
@@ -268,7 +268,7 @@ def given_subarray_ended_scan(
         subarray_node_low.sdp_subarray1.SetDefective(
             SDP_COMMAND_REJECTED_DEFECT
         )
-    elif "csp" in pytest.subsystems_to_endscan:
+    if "csp" in pytest.subsystems_to_endscan:
         subarray_node_low.csp_subarray_leaf_node.EndScan()
         LOGGER.info(
             "Invoked EndScan on CSP Subarray Leaf Node: %s",
@@ -337,11 +337,11 @@ def when_endscan_invoked(
         subarray_node_low.mccs_subarray1.SetDefective(
             json.dumps({"enabled": False})
         )
-    elif "sdp" in pytest.subsystems_to_endscan:
+    if "sdp" in pytest.subsystems_to_endscan:
         subarray_node_low.sdp_subarray1.SetDefective(
             json.dumps({"enabled": False})
         )
-    elif "csp" in pytest.subsystems_to_endscan:
+    if "csp" in pytest.subsystems_to_endscan:
         subarray_node_low.csp_subarray1.SetDefective(
             json.dumps({"enabled": False})
         )
@@ -400,49 +400,48 @@ def then_subarrays_in_ready_obsstate(
         ObsState.READY,
     )
 
-    for subsystem_name in pytest.subsystems_to_endscan:
-        if subsystem_name == "mccs":
-            _assert_subsystem_command_result(
-                event_tracer,
-                subarray_node_low.mccs_subarray_leaf_node,
-                (
-                    Anything,
-                    json.dumps(
-                        (
-                            int(ResultCode.OK),
-                            MESSAGE,
-                        )
-                    ),
+    if "mccs" in pytest.subsystems_to_endscan:
+        _assert_subsystem_command_result(
+            event_tracer,
+            subarray_node_low.mccs_subarray_leaf_node,
+            (
+                Anything,
+                json.dumps(
+                    (
+                        int(ResultCode.OK),
+                        MESSAGE,
+                    )
                 ),
-                "mccs",
-            )
-        elif subsystem_name == "sdp":
-            _assert_subsystem_command_result(
-                event_tracer,
-                subarray_node_low.sdp_subarray_leaf_node,
-                (
-                    Anything,
-                    json.dumps(
-                        (
-                            int(ResultCode.OK),
-                            MESSAGE,
-                        )
-                    ),
+            ),
+            "mccs",
+        )
+    if "sdp" in pytest.subsystems_to_endscan:
+        _assert_subsystem_command_result(
+            event_tracer,
+            subarray_node_low.sdp_subarray_leaf_node,
+            (
+                Anything,
+                json.dumps(
+                    (
+                        int(ResultCode.OK),
+                        MESSAGE,
+                    )
                 ),
-                "sdp",
-            )
-        elif subsystem_name == "csp":
-            _assert_subsystem_command_result(
-                event_tracer,
-                subarray_node_low.csp_subarray_leaf_node,
-                (
-                    Anything,
-                    json.dumps(
-                        (
-                            int(ResultCode.OK),
-                            MESSAGE,
-                        )
-                    ),
+            ),
+            "sdp",
+        )
+    if "csp" in pytest.subsystems_to_endscan:
+        _assert_subsystem_command_result(
+            event_tracer,
+            subarray_node_low.csp_subarray_leaf_node,
+            (
+                Anything,
+                json.dumps(
+                    (
+                        int(ResultCode.OK),
+                        MESSAGE,
+                    )
                 ),
-                "csp",
-            )
+            ),
+            "csp",
+        )
