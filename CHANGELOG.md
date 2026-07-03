@@ -5,6 +5,12 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[2.17.1]
+*************
+Branch release
+---------------
+* Utilised the transducer chart with SKB-1383 fix
+
 [2.17.0-rc.1]
 *************
 Updated
