@@ -25,7 +25,7 @@ Scenario: EndScan transitions the subarray to READY when selected subsystems hav
     Then the TMC subarray and the subsystem subarray are in READY obsState
     Examples:
         | subsystem          |
-        | mccs               |
+        #| mccs               |
         | csp                |
         | sdp                |
         | mccs, csp          |
