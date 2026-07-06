@@ -7,10 +7,6 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
 [Unreleased]
 *************
-Fixed
------
-* Utilised the transducer chart 1.0.0 with SKB-1383 fix
-
 Updated
 -------
 * TMC supports optional parameter `duration` for scan command
@@ -27,9 +23,9 @@ Updated
 
 [2.17.1]
 *************
-Branch release
----------------
-* Utilised the transducer chart 1.0.0 with SKB-1383 fix
+Fixed
+-----
+* Utilised the transducer chart 1.0.0 with SKB-1383 fix. It is a branch release REL-3155.
 
 [2.17.0-rc.1]
 *************

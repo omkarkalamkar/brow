@@ -55,7 +55,6 @@ ska-tango-base:
 tmc-low:
   labels:
     app: ska-tmc-low-integration
-  enabled: true
 
   deviceServers:
     centralnode:
