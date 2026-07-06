@@ -323,7 +323,6 @@ def when_endscan_invoked(
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
-    event_tracer.clear_events()
 
 
 @then("the TMC subarray and the subsystem subarray are in READY obsState")
@@ -440,3 +439,4 @@ def then_subarrays_in_ready_obsstate(
                 ),
             ),
         )
+    event_tracer.clear_events()
