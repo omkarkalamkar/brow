@@ -238,6 +238,7 @@ def given_subarray_in_scanning(
     LOGGER.info(
         "Executed Scan command and verified subarray is in SCANNING obsState."
     )
+    event_tracer.clear_events()
 
 
 @given(parsers.parse("{subsystem} have already ended scan"))
@@ -261,7 +262,7 @@ def given_subarray_ended_scan(
     # obsState changes to READY
     if "mccs" in pytest.subsystems_to_endscan:
 
-        subarray_node_low.mccs_subarray_leaf_node.EndScan()
+        _, unique_id = subarray_node_low.mccs_subarray_leaf_node.EndScan()
         LOGGER.info(
             "Invoked EndScan on MCCS Subarray Leaf Node: %s",
             subarray_node_low.mccs_subarray_leaf_node.dev_name(),
@@ -287,14 +288,14 @@ def given_subarray_ended_scan(
             subarray_node_low.mccs_subarray_leaf_node,
             "longRunningCommandResult",
             (
-                Anything,
+                unique_id[0],
                 json.dumps((int(ResultCode.OK), "Command Completed")),
             ),
         )
 
     if "sdp" in pytest.subsystems_to_endscan:
 
-        subarray_node_low.sdp_subarray_leaf_node.EndScan()
+        _, unique_id = subarray_node_low.sdp_subarray_leaf_node.EndScan()
         LOGGER.info(
             "Invoked EndScan on SDP Subarray Leaf Node: %s",
             subarray_node_low.sdp_subarray_leaf_node.dev_name(),
@@ -319,13 +320,13 @@ def given_subarray_ended_scan(
             subarray_node_low.sdp_subarray_leaf_node,
             "longRunningCommandResult",
             (
-                Anything,
+                unique_id[0],
                 json.dumps((int(ResultCode.OK), "Command Completed")),
             ),
         )
     if "csp" in pytest.subsystems_to_endscan:
 
-        subarray_node_low.csp_subarray_leaf_node.EndScan()
+        _, unique_id = subarray_node_low.csp_subarray_leaf_node.EndScan()
         LOGGER.info(
             "Invoked EndScan on CSP Subarray Leaf Node: %s",
             subarray_node_low.csp_subarray_leaf_node.dev_name(),
@@ -350,10 +351,11 @@ def given_subarray_ended_scan(
             subarray_node_low.csp_subarray_leaf_node,
             "longRunningCommandResult",
             (
-                Anything,
+                unique_id[0],
                 json.dumps((int(ResultCode.OK), "Command Completed")),
             ),
         )
+    event_tracer.clear_events()
 
 
 @when("I invoke EndScan and it is rejected by the subsystem")
@@ -399,6 +401,7 @@ def when_endscan_invoked(
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
+    event_tracer.clear_events()
 
 
 @then("the TMC subarray and the subsystem subarray are in READY obsState")
@@ -517,3 +520,4 @@ def then_subarrays_in_ready_obsstate(
             ),
         )
     _reset_defects(subarray_node_low, pytest.subsystems_to_endscan)
+    event_tracer.clear_events()

@@ -137,6 +137,7 @@ def given_tmc(
         "obsState",
         ObsState.EMPTY,
     )
+    event_tracer.clear_events()
 
 
 @given("the telescope is in the ON state")
