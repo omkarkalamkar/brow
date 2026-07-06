@@ -31,6 +31,75 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 
 
+def _induce_reject_defect(
+    subarray_node_low: SubarrayNodeWrapperLow, subsystems: list[str]
+):
+    """Induce a defect in the specified subsystem(s) to reject the
+    EndScan command.
+
+    Args:
+        subarray_node_low: Wrapper for the low subarray node and its
+            subsystem leaf nodes.
+        subsystems: List of subsystem names to induce the defect for.
+    """
+    if "mccs" in subsystems:
+        subarray_node_low.mccs_subarray1.SetDefective(COMMAND_REJECTED_DEFECT)
+        LOGGER.info(
+            "Induced defect in MCCS Subarray Leaf Node: %s",
+            subarray_node_low.mccs_subarray_leaf_node.dev_name(),
+        )
+    if "sdp" in subsystems:
+        subarray_node_low.sdp_subarray1.SetDefective(
+            SDP_COMMAND_REJECTED_DEFECT
+        )
+        LOGGER.info(
+            "Induced defect in SDP Subarray Leaf Node: %s",
+            subarray_node_low.sdp_subarray_leaf_node.dev_name(),
+        )
+    if "csp" in subsystems:
+        subarray_node_low.csp_subarray1.SetDefective(COMMAND_REJECTED_DEFECT)
+        LOGGER.info(
+            "Induced defect in CSP Subarray Leaf Node: %s",
+            subarray_node_low.csp_subarray_leaf_node.dev_name(),
+        )
+
+
+def _reset_defects(
+    subarray_node_low: SubarrayNodeWrapperLow, subsystems: list[str]
+):
+    """Reset the defects in the specified subsystem(s) after the test.
+
+    Args:
+        subarray_node_low: Wrapper for the low subarray node and its
+            subsystem leaf nodes.
+        subsystems: List of subsystem names to reset the defect for.
+    """
+    if "mccs" in subsystems:
+        subarray_node_low.mccs_subarray1.SetDefective(
+            json.dumps({"enabled": False})
+        )
+        LOGGER.info(
+            "Reset defect in MCCS Subarray Leaf Node: %s",
+            subarray_node_low.mccs_subarray_leaf_node.dev_name(),
+        )
+    if "sdp" in subsystems:
+        subarray_node_low.sdp_subarray1.SetDefective(
+            json.dumps({"enabled": False})
+        )
+        LOGGER.info(
+            "Reset defect in SDP Subarray Leaf Node: %s",
+            subarray_node_low.sdp_subarray_leaf_node.dev_name(),
+        )
+    if "csp" in subsystems:
+        subarray_node_low.csp_subarray1.SetDefective(
+            json.dumps({"enabled": False})
+        )
+        LOGGER.info(
+            "Reset defect in CSP Subarray Leaf Node: %s",
+            subarray_node_low.csp_subarray_leaf_node.dev_name(),
+        )
+
+
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_endscan_in_ready.feature",
@@ -222,7 +291,6 @@ def given_subarray_ended_scan(
                 json.dumps((int(ResultCode.OK), "Command Completed")),
             ),
         )
-        subarray_node_low.mccs_subarray1.SetDefective(COMMAND_REJECTED_DEFECT)
 
     if "sdp" in pytest.subsystems_to_endscan:
 
@@ -255,9 +323,6 @@ def given_subarray_ended_scan(
                 json.dumps((int(ResultCode.OK), "Command Completed")),
             ),
         )
-        subarray_node_low.sdp_subarray1.SetDefective(
-            SDP_COMMAND_REJECTED_DEFECT
-        )
     if "csp" in pytest.subsystems_to_endscan:
 
         subarray_node_low.csp_subarray_leaf_node.EndScan()
@@ -289,7 +354,6 @@ def given_subarray_ended_scan(
                 json.dumps((int(ResultCode.OK), "Command Completed")),
             ),
         )
-        subarray_node_low.csp_subarray1.SetDefective(COMMAND_REJECTED_DEFECT)
 
 
 @when("I invoke EndScan and it is rejected by the subsystem")
@@ -305,7 +369,7 @@ def when_endscan_invoked(
         event_tracer: Tango event tracer used to verify that the subarray is
             in READY and receives a successful command result.
     """
-
+    _induce_reject_defect(subarray_node_low, pytest.subsystems_to_endscan)
     _, unique_id = subarray_node_low.execute_transition("EndScan")
     LOGGER.info(
         "Invoked EndScan on Subarray Node: %s",
@@ -335,19 +399,6 @@ def when_endscan_invoked(
         "longRunningCommandResult",
         (unique_id[0], json.dumps((int(ResultCode.OK), "Command Completed"))),
     )
-
-    if "mccs" in pytest.subsystems_to_endscan:
-        subarray_node_low.mccs_subarray1.SetDefective(
-            json.dumps({"enabled": False})
-        )
-    if "sdp" in pytest.subsystems_to_endscan:
-        subarray_node_low.sdp_subarray1.SetDefective(
-            json.dumps({"enabled": False})
-        )
-    if "csp" in pytest.subsystems_to_endscan:
-        subarray_node_low.csp_subarray1.SetDefective(
-            json.dumps({"enabled": False})
-        )
 
 
 @then("the TMC subarray and the subsystem subarray are in READY obsState")
@@ -465,3 +516,4 @@ def then_subarrays_in_ready_obsstate(
                 ),
             ),
         )
+    _reset_defects(subarray_node_low, pytest.subsystems_to_endscan)
