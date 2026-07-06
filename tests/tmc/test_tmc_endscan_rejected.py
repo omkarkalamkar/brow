@@ -31,7 +31,6 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
 )
 
 
-@pytest.mark.skip(reason="execute tests")
 def _induce_reject_defect(
     subarray_node_low: SubarrayNodeWrapperLow, subsystems: list[str]
 ):
