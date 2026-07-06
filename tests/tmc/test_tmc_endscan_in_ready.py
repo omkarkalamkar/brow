@@ -278,6 +278,7 @@ def given_subarray_ended_scan(
                 json.dumps((int(ResultCode.OK), "Command Completed")),
             ),
         )
+    event_tracer.clear_events()
 
 
 @when("I invoke EndScan")
