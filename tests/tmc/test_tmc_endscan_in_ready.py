@@ -26,7 +26,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_commands,
 )
 
-w
+
 @pytest.mark.SKA_low
 @scenario(
     "../features/tmc/check_endscan_in_ready.feature",
