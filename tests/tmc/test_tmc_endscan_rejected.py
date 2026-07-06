@@ -64,6 +64,42 @@ def _induce_reject_defect(
         )
 
 
+def _set_direct_obsstate(
+    subarray_node_low: SubarrayNodeWrapperLow,
+    subsystems: list[str],
+):
+    """Set the obsState of the specified subsystem(s) directly to the given
+    obsState.
+
+    Args:
+        subarray_node_low: Wrapper for the low subarray node and its
+            subsystem leaf nodes.
+        subsystems: List of subsystem names to set the obsState for.
+        obs_state: The ObsState to set for the specified subsystem(s).
+    """
+    if "mccs" in subsystems:
+        subarray_node_low.mccs_subarray1.SetDirectObsState(ObsState.READY)
+        LOGGER.info(
+            "Set obsState of MCCS Subarray: %s to %s",
+            subarray_node_low.mccs_subarray_leaf_node.dev_name(),
+            ObsState.READY.name,
+        )
+    if "sdp" in subsystems:
+        subarray_node_low.sdp_subarray1.SetDirectObsState(ObsState.READY)
+        LOGGER.info(
+            "Set obsState of SDP Subarray: %s to %s",
+            subarray_node_low.sdp_subarray_leaf_node.dev_name(),
+            ObsState.READY.name,
+        )
+    if "csp" in subsystems:
+        subarray_node_low.csp_subarray1.SetDirectObsState(ObsState.READY)
+        LOGGER.info(
+            "Set obsState of CSP Subarray: %s to %s",
+            subarray_node_low.csp_subarray_leaf_node.dev_name(),
+            ObsState.READY.name,
+        )
+
+
 def _reset_defects(
     subarray_node_low: SubarrayNodeWrapperLow, subsystems: list[str]
 ):
@@ -372,6 +408,7 @@ def when_endscan_invoked(
     """
     _induce_reject_defect(subarray_node_low, pytest.subsystems_to_endscan)
     _, unique_id = subarray_node_low.execute_transition("EndScan")
+    _set_direct_obsstate(subarray_node_low, pytest.subsystems_to_endscan)
     LOGGER.info(
         "Invoked EndScan on Subarray Node: %s",
         subarray_node_low.subarray_node.dev_name(),
