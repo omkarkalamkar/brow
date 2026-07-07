@@ -24,6 +24,7 @@ Updated
   - ska-tmc-cspleafnodes: v0.48.1 if subsystem subarray is already in READY obsstate then endscan is not invoked.
   - ska-tmc-mccsleafnode: v0.19.1 if subsystem subarray is already in READY obsstate then endscan is not invoked.
   - ska-tmc-sdpleafnode: v0.32.1 if subsystem subarray is already in READY obsstate then endscan is not invoked.
+  - Added support for starting the scan duration timer at `ScanStartTime`.
 
 
 **PLEASE NOTE: Since this version, SubarrayNode Low supports CSP Scan schema 8.4 or higher version. There is no backword compatibility.**

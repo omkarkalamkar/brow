@@ -1,4 +1,4 @@
-@XTP-113455 XTP-28348
+@XTP-113455 @XTP-28348
 Feature: Scan command with ScanStartTime
 
 
