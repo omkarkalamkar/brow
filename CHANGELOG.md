@@ -21,6 +21,12 @@ Updated
 
 **PLEASE NOTE: Since this version, SubarrayNode Low supports CSP Scan schema 8.4 or higher version. There is no backword compatibility.**
 
+[2.17.1]
+*************
+Fixed
+-----
+* Utilised the transducer chart 1.0.0 with SKB-1383 fix. It is a branch release REL-3155.
+
 [2.17.0-rc.1]
 *************
 Updated
