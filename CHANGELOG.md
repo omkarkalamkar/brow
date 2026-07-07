@@ -18,6 +18,13 @@ Updated
 
   - ska-tmc-subarraynode: v2.1.0
   - ska-tmc-cspleafnodes: v0.47.0
+* Updates for ADR-132:
+
+  - ska-tmc-subarraynode: v2.3.0 Obsstate rules updates
+  - ska-tmc-cspleafnodes: v0.48.1 if subsystem subarray is already in READY obsstate then endscan is not invoked.
+  - ska-tmc-mccsleafnode: v0.19.1 if subsystem subarray is already in READY obsstate then endscan is not invoked.
+  - ska-tmc-sdpleafnode: v0.32.1 if subsystem subarray is already in READY obsstate then endscan is not invoked.
+
 
 **PLEASE NOTE: Since this version, SubarrayNode Low supports CSP Scan schema 8.4 or higher version. There is no backword compatibility.**
 
@@ -53,7 +60,7 @@ Updated
 -------
 * Updated TMC Low to support MCCS early Scan scenario. Here the Scan command is invoked on MCCS Subarray via Subarray Leaf Node. Later the normal Scan command is invoked from TMC Subarray.
 * Utilized CentralNode v1.3.1
-        
+
 Fixed
 -----
 * Fixed KeyError in release resources command when attempting to remove PSS beams/subsystems assignment for subarrays that were not assigned PSS beams/subsystems. Resolves SKB-1300.

@@ -162,24 +162,6 @@ COMMAND_NOT_ALLOWED_DEFECT = json.dumps(
     }
 )
 
-COMMAND_REJECTED_DEFECT = json.dumps(
-    {
-        "enabled": True,
-        "fault_type": FaultType.LONG_RUNNING_EXCEPTION,
-        "error_message": "Command not allowed",
-        "result": ResultCode.REJECTED,
-    }
-)
-
-SDP_COMMAND_REJECTED_DEFECT = json.dumps(
-    {
-        "enabled": True,
-        "fault_type": FaultType.FAILED_RESULT,
-        "error_message": "API_CommandNotAllowed",
-        "result": ResultCode.REJECTED,
-    }
-)
-
 TIMEOUT_DEFECT = json.dumps(
     {
         "enabled": True,
