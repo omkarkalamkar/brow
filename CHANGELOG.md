@@ -5,6 +5,28 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
+[Unreleased]
+*************
+Updated
+-------
+* TMC supports optional parameter `duration` for scan command
+* Updated SubarrayNode Low to support CSP Scan schema 8.4 and SDP Scan schema 2.1
+* This version has two feature flags one for Scan Start time and other for duration. User needs to enable them in the umbrella chart as per the input JSON to be provided.
+    * ScanStartTimeEnabled :  This refers to the property provided to enable/disable start_time in Scan JSON. Currently defaults to false.
+    * ScanDurationEnabled :  This refers to the property provided to enable/disable duration in Scan JSON. Currently defaults to false.
+* Updated following TMC component docker images:
+
+  - ska-tmc-subarraynode: v2.1.0
+  - ska-tmc-cspleafnodes: v0.47.0
+
+**PLEASE NOTE: Since this version, SubarrayNode Low supports CSP Scan schema 8.4 or higher version. There is no backword compatibility.**
+
+[2.17.1]
+*************
+Fixed
+-----
+* Utilised the transducer chart 1.0.0 with SKB-1383 fix. It is a branch release REL-3155.
+
 [2.17.0]
 ********
 Updated
@@ -189,11 +211,6 @@ Fixed
   ObsState when applicable.
 
 * logging level is set to 4 (``INFO`` level). To set the logging level of one or more specific component, refer to advanced cutomization options.
-
-
-
-
-
 
 [2.12.0]
 ************
