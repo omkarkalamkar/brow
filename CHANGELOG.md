@@ -27,6 +27,24 @@ Fixed
 -----
 * Utilised the transducer chart 1.0.0 with SKB-1383 fix. It is a branch release REL-3155.
 
+[2.17.0]
+********
+Updated
+-------
+* Utilized simulators chart 1.15.0 with QualityMetrics introduced on SDP Subarray simulator
+* Subscribed SDP Subarray QualityMetrics on TMC Quality Monitor
+* Utilized following charts with Pytango 10.3.0 update:
+
+  - ska-tmc-centralnode: v1.5.0
+  - ska-tmc-subarraynode: v1.14.0
+  - ska-tmc-sdpleafnodes: v0.31.0
+  - ska-tmc-cspleafnodes: v0.46.0
+  - ska-tmc-mccsleafnodes: v0.18.0
+
+Fixed
+-----
+* Fixed the bug SKB-1391: Abort command failure on CSP subarray leaf node
+
 [2.17.0-rc.1]
 *************
 Updated
