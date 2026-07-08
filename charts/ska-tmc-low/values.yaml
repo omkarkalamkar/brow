@@ -1,8 +1,6 @@
 display: ":0"
 xauthority: "~/.Xauthority"
 
-enabled: true
-
 legacy_compatibility: true
 
 system: TM-low
