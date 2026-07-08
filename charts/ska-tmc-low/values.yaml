@@ -78,9 +78,9 @@ centralnode:
 
 subarraynode:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-subarraynode
+    registry: artefact.skao.int
     image: ska-tmc-subarraynode
-    tag: 2.3.0-dev.c430c5d4a
+    tag: 2.3.0
     pullPolicy: IfNotPresent
 
 sdpleafnodes:
@@ -92,16 +92,16 @@ sdpleafnodes:
 
 cspmasterleafnode:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-cspleafnodes
+    registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.47.2-dev.cd73cd59d
+    tag: 0.48.1
     pullPolicy: IfNotPresent
 
 cspsubarrayleafnode:
   image:
-    registry: registry.gitlab.com/ska-telescope/ska-tmc/ska-tmc-cspleafnodes
+    registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.47.2-dev.cd73cd59d
+    tag: 0.48.1
     pullPolicy: IfNotPresent
 
 mccsmasterleafnode:
@@ -154,7 +154,7 @@ deviceServers:
   subarraynode:
     enabled: true
     file: "data/subarraynode.yaml"
-    CspAssignResourcesInterfaceURL: "https://schema.skao.int/ska-low-csp-assignresources/3.0"
+    CspAssignResourcesInterfaceURL: "https://schema.skao.int/ska-low-csp-assignresources/7.5"
     CspScanInterfaceURL: "https://schema.skao.int/ska-low-csp-scan/8.4"
     SdpScanInterfaceURL: "https://schema.skao.int/ska-sdp-scan/2.1"
     MccsConfigureInterfaceURL: "https://schema.skao.int/ska-low-mccs-configure/1.0"
