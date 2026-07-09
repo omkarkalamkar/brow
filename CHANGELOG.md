@@ -14,10 +14,6 @@ Updated
 * This version has two feature flags one for Scan Start time and other for duration. User needs to enable them in the umbrella chart as per the input JSON to be provided.
     * ScanStartTimeEnabled :  This refers to the property provided to enable/disable start_time in Scan JSON. Currently defaults to false.
     * ScanDurationEnabled :  This refers to the property provided to enable/disable duration in Scan JSON. Currently defaults to false.
-* Updated following TMC component docker images:
-
-  - ska-tmc-subarraynode: v2.1.0
-  - ska-tmc-cspleafnodes: v0.47.0
 * Updates for ADR-132:
 
   - ska-tmc-subarraynode: v2.3.0 Obsstate rules updates
