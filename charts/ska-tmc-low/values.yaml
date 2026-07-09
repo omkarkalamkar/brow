@@ -78,42 +78,42 @@ subarraynode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-subarraynode
-    tag: 2.1.0
+    tag: 2.3.0
     pullPolicy: IfNotPresent
 
 sdpleafnodes:
   image:
     registry: artefact.skao.int
     image: ska-tmc-sdpleafnodes
-    tag: 0.31.0
+    tag: 0.32.1
     pullPolicy: IfNotPresent
 
 cspmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.47.0
+    tag: 0.48.1
     pullPolicy: IfNotPresent
 
 cspsubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-cspleafnodes
-    tag: 0.47.0
+    tag: 0.48.1
     pullPolicy: IfNotPresent
 
 mccsmasterleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.18.0
+    tag: 0.19.1
     pullPolicy: IfNotPresent
 
 mccssubarrayleafnode:
   image:
     registry: artefact.skao.int
     image: ska-tmc-mccsleafnodes
-    tag: 0.18.0
+    tag: 0.19.1
     pullPolicy: IfNotPresent
 
 resource_monitor:
@@ -152,7 +152,7 @@ deviceServers:
   subarraynode:
     enabled: true
     file: "data/subarraynode.yaml"
-    CspAssignResourcesInterfaceURL: "https://schema.skao.int/ska-low-csp-assignresources/3.0"
+    CspAssignResourcesInterfaceURL: "https://schema.skao.int/ska-low-csp-assignresources/7.5"
     CspScanInterfaceURL: "https://schema.skao.int/ska-low-csp-scan/8.4"
     SdpScanInterfaceURL: "https://schema.skao.int/ska-sdp-scan/2.1"
     MccsConfigureInterfaceURL: "https://schema.skao.int/ska-low-mccs-configure/1.0"
@@ -266,7 +266,7 @@ ska-tango-transducer:
         - name: "qualitymonitor01"
           deviceName: "low-tmc/subarray-quality-monitor/01"
           readPeriod: "1000"
-          subscribedAttributes: ["qualityMetricsCspSubarray|low-csp/subarray/01/qualityAssuranceMetrics|json", 
+          subscribedAttributes: ["qualityMetricsCspSubarray|low-csp/subarray/01/qualityAssuranceMetrics|json",
                                  "qualityMetricsMccsSubarray|low-mccs/subarray/01/qualityAssuranceMetrics|json",
                                  "qualityMetricsSdpStreamsStarted|low-sdp/queueconnector/01/percentageVisReceiveStreamsStarted",
                                  "qualityMetricsSdpHeaps|low-sdp/queueconnector/01/totalVisReceiveHeaps",
@@ -279,7 +279,7 @@ ska-tango-transducer:
         - name: "qualitymonitor02"
           deviceName: "low-tmc/subarray-quality-monitor/02"
           readPeriod: "1000"
-          subscribedAttributes: ["qualityMetricsCspSubarray|low-csp/subarray/02/qualityAssuranceMetrics|json", 
+          subscribedAttributes: ["qualityMetricsCspSubarray|low-csp/subarray/02/qualityAssuranceMetrics|json",
                                  "qualityMetricsMccsSubarray|low-mccs/subarray/02/qualityAssuranceMetrics|json",
                                   "qualityMetricsSdpStreamsStarted|low-sdp/queueconnector/02/percentageVisReceiveStreamsStarted",
                                   "qualityMetricsSdpHeaps|low-sdp/queueconnector/02/totalVisReceiveHeaps",

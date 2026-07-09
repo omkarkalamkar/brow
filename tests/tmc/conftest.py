@@ -15,7 +15,10 @@ from ska_integration_test_harness.facades.tmc_facade import TMCFacade
 from ska_tango_testing.integration import TangoEventTracer, log_events
 from tango import DevState
 
-from tests.resources.test_harness.central_node_low import CentralNodeWrapperLow
+from tests.resources.test_harness.central_node_low import (
+    LOGGER,
+    CentralNodeWrapperLow,
+)
 from tests.resources.test_harness.constant import (
     ERROR_PROPAGATION_DEFECT,
     FAILED_DEFECT,
@@ -37,6 +40,104 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
     prepare_json_args_for_commands,
 )
+
+
+@given("a TMC")
+def given_tmc(
+    central_node_low: CentralNodeWrapperLow,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+):
+    """Set up a TMC and ensure it is in the ON state.
+
+    Args:
+        central_node_low: Central node test wrapper providing control
+            and state assertions for the TMC central node.
+        subarray_node_low: Subarray node test wrapper providing access
+            to subarray and subsystem leaf nodes.
+        event_tracer: Event tracer used to subscribe and assert Tango
+            event state changes.
+    """
+    # ---------Event Subscriptions and Logging----------
+    event_tracer.subscribe_event(
+        central_node_low.central_node, "telescopeState"
+    )
+    event_tracer.subscribe_event(
+        central_node_low.central_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.subarray_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(subarray_node_low.subarray_node, "obsState")
+    event_tracer.subscribe_event(
+        subarray_node_low.mccs_subarray_leaf_node,
+        "obsState",
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.csp_subarray_leaf_node,
+        "cspSubarrayObsState",
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.sdp_subarray_leaf_node,
+        "sdpSubarrayObsState",
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.mccs_subarray_leaf_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.csp_subarray_leaf_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(
+        subarray_node_low.sdp_subarray_leaf_node, "longRunningCommandResult"
+    )
+    log_events(
+        {
+            central_node_low.central_node: [
+                "telescopeState",
+                "longRunningCommandResult",
+            ],
+            subarray_node_low.subarray_node: [
+                "longRunningCommandResult",
+                "obsState",
+            ],
+            subarray_node_low.mccs_subarray_leaf_node: [
+                "obsState",
+                "longRunningCommandResult",
+            ],
+            subarray_node_low.csp_subarray_leaf_node: [
+                "cspSubarrayObsState",
+                "longRunningCommandResult",
+            ],
+            subarray_node_low.sdp_subarray_leaf_node: [
+                "sdpSubarrayObsState",
+                "longRunningCommandResult",
+            ],
+        }
+    )
+    LOGGER.info("Subscribed to events and set up logging for TMC devices.")
+    # ----------Move TMC to ON State and Verify----------
+    central_node_low.move_to_on()
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN" STEP: '
+        '"a TMC Central Node device" '
+        f"({central_node_low.central_node.dev_name()}) "
+        "is expected to be in TelescopeState ON",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.central_node,
+        "telescopeState",
+        DevState.ON,
+    )
+    assert_that(event_tracer).described_as(
+        'FAILED ASSUMPTION IN "GIVEN" STEP: '
+        '"a TMC Subarray Node device" '
+        f"({central_node_low.subarray_node.dev_name()}) "
+        f"is expected to be in EMPTY obstate",
+    ).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "obsState",
+        ObsState.EMPTY,
+    )
+    event_tracer.clear_events()
 
 
 @given("the telescope is in the ON state")
