@@ -9,6 +9,8 @@ This project adheres to `Semantic Versioning <http://semver.org/>`_.
 *************
 Updated
 -------
+**PLEASE NOTE: Since this version, SubarrayNode Low supports CSP Scan schema 8.4 or higher version. There is no backward compatibility.**
+
 * TMC supports optional parameter `duration` for scan command
 * Updated SubarrayNode Low to support CSP Scan schema 8.4 and SDP Scan schema 2.1
 * This version has two feature flags one for Scan Start time and other for duration. User needs to enable them in the umbrella chart as per the input JSON to be provided.
@@ -20,8 +22,6 @@ Updated
   - ska-tmc-mccsleafnode: v0.19.1 if subsystem subarray is already in READY obsstate then endscan is not invoked.
   - ska-tmc-sdpleafnode: v0.32.1 if subsystem subarray is already in READY obsstate then endscan is not invoked.
   - Added support for starting the scan duration timer at `ScanStartTime`.
-
-**PLEASE NOTE: Since this version, SubarrayNode Low supports CSP Scan schema 8.4 or higher version. There is no backward compatibility.**
 
 [2.17.1]
 ********
