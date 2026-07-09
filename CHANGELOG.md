@@ -5,7 +5,7 @@ Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to `Semantic Versioning <http://semver.org/>`_.
 
-[Unreleased]
+[2.18.0-rc.1]
 *************
 Updated
 -------
@@ -26,8 +26,7 @@ Updated
   - ska-tmc-sdpleafnode: v0.32.1 if subsystem subarray is already in READY obsstate then endscan is not invoked.
   - Added support for starting the scan duration timer at `ScanStartTime`.
 
-
-**PLEASE NOTE: Since this version, SubarrayNode Low supports CSP Scan schema 8.4 or higher version. There is no backword compatibility.**
+**PLEASE NOTE: Since this version, SubarrayNode Low supports CSP Scan schema 8.4 or higher version. There is no backward compatibility.**
 
 [2.17.1]
 *************
