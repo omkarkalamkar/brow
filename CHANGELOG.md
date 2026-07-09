@@ -15,7 +15,6 @@ Updated
     * ScanStartTimeEnabled :  This refers to the property provided to enable/disable start_time in Scan JSON. Currently defaults to false.
     * ScanDurationEnabled :  This refers to the property provided to enable/disable duration in Scan JSON. Currently defaults to false.
 * Updates for ADR-132:
-
   - ska-tmc-subarraynode: v2.3.0 Obsstate rules updates
   - ska-tmc-cspleafnodes: v0.48.1 if subsystem subarray is already in READY obsstate then endscan is not invoked.
   - ska-tmc-mccsleafnode: v0.19.1 if subsystem subarray is already in READY obsstate then endscan is not invoked.
@@ -25,7 +24,7 @@ Updated
 **PLEASE NOTE: Since this version, SubarrayNode Low supports CSP Scan schema 8.4 or higher version. There is no backward compatibility.**
 
 [2.17.1]
-*************
+********
 Fixed
 -----
 * Utilised the transducer chart 1.0.0 with SKB-1383 fix. It is a branch release REL-3155.
