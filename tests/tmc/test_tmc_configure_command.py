@@ -31,6 +31,7 @@ from tests.resources.test_support.common_utils.tmc_helpers import (
     prepare_json_args_for_centralnode_commands,
     prepare_json_args_for_commands,
 )
+from tests.tmc.conftest import perform_idle_transition
 
 logger = logging.getLogger(__name__)
 
@@ -273,3 +274,86 @@ def check_if_quality_monitor_ready_for_scan(
         subarray_node_low.quality_monitor.qualityMetricsCspSubarray
     )
     logger.info("qualityMetricsCspSubarray: %s", csp_qa_metrics)
+
+
+@pytest.mark.SKA_low
+@pytest.mark.parametrize(
+    "configure_input,expect_rejected,expected_error_fragment",
+    [
+        ("configure_low", False, None),
+        (
+            "configure_low_without_max_scan_length",
+            True,
+            "max_scan_length",
+        ),
+    ],
+    ids=["with_max_scan_length", "without_max_scan_length"],
+)
+def test_tmc_configure_command_max_scan_length_skb_1441(
+    configure_input: str,
+    expect_rejected: bool,
+    expected_error_fragment: str,
+    central_node_low: CentralNodeWrapperLow,
+    subarray_node_low: SubarrayNodeWrapperLow,
+    event_tracer: TangoEventTracer,
+    command_input_factory: JsonFactory,
+):
+    """SKB-1441: Parameterised Configure test that uses the same Low
+    configure JSON with and without the deprecated PST key max_scan_length.
+
+    The without-max_scan_length case is expected to be rejected by schema
+    validation, producing the logs required to confirm the issue.
+    """
+    event_tracer.subscribe_event(
+        central_node_low.central_node, "telescopeState"
+    )
+    event_tracer.subscribe_event(
+        central_node_low.central_node, "longRunningCommandResult"
+    )
+    event_tracer.subscribe_event(central_node_low.subarray_node, "obsState")
+
+    central_node_low.move_to_on()
+    assert_that(event_tracer).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.central_node,
+        "telescopeState",
+        DevState.ON,
+    )
+
+    set_receive_address(central_node_low)
+    perform_idle_transition(
+        central_node_low,
+        subarray_node_low,
+        event_tracer,
+        command_input_factory,
+    )
+
+    configure_json = prepare_json_args_for_commands(
+        configure_input, command_input_factory
+    )
+    logger.info("SKB-1441 configure test using fixture=%s", configure_input)
+    logger.info("Configure JSON: %s", configure_json)
+
+    result, message = subarray_node_low.execute_transition(
+        "Configure", configure_json
+    )
+    logger.info(
+        "Configure immediate result=%s message=%s", result, message
+    )
+
+    if expect_rejected:
+        assert result[0] == ResultCode.REJECTED, (
+            f"Expected REJECTED for {configure_input}, got {result}"
+        )
+        assert expected_error_fragment in message[0], (
+            f"Expected '{expected_error_fragment}' in validation message, "
+            f"got: {message[0]}"
+        )
+        assert subarray_node_low.subarray_node.obsState == ObsState.IDLE
+        return
+
+    log_events({central_node_low.subarray_node: ["obsState"]})
+    assert_that(event_tracer).within_timeout(TIMEOUT).has_change_event_occurred(
+        central_node_low.subarray_node,
+        "obsState",
+        ObsState.READY,
+    )
